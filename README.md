@@ -3,7 +3,7 @@
   <a href="https://github.com/thedaviddias/Front-End-Performance-Checklist"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
   <br>
     <br>
-  33 Concepts Every JS Developer Should Know
+  33 Concepts Every JavaScript Developer Should Know
   <br>
 </h1>
 
@@ -24,8 +24,8 @@ This repository was created with the intention of helping developers master thei
 
 ## Table of Contents
 
-1. **[Call Stack](#html)**
-2. **[Primitive Types](#css)**
+1. **[Call Stack](#call-stack)**
+2. **[Primitive Types](#primitive-types)**
 3. **[Value Types & Reference Types](#html)**
 4. **[Implicit, Explicit, Nominal, Structuring & Duck Typing](#css)**
 5. **[== vs === vs typeof](#html)**
@@ -61,7 +61,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## HTML
+## Call Stack
 
 ### Articles
 
@@ -84,3 +84,27 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Call Stack & Event Loop — movies com](https://www.youtube.com/watch?v=mk0lu9MKBto)
 
 **[⬆ back to top](#table-of-contents)**
+
+---
+
+## Primitive Types
+
+### Articles
+
+ * 📜 [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
+ * 📜 [What You Need to Know About JavaScript Number Type — Max Wizard K](https://medium.com/dailyjs/javascripts-number-type-8d59199db1b6)
+ * 📜 [What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
+ * 📜 [The Secret Life of JavaScript Primitives — Angus Croll](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
+ * 📜 [Primitive Types — Flow](https://flow.org/en/docs/types/primitives/)
+
+### Videos
+
+ * 🎥 [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
+ * 🎥 [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
+ * 🎥 [Javascript Primitive and Reference Types — Baljeet Singh](https://www.youtube.com/watch?v=F7YbhKbpFic)
+ * 🎥 [Value Types and Reference Types in JavaScript — Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
+ * 🎥 [JavaScript Primitive Data Types — Avelx](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
+ 
+**[⬆ back to top](#table-of-contents)**
+
+---
