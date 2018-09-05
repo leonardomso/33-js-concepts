@@ -18,7 +18,7 @@
 
 ## Introduction
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. Feel free to contribute.
+This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1). Feel free to contribute.
 
 ---
 
@@ -26,10 +26,10 @@ This repository was created with the intention of helping developers master thei
 
 1. **[Call Stack](#call-stack)**
 2. **[Primitive Types](#primitive-types)**
-3. **[Value Types & Reference Types](#html)**
-4. **[Implicit, Explicit, Nominal, Structuring & Duck Typing](#css)**
-5. **[== vs === vs typeof](#html)**
-6. **[Function Scope, Block Scope & Lexical Scope](#css)**
+3. **[Value Types & Reference Types](#value-types-and-reference-types)**
+4. **[Implicit, Explicit, Nominal, Structuring & Duck Typing](#typing)**
+5. **[== vs === vs typeof](#double-triple-equals)**
+6. **[Function Scope, Block Scope & Lexical Scope](#scope)**
 7. **[Expression vs Statement](#html)**
 8. **[Call Stack & Expressions](#images)**
 9. **[IIFE, Modules & Namespaces](#javascript)**
@@ -61,7 +61,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Call Stack
+## 1. Call Stack
 
 ### Articles
 
@@ -87,7 +87,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Primitive Types
+## 2. Primitive Types
 
 ### Articles
 
@@ -108,3 +108,23 @@ This repository was created with the intention of helping developers master thei
 **[⬆ back to top](#table-of-contents)**
 
 ---
+
+## 3. Value Types & Reference Types
+
+### Articles
+
+ * 📜 [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
+ * 📜 [Understand Value and Reference Types in JavaScript — Zsolt Nagy](https://www.zsoltnagy.eu/understand-value-and-reference-types-in-javascript/)
+ * 📜 [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
+ * 📜 [Value Types, Reference Types and Scope in JavaScript — Ben Aston](https://medium.com/@benastontweet/lesson-1b-javascript-fundamentals-380f601ba851)
+ * 📜 [Back to roots: JavaScript Value vs Reference — Miro Koczka](https://medium.com/dailyjs/back-to-roots-javascript-value-vs-reference-8fb69d587a18)
+ * 📜 [Grasp “By Value” and “By Reference” in JavaScript — Léna Faure](https://hackernoon.com/grasp-by-value-and-by-reference-in-javascript-7ed75efa1293)
+ * 📜 [JavaScript Reference and Copy Variables — Vítor Capretz](https://hackernoon.com/javascript-reference-and-copy-variables-b0103074fdf0)
+ * 📜 [JavaScript Primitive vs Reference Values](http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/)
+
+### Videos
+
+ * 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
+ * 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
+
+**[⬆ back to top](#table-of-contents)**
