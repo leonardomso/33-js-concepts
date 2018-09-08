@@ -26,8 +26,8 @@ This repository was created with the intention of helping developers master thei
 
 1. **[Call Stack](#call-stack)**
 2. **[Primitive Types](#primitive-types)**
-3. **[Value Types & Reference Types](#value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring & Duck Typing](#typing)**
+3. **[Value Types & Reference Types](#value-types-&-reference-types)**
+4. **[Implicit, Explicit, Nominal, Structuring & Duck Typing](#implicit-explicit-nominal-structuring-&-duck-typing)**
 5. **[== vs === vs typeof](#double-triple-equals)**
 6. **[Function Scope, Block Scope & Lexical Scope](#scope)**
 7. **[Expression vs Statement](#html)**
@@ -126,5 +126,19 @@ This repository was created with the intention of helping developers master thei
 
  * 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
  * 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## 3. Implicit, Explicit, Nominal, Structuring & Duck Typing
+
+### Articles
+
+ * 📜 [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
+ * 📜 [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
+ * 📜 [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
+ * 📜 [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
+ * 📜 [You Don't Know JS: Types & Grammar [Book] — Kyle Simpson](https://www.oreilly.com/library/view/you-dont-know/9781491905159/ch04.html)
 
 **[⬆ back to top](#table-of-contents)**
