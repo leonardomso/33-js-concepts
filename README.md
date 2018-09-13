@@ -30,8 +30,8 @@ This repository was created with the intention of helping developers master thei
 4. **[Implicit, Explicit, Nominal, Structuring & Duck Typing](#implicit-explicit-nominal-structuring-&-duck-typing)**
 5. **[== vs === vs typeof](#double-triple-equals)**
 6. **[Function Scope, Block Scope & Lexical Scope](#scope)**
-7. **[Expression vs. Statement](#html)**
-8. **[Call Stack & Expressions](#images)**
+7. **[Expression vs. Statement](#expression)**
+8. **[Hoisting](#hoisting)**
 9. **[IIFE, Modules & Namespaces](#javascript)**
 10. **[Message Queue & Event Loop](#css)**
 11. **[setTimeout, setInterval & requestAnimationFrame](#html)**
@@ -208,6 +208,33 @@ This repository was created with the intention of helping developers master thei
 
  * 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
  * 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## 8. Hoisting
+
+### Articles
+
+ * 📜 [Understanding Hoisting in JavaScript ― Elizabeth Mabishi](https://scotch.io/tutorials/understanding-hoisting-in-javascript)
+ * 📜 [JavaScript: What is Hoisting? ― Brandon Morelli](https://codeburst.io/javascript-what-is-hoisting-dfa84512dd28)
+ * 📜 [Understanding Hoisting in JavaScript ― Victor Ofoegbu](https://codeburst.io/understanding-hoisting-in-javascript-c8d35d5db2c2)
+ * 📜 [Scoping and Hoisting in JavaScript ― Naveen Karippai](https://medium.com/@naveenkarippai/scoping-and-hoisting-in-javascript-2c2e82107427)
+ * 📜 [Hoisting in JavaScript ― Ankush Chatterjee](https://medium.com/front-end-hacking/hoisting-in-javascript-f4a600a02a78)
+ * 📜 [Hoisting in JavaScript: a Quick Guide ― Léna Faure](https://hackernoon.com/hoisting-in-javascript-a-quick-guide-cc4d9597bbd7)
+ * 📜 [A guide to JavaScript variable hoisting 🚩 with let and const ― Bhuvan Malik](https://medium.freecodecamp.org/what-is-variable-hoisting-differentiating-between-var-let-and-const-in-es6-f1a70bb43d)
+ * 📜 [Function Hoisting & Hoisting Interview Questions ― Bhuvan Malik](https://medium.freecodecamp.org/function-hoisting-hoisting-interview-questions-b6f91dbc2be8)
+ * 📜 [Understanding Variables, Scope, and Hoisting in JavaScript ― Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-variables-scope-hoisting-in-javascript)
+ * 📜 [Javascript hoisting, var, let and const variables ― Vojtech Ruzicka](https://www.vojtechruzicka.com/javascript-hoisting-var-let-const-variables/)
+
+### Videos
+
+ * 🎥 [Hoisting in JavaScript Explained ― mmtuts](https://www.youtube.com/watch?v=ppMlvGMT2qE)
+ * 🎥 [Hoisting - Beau teaches JavaScript ― freeCodeCamp](https://www.youtube.com/watch?v=C1PZh_ea-7I)
+ * 🎥 [Hoisting in JavaScript Explained in (About) 5 Minutes ― 5-Minute Web Dev](https://www.youtube.com/watch?v=AplVrrwY1TI)
+ * 🎥 [JavaScript Hoisting Explained ―Pretty Printed](https://www.youtube.com/watch?v=Ln4nXoGVno8)
+ * 🎥 [JavaScript is Easy: What is Hoisting? ― MakingDevelopers](https://www.youtube.com/watch?v=shj5aYdlU3E)
 
 **[⬆ back to top](#table-of-contents)**
 
