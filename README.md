@@ -32,7 +32,7 @@ This repository was created with the intention of helping developers master thei
 6. **[Function Scope, Block Scope & Lexical Scope](#scope)**
 7. **[Expression vs. Statement](#expression)**
 8. **[Hoisting](#hoisting)**
-9. **[IIFE, Modules & Namespaces](#javascript)**
+9. **[IIFE, Modules & Namespaces](#modules)**
 10. **[Message Queue & Event Loop](#css)**
 11. **[setTimeout, setInterval & requestAnimationFrame](#html)**
 12. **[Expensive Operation & Big O Notation](#images)**
@@ -235,6 +235,33 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Hoisting in JavaScript Explained in (About) 5 Minutes ― 5-Minute Web Dev](https://www.youtube.com/watch?v=AplVrrwY1TI)
  * 🎥 [JavaScript Hoisting Explained ―Pretty Printed](https://www.youtube.com/watch?v=Ln4nXoGVno8)
  * 🎥 [JavaScript is Easy: What is Hoisting? ― MakingDevelopers](https://www.youtube.com/watch?v=shj5aYdlU3E)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## 9. IIFE, Modules & Namespaces
+
+### Articles
+
+ * 📜 [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
+ * 📜 [Do ES6 Modules make the case of IIFEs obsolete?](https://hashnode.com/post/do-es6-modules-make-the-case-of-iifes-obsolete-civ96wet80scqgc538un20es0)
+ * 📜 [A 10 minute primer to JavaScript modules, module formats, module loaders and module bundlers ― Jurgen Van de Moere](https://www.jvandemo.com/a-10-minute-primer-to-javascript-modules-module-formats-module-loaders-and-module-bundlers/)
+ * 📜 [16. Modules ― Exploring JS](http://exploringjs.com/es6/ch_modules.html)
+ * 📜 [ES modules: A cartoon deep-dive — Lin Clark](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
+ * 📜 [Understanding ES6 Modules — Craig Buckler](https://www.sitepoint.com/understanding-es6-modules/)
+ * 📜 [An overview of ES6 Modules in JavaScript — Brent Graham](https://blog.cloud66.com/an-overview-of-es6-modules-in-javascript/)
+ * 📜 [ES6 Modules in Depth —Nicolás Bevacqua](https://ponyfoo.com/articles/es6-modules-in-depth)
+ * 📜 [ES6 modules, Node.js and the Michael Jackson Solution — Alberto Gimeno](https://medium.com/dailyjs/es6-modules-node-js-and-the-michael-jackson-solution-828dc244b8b)
+
+### Videos
+
+ * 🎥 [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
+ * 🎥 [Understanding JavaScript IIFE](https://www.youtube.com/watch?v=I5EntfMeIIQ)
+ * 🎥 [JavaScript Modules: ES6 Import and Export — Kyle Robinson](https://www.youtube.com/watch?v=_3oSWwapPKQ)
+ * 🎥 [ES6 - Modules — Ryan Christiani](https://www.youtube.com/watch?v=aQr2bV1BPyE)
+ * 🎥 [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
+ * 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 
 **[⬆ back to top](#table-of-contents)**
 
