@@ -34,9 +34,9 @@ This repository was created with the intention of helping developers master thei
 8. **[Hoisting](#hoisting)**
 9. **[IIFE, Modules & Namespaces](#modules)**
 10. **[Message Queue & Event Loop](#message-queue)**
-11. **[setTimeout, setInterval & requestAnimationFrame](#html)**
-12. **[Expensive Operation & Big O Notation](#images)**
-13. **[JavaScript Engines](#javascript)**
+11. **[setTimeout, setInterval & requestAnimationFrame](#settimeout)**
+12. **[Expensive Operation & Big O Notation](#expensive-operation)**
+13. **[JavaScript Engines](#javascript-engines)**
 14. **[Binary, Hex, Dec, Scientific Notation](#html)**
 15. **[Bitwise Operators, Type Arrays & Array Buffers](#html)**
 16. **[DOM & Layout Trees](#images)**
@@ -328,6 +328,24 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
  * 🎥 [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
  * 🎥 [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## 13. JavaScript Engines
+
+### Articles
+
+ * 📜 [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
+ * 📜 [Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
+ * 📜 [Understanding V8’s Bytecode — Franziska Hinkelmann](https://medium.com/dailyjs/understanding-v8s-bytecode-317d46c94775)
+ * 📜 [How the V8 engine works? — Thibault Laurens](http://thibaultlaurens.github.io/javascript/2013/04/29/how-the-v8-engine-works/)
+ * 📜 [A Brief History of Google’s V8 Javascript Engine — Clair Smith](https://www.mediacurrent.com/blog/brief-history-googles-v8-javascript-engine/)
+
+### Videos
+
+ * 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 
 **[⬆ back to top](#table-of-contents)**
 
