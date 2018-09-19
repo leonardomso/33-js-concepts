@@ -350,3 +350,16 @@ This repository was created with the intention of helping developers master thei
 **[⬆ back to top](#table-of-contents)**
 
 ---
+
+## 14. Bitwise Operators, Type Arrays & Array Buffers
+
+### Articles
+
+ * 📜 [Displaying numbers in JavaScript ― Dr. Axel Rauschmayer](http://2ality.com/2012/03/displaying-numbers.html)
+ * 📜 [JavaScript Number Formats: As Easy As 1-2-3! ― Michael Churchman](https://blog.udemy.com/javascript-format-number/)
+ * 📜 [Numbers ― JavaScript.Info](https://javascript.info/number)
+ * 📜 [Speaking JavaScript Chapter 11. Numbers [Book] ― Dr. Axel Rauschmayer](http://speakingjs.com/es5/ch11.html)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
