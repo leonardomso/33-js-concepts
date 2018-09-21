@@ -351,7 +351,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 14. Bitwise Operators, Type Arrays & Array Buffers
+## 14. Binary, Hex, Dec, Scientific Notation
 
 ### Articles
 
@@ -359,6 +359,24 @@ This repository was created with the intention of helping developers master thei
  * 📜 [JavaScript Number Formats: As Easy As 1-2-3! ― Michael Churchman](https://blog.udemy.com/javascript-format-number/)
  * 📜 [Numbers ― JavaScript.Info](https://javascript.info/number)
  * 📜 [Speaking JavaScript Chapter 11. Numbers [Book] ― Dr. Axel Rauschmayer](http://speakingjs.com/es5/ch11.html)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## 15. Bitwise Operators, Type Arrays & Array Buffers
+
+### Articles
+
+ * 📜 [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
+ * 📜 [Using JavaScript’s Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
+ * 📜 [JavaScript Bitwise Operators — w3resource](https://www.w3resource.com/javascript/operators/bitwise-operator.php)
+ * 📜 [Bitwise Operators in Javascript — Joe Cha](https://medium.com/bother7-blog/bitwise-operators-in-javascript-65c4c69be0d3)
+ * 📜 [A Comprehensive Primer on Binary Computation and Bitwise Operators in Javascript — Paul Brown](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
+ 
+ ### Videos
+
+ * 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
 **[⬆ back to top](#table-of-contents)**
 
