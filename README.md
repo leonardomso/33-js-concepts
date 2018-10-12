@@ -45,7 +45,7 @@ This repository was created with the intention of helping developers master thei
 19. **[Object.create & Object.assign](#performances-and-js-frameworks)**
 20. **[Factories & Classes](#images)**
 21. **[Member Properties & Properties on the Prototype](#javascript)**
-22. **[for, while vs map, reduce, filter](#server)**
+22. **[Pure Functions, Side Effects & State Mutation](#server)**
 23. **[map, reduce, filter](#performances-and-js-frameworks)**
 24. **[Closures](#server)**
 25. **[High Order Functions](#performances-and-js-frameworks)**
@@ -503,14 +503,29 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 22. for, while vs map, reduce, filter
+## 22. Pure Functions, Side Effects & State Mutation
 
 ### Articles
 
- * 📜 [Javascript performance test - for vs for each vs (map, reduce, filter, find) — Deepak Gupta](https://hackernoon.com/javascript-performance-test-for-vs-for-each-vs-map-reduce-filter-find-32c1113f19d7)
- * 📜 [Why and when to use forEach, map, filter, reduce, and find in JavaScript — Jeff Lombard](https://medium.com/@JeffLombardJr/understanding-foreach-map-filter-and-find-in-javascript-f91da93b9f2c)
- * 📜 [Array Methods Explained : Filter vs Map vs Reduce vs ForEach — Manoj Singh Negi](https://codeburst.io/array-methods-explained-filter-vs-map-vs-reduce-vs-foreach-ea3127c6d319)
- * 📜 [.map() vs .forEach() vs for () — Ryan P. C. McQuen](https://ryanpcmcquen.org/javascript/2015/10/25/map-vs-foreach-vs-for.html)
+ * 📜 [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
+ * 📜 [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
+ * 📜 [JavaScript: What Are Pure Functions And Why Use Them? — James Jeffery](https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c)
+ * 📜 [Pure functions in JavaScript — @nicoespeon](http://www.nicoespeon.com/en/2015/01/pure-functions-javascript/)
+ * 📜 [Functional Programming: Pure Functions — Arne Brasseur](https://www.sitepoint.com/functional-programming-pure-functions/)
+ * 📜 [Pure Functions In Javascript — Krunal](https://appdividend.com/2017/04/10/pure-functions-in-javascript/)
+ * 📜 [Making your JavaScript Pure — Jack Franklin](https://alistapart.com/article/making-your-javascript-pure)
+ * 📜 [To mutate, or not to mutate, in JavaScript](https://slemgrim.com/mutate-or-not-to-mutate/)
+ * 📜 [Arrays, Objects and Mutations — Federico Knüssel](https://medium.com/@fknussel/arrays-objects-and-mutations-6b23348b54aa)
+ * 📜 [The State of Immutability — Maciej Sikora](https://medium.com/dailyjs/the-state-of-immutability-169d2cd11310)
+ * 📜 [How to deal with dirty side effects in your pure functional JavaScript — James Sinclair](https://jrsinclair.com/articles/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
+ * 📜 [Preventing Side Effects in JavaScript — David Walsh](https://davidwalsh.name/preventing-sideeffects-javascript)
+ 
+ ### Videos
+
+ * 🎥 [Pure Functions — Hexlet](https://www.youtube.com/watch?v=dZ41D6LDSBg)
+ * 🎥 [Pure Functions - Functional Programming in JavaScript — Paul McBride](https://www.youtube.com/watch?v=Jh_Uzqzz_wM)
+ * 🎥 [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
+
 
 **[⬆ back to top](#table-of-contents)**
 
