@@ -51,7 +51,7 @@ This repository was created with the intention of helping developers master thei
 25. **[High Order Functions](#performances-and-js-frameworks)**
 26. **[Abstract Data Structures in JavaScript](#images)**
 27. **[Recursion](#javascript)**
-28. **[Algorithms](#server)**
+28. **[Algorithms](#algorithms)**
 29. **[Inheritance, Polymorphism & Code Reuse](#performances-and-js-frameworks)**
 30. **[Design Patterns](#images)**
 31. **[Partial Functions, Currying, Compose, and Pipe](#javascript)**
@@ -666,6 +666,23 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Recursion and Recursive Functions — Hexlet](https://www.youtube.com/watch?v=vLhHyGTkjCs)
  * 🎥 [Recursion: Recursion() - JS Monthly — Lucas da Costa](https://www.youtube.com/watch?v=kGXVsd8pBLw)
  * 🎥 [Recursive Function in JavaScript — kudvenkat](https://www.youtube.com/watch?v=uyjsR9eNTIw)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## 28. Algorithms
+
+### Articles
+
+ * 📜 [Data Structures and Algorithms using ES6](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
+ * 📜 [Algorithms and data structures implemented in JavaScript with explanations and links to further readings](https://github.com/trekhleb/javascript-algorithms)
+ * 📜 [JS: Interview Algorithm](http://www.thatjsdude.com/interview/js1.html)
+ * 📜 [Algorithms in JavaScript — Thon Ly](https://medium.com/siliconwat/algorithms-in-javascript-b0bed68f4038)
+ * 📜 [JavaScript Objects, Square Brackets and Algorithms — Dmitri Grabov](https://medium.freecodecamp.org/javascript-objects-square-brackets-and-algorithms-e9a2916dc158)
+ * 📜 [Atwood's Law applied to CS101 - Classic algorithms and data structures implemented in JavaScript](https://github.com/felipernb/algorithms.js)
+ * 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
+ * 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 
 **[⬆ back to top](#table-of-contents)**
 
