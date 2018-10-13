@@ -24,18 +24,18 @@ This repository was created with the intention of helping developers master thei
 
 ## Table of Contents
 
-1. **[Call Stack](#call-stack)**
+1. [Call Stack](#call-stack)
 2. **[Primitive Types](#primitive-types)**
-3. **[Value Types & Reference Types](#value-types-&-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring & Duck Typing](#implicit-explicit-nominal-structuring-&-duck-typing)**
-5. **[== vs === vs typeof](#double-triple-equals)**
+3. **[Value Types and Reference Types](#value-types-and-reference-types)**
+4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#implicit-explicit-nominal-structuring-and-duck-typing)**
+5. **[== vs === vs typeof](#==-vs-===-vs-typeof)**
 6. **[Function Scope, Block Scope & Lexical Scope](#scope)**
 7. **[Expression vs. Statement](#expression)**
 8. **[Hoisting](#hoisting)**
 9. **[IIFE, Modules & Namespaces](#iife)**
 10. **[Message Queue & Event Loop](#message-queue)**
 11. **[setTimeout, setInterval & requestAnimationFrame](#set-timeout)**
-12. **[Expensive Operation & Big O Notation](#expensive-operation)**
+12. **[Expensive Operation Big O Notation](#expensive-operation)**
 13. **[JavaScript Engines](#javascript-engines)**
 14. **[Binary, Hex, Dec, Scientific Notation](#binary)**
 15. **[Bitwise Operators, Type Arrays & Array Buffers](#bitwise-operators)**
