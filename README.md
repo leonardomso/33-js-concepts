@@ -24,7 +24,7 @@ This repository was created with the intention of helping developers master thei
 
 ## Table of Contents
 
-1. [Call Stack](#call-stack)
+1. **[Call Stack](#call-stack)**
 2. **[Primitive Types](#primitive-types)**
 3. **[Value Types and Reference Types](#value-types-and-reference-types)**
 4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#implicit-explicit-nominal-structuring-and-duck-typing)**
