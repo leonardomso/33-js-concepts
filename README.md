@@ -32,31 +32,31 @@ This repository was created with the intention of helping developers master thei
 6. **[Function Scope, Block Scope & Lexical Scope](#scope)**
 7. **[Expression vs. Statement](#expression)**
 8. **[Hoisting](#hoisting)**
-9. **[IIFE, Modules & Namespaces](#modules)**
+9. **[IIFE, Modules & Namespaces](#iife)**
 10. **[Message Queue & Event Loop](#message-queue)**
-11. **[setTimeout, setInterval & requestAnimationFrame](#settimeout)**
+11. **[setTimeout, setInterval & requestAnimationFrame](#set-timeout)**
 12. **[Expensive Operation & Big O Notation](#expensive-operation)**
 13. **[JavaScript Engines](#javascript-engines)**
-14. **[Binary, Hex, Dec, Scientific Notation](#html)**
-15. **[Bitwise Operators, Type Arrays & Array Buffers](#html)**
-16. **[DOM & Layout Trees](#images)**
-17. **[new, Constructor, instanceof & Instances](#javascript)**
-18. **[Prototype Inheritance & Prototype Chain](#prototype-inheritance)**
-19. **[Object.create & Object.assign](#performances-and-js-frameworks)**
-20. **[Factories & Classes](#images)**
+14. **[Binary, Hex, Dec, Scientific Notation](#binary)**
+15. **[Bitwise Operators, Type Arrays & Array Buffers](#bitwise-operators)**
+16. **[DOM & Layout Trees](#dom)**
+17. **[new, Constructor, instanceof & Instances](#new-constructor)**
+18. **[Prototype Inheritance & Prototype Chain](#prototype)**
+19. **[Object.create & Object.assign](#object)**
+20. **[Factories & Classes](#factories-classes)**
 21. **[Prototype](#prototype)**
-22. **[Pure Functions, Side Effects & State Mutation](#server)**
-23. **[map, reduce, filter](#performances-and-js-frameworks)**
-24. **[Closures](#server)**
-25. **[High Order Functions](#performances-and-js-frameworks)**
-26. **[Abstract Data Structures in JavaScript](#images)**
-27. **[Recursion](#javascript)**
+22. **[Pure Functions, Side Effects & State Mutation](#pure-functions)**
+23. **[map, reduce, filter](#map-reduce-filter)**
+24. **[Closures](#closures)**
+25. **[High Order Functions](#high-order-functions)**
+26. **[Abstract Data Structures in JavaScript](#abstract-data-structures)**
+27. **[Recursion](#recursion)**
 28. **[Algorithms](#algorithms)**
-29. **[Inheritance, Polymorphism & Code Reuse](#performances-and-js-frameworks)**
-30. **[Design Patterns](#images)**
+29. **[Inheritance, Polymorphism & Code Reuse](#inheritance)**
+30. **[Design Patterns](#design-patterns)**
 31. **[Partial Functions, Currying, Compose, and Pipe](#javascript)**
-32. **[this, call, apply & bind](#server)**
-33. **[Clean Code](#performances-and-js-frameworks)**
+32. **[this, call, apply & bind](#this-call-apply-bind)**
+33. **[Clean Code](#clean-code)**
 
 
 ---
@@ -717,5 +717,19 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
 **[⬆ back to top](#table-of-contents)**
+
+---
+
+## 30. Design Patterns
+
+### Articles
+
+ * 📜 [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
+ * 📜 [JavaScript Design Patterns – Beginner's Guide to Mobile Web Development — Soumyajit Pathak](https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15)
+ * 📜 [JavaScript Design Patterns — Akash Pal](https://medium.com/front-end-hacking/javascript-design-patterns-ed9d4c144c81)
+ * 📜 [Javascript Design Patterns: What They Are & How To Use Them — Patrick Simpson](https://seesparkbox.com/foundry/javascript_design_patterns)
+ * 📜 [All the 23 (GoF) design patterns implemented in Javascript — Felipe Beline](https://github.com/fbeline/Design-Patterns-JS)
+ 
+ **[⬆ back to top](#table-of-contents)**
 
 ---
