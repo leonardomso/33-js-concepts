@@ -41,7 +41,7 @@ This repository was created with the intention of helping developers master thei
 15. **[Bitwise Operators, Type Arrays & Array Buffers](#html)**
 16. **[DOM & Layout Trees](#images)**
 17. **[new, Constructor, instanceof & Instances](#javascript)**
-18. **[Prototype Inheritance & Prototype Chain](#server)**
+18. **[Prototype Inheritance & Prototype Chain](#prototype-inheritance)**
 19. **[Object.create & Object.assign](#performances-and-js-frameworks)**
 20. **[Factories & Classes](#images)**
 21. **[Prototype](#prototype)**
@@ -704,6 +704,29 @@ This repository was created with the intention of helping developers master thei
  * 📜 [Atwood's Law applied to CS101 - Classic algorithms and data structures implemented in JavaScript](https://github.com/felipernb/algorithms.js)
  * 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
  * 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
+## 29. Inheritance, Polymorphism & Code Reuse
+
+### Articles
+
+ * 📜 [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
+ * 📜 [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
+ * 📜 [Inheritance in JavaScript — Rupesh Mishra](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
+ * 📜 [Simple Inheritance with JavaScript — David Catuhe](https://www.sitepoint.com/simple-inheritance-javascript/)
+ * 📜 [JavaScript — Inheritance, delegation patterns and Object linking — NC Patro](https://codeburst.io/javascript-inheritance-25fe61ab9f85)
+ * 📜 [Object Oriented JavaScript: Polymorphism with examples — Knoldus Blogs](https://blog.knoldus.com/object-oriented-javascript-polymorphism-with-examples/)
+ * 📜 [Program Like Proteus — A beginner’s guide to polymorphism in Javascript — Sam Galson](https://medium.com/yld-engineering-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2)
+ * 📜 [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
+ 
+  ### Videos
+
+ * 🎥 [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
+ * 🎥 [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
+ * 🎥 [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
 **[⬆ back to top](#table-of-contents)**
 
