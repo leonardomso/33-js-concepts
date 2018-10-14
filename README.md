@@ -1,19 +1,20 @@
+
 <h1 align="center">
 <br>
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
-  <br>
+  33 Concepts Every JavaScript Developer Should Know
+  <br>
 </h1>
 
 <p align="center">
-  <a href="http://makeapullrequest.com">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
-  </a>
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="Licence MIT">
-  </a>
+  <a href="http://makeapullrequest.com">
+    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
+  </a>
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="Licence MIT">
+  </a>
 </p>
 
 ## Introduction
@@ -29,33 +30,33 @@ This repository was created with the intention of helping developers master thei
 3. **[Value Types and Reference Types](#value-types-and-reference-types)**
 4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#==-vs-===-vs-typeof)**
-6. **[Function Scope, Block Scope & Lexical Scope](#scope)**
-7. **[Expression vs. Statement](#expression)**
+6. **[Function Scope, Block Scope and Lexical Scope](#function-scope-block-scope-and-lexical-scope)**
+7. **[Expression vs Statement](#expression-vs-statement)**
 8. **[Hoisting](#hoisting)**
-9. **[IIFE, Modules & Namespaces](#iife)**
-10. **[Message Queue & Event Loop](#message-queue)**
-11. **[setTimeout, setInterval & requestAnimationFrame](#set-timeout)**
-12. **[Expensive Operation Big O Notation](#expensive-operation)**
+9. **[IIFE, Modules and Namespaces](#iife-modules-and-namespaces)**
+10. **[Message Queue and Event Loop](#message-queue-and-event-loop)**
+11. **[setTimeout, setInterval and requestAnimationFrame](#settimeout-setinterval-and-requestanimationframe)**
+12. **[Expensive Operation and Big O Notation](#expensive-operation-and-big-o-notation)**
 13. **[JavaScript Engines](#javascript-engines)**
-14. **[Binary, Hex, Dec, Scientific Notation](#binary)**
-15. **[Bitwise Operators, Type Arrays & Array Buffers](#bitwise-operators)**
-16. **[DOM & Layout Trees](#dom)**
-17. **[new, Constructor, instanceof & Instances](#new-constructor)**
-18. **[Prototype Inheritance & Prototype Chain](#prototype)**
-19. **[Object.create & Object.assign](#object)**
-20. **[Factories & Classes](#factories-classes)**
-21. **[Prototype](#prototype)**
-22. **[Pure Functions, Side Effects & State Mutation](#pure-functions)**
+14. **[Binary, Hex, Dec, Scientific Notation](#binary-hex-dec-scientific-notation)**
+15. **[Bitwise Operators, Type Arrays and Array Buffers](#bitwise-operators-type-arrays-and-array-buffers)**
+16. **[DOM and Layout Trees](#dom-and-layout-trees)**
+17. **[new, Constructor, instanceof and Instances](#new-constructor-instanceof-and-instances)**
+18. **[Prototype Inheritance and Prototype Chain](#prototype-inheritance-and-prototype-chain)**
+19. **[Object.create and Object.assign](#object.create-and-object.assign)**
+20. **[Factories and Classes](#factories-and-classes)**
+21. **[Memoization](#memoization)**
+22. **[Pure Functions, Side Effects and State Mutation](#pure-functions-side-effects-and-state-mutation)**
 23. **[map, reduce, filter](#map-reduce-filter)**
 24. **[Closures](#closures)**
 25. **[High Order Functions](#high-order-functions)**
-26. **[Abstract Data Structures in JavaScript](#abstract-data-structures)**
+26. **[Abstract Data Structures](#abstract-data-structures)**
 27. **[Recursion](#recursion)**
 28. **[Algorithms](#algorithms)**
-29. **[Inheritance, Polymorphism & Code Reuse](#inheritance)**
+29. **[Inheritance, Polymorphism and Code Reuse](#inheritance-polymorphism-and-code-reuse)**
 30. **[Design Patterns](#design-patterns)**
-31. **[Partial Functions, Currying, Compose, and Pipe](#javascript)**
-32. **[this, call, apply & bind](#this-call-apply-bind)**
+31. **[Partial Functions, Currying, Compose and Pipe](#partial-functions-currying-compose-and-pipe)**
+32. **[this, call, apply and bind](#this-call-apply-and-bind)**
 33. **[Clean Code](#clean-code)**
 
 
@@ -94,7 +95,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
  * 📜 [What You Need to Know About JavaScript Number Type — Max Wizard K](https://medium.com/dailyjs/javascripts-number-type-8d59199db1b6)
  * 📜 [What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
- * 📜 [The Secret Life of JavaScript Primitives — Angus Croll](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
+ * 📜 [The Secret Life of JavaScript Primitives — Angus Croll](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
  * 📜 [Primitive Types — Flow](https://flow.org/en/docs/types/primitives/)
 
 ### Videos
@@ -109,7 +110,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 3. Value Types & Reference Types
+## 3. Value Types and Reference Types
 
 ### Articles
 
@@ -131,7 +132,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring & Duck Typing
+## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
 
 ### Articles
 
@@ -145,7 +146,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 5. == vs. === vs. typeof
+## 5. == vs === vs typeof
 
 ### Articles
 
@@ -168,7 +169,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 6. Function Scope, Block Scope & Lexical Scope
+## 6. Function Scope, Block Scope and Lexical Scope
 
 ### Articles
 
@@ -180,7 +181,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [Understanding Scope and Context in JavaScript | Ryan Morr](http://ryanmorr.com/understanding-scope-and-context-in-javascript/)
  * 📜 [JavaScript Scope and Closures — Zell Liew](https://css-tricks.com/javascript-scope-closures/)
  * 📜 [Understanding Scope in JavaScript — Wissam Abirached](https://developer.telerik.com/topics/web-development/understanding-scope-in-javascript/)
- * 📜 [Speaking JavaScript - Variables: Scopes, Environments, and Closures — Dr. Axel Rauschmayer](http://speakingjs.com/es5/ch16.html)
+ * 📜 [Speaking JavaScript - Variables: Scopes, Environments, and Closures — Dr. Axel Rauschmayer](http://speakingjs.com/es5/ch16.html)
  * 📜 [Understanding Scope in JavaScript ― Hammad Ahmed](https://scotch.io/tutorials/understanding-scope-in-javascript)
 
 ### Videos
@@ -194,7 +195,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 7. Expression vs. Statement
+## 7. Expression vs Statement
 
 ### Articles
 
@@ -202,7 +203,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
  * 📜 [JavaScript Function — Declaration vs Expression — Ravi Roshan](https://medium.com/@raviroshan.talk/javascript-function-declaration-vs-expression-f5873b8c7b38)
  * 📜 [Function Declarations vs. Function Expressions — Mandeep Singh](https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052)
- * 📜 [Function Declarations vs. Function Expressions — Anguls Croll](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
+ * 📜 [Function Declarations vs. Function Expressions — Anguls Croll](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
 
 ### Videos
 
@@ -240,7 +241,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 9. IIFE, Modules & Namespaces
+## 9. IIFE, Modules and Namespaces
 
 ### Articles
 
@@ -267,7 +268,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 10. Message Queue & Event Loop
+## 10. Message Queue and Event Loop
 
 ### Articles
 
@@ -290,7 +291,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 11. setTimeout, setInterval & requestAnimationFrame
+## 11. setTimeout, setInterval and requestAnimationFrame
 
 ### Articles
 
@@ -312,7 +313,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 12. Expensive Operation & Big O Notation
+## 12. Expensive Operation and Big O Notation
 
 ### Articles
 
@@ -358,13 +359,13 @@ This repository was created with the intention of helping developers master thei
  * 📜 [Displaying numbers in JavaScript ― Dr. Axel Rauschmayer](http://2ality.com/2012/03/displaying-numbers.html)
  * 📜 [JavaScript Number Formats: As Easy As 1-2-3! ― Michael Churchman](https://blog.udemy.com/javascript-format-number/)
  * 📜 [Numbers ― JavaScript.Info](https://javascript.info/number)
- * 📜 [Speaking JavaScript Chapter 11. Numbers [Book] ― Dr. Axel Rauschmayer](http://speakingjs.com/es5/ch11.html)
+ * 📜 [Speaking JavaScript Chapter 11. Numbers [Book] ― Dr. Axel Rauschmayer](http://speakingjs.com/es5/ch11.html)
 
 **[⬆ back to top](#table-of-contents)**
 
 ---
 
-## 15. Bitwise Operators, Type Arrays & Array Buffers
+## 15. Bitwise Operators, Type Arrays and Array Buffers
 
 ### Articles
 
@@ -382,7 +383,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 16. DOM & Layout Trees
+## 16. DOM and Layout Trees
 
 ### Articles
 
@@ -404,7 +405,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 17. new, Constructor, instanceof & Instances
+## 17. new, Constructor, instanceof and Instances
 
 ### Articles
 
@@ -422,7 +423,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 18. Prototype Inheritance & Prototype Chain
+## 18. Prototype Inheritance and Prototype Chain
 
 ### Articles
 
@@ -462,7 +463,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 19. Object.create & Object.assign
+## 19. Object.create and Object.assign
 
 ### Articles
 
@@ -487,7 +488,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 20. Factories & Classes
+## 20. Factories and Classes
 
 ### Articles
 
@@ -512,14 +513,14 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 22. Pure Functions, Side Effects & State Mutation
+## 22. Pure Functions, Side Effects and State Mutation
 
 ### Articles
 
  * 📜 [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
  * 📜 [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
  * 📜 [JavaScript: What Are Pure Functions And Why Use Them? — James Jeffery](https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c)
- * 📜 [Pure functions in JavaScript — @nicoespeon](http://www.nicoespeon.com/en/2015/01/pure-functions-javascript/)
+ * 📜 [Pure functions in JavaScript — @nicoespeon](http://www.nicoespeon.com/en/2015/01/pure-functions-javascript/)
  * 📜 [Functional Programming: Pure Functions — Arne Brasseur](https://www.sitepoint.com/functional-programming-pure-functions/)
  * 📜 [Pure Functions In Javascript — Krunal](https://appdividend.com/2017/04/10/pure-functions-in-javascript/)
  * 📜 [Making your JavaScript Pure — Jack Franklin](https://alistapart.com/article/making-your-javascript-pure)
@@ -547,7 +548,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
  * 📜 [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
  * 📜 [JavaScript’s Map, Reduce, and Filter — Dan Martensen](https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter)
- * 📜 [How to Use Map, Filter, & Reduce in JavaScript — Peleke Sengstacke](https://code.tutsplus.com/tutorials/how-to-use-map-filter-reduce-in-javascript--cms-26209)
+ * 📜 [How to Use Map, Filter, & Reduce in JavaScript — Peleke Sengstacke](https://code.tutsplus.com/tutorials/how-to-use-map-filter-reduce-in-javascript--cms-26209)
  * 📜 [JavaScript — Learn to Chain Map, Filter, and Reduce — Brandon Morelli](https://codeburst.io/javascript-learn-to-chain-map-filter-and-reduce-acd2d0562cd4)
  * 📜 [Javascript data structure with map, reduce, filter and ES6 — Deepak Gupta](https://codeburst.io/write-beautiful-javascript-with-%CE%BB-fp-es6-350cd64ab5bf)
  * 📜 [Understanding map, filter and reduce in Javascript — Luuk Gruijs](https://hackernoon.com/understanding-map-filter-and-reduce-in-javascript-5df1c7eee464)
@@ -631,7 +632,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 26. Abstract Data Structures in JavaScript
+## 26. Abstract Data Structures
 
 ### Articles
 
@@ -697,7 +698,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 29. Inheritance, Polymorphism & Code Reuse
+## 29. Inheritance, Polymorphism and Code Reuse
 
 ### Articles
 
@@ -734,7 +735,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 31. Partial Functions, Currying, Compose, and Pipe
+## 31. Partial Functions, Currying, Compose and Pipe
 
 ### Articles
 
@@ -761,7 +762,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## 32. this, call, apply & bind
+## 32. this, call, apply and bind
 
 ### Articles
 
@@ -803,4 +804,3 @@ This repository was created with the intention of helping developers master thei
  **[⬆ back to top](#table-of-contents)**
 
 ---
-
