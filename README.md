@@ -29,7 +29,7 @@ This repository was created with the intention of helping developers master thei
 - **[Primitive Types](#primitive-types)**
 - **[Value Types and Reference Types](#value-types-and-reference-types)**
 - **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#implicit-explicit-nominal-structuring-and-duck-typing)**
-- **[== vs === vs typeof](#--vs---vs-typeof)**
+- **[== vs === vs typeof](#-vs--vs-typeof)**
 - **[Function Scope, Block Scope and Lexical Scope](#function-scope-block-scope-and-lexical-scope)**
 - **[Expression vs Statement](#expression-vs-statement)**
 - **[Hoisting](#hoisting)**
