@@ -513,6 +513,28 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
+## 21. Memoization
+
+### Articles
+
+ * 📜 [How to use Memoize to cache JavaScript function results and speed up your code — Divyanshu Maithani](https://medium.freecodecamp.org/understanding-memoize-in-javascript-51d07d19430e)
+ * 📜 [Understanding JavaScript Memoization In 3 Minutes — Codesmith](https://codeburst.io/understanding-memoization-in-3-minutes-2e58daf33a19)
+ * 📜 [Implementing Memoization in JavaScript — Colin Ihrig](https://www.sitepoint.com/implementing-memoization-in-javascript/)
+ * 📜 [JS Memoization — Artur Arsalanov](https://medium.com/@arturarsalanov/js-memorization-c362521d1a31)
+ * 📜 [Memoization in JavaScript — Zsolt Nagy](http://www.zsoltnagy.eu/memoization-in-javascript/)
+ * 📜 [JavaScript Closures, Memoization and Factories — Juan Cortés](https://itnext.io/why-you-need-to-understand-javascript-closures-53efa66ae11a)
+ * 📜 [Memoization with Pure Functions in ES6 — Jonathan Schapiro](https://medium.com/front-end-hacking/today-i-learned-memoization-with-pure-functions-in-es6-33a4765518b5)
+ * 📜 [JavaScript Function Memoization — In Lehman's Terms](http://inlehmansterms.net/2015/03/01/javascript-memoization/)
+ 
+ ### Videos
+
+ * 🎥 [JavaScript Simple Memoization Example — Theodore Anderson](https://www.youtube.com/watch?v=T09G52pyQII)
+ * 🎥 [Introduction to Memoization in Javascript — PentaCode](https://www.youtube.com/watch?v=GL2_ozqhGsA)
+
+**[⬆ back to top](#table-of-contents)**
+
+---
+
 ## 22. Pure Functions, Side Effects and State Mutation
 
 ### Articles
