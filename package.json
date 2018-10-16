@@ -1,7 +1,7 @@
 {
-  "name": "33",
+  "name": "33-js-concepts",
   "version": "1.0.0",
-  "description": "<h1 align=\"center\">\r <br>\r   <a href=\"https://github.com/thedaviddias/Front-End-Performance-Checklist\"><img src=\"https://i.imgur.com/dsHmk6H.jpg\" alt=\"33 Concepts Every JS Developer Should Know\" width=200\"></a>\r   <br>\r     <br>\r   33 Concepts Every JavaScript Developer Should Know\r   <br>\r </h1>",
+  "description": "33 Concepts Every JS Developer Should Know",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,9 +10,17 @@
     "type": "git",
     "url": "git+https://github.com/leonardomso/33.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "JavaScript",
+    "JS",
+    "NodeJS",
+    "Node"
+  ],
+  "author": {
+    "name": "Leonardo Maldonado",
+    "url": "https://github.com/leonardomso"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/leonardomso/33/issues"
   },
