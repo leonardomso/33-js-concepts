@@ -24,44 +24,44 @@ This repository was created with the intention of helping developers master thei
 
 ## Table of Contents
 
-- **[Call Stack](#call-stack)**
-- **[Primitive Types](#primitive-types)**
-- **[Value Types and Reference Types](#value-types-and-reference-types)**
-- **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#implicit-explicit-nominal-structuring-and-duck-typing)**
-- **[== vs === vs typeof](#-vs--vs-typeof)**
-- **[Function Scope, Block Scope and Lexical Scope](#function-scope-block-scope-and-lexical-scope)**
-- **[Expression vs Statement](#expression-vs-statement)**
-- **[IIFE, Modules and Namespaces](#iife-modules-and-namespaces)**
-- **[Message Queue and Event Loop](#message-queue-and-event-loop)**
-- **[setTimeout, setInterval and requestAnimationFrame](#settimeout-setinterval-and-requestanimationframe)**
-- **[JavaScript Engines](#javascript-engines)**
-- **[Bitwise Operators, Type Arrays and Array Buffers](#bitwise-operators-type-arrays-and-array-buffers)**
-- **[DOM and Layout Trees](#dom-and-layout-trees)**
-- **[Factories and Classes](#factories-and-classes)**
-- **[this, call, apply and bind](#this-call-apply-and-bind)**
-- **[new, Constructor, instanceof and Instances](#new-constructor-instanceof-and-instances)**
-- **[Prototype Inheritance and Prototype Chain](#prototype-inheritance-and-prototype-chain)**
-- **[Object.create and Object.assign](#objectcreate-and-objectassign)**
-- **[map, reduce, filter](#map-reduce-filter)**
-- **[Pure Functions, Side Effects and State Mutation](#pure-functions-side-effects-and-state-mutation)**
-- **[Closures](#closures)**
-- **[High Order Functions](#high-order-functions)**
-- **[Recursion](#recursion)**
-- **[Collections](#collections)**
-- **[Promises](#promises)**
-- **[async/await](#asyncawait)**
-- **[Data Structures](#data-structures)**
-- **[Expensive Operation and Big O Notation](#expensive-operation-and-big-o-notation)**
-- **[Algorithms](#algorithms)**
-- **[Inheritance, Polymorphism and Code Reuse](#inheritance-polymorphism-and-code-reuse)**
-- **[Design Patterns](#design-patterns)**
-- **[Partial Applications, Currying, Compose and Pipe](#partial-applications-currying-compose-and-pipe)**
-- **[Clean Code](#clean-code)**
+1. **[Call Stack](#1-call-stack)**
+2. **[Primitive Types](#2-primitive-types)**
+3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
+4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+5. **[== vs === vs typeof](#5--vs--vs-typeof)**
+6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
+7. **[Expression vs Statement](#7-expression-vs-statement)**
+8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
+9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
+10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+11. **[JavaScript Engines](#11-javascript-engines)**
+12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
+13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
+14. **[Factories and Classes](#14-factories-and-classes)**
+15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
+16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
+17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
+18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+19. **[map, reduce, filter](#19-map-reduce-filter)**
+20. **[Pure Functions, Side Effects and State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
+21. **[Closures](#21-closures)**
+22. **[High Order Functions](#22-high-order-functions)**
+23. **[Recursion](#23-recursion)**
+24. **[Collections](#24-collections)**
+25. **[Promises](#25-promises)**
+26. **[async/await](#26-asyncawait)**
+27. **[Data Structures](#27-data-structures)**
+28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
+29. **[Algorithms](#29-algorithms)**
+30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
+31. **[Design Patterns](#31-design-patterns)**
+32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
+33. **[Clean Code](#33-clean-code)**
 
 
 ---
 
-## Call Stack
+## 1. Call Stack
 
 ### Articles
 
@@ -89,7 +89,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Primitive Types
+## 2. Primitive Types
 
 ### Articles
 
@@ -112,7 +112,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Value Types and Reference Types
+## 3. Value Types and Reference Types
 
 ### Articles
 
@@ -134,7 +134,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
 
 ### Articles
 
@@ -155,7 +155,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## == vs === vs typeof
+## 5. == vs === vs typeof
 
 ### Articles
 
@@ -178,7 +178,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Function Scope, Block Scope and Lexical Scope
+## 6. Function Scope, Block Scope and Lexical Scope
 
 ### Articles
 
@@ -204,7 +204,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Expression vs Statement
+## 7. Expression vs Statement
 
 ### Articles
 
@@ -223,7 +223,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## IIFE, Modules and Namespaces
+## 8. IIFE, Modules and Namespaces
 
 ### Articles
 
@@ -250,7 +250,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Message Queue and Event Loop
+## 9. Message Queue and Event Loop
 
 ### Articles
 
@@ -273,7 +273,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## setTimeout, setInterval and requestAnimationFrame
+## 10. setTimeout, setInterval and requestAnimationFrame
 
 ### Articles
 
@@ -295,7 +295,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## JavaScript Engines
+## 11. JavaScript Engines
 
 ### Articles
 
@@ -313,7 +313,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Bitwise Operators, Type Arrays and Array Buffers
+## 12. Bitwise Operators, Type Arrays and Array Buffers
 
 ### Articles
 
@@ -331,7 +331,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## DOM and Layout Trees
+## 13. DOM and Layout Trees
 
 ### Articles
 
@@ -353,7 +353,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Factories and Classes
+## 14. Factories and Classes
 
 ### Articles
 
@@ -378,7 +378,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## this, call, apply and bind
+## 15. this, call, apply and bind
 
 ### Articles
 
@@ -407,7 +407,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## new, Constructor, instanceof and Instances
+## 16. new, Constructor, instanceof and Instances
 
 ### Articles
 
@@ -425,7 +425,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Prototype Inheritance and Prototype Chain
+## 17. Prototype Inheritance and Prototype Chain
 
 ### Articles
 
@@ -466,7 +466,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Object.create and Object.assign
+## 18. Object.create and Object.assign
 
 ### Articles
 
@@ -491,7 +491,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## map, reduce, filter
+## 19. map, reduce, filter
 
 ### Articles
 
@@ -525,7 +525,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Pure Functions, Side Effects and State Mutation
+## 20. Pure Functions, Side Effects and State Mutation
 
 ### Articles
 
@@ -553,7 +553,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Closures
+## 21. Closures
 
 ### Articles
 
@@ -582,7 +582,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## High Order Functions
+## 22. High Order Functions
 
 ### Articles
 
@@ -610,7 +610,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Recursion
+## 23. Recursion
 
 ### Articles
 
@@ -635,7 +635,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Collections
+## 24. Collections
 
 ### Articles
 
@@ -664,7 +664,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Promises
+## 25. Promises
 
 ### Articles
 
@@ -694,7 +694,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## async/await
+## 26. async/await
 
 ### Articles
 
@@ -718,7 +718,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Data Structures
+## 27. Data Structures
 
 ### Articles
 
@@ -742,7 +742,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Expensive Operation and Big O Notation
+## 28. Expensive Operation and Big O Notation
 
 ### Articles
 
@@ -763,7 +763,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Algorithms
+## 29. Algorithms
 
 ### Articles
 
@@ -780,7 +780,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Inheritance, Polymorphism and Code Reuse
+## 30. Inheritance, Polymorphism and Code Reuse
 
 ### Articles
 
@@ -803,7 +803,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Design Patterns
+## 31. Design Patterns
 
 ### Articles
 
@@ -817,7 +817,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Partial Applications, Currying, Compose and Pipe
+## 32. Partial Applications, Currying, Compose and Pipe
 
 ### Articles
 
@@ -854,7 +854,7 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
-## Clean Code
+## 33. Clean Code
 
 ### Articles
 
