@@ -1,5 +1,3 @@
-
-
 <h1 align="center">
 <br>
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
@@ -43,7 +41,7 @@ This repository was created with the intention of helping developers master thei
 - **[this, call, apply and bind](#this-call-apply-and-bind)**
 - **[new, Constructor, instanceof and Instances](#new-constructor-instanceof-and-instances)**
 - **[Prototype Inheritance and Prototype Chain](#prototype-inheritance-and-prototype-chain)**
-- **[Object.create and Object.assign](#object.create-and-object.assign)**
+- **[Object.create and Object.assign](#objectcreate-and-objectassign)**
 - **[map, reduce, filter](#map-reduce-filter)**
 - **[Pure Functions, Side Effects and State Mutation](#pure-functions-side-effects-and-state-mutation)**
 - **[Closures](#closures)**
