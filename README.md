@@ -396,7 +396,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
  * 📜 [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
  * 📜 [What is 'this' in JavaScript? — Daniel Li](http://blog.brew.com.hk/what-is-this-in-javascript/)
- * 📜 [Let me explain to you what is `this`. (Javascript)](https://dev.to/ycmjason/let-me-explain-to-you-what-is-this-javascript-44ja)
+ * 📜 [Let me explain to you what is `this`. (Javascript) — Jason Yu](https://dev.to/ycmjason/let-me-explain-to-you-what-is-this-javascript-44ja)
  
   ### Videos
 
