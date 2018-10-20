@@ -85,7 +85,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Call Stack & Event Loop — movies com](https://www.youtube.com/watch?v=mk0lu9MKBto)
  * 🎥 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -109,7 +109,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Value Types and Reference Types in JavaScript — Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
  * 🎥 [JavaScript Primitive Data Types — Avelx](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
  
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -131,7 +131,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
  * 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -152,7 +152,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
  * 🎥 [JavaScript Questions: What is Coercion? - Steven Hancock](https://www.youtube.com/watch?v=z4-8wMSPJyI)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -176,7 +176,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
  * 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -202,7 +202,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript Block Scope and Function Scope — mmtuts](https://www.youtube.com/watch?v=aK_nuUAdr8E)
  * 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -221,7 +221,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
  * 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -248,7 +248,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
  * 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -271,7 +271,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
  * 🎥 [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -294,7 +294,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript setTimeout, setInterval & clearInterval — DoingITeasyChannel](https://www.youtube.com/watch?v=BVALvvy5bZY)
  * 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -312,7 +312,7 @@ This repository was created with the intention of helping developers master thei
 
  * 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -330,7 +330,7 @@ This repository was created with the intention of helping developers master thei
 
  * 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -352,7 +352,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -377,7 +377,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
  * 🎥 [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -407,7 +407,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript Practical Applications of Call, Apply and Bind functions— techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
  * 🎥 [JavaScript (call, bind, apply) — curious aatma](https://www.youtube.com/watch?v=Uy0NOXLBraE)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -425,7 +425,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [JavaScript instanceof vs typeof — Gary Rafferty](http://garyrafferty.com/2012/12/07/JavaScript-instanceof-vs-typeof.html)
  * 📜 [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -466,7 +466,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript Using Prototypes — O'Reilly](https://www.youtube.com/watch?v=oCwCcNvaXAQ)
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -491,7 +491,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
  * 🎥 [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -526,7 +526,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Arrow functions in JavaScript - What, Why and How — Fun Fun Function](https://www.youtube.com/watch?v=6sQDTgOqh-I)
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -554,7 +554,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
 
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -583,7 +583,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Closures — freeCodeCamp](https://www.youtube.com/watch?v=1JsJx1x35c0)
  * 🎥 [JavaScript Closures — CodeWorkr](https://www.youtube.com/watch?v=-rLrGAXK8WE)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -611,7 +611,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Higher Order Iterators in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=GYRMNp1SKXA)
  * 🎥 [Higher Order Functions in JavaScript — The Coding Train](https://www.youtube.com/watch?v=H4awPsyugS0)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -636,7 +636,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Recursion: Recursion() - JS Monthly — Lucas da Costa](https://www.youtube.com/watch?v=kGXVsd8pBLw)
  * 🎥 [Recursive Function in JavaScript — kudvenkat](https://www.youtube.com/watch?v=uyjsR9eNTIw)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -665,7 +665,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media](https://www.youtube.com/watch?v=ycohYSx5h9w)
  * 🎥 [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
  
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -695,7 +695,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Promises — Fun Fun Function](https://www.youtube.com/watch?v=2d7s3spWAzo)
  * 🎥 [Error Handling Promises in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=f8IgdnYIwOU)
  
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -723,7 +723,7 @@ This repository was created with the intention of helping developers master thei
 
  * 🎥 [Async + Await — Wes Bos](https://www.youtube.com/watch?v=9YkUCxvaLEk)
  
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -747,7 +747,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
  * 🎥 [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -768,7 +768,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
  * 🎥 [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -785,7 +785,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
  * 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -808,7 +808,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
  * 🎥 [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -823,7 +823,7 @@ This repository was created with the intention of helping developers master thei
  * 📜 [All the 23 (GoF) design patterns implemented in Javascript — Felipe Beline](https://github.com/fbeline/Design-Patterns-JS)
  * 📜 [Learning JavaScript Design Patterns — Addy Osmani ](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
  
- **[⬆ back to top](#table-of-contents)**
+ **[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -865,7 +865,7 @@ This repository was created with the intention of helping developers master thei
  * 🎥 [Partial Application vs. Currying — NWCalvank](https://www.youtube.com/watch?v=DzLkRsUN2vE)
  * 🎥 [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -880,6 +880,6 @@ This repository was created with the intention of helping developers master thei
  * 📜 [Keeping your code clean — Samuel James](https://codeburst.io/keeping-your-code-clean-d30bcffd1a10)
  * 📜 [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
  
- **[⬆ back to top](#table-of-contents)**
+ **[⬆ Back to Top](#table-of-contents)**
 
 ---
