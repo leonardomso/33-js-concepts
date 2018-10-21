@@ -825,7 +825,7 @@ This repository was created with the intention of helping developers master thei
 
   ### Videos
 
- * 🎥 [JavaScript Design Patterns](https://www.udacity.com/course/javascript-design-patterns--ud989)
+ * 🎥 [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
  
  **[⬆ Back to Top](#table-of-contents)**
 
