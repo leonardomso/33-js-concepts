@@ -722,7 +722,8 @@ This repository was created with the intention of helping developers master thei
  ### Videos
 
  * 🎥 [Async + Await — Wes Bos](https://www.youtube.com/watch?v=9YkUCxvaLEk)
- 
+ * 🎥 [Asynchrony: Under the Hood - Shelley Vohr](https://www.youtube.com/watch?v=SrNQS8J67zc)
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
