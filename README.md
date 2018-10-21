@@ -822,6 +822,10 @@ This repository was created with the intention of helping developers master thei
  * 📜 [Javascript Design Patterns: What They Are & How To Use Them — Patrick Simpson](https://seesparkbox.com/foundry/javascript_design_patterns)
  * 📜 [All the 23 (GoF) design patterns implemented in Javascript — Felipe Beline](https://github.com/fbeline/Design-Patterns-JS)
  * 📜 [Learning JavaScript Design Patterns — Addy Osmani ](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+
+  ### Videos
+
+ * 🎥 [JavaScript Design Patterns](https://www.udacity.com/course/javascript-design-patterns--ud989)
  
  **[⬆ Back to Top](#table-of-contents)**
 
