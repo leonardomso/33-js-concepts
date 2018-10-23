@@ -725,6 +725,7 @@ This repository was created with the intention of helping developers master thei
 
  * 🎥 [Async + Await — Wes Bos](https://www.youtube.com/watch?v=9YkUCxvaLEk)
  * 🎥 [Asynchrony: Under the Hood - Shelley Vohr](https://www.youtube.com/watch?v=SrNQS8J67zc)
+ * 🎥 [Async / await in JavaScript - What, Why and How - Fun Fun Function](https://www.youtube.com/watch?v=568g8hxJJp4&index=3&list=PL0zVEGEvSaeHJppaRLrqjeTPnCH6)
 
 **[⬆ Back to Top](#table-of-contents)**
 
