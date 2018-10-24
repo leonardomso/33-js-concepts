@@ -14,7 +14,7 @@
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License MIT">
   </a>
-  <a href="https://travis-ci.org/leonardomso/33-js-concepts">
+  <a href="https://travis-ci.com/leonardomso/33-js-concepts">
     <img src="https://travis-ci.com/leonardomso/33-js-concepts.svg?branch=master" alt="Build Status">
   </a>
 </p>
