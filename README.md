@@ -14,7 +14,7 @@
   <a href="https://opensource.org/licenses/MIT">
     <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License MIT">
   </a>
-  <a href="https://travis-ci.org/leonardomso/33-js-concepts">
+  <a href="https://travis-ci.com/leonardomso/33-js-concepts">
     <img src="https://travis-ci.com/leonardomso/33-js-concepts.svg?branch=master" alt="Build Status">
   </a>
 </p>
@@ -157,6 +157,7 @@ All the translations for this repo will be listed below:
  * 📜 [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
  * 📜 [You Don't Know JS: Types & Grammar [Book] — Kyle Simpson](https://www.oreilly.com/library/view/you-dont-know/9781491905159/ch04.html)
  * 📜 [(Not) Everything in JavaScript is an Object - Daniel Li](http://blog.brew.com.hk/not-everything-in-javascript-is-an-object/)
+ * 📜 [Type Coercion in JavaScript, and why everyone gets it wrong.](https://thedevs.network/blog/type-coercion-in-javascript-and-why-everyone-gets-it-wrong)
  
  ### Videos
 
