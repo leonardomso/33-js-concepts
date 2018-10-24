@@ -25,9 +25,11 @@ This repository was created with the intention of helping developers master thei
 
 ## Community
 
-Feel free to submit a PR adding a link to your own recaps or reviews!
+Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
-* [Stephentian 总结的中文版本](https://github.com/stephentian/33-js-concepts)
+All the translations for this repo will be listed below:
+
+[Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
 
 ---
 
