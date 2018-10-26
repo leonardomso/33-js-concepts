@@ -38,37 +38,37 @@ Todas as traduções para este repositório serão listadas abaixo:
 
 1. **[Pilha de chamadas](#1-pilha-de-chamadas-i)**
 2. **[Tipos primitivos](#2-tipos-primitivos)**
-3. **[Tipos de valores e Tipos de referências](#3-tipos-de-valores-e-tipos-de-referencias)**
-4. **[Implícito, Explicito, Nominal, Estruturando e Chamada de métodos](#4-implicito-explicito-nominal-estruturando-e-chamada-de-metodos)**
-5. **[== vs === vs typeof](#5)**
-6. **[Escopo da Função, Escopo do Bloco e Escopo Léxico](#6-function-scope-block-scope-and-lexical-scope)**
+3. **[Tipos de valores e Tipos de referências](#3-tipos-de-valores-e-tipos-de-refer%C3%AAncias)**
+4. **[Implícito, Explicito, Nominal, Estruturando e Chamada de métodos](#4-implícito-explícito-nominal-estruturando-e-chamada-de-métodos)**
+5. **[== vs === vs typeof](#5--vs--vs-typeof)**
+6. **[Escopo da Função, Escopo do Bloco e Escopo Léxico](#6-escopo-da-função-escopo-do-bloco-e-escopo-léxico)**
 7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, Modules e Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Message Queue e Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval e requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+8. **[IIFE, Modules e Namespaces](#8-iife-modules-e-namespaces)**
+9. **[Message Queue e Event Loop](#9-message-queue-e-event-loop)**
+10. **[setTimeout, setInterval e requestAnimationFrame](#10-settimeout-setinterval-e-requestanimationframe)**
 11. **[JavaScript Engines](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays e Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM e Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories e Classes](#14-factories-and-classes)**
-15. **[this, call, apply e bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof e Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance e Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create e Object.assign](#18-objectcreate-and-objectassign)**
+12. **[Bitwise Operators, Type Arrays e Array Buffers](#12-bitwise-operators-type-arrays-e-array-buffers)**
+13. **[DOM e Layout Trees](#13-dom-e-layout-trees)**
+14. **[Factories e Classes](#14-factories-e-classes)**
+15. **[this, call, apply e bind](#15-this-call-apply-e-bind)**
+16. **[new, Constructor, instanceof e Instances](#16-new-constructor-instanceof-e-instances)**
+17. **[Prototype Inheritance e Prototype Chain](#17-prototype-inheritance-e-prototype-chain)**
+18. **[Object.create e Object.assign](#18-objectcreate-e-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects e State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
+20. **[Pure Functions, Side Effects e State Mutation](#20-pure-functions-side-effects-e-state-mutation)**
 21. **[Closures](#21-closures)**
-22. **[Funções de alta ordem](#22-high-order-functions)**
-23. **[Recursão](#23-recursion)**
+22. **[Funções de alta ordem](#22-funções-de-alta-ordem)**
+23. **[Recursão](#23-recursão)**
 24. **[Collections](#24-collections)**
 25. **[Promises](#25-promises)**
 26. **[async/await](#26-asyncawait)**
-27. **[Estrutura dos dados](#27-data-structures)**
-28. **[Expensive Operation e Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algoritmos](#29-algorithms)**
-30. **[Herança, Polimorfismo e Reutilização de Código](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Padrões de design](#31-design-patterns)**
-32. **[Aplicações parciais, Currying, Compose e Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Código limpo (clean)](#33-clean-code)**
+27. **[Estrutura dos dados](#27-estrutura-dos-dados)**
+28. **[Expensive Operation e Big O Notation](#28-expensive-operation-e-big-o-notation)**
+29. **[Algoritmos](#29-algoritmos)**
+30. **[Herança, Polimorfismo e Reutilização de Código](#30-herança-polimorfismo-e-reutilização-de-código)**
+31. **[Padrões de design](#31-padrões-de-design)**
+32. **[Aplicações parciais, Currying, Compose e Pipe](#32-aplicações-parciais-currying-compose-e-pipe)**
+33. **[Código limpo (clean)](#33-código-limpo-clean)**
 
 ---
 
