@@ -30,6 +30,7 @@ Sinta-se à vontade para enviar um PR adicionando um link para suas próprias re
 Todas as traduções para este repositório serão listadas abaixo:
 
 [Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
+
 [Portuguese-BR Translation by Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts)
 
 ---
