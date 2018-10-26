@@ -36,7 +36,7 @@ Todas as traduções para este repositório serão listadas abaixo:
 
 ## Tabela de conteúdos
 
-1. **[Pilha de chamadas](#1-call-stack)**
+1. **[Pilha de chamadas](#1-pilha-de-chamadas)**
 2. **[Tipos primitivos](#2-primitive-types)**
 3. **[Tipos de valores e Tipos de Tipos de referência](#3-value-types-and-reference-types)**
 4. **[Implícito, Explicito, Nominal, Estruturando e Chamada de métodos](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
@@ -909,4 +909,3 @@ Todas as traduções para este repositório serão listadas abaixo:
  **[⬆ Voltar ao topo](#table-of-contents)**
 
 ---
-
