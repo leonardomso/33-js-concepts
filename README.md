@@ -58,7 +58,7 @@ All the translations for this repo will be listed below:
 21. **[Closures](#21-closures)**
 22. **[High Order Functions](#22-high-order-functions)**
 23. **[Recursion](#23-recursion)**
-24. **[Collections](#24-collections)**
+24. **[Collections and Generators](#24-collections-and-generators)**
 25. **[Promises](#25-promises)**
 26. **[async/await](#26-asyncawait)**
 27. **[Data Structures](#27-data-structures)**
@@ -68,7 +68,6 @@ All the translations for this repo will be listed below:
 31. **[Design Patterns](#31-design-patterns)**
 32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Clean Code](#33-clean-code)**
-34. **[Generators](#34-generators)**
 
 
 ---
@@ -661,7 +660,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 24. Collections
+## 24. Collections and Generators
 
 ### Articles
 
@@ -679,12 +678,18 @@ All the translations for this repo will be listed below:
  * 📜 [How to create an array of unique values in JavaScript using Sets — Claire Parker-Jones](https://dev.to/claireparker/how-to-create-an-array-of-unique-values-in-javascript-using-sets-5dg6)
  * 📜 [What You Should Know About ES6 Maps — Just Chris](https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e)
  * 📜 [ES6 Maps in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-maps-in-depth)
+ * 📜 [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
+* 📜 [What are JavaScript Generators and how to use them — Vladislav Stepanov](https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e)
+* 📜 [Understanding JavaScript Generators With Examples  — Arfat Salman](https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
+* 📜 [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
+
 
 
  ### Videos
 
  * 🎥 [JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media](https://www.youtube.com/watch?v=ycohYSx5h9w)
  * 🎥 [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
+ * 🎥 [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
 
 **[⬆ Back to Top](#table-of-contents)**
 
