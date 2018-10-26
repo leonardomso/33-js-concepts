@@ -29,9 +29,8 @@ Sinta-se à vontade para enviar um PR adicionando um link para suas próprias re
 
 Todas as traduções para este repositório serão listadas abaixo:
 
-[Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
-
-[Portuguese-BR Translation by Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts)
+- [Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
+- [Portuguese-BR Translation by Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts)
 
 ---
 
@@ -97,7 +96,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Call Stack & Event Loop — movies com](https://www.youtube.com/watch?v=mk0lu9MKBto)
  * 🎥 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -122,7 +121,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript Primitive Data Types — Avelx](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
  * 🎥 [Everything you never wanted to know about JavaScript numbers — Bartek Szopka](https://www.youtube.com/watch?v=MqHDDtVYJRI)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -144,7 +143,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
  * 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -166,7 +165,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
  * 🎥 [JavaScript Questions: What is Coercion? - Steven Hancock](https://www.youtube.com/watch?v=z4-8wMSPJyI)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -190,7 +189,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
  * 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -216,7 +215,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript Block Scope and Function Scope — mmtuts](https://www.youtube.com/watch?v=aK_nuUAdr8E)
  * 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -235,7 +234,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
  * 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -262,7 +261,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
  * 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -287,7 +286,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -310,7 +309,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript setTimeout, setInterval & clearInterval — DoingITeasyChannel](https://www.youtube.com/watch?v=BVALvvy5bZY)
  * 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -330,7 +329,7 @@ Todas as traduções para este repositório serão listadas abaixo:
 
  * 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -348,7 +347,7 @@ Todas as traduções para este repositório serão listadas abaixo:
 
  * 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -370,7 +369,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -395,7 +394,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
  * 🎥 [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -426,7 +425,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript (call, bind, apply) — curious aatma](https://www.youtube.com/watch?v=Uy0NOXLBraE)
  * 🎥 [Understanding Functions and 'this' In The World of ES2017 — Bryan Hughes](https://www.youtube.com/watch?v=AOSYY1_np_4)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -444,7 +443,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 📜 [JavaScript instanceof vs typeof — Gary Rafferty](http://garyrafferty.com/2012/12/07/JavaScript-instanceof-vs-typeof.html)
  * 📜 [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -487,7 +486,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -512,7 +511,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
  * 🎥 [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -547,7 +546,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Arrow functions in JavaScript - What, Why and How — Fun Fun Function](https://www.youtube.com/watch?v=6sQDTgOqh-I)
 
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -575,7 +574,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
 
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -604,7 +603,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Closures — freeCodeCamp](https://www.youtube.com/watch?v=1JsJx1x35c0)
  * 🎥 [JavaScript Closures — CodeWorkr](https://www.youtube.com/watch?v=-rLrGAXK8WE)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -632,7 +631,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Higher Order Iterators in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=GYRMNp1SKXA)
  * 🎥 [Higher Order Functions in JavaScript — The Coding Train](https://www.youtube.com/watch?v=H4awPsyugS0)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -657,7 +656,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Recursion: Recursion() - JS Monthly — Lucas da Costa](https://www.youtube.com/watch?v=kGXVsd8pBLw)
  * 🎥 [Recursive Function in JavaScript — kudvenkat](https://www.youtube.com/watch?v=uyjsR9eNTIw)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -686,7 +685,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media](https://www.youtube.com/watch?v=ycohYSx5h9w)
  * 🎥 [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -716,7 +715,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Promises — Fun Fun Function](https://www.youtube.com/watch?v=2d7s3spWAzo)
  * 🎥 [Error Handling Promises in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=f8IgdnYIwOU)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -746,7 +745,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Asynchrony: Under the Hood — Shelley Vohr](https://www.youtube.com/watch?v=SrNQS8J67zc)
  * 🎥 [async/await in JavaScript - What, Why and How — Fun Fun Function](https://www.youtube.com/watch?v=568g8hxJJp4&index=3&list=PL0zVEGEvSaeHJppaRLrqjeTPnCH6)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -770,7 +769,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
  * 🎥 [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -791,7 +790,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
  * 🎥 [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -808,7 +807,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
  * 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -831,7 +830,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
  * 🎥 [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -850,7 +849,7 @@ Todas as traduções para este repositório serão listadas abaixo:
 
  * 🎥 [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 
- **[⬆ Voltar ao topo](#table-of-contents)**
+ **[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -892,7 +891,7 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 🎥 [Partial Application vs. Currying — NWCalvank](https://www.youtube.com/watch?v=DzLkRsUN2vE)
  * 🎥 [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 
-**[⬆ Voltar ao topo](#table-of-contents)**
+**[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
 
@@ -907,6 +906,6 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 📜 [Keeping your code clean — Samuel James](https://codeburst.io/keeping-your-code-clean-d30bcffd1a10)
  * 📜 [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
 
- **[⬆ Voltar ao topo](#table-of-contents)**
+ **[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
 ---
