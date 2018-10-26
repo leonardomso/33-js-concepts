@@ -29,7 +29,9 @@ Feel free to submit a PR adding a link to your own recaps or reviews. If you wan
 
 All the translations for this repo will be listed below:
 
-[Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
+- [Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
+- [Portuguese-BR Translation by Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts)
+
 
 ---
 
