@@ -36,11 +36,11 @@ Todas as traduções para este repositório serão listadas abaixo:
 
 ## Tabela de conteúdos
 
-1. **[Pilha de chamadas](#1-pilha-de-chamadas)**
-2. **[Tipos primitivos](#2-primitive-types)**
-3. **[Tipos de valores e Tipos de Tipos de referência](#3-value-types-and-reference-types)**
-4. **[Implícito, Explicito, Nominal, Estruturando e Chamada de métodos](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
-5. **[== vs === vs typeof](#5--vs--vs-typeof)**
+1. **[Pilha de chamadas](#1-pilha-de-chamadas-i)**
+2. **[Tipos primitivos](#2-tipos-primitivos)**
+3. **[Tipos de valores e Tipos de referências](#3-tipos-de-valores-e-tipos-de-referencias)**
+4. **[Implícito, Explicito, Nominal, Estruturando e Chamada de métodos](#4-implicito-explicito-nominal-estruturando-e-chamada-de-metodos)**
+5. **[== vs === vs typeof](#5)**
 6. **[Escopo da Função, Escopo do Bloco e Escopo Léxico](#6-function-scope-block-scope-and-lexical-scope)**
 7. **[Expression vs Statement](#7-expression-vs-statement)**
 8. **[IIFE, Modules e Namespaces](#8-iife-modules-and-namespaces)**
