@@ -854,6 +854,7 @@ All the translations for this repo will be listed below:
   ### Videos
 
  * 🎥 [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
+ * 🎥 [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
 
  **[⬆ Back to Top](#table-of-contents)**
 
