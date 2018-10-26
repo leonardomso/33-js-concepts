@@ -913,17 +913,3 @@ All the translations for this repo will be listed below:
  * 📜 [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
 
  **[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 34. Generators
-
-### Articles
-
-* 📜 [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
-* 📜 [What are JavaScript Generators and how to use them — Vladislav Stepanov](https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e)
-* 📜 [Understanding JavaScript Generators With Examples  — Arfat Salman](https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
-* 📜[The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
-* 📜[JavaScript Symbols, Iterators, Generators, Async/Await, and Async Iterators — All Explained Simply — Rajaraodv](https://medium.freecodecamp.org/some-of-javascripts-most-useful-features-can-be-tricky-let-me-explain-them-4003d7bbed32)
-
-**[⬆ Back to Top](#table-of-contents)**
