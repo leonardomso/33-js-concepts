@@ -18,16 +18,16 @@
     <img src="https://img.shields.io/travis/leonardomso/33-js-concepts/master.svg?style=flat-square&label=build&logo=travis" alt="Build Status">
   </a>
 </p>
-
 ## Introduction
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Ce référentiel a été créé dans le but d'aider les développeurs à maîtriser leurs concepts en JavaScript. Ce n'est pas une exigence, mais un guide pour les études futures. Il est basé sur un article écrit par [Stephen Curtis] (https://twitter.com/stephenthecurt) et vous pouvez le lire [ici] (https://medium.com/@stephenthecurt/33-fundamentals-every-javascript -developer-should-know-13dd720a90d1).
 
-## Community
+## Communauté
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+N'hésitez pas à soumettre un PR en ajoutant un lien vers vos propres récapitulatifs ou critiques. Si vous souhaitez traduire le référentiel dans votre langue maternelle, n'hésitez pas à le faire.
 
-All the translations for this repo will be listed below:
+Toutes les traductions de ce dépôt seront listées ci-dessous:
+
 
 - [Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
 - [Portuguese-BR Translation by Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts)
