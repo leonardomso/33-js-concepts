@@ -4,7 +4,7 @@
   <br>
     <br>
   33 Concepts Every JavaScript Developer Should Know
-  <br>
+  <br><br>
 </h1>
 
 <p align="center">
