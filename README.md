@@ -517,6 +517,11 @@ Todas as traduções para este repositório serão listadas abaixo:
 
 ## 19. map, reduce, filter
 
+### Artigos (português)
+
+ * 📜 [map(), filter() e reduce() em JavaScript — Tárcio Zemel](http://desenvolvimentoparaweb.com/javascript/map-filter-reduce-javascript/)
+ * 📜 [JavaScript: Conhecendo map(), filter() e reduce() — Thiago S. Adriano](https://medium.com/@programadriano/javascript-conhecendo-map-filter-e-reduce-ce072d8f0ec5)
+
 ### Artigos (inglês)
 
  * 📜 [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
@@ -720,6 +725,11 @@ Todas as traduções para este repositório serão listadas abaixo:
 ---
 
 ## 26. async/await
+
+### Artigos (português)
+
+ * 📜 [Entendendo o async e o await em JavaScript — Wendell Adriel](https://tableless.com.br/entendendo-o-async-e-o-await-em-javascript/)
+ * 📜 [Async Await, JS assincronamente síncrono — FELIPE N. MOURA](https://braziljs.org/blog/async-await-js-assincronamente-sincrono/)
 
 ### Artigos (inglês)
 
