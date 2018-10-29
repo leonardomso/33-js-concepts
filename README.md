@@ -31,7 +31,7 @@ All the translations for this repo will be listed below:
 
 - [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [Korean](https://github.com/yjs03057/33-js-concepts.git) - Suin Lee
+- [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
 
 
 ---
