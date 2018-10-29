@@ -86,7 +86,7 @@
  * 🎥 [Call Stack & Event Loop — movies com](https://www.youtube.com/watch?v=mk0lu9MKBto)
  * 🎥 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -111,7 +111,7 @@
  * 🎥 [JavaScript Primitive Data Types — Avelx](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
  * 🎥 [Everything you never wanted to know about JavaScript numbers — Bartek Szopka](https://www.youtube.com/watch?v=MqHDDtVYJRI)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -133,7 +133,7 @@
  * 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
  * 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -155,7 +155,7 @@
  * 🎥 [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
  * 🎥 [JavaScript Questions: What is Coercion? - Steven Hancock](https://www.youtube.com/watch?v=z4-8wMSPJyI)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -179,7 +179,7 @@
  * 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
  * 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -205,7 +205,7 @@
  * 🎥 [JavaScript Block Scope and Function Scope — mmtuts](https://www.youtube.com/watch?v=aK_nuUAdr8E)
  * 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -225,7 +225,7 @@
  * 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
  * 🎥 [Function Statements and Function Expressions — Codeacademy](https://www.youtube.com/watch?v=oB5rH_9bqAI)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -252,7 +252,7 @@
  * 🎥 [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
  * 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -277,7 +277,7 @@
  * 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -300,7 +300,7 @@
  * 🎥 [JavaScript setTimeout, setInterval & clearInterval — DoingITeasyChannel](https://www.youtube.com/watch?v=BVALvvy5bZY)
  * 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -320,7 +320,7 @@
 
  * 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -338,7 +338,7 @@
 
  * 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -359,7 +359,7 @@
  * 🎥 [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
  * 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -384,7 +384,7 @@
  * 🎥 [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
  * 🎥 [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -416,7 +416,7 @@
  * 🎥 [Understanding Functions and 'this' In The World of ES2017 — Bryan Hughes](https://www.youtube.com/watch?v=AOSYY1_np_4)
  * 🎥 [bind and this - Object Creation in JavaScript - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -434,7 +434,7 @@
  * 📜 [JavaScript instanceof vs typeof — Gary Rafferty](http://garyrafferty.com/2012/12/07/JavaScript-instanceof-vs-typeof.html)
  * 📜 [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -477,7 +477,7 @@
  * 🎥 [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -502,7 +502,7 @@
  * 🎥 [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
  * 🎥 [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -538,7 +538,7 @@
  * 🎥 [Learning Functional Programming with JavaScript — Anjana Vakil - JSUnconf](https://www.youtube.com/watch?v=e-5obm1G_FY&t=1521s)
 
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -566,7 +566,7 @@
  * 🎥 [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
 
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -595,7 +595,7 @@
  * 🎥 [Closures — freeCodeCamp](https://www.youtube.com/watch?v=1JsJx1x35c0)
  * 🎥 [JavaScript Closures — CodeWorkr](https://www.youtube.com/watch?v=-rLrGAXK8WE)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -623,7 +623,7 @@
  * 🎥 [Higher Order Iterators in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=GYRMNp1SKXA)
  * 🎥 [Higher Order Functions in JavaScript — The Coding Train](https://www.youtube.com/watch?v=H4awPsyugS0)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -649,7 +649,7 @@
  * 🎥 [Recursive Function in JavaScript — kudvenkat](https://www.youtube.com/watch?v=uyjsR9eNTIw)
  * 🎥 [What on Earth is Recursion? — Computerphile](https://www.youtube.com/watch?v=Mv9NEXX1VHc)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -684,7 +684,7 @@
  * 🎥 [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
  * 🎥 [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -715,7 +715,7 @@
  * 🎥 [Error Handling Promises in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=f8IgdnYIwOU)
  * 🎥 [Promises Part 1 - Topics of JavaScript/ES6 — The Coding Train](https://www.youtube.com/watch?v=QO4NXhWo_NM)
  
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -745,7 +745,7 @@
  * 🎥 [Asynchrony: Under the Hood — Shelley Vohr](https://www.youtube.com/watch?v=SrNQS8J67zc)
  * 🎥 [async/await in JavaScript - What, Why and How — Fun Fun Function](https://www.youtube.com/watch?v=568g8hxJJp4&index=3&list=PL0zVEGEvSaeHJppaRLrqjeTPnCH6)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -769,7 +769,7 @@
  * 🎥 [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
  * 🎥 [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -790,7 +790,7 @@
  * 🎥 [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
  * 🎥 [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -807,7 +807,7 @@
  * 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
  * 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -830,7 +830,7 @@
  * 🎥 [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
  * 🎥 [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -850,7 +850,7 @@
  * 🎥 [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
  * 🎥 [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
 
- **[⬆  Back to Top](#table-of-contents)**
+ **[⬆  Back to Top](#목차)**
 
 ---
 
@@ -892,7 +892,7 @@
  * 🎥 [Partial Application vs. Currying — NWCalvank](https://www.youtube.com/watch?v=DzLkRsUN2vE)
  * 🎥 [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 
-**[⬆  Back to Top](#table-of-contents)**
+**[⬆  Back to Top](#목차)**
 
 ---
 
@@ -910,4 +910,4 @@
 ### 영상
  * 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 
- **[⬆  Back to Top](#table-of-contents)**
+ **[⬆  Back to Top](#목차)**
