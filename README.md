@@ -39,15 +39,15 @@ Todas las traducciones para este repo serán enumeradas abajo:
 
 ## Tabla de contenido
 
-1. **[Pila de llamadas](#1.-Pila-de-llamadas)**
-2. **[Tipos primitivos](#2.-Tipos-primitivos)**
-3. **[Tipos de valor y tipos de referencia](#3.-Tipos-de-valores-y-tipos-de-referencias)**
-4. **[Implícito, Explícito, Nominal, Estructuración y  Escritura de pato](#4.-Implícito,-Explícito,-Nominal,-Estructuración-y-Escritura-de-pato)**
+1. **[Pila de llamadas](#1-pila-de-llamadas)**
+2. **[Tipos primitivos](#2-tipos-primitivos)**
+3. **[Tipos de valor y tipos de referencia](#3-tipos-de-valores-y-tipos-de-referencias)**
+4. **[Implícito, Explícito, Nominal, Estructuración y  Escritura de pato](#4-implícito,-explícito,-nominal,-estructuración-y-escritura-de-pato)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Alcance de la función, Ámbito de bloque y alcance léxico](#6-Alcance-de-la-función,-Ámbito-de-bloque-y-alcance-léxico)**
+6. **[Alcance de la función, Ámbito de bloque y alcance léxico](#6-alcance-de-la-función,-ámbito-de-bloque-y-alcance-léxico)**
 7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, módulos y espacios de nombres](#8-IIFE,-módulos-y-espacios-de-nombres)**
-9. **[Message Queue y Event Loop](#9-Message-queue-y-event-loop)**
+8. **[IIFE, módulos y espacios de nombres](#8-iife,-módulos-y-espacios-de-nombres)**
+9. **[Message Queue y Event Loop](#9-message-queue-y-event-loop)**
 10. **[setTimeout, setInterval y requestAnimationFrame](#10-settimeout-setinterval-y-requestanimationframe)**
 11. **[Motores de JavaScript](#11-motores-de-JavaScript)**
 12. **[Bitwise Operators, Type Arrays y Array Buffers](#12-bitwise-operators-type-arrays-y-array-buffers)**
@@ -68,7 +68,7 @@ Todas las traducciones para este repo serán enumeradas abajo:
 27. **[Estructuras de datos](#27-estructuras-de-datos)**
 28. **[Expensive Operation y Big O Notation](#28-expensive-operation-y-big-o-notation)**
 29. **[Algoritmos](#29-algoritmos)**
-30. **[Herencia, polimorfismo y reutilización de código](#30-herencia,-polimorfismo-y-reutilización-de-código)**
+30. **[Inheritance, polymorphism and code reuse](#30-inheritance,-polymorphism-and-code-reuse)**
 31. **[Patrones de diseño](#31-patrones-de-diseño)**
 32. **[Partial Applications, Currying, Compose y Pipe](#32-partial-applications-currying-compose-y-pipe)**
 33. **[Código limpio](#33-código-limpio)**
@@ -831,7 +831,7 @@ Todas las traducciones para este repo serán enumeradas abajo:
 
 ---
 
-## 30. Herencia, polimorfismo y reutilización de código
+## 30. Inheritance, polymorphism and code reuse
 
 ### Artículos (Inglés)
 
