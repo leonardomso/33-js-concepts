@@ -3,7 +3,7 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  Her JavaScript geliştiricisinin bilmesi gereken 33 kavram.
   <br>
 </h1>
 
@@ -19,18 +19,18 @@
   </a>
 </p>
 
-## Introduction
+## Giriş
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Bu depo, geliştiricilerin JavaScript kavramlarına  hakim olmaları amacıyla oluşturulmuştur. Bu bir gereklilik değil, gelecekteki çalışmalarınız için bir rehber niteliğindedir. Stephen Curtis tarafından yazılmış bir makaleye dayanır [Stephen Curtis](https://twitter.com/stephenthecurt) ve [buradan] okuyabilirsiniz. (https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-## Community
+## Topluluk
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+Kendi yorumlarınıza bir bağlantı ekleyerek PR göndermekten çekinmeyin. Bu depoyu kendi dilinize çevirmek isterseniz, lütfen çekinmeyin.
 
-All the translations for this repo will be listed below:
+Bu depo için tüm çeviriler aşağıda listelenecektir::
 
-- [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
-- [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Çince](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Portekizce-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 
 
 ---
