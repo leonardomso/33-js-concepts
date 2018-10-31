@@ -21,7 +21,7 @@
 
 ## Giriş
 
-Bu depo, geliştiricilerin JavaScript kavramlarına  hakim olmaları amacıyla oluşturulmuştur. Bu bir gereklilik değil, gelecekteki çalışmalarınız için bir rehber niteliğindedir. Stephen Curtis tarafından yazılmış bir makaleye dayanır [Stephen Curtis](https://twitter.com/stephenthecurt) ve [buradan] okuyabilirsiniz. (https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Bu depo, geliştiricilerin JavaScript kavramlarına  hakim olmaları amacıyla oluşturulmuştur. Bu bir gereklilik değil, gelecekteki çalışmalarınız için bir rehber niteliğindedir. Stephen Curtis tarafından yazılmış bir makaleye dayanır [Stephen Curtis](https://twitter.com/stephenthecurt) ve [buradan](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) okuyabilirsiniz. .
 
 ## Topluluk
 
