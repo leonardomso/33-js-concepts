@@ -29,8 +29,10 @@ Sinta-se à vontade para enviar um PR adicionando um link para suas próprias re
 
 Todas as traduções para este repositório serão listadas abaixo:
 
-- [Chinese Translation by Re Tian](https://github.com/stephentian/33-js-concepts)
-- [Portuguese-BR Translation by Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts)
+- [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
 
 ---
 
