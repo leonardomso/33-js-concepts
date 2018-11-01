@@ -283,6 +283,7 @@ All the translations for this repo will be listed below:
  * 📜 [Event Loop in Javascript — Manjula Dube](https://code.likeagirl.io/what-the-heck-is-event-loop-1e414fccef49)
  * 📜 [The JavaScript Event Loop — Flavio Copes](https://flaviocopes.com/javascript-event-loop/)
  * 📜 [How JavaScript works: Event loop — Alexander Zlatkov](https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5)
+ * 📜 [Desmitificando el Event Loop (Spanish)](https://youtu.be/Eqq2Rb7LzYE)
 
 ### Videos
 
