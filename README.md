@@ -38,7 +38,7 @@ Todas as traduções para este repositório serão listadas abaixo:
 
 ## Tabela de conteúdos
 
-1. **[Pilha de chamadas](#1-pilha-de-chamadas-i)**
+1. **[Pilha de chamadas](#1-pilha-de-chamadas)**
 2. **[Tipos primitivos](#2-tipos-primitivos)**
 3. **[Tipos de valores e Tipos de referências](#3-tipos-de-valores-e-tipos-de-refer%C3%AAncias)**
 4. **[Implícito, Explicito, Nominal, Estruturando e Chamada de métodos](#4-implícito-explícito-nominal-estruturando-e-chamada-de-métodos)**
