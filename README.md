@@ -31,6 +31,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 - [Çince](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Portekizce-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Türkçe](https://github.com/ilker0/33-js-concepts) — İlker Demir
 
 
 ---
