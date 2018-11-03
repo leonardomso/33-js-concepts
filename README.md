@@ -31,11 +31,12 @@ Kendi yorumlarınıza bir bağlantı ekleyerek PR göndermekten çekinmeyin. Bu 
 
 Bu depo için tüm çeviriler aşağıda listelenecektir::
 
-- [Çince](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [Korece](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [İspanyolca](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Türkçe](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Turkish](https://github.com/ilker0/33-js-concepts) — İlker Demir
+
 
 
 ---
