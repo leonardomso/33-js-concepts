@@ -5,6 +5,8 @@
     <br>
   Her JavaScript geliştiricisinin bilmesi gereken 33 kavram
   <br>
+  33 Concepts Every JavaScript Developer Should Know
+  <br><br>
 </h1>
 
 <p align="center">
@@ -32,6 +34,11 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 - [Çince](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Portekizce-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 - [Türkçe](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+
 
 
 ---
@@ -236,6 +243,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
  * 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
  * 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
+ * 🎥 [Function Statements and Function Expressions — Codeacademy](https://www.youtube.com/watch?v=oB5rH_9bqAI)
 
 **[⬆ Başa Dön](#içindekiler)**
 
@@ -288,6 +296,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
  * 🎥 [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
  * 🎥 [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
  * 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
+ * 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
 
 
 **[⬆ Başa Dön](#içindekiler)**
@@ -430,6 +439,12 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 **[⬆ Başa Dön](#içindekiler)**
 
+ * 🎥 [bind and this - Object Creation in JavaScript - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
+ * 🎥 [JavaScript Practical Applications of Call, Apply and Bind functions — techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
+ * 🎥 [JS Function Methods call(), apply(), and bind() — Steve Griffith](https://www.youtube.com/watch?v=uBdH0iB1VDM)
+ 
+**[⬆ Back to Top](#table-of-contents)**
+
 ---
 
 ## 16. Yeni, Kurucu, Instanceof ve Instances
@@ -487,6 +502,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
  * 🎥 [Prototype in JavaScript — kudvenkat](https://www.youtube.com/watch?v=2rkEbcptR64)
  * 🎥 [JavaScript Using Prototypes — O'Reilly](https://www.youtube.com/watch?v=oCwCcNvaXAQ)
  * 🎥 [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
+ * 🎥 [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
 
 **[⬆ Başa Dön](#içindekiler)**
