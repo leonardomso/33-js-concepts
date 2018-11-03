@@ -74,7 +74,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 1. Call Stack
+## 1. Çağrı Yığını
 
 ### Makaleler
 
@@ -102,7 +102,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 2. Primitive Types
+## 2. İlkel Tipler
 
 ### Makaleler
 
@@ -127,7 +127,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. Değer Tipler ve Referans Tipler
 
 ### Makaleler
 
@@ -149,7 +149,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. Kesin, Belirgin, Sözde, Yapılanan ve Ördek Yazma
 
 ### Makaleler
 
@@ -171,7 +171,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 5. == vs === vs typeof
+## 5. == ve === farkı
 
 ### Makaleler
 
@@ -195,7 +195,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 6. Function Scope, Block Scope and Lexical Scope
+## 6. Fonksiyon Kapsamı, Blok Kapsamı ve Sözlüksel Kapsam
 
 ### Makaleler
 
@@ -221,7 +221,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 7. Expression vs Statement
+## 7. İfade ve Deyim
 
 ### Makaleler
 
@@ -240,7 +240,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 8. IIFE, Modules and Namespaces
+## 8. IIFE, Modüller and İsim Uzayları
 
 ### Makaleler
 
@@ -268,7 +268,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 9. Message Queue and Event Loop
+## 9. Mesaj Kuyruğu ve Olay Döngüsü
 
 ### Makaleler
 
@@ -293,7 +293,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 10. setTimeout, setInterval and requestAnimationFrame
+## 10. setTimeout, setInterval ve requestAnimationFrame
 
 ### Makaleler
 
@@ -316,7 +316,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 11. JavaScript Engines
+## 11. JavaScript Motorları
 
 ### Makaleler
 
@@ -336,7 +336,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 12. Bitsel Operatörler, Dizi Tipleri and Dizi Arabellekleri
 
 ### Makaleler
 
@@ -354,7 +354,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 13. DOM and Layout Trees
+## 13. DOM ve Düzen Ağaçları
 
 ### Makaleler
 
@@ -375,7 +375,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 14. Factories and Classes
+## 14. Fabrikalar ve Sınıflar
 
 ### Makaleler
 
@@ -400,7 +400,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 15. this, call, apply and bind
+## 15. Bu, Çağrı, Uygulamak ve Bağlamak
 
 ### Makaleler
 
@@ -431,7 +431,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 16. new, Constructor, instanceof and Instances
+## 16. Yeni, Kurucu, Instanceof ve Instances
 
 ### Makaleler
 
@@ -449,7 +449,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. Prototip Kullanımı ve Prototip Zinciri
 
 ### Makaleler
 
@@ -492,7 +492,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. Object.create ve Object.assign
 
 ### Makaleler
 
@@ -553,7 +553,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 20. Pure Functions, Side Effects and State Mutation
+## 20. Saf Fonksiyonlar, Yan Etkiler ve Resmi Mutasyon
 
 ### Makaleler
 
@@ -610,7 +610,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 22. High Order Functions
+## 22. Yüksek Yöntemli Fonksiyonlar
 
 ### Makaleler
 
@@ -638,7 +638,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 23. Recursion
+## 23. Özyineleme
 
 ### Makaleler
 
@@ -665,7 +665,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 24. Collections and Generators
+## 24. Koleksiyonlar ve Jeneratörler
 
 ### Makaleler
 
@@ -731,7 +731,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 26. async/await
+## 26. asenkron/beklemek
 
 ### Makaleler
 
@@ -763,7 +763,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 27. Data Structures
+## 27. Veri Yapıları
 
 ### Makaleler
 
@@ -787,7 +787,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 28. Pahalı Operasyon ve Büyük O Notasyonu
 
 ### Makaleler
 
@@ -808,7 +808,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 29. Algorithms
+## 29. Algoritmalar
 
 ### Makaleler
 
@@ -825,7 +825,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 30. Miras, Çok Biçimlilik ve Yeniden Kod Kullanımı
 
 ### Makaleler
 
@@ -848,7 +848,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 31. Design Patterns
+## 31. Tasarım Desenleri
 
 ### Makaleler
 
@@ -868,7 +868,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 32. Partial Applications, Currying, Compose and Pipe
+## 32. Partial Applications, Currying, Compose ve Pipe
 
 ### Makaleler
 
@@ -910,7 +910,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 33. Clean Code
+## 33. Temiz Kod
 
 ### Makaleler
 
