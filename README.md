@@ -33,6 +33,8 @@ Todas as traduções para este repositório serão listadas abaixo:
 - [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 - [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
 - [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Turkish](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Russian](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 
 ---
 
