@@ -33,6 +33,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 - [Korece](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
 - [İspanyolca](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
 - [Türkçe](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Rusça](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 
 
 
