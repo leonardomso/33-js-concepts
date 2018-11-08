@@ -45,7 +45,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 2. **[İlkel Tipler](#2-ilkel-tipler)**
 3. **[Değer Tipler ve Referans Tipler](#3-değer-tipler-ve-referans-tipler)**
 4. **[Kesin, Belirgin, Sözde, Yapılanan ve Ördek Yazma](#4-kesin-belirgin-sözde-yapılanan-ve-ördek-yazma)**
-5. **[==, ===, ve typeof farkı](#5--ve--farkı)**
+5. **[==, ===, ve typeof farkı](#5----ve-typeof-farkı)**
 6. **[Fonksiyon Kapsamı, Blok Kapsamı ve Sözlüksel Kapsam](#6-fonksiyon-kapsamı-blok-kapsamı-ve-sözlüksel-kapsam)**
 7. **[İfade ve Deyim](#7-ifade-ve-deyim)**
 8. **[IIFE, Modüller and İsim Uzayları](#8-iife-modüller-and-isim-uzayları)**
@@ -175,7 +175,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 5. == ve === farkı
+## 5. ==, ===, ve typeof farkı
 
 ### Makaleler
 
@@ -744,7 +744,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 26. asenkron/beklemek
+## 26. async/await
 
 ### Makaleler
 
