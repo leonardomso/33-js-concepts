@@ -41,39 +41,39 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ## İçindekiler
 
-1. **[Call Stack](#1-çağrı-yığını)**
-2. **[Primitive Types](#2-ilkel-tipler)**
-3. **[Value Types and Reference Types](#3-değer-tipler-ve-referans-tipler)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-kesin-belirgin-sözde-yapılanan-ve-ördek-yazma)**
-5. **[== vs === vs typeof](#5--ve--farkı)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-fonksiyon-kapsamı-blok-kapsamı-ve-sözlüksel-kapsam)**
-7. **[Expression vs Statement](#7-ifade-ve-deyim)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modüller-and-isim-uzayları)**
-9. **[Message Queue and Event Loop](#9-mesaj-kuyruğu-ve-olay-döngüsü)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-ve-requestanimationframe)**
-11. **[JavaScript Engines](#11-javascript-motorları)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitsel-operatörler-dizi-tipleri-and-dizi-arabellekleri)**
-13. **[DOM and Layout Trees](#13-dom-ve-düzen-ağaçları)**
-14. **[Factories and Classes](#14-fabrikalar-ve-sınıflar)**
-15. **[this, call, apply and bind](#15-this-call-apply-ve-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-ve-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototip-kullanımı-ve-prototip-zinciri)**
-18. **[Object.create and Object.assign](#18-objectcreate-ve-objectassign)**
+1. **[Çağrı Yığını](#1-çağrı-yığını)**
+2. **[İlkel Tipler](#2-ilkel-tipler)**
+3. **[Değer Tipler ve Referans Tipler](#3-değer-tipler-ve-referans-tipler)**
+4. **[Kesin, Belirgin, Sözde, Yapılanan ve Ördek Yazma](#4-kesin-belirgin-sözde-yapılanan-ve-ördek-yazma)**
+5. **[==, ===, ve typeof farkı](#5--ve--farkı)**
+6. **[Fonksiyon Kapsamı, Blok Kapsamı ve Sözlüksel Kapsam](#6-fonksiyon-kapsamı-blok-kapsamı-ve-sözlüksel-kapsam)**
+7. **[İfade ve Deyim](#7-ifade-ve-deyim)**
+8. **[IIFE, Modüller and İsim Uzayları](#8-iife-modüller-and-isim-uzayları)**
+9. **[Mesaj Kuyruğu ve Olay Döngüsü](#9-mesaj-kuyruğu-ve-olay-döngüsü)**
+10. **[setTimeout, setInterval ve requestAnimationFrame](#10-settimeout-setinterval-ve-requestanimationframe)**
+11. **[JavaScript Motorları](#11-javascript-motorları)**
+12. **[Bitsel Operatörler, Dizi Tipleri and Dizi Arabellekleri](#12-bitsel-operatörler-dizi-tipleri-and-dizi-arabellekleri)**
+13. **[DOM ve Düzen Ağaçları](#13-dom-ve-düzen-ağaçları)**
+14. **[Fabrikalar ve Sınıflar](#14-fabrikalar-ve-sınıflar)**
+15. **[this, call, apply ve bind](#15-this-call-apply-ve-bind)**
+16. **[new, Constructor, instanceof ve Instances](#16-new-constructor-instanceof-ve-instances)**
+17. **[Prototip Kullanımı ve Prototip Zinciri](#17-prototip-kullanımı-ve-prototip-zinciri)**
+18. **[Object.create ve Object.assign](#18-objectcreate-ve-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects and State Mutation](#20-saf-fonksiyonlar-yan-etkiler-ve-resmi-mutasyon)**
+20. **[Saf Fonksiyonlar, Yan Etkiler ve Resmi Mutasyon](#20-saf-fonksiyonlar-yan-etkiler-ve-resmi-mutasyon)**
 21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-yüksek-mertebeden-fonksiyonlar)**
-23. **[Recursion](#23-özyineleme)**
-24. **[Collections and Generators](#24-koleksiyonlar-ve-üreticiler)**
+22. **[Yüksek Mertebeden Fonksiyonlar](#22-yüksek-mertebeden-fonksiyonlar)**
+23. **[Özyineleme](#23-özyineleme)**
+24. **[Koleksiyonlar ve Üreticiler](#24-koleksiyonlar-ve-üreticiler)**
 25. **[Promises](#25-promises)**
-26. **[async/await](#26-asenkronbeklemek)**
-27. **[Data Structures](#27-veri-yapıları)**
-28. **[Expensive Operation and Big O Notation](#28-pahalı-operasyon-ve-büyük-o-notasyonu)**
-29. **[Algorithms](#29-algoritmalar)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-miras-çok-biçimlilik-ve-yeniden-kod-kullanımı)**
-31. **[Design Patterns](#31-tasarım-desenleri)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-ve-pipe)**
-33. **[Clean Code](#33-temiz-kod)**
+26. **[async/await](#26-asyncawait)**
+27. **[Veri Yapıları](#27-veri-yapıları)**
+28. **[Pahalı Operasyon ve Büyük O Notasyonu](#28-pahalı-operasyon-ve-büyük-o-notasyonu)**
+29. **[Algoritmalar](#29-algoritmalar)**
+30. **[Miras, Çok Biçimlilik ve Yeniden Kod Kullanımı](#30-miras-çok-biçimlilik-ve-yeniden-kod-kullanımı)**
+31. **[Tasarım Desenleri](#31-tasarım-desenleri)**
+32. **[Partial Applications, Currying, Compose ve Pipe](#32-partial-applications-currying-compose-ve-pipe)**
+33. **[Temiz Kod](#33-temiz-kod)**
 
 
 ---
