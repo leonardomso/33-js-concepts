@@ -33,46 +33,47 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 - [Korece](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
 - [İspanyolca](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
 - [Türkçe](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Rusça](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 
 
 
 ---
 
-## içindekiler
+## İçindekiler
 
-1. **[Call Stack](#1-call-stack)**
-2. **[Primitive Types](#2-primitive-types)**
-3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
-5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[JavaScript Engines](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
-15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+1. **[Çağrı Yığını](#1-çağrı-yığını)**
+2. **[İlkel Tipler](#2-ilkel-tipler)**
+3. **[Değer Tipler ve Referans Tipler](#3-değer-tipler-ve-referans-tipler)**
+4. **[Kesin, Belirgin, Sözde, Yapılanan ve Ördek Yazma](#4-kesin-belirgin-sözde-yapılanan-ve-ördek-yazma)**
+5. **[==, ===, ve typeof farkı](#5---ve-typeof-farkı)**
+6. **[Fonksiyon Kapsamı, Blok Kapsamı ve Sözlüksel Kapsam](#6-fonksiyon-kapsamı-blok-kapsamı-ve-sözlüksel-kapsam)**
+7. **[İfade ve Deyim](#7-ifade-ve-deyim)**
+8. **[IIFE, Modüller and İsim Uzayları](#8-iife-modüller-and-isim-uzayları)**
+9. **[Mesaj Kuyruğu ve Olay Döngüsü](#9-mesaj-kuyruğu-ve-olay-döngüsü)**
+10. **[setTimeout, setInterval ve requestAnimationFrame](#10-settimeout-setinterval-ve-requestanimationframe)**
+11. **[JavaScript Motorları](#11-javascript-motorları)**
+12. **[Bitsel Operatörler, Dizi Tipleri and Dizi Arabellekleri](#12-bitsel-operatörler-dizi-tipleri-and-dizi-arabellekleri)**
+13. **[DOM ve Düzen Ağaçları](#13-dom-ve-düzen-ağaçları)**
+14. **[Fabrikalar ve Sınıflar](#14-fabrikalar-ve-sınıflar)**
+15. **[this, call, apply ve bind](#15-this-call-apply-ve-bind)**
+16. **[new, Constructor, instanceof ve Instances](#16-new-constructor-instanceof-ve-instances)**
+17. **[Prototip Kullanımı ve Prototip Zinciri](#17-prototip-kullanımı-ve-prototip-zinciri)**
+18. **[Object.create ve Object.assign](#18-objectcreate-ve-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects and State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
+20. **[Saf Fonksiyonlar, Yan Etkiler ve Resmi Mutasyon](#20-saf-fonksiyonlar-yan-etkiler-ve-resmi-mutasyon)**
 21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-high-order-functions)**
-23. **[Recursion](#23-recursion)**
-24. **[Collections and Generators](#24-collections-and-generators)**
+22. **[Yüksek Mertebeden Fonksiyonlar](#22-yüksek-mertebeden-fonksiyonlar)**
+23. **[Özyineleme](#23-özyineleme)**
+24. **[Koleksiyonlar ve Üreticiler](#24-koleksiyonlar-ve-üreticiler)**
 25. **[Promises](#25-promises)**
 26. **[async/await](#26-asyncawait)**
-27. **[Data Structures](#27-data-structures)**
-28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms](#29-algorithms)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Design Patterns](#31-design-patterns)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code](#33-clean-code)**
+27. **[Veri Yapıları](#27-veri-yapıları)**
+28. **[Pahalı Operasyon ve Büyük O Notasyonu](#28-pahalı-operasyon-ve-büyük-o-notasyonu)**
+29. **[Algoritmalar](#29-algoritmalar)**
+30. **[Miras, Çok Biçimlilik ve Yeniden Kod Kullanımı](#30-miras-çok-biçimlilik-ve-yeniden-kod-kullanımı)**
+31. **[Tasarım Desenleri](#31-tasarım-desenleri)**
+32. **[Partial Applications, Currying, Compose ve Pipe](#32-partial-applications-currying-compose-ve-pipe)**
+33. **[Temiz Kod](#33-temiz-kod)**
 
 
 ---
@@ -174,7 +175,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 5. == ve === farkı
+## 5. ==, ===, ve typeof farkı
 
 ### Makaleler
 
@@ -405,7 +406,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 15. Bu, Çağrı, Uygulamak ve Bağlamak
+## 15. this, call, apply ve bind
 
 ### Makaleler
 
@@ -431,18 +432,15 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
  * 🎥 [JavaScript Practical Applications of Call, Apply and Bind functions— techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
  * 🎥 [JavaScript (call, bind, apply) — curious aatma](https://www.youtube.com/watch?v=Uy0NOXLBraE)
  * 🎥 [Understanding Functions and 'this' In The World of ES2017 — Bryan Hughes](https://www.youtube.com/watch?v=AOSYY1_np_4)
-
-**[⬆ Başa Dön](#içindekiler)**
-
  * 🎥 [bind and this - Object Creation in JavaScript - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
  * 🎥 [JavaScript Practical Applications of Call, Apply and Bind functions — techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
  * 🎥 [JS Function Methods call(), apply(), and bind() — Steve Griffith](https://www.youtube.com/watch?v=uBdH0iB1VDM)
- 
-**[⬆ Back to Top](#table-of-contents)**
+
+**[⬆ Başa Dön](#içindekiler)**
 
 ---
 
-## 16. Yeni, Kurucu, Instanceof ve Instances
+## 16. new, Constructor, instanceof ve Instances
 
 ### Makaleler
 
@@ -622,7 +620,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 22. Yüksek Yöntemli Fonksiyonlar
+## 22. Yüksek Mertebeden Fonksiyonlar
 
 ### Makaleler
 
@@ -677,7 +675,7 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 ---
 
-## 24. Koleksiyonlar ve Jeneratörler
+## 24. Koleksiyonlar ve Üreticiler
 
 ### Makaleler
 
@@ -738,12 +736,12 @@ Bu depo için tüm çeviriler aşağıda listelenecektir::
  * 🎥 [Promises — Fun Fun Function](https://www.youtube.com/watch?v=2d7s3spWAzo)
  * 🎥 [Error Handling Promises in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=f8IgdnYIwOU)
  * 🎥 [Promises Part 1 - Topics of JavaScript/ES6 — The Coding Train](https://www.youtube.com/watch?v=QO4NXhWo_NM)
- 
+
 **[⬆ Başa Dön](#içindekiler)**
 
 ---
 
-## 26. asenkron/beklemek
+## 26. async/await
 
 ### Makaleler
 
