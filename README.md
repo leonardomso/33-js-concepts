@@ -584,6 +584,7 @@ All the translations for this repo will be listed below:
  * 📜 [Preventing Side Effects in JavaScript — David Walsh](https://davidwalsh.name/preventing-sideeffects-javascript)
  * 📜 [Wielding Pure Functions in JavaScript and Function Composition — Peleke Sengstacke
 ](https://scotch.io/tutorials/wielding-pure-functions-in-javascript-and-function-composition)
+ * 📜 [JavaScript: Pure Functions — William S. Vincent](https://wsvincent.com/javascript-pure-functions/)
 
  ### Videos
 
