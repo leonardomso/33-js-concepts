@@ -21,7 +21,7 @@
 
 ## Wstęp
 
-To repozytorium powstało z intencją dostarczenia pomocy programistom chcącym osiągnąć mistrzostwo w znajomości języka Javascript. Jest to przewodnik po ważnych konceptach języka, nie lista wymagań. Zawartość repozytorium bazuje na artykule napisanym przez [Stephena Curtisa](https://twitter.com/stephenthecurt). Z artykułem można zapoznać się w [tym miejscu](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+To repozytorium powstało z intencją dostarczenia wiedzy i wartościowych źródeł informacji dla osób chcących osiągnąć mistrzostwo w znajomości języka Javascript. Jest to zaledwie przewodnik po ważnych konceptach języka, nie absolutna lista wymagań. Zawartość repozytorium bazuje na artykule napisanym przez [Stephena Curtisa](https://twitter.com/stephenthecurt). Z artykułem można zapoznać się w [tym miejscu](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
 ## Społeczność
 
@@ -44,45 +44,45 @@ Lista aktualnie dostępnych tłumaczeń znajduje się poniżej:
 ## Spis treści
 
 1. **[Stos wywołań](#1-call-stack)**
-2. **[Typy proste](#2-primitive-types)**
-3. **[Wartości Typy i Wartości Referencyjne](#3-value-types-and-reference-types)**
+2. **[Typy Proste](#2-primitive-types)**
+3. **[Typy Wartościowe i Typy Referencyjne](#3-value-types-and-reference-types)**
 4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
 6. **[Zakres Funkcji, Zakres Bloku i Zakres Leksykalny](#6-function-scope-block-scope-and-lexical-scope)**
 7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
+8. **[IIFE, Moduły i Przestrzenie Nazw](#8-iife-modules-and-namespaces)**
 9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[JavaScript Engines](#11-javascript-engines)**
+10. **[setTimeout, setInterval i requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+11. **[Silniki JavaScript](#11-javascript-engines)**
 12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
 13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
-15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
+14. **[Fabryki i Klasy](#14-factories-and-classes)**
+15. **[this, call, apply i bind](#15-this-call-apply-and-bind)**
+16. **[new, Constructor, instanceof i Instances](#16-new-constructor-instanceof-and-instances)**
 17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+18. **[Object.create i Object.assign](#18-objectcreate-and-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
 20. **[Pure Functions, Side Effects and State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
 21. **[Domknięcia](#21-closures)**
 22. **[High Order Functions](#22-high-order-functions)**
-23. **[Recursion](#23-recursion)**
+23. **[Rekursja/Rekurencja](#23-recursion)**
 24. **[Collections and Generators](#24-collections-and-generators)**
 25. **[Promises](#25-promises)**
 26. **[async/await](#26-asyncawait)**
 27. **[Data Structures](#27-data-structures)**
 28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms](#29-algorithms)**
+29. **[Algorytmy](#29-algorithms)**
 30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Design Patterns](#31-design-patterns)**
+31. **[Wzorce Projektowe](#31-design-patterns)**
 32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code](#33-clean-code)**
+33. **[Czysty Kod](#33-clean-code)**
 
 
 ---
 
-## 1. Call Stack
+## 1. Stos Wywołań
 
-### Articles
+### Artykuły
 
  * 📜 [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
  * 📜 [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -93,7 +93,7 @@ Lista aktualnie dostępnych tłumaczeń znajduje się poniżej:
  * 📜 [How JavaScript Works: An Overview of the Engine, the Runtime, and the Call Stack — Alexander Zlatkov](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)
  * 📜 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://tylermcginnis.com/ultimate-guide-to-execution-contexts-hoisting-scopes-and-closures-in-javascript/)
 
-### Videos
+### Filmy
 
  * 🎥 [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
  * 🎥 [The JS Call Stack Explained In 9 Minutes — Colt Steele](https://www.youtube.com/watch?v=W8AeMrVtFLY)
@@ -104,13 +104,13 @@ Lista aktualnie dostępnych tłumaczeń znajduje się poniżej:
  * 🎥 [Call Stack & Event Loop — movies com](https://www.youtube.com/watch?v=mk0lu9MKBto)
  * 🎥 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Powrót do góry strony](#table-of-contents)**
 
 ---
 
-## 2. Primitive Types
+## 2. Typy Proste
 
-### Articles
+### Artykuły
 
  * 📜 [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
  * 📜 [What You Need to Know About JavaScript Number Type — Max Wizard K](https://medium.com/dailyjs/javascripts-number-type-8d59199db1b6)
@@ -120,7 +120,7 @@ Lista aktualnie dostępnych tłumaczeń znajduje się poniżej:
  * 📜 [(Not) Everything in JavaScript is an Object - Daniel Li](http://blog.brew.com.hk/not-everything-in-javascript-is-an-object/)
  * 📜 [JavaScript data types and data structures - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### Videos
+### Filmy
 
  * 🎥 [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
  * 🎥 [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
@@ -129,13 +129,13 @@ Lista aktualnie dostępnych tłumaczeń znajduje się poniżej:
  * 🎥 [JavaScript Primitive Data Types — Avelx](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
  * 🎥 [Everything you never wanted to know about JavaScript numbers — Bartek Szopka](https://www.youtube.com/watch?v=MqHDDtVYJRI)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Powrót do góry strony](#table-of-contents)**
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. Typy Wartościowe i Typy Referencyjne
 
-### Articles
+### Artykuły
 
  * 📜 [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
  * 📜 [Understand Value and Reference Types in JavaScript — Zsolt Nagy](https://www.zsoltnagy.eu/understand-value-and-reference-types-in-javascript/)
@@ -146,12 +146,12 @@ Lista aktualnie dostępnych tłumaczeń znajduje się poniżej:
  * 📜 [JavaScript Reference and Copy Variables — Vítor Capretz](https://hackernoon.com/javascript-reference-and-copy-variables-b0103074fdf0)
  * 📜 [JavaScript Primitive vs Reference Values](http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/)
 
-### Wideo
+### Filmy
 
  * 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
  * 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Powrót do góry strony](#table-of-contents)**
 
 ---
 
