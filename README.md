@@ -35,6 +35,7 @@ All the translations for this repo will be listed below:
 - [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
 - [Turkish](https://github.com/ilker0/33-js-concepts) — İlker Demir
 - [Russian](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Tiếng Việt](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
 
 ---
 
