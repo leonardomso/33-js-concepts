@@ -585,6 +585,7 @@ All the translations for this repo will be listed below:
  * 📜 [Wielding Pure Functions in JavaScript and Function Composition — Peleke Sengstacke
 ](https://scotch.io/tutorials/wielding-pure-functions-in-javascript-and-function-composition)
  * 📜 [JavaScript: Pure Functions — William S. Vincent](https://wsvincent.com/javascript-pure-functions/)
+ * 📜 [Functional programming paradigms in modern JavaScript: Pure functions — Alexander Kondov](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
 
  ### Videos
 
