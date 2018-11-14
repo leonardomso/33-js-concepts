@@ -66,15 +66,15 @@ Lista aktualnie dostępnych tłumaczeń znajduje się poniżej:
 21. **[Domknięcia](#21-closures)**
 22. **[Funkcje Wyższego Rzędu](#22-high-order-functions)**
 23. **[Rekursja/Rekurencja](#23-recursion)**
-24. **[Generatory i Kolekcje](#24-collections-and-generators)**
-25. **[Obietnice](#25-promises)**
+24. **[Collections and Generators](#24-collections-and-generators)**
+25. **[Promises](#25-promises)**
 26. **[async/await](#26-asyncawait)**
 27. **[Struktury Danych](#27-data-structures)**
 28. **[Kosztowne Operacje i Asymptotyczne Tempo Wzrostu (Notacja Dużego O)](#28-expensive-operation-and-big-o-notation)**
 29. **[Algorytmy](#29-algorithms)**
 30. **[Dziedziczenie, Polimorfizm i Ponowne Wykorzystanie Kodu](#30-inheritance-polymorphism-and-code-reuse)**
 31. **[Wzorce Projektowe](#31-design-patterns)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
+32. **[Partial Applications, Currying, Compose i Pipe](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Czysty Kod](#33-clean-code)**
 
 ---
