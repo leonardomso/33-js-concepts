@@ -38,7 +38,7 @@ All the translations for this repo will be listed below:
 - [Tiếng Việt](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
 - [Polish](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
 - [Persian](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Indonesian](https://github.com/rijdz/33-js-concepts) - Rijdzuan Sampoerna
+- [Indonesian](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
 
 ---
 
