@@ -3,7 +3,7 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 Konzepte die jeder JavaScript Entwickler kennen sollte
   <br><br>
 </h1>
 
@@ -19,71 +19,72 @@
   </a>
 </p>
 
-## Introduction
+## Einleitung
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Dieses Repository wurde erstellt um Entwickerln zu helfen Ihre Kentnisse zu verbessern. Es ist keine Anforderung aber ein Führer für eure kommenden Projekte. Es basiert auf einen Artikel von [Stephen Curtis](https://twitter.com/stephenthecurt) welchen Ihr [hier](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) lesen könnt.
 
 ## Community
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+Seit frei ein Pull Request zu senden mit dem Link eurer eigenen Verbesserungsvorschläge. Wenn Ihr wollt könnt Ihr das Repo auch in eure eigene Sprache übersetzen.
 
-All the translations for this repo will be listed below:
+Alle bisherigen Übersetzungen findet Ihr hier:
 
-- [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
-- [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Turkish](https://github.com/ilker0/33-js-concepts) — İlker Demir
-- [Russian](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
-- [Tiếng Việt](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [Polish](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [Persian](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Indonesian](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [Chinesisch](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Portugisisch](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Koreanisch](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Spanisch](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Turkisch](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Deutsch](https://github.com/burhannn/33-js-concepts) — Burhan Bucak
+- [Russisch](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Vietnamesisch](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
+- [Polnisch](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+- [Persisch](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+- [Indonesisch](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
 
 ---
 
-## Table of Contents
+## Inhaltsverzeichnis
 
-1. **[Call Stack](#1-call-stack)**
-2. **[Primitive Types](#2-primitive-types)**
-3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+1. **[Aufrufs Stack](#1-Aufrufs-Stack)**
+2. **[Primitive Datentypen](#2-Primitive-Datentypen)**
+3. **[Wert und Referenztypen](#3-Wert-und-Referenztypen)**
+4. **[Implizit, Explizit, Nominal, Strukturierung und Duck Typing](#4-Implizit,-Explizit,-Nominal,-Strukturierung-und-Duck-Typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
+6. **[Funktions Scope, Block Scope und Lexiographischer Scope](#6-function-scope-block-scope-and-lexical-scope)**
 7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+8. **[IIFE, Module und Namespaces](#8-iife-modules-and-namespaces)**
+9. **[Message Warteschlange und Event Loop](#9-message-queue-and-event-loop)**
+10. **[setTimeout, setInterval und requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
 11. **[JavaScript Engines](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
-15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+12. **[Bitwise Operatoren, Type Arrays und Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
+13. **[DOM und Layout Bäume](#13-dom-and-layout-trees)**
+14. **[Factories und Klassen](#14-factories-and-classes)**
+15. **[this, call, apply und bind](#15-this-call-apply-and-bind)**
+16. **[new, Konstruktor, instanceof und Instancen](#16-new-constructor-instanceof-and-instances)**
+17. **[Vererben von Prototypen und Prototyp Schlüsseln](#17-prototype-inheritance-and-prototype-chain)**
+18. **[Object.create und Object.assign](#18-objectcreate-and-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects and State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
+20. **[Pure Funktionen, Seiteneffekte und State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
 21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-high-order-functions)**
-23. **[Recursion](#23-recursion)**
-24. **[Collections and Generators](#24-collections-and-generators)**
+22. **[Hoch priorisierte Funktionen](#22-high-order-functions)**
+23. **[Rekursion](#23-recursion)**
+24. **[Collections und Generators](#24-collections-and-generators)**
 25. **[Promises](#25-promises)**
 26. **[async/await](#26-asyncawait)**
-27. **[Data Structures](#27-data-structures)**
-28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms](#29-algorithms)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
+27. **[Datenstrukturen](#27-data-structures)**
+28. **[Teure Operationen und O-Notation](#28-expensive-operation-and-big-o-notation)**
+29. **[Algorithmen](#29-algorithms)**
+30. **[Vererbung, Polymorphie and Code Nutzung](#30-inheritance-polymorphism-and-code-reuse)**
 31. **[Design Patterns](#31-design-patterns)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
+32. **[Teil Anwendungen, Currying, Compose und Pipe](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Clean Code](#33-clean-code)**
 
 
 ---
 
-## 1. Call Stack
+## 1. Aufrufs Stack
 
-### Articles
+### Artikel
 
  * 📜 [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
  * 📜 [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -109,7 +110,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Primitive Types
+## 2. Primitive Datentypen
 
 ### Articles
 
@@ -133,9 +134,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. Wert und Referenztypen
 
-### Articles
+### Artikel
 
  * 📜 [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
  * 📜 [Understand Value and Reference Types in JavaScript — Zsolt Nagy](https://www.zsoltnagy.eu/understand-value-and-reference-types-in-javascript/)
@@ -156,9 +157,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. Implizit, Explizit, Nominal, Strukturierung und Duck Typing
 
-### Articles
+### Artikel
 
  * 📜 [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
  * 📜 [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
