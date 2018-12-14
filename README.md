@@ -923,6 +923,10 @@ Todas as traduções para este repositório serão listadas abaixo:
  * 📜 [Clean Code JavaScript — Sarah Drasner](https://css-tricks.com/clean-code-javascript/)
  * 📜 [Keeping your code clean — Samuel James](https://codeburst.io/keeping-your-code-clean-d30bcffd1a10)
  * 📜 [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
+ 
+ ### Artigos (português)
+ 
+* 📜 [Conceitos de Código Limpo adaptados em JavaScript - Felipe Augusto](https://github.com/felipe-augusto/clean-code-javascript)
 
  **[⬆ Voltar ao topo](#tabela-de-conteúdos)**
 
