@@ -42,6 +42,7 @@ All the translations for this repo will be listed below:
 - [Persian](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
 - [Indonesian](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
 - [French](https://github.com/robinmetral/33-concepts-js) — Robin
+- [Hindi](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
 
 ---
 
