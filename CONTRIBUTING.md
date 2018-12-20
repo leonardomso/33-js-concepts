@@ -9,12 +9,11 @@ In order to create a new translation, you need to follow these steps:
 * Add yourself to the watch list of the main repo, to keep up with changes.
 * When translating topics, **create NEW directory with suffix of your language in folder topics**.
   * For example, Spanish tranlation for `topics/en/sql.md` will be on `topics/es/sql.md`.
-* Create `topics/*YOUR_LANG*/readme.md` like [original README](readme.md)
+* Create `topics/*YOUR_LANG*/readme.md` like [original README](https://github.com/leonardomso/33-js-concepts/blob/master/README.md).
 * Open a [new issue](https://github.com/leonardomso/33-js-concepts/issues/new) and ask to be part of the organization.
 * Transfer the repo to the organization.
 * Merge new content from the main repo.
-* Keep translating...
-* Rinse/repeat last two steps until a topics is done.
+* Rinse/repeat last two steps until completing a topic.
 
 ### Open a Pull Request
 
