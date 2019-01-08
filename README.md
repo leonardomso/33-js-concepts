@@ -973,3 +973,12 @@ All the translations for this repo will be listed below:
 *  🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 
  **[⬆ Back to Top](#table-of-contents)**
+
+### Code Visualization:
+
+Here is a cool visualization of the code evolution
+
+ [![Watch the video](https://img.youtube.com/vi/t0P_HF8gJ1c/0.jpg)](https://www.youtube.com/watch?v=t0P_HF8gJ1c)
+
+ [https://www.youtube.com/watch?v=t0P_HF8gJ1c](https://www.youtube.com/watch?v=t0P_HF8gJ1c)
+
