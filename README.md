@@ -43,6 +43,7 @@ All the translations for this repo will be listed below:
 - [Indonesian](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
 - [French](https://github.com/robinmetral/33-concepts-js) — Robin Métral
 - [Hindi](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
+- [Greek](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
 
 ---
 
