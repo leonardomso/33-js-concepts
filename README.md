@@ -798,6 +798,7 @@ All the translations for this repo will be listed below:
  * 📜 [Flow Control in Modern JS: Callbacks to Promises to Async/Await — Craig Buckler](https://www.sitepoint.com/flow-control-callbacks-promises-async-await/)
  * 📜 [JavaScript: Promises and Why Async/Await Wins the Battle — Nick Parsons](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)
  * 📜 [How To Master Async/Await With This Real World Example — Adrian Hajdin](https://medium.freecodecamp.org/how-to-master-async-await-with-this-real-world-example-19107e7558ad)
+ * 📜 [How to improve your asynchronous Javascript code with async and await — Indrek Lasn](https://medium.freecodecamp.org/improve-your-asynchronous-javascript-code-with-async-and-await-c02fc3813eda)
 
  ### Videos
 
