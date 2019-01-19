@@ -39,6 +39,9 @@ Todas as traduções para este repositório serão listadas abaixo:
 - [Polish](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
 - [Persian](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
 - [Indonesian](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [French](https://github.com/robinmetral/33-concepts-js) — Robin Métral
+- [Hindi](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
+- [Greek](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
 
 ---
 
