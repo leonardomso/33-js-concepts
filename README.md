@@ -45,6 +45,8 @@ All the translations for this repo will be listed below:
 - [Hindi](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
 - [Greek](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
 - [Japanese](https://github.com/oimo23/33-js-concepts) — oimo23
+- [German](https://github.com/burhannn/33-js-concepts) — burhannn
+
 
 ---
 
