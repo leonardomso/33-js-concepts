@@ -1,9 +1,9 @@
 ﻿<h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
+  <a href="https://github.com/leonardomso/33"><img src="https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjYodGzgrfgAhWDPH0KHVjoBnMQjRx6BAgBEAU&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3AGraphQL_Logo.svg&psig=AOvVaw1fKkRHzWeVd0GcAW7LjX0L&ust=1550089201312877" alt="33 Concepts Every GraphQL Developer Should Know" width=200"></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 Concepts Every GraphQL Developer Should Know
   <br><br>
 </h1>
 
