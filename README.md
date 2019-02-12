@@ -1,6 +1,7 @@
 ﻿<h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="https://www.google.com/url?sa=i&source=images&cd=&cad=rja&uact=8&ved=2ahUKEwjYodGzgrfgAhWDPH0KHVjoBnMQjRx6BAgBEAU&url=https%3A%2F%2Fcommons.wikimedia.org%2Fwiki%2FFile%3AGraphQL_Logo.svg&psig=AOvVaw1fKkRHzWeVd0GcAW7LjX0L&ust=1550089201312877" alt="33 Concepts Every GraphQL Developer Should Know" width=200"></a>
+  <a href="https://travis-ci.com/leonardomso/33-js-concepts">
+ <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/512px-GraphQL_Logo.svg.png" alt="33 Concepts Every GraphQL Developer Should Know" width=200"></a>
   <br>
     <br>
   33 Concepts Every GraphQL Developer Should Know
@@ -50,9 +51,9 @@ All the translations for this repo will be listed below:
 ## Table of Contents
 
 1. **[Caching](#1-caching)**
-2. **[Primitive Types](#2-primitive-types)**
-3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+2. **[Setting up a server](#2-setting-up-a-server)**
+3. **[Context](#3-context)**
+4. **[Databases](#4-databases)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
 6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
 7. **[Expression vs Statement](#7-expression-vs-statement)**
@@ -90,10 +91,10 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
- * 📜 [Understanding Caching](https://medium.com/p/58756ff253d8#9388)
- * 📜 [Caching with GraphQL - What are the best options?](https://blog.usejournal.com/caching-with-graphql-what-are-the-best-options-e161b0f20e59)
- * 📜 [GraphQL VS Rest: Caching](https://philsturgeon.uk/api/2017/01/26/graphql-vs-rest-caching/)
- * 📜 [Learn Caching](https://graphql.org/learn/caching/)
+ * 📜 [Understanding Caching - Weblab Technology](https://medium.com/p/58756ff253d8#9388)
+ * 📜 [Caching with GraphQL - What are the best options? - Will Howard](https://blog.usejournal.com/caching-with-graphql-what-are-the-best-options-e161b0f20e59)
+ * 📜 [GraphQL VS Rest: Caching - Phil Sturgeon](https://philsturgeon.uk/api/2017/01/26/graphql-vs-rest-caching/)
+ * 📜 [Learn Caching - GraphQL](https://graphql.org/learn/caching/)
 
 ### Videos
 
@@ -105,71 +106,53 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Primitive Types
+## 2. Setting Up a Server
 
 ### Articles
 
- * 📜 [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
- * 📜 [What You Need to Know About JavaScript Number Type — Max Wizard K](https://medium.com/dailyjs/javascripts-number-type-8d59199db1b6)
- * 📜 [What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
- * 📜 [The Secret Life of JavaScript Primitives — Angus Croll](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
- * 📜 [Primitive Types — Flow](https://flow.org/en/docs/types/primitives/)
- * 📜 [(Not) Everything in JavaScript is an Object — Daniel Li](http://blog.brew.com.hk/not-everything-in-javascript-is-an-object/)
- * 📜 [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
- * 📜 [Diving Deeper in JavaScripts Objects — Arfat Salman](https://blog.bitsrc.io/diving-deeper-in-javascripts-objects-318b1e13dc12)
+ * 📜 [Building a server with Apollo - Apollo GraphQL](https://www.apollographql.com/docs/apollo-server/essentials/server.html)
+ * 📜 [Your First GraphQL Server — Clay Allsopp](https://medium.com/the-graphqlhub/your-first-graphql-server-3c766ab4f0a2)
+ * 📜 [Learn to build a GraphQL server with minimal effort — Ian Wilson](https://medium.freecodecamp.org/learn-to-build-a-graphql-server-with-minimal-effort-fc7fcabe8ebd)
+ * 📜 [Building a GraphQL Server with Node.js — Angus Croll](https://itnext.io/building-a-graphql-server-with-node-js-and-express-f8ea78e831f9)
+
 
 ### Videos
 
- * 🎥 [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
- * 🎥 [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
- * 🎥 [Value Types and Reference Types in JavaScript — Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
- * 🎥 [JavaScript Primitive Data Types — Avelx](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
- * 🎥 [Everything you never wanted to know about JavaScript numbers — Bartek Szopka](https://www.youtube.com/watch?v=MqHDDtVYJRI)
- * 🎥 [What are variables in Javascript? — JS For Everyone](https://www.youtube.com/watch?v=B4Bbmei_thw)
+ * 🎥 [Building a GraphQL Server [Part 1] — Traversy Media](https://www.youtube.com/watch?v=PEcJxkylcRM)
+ * 🎥 [Building a GraphQL Server with TypeScript](https://www.youtube.com/watch?v=20zGexpEitc)
+ * 🎥 [Learn how to build an API using GraphQL with Apollo Server 2.0 — Fireship](https://www.youtube.com/watch?v=8D9XnnjFGMs)
+ * 🎥 [GraphQL server tutorial for Node.js with SQL, MongoDB and REST — Apollo GraphQL](https://www.youtube.com/watch?v=PHabPhgRUuU)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. Context
 
 ### Articles
 
- * 📜 [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
- * 📜 [Understand Value and Reference Types in JavaScript — Zsolt Nagy](https://www.zsoltnagy.eu/understand-value-and-reference-types-in-javascript/)
- * 📜 [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
- * 📜 [Value Types, Reference Types and Scope in JavaScript — Ben Aston](https://medium.com/@benastontweet/lesson-1b-javascript-fundamentals-380f601ba851)
- * 📜 [Back to roots: JavaScript Value vs Reference — Miro Koczka](https://medium.com/dailyjs/back-to-roots-javascript-value-vs-reference-8fb69d587a18)
- * 📜 [Grasp “By Value” and “By Reference” in JavaScript — Léna Faure](https://hackernoon.com/grasp-by-value-and-by-reference-in-javascript-7ed75efa1293)
- * 📜 [JavaScript Reference and Copy Variables — Vítor Capretz](https://hackernoon.com/javascript-reference-and-copy-variables-b0103074fdf0)
- * 📜 [JavaScript Primitive vs Reference Values](http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/)
- * 📜 [JavaScript by Reference vs. by Value — nrabinowitz](https://stackoverflow.com/questions/6605640/javascript-by-reference-vs-by-value)
-
-### Videos
-
- * 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
- * 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
+ * 📜 [GraphQL Context and Services - Eric Clemmons](https://medium.com/@ericclemmons/graphql-context-services-6510269ef5a1)
+ * 📜 [Learning about Execution and Context - GraphQL](https://graphql.org/learn/execution/)
 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. Databases
 
 ### Articles
 
- * 📜 [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
- * 📜 [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
- * 📜 [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
- * 📜 [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
- * 📜 [You Don't Know JS: Types & Grammar [Book] — Kyle Simpson](https://www.oreilly.com/library/view/you-dont-know/9781491905159/ch04.html)
- * 📜 [Type Coercion in JavaScript, and why everyone gets it wrong.](https://thedevs.network/blog/type-coercion-in-javascript-and-why-everyone-gets-it-wrong)
+ * 📜 [Selecting database as data source for GraphQL Server — Wojciech Trocki](https://medium.com/@wtr/selecting-database-as-data-source-for-graphql-server-e3281fcefb2)
+ * 📜 [Connecting Server and Database with the Prisma Client — Prisma](https://www.howtographql.com/graphql-js/5-connecting-server-and-database/)
+ * 📜 [Using a GraphQL API for Database Administration — Michael Hunger](https://medium.freecodecamp.org/using-a-graphql-api-for-database-administration-1a5039b43c8f)
+ * 📜 [GraphQL as a database query language - Predrag Gruevski](https://blog.kensho.com/compiled-graphql-as-a-database-query-language-72e106844282)
+ * 📜 [Use all the databases — Loren Sands-Ramshaw](https://www.compose.com/articles/use-all-the-databases-part-1/)
 
  ### Videos
 
- * 🎥 [== ? === ??? ...#@^% - Shirmung Bielefeld](https://www.youtube.com/watch?v=qGyqzN0bjhc&t)
- * 🎥 [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
- * 🎥 [JavaScript Questions: What is Coercion? - Steven Hancock](https://www.youtube.com/watch?v=z4-8wMSPJyI)
+ * 🎥 [Build a GraphQL Server with Node.js and MongoDB - Ben Awad](https://www.youtube.com/watch?v=291i04TfGb0)
+ * 🎥 [Build a GraphQL server for Node.js, using PostgreSQL/MySQL - Lee Benson](https://www.youtube.com/watch?v=DNPVqK_woRQ&t=3s)
 
 **[⬆ Back to Top](#table-of-contents)**
 
