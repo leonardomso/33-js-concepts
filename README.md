@@ -54,7 +54,7 @@ All the translations for this repo will be listed below:
 2. **[Setting up a server](#2-setting-up-a-server)**
 3. **[Context](#3-context)**
 4. **[Databases](#4-databases)**
-5. **[== vs === vs typeof](#5--vs--vs-typeof)**
+5. **[Dataloader](#5-dataloader)**
 6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
 7. **[Expression vs Statement](#7-expression-vs-statement)**
 8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
@@ -158,11 +158,11 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 5. == vs === vs typeof
+## 5. Dataloader
 
 ### Articles
 
- * 📜 [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
+ * 📜 [Using dataloader with GraphQL: A Concrete Example — John Tucker](https://codeburst.io/using-dataloader-with-graphql-a-concrete-example-9b21352f1676)
  * 📜 [What is the difference between =, ==, and === in JS? — Codecademy](https://www.codecademy.com/en/forum_questions/558ea4f5e39efed371000508)
  * 📜 [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
  * 📜 [== vs === JavaScript: Double Equals and Coercion — AJ Meyghani](https://www.codementor.io/javascript/tutorial/double-equals-and-coercion-in-javascript)
