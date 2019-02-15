@@ -41,8 +41,8 @@ All the translations for this repo will be listed below:
 3. **[Context](#3-context)**
 4. **[Databases](#4-databases)**
 5. **[Dataloader](#5-dataloader)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Expression vs Statement](#7-expression-vs-statement)**
+6. **[Endpoints](#6-endpoints)**
+7. **[Entry Points](#7-entry-points)**
 8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
 9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
 10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
@@ -160,22 +160,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 6. Endpoints
-
-### Articles
-
- * 📜 [3 Methods to resolve Graphql Endpoints - Nicholas Hagen](https://www.contentful.com/blog/2018/09/25/3-methods-resolve-graphql-endpoints/)
- 
-
-### Videos
-
- * 🎥 [GraphQL with your REST endpoints with RestLink — Leigh Halliday](https://www.youtube.com/watch?v=yvoGCY7N_fg)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 7. Entry Points
+## 6. Entry Points
 
 ### Articles
 
@@ -193,7 +178,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 8. Endpoints
+## 7. Endpoints
 
 ### Articles
 
@@ -210,7 +195,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 9. Entry Points
+## 8. Entry Points
 
 ### Articles
 
@@ -224,7 +209,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 10. Fetching
+## 9. Fetching
 
 ### Articles
 
@@ -239,7 +224,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 11. Field
+## 10. Field
 
 ### Articles
 
@@ -254,7 +239,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 12. Fragment
+## 11. Fragment
 
 ### Articles
 
@@ -270,7 +255,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 13. Mutations
+## 12. Mutations
 
 ### Articles
 
@@ -286,7 +271,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 14. Nested Info
+## 13. Nested Info
 
 ### Articles
 
@@ -301,7 +286,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 15. Polling
+## 14. Polling
 
 ### Articles
 
@@ -313,7 +298,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 16. Queries
+## 15. Queries
 
 ### Articles
 
@@ -329,7 +314,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 17. Relationships
+## 16. Relationships
 
 ### Articles
 
@@ -345,7 +330,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 18. Resolver
+## 17. Resolver
 
 ### Articles
 
@@ -360,7 +345,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 19. Root Field
+## 18. Root Field
 
 ### Articles
 
@@ -374,7 +359,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 20. Schema
+## 19. Schema
 
 ### Articles
 
@@ -390,7 +375,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 21. Schema Definition Language
+## 20. Schema Definition Language
 
 ### Articles
 
@@ -401,7 +386,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 22. Schema Design
+## 21. Schema Design
 
 ### Articles
 
@@ -413,7 +398,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 23. Schema Stiching
+## 22. Schema Stiching
 
 ### Articles
 
@@ -431,7 +416,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 24. Subscriptions
+## 23. Subscriptions
 
 ### Articles
 
@@ -448,7 +433,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 25. Types
+## 24. Types
 
 ### Articles
 
@@ -463,7 +448,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 26. Union Types
+## 25. Union Types
 ### Articles
 
  * 📜 [How to write add unions and interfaces to a schema - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/features/unions-interfaces.html)
