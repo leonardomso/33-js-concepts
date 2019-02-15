@@ -195,21 +195,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 8. Entry Points
-
-### Articles
-
- * 📜 [More GraphQL Concepts - How to Graphql](https://www.howtographql.com/advanced/2-more-graphql-concepts/)
- * 📜 [Entry Points - Graphql.org](https://graphql.org/graphql-js/graphql/#entry-point)
-
- ### Videos
-
- * 🎥 [The GraphQL entry points - Mateu](https://www.youtube.com/watch?v=7eLsfIZYuvU)
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 9. Fetching
+## 8. Fetching
 
 ### Articles
 
@@ -224,7 +210,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 10. Field
+## 9. Field
 
 ### Articles
 
@@ -239,7 +225,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 11. Fragment
+## 10. Fragment
 
 ### Articles
 
@@ -255,7 +241,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 12. Mutations
+## 11. Mutations
 
 ### Articles
 
@@ -271,7 +257,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 13. Nested Info
+## 12. Nested Info
 
 ### Articles
 
@@ -286,7 +272,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 14. Polling
+## 13. Polling
 
 ### Articles
 
@@ -298,7 +284,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 15. Queries
+## 14. Queries
 
 ### Articles
 
@@ -314,7 +300,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 16. Relationships
+## 15. Relationships
 
 ### Articles
 
@@ -330,7 +316,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 17. Resolver
+## 16. Resolver
 
 ### Articles
 
@@ -345,7 +331,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 18. Root Field
+## 17. Root Field
 
 ### Articles
 
@@ -359,7 +345,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 19. Schema
+## 18. Schema
 
 ### Articles
 
@@ -375,7 +361,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 20. Schema Definition Language
+## 19. Schema Definition Language
 
 ### Articles
 
@@ -386,7 +372,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 21. Schema Design
+## 20. Schema Design
 
 ### Articles
 
@@ -398,7 +384,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 22. Schema Stiching
+## 21. Schema Stiching
 
 ### Articles
 
@@ -416,7 +402,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 23. Subscriptions
+## 22. Subscriptions
 
 ### Articles
 
@@ -433,7 +419,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 24. Types
+## 23. Types
 
 ### Articles
 
@@ -448,7 +434,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 25. Union Types
+## 24. Union Types
 ### Articles
 
  * 📜 [How to write add unions and interfaces to a schema - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/features/unions-interfaces.html)
