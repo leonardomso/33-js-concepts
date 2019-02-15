@@ -198,128 +198,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 8. IIFE, Modules and Namespaces
-
-### Articles
-
- * 📜 [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
- * 📜 [Do ES6 Modules make the case of IIFEs obsolete?](https://hashnode.com/post/do-es6-modules-make-the-case-of-iifes-obsolete-civ96wet80scqgc538un20es0)
- * 📜 [A 10 minute primer to JavaScript modules, module formats, module loaders and module bundlers ― Jurgen Van de Moere](https://www.jvandemo.com/a-10-minute-primer-to-javascript-modules-module-formats-module-loaders-and-module-bundlers/)
- * 📜 [Modules ― Exploring JS](http://exploringjs.com/es6/ch_modules.html)
- * 📜 [ES modules: A cartoon deep-dive — Lin Clark](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
- * 📜 [Understanding ES6 Modules — Craig Buckler](https://www.sitepoint.com/understanding-es6-modules/)
- * 📜 [An overview of ES6 Modules in JavaScript — Brent Graham](https://blog.cloud66.com/an-overview-of-es6-modules-in-javascript/)
- * 📜 [ES6 Modules in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-modules-in-depth)
- * 📜 [ES6 modules, Node.js and the Michael Jackson Solution — Alberto Gimeno](https://medium.com/dailyjs/es6-modules-node-js-and-the-michael-jackson-solution-828dc244b8b)
- * 📜 [JavaScript Modules: A Beginner’s Guide — Preethi Kasireddy](https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc)
- * 📜 [Using JavaScript modules on the web](https://developers.google.com/web/fundamentals/primers/modules)
-
-### Videos
-
- * 🎥 [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
- * 🎥 [Understanding JavaScript IIFE](https://www.youtube.com/watch?v=I5EntfMeIIQ)
- * 🎥 [JavaScript Modules: ES6 Import and Export — Kyle Robinson](https://www.youtube.com/watch?v=_3oSWwapPKQ)
- * 🎥 [ES6 - Modules — Ryan Christiani](https://www.youtube.com/watch?v=aQr2bV1BPyE)
- * 🎥 [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
- * 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 9. Message Queue and Event Loop
-
-### Articles
-
- * 📜 [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
- * 📜 [The JavaScript Event Loop: Explained — Erin Sweson-Healey](https://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/)
- * 📜 [What is the Event Loop in Javascript — WP Tutor.io](https://www.wptutor.io/web/js/javascript-event-loop)
- * 📜 [Understanding JS: The Event Loop — Alexander Kondov](https://hackernoon.com/understanding-js-the-event-loop-959beae3ac40)
- * 📜 [Understanding the JavaScript Event Loop — Ashish Gupta](https://www.zeolearn.com/magazine/understanding-the-javascript-event-loop)
- * 📜 [Event Loop in Javascript — Manjula Dube](https://code.likeagirl.io/what-the-heck-is-event-loop-1e414fccef49)
- * 📜 [The JavaScript Event Loop — Flavio Copes](https://flaviocopes.com/javascript-event-loop/)
- * 📜 [How JavaScript works: Event loop — Alexander Zlatkov](https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5)
- * 📜 [Tasks, microtasks, queues and schedules — Jake Archibald](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
- * 📜 [Visualising the JavaScript Event Loop with a Pizza Restaurant analogy — Priyansh Jain](https://dev.to/presto412/visualising-the-javascript-event-loop-with-a-pizza-restaurant-analogy-47a8)
-
-### Videos
-
- * 🎥 [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
- * 🎥 [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
- * 🎥 [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
- * 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
- * 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
-
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 10. setTimeout, setInterval and requestAnimationFrame
-
-### Articles
-
- * 📜 [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
- * 📜 [Why not to use setInterval — Akanksha Sharma](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
- * 📜 [setTimeout VS setInterval — Develoger](https://develoger.com/settimeout-vs-setinterval-cff85142555b)
- * 📜 [Using requestAnimationFrame — Chris Coyier](https://css-tricks.com/using-requestanimationframe/)
- * 📜 [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
- * 📜 [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
-
-### Videos
-
- * 🎥 [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
- * 🎥 [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
- * 🎥 [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
- * 🎥 [JavaScript setTimeout, setInterval & clearInterval — DoingITeasyChannel](https://www.youtube.com/watch?v=BVALvvy5bZY)
- * 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 11. JavaScript Engines
-
-### Articles
-
- * 📜 [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
- * 📜 [Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
- * 📜 [Understanding V8’s Bytecode — Franziska Hinkelmann](https://medium.com/dailyjs/understanding-v8s-bytecode-317d46c94775)
- * 📜 [How the V8 engine works? — Thibault Laurens](http://thibaultlaurens.github.io/javascript/2013/04/29/how-the-v8-engine-works/)
- * 📜 [A Brief History of Google’s V8 Javascript Engine — Clair Smith](https://www.mediacurrent.com/blog/brief-history-googles-v8-javascript-engine/)
- * 📜 [JavaScript essentials: why you should know how the engine works - Rainer Hahnekamp](https://medium.freecodecamp.org/javascript-essentials-why-you-should-know-how-the-engine-works-c2cc0d321553)
- * 📜 [JavaScript engine fundamentals: Shapes and Inline Caches](https://mathiasbynens.be/notes/shapes-ics)
- * 📜 [JavaScript engine fundamentals: optimizing prototypes](https://mathiasbynens.be/notes/prototypes)
- * 📜 [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
-
-
-### Videos
-
- * 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 12. Bitwise Operators, Type Arrays and Array Buffers
-
-### Articles
-
- * 📜 [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
- * 📜 [Using JavaScript’s Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
- * 📜 [JavaScript Bitwise Operators — w3resource](https://www.w3resource.com/javascript/operators/bitwise-operator.php)
- * 📜 [Bitwise Operators in Javascript — Joe Cha](https://medium.com/bother7-blog/bitwise-operators-in-javascript-65c4c69be0d3)
- * 📜 [A Comprehensive Primer on Binary Computation and Bitwise Operators in Javascript — Paul Brown](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
-
- ### Videos
-
- * 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 13. Endpoints
+## 8. Endpoints
 
 ### Articles
 
@@ -336,7 +215,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 14. Entry Points
+## 9. Entry Points
 
 ### Articles
 
@@ -350,7 +229,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 15. Fetching
+## 10. Fetching
 
 ### Articles
 
@@ -365,7 +244,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 16. Field
+## 11. Field
 
 ### Articles
 
@@ -381,7 +260,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 17. Fragment
+## 12. Fragment
 
 ### Articles
 
@@ -397,7 +276,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 18. Mutations
+## 13. Mutations
 
 ### Articles
 
@@ -413,7 +292,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 19. Nested Info
+## 14. Nested Info
 
 ### Articles
 
@@ -428,7 +307,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 20. Polling
+## 15. Polling
 
 ### Articles
 
@@ -440,7 +319,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 21. Queries
+## 16. Queries
 
 ### Articles
 
@@ -456,7 +335,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 22. Relationships
+## 17. Relationships
 
 ### Articles
 
@@ -472,7 +351,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 23. Resolver
+## 18. Resolver
 
 ### Articles
 
@@ -487,7 +366,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 24. Root Field
+## 19. Root Field
 
 ### Articles
 
@@ -501,7 +380,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 25. Schema
+## 20. Schema
 
 ### Articles
 
@@ -517,7 +396,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 26. Schema Definition Language
+## 21. Schema Definition Language
 
 ### Articles
 
@@ -528,7 +407,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 27. Schema Design
+## 22. Schema Design
 
 ### Articles
 
@@ -540,7 +419,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 28. Schema Stiching
+## 23. Schema Stiching
 
 ### Articles
 
@@ -558,7 +437,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 29. Subscriptions
+## 24. Subscriptions
 
 ### Articles
 
@@ -575,7 +454,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 30. Types
+## 25. Types
 
 ### Articles
 
@@ -590,7 +469,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 31. Union Types
+## 26. Union Types
 ### Articles
 
  * 📜 [How to write add unions and interfaces to a schema - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/features/unions-interfaces.html)
