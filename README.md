@@ -169,10 +169,7 @@ All the translations for this repo will be listed below:
 
 ### Videos
 
- * 🎥 [What Makes Javascript Weird ... and Awesome pt. 4 — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
- * 🎥 [Variable Scope in JavaScript — Kirupa Chinnathambi](https://www.youtube.com/watch?v=dhp57T3p760)
- * 🎥 [JavaScript Block Scope and Function Scope — mmtuts](https://www.youtube.com/watch?v=aK_nuUAdr8E)
- * 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
+ * 🎥 [GraphQL with your REST endpoints with RestLink — Leigh Halliday](https://www.youtube.com/watch?v=yvoGCY7N_fg)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -182,7 +179,7 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
- * 📜 [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://www.howtographql.com/advanced/2-more-graphql-concepts/)
+ * 📜 [API Reference: entry points — GraphQL](https://graphql.org/graphql-js/graphql/#entry-point)
  * 📜 [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
  * 📜 [JavaScript Function — Declaration vs Expression — Ravi Roshan](https://medium.com/@raviroshan.talk/javascript-function-declaration-vs-expression-f5873b8c7b38)
  * 📜 [Function Declarations vs. Function Expressions — Mandeep Singh](https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052)
@@ -190,9 +187,7 @@ All the translations for this repo will be listed below:
 
 ### Videos
 
- * 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
- * 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
- * 🎥 [Function Statements and Function Expressions — Codeacademy](https://www.youtube.com/watch?v=oB5rH_9bqAI)
+ * 🎥 [ContentaJS GraphQL 3 - The GraphQL entry points — Mateu](https://www.youtube.com/watch?v=7eLsfIZYuvU)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -249,7 +244,6 @@ All the translations for this repo will be listed below:
 ### Articles
 
  * 📜 [Class: GraphQL::Field - rubydoc.info](https://www.rubydoc.info/gems/graphql/GraphQL/Field)
- * 📜 (https://graphql-ruby.org/fields/introduction.html)
  * 📜 [Fields: Introduction - graphql-ruby.org](https://graphql-ruby.org/fields/introduction.html)
 
  ### Videos
