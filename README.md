@@ -6,8 +6,8 @@
   33 Concepts Every JavaScript Developer Should Know
   <br><br>
 </h1>
-
-[![Support](https://img.shields.io/badge/paypal-doar-179bd7.svg?logo=paypal&style=flat&logoColor=blue)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url)
+    
+[![Donate](https://i.imgur.com/qVTU1Uc.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url)
 
 ## Introduction
 
