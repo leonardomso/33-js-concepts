@@ -7,9 +7,9 @@
   <br><br>
 </h1>
     
-<div align="center">
-	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url"><img src="https://i.imgur.com/qVTU1Uc.png" /></a>
-</div>
+<h1 align="center">
+	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url" target="_blank"><img src="https://i.imgur.com/qVTU1Uc.png" /></a>
+</h1 >
 
 ## Introduction
 
