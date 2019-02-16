@@ -7,7 +7,9 @@
   <br><br>
 </h1>
     
-[![Donate](https://i.imgur.com/qVTU1Uc.png)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url)
+<div align="center">
+	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url"><img src="https://i.imgur.com/qVTU1Uc.png" /></a>
+</div>
 
 ## Introduction
 
