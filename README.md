@@ -592,6 +592,7 @@ All the translations for this repo will be listed below:
 ---
 
 # Best Practices
+
 ## 34. Schema Design
 
 ### Articles
