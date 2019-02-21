@@ -318,39 +318,10 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
-
-
-
-
-
-
-
-
-
-
-
----
-## 1. Cache
-
-
-### Articles
-
- * 📜 [Understanding Caching - Weblab Technology](https://medium.com/p/58756ff253d8#9388)
- * 📜 [Caching with GraphQL - What are the best options? - Will Howard](https://blog.usejournal.com/caching-with-graphql-what-are-the-best-options-e161b0f20e59)
- * 📜 [GraphQL VS Rest: Caching - Phil Sturgeon](https://philsturgeon.uk/api/2017/01/26/graphql-vs-rest-caching/)
- * 📜 [Learn Caching - GraphQL](https://graphql.org/learn/caching/)
-
-### Videos
-
- * 🎥 [GraphQL Caching using DataLoader — Fun Fun Function](https://www.youtube.com/watch?v=--AguZ20lLA)
- * 🎥 [Feature: GraphQL Caching with DataLoader — Ben Awad](https://www.youtube.com/watch?v=tSQ7WuAcAbU)
-
-
-**[⬆ Back to Top](#table-of-contents)**
-
 ---
 
-## 2. Setting Up a Server
+# Server
+## 1. Setting Up a Server
 
 ### Articles
 
@@ -367,12 +338,42 @@ All the translations for this repo will be listed below:
  * 🎥 [Learn how to build an API using GraphQL with Apollo Server 2.0 — Fireship](https://www.youtube.com/watch?v=8D9XnnjFGMs)
  * 🎥 [GraphQL server tutorial for Node.js with SQL, MongoDB and REST — Apollo GraphQL](https://www.youtube.com/watch?v=PHabPhgRUuU)
 
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 2. Schema
+
+### Articles
+
+ * 📜 [Understanding schema concepts - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/essentials/schema.html)
+ * 📜 [Graphql Server Basics: Schemas Explained - Prisma Documentation](https://www.prisma.io/blog/graphql-server-basics-the-schema-ac5e2950214e)
+ 
+
+ ### Videos
+
+ * 🎥 [GraphQL Schema - The Net Ninja](https://www.youtube.com/watch?v=A8vtRvz-lK0)
 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 3. Context
+## 3. Resolver
+
+### Articles
+
+ * 📜 [GraphQL Resolvers: Best Practices - Mark Stuart](https://medium.com/paypal-engineering/graphql-resolvers-best-practices-cd36fdbcef55)
+ * 📜 [Overview of Resolvers - Graphcool Documentation](https://www.graph.cool/docs/reference/functions/resolvers-su6wu3yoo2)
+
+ ### Videos
+
+ * 🎥 [GraphQL Tutorial #9, The Resolve Function - The Net Ninja](https://www.youtube.com/watch?v=NWod5SFW13s)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 4. Context
 
 ### Articles
 
@@ -383,7 +384,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 4. Databases
+## 5. Databases
 
 ### Articles
 
@@ -402,7 +403,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 5. Dataloader
+## 6. Dataloader
 
 ### Articles
 
@@ -418,7 +419,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 6. Entry Points
+## 7. Entry Points
 
 ### Articles
 
@@ -433,7 +434,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 7. Endpoints
+## 8. Endpoints
 
 ### Articles
 
@@ -450,108 +451,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 8. Fetching
-
-### Articles
-
- * 📜 [4 simple ways to call a GraphQL API - Sashko Stubailo](https://blog.apollographql.com/4-simple-ways-to-call-a-graphql-api-a6807bcdb355)
-
-  ### Videos
-
- * 🎥 [Fetching data from an API in GraphQL - Ben Awad](https://www.youtube.com/watch?v=RDQyAcvmbpM)
- * 🎥 [Building a GraphQL Server, RootQuery & Fetching Data - Traversy Media](https://www.youtube.com/watch?v=e9Zxzr7sy60)
- 
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-
-## 10. Fragment
-
-### Articles
-
- * 📜 [Using fragments - Apollo](https://www.apollographql.com/docs/react/advanced/fragments.html)
- * 📜 [How to query your schema with GraphQL fragments - David Mráz](https://medium.com/graphql-mastery/graphql-fragments-and-how-to-use-them-8ee30b44f59e)
- * 📜 [GraphQL Fragments are the Best Match for UI Components - Samer Buna](https://www.manifold.co/blog/graphql-fragments-are-the-best-match-for-ui-components-72b8f61c20fe)
-
- ### Videos
-
- * 🎥 [How GraphQL Fragments Work - Ben Awad](https://www.youtube.com/watch?v=AAHR7eBKLU8)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-
----
-
-
-## 13. Polling
-
-### Articles
-
- * 📜 [Dynamic GraphQL polling with React and Apollo Client - David Glasser](https://blog.apollographql.com/dynamic-graphql-polling-with-react-and-apollo-client-fb36e390d250)
- * 📜 [Introducing Schema Polling - Novvum ](https://www.novvum.io/post/graphql-playground-v1-8-8-introducing-schema-polling)
- 
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-
-
----
-
-
-## 16. Resolver
-
-### Articles
-
- * 📜 [GraphQL Resolvers: Best Practices - Mark Stuart](https://medium.com/paypal-engineering/graphql-resolvers-best-practices-cd36fdbcef55)
- * 📜 [Overview of Resolvers - Graphcool Documentation](https://www.graph.cool/docs/reference/functions/resolvers-su6wu3yoo2)
-
- ### Videos
-
- * 🎥 [GraphQL Tutorial #9, The Resolve Function - The Net Ninja](https://www.youtube.com/watch?v=NWod5SFW13s)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-
----
-
-## 18. Schema
-
-### Articles
-
- * 📜 [Understanding schema concepts - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/essentials/schema.html)
- * 📜 [Graphql Server Basics: Schemas Explained - Prisma Documentation](https://www.prisma.io/blog/graphql-server-basics-the-schema-ac5e2950214e)
- 
-
- ### Videos
-
- * 🎥 [GraphQL Schema - The Net Ninja](https://www.youtube.com/watch?v=A8vtRvz-lK0)
-
-**[⬆ Back to Top](#table-of-contents)**
-
-
-
----
-
-## 20. Schema Design
-
-### Articles
-
- * 📜 [GraphQL best practices for GraphQL schema design - David Mraz](https://graphqlmastery.com/blog/graphql-best-practices-for-graphql-schema-design)
- * 📜 [GraphQL Schema Design: Building Evolvable Schemas - Marc-André Giroux](https://blog.apollographql.com/graphql-schema-design-building-evolvable-schemas-1501f3c59ed5)
- * 📜 [Writing a Graphql Schema - Eitan Frailich](https://github.com/davidyaha/graphql-workshop/blob/master/manuals/step-2-writing-a-schema.md)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 21. Schema Stiching
+## 9. Schema Stiching
 
 ### Articles
 
@@ -569,7 +469,150 @@ All the translations for this repo will be listed below:
 
 ---
 
+## 10. Code First
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
 ---
 
+## 11. Schema First
 
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 12. Middleware
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+# Client
+## 1. Fetching
+
+### Articles
+
+ * 📜 [4 simple ways to call a GraphQL API - Sashko Stubailo](https://blog.apollographql.com/4-simple-ways-to-call-a-graphql-api-a6807bcdb355)
+
+  ### Videos
+
+ * 🎥 [Fetching data from an API in GraphQL - Ben Awad](https://www.youtube.com/watch?v=RDQyAcvmbpM)
+ * 🎥 [Building a GraphQL Server, RootQuery & Fetching Data - Traversy Media](https://www.youtube.com/watch?v=e9Zxzr7sy60)
+ 
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 2. Fragments
+
+### Articles
+
+ * 📜 [Using fragments - Apollo](https://www.apollographql.com/docs/react/advanced/fragments.html)
+ * 📜 [How to query your schema with GraphQL fragments - David Mráz](https://medium.com/graphql-mastery/graphql-fragments-and-how-to-use-them-8ee30b44f59e)
+ * 📜 [GraphQL Fragments are the Best Match for UI Components - Samer Buna](https://www.manifold.co/blog/graphql-fragments-are-the-best-match-for-ui-components-72b8f61c20fe)
+
+ ### Videos
+
+ * 🎥 [How GraphQL Fragments Work - Ben Awad](https://www.youtube.com/watch?v=AAHR7eBKLU8)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 3. Variables
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 4. Alias
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 5. Polling
+
+### Articles
+
+ * 📜 [Dynamic GraphQL polling with React and Apollo Client - David Glasser](https://blog.apollographql.com/dynamic-graphql-polling-with-react-and-apollo-client-fb36e390d250)
+ * 📜 [Introducing Schema Polling - Novvum ](https://www.novvum.io/post/graphql-playground-v1-8-8-introducing-schema-polling)
+ 
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+# Best Practices
+## 1. Schema Design
+
+### Articles
+
+ * 📜 [GraphQL best practices for GraphQL schema design - David Mraz](https://graphqlmastery.com/blog/graphql-best-practices-for-graphql-schema-design)
+ * 📜 [GraphQL Schema Design: Building Evolvable Schemas - Marc-André Giroux](https://blog.apollographql.com/graphql-schema-design-building-evolvable-schemas-1501f3c59ed5)
+ * 📜 [Writing a Graphql Schema - Eitan Frailich](https://github.com/davidyaha/graphql-workshop/blob/master/manuals/step-2-writing-a-schema.md)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 2. Logging
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
 
