@@ -42,40 +42,40 @@ All the translations for this repo will be listed below:
 6. **[Field](#6-field)**
 7. **[Relationships](#7-relationships)**
 8. **[Nested Info](#8-nested-info)**
-9. **Comments and Descriptions**
-10. **Arguments**
-11. **[Union Types](#24-union-types)**
-12. **DefaultValue**
-13. **Directives**
-14. **Type Extensions**
-15. **Schema Extension**
-16. **[Schema Definition Language](#19-schema-definition-language)**
+9. **[Comments and Descriptions](#9-comments-and-descriptions)**
+10. **[Arguments]**
+11. **[Union Types](#11-union-types)**
+12. **[DefaultValue](#12-defaultvalue)**
+13. **[Directives](#13-directives)**
+14. **[Type Extensions](#14-type-extensions)**
+15. **[Schema Extension](#15-schema-extension)**
+16. **[Schema Definition Language](#16-schema-definition-language)**
 
 **Server**
-1. **[Setting up a server](#2-setting-up-a-server)**
-2. **[Schema](#18-schema)**
-3. **[Resolvers](#16-resolver)**
-4. **[Context](#3-context)**
-5. **[Databases](#4-databases)**
-6. **[Dataloader](#5-dataloader)**
-7. **[Entry Points](#6-entry-points)**
-8. **[Endpoints](#7-endpoints)**
-9. **[Schema Stitching](#21-schema-stitching)**
-10. **Code First**
-11. **Schema First**
-12. **Middleware**
+17. **[Setting up a server](#17-setting-up-a-server)**
+18. **[Schema](#18-schema)**
+19. **[Resolvers](#19-resolvers)**
+20. **[Context](#20-context)**
+21. **[Databases](#21-databases)**
+22. **[Dataloader](#22-dataloader)**
+23. **[Entry Points](#23-entry-points)**
+24. **[Endpoints](#24-endpoints)**
+25. **[Schema Stitching](#25schema-stitching)**
+26. **[Code First](#26-code-first)**
+27. **[Schema First](#27-schema-first)**
+28. **[Middleware](#28-middleware)**
 
 **Client**
-1. **[Fetching](#8-fetching)**
-2. **[Fragments](#10-fragment)** 
-3. **Variables**
-4. **Alias**
-5. **[Polling](#13-polling)**
-6. **[Cache](#1-cache)**
+29. **[Fetching](#29-fetching)**
+30. **[Fragments](#30-fragments)** 
+31. **[Variables](#31-alias)**
+32. **[Alias](#32-alias)**
+33. **[Polling](#33-polling)**
+34. **[Cache](#34-cache)**
 
 **Best Practices**
-1. **[Schema Design](#20-schema-design)**
-2. **Logging** 
+35. **[Schema Design](#35-schema-design)**
+36. **[Logging](#36-logging)** 
 
 ---
 # Specs
