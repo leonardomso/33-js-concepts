@@ -22,9 +22,7 @@
 
 ## Introduction
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
-
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+This repository was created with the intention of helping developers master their concepts in GraphQL. It is not a requirement, but a guide for future studies.
 
 ## Community
 
@@ -35,35 +33,305 @@ All the translations for this repo will be listed below:
 ---
 
 ## Table of Contents
+**Specs**
+1. **[Root Field](#1-root-field)**
+2. **[Queries](#2-queries)**
+3. **[Mutations](#3-mutations)**
+4. **[Subscriptions](#4-subscriptions)**
+5. **[Types](#5-types)**
+6. **[Field](#6-field)**
+7. **[Relationships](#7-relationships)**
+8. **[Nested Info](#8-nested-info)**
+9. **Comments and Descriptions**
+10. **Arguments**
+11. **[Union Types](#24-union-types)**
+12. **DefaultValue**
+13. **Directives**
+14. **Type Extensions**
+15. **Schema Extension**
+16. **[Schema Definition Language](#19-schema-definition-language)**
 
-1. **[Caching](#1-caching)**
-2. **[Setting up a server](#2-setting-up-a-server)**
-3. **[Context](#3-context)**
-4. **[Databases](#4-databases)**
-5. **[Dataloader](#5-dataloader)**
-6. **[Entry Points](#6-entry-points)**
-7. **[Endpoints](#7-endpoints)**
-8. **[Fetching](#8-fetching)**
-9. **[Field](#9-field)**
-10. **[Fragment](#10-fragment)**
-11. **[Mutations](#11-mutations)**
-12. **[Nested Info](#12-nested-info)**
-13. **[Polling](#13-polling)**
-14. **[Queries](#14-queries)**
-15. **[Relationships](#15-relationships)**
-16. **[Resolver](#16-resolver)**
-17. **[Root Field](#17-root-field)**
-18. **[Schema](#18-schema)**
-19. **[Schema Definition Language](#19-schema-definition-language)**
-20. **[Schema Design](#20-schema-design)**
-21. **[Schema Stitching](#21-schema-stitching)**
-22. **[Subscriptions](#22-subscriptions)**
-23. **[Types](#23-types)**
-24. **[Union Types](#24-union-types)**
+**Server**
+1. **[Setting up a server](#2-setting-up-a-server)**
+2. **[Schema](#18-schema)**
+3. **[Resolvers](#16-resolver)**
+4. **[Context](#3-context)**
+5. **[Databases](#4-databases)**
+6. **[Dataloader](#5-dataloader)**
+7. **[Entry Points](#6-entry-points)**
+8. **[Endpoints](#7-endpoints)**
+9. **[Schema Stitching](#21-schema-stitching)**
+10. **Code First**
+11. **Schema First**
+12. **Middleware**
+
+**Client**
+1. **[Fetching](#8-fetching)**
+2. **[Fragments](#10-fragment)** 
+3. **Variables**
+4. **Alias**
+5. **[Polling](#13-polling)**
+6. **[Cache](#1-cache)**
+
+**Best Practices**
+1. **[Schema Design](#20-schema-design)**
+2. **Logging** 
+
+---
+# Specs
+## 1. Root Field
+
+### Articles
+
+ * 📜 [Root Fields & Resolvers - Graphql.org ](https://graphql.org/learn/execution/)
+
+ ### Videos
+
+ * 🎥 [GraphQL Tutorial, Root Query — The Net Ninja](https://www.youtube.com/watch?v=ALqNbTik44o)
+
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 1. Caching
+## 2. Queries
+
+### Articles
+
+ * 📜 [Queries and Mutations - Graphql.org](https://graphql.org/learn/queries/)
+ * 📜 [The Anatomy of a Graphql Query — Sashko Stubailo](https://blog.apollographql.com/the-anatomy-of-a-graphql-query-6dffa9e9e747)
+ * 📜 [Fetch data with queries - Apollo Documentation](https://www.apollographql.com/docs/tutorial/queries.html)
+
+ ### Videos
+
+ * 🎥 [GraphQL Tutorial #4 - Making Queries - The Net Ninja](https://www.youtube.com/watch?v=bX2e4FILf78)
+ 
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 3. Mutations
+
+### Articles
+
+ * 📜 [Understanding schema concepts - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/essentials/schema.html)
+ * 📜 [Mutations in GraphQL - Alexander Kondov](https://hackernoon.com/mutations-in-graphql-9ac6a28202a2)
+
+ ### Videos
+
+ * 🎥 [GraphQL Tutorial #18 - Mutations - The Net Ninja](https://www.youtube.com/watch?v=DU77lbBPfBI)
+ * 🎥 [GraphQL Tutorial #19 - More on Mutations - The Net Ninja](https://www.youtube.com/watch?v=H8oRezNak2s)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 4. Subscriptions
+
+### Articles
+
+ * 📜 [Graphql Subscriptions Example - jedwards1211](https://github.com/apollographql/graphql-subscriptions)
+ * 📜 [Make web real-time with GraphQL subscriptions - David Qorashi](https://medium.com/@hpux/make-web-real-time-with-graphql-subscriptions-5a59ac1b010c)
+ * 📜 [Subscriptions in Graphql and Relay - Dan Schafer](https://graphql.org/blog/subscriptions-in-graphql-and-relay/)
+ * 📜 [From Zero to Graphql Subscriptions - Robert Zhu](https://hackernoon.com/from-zero-to-graphql-subscriptions-416b9e0284f3)
+
+ ### Videos
+
+ * 🎥 [What is a Graphql Subscription - Ben Awad](https://www.youtube.com/watch?v=Tp8UPgmhyTs)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 5. Types
+
+### Articles
+
+ * 📜 [Constructing Types — Graphql.org](https://graphql.org/graphql-js/constructing-types/)
+ * 📜 [Object Types — Graphql.org](https://graphql.org/graphql-js/object-types/)
+
+  ### Videos
+
+ * 🎥 [Type Relations — The Net Ninja](https://www.youtube.com/watch?v=-aQ_Io9m1GQ)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 6. Field
+
+### Articles
+
+ * 📜 [Class: GraphQL::Field - rubydoc.info](https://www.rubydoc.info/gems/graphql/GraphQL/Field)
+ * 📜 [Fields: Introduction - graphql-ruby.org](https://graphql-ruby.org/fields/introduction.html)
+
+ ### Videos
+
+ * 🎥 [Your GraphQL field guide - Bojan Tomić](https://www.youtube.com/watch?v=ROwICdehlb0)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 7. Relationships
+
+### Articles
+
+ * 📜 [Explaining GraphQL Connections - Caleb Meredith](https://blog.apollographql.com/explaining-graphql-connections-c48b7c3d6976)
+ * 📜 [Relations - Graphql Documentation](https://www.howtographql.com/graphql-scala/7-relations/)
+
+ ### Videos
+
+ * 🎥 [Type Relations - The Net Ninja](https://www.youtube.com/watch?v=-aQ_Io9m1GQ)
+ * 🎥 [GraphQL Data Relationships - MicroUrb](https://www.youtube.com/watch?v=9EzZJz0QeEI)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 8. Nested Info
+
+### Articles
+
+ * 📜 [GraphQL Schema Language Cheat Sheet - Hafiz Ismail](https://wehavefaces.net/graphql-shorthand-notation-cheatsheet-17cd715861b6)
+ * 📜 [Advanced querying with GraphQL and Express - Alexander Kondov](https://hackernoon.com/advanced-querying-with-graphql-and-express-8cf2fd05f5ea)
+
+ ### Videos
+
+ * 🎥 [Nesting GraphQL - Ben Awad](https://www.youtube.com/watch?v=Ffl1oWjSUF4)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 9. Comments/Descriptions
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 10. Arguments
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 11. Union Types
+### Articles
+
+ * 📜 [How to write add unions and interfaces to a schema - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/features/unions-interfaces.html)
+ * 📜 [Graphql Tour Interfaces and Unions — Clay Allsopp](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
+ * 📜 [Graphql Interfaces and Unions-How to design a Graphql Schema — David Mraz](https://graphqlmastery.com/blog/graphql-interfaces-and-unions-how-to-design-graphql-schema)
+ * 📜 [Interfaces and Unions in GraphQL — AWS Documentation](https://docs.aws.amazon.com/appsync/latest/devguide/interfaces-and-unions.html)
+
+  ### Videos
+
+ * 🎥 [Typescript Union and Intersection Types- Interface vs Type Aliases - Angular University](https://www.youtube.com/watch?v=76io0UBS6fA)
+
+ **[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 12. DefaultValue
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 13. Directives
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 14. Type Extension
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 15. Schema Extension
+
+### Articles
+
+ * 📜 [Title - Author]([Paste Link here])
+
+
+ ### Videos
+
+ * 🎥 [Title - Youtube Name]([Paste Link here])
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 16. Schema Definition Language
+
+### Articles
+
+ * 📜 [GraphQL SDL, Schema Definition Language - Prisma Documentation](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51)
+ * 📜 [Three ways to represent your GraphQL schema - Sashko Stubailo](https://blog.apollographql.com/three-ways-to-represent-your-graphql-schema-a41f4175100d)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+
+
+
+
+
+
+
+
+
+
+
+---
+## 1. Cache
+
 
 ### Articles
 
@@ -197,20 +465,6 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 9. Field
-
-### Articles
-
- * 📜 [Class: GraphQL::Field - rubydoc.info](https://www.rubydoc.info/gems/graphql/GraphQL/Field)
- * 📜 [Fields: Introduction - graphql-ruby.org](https://graphql-ruby.org/fields/introduction.html)
-
- ### Videos
-
- * 🎥 [Your GraphQL field guide - Bojan Tomić](https://www.youtube.com/watch?v=ROwICdehlb0)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
 
 ## 10. Fragment
 
@@ -228,36 +482,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 11. Mutations
-
-### Articles
-
- * 📜 [Understanding schema concepts - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/essentials/schema.html)
- * 📜 [Mutations in GraphQL - Alexander Kondov](https://hackernoon.com/mutations-in-graphql-9ac6a28202a2)
-
- ### Videos
-
- * 🎥 [GraphQL Tutorial #18 - Mutations - The Net Ninja](https://www.youtube.com/watch?v=DU77lbBPfBI)
- * 🎥 [GraphQL Tutorial #19 - More on Mutations - The Net Ninja](https://www.youtube.com/watch?v=H8oRezNak2s)
-
-**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 12. Nested Info
-
-### Articles
-
- * 📜 [GraphQL Schema Language Cheat Sheet - Hafiz Ismail](https://wehavefaces.net/graphql-shorthand-notation-cheatsheet-17cd715861b6)
- * 📜 [Advanced querying with GraphQL and Express - Alexander Kondov](https://hackernoon.com/advanced-querying-with-graphql-and-express-8cf2fd05f5ea)
-
- ### Videos
-
- * 🎥 [Nesting GraphQL - Ben Awad](https://www.youtube.com/watch?v=Ffl1oWjSUF4)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
 
 ## 13. Polling
 
@@ -271,37 +498,10 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 14. Queries
 
-### Articles
-
- * 📜 [Queries and Mutations - Graphql.org](https://graphql.org/learn/queries/)
- * 📜 [The Anatomy of a Graphql Query — Sashko Stubailo](https://blog.apollographql.com/the-anatomy-of-a-graphql-query-6dffa9e9e747)
- * 📜 [Fetch data with queries - Apollo Documentation](https://www.apollographql.com/docs/tutorial/queries.html)
-
- ### Videos
-
- * 🎥 [GraphQL Tutorial #4 - Making Queries - The Net Ninja](https://www.youtube.com/watch?v=bX2e4FILf78)
- 
-**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 15. Relationships
-
-### Articles
-
- * 📜 [Explaining GraphQL Connections - Caleb Meredith](https://blog.apollographql.com/explaining-graphql-connections-c48b7c3d6976)
- * 📜 [Relations - Graphql Documentation](https://www.howtographql.com/graphql-scala/7-relations/)
-
- ### Videos
-
- * 🎥 [Type Relations - The Net Ninja](https://www.youtube.com/watch?v=-aQ_Io9m1GQ)
- * 🎥 [GraphQL Data Relationships - MicroUrb](https://www.youtube.com/watch?v=9EzZJz0QeEI)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
 
 ## 16. Resolver
 
@@ -318,17 +518,6 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 17. Root Field
-
-### Articles
-
- * 📜 [Root Fields & Resolvers - Graphql.org ](https://graphql.org/learn/execution/)
-
- ### Videos
-
- * 🎥 [GraphQL Tutorial, Root Query — The Net Ninja](https://www.youtube.com/watch?v=ALqNbTik44o)
-
-**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -346,16 +535,7 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
-## 19. Schema Definition Language
-
-### Articles
-
- * 📜 [GraphQL SDL, Schema Definition Language - Prisma Documentation](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51)
- * 📜 [Three ways to represent your GraphQL schema - Sashko Stubailo](https://blog.apollographql.com/three-ways-to-represent-your-graphql-schema-a41f4175100d)
-
-**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
@@ -389,50 +569,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 22. Subscriptions
-
-### Articles
-
- * 📜 [Graphql Subscriptions Example - jedwards1211](https://github.com/apollographql/graphql-subscriptions)
- * 📜 [Make web real-time with GraphQL subscriptions - David Qorashi](https://medium.com/@hpux/make-web-real-time-with-graphql-subscriptions-5a59ac1b010c)
- * 📜 [Subscriptions in Graphql and Relay - Dan Schafer](https://graphql.org/blog/subscriptions-in-graphql-and-relay/)
- * 📜 [From Zero to Graphql Subscriptions - Robert Zhu](https://hackernoon.com/from-zero-to-graphql-subscriptions-416b9e0284f3)
-
- ### Videos
-
- * 🎥 [What is a Graphql Subscription - Ben Awad](https://www.youtube.com/watch?v=Tp8UPgmhyTs)
-
-**[⬆ Back to Top](#table-of-contents)**
-
 ---
 
-## 23. Types
 
-### Articles
 
- * 📜 [Constructing Types — Graphql.org](https://graphql.org/graphql-js/constructing-types/)
- * 📜 [Object Types — Graphql.org](https://graphql.org/graphql-js/object-types/)
-
-  ### Videos
-
- * 🎥 [Type Relations — The Net Ninja](https://www.youtube.com/watch?v=-aQ_Io9m1GQ)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 24. Union Types
-### Articles
-
- * 📜 [How to write add unions and interfaces to a schema - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/features/unions-interfaces.html)
- * 📜 [Graphql Tour Interfaces and Unions — Clay Allsopp](https://medium.com/the-graphqlhub/graphql-tour-interfaces-and-unions-7dd5be35de0d)
- * 📜 [Graphql Interfaces and Unions-How to design a Graphql Schema — David Mraz](https://graphqlmastery.com/blog/graphql-interfaces-and-unions-how-to-design-graphql-schema)
- * 📜 [Interfaces and Unions in GraphQL — AWS Documentation](https://docs.aws.amazon.com/appsync/latest/devguide/interfaces-and-unions.html)
-
-  ### Videos
-
- * 🎥 [Typescript Union and Intersection Types- Interface vs Type Aliases - Angular University](https://www.youtube.com/watch?v=76io0UBS6fA)
-
- **[⬆ Back to Top](#table-of-contents)**
-
----
