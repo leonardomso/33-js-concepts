@@ -92,7 +92,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 2. Queries
 
@@ -108,7 +107,6 @@ All the translations for this repo will be listed below:
  
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 3. Mutations
 
@@ -124,7 +122,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 4. Subscriptions
 
@@ -141,7 +138,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 5. Types
 
@@ -156,7 +152,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 6. Field
 
@@ -171,7 +166,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 7. Relationships
 
@@ -187,7 +181,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 8. Nested Info
 
@@ -202,7 +195,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 9. Comments and Descriptions
 
@@ -210,14 +202,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 10. Arguments
 
@@ -225,14 +215,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 11. Union Types
 
@@ -249,7 +237,6 @@ All the translations for this repo will be listed below:
 
  **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 12. DefaultValue
 
@@ -264,7 +251,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 13. Directives
 
@@ -279,7 +265,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 14. Type Extension
 
@@ -287,14 +272,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 15. Schema Extension
 
@@ -302,14 +285,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 16. Schema Definition Language
 
@@ -342,7 +323,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 18. Schema
 
@@ -358,7 +338,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 19. Resolvers
 
@@ -373,7 +352,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 20. Context
 
@@ -384,7 +362,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 21. Databases
 
@@ -403,7 +380,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 22. Dataloader
 
@@ -419,7 +395,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 23. Entry Points
 
@@ -427,14 +402,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [API Reference: entry points — GraphQL](https://graphql.org/graphql-js/graphql/#entry-point)
 
-
 ### Videos
 
  * 🎥 [ContentaJS GraphQL 3 - The GraphQL entry points — Mateu](https://www.youtube.com/watch?v=7eLsfIZYuvU)
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 24. Endpoints
 
@@ -451,7 +424,6 @@ All the translations for this repo will be listed below:
  
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 25. Schema Stitching
 
@@ -469,7 +441,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 26. Code First
 
@@ -477,14 +448,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 27. Schema First
 
@@ -492,14 +461,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 28. Middleware
 
@@ -531,7 +498,6 @@ All the translations for this repo will be listed below:
  
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 30. Fragments
 
@@ -547,7 +513,6 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 31. Variables
 
@@ -555,14 +520,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 32. Alias
 
@@ -570,14 +533,12 @@ All the translations for this repo will be listed below:
 
  * 📜 [Title - Author]([Paste Link here])
 
-
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
 ## 33. Polling
 
@@ -586,14 +547,29 @@ All the translations for this repo will be listed below:
  * 📜 [Dynamic GraphQL polling with React and Apollo Client - David Glasser](https://blog.apollographql.com/dynamic-graphql-polling-with-react-and-apollo-client-fb36e390d250)
  * 📜 [Introducing Schema Polling - Novvum ](https://www.novvum.io/post/graphql-playground-v1-8-8-introducing-schema-polling)
  
+**[⬆ Back to Top](#table-of-contents)**
+
+
+## 34. Cache
+
+### Articles
+
+ * 📜 [Understanding Caching](https://medium.com/p/58756ff253d8#9388)
+ * 📜 [Caching with GraphQL - What are the best options?](https://blog.usejournal.com/caching-with-graphql-what-are-the-best-options-e161b0f20e59)
+ * 📜 [GraphQL VS Rest: Caching](https://philsturgeon.uk/api/2017/01/26/graphql-vs-rest-caching/)
+ * 📜 [Learn Caching](https://graphql.org/learn/caching/)
+
+### Videos
+
+* 🎥 [GraphQL Caching using DataLoader — Fun Fun Function](https://www.youtube.com/watch?v=--AguZ20lLA)
+* 🎥 [Feature: GraphQL Caching with DataLoader — Ben Awad](https://www.youtube.com/watch?v=tSQ7WuAcAbU)
 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
-
 # Best Practices
 
-## 34. Schema Design
+## 35. Schema Design
 
 ### Articles
 
@@ -603,20 +579,15 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
----
 
-## 35. Logging
+## 36. Logging
 
 ### Articles
 
  * 📜 [Title - Author]([Paste Link here])
-
 
  ### Videos
 
  * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
-
----
-
