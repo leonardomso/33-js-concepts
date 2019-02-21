@@ -43,7 +43,7 @@ All the translations for this repo will be listed below:
 7. **[Relationships](#7-relationships)**
 8. **[Nested Info](#8-nested-info)**
 9. **[Comments and Descriptions](#9-comments-and-descriptions)**
-10. **[Arguments]**
+10. **[Arguments](#10-arguments)**
 11. **[Union Types](#11-union-types)**
 12. **[DefaultValue](#12-defaultvalue)**
 13. **[Directives](#13-directives)**
@@ -52,6 +52,7 @@ All the translations for this repo will be listed below:
 16. **[Schema Definition Language](#16-schema-definition-language)**
 
 **Server**
+
 17. **[Setting up a server](#17-setting-up-a-server)**
 18. **[Schema](#18-schema)**
 19. **[Resolvers](#19-resolvers)**
@@ -60,12 +61,13 @@ All the translations for this repo will be listed below:
 22. **[Dataloader](#22-dataloader)**
 23. **[Entry Points](#23-entry-points)**
 24. **[Endpoints](#24-endpoints)**
-25. **[Schema Stitching](#25schema-stitching)**
+25. **[Schema Stitching](#25-schema-stitching)**
 26. **[Code First](#26-code-first)**
 27. **[Schema First](#27-schema-first)**
 28. **[Middleware](#28-middleware)**
 
 **Client**
+
 29. **[Fetching](#29-fetching)**
 30. **[Fragments](#30-fragments)** 
 31. **[Variables](#31-alias)**
@@ -74,11 +76,13 @@ All the translations for this repo will be listed below:
 34. **[Cache](#34-cache)**
 
 **Best Practices**
+
 35. **[Schema Design](#35-schema-design)**
 36. **[Logging](#36-logging)** 
 
 ---
 # Specs
+
 ## 1. Root Field
 
 ### Articles
@@ -234,6 +238,7 @@ All the translations for this repo will be listed below:
 ---
 
 ## 11. Union Types
+
 ### Articles
 
  * 📜 [How to write add unions and interfaces to a schema - Apollo Documentation](https://www.apollographql.com/docs/apollo-server/features/unions-interfaces.html)
@@ -321,7 +326,7 @@ All the translations for this repo will be listed below:
 ---
 
 # Server
-## 1. Setting Up a Server
+## 17. Setting Up a Server
 
 ### Articles
 
@@ -342,7 +347,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Schema
+## 18. Schema
 
 ### Articles
 
@@ -358,7 +363,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 3. Resolver
+## 19. Resolver
 
 ### Articles
 
@@ -373,7 +378,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 4. Context
+## 20. Context
 
 ### Articles
 
@@ -384,7 +389,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 5. Databases
+## 21. Databases
 
 ### Articles
 
@@ -403,7 +408,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 6. Dataloader
+## 21. Dataloader
 
 ### Articles
 
@@ -419,7 +424,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 7. Entry Points
+## 22. Entry Points
 
 ### Articles
 
@@ -434,7 +439,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 8. Endpoints
+## 23. Endpoints
 
 ### Articles
 
@@ -451,7 +456,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 9. Schema Stiching
+## 24. Schema Stiching
 
 ### Articles
 
@@ -469,7 +474,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 10. Code First
+## 25. Code First
 
 ### Articles
 
@@ -484,7 +489,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 11. Schema First
+## 26. Schema First
 
 ### Articles
 
@@ -499,7 +504,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 12. Middleware
+## 27. Middleware
 
 ### Articles
 
@@ -515,7 +520,8 @@ All the translations for this repo will be listed below:
 ---
 
 # Client
-## 1. Fetching
+
+## 28. Fetching
 
 ### Articles
 
@@ -530,7 +536,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Fragments
+## 29. Fragments
 
 ### Articles
 
@@ -546,7 +552,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 3. Variables
+## 30. Variables
 
 ### Articles
 
@@ -561,7 +567,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 4. Alias
+## 31. Alias
 
 ### Articles
 
@@ -576,7 +582,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 5. Polling
+## 32. Polling
 
 ### Articles
 
@@ -589,7 +595,7 @@ All the translations for this repo will be listed below:
 ---
 
 # Best Practices
-## 1. Schema Design
+## 33. Schema Design
 
 ### Articles
 
@@ -601,7 +607,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Logging
+## 34. Logging
 
 ### Articles
 
