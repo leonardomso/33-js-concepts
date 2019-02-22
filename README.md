@@ -1,24 +1,8 @@
 <h1 align="center">
-<br>
-  <a href="https://travis-ci.com/leonardomso/33-js-concepts">
- <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/17/GraphQL_Logo.svg/512px-GraphQL_Logo.svg.png" alt="33 Concepts Every GraphQL Developer Should Know" width=200"></a>
-  <br>
     <br>
   33 Concepts Every GraphQL Developer Should Know
   <br><br>
 </h1>
-
-<p align="center">
-  <a href="http://makeapullrequest.com">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square" alt="PRs Welcome">
-  </a>
-  <a href="https://opensource.org/licenses/MIT">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square" alt="License MIT">
-  </a>
-  <a href="https://travis-ci.com/leonardomso/33-js-concepts">
-    <img src="https://img.shields.io/travis/leonardomso/33-js-concepts/master.svg?style=flat-square&label=build&logo=travis" alt="Build Status">
-  </a>
-</p>
 
 ## Introduction
 
