@@ -579,10 +579,6 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
- * 📜 [Title - Author]([Paste Link here])
-
- ### Videos
-
- * 🎥 [Title - Youtube Name]([Paste Link here])
+ * 📜 [GraphQL Log - withSpectrum]([https://github.com/withspectrum/graphql-log])
 
 **[⬆ Back to Top](#table-of-contents)**
