@@ -430,6 +430,7 @@ All the translations for this repo will be listed below:
 ### Articles
 
  * 📜 [The ultimate guide to Schema Stitching in GraphQL - Rishichandra Wawhal](https://blog.hasura.io/the-ultimate-guide-to-schema-stitching-in-graphql-f30178ac0072/)
+  * 📜 [GraphQL Stitching 101 - Artsy] (http://artsy.github.io/blog/2018/12/11/GraphQL-Stitching/)
  * 📜 [Schema Stitching - Apollo Documentation](https://www.apollographql.com/docs/graphql-tools/schema-stitching.html)
  * 📜 [GraphQL Remote Schema Stitching in a Multi-Service Architecture - Suciu Vlad](https://medium.com/provablyfair/graphql-remote-schema-stitching-in-a-multi-service-architecture-ac329037f082)
 
@@ -446,11 +447,8 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
- * 📜 [Title - Author]([Paste Link here])
+ * 📜 [Code-first - Hot Chocolate]([https://hotchocolate.io/docs/code-first])
 
- ### Videos
-
- * 🎥 [Title - Youtube Name]([Paste Link here])
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -459,11 +457,12 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
- * 📜 [Title - Author]([Paste Link here])
+ * 📜 [The Problems of Schema-First GraphQL - Prisma]([https://www.prisma.io/blog/the-problems-of-schema-first-graphql-development-x1mn4cb0tyl3])
+  * 📜 [Using a Schema-First Design As Your Single Source of Truth - Prisma]([https://nordicapis.com/using-a-schema-first-design-as-your-single-source-of-truth/])
 
  ### Videos
 
- * 🎥 [Title - Youtube Name]([Paste Link here])
+ * 🎥 [Schema First Development - Prisma]([https://www.youtube.com/watch?v=SdWI7XaAeeY])
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -472,12 +471,12 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
- * 📜 [Title - Author]([Paste Link here])
+ * 📜 [GraphQL Middleware - Prisma]([https://www.prisma.io/blog/graphql-middleware-zie3iphithxy])
 
 
  ### Videos
 
- * 🎥 [Title - Youtube Name]([Paste Link here])
+ * 🎥 [GraphQL Middleware - Ben Awad]([https://www.youtube.com/watch?v=0npsaFdrrFw])
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -518,27 +517,23 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
- * 📜 [Title - Author]([Paste Link here])
-
+ * 📜 [GraphQL Tour: Variables - Clay Allsop]([https://medium.com/the-graphqlhub/graphql-tour-variables-58c6abd10f56])
+ * 📜 [Introduction to GraphQL: GraphQL Variables - Flavioscopes]([https://flaviocopes.com/graphql/#graphql-variables])
  ### Videos
 
- * 🎥 [Title - Youtube Name]([Paste Link here])
+ * 🎥 [GraphQL Tutorial #32: query variables - The Net Ninja]([https://www.youtube.com/watch?v=Rvx1HLMK1-U])
 
 **[⬆ Back to Top](#table-of-contents)**
-
 
 ## 32. Alias
 
 ### Articles
 
- * 📜 [Title - Author]([Paste Link here])
-
- ### Videos
-
- * 🎥 [Title - Youtube Name]([Paste Link here])
+ * 📜 [An Introduction to GraphQL: Aliases - GraphQL Mastery]([https://flaviocopes.com/graphql/#aliases])
+ * 📜 [How to use GraphQL aliases - GraphQL Mastery]([https://medium.com/graphql-mastery/graphql-quick-tip-aliases-567303a9ddc5])
+ * 📜 [More GraphQL Concepts: Aliases - HowtoGraphQL]([https://www.howtographql.com/advanced/2-more-graphql-concepts/])
 
 **[⬆ Back to Top](#table-of-contents)**
-
 
 ## 33. Polling
 
