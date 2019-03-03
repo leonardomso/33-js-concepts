@@ -1,6 +1,6 @@
 ﻿<h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
+  <a href="https://github.com/biyott/33-js-concepts"><img src="https://i.imgur.com/ioE9r3R.jpg" alt="33 Concepts Every JS Developer Should Know" width=200"></a>
   <br>
     <br>
   33 Concepts Every JavaScript Developer Should Know
@@ -8,7 +8,7 @@
 </h1>
     
 <h1 align="center">
-	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url" target="_blank"><img src="https://i.imgur.com/qVTU1Uc.png" /></a>
+	<a href="https://toon.at/donate/636872399636854841" target="_blank"><img src="https://i.imgur.com/OXjsJXs.png" /></a>
 </h1 >
 
 ## 소개
