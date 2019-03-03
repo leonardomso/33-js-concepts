@@ -66,6 +66,6 @@
 
 ### Articles
 
- * 📜 [자바스크립트 - 콜스택, 이벤트 루프, 태스크 등에 대한 이해](./posts/1. call stack - 1) 자바스크립트 - 콜스택, 이벤트 루프, 태스크 등에 대한 이해.md)
+ * 📜 [자바스크립트 - 콜스택, 이벤트 루프, 태스크 등에 대한 이해](./posts/01.%20call%20stack-%EC%9E%90%EB%B0%94%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8A%B8%20-%20%EC%BD%9C%EC%8A%A4%ED%83%9D%2C%20%EC%9D%B4%EB%B2%A4%ED%8A%B8%20%EB%A3%A8%ED%94%84%2C%20%ED%83%9C%EC%8A%A4%ED%81%AC%20%EB%93%B1%EC%97%90%20%EB%8C%80%ED%95%9C%20%EC%9D%B4%ED%95%B4.md)
  
  **[⬆ Back to Top](#table-of-contents)**
