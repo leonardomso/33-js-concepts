@@ -15,8 +15,7 @@
 
 이 저장소는 [33 Concepts Every JavaScript Developer Should Know](https://github.com/leonardomso/33-js-concepts) 영어 원문 저장소를 바탕으로 자바스크립트에 대해 정리하고자 하는 목적으로 만들어졌습니다. ([한글 번역글](https://github.com/yjs03057/33-js-concepts) 참고)
 
-우선, 원문에 링크된 글들을 직접 번역할 것이고,
-이후 다른 글이나 제 개인이 학습한 내용을 덧붙일 계획입니다.
+우선, 원문에 링크된 글들을 직접 번역하며 요약합니다. 그 과정에서 저의 의견이나 다른 글에서 참고한 내용에 따라 추가ㆍ변경될 수도 있습니다.
 원문 가이드는 [Stephen Curtis](https://twitter.com/stephenthecurt)의 글을 바탕으로 쓰여졌으며, [여기](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1)에서 참고할 수 있다고 합니다.
 
 **🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
