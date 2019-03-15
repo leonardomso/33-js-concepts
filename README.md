@@ -6,10 +6,16 @@
   33 Concepts Every JavaScript Developer Should Know
   <br><br>
 </h1>
-    
+  
+Original Post's Donation:
 <h1 align="center">
+	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url" target="_blank"><img src="https://i.imgur.com/qVTU1Uc.png" /></a>
+</h1>
+
+제 포스트에 대한 도네이션:
+<h1 align="center">	
 	<a href="https://toon.at/donate/636872399636854841" target="_blank"><img src="https://i.imgur.com/OXjsJXs.png" /></a>
-</h1 >
+</h1>
 
 ## 소개
 
