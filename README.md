@@ -7,7 +7,7 @@
   <br><br>
 </h1>
 
-[![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](#twitter)
+[![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
 ## Introduction
 
