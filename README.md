@@ -7,11 +7,7 @@
   <br><br>
 </h1>
 
-﻿<h1 align="center">
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](#twitter)
-</h1>
-    
-
 
 ## Introduction
 
