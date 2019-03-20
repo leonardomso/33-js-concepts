@@ -6,10 +6,12 @@
   33 Concepts Every JavaScript Developer Should Know
   <br><br>
 </h1>
+
+﻿<h1 align="center">
+[![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](#twitter)
+</h1>
     
-<h1 align="center">
-	<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=JP4Z4XHHPXX96&item_name=Support+for+more+projects.&currency_code=BRL&amount=5&source=url" target="_blank"><img src="https://i.imgur.com/qVTU1Uc.png" /></a>
-</h1 >
+
 
 ## Introduction
 
