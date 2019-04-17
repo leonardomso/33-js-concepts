@@ -53,7 +53,7 @@ It has a single call stack which along with other parts like heap, queue constit
 
 Let us first go through each of these terminologies :
 
-![test](./img-src/callstack-1/2019-04-17-1.png)
+![test](./img-src/callstack-1/2019-04-17-1.PNG)
 
 1.Call Stack :- It’s a data structure which records the function calls, basically where in the program we are.
 If we call a function to execute , we push something on to the stack, and when we return from a function, we pop off the top of the stack.
