@@ -145,7 +145,7 @@ Sometime in the future, the response comes back and our callback is executed, ou
 
 The decoupling of the caller from the response allows for the JavaScript runtime to do other things while waiting for your asynchronous operation to complete and their callbacks to fire.
 비동기 명령이 완료되어서 콜백이 발사되기를 기다리는 동안 자바스크립트 런타임은 콜러의 응답으로부터 복제된다.
-다시 ㄱㄱㅇㅇ11
+다시 ㄱㄱㅇㅇ
 
 2This is where browser APIs kicks in and call its APIs, which are basically threads created by browser implemented in C++ to handle async events like DOM events, http request, setTimeout, etc.(After knowing this, in Angular 2, Zones are used which monkey patches these APIs to cause runtime change detection, which I can get a picture now, how they were able to achieve it.)
 
