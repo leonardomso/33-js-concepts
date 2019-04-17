@@ -53,7 +53,7 @@ It has a single call stack which along with other parts like heap, queue constit
 
 Let us first go through each of these terminologies :
 
-![test](./img-src/callstack-1/2019-04-17-1.png)
+![test](./img-src/callstack-1/2019-04-17-1.PNG)
 
 1.Call Stack :- It’s a data structure which records the function calls, basically where in the program we are.
 If we call a function to execute , we push something on to the stack, and when we return from a function, we pop off the top of the stack.
@@ -143,7 +143,7 @@ Sometime in the future, the response comes back and our callback is executed, ou
 "스크립트 호출 완료!"를 콘솔로 즉시 출력
 언젠가, 반응이 돌아오고 우리의 콜백이 실행되어 콘솔로 몸을 출력한다.
 
-The decoupling of the caller from the response allows for the JavaScript runtime to do other things while waiting for your asynchronous operation to complete and their callbacks to fire. 2This is where browser APIs kicks in and call its APIs, which are basically threads created by browser implemented in C++ to handle async events like DOM events, http request, setTimeout, etc.(After knowing this, in Angular 2, Zones are used which monkey patches these APIs to cause runtime change detection, which I can get a picture now, how they were able to achieve it.)
+The decoupling of the caller from the response allows for the JavaScript runtime to do other things while waiting for your asynchronous operation to complete and their callbacks to fire. 
 
 Browser Web APIs- threads created by browser implemented in C++ to handle async events like DOM events, http request, setTimeout, etc.
 Now these WebAPIs can’t themselves put the execution code on to the stack, if it did, then it would randomly appear in the middle of your code. The message callback queue discussed above shows the way. 3Any of the WebAPI pushes the callback onto this queue when it’s done executing. The Event Loop now is responsible for the execution of these callbacks in the queue and pushing it in the stack, when it is empty 4. Event loop basic job is to look both at the stack and the task queue, pushing the first thing on the queue to the stack when it see stack as empty. Each message or callback is processed completely before any other message is processed.
