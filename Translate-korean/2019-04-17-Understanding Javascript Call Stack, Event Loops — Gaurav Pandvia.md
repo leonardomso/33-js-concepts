@@ -149,3 +149,5 @@ Browser Web APIs- threads created by browser implemented in C++ to handle async 
 Now these WebAPIs can’t themselves put the execution code on to the stack, if it did, then it would randomly appear in the middle of your code. The message callback queue discussed above shows the way. 3Any of the WebAPI pushes the callback onto this queue when it’s done executing. The Event Loop now is responsible for the execution of these callbacks in the queue and pushing it in the stack, when it is empty 4. Event loop basic job is to look both at the stack and the task queue, pushing the first thing on the queue to the stack when it see stack as empty. Each message or callback is processed completely before any other message is processed.
 
 test
+test
+
