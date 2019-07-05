@@ -649,6 +649,7 @@ All the translations for this repo will be listed below:
  * 📜 [Getting Closure — RealLifeJS](http://reallifejs.com/the-meat/getting-closure/)
  * 📜 [Understanding Closures in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/a-beginners-guide-to-closures-in-javascript-97d372284dda)
  * 📜 [A basic guide to Closures in JavaScript — Parathan Thiyagalingam](https://medium.freecodecamp.org/a-basic-guide-to-closures-in-javascript-9fc8b7e3463e)
+ * 📜 [Closures: Using Memoization — Brian Barbour](https://dev.to/steelvoltage/closures-using-memoization-3597)
 
  ### Videos
 
