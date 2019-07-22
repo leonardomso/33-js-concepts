@@ -781,6 +781,7 @@ All the translations for this repo will be listed below:
  * 📜 [Playing with Javascript Promises: A Comprehensive Approach — Rajesh Babu](https://codeburst.io/playing-with-javascript-promises-a-comprehensive-approach-25ab752c78c3)
  * 📜 [How to Write a JavaScript Promise — Brandon Wozniewicz](https://medium.freecodecamp.org/how-to-write-a-javascript-promise-4ed8d44292b8)
  * 📜 [Asynchronous JavaScript | Callbacks | Closures | Promises — Full Stack Geek](https://dev.to/full_stackgeek/asynchronous-javascript-callbacks-closures-promises-353h)
+ * 📜 [Understanding Promises in JavaScript — Chris Noring](https://dev.to/itnext/reverse-engineering-understand-promises-1jfc)
 
  ### Videos
 
