@@ -36,6 +36,7 @@ All the translations for this repo will be listed below:
 - [Greek](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
 - [Japanese](https://github.com/oimo23/33-js-concepts) — oimo23
 - [German](https://github.com/burhannn/33-js-concepts) — burhannn
+- [Ukrainian](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
 
 
 ---
