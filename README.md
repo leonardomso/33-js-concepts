@@ -1011,6 +1011,7 @@ All the translations for this repo will be listed below:
  * 📜 [Keeping your code clean — Samuel James](https://codeburst.io/keeping-your-code-clean-d30bcffd1a10)
  * 📜 [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
  * 📜 [best practices for cross node/web development - Jimmy Wärting](https://github.com/cross-js/cross-js)
+ * 📜 [Writing Clean Code - Dylan Paulus](https://dev.to/ganderzz/on-writing-clean-code-57cm)
 
 ### Videos
 *  🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
