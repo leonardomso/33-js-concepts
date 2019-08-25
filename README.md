@@ -665,6 +665,7 @@ All the translations for this repo will be listed below:
  * 📜 [Closures: Using Memoization — Brian Barbour](https://dev.to/steelvoltage/closures-using-memoization-3597)
  * 📜 [A Brief Introduction to Closures and Lexical Scoping in JavaScript — Ashutosh K Singh
 ](https://medium.com/better-programming/a-brief-introduction-to-closures-and-lexical-scoping-in-javascript-8a5866496232)
+ * 📜 [Demystify Closures — stereobooster](https://dev.to/stereobooster/demystify-closures-5g42)
 
  ### Videos
 
