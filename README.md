@@ -509,6 +509,7 @@ All the translations for this repo will be listed below:
  * 📜 [Let’s Build Prototypal Inheritance in JS — var-che](https://dev.to/varche/let-s-build-prototypal-inheritance-in-js-56mm)
  * 📜 [Objects, Prototypes and Classes in JavaScript — Atta](https://dev.to/attacomsian/objects-prototypes-and-classes-in-javascript-3i9b)
  * 📜 [JavaScript Prototypal Inheritance and Object Creation — Nick Shoup](https://dev.to/shoupn/javascript-prototypes-and-object-creation-2onh)
+ * 📜 [The magical world of JavaScript prototypes — Belén](https://dev.to/ladybenko/the-magical-world-of-javascript-prototypes-1mhg)
 
  ### Videos
 
