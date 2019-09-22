@@ -587,6 +587,7 @@ All the translations for this repo will be listed below:
  * 📜 [How to Manipulate Arrays in JavaScript — Bolaji Ayodeji](https://www.freecodecamp.org/news/manipulating-arrays-in-javascript/)
  * 📜 [How to simplify your codebase with map(), reduce(), and filter() in JavaScript — Alex Permyakov](https://itnext.io/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f)
  * 📜 [.map(), .filter(), and .reduce() — Andy Pickle](https://dev.to/pickleat/map-filter-and-reduce-2efb)
+ * 📜 [Map/Filter/Reduce Crash Course — Chris Achard](https://dev.to/chrisachard/map-filter-reduce-crash-course-5gan)
  * 📜 [Map, Filter and Reduce – Animated — JavaScript Teacher](https://medium.com/@js_tut/map-filter-and-reduce-animated-7fe391a35a47)
  * 📜 [Map, Filter, Reduce and others Arrays Iterators You Must Know to Become an Algorithms Wizard — Mauro Bono](https://dev.to/uptheirons78/map-filter-reduce-and-others-arrays-iterators-you-must-know-to-become-an-algorithms-wizard-4209)
  * 📜 [How to Use JavaScript’s .map, .filter, and .reduce — Avery Duffin](https://medium.com/better-programming/how-to-javascripts-map-vs-filter-vs-reduce-80d87a5a0a24)
