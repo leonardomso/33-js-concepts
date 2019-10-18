@@ -710,6 +710,8 @@ All the translations for this repo will be listed below:
  * 🎥 [Higher Order Functions in Javascript — Raja Yogan](https://www.youtube.com/watch?v=dTlpYnmBW9I)
  * 🎥 [Higher Order Iterators in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=GYRMNp1SKXA)
  * 🎥 [Higher Order Functions in JavaScript — The Coding Train](https://www.youtube.com/watch?v=H4awPsyugS0)
+ * 🎥 [Part 1: An Introduction to Callbacks and Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=7E8ctomPQJw)
+ * 🎥 [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
 
 **[⬆ Back to Top](#table-of-contents)**
 
