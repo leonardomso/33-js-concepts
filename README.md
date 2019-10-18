@@ -21,24 +21,24 @@ Sentitevi liberi di inviare una PR aggiungendo un link con i vostri propri riepi
 
 Tutte le traduzioni di questo archivio sono elencate qui sotto:
 
-- [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
-- [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Turkish](https://github.com/ilker0/33-js-concepts) — İlker Demir
-- [Russian](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
-- [Tiếng Việt](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [Polish](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [Persian](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Indonesian](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
-- [French](https://github.com/robinmetral/33-concepts-js) — Robin Métral
+- [Cinese](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Portoghese Brasiliano](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Coreano](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Spagnolo](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Turco](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Russo](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Vietnamita](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
+- [Polacco](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+- [Persiano](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+- [Indonesiano](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [Francese](https://github.com/robinmetral/33-concepts-js) — Robin Métral
 - [Hindi](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
-- [Greek](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
-- [Japanese](https://github.com/oimo23/33-js-concepts) — oimo23
-- [German](https://github.com/burhannn/33-js-concepts) — burhannn
-- [Ukrainian](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
-- [Sinhala](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
-- [Italian](https://github.com/donearm/33-js-concepts) - Gianluca Fiore
+- [Greco](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
+- [Giapponese](https://github.com/oimo23/33-js-concepts) — oimo23
+- [Tedesco](https://github.com/burhannn/33-js-concepts) — burhannn
+- [Ucraino](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
+- [Singalese](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
+- [Inglese](https://github.com/leonardomso/33-js-concepts) - Leonardo Maldonado
 
 
 ---
