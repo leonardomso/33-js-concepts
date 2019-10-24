@@ -463,6 +463,7 @@ All the translations for this repo will be listed below:
  * 🎥 [bind and this - Object Creation in JavaScript - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
  * 🎥 [JavaScript Practical Applications of Call, Apply and Bind functions — techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
  * 🎥 [JS Function Methods call(), apply(), and bind() — Steve Griffith](https://www.youtube.com/watch?v=uBdH0iB1VDM)
+ * 🎥 [Polyfill for bind method](https://www.youtube.com/watch?v=ke_y6z0xRpk&t=671s)
 
 **[⬆ Back to Top](#table-of-contents)**
 
