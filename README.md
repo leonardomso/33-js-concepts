@@ -808,6 +808,7 @@ All the translations for this repo will be listed below:
  * 📜 [Asynchronous JavaScript | Callbacks | Closures | Promises — Full Stack Geek](https://dev.to/full_stackgeek/asynchronous-javascript-callbacks-closures-promises-353h)
  * 📜 [Understanding Promises in JavaScript — Chris Noring](https://dev.to/itnext/reverse-engineering-understand-promises-1jfc)
  * 📜 [Converting callbacks to promises — Zell Liew](https://dev.to/zellwk/converting-callbacks-to-promises-nhn)
+ * 📜 [JavaScript Promises: Zero To Hero Plus Cheat Sheet — Joshua Saunders](https://medium.com/dailyjs/javascript-promises-zero-to-hero-plus-cheat-sheet-64d75051cffa)
 
  ### Videos
 
