@@ -1034,6 +1034,7 @@ All the translations for this repo will be listed below:
  * 📜 [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
  * 📜 [best practices for cross node/web development - Jimmy Wärting](https://github.com/cross-js/cross-js)
  * 📜 [Writing Clean Code - Dylan Paulus](https://dev.to/ganderzz/on-writing-clean-code-57cm)
+ * 📜 [Writing Clean Code and The Practice of Programming - Nityesh Agarwal](https://dev.to/nityeshaga/writing-clean-code-and-the-practice-of-programming-actionable-advice-for-beginners-5f0k)
 
 ### Videos
 *  🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
