@@ -875,6 +875,8 @@ All the translations for this repo will be listed below:
  * 📜 [Collection of classic computer science paradigms in JavaScript](https://github.com/nzakas/computer-science-in-javascript)
  * 📜 [All the things you didn't know you wanted to know about data structures](https://github.com/jamiebuilds/itsy-bitsy-data-structures)
  * 📜 [JavaScript Data Structures: Singly Linked List: Setup — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-setup-4950)
+ * 📜 [JavaScript Data Structures: Singly Linked List: Insert — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-insert-3in4)
+ * 📜 [JavaScript Data Structures: Singly Linked List: Remove — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-remove-fai)
 
  ### Videos
 
