@@ -849,8 +849,9 @@ All the translations for this repo will be listed below:
  * 📜 [How to improve your asynchronous Javascript code with async and await — Indrek Lasn](https://medium.freecodecamp.org/improve-your-asynchronous-javascript-code-with-async-and-await-c02fc3813eda)
  * 📜 [Making Fetches Easy With Async Await — Mickey Sheridan](https://medium.com/@micksheridan.24/making-fetches-easy-with-async-await-8a1246efa1f6)
  * 📜 [7 Reasons Why JavaScript Async/Await Is Better Than Plain Promises — Mostafa Gaafar](https://dev.to/gafi/7-reasons-to-always-use-async-await-over-plain-promises-tutorial-4ej9)
- * 📜 [Asynchronous Operations in JavaScript — Jscrambler(https://dev.to/jscrambler/asynchronous-operations-in-javascript-2p6b)
- * 📜 [Async/await: A slight design flaw. — Joey(https://dev.to/joeyhub/async-await-a-slight-design-flaw-2h2j)
+ * 📜 [Asynchronous Operations in JavaScript — Jscrambler](https://dev.to/jscrambler/asynchronous-operations-in-javascript-2p6b)
+ * 📜 [Async/await: A slight design flaw. — Joey](https://dev.to/joeyhub/async-await-a-slight-design-flaw-2h2j)
+ * 📜 [JavaScript: Promises or async-await — Gokul N K](https://medium.com/better-programming/should-i-use-promises-or-async-await-126ab5c98789)
 
  ### Videos
 
