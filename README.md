@@ -882,6 +882,7 @@ All the translations for this repo will be listed below:
  * 📜 [JavaScript Data Structures: Singly Linked List: Setup — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-setup-4950)
  * 📜 [JavaScript Data Structures: Singly Linked List: Insert — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-insert-3in4)
  * 📜 [JavaScript Data Structures: Singly Linked List: Remove — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-remove-fai)
+ * 📜 [Data Structures: Understanding Graphs — Rachel Hawa](https://medium.com/javascript-in-plain-english/data-structures-understanding-graphs-82509d35e6b5)
 
  ### Videos
 
