@@ -974,6 +974,7 @@ All the translations for this repo will be listed below:
  * 📜 [Design patterns in modern JavaScript development](https://levelup.gitconnected.com/design-patterns-in-modern-javascript-development-ec84d8be06ca)
  * 📜 [Understanding Design Patterns: Iterator using Dev.to and Medium social networks! — Carlos Caballero](https://dev.to/carlillo/understanding-design-patterns-iterator-using-dev-to-and-medium-social-networks-3bdd)
  * 📜 [JavaScript Design Patterns - Factory Pattern — KristijanFištrek](https://dev.to/kristijanfistrek/javascript-design-patterns-factory-pattern-562p)
+ * 📜 [JavaScript Design Pattern — Module Pattern - Factory Pattern — Moon](https://medium.com/javascript-in-plain-english/javascript-design-pattern-module-pattern-555737eccecd)
 
 
   ### Videos
