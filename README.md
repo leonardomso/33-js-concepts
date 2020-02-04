@@ -21,6 +21,7 @@ Feel free to submit a PR adding a link to your own recaps or reviews. If you wan
 
 All the translations for this repo will be listed below:
 
+- [Arabic](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Portuguese-BR](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 - [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
