@@ -982,6 +982,7 @@ All the translations for this repo will be listed below:
  * 📜 [JavaScript Design Patterns - Factory Pattern — KristijanFištrek](https://dev.to/kristijanfistrek/javascript-design-patterns-factory-pattern-562p)
  * 📜 [JavaScript Design Pattern — Module Pattern - Factory Pattern — Moon](https://medium.com/javascript-in-plain-english/javascript-design-pattern-module-pattern-555737eccecd)
  * 📜 [Design Patterns: Null Object - Carlos Caballero](https://medium.com/better-programming/design-patterns-null-object-5ee839e37892)
+ * 📜 [Strategy Pattern - Francesco Ciulla](https://dev.to/francescoxx/strategy-pattern-5oh)
 
 
   ### Videos
