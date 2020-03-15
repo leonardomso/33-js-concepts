@@ -1053,6 +1053,7 @@ All the translations for this repo will be listed below:
  * 📜 [best practices for cross node/web development - Jimmy Wärting](https://github.com/cross-js/cross-js)
  * 📜 [Writing Clean Code - Dylan Paulus](https://dev.to/ganderzz/on-writing-clean-code-57cm)
  * 📜 [Writing Clean Code and The Practice of Programming - Nityesh Agarwal](https://dev.to/nityeshaga/writing-clean-code-and-the-practice-of-programming-actionable-advice-for-beginners-5f0k)
+ * 📜 [Clean code, dirty code, human code - Daniel Irvine](https://dev.to/d_ir/clean-code-dirty-code-human-code-6nm)
 
 ### Videos
 *  🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
