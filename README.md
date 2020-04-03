@@ -1061,5 +1061,6 @@ All the translations for this repo will be listed below:
 
 ### Videos
 *  🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
+*  🎥 [Clean Code: Functions(Part 1) - Beau teaches](https://www.youtube.com/watch?v=RR_dQ4sBSBM)
 
  **[⬆ Back to Top](#table-of-contents)**
