@@ -683,6 +683,7 @@ All the translations for this repo will be listed below:
 ](https://medium.com/better-programming/a-brief-introduction-to-closures-and-lexical-scoping-in-javascript-8a5866496232)
  * 📜 [Demystify Closures — stereobooster](https://dev.to/stereobooster/demystify-closures-5g42)
  * 📜 [Scopes and Closures - JavaScript Concepts — Agney Menon](https://dev.to/boywithsilverwings/scopes-and-closures-javascript-concepts-4dfj)
+ * 📜 [Understanding Closures in JavaScript — Matt Popovich](https://dev.to/mattpopovich/understanding-closures-in-javascript-3k0d)
 
  ### Videos
 
