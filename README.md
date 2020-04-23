@@ -518,6 +518,7 @@ All the translations for this repo will be listed below:
  * 📜 [Objects, Prototypes and Classes in JavaScript — Atta](https://dev.to/attacomsian/objects-prototypes-and-classes-in-javascript-3i9b)
  * 📜 [JavaScript Prototypal Inheritance and Object Creation — Nick Shoup](https://dev.to/shoupn/javascript-prototypes-and-object-creation-2onh)
  * 📜 [The magical world of JavaScript prototypes — Belén](https://dev.to/ladybenko/the-magical-world-of-javascript-prototypes-1mhg)
+ * 📜 [Understanding Prototypal Inheritance In JavaScript — Lawrence Eagles](https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4)
 
  ### Videos
 
