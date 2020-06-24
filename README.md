@@ -421,6 +421,7 @@ All the translations for this repo will be listed below:
  * 📜 [Class vs Factory function: exploring the way forward — Cristi Salcescu](https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15)
  * 📜 [How ES6 classes really work and how to build your own — Robert Grosse](https://medium.com/@robertgrosse/how-es6-classes-really-work-and-how-to-build-your-own-fd6085eb326a)
  * 📜 [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
+ * 📜 [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
 
  ### Videos
 
@@ -869,6 +870,7 @@ All the translations for this repo will be listed below:
  * 📜 [Async/await: A slight design flaw. — Joey](https://dev.to/joeyhub/async-await-a-slight-design-flaw-2h2j)
  * 📜 [JavaScript: Promises or async-await — Gokul N K](https://medium.com/better-programming/should-i-use-promises-or-async-await-126ab5c98789)
  * 📜 [Async / Await: From Zero to Hero — Zhi Yuan](https://dev.to/zhiyuanamos/async-await-from-zero-to-hero-a22)
+ * 📜 [JavaScript Visualized: Promises & Async/Await — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
 
  ### Videos
 
