@@ -719,6 +719,7 @@ All the translations for this repo will be listed below:
  * 📜 [Just a reminder on how to use high order functions — Pedro Filho](https://github.com/pedroapfilho/high-order-functions)
  * 📜 [Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
  * 📜 [What is a Higher-Order Function? — Nick Scialli](https://dev.to/nas5w/what-is-a-higher-order-function-5gk9)
+ * 📜 [Higher Order Functions - A pragmatic approach — emmanuel ikwuoma](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
 
  ### Videos
 
