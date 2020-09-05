@@ -692,6 +692,7 @@ All the translations for this repo will be listed below:
  * 📜 [Scopes and Closures - JavaScript Concepts — Agney Menon](https://dev.to/boywithsilverwings/scopes-and-closures-javascript-concepts-4dfj)
  * 📜 [Understanding Closures in JavaScript — Matt Popovich](https://dev.to/mattpopovich/understanding-closures-in-javascript-3k0d)
  * 📜 [whatthefuck.is · A Closure - Dan Abramov](https://whatthefuck.is/closure)
+ * 📜 [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
  
  ### Videos
 
