@@ -1014,6 +1014,7 @@ All the translations for this repo will be listed below:
  * 📜 [Strategy Pattern - Francesco Ciulla](https://dev.to/francescoxx/strategy-pattern-5oh)
  * 📜 [Adapter Pattern - Francesco Ciulla](https://dev.to/francescoxx/adapter-pattern-5bjk)
  * 📜 [The Power of Composite Pattern in JavaScript - jsmanifest](https://dev.to/jsmanifest/the-power-of-composite-pattern-in-javascript-2732)
+ * 📜 [In Defense of Defensive Programming - Adam Nathaniel Davis](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
 
 
   ### Videos
