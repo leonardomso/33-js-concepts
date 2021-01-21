@@ -632,7 +632,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 20. Pure Functions, Side Effects and State Mutation
+## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
 
 ### Articles
 
@@ -654,6 +654,8 @@ All the translations for this repo will be listed below:
  * 📜 [Functional programming paradigms in modern JavaScript: Pure functions — Alexander Kondov](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
  * 📜 [Understanding Javascript Mutation and Pure Functions — Chidume Nnamdi](https://blog.bitsrc.io/understanding-javascript-mutation-and-pure-functions-7231cc2180d3)
  * 📜 [Functional-ish JavaScript — Daniel Brain](https://medium.com/@bluepnume/functional-ish-javascript-205c05d0ed08)
+ * 📜 [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
+ * 📜 [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
 
  ### Videos
 
@@ -662,6 +664,7 @@ All the translations for this repo will be listed below:
  * 🎥 [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
  * 🎥 [JavaScript Pure vs Impure Functions Explained — Theodore Anderson](https://www.youtube.com/watch?v=AHbRVJzpB54)
  * 🎥 [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
+ * 🎥 [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
 **[⬆ Back to Top](#table-of-contents)**
 
