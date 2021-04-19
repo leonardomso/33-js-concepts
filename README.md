@@ -111,6 +111,7 @@ All the translations for this repo will be listed below:
  * 🎥 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
  * 🎥 [What the heck is the event loop anyway? — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
  * 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
+ * 🎥 [How JavaScript Code is executed? ❤️& Call Stack](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -129,7 +130,8 @@ All the translations for this repo will be listed below:
  * 📜 [What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
  * 📜 [The Secret Life of JavaScript Primitives — Angus Croll](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
  * 📜 [Primitive Types — Flow](https://flow.org/en/docs/types/primitives/)
- * 📜 [(Not) Everything in JavaScript is an Object — Daniel Li](http://blog.brew.com.hk/not-everything-in-javascript-is-an-object/)
+ * 📜 [(Not) Everything in JavaScript is an Object — Daniel Li](https://dev.to/d4nyll/not-everything-in-javascript-is-an-object)
+ * 📜 [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
  * 📜 [Diving Deeper in JavaScripts Objects — Arfat Salman](https://blog.bitsrc.io/diving-deeper-in-javascripts-objects-318b1e13dc12)
  * 📜 [The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
 
@@ -483,6 +485,8 @@ All the translations for this repo will be listed below:
  * 📜 [A quick intro to 'this' in JavaScript — Natalie Smith](https://dev.to/thatgalnatalie/a-quick-intro-to-this-in-javascript-2mhp)
  * 📜 [Explaining JavaScript 'this' to my cat — Andrey K](https://dev.to/cat__logic/explaining-javascript-this-to-my-cat-1kig)
  * 📜 [A conversation with the 'this' keyword in Javascript — Karen Efereyan](https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g)
+ * 📜 [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
+ * 📜 [Understanding 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
 
   ### Videos
 
@@ -590,6 +594,7 @@ All the translations for this repo will be listed below:
  * 📜 [JavaScript: Object.assign() — Thiago S. Adriano](https://codeburst.io/javascript-object-assign-bc9696dcbb6e)
  * 📜 [How to deep clone a JavaScript Object — Flavio Copes](https://flaviocopes.com/how-to-clone-javascript-object/)
  * 📜 [Object Assignment vs. Primitive Assignment in JavaScript for Beginners — Nick Scialli](https://dev.to/nas5w/object-assignment-vs-primitive-assignment-in-javascript-for-beginners-2moi)
+ * 📜 [Object.create(): When and Why to Use — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
 
  ### Videos
 
@@ -657,7 +662,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 20. Pure Functions, Side Effects and State Mutation
+## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
 
 ### Articles
 
@@ -678,6 +683,8 @@ All the translations for this repo will be listed below:
  * 📜 [Functional programming paradigms in modern JavaScript: Pure functions — Alexander Kondov](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
  * 📜 [Understanding Javascript Mutation and Pure Functions — Chidume Nnamdi](https://blog.bitsrc.io/understanding-javascript-mutation-and-pure-functions-7231cc2180d3)
  * 📜 [Functional-ish JavaScript — Daniel Brain](https://medium.com/@bluepnume/functional-ish-javascript-205c05d0ed08)
+ * 📜 [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
+ * 📜 [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
 
  ### Videos
 
@@ -686,6 +693,7 @@ All the translations for this repo will be listed below:
  * 🎥 [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
  * 🎥 [JavaScript Pure vs Impure Functions Explained — Theodore Anderson](https://www.youtube.com/watch?v=AHbRVJzpB54)
  * 🎥 [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
+ * 🎥 [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -724,7 +732,7 @@ All the translations for this repo will be listed below:
  * 📜 [Understanding Closures in JavaScript — Matt Popovich](https://dev.to/mattpopovich/understanding-closures-in-javascript-3k0d)
  * 📜 [whatthefuck.is · A Closure - Dan Abramov](https://whatthefuck.is/closure)
  * 📜 [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
- 
+
  ### Videos
 
  * 🎥 [JavaScript The Hard Parts: Closure, Scope & Execution Context - Codesmith](https://www.youtube.com/watch?v=XTAzsODSCsM)
@@ -879,7 +887,7 @@ All the translations for this repo will be listed below:
  * 📜 [JavaScript Visualized: Promises & Async/Await — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
  * 📜 [Promises in JavaScript — Peter Klingelhofer](https://dev.to/peterklingelhofer/promises-in-javascript-3h5k)
  * 📜 [Best Practices for ES6 Promises — Basti Ortiz](https://dev.to/somedood/best-practices-for-es6-promises-36da)
- 
+
 
  ### Videos
 
@@ -954,9 +962,7 @@ All the translations for this repo will be listed below:
  * 📜 [All algorithms writing with JavaScript in the book 'Algorithms Fourth Edition'](https://github.com/barretlee/algorithms)
  * 📜 [Collection of classic computer science paradigms in JavaScript](https://github.com/nzakas/computer-science-in-javascript)
  * 📜 [All the things you didn't know you wanted to know about data structures](https://github.com/jamiebuilds/itsy-bitsy-data-structures)
- * 📜 [JavaScript Data Structures: Singly Linked List: Setup — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-setup-4950)
- * 📜 [JavaScript Data Structures: Singly Linked List: Insert — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-insert-3in4)
- * 📜 [JavaScript Data Structures: Singly Linked List: Remove — miku86](https://dev.to/miku86/javascript-data-structures-singly-linked-list-remove-fai)
+ * 📜 [JavaScript Data Structures: 40 Part Series — miku86](https://dev.to/miku86/series/3259)
  * 📜 [Data Structures: Understanding Graphs — Rachel Hawa](https://medium.com/javascript-in-plain-english/data-structures-understanding-graphs-82509d35e6b5)
  * 📜 [Data Structures Two Ways: Linked List (Pt 1) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-2n61)
  * 📜 [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
@@ -964,7 +970,6 @@ All the translations for this repo will be listed below:
 
  ### Videos
 
- * 🎥 [Algorithms in JavaScript — Seth Koch](https://www.youtube.com/watch?v=PylQlISSH8U&list=PLujX4CIdBGCa-65N3uN8CDbUMrYsHBrz-)
  * 🎥 [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
  * 🎥 [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
  * 🎥 [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
