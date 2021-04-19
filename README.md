@@ -192,7 +192,7 @@ All the translations for this repo will be listed below:
 
 ### Books
 
-- [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed/types%20%26%20grammar)
+- [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -557,7 +557,7 @@ All the translations for this repo will be listed below:
 
 ### Books
 
-- [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed/this%20%26%20object%20prototypes)
+- [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
 **[⬆ Back to Top](#table-of-contents)**
 
