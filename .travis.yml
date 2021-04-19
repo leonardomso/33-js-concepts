@@ -1,6 +1,0 @@
-language: ruby
-rvm: 2.4.1
-before_script: gem install awesome_bot
-script: awesome_bot README.md --allow-redirect --allow-dupe --allow 999
-notifications:
-  email: false
