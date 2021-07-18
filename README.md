@@ -67,7 +67,7 @@ All the translations for this repo will be listed below:
 19. **[map, reduce, filter](#19-map-reduce-filter)**
 20. **[Pure Functions, Side Effects and State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
 21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-high-order-functions)**
+22. **[Higher Order Functions](#22-high-order-functions)**
 23. **[Recursion](#23-recursion)**
 24. **[Collections and Generators](#24-collections-and-generators)**
 25. **[Promises](#25-promises)**
@@ -734,7 +734,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 22. High Order Functions
+## 22. Higher Order Functions
 
 ### Books
 
