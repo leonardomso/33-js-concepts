@@ -287,6 +287,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript Modules: A Beginner’s Guide — Preethi Kasireddy](https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc)
 - 📜 [Using JavaScript modules on the web — Addy Osmani & Mathias Bynens](https://developers.google.com/web/fundamentals/primers/modules)
 - 📜 [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
+- 📜 [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
 
 ### Videos
 
