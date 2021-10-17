@@ -4,7 +4,9 @@
   <br>
     <br>
   33 Concepts Every JavaScript Developer Should Know
-  <br><br>
+  <br>
+  Obrigado, evento hacktoberfest
+  <br>
 </h1>
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
