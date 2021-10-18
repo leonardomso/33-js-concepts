@@ -956,6 +956,7 @@ All the translations for this repo will be listed below:
 - 🎥 [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
 - 🎥 [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
 - 🎥 [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
+- 🎥 [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
 
 **[⬆ Back to Top](#table-of-contents)**
 
