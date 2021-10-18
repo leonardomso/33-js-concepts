@@ -643,6 +643,7 @@ All the translations for this repo will be listed below:
 - 🎥 [Reduce Advanced - Part 4 of FP in JavaScript - Fun Fun Function](https://www.youtube.com/watch?v=1DMolJ2FrNY&t=621s)
 - 🎥 [reduce Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=IXp06KekEjM)
 - 🎥 [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
+- 🎥 [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
 
 **[⬆ Back to Top](#table-of-contents)**
 
