@@ -65,7 +65,7 @@ All the translations for this repo will be listed below:
 17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
 18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects and State Mutation](#20-pure-functions-side-effects-and-state-mutation)**
+20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
 21. **[Closures](#21-closures)**
 22. **[High Order Functions](#22-high-order-functions)**
 23. **[Recursion](#23-recursion)**
