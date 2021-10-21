@@ -872,6 +872,7 @@ All the translations for this repo will be listed below:
 - 📜 [Promises in JavaScript — Peter Klingelhofer](https://dev.to/peterklingelhofer/promises-in-javascript-3h5k)
 - 📜 [Best Practices for ES6 Promises — Basti Ortiz](https://dev.to/somedood/best-practices-for-es6-promises-36da)
 - 📜 [Lo que debemos saber de EScript 2020 — Kike Sanchez](https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd)
+- 📜 [Promise Basics - javascript.info](https://javascript.info/promise-basics)
 
 ### Videos
 
