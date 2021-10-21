@@ -730,6 +730,7 @@ All the translations for this repo will be listed below:
 - 🎥 [Closures — freeCodeCamp](https://www.youtube.com/watch?v=1JsJx1x35c0)
 - 🎥 [JavaScript Closures — CodeWorkr](https://www.youtube.com/watch?v=-rLrGAXK8WE)
 - 🎥 [Closures in JS  - Akshay Saini](https://www.youtube.com/watch?v=qikxEIxsXco)
+- 🎥 [CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre](https://youtu.be/xa8lhVwQBw4)
 
 **[⬆ Back to Top](#table-of-contents)**
 
