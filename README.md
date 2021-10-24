@@ -114,7 +114,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
 - 🎥 [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -146,7 +146,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [What are variables in Javascript? — JS For Everyone](https://www.youtube.com/watch?v=B4Bbmei_thw)
 - 🎥 [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -170,7 +170,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
 - 🎥 [VALORES vs REFERENCIAS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=AvkyOrWkuQc)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -195,7 +195,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -218,7 +218,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -252,7 +252,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
 - 🎥 [Variable Scope — Steve Griffith](https://www.youtube.com/watch?v=FyWdrCZZavQ)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -271,7 +271,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
 - 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -303,7 +303,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 - 🎥 [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -329,7 +329,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 - 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -351,7 +351,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
 - 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -373,7 +373,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 - 🎥 [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -392,7 +392,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 
 - 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -419,7 +419,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -445,7 +445,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
 - 🎥 [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -492,7 +492,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [bind and this - Object Creation in JavaScript - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
 - 🎥 [JS Function Methods call(), apply(), and bind() — Steve Griffith](https://www.youtube.com/watch?v=uBdH0iB1VDM)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -509,7 +509,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 📜 [What Is the Instanceof Operator in JavaScript — appendTo](https://appendto.com/2016/10/what-is-the-instanceof-operator-in-javascript/)
 - 📜 [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -561,7 +561,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -591,7 +591,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - 🎥 [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -649,7 +649,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
 - 🎥 [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -686,7 +686,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
 - 🎥 [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -735,7 +735,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Closures in JS  - Akshay Saini](https://www.youtube.com/watch?v=qikxEIxsXco)
 - 🎥 [CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre](https://youtu.be/xa8lhVwQBw4)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -768,7 +768,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
 - 🎥 [Higher-Order Functions ft. Functional Programming - Akshay Saini](https://www.youtube.com/watch?v=HkWxvB1RJq0)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -800,7 +800,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Recursion, Iteration, and JavaScript: A Love Story | JSHeroes 2018 — Anjana Vakil](https://www.youtube.com/watch?v=FmiQr4nfoPQ)
 - 🎥 [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -837,7 +837,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
 - 🎥 [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -887,7 +887,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Promises Part 1 - Topics of JavaScript/ES6 — The Coding Train](https://www.youtube.com/watch?v=QO4NXhWo_NM)
 - 🎥 [JavaScript Promise in 100 Seconds](https://www.youtube.com/watch?v=RvYYCGs45L4)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -937,7 +937,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Complete Guide to JS Async & Await ES2017/ES8 — Colt Steele](https://www.youtube.com/watch?v=krAYA4rvbdA)
 - 🎥 [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -967,7 +967,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
 - 🎥 [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -989,7 +989,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
 - 🎥 [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -1007,7 +1007,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -1033,7 +1033,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
 - 🎥 [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -1069,7 +1069,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 - 🎥 [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -1120,7 +1120,7 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 - 🎥 [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
 
 ---
 
@@ -1148,4 +1148,4 @@ Developers தங்கள் JavaScript பற்றிய கருத்த�
 - 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 
-**[⬆ மீண்டும் மேலே](#table-of-contents)**
+**[⬆ மீண்டும் மேலே](#உள்ளடக்க-அட்டவணை)**
