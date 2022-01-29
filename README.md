@@ -44,7 +44,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## Table of Contents
+## <a id="table-of-contents">Table of Contents</a>
 
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitive Types](#2-primitive-types)**
