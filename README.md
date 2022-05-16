@@ -199,6 +199,12 @@ All the translations for this repo will be listed below:
 ---
 
 ## 5. == vs === vs typeof
+    
+### Reference
+
+- 📜 [Equality (==) — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)
+- 📜 [Strict Equality (===) — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)
+- 📜 [typeof — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)
 
 ### Articles
 
