@@ -19,7 +19,7 @@ This repository was created with the intention of helping developers master thei
 
 Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
-All the translations for this repo will be listed below:
+Bu depo için tüm çeviriler aşağıda listelenecektir::
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
