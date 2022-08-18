@@ -1005,7 +1005,7 @@ All the translations for this repo will be listed below:
 - 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
-
+- 📜 [10 Best Data Structures and Algorithms Books [2022]](https://www.interviewbit.com/blog/data-structures-and-algorithms-books/)
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -1041,6 +1041,7 @@ All the translations for this repo will be listed below:
 ### Books
 
 - 📜 [Learning JavaScript Design Patterns — Addy Osmani ](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+- 📜 [7 Best System Design Books in 2022 ](https://www.interviewbit.com/blog/system-design-books/)    
 
 ### Articles
 
