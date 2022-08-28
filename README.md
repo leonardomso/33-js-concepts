@@ -1,12 +1,14 @@
-﻿<h1 align="center">
+<h1 align="center">
 <br>
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Fogalom Amit Minden JS Fejlesztőnek Tudnia Kell" width=200" /></a>
   <br>
     <br>
-  33 Fogalom Amit Minden JS Fejlesztőnek Tudnia Kell
+  33 Fogalom Amit Minden JS Fejlesztőnek Tudnia Kell*
   <br><br>
 </h1>
 
+
+    
 [![Kövess be](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
 ## Bevezető
@@ -53,7 +55,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
 6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Kifejezések vs Kijelentés](#7-expression-vs-statement)**
+7. **[Kifejezések vs Kijelentések](#7-expression-vs-statement)**
 8. **[Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
 9. **[Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)](#9-message-queue-and-event-loop)**
 10. **[setTimeout, setInterval és requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
@@ -274,9 +276,9 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 
 ---
 
-## 8. IIFE, Modules and Namespaces
+## 8. Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak
 
-### Articles
+### Cikkek
 
 - 📜 [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
 - 📜 [Do ES6 Modules make the case of IIFEs obsolete?](https://hashnode.com/post/do-es6-modules-make-the-case-of-iifes-obsolete-civ96wet80scqgc538un20es0)
@@ -292,7 +294,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
 - 📜 [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
 
-### Videos
+### Videók
 
 - 🎥 [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
 - 🎥 [Understanding JavaScript IIFE — Sheo Narayan](https://www.youtube.com/watch?v=I5EntfMeIIQ)
@@ -302,13 +304,13 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 - 🎥 [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 9. Message Queue and Event Loop
+## 9. Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)
 
-### Articles
+### Cikkek
 
 - 📜 [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
 - 📜 [The JavaScript Event Loop: Explained — Erin Sweson-Healey](https://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/)
@@ -320,7 +322,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Visualising the JavaScript Event Loop with a Pizza Restaurant analogy — Priyansh Jain](https://dev.to/presto412/visualising-the-javascript-event-loop-with-a-pizza-restaurant-analogy-47a8)
 - 📜 [JavaScript Visualized: Event Loop — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif)
 
-### Videos
+### Videók
 
 - 🎥 [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - 🎥 [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
@@ -328,13 +330,13 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 - 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 10. setTimeout, setInterval and requestAnimationFrame
+## 10. setTimeout, setInterval és requestAnimationFrame
 
-### Articles
+### Cikkek
 
 - 📜 [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
 - 📜 [Why not to use setInterval — Akanksha Sharma](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
@@ -343,20 +345,20 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
 - 📜 [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
 
-### Videos
+### Videók
 
 - 🎥 [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
 - 🎥 [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
 - 🎥 [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
 - 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 11. JavaScript Engines
+## 11. JavaScript Motorok
 
-### Articles
+### Cikkek
 
 - 📜 [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
 - 📜 [Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
@@ -367,18 +369,18 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [JavaScript engine fundamentals: optimizing prototypes](https://mathiasbynens.be/notes/prototypes)
 - 📜 [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 - 🎥 [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 12. Bitenkénti Operátorok, Típus Tömbök és Tömb Pufferek
 
-### Articles
+### Cikkek
 
 - 📜 [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
 - 📜 [Using JavaScript’s Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
@@ -387,21 +389,21 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [A Comprehensive Primer on Binary Computation and Bitwise Operators in Javascript — Paul Brown](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
 - 📜 [How can I understand Bitwise operation in JavaScript?](https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 13. DOM and Layout Trees
+## 13. DOM és Fa-Szerkezetek
 
-### Books
+### Könyvek
 
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
-### Articles
+### Cikkek
 
 - 📜 [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
 - 📜 [What’s the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
@@ -413,18 +415,18 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Render Tree Construction — Ilya Grigorik](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
 - 📜 [What exactly is the DOM?](https://bitsofco.de/what-exactly-is-the-dom/)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 14. Factories and Classes
+## 14. Üzemi funkciók(Factories) és Osztályok
 
-### Articles
+### Cikkek
 
 - 📜 [How To Use Classes in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
 - 📜 [Javascript Classes — Under The Hood — Majid](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
@@ -438,25 +440,25 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
 - 📜 [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript Factory Functions — Programming with Mosh](https://www.youtube.com/watch?v=jpegXpQpb3o)
 - 🎥 [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
 - 🎥 [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 15. this, call, apply and bind
+## 15. this, call, apply és bind
 
-### Reference
+### Hivatkozás
 
 - 📜 [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 - 📜 [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
 - 📜 [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
-### Articles
+### Cikkek
 
 - 📜 [Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
 - 📜 [How-to: call() , apply() and bind() in JavaScript — Niladri Sekhar Dutta](https://www.codementor.io/niladrisekhardutta/how-to-call-apply-and-bind-in-javascript-8i1jca6jp)
@@ -482,7 +484,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
 - 📜 [Understanding 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript call, apply and bind — techsith](https://www.youtube.com/watch?v=c0mLRpw-9rI)
 - 🎥 [JavaScript Practical Applications of Call, Apply and Bind functions— techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
@@ -491,13 +493,13 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [bind and this - Object Creation in JavaScript - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
 - 🎥 [JS Function Methods call(), apply(), and bind() — Steve Griffith](https://www.youtube.com/watch?v=uBdH0iB1VDM)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 16. new, Constructor, instanceof and Instances
+## 16. new, Constructor, instanceof és Instancok
 
-### Articles
+### Cikkek
 
 - 📜 [JavaScript For Beginners: the ‘new’ operator — Brandon Morelli](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
 - 📜 [Let’s demystify JavaScript’s ‘new’ keyword — Cynthia Lee](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
@@ -508,17 +510,17 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [What Is the Instanceof Operator in JavaScript — appendTo](https://appendto.com/2016/10/what-is-the-instanceof-operator-in-javascript/)
 - 📜 [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. Prototípus Öröklődés(Inheritance) és Prototípus Lánc
 
-### Reference
+### Hivatkozás
 
 - 📜 [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
-### Articles
+### Cikkek
 
 - 📜 [Javascript : Prototype vs Class — Valentin PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
 - 📜 [JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens](https://mathiasbynens.be/notes/prototypes)
@@ -542,7 +544,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Understanding Prototypal Inheritance In JavaScript — Lawrence Eagles](https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4)
 - 📜 [Objects and Prototypes in JavaScript — Irena Popova](https://dev.to/irenejpopova/objects-and-prototypes-in-javascript-2eie)
 
-### Videos
+### Videók
 
 - 🎥 [Javascript Prototype Inheritance — Avelx](https://www.youtube.com/watch?v=sOrtAjyk4lQ)
 - 🎥 [JavaScript Prototype Inheritance Explained pt. I — techsith](https://www.youtube.com/watch?v=7oNWNlMrkpc)
@@ -556,22 +558,22 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 - 🎥 [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
-### Books
+### Könyvek
 
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. Object.create és Object.assign
 
-### Reference
+### Hivatkozás
 
 - 📜 [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 - 📜 [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
-### Articles
+### Cikkek
 
 - 📜 [Object.create in JavaScript — Rupesh Mishra](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
 - 📜 [Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
@@ -585,18 +587,18 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [How to deep clone a JavaScript Object — Flavio Copes](https://flaviocopes.com/how-to-clone-javascript-object/)
 - 📜 [Object.create(): When and Why to Use — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
 
-### Videos
+### Videók
 
 - 🎥 [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - 🎥 [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
 ## 19. map, reduce, filter
 
-### Articles
+### Cikkek
 
 - 📜 [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
 - 📜 [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
@@ -632,7 +634,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Mastering the JavaScript Reduce method ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
 - 📜 [JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
 
-### Videos
+### Videók
 
 - 🎥 [Map, Filter and Reduce — Lydia Hallie](https://www.youtube.com/watch?v=UXiYii0Y7Nw)
 - 🎥 [Functional JavaScript: Map, forEach, Reduce, Filter — Theodore Anderson](https://www.youtube.com/watch?v=vytzLlY_wmU)
@@ -649,13 +651,13 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
 - 🎥 [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
+## 20. Letisztult Funkciók, Mellékhatások, Állapot Mutációk és Esemény Szaporítás
 
-### Articles
+### Cikkek
 
 - 📜 [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
 - 📜 [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
@@ -677,7 +679,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 - 📜 [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
 
-### Videos
+### Videók
 
 - 🎥 [Pure Functions — Hexlet](https://www.youtube.com/watch?v=dZ41D6LDSBg)
 - 🎥 [Pure Functions - Functional Programming in JavaScript — Paul McBride](https://www.youtube.com/watch?v=Jh_Uzqzz_wM)
@@ -686,18 +688,18 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
 - 🎥 [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 21. Closures
+## 21. Closure
 
-### Reference
+### Hivatkozás
 
 - 📜 [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 - 📜 [Closure — JavaScript.Info](https://javascript.info/closure)
 
-### Articles
+### Cikkek
 
 - 📜 [I never understood JavaScript closures — Olivier De Meulder](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
 - 📜 [Understand JavaScript Closures With Ease — Richard Bovell](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
@@ -723,7 +725,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [whatthefuck.is · A Closure - Dan Abramov](https://whatthefuck.is/closure)
 - 📜 [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript The Hard Parts: Closure, Scope & Execution Context - Codesmith](https://www.youtube.com/watch?v=XTAzsODSCsM)
 - 🎥 [Javascript Closure — techsith](https://www.youtube.com/watch?v=71AtaJpJHw0)
@@ -735,17 +737,17 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [Closures in JS  - Akshay Saini](https://www.youtube.com/watch?v=qikxEIxsXco)
 - 🎥 [CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre](https://youtu.be/xa8lhVwQBw4)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 22. High Order Functions
+## 22. Magasabbrendű Funkciók
 
-### Books
+### Könyvek
 
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
-### Articles
+### Cikkek
 
 - 📜 [Higher-Order Functions in JavaScript — M. David Green](https://www.sitepoint.com/higher-order-functions-javascript/)
 - 📜 [Higher Order Functions: Using Filter, Map and Reduce for More Maintainable Code — Guido Schmitz](https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528)
@@ -756,7 +758,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
 - 📜 [Higher Order Functions - A pragmatic approach — emmanuel ikwuoma](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript Higher Order Functions & Arrays — Traversy Media](https://www.youtube.com/watch?v=rRgD1yVwIvE)
 - 🎥 [Higher Order Functions — Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
@@ -767,13 +769,13 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
 - 🎥 [Higher-Order Functions ft. Functional Programming - Akshay Saini](https://www.youtube.com/watch?v=HkWxvB1RJq0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 23. Recursion
+## 23. Rekurzió
 
-### Articles
+### Cikkek
 
 - 📜 [Recursion in JavaScript — Kevin Ennis](https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f)
 - 📜 [Understanding Recursion in JavaScript — Zak Frisch](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
@@ -787,7 +789,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Accio Recursion!: Your New Favorite JavaScript Spell — Leanne Cabey](https://medium.com/datadriveninvestor/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3)
 - 📜 [Recursion Explained (with Examples) — Christina](https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m)
 
-### Videos
+### Videók
 
 - 🎥 [Recursion In JavaScript — techsith](https://www.youtube.com/watch?v=VtG0WAUvq2w)
 - 🎥 [Recursion — Fun Fun Function](https://www.youtube.com/watch?v=k7-N8R0-KY4)
@@ -799,17 +801,17 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [Recursion, Iteration, and JavaScript: A Love Story | JSHeroes 2018 — Anjana Vakil](https://www.youtube.com/watch?v=FmiQr4nfoPQ)
 - 🎥 [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 24. Collections and Generators
+## 24. Gyűjtemények és Generátorok
 
-### Reference
+### Hivatkozás
 
 - 📜 [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
 
-### Articles
+### Cikkek
 
 - 📜 [ES6 In Depth: Collections — Jason Orendorff](https://hacks.mozilla.org/2015/06/es6-in-depth-collections/)
 - 📜 [ES6 Collections: Using Map, Set, WeakMap, WeakSet — Kyle Pennell](https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/)
