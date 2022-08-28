@@ -70,11 +70,11 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 18. **[Object.create és Object.assign](#18-objectcreate-és-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
 20. **[Letisztult Funkciók, Mellékhatások, Állapot Mutációk és Esemény Szaporítás](#20-letisztult-funkciók-mellékhatások-állapot-mutációk-és-esemény-szaporítás)**
-21. **[Closure-ok](#21-closure-ok)**
+21. **[Closure-ok](#21-closureok)**
 22. **[Magasabbrendű Funkciók](#22-magasabbrendű-funkciók)**
 23. **[Rekurzió](#23-rekurzió)**
 24. **[Gyűjtemények és Generátorok](#24-gyűjtemények-és-generátorok)**
-25. **[Promise-ok](#25-promise-ok)**
+25. **[Promise-ok](#25-promiseok)**
 26. **[async/await](#26-asyncawait)**
 27. **[Adat Struktúrák](#27-adat-struktúrák)**
 28. **[Big O jegyzék és Hasznosság](#28-big-o-jegyzék-és-hasznosság)**
