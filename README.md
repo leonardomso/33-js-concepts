@@ -55,34 +55,34 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 3. **[Érték Típusok és Referencia Típusok](#3-érték-típusok-és-referencia-típusok)**
 4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominális-strukturális-és-dinamikus-típusozás)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-funkció-hatáskör(scope)-blokk-hatáskör-és-nem-rendszerzett(lexikális)-hatáskör)**
-7. **[Kifejezések vs Kijelentések](#7-expression-vs-statement)**
-8. **[Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
-9. **[Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval és requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[JavaScript Motorok](#11-javascript-engines)**
-12. **[Bitenkénti Operátorok, Típus Tömbök és Tömb Pufferek](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM és Fa-Szerkezetek](#13-dom-and-layout-trees)**
-14. **[Üzemi funkciók(Factories) és Osztályok](#14-factories-and-classes)**
-15. **[this, call, apply és bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof és Instancok](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototípus Öröklődés(Inheritance) és Prototípus Lánc](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create és Object.assign](#18-objectcreate-and-objectassign)**
+6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-funkció-hatáskörscope-blokk-hatáskör-és-nem-rendszerzettlexikális-hatáskör)**
+7. **[Kifejezések vs Kijelentések](#7-kifejezések-vs-kijelentések)**
+8. **[Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak](#8-azonnal-meghívott-funkció-kifejezésiife-modulok-és-névtárak)**
+9. **[Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)](#9-üzenet-sormessage-queue-és-esemény-hurokevent-loop)**
+10. **[setTimeout, setInterval és requestAnimationFrame](#10-settimeout-setinterval-és-requestanimationframe)**
+11. **[JavaScript Motorok](#11-javascript-motorok)**
+12. **[Bitenkénti Operátorok, Típus Tömbök és Tömb Pufferek](#12-bitenkénti-operátorok-típus-tömbök-és-tömb-pufferek)**
+13. **[DOM és Fa-Szerkezetek](#13-dom-és-fa-szerkezetek)**
+14. **[Üzemi funkciók(Factories) és Osztályok](#14-üzemi-funkciókfactories-és-osztályok)**
+15. **[this, call, apply és bind](#15-this-call-apply-és-bind)**
+16. **[new, Constructor, instanceof és Instancok](#16-new-constructor-instanceof-és-instancok)**
+17. **[Prototípus Öröklődés(Inheritance) és Prototípus Lánc](#17-prototípus-öröklődésinheritance-aés-prototípu-lánc)**
+18. **[Object.create és Object.assign](#18-objectcreate-és-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Letisztult Funkciók, Mellékhatások, Állapot Mutációk és Esemény Szaporítás](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
-21. **[Closure](#21-closures)**
-22. **[Magasabbrendű Funkciók](#22-high-order-functions)**
-23. **[Rekurzió](#23-recursion)**
-24. **[Gyűjtemények és Generátorok](#24-collections-and-generators)**
-25. **[Promise](#25-promises)**
+20. **[Letisztult Funkciók, Mellékhatások, Állapot Mutációk és Esemény Szaporítás](#20-letisztult-funkciók-mellékhatások-állapot-mutációk-és-esemény-szaporítás)**
+21. **[Closure-ok](#21-closure-ok)**
+22. **[Magasabbrendű Funkciók](#22-magasabbrendű-funkciók)**
+23. **[Rekurzió](#23-rekurzió)**
+24. **[Gyűjtemények és Generátorok](#24-gyűjtemények-és-generátorok)**
+25. **[Promise-ok](#25-promise-ok)**
 26. **[async/await](#26-asyncawait)**
-27. **[Adat Struktúrák](#27-data-structures)**
-28. **[Big O jegyzék és Hasznosság](#28-expensive-operation-and-big-o-notation)**
-29. **[Algoritmusok](#29-algorithms)**
-30. **[Inheritance(Öröklődés), Polimorfizmus és Kód ismétlés](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Dizájn Minták](#31-design-patterns)**
-32. **[Részleges Alkalmazások, Curry-zés, Compose és Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Tiszta Kód](#33-clean-code)**
+27. **[Adat Struktúrák](#27-adat-struktúrák)**
+28. **[Big O jegyzék és Hasznosság](#28-big-o-jegyzék-és-hasznosság)**
+29. **[Algoritmusok](#29-algoritmusok)**
+30. **[Inheritance(Öröklődés), Polimorfizmus és Kód ismétlés](#30-inheritanceöröklődés-polimorfizmus-és-kód-ismétlés)**
+31. **[Dizájn Minták](#31-dizájn-minták)**
+32. **[Részleges Alkalmazások, Curry-zés, Compose és Pipe](#32-részleges-alkalmazások-curry-zés-compose-és-pipe)**
+33. **[Tiszta Kód](#33-tiszta-kód)**
 
 ---
 
