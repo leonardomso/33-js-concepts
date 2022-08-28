@@ -9,9 +9,9 @@
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
-## Introduction
+## Bevezető
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Ez a gyűjtemény azzal a szándékkal készült, hogy segítse a fejlesztők dolgát a Javascript fogalmainak elsajátításában. Ez nem elvárás, de ez innkább egy segéd a jövendő tanulmányokban. [Stephen Curtis](https://twitter.com/stephenthecurt) által írt cikkre épül, melyet [itt](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) olvashatsz el.
 
 **🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
