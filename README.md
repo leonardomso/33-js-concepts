@@ -1,29 +1,29 @@
 ﻿<h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
+  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Fogalom Amit Minden JS Fejlesztőnek Tudnia Kell" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 Fogalom Amit Minden JS Fejlesztőnek Tudnia Kell
   <br><br>
 </h1>
 
-[![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
+[![Kövess be](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
 ## Bevezető
 
 Ez a gyűjtemény azzal a szándékkal készült, hogy segítse a fejlesztők dolgát a Javascript fogalmainak elsajátításában. Ez nem elvárás, de ez innkább egy segéd a jövendő tanulmányokban. [Stephen Curtis](https://twitter.com/stephenthecurt) által írt cikkre épül, melyet [itt](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) olvashatsz el.
 
-**🚀 [Top open source projects of 2018-as top nílt forrású projektje](https://blog.github.com/2018-12-13-new-open-source-projects/) közé sorolta a Github!**
+**🚀 [2018-as top nyílt forrású projektje](https://blog.github.com/2018-12-13-new-open-source-projects/) közé sorolta a Github!**
 
 ## Közösség
 
-Szabadon köldhetsz PR-t az általad hozzáadott szemléid vagy összegzéseid hivatkozásával. Hogyha szeretnéd lefordítani a gyűjteményt anyanyelvedre, bátran tedd meg.
+Szabadon küldhetsz PR-t az általad hozzáadott szemléid vagy összegzéseid hivatkozásával. Hogyha szeretnéd lefordítani a gyűjteményt anyanyelvedre, bátran tedd meg.
 
 Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 
-- [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
-- [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Shqip (Albán)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
+- [اَلْعَرَبِيَّةُ‎ (Arab)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [汉语 (Kínai)](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Português do Brasil (Braziliai Portugál) ](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 - [한국어 (Kóreai)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
 - [Español (Spanyol)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
