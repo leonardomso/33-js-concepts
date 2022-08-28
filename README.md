@@ -50,35 +50,35 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitív Típusok](#2-primitive-types)**
 3. **[Érték Típusok és Referencia Típusok](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominális, Strukturálás és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett Hatáskör](#6-function-scope-block-scope-and-lexical-scope)**
+6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-function-scope-block-scope-and-lexical-scope)**
 7. **[Kifejezések vs Kijelentés](#7-expression-vs-statement)**
-8. **[AHFK(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
-9. **[Üzenet Sor és Esemény Hurok](#9-message-queue-and-event-loop)**
+8. **[Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
+9. **[Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)](#9-message-queue-and-event-loop)**
 10. **[setTimeout, setInterval és requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
 11. **[JavaScript Motorok](#11-javascript-engines)**
 12. **[Bitenkénti Operátorok, Típus Tömbök és Tömb Pufferek](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM és Fa Szerkezetek](#13-dom-and-layout-trees)**
-14. **[Üzemi funkciók és Osztályok](#14-factories-and-classes)**
+13. **[DOM és Fa-Szerkezetek](#13-dom-and-layout-trees)**
+14. **[Üzemi funkciók(Factories) és Osztályok](#14-factories-and-classes)**
 15. **[this, call, apply és bind](#15-this-call-apply-and-bind)**
 16. **[new, Constructor, instanceof és Instancok](#16-new-constructor-instanceof-and-instances)**
 17. **[Prototípus Öröklődés(Inheritance) és Prototípus Lánc](#17-prototype-inheritance-and-prototype-chain)**
 18. **[Object.create és Object.assign](#18-objectcreate-and-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
 20. **[Letisztult Funkciók, Mellékhatások, Állapot Mutációk és Esemény Szaporítás](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
-21. **[Closures](#21-closures)**
+21. **[Closure](#21-closures)**
 22. **[Magasabbrendű Funkciók](#22-high-order-functions)**
 23. **[Rekurzió](#23-recursion)**
 24. **[Gyűjtemények és Generátorok](#24-collections-and-generators)**
 25. **[Promise](#25-promises)**
 26. **[async/await](#26-asyncawait)**
 27. **[Adat Struktúrák](#27-data-structures)**
-28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms](#29-algorithms)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Design Patterns](#31-design-patterns)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
+28. **[Big O jegyzék és Hasznosság](#28-expensive-operation-and-big-o-notation)**
+29. **[Algoritmusok](#29-algorithms)**
+30. **[Inheritance(Öröklődés), Polimorfizmus és Kód ismétlés](#30-inheritance-polymorphism-and-code-reuse)**
+31. **[Dizájn Minták](#31-design-patterns)**
+32. **[Részleges Alkalmazások, [Curry-zálás](https://blog.logrocket.com/understanding-javascript-currying/), [Compose és Pipe](https://itnext.io/write-better-javascript-function-composition-with-pipe-and-compose-93cc39ab16ee)](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Clean Code](#33-clean-code)**
 
 ---
