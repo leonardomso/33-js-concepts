@@ -31,7 +31,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - [русский язык (Orosz)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 - [Tiếng Việt (Vietnámi)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
 - [Polski (Lengyel)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+- [فارسی (Perzsa)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
 - [Bahasa Indonesia (Indonéz)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
 - [Français (Francia)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
 - [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
@@ -48,32 +48,32 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 ## <a id="table-of-contents">Tartalomjegyzék</a>
 
 1. **[Call Stack](#1-call-stack)**
-2. **[Primitive Types](#2-primitive-types)**
-3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+2. **[Primitív Típusok](#2-primitive-types)**
+3. **[Érték Típusok és Referencia Típusok](#3-value-types-and-reference-types)**
+4. **[Implicit, Explicit, Nominális, Strukturálás és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[JavaScript Engines](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
-15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett Hatáskör](#6-function-scope-block-scope-and-lexical-scope)**
+7. **[Kifejezések vs Kijelentés](#7-expression-vs-statement)**
+8. **[AHFK(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
+9. **[Üzenet Sor és Esemény Hurok](#9-message-queue-and-event-loop)**
+10. **[setTimeout, setInterval és requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+11. **[JavaScript Motorok](#11-javascript-engines)**
+12. **[Bitenkénti Operátorok, Típus Tömbök és Tömb Pufferek](#12-bitwise-operators-type-arrays-and-array-buffers)**
+13. **[DOM és Fa Szerkezetek](#13-dom-and-layout-trees)**
+14. **[Üzemi funkciók és Osztályok](#14-factories-and-classes)**
+15. **[this, call, apply és bind](#15-this-call-apply-and-bind)**
+16. **[new, Constructor, instanceof és Instancok](#16-new-constructor-instanceof-and-instances)**
+17. **[Prototípus Öröklődés(Inheritance) és Prototípus Lánc](#17-prototype-inheritance-and-prototype-chain)**
+18. **[Object.create és Object.assign](#18-objectcreate-and-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
+20. **[Letisztult Funkciók, Mellékhatások, Állapot Mutációk és Esemény Szaporítás](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
 21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-high-order-functions)**
-23. **[Recursion](#23-recursion)**
-24. **[Collections and Generators](#24-collections-and-generators)**
-25. **[Promises](#25-promises)**
+22. **[Magasabbrendű Funkciók](#22-high-order-functions)**
+23. **[Rekurzió](#23-recursion)**
+24. **[Gyűjtemények és Generátorok](#24-collections-and-generators)**
+25. **[Promise](#25-promises)**
 26. **[async/await](#26-asyncawait)**
-27. **[Data Structures](#27-data-structures)**
+27. **[Adat Struktúrák](#27-data-structures)**
 28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
 29. **[Algorithms](#29-algorithms)**
 30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
