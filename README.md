@@ -51,7 +51,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 ## <a id="table-of-contents">Tartalomjegyzék</a>
 
 1. **[Call Stack](#1-call-stack)**
-2. **[Primitív Típusok](#2-primitive-types)**
+2. **[Primitív Típusok](#2-primitív-típusok)**
 3. **[Érték Típusok és Referencia Típusok](#3-value-types-and-reference-types)**
 4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
