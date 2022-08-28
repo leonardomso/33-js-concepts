@@ -13,39 +13,39 @@
 
 Ez a gyűjtemény azzal a szándékkal készült, hogy segítse a fejlesztők dolgát a Javascript fogalmainak elsajátításában. Ez nem elvárás, de ez innkább egy segéd a jövendő tanulmányokban. [Stephen Curtis](https://twitter.com/stephenthecurt) által írt cikkre épül, melyet [itt](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) olvashatsz el.
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 [Top open source projects of 2018-as top nílt forrású projektje](https://blog.github.com/2018-12-13-new-open-source-projects/) közé sorolta a Github!**
 
-## Community
+## Közösség
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+Szabadon köldhetsz PR-t az általad hozzáadott szemléid vagy összegzéseid hivatkozásával. Hogyha szeretnéd lefordítani a gyűjteményt anyanyelvedre, bátran tedd meg.
 
-All the translations for this repo will be listed below:
+Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
-- [Português do Brasil (Brazilian Portuguese) ](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
-- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
-- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+- [Português do Brasil (Braziliai Portugál) ](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [한국어 (Kóreai)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Español (Spanyol)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Türkçe (Török)](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [русский язык (Orosz)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Tiếng Việt (Vietnámi)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
+- [Polski (Lengyel)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
 - [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
-- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
+- [Bahasa Indonesia (Indonéz)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [Français (Francia)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
 - [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
-- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
-- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
-- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
-- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
+- [Ελληνικά (Görög)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
+- [日本語 (Japán)](https://github.com/oimo23/33-js-concepts) — oimo23
+- [Deutsch (Német)](https://github.com/burhannn/33-js-concepts) — burhannn
+- [украї́нська мо́ва (Ukrán)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
-- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
-- [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
+- [Italiano (Olasz)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
+- [Malagasy (Madagaszkári)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
 
 ---
 
-## <a id="table-of-contents">Table of Contents</a>
+## <a id="table-of-contents">Tartalomjegyzék</a>
 
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitive Types](#2-primitive-types)**
