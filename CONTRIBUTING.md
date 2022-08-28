@@ -1,20 +1,20 @@
 
-# Contribution
-This project would not be possible without your help and support and we appreciate your willingness to contribute!
+# Közreműkődés
+Ez a projekt nem jött volna létre a Te segítséged és támogatásod nélkül és nagyra értékeljük a közreműködési hajlandóságod!
 
-### Creating New Translation
+### Új Fordítások Készítése
 
-In order to create a new translation, you need to follow these steps:
+Amennyiben új fordítást szeretnél készíteni, a következőket kell tenned:
 
-* Fork the [main repo](https://github.com/leonardomso/33-js-concepts).
-* Add yourself to the watch list of the main repo to keep up with changes.
-* Translate the repo on your forked repo.
-* Go to the [main repo](https://github.com/leonardomso/33-js-concepts) and edit the README.md to include your translated repo link there.
-* Inside the **Community**, add a new line with the link for your translated repo like: 
-	* [Your language in native form (English name)](link to your repo here) — Your Name
-	* e.g. `[日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23`
-* Create a new Pull Request with the name "Add *your language here*" translation.
-* Now, just wait for the merge! 
+* Forkold a [fő könyvtárat](https://github.com/leonardomso/33-js-concepts).
+* Tedd be magad a fő könyvtár figyelőjébe(Watch List), hogy ne maradj le a véltozásokról.
+* Fordítsd le a könyvtárat a forkolt könyvtáradban.
+* Menj a [fő könyvtárba](https://github.com/leonardomso/33-js-concepts) és módosítsd a README.md fájlban a lefordított könyvtár elérési hivatkozását.
+* A **Közösségben**, add hozzá egy új sorba a lefordított könyvtárat így: 
+	* [Nyelved anyanyelvi formában (Nyelved Angolul)](hivatkozás a könyvtáradhoz) — A Neved
+	* pl. `[日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23`
+* Küldj egy új Pull Request-et a következő címmel "Add *az anyanyelved ide*".
+* És most, várj a beolvasztásra! 
 
-## License
-By contributing, you agree that your contributions will be licensed under its [MIT license](./LICENSE).
+## Licensz
+Közreműködéseddel elfogadod, hogy a közreműködéseid az [MIT licensz](./LICENSE) védjegye alatt fognak állni.
