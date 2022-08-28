@@ -81,7 +81,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 29. **[Algoritmusok](#29-algorithms)**
 30. **[Inheritance(Öröklődés), Polimorfizmus és Kód ismétlés](#30-inheritance-polymorphism-and-code-reuse)**
 31. **[Dizájn Minták](#31-design-patterns)**
-32. **[Részleges Alkalmazások, Curry-zálás, Compose és Pipe](#32-partial-applications-currying-compose-and-pipe)**
+32. **[Részleges Alkalmazások, Curry-zés, Compose és Pipe](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Tiszta Kód](#33-clean-code)**
 
 ---
@@ -1075,7 +1075,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 
 ---
 
-## 32. Részleges Alkalmazások, Curry-zálás, Compose és Pipe
+## 32. Részleges Alkalmazások, Curry-zés, Compose és Pipe
     
 ### Könyvek
 
