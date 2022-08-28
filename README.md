@@ -66,7 +66,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 14. **[Üzemi funkciók(Factories) és Osztályok](#14-üzemi-funkciókfactories-és-osztályok)**
 15. **[this, call, apply és bind](#15-this-call-apply-és-bind)**
 16. **[new, Constructor, instanceof és Instancok](#16-new-constructor-instanceof-és-instancok)**
-17. **[Prototípus Öröklődés(Inheritance) és Prototípus Lánc](#17-prototípus-öröklődésinheritance-aés-prototípu-lánc)**
+17. **[Prototípus Öröklődés(Inheritance) és Prototípus Lánc](#17-prototípus-öröklődésinheritance-és-prototípus-lánc)**
 18. **[Object.create és Object.assign](#18-objectcreate-és-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
 20. **[Letisztult Funkciók, Mellékhatások, Állapot Mutációk és Esemény Szaporítás](#20-letisztult-funkciók-mellékhatások-állapot-mutációk-és-esemény-szaporítás)**
