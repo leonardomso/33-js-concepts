@@ -7,13 +7,13 @@
   <br><br>
 </h1>
 
-*Amit lehetett ;s ;rtelme volt magyarra fordtottam, van ami két nyelven is szerepel, hiszen a programozás nyelve az mindig is angol volt, de csak hogz érthetőbb legyen a fogalom.
+*Amit lehetett és értelme volt magyarra fordtottam, van olyan cím, ami két nyelven is szerepel, hiszen a programozás nyelve mindig is angol volt, de csak hogy érthetőbb legyen a fogalom. Vannak idegennyelvű videók is, azokhoz lehet kérni Youtube-on feliratot, de bő a választék.
     
 [![Kövess be](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
 ## Bevezető
 
-Ez a gyűjtemény azzal a szándékkal készült, hogy segítse a fejlesztők dolgát a Javascript fogalmainak elsajátításában. Ez nem elvárás, de ez innkább egy segéd a jövendő tanulmányokban. [Stephen Curtis](https://twitter.com/stephenthecurt) által írt cikkre épül, melyet [itt](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) olvashatsz el.
+Ez a gyűjtemény azzal a szándékkal készült, hogy segítse a fejlesztők dolgát a Javascript fogalmainak elsajátításában. Ez nem elvárás, de ez inkább egy segéd a jövendő tanulmányokban. [Stephen Curtis](https://twitter.com/stephenthecurt) által írt cikkre épül, melyet [itt](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) olvashatsz el.
 
 **🚀 [2018-as top nyílt forrású projektje](https://blog.github.com/2018-12-13-new-open-source-projects/) közé sorolta a Github!**
 
