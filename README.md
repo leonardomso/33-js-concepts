@@ -52,10 +52,10 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitív Típusok](#2-primitív-típusok)**
-3. **[Érték Típusok és Referencia Típusok](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+3. **[Érték Típusok és Referencia Típusok](#3-érték-típusok-és-referencia-típusok)**
+4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominális-strukturális-és-dinamikus-típusozás)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-function-scope-block-scope-and-lexical-scope)**
+6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-funkció-hatáskör(scope)-blokk-hatáskör-és-nem-rendszerzett(lexikális)-hatáskör)**
 7. **[Kifejezések vs Kijelentések](#7-expression-vs-statement)**
 8. **[Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
 9. **[Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)](#9-message-queue-and-event-loop)**
