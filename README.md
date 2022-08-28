@@ -81,7 +81,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 29. **[Algoritmusok](#29-algorithms)**
 30. **[Inheritance(Öröklődés), Polimorfizmus és Kód ismétlés](#30-inheritance-polymorphism-and-code-reuse)**
 31. **[Dizájn Minták](#31-design-patterns)**
-32. **[Részleges Alkalmazások, Curry-zálás(https://blog.logrocket.com/understanding-javascript-currying/), Compose és Pipe(https://itnext.io/write-better-javascript-function-composition-with-pipe-and-compose-93cc39ab16ee)](#32-partial-applications-currying-compose-and-pipe)**
+32. **[Részleges Alkalmazások, Curry-zálás, Compose és Pipe](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Tiszta Kód](#33-clean-code)**
 
 ---
@@ -1083,8 +1083,6 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 
 ### Cikkek
 
-- 📜 [What is Currying - Ezekiel Lawson](https://blog.logrocket.com/understanding-javascript-currying/)
-- 📜 [Compose and Pipe - Filippo Rivolta](https://itnext.io/write-better-javascript-function-composition-with-pipe-and-compose-93cc39ab16ee)
 - 📜 [Use function composition in JavaScript — Rémi](https://www.codementor.io/michelre/use-function-composition-in-javascript-gkmxos5mj)
 - 📜 [Currying in JavaScript ES6 — Adam Bene](https://blog.benestudio.co/currying-in-javascript-es6-540d2ad09400)
 - 📜 [Composition and Currying Elegance in JavaScript — Pragyan Das](https://medium.com/@pragyan88/writing-middleware-composition-and-currying-elegance-in-javascript-8b15c98a541b)
