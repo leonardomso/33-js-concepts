@@ -42,7 +42,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
 - [Italiano (Olasz)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [Malagasy (Madagaszkári)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
-
+- [Magyar (Hungarian)](https://github.com/andrejmoltok/33-js-concepts) - Andras Pal Ciocan
 ---
 
 ## <a id="table-of-contents">Tartalomjegyzék</a>
@@ -53,7 +53,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
 6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Kifejezések vs Kijelentések](#7-expression-vs-statement)**
+7. **[Kifejezések vs Kijelentés](#7-expression-vs-statement)**
 8. **[Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
 9. **[Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)](#9-message-queue-and-event-loop)**
 10. **[setTimeout, setInterval és requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
@@ -78,18 +78,18 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 29. **[Algoritmusok](#29-algorithms)**
 30. **[Inheritance(Öröklődés), Polimorfizmus és Kód ismétlés](#30-inheritance-polymorphism-and-code-reuse)**
 31. **[Dizájn Minták](#31-design-patterns)**
-32. **[Részleges Alkalmazások, [Curry-zálás](https://blog.logrocket.com/understanding-javascript-currying/), [Compose és Pipe](https://itnext.io/write-better-javascript-function-composition-with-pipe-and-compose-93cc39ab16ee)](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code](#33-clean-code)**
+32. **[Részleges Alkalmazások, Curry-zálás(https://blog.logrocket.com/understanding-javascript-currying/), Compose és Pipe(https://itnext.io/write-better-javascript-function-composition-with-pipe-and-compose-93cc39ab16ee)](#32-partial-applications-currying-compose-and-pipe)**
+33. **[Tiszta Kód](#33-clean-code)**
 
 ---
 
 ## 1. Call Stack
 
-### Reference
+### Hivatkozás
 
 - 📜 [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### Articles
+### Cikkek
 
 - 📜 [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
 - 📜 [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -100,7 +100,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://tylermcginnis.com/ultimate-guide-to-execution-contexts-hoisting-scopes-and-closures-in-javascript/)
 - 📜 [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
 
-### Videos
+### Videók
 
 - 🎥 [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
 - 🎥 [The JS Call Stack Explained In 9 Minutes — Colt Steele](https://www.youtube.com/watch?v=W8AeMrVtFLY)
@@ -112,17 +112,17 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
 - 🎥 [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 2. Primitive Types
+## 2. Primitív Típusok
 
-### Reference
+### Hivatkozás
 
 - 📜 [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### Articles
+### Cikkek
 
 - 📜 [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
 - 📜 [What You Need to Know About JavaScript Number Type — Max Wizard K](https://indepth.dev/posts/1139/here-is-what-you-need-to-know-about-javascripts-number-type)
@@ -135,7 +135,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
 - 📜 [Object to primitive conversion — JavaScript.info](https://javascript.info/object-toprimitive)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - 🎥 [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
@@ -145,13 +145,13 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [What are variables in Javascript? — JS For Everyone](https://www.youtube.com/watch?v=B4Bbmei_thw)
 - 🎥 [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. Érték Típusok és Referencia Típusok
 
-### Articles
+### Cikkek
 
 - 📜 [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
 - 📜 [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
@@ -163,26 +163,26 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [JavaScript by Reference vs. by Value — nrabinowitz](https://stackoverflow.com/questions/6605640/javascript-by-reference-vs-by-value)
 - 📜 [JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
 
-### Videos
+### Videók
 
 - 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
 - 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
 - 🎥 [VALORES vs REFERENCIAS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=AvkyOrWkuQc)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás
 
-### Articles
+### Cikkek
 
 - 📜 [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
 - 📜 [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
 - 📜 [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
 - 📜 [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
 
-### Videos
+### Videók
 
 - 🎥 [== ? === ??? ...#@^% - Shirmung Bielefeld](https://www.youtube.com/watch?v=qGyqzN0bjhc&t)
 - 🎥 [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
@@ -190,17 +190,17 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [Typing: Static vs Dynamic, Weak vs. Strong - Codexpanse](https://www.youtube.com/watch?v=C5fr0LZLMAs)
 - 🎥 [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
 
-### Books
+### Könyvek
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
 ## 5. == vs === vs typeof
 
-### Articles
+### Cikkek
 
 - 📜 [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
 - 📜 [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
@@ -212,22 +212,22 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [How to better check data types in JavaScript — Webbjocke](https://webbjocke.com/javascript-check-data-types/)
 - 📜 [Checking for the Absence of a Value in JavaScript — Tomer Aberbach](https://tomeraberba.ch/html/post/checking-for-the-absence-of-a-value-in-javascript.html)
 
-### Videos
+### Videók
 
 - 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 6. Function Scope, Block Scope and Lexical Scope
+## 6. Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör
 
-### Books
+### Könyvek
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
-### Articles
+### Cikkek
 
 - 📜 [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
 - 📜 [The battle between Function Scope and Block Scope — Marius Herring](http://www.deadcoderising.com/2017-04-11-es6-var-let-and-const-the-battle-between-function-scope-and-block-scope/)
@@ -243,7 +243,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and “this” ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
 - 📜 [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
 
-### Videos
+### Videók
 
 - 🎥 [What Makes Javascript Weird ... and Awesome pt. 4 — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
 - 🎥 [Variable Scope in JavaScript — Kirupa Chinnathambi](https://www.youtube.com/watch?v=dhp57T3p760)
@@ -251,13 +251,13 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
 - 🎥 [Variable Scope — Steve Griffith](https://www.youtube.com/watch?v=FyWdrCZZavQ)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
-## 7. Expression vs Statement
+## 7. Kifejezések vs Kijelentések
 
-### Articles
+### Cikkek
 
 - 📜 [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
 - 📜 [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
@@ -265,12 +265,12 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 - 📜 [Function Declarations vs. Function Expressions — Mandeep Singh](https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052)
 - 📜 [Function Declarations vs. Function Expressions — Anguls Croll](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
 
-### Videos
+### Videók
 
 - 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
 - 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ Vissza a tetejére](#table-of-contents)**
 
 ---
 
