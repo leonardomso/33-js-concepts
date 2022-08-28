@@ -53,7 +53,7 @@ Az összes elérhető gyűjtemény fordítás az alábbi listában látható:
 4. **[Implicit, Explicit, Nominális, Strukturális és Dinamikus Típusozás](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
 6. **[Funkció Hatáskör(Scope), Blokk Hatáskör és Nem Rendszerzett(Lexikális) Hatáskör](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Kifejezések vs Kijelentés](#7-expression-vs-statement)**
+7. **[Kifejezések vs Kijelentések](#7-expression-vs-statement)**
 8. **[Azonnal Meghívott Funkció Kifejezés(IIFE), Modulok és Névtárak](#8-iife-modules-and-namespaces)**
 9. **[Üzenet Sor(Message Queue) és Esemény Hurok(Event Loop)](#9-message-queue-and-event-loop)**
 10. **[setTimeout, setInterval és requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
