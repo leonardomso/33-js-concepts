@@ -328,6 +328,7 @@ All the translations for this repo will be listed below:
 - 🎥 [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
 - 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 - 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
+- 🎥 [Asynchronous JavaScript & EVENT LOOP from scratch - Akshay Saini](https://www.youtube.com/watch?v=8zKuNo4ay8E&t=11s)
 
 **[⬆ Back to Top](#table-of-contents)**
 
