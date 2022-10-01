@@ -40,7 +40,7 @@ Tutte le traduzioni di questo archivio sono elencate qui sotto:
 - [Deutsch (tedesco)](https://github.com/burhannn/33-js-concepts) — burhannn
 - [украї́нська мо́ва (ucraino)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
 - [සිංහල (singalese)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
-- [Italiano (Italiano)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
+- [Italiano (Italiano)](https://github.com/Donearm/33-js-concepts) — Fayemi Toluwanimi
 - [Malgascio (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
 
 ---
