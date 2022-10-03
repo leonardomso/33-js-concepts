@@ -1,4 +1,4 @@
-﻿<h1 align="center">
+<h1 align="center">
 <br>
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
@@ -259,7 +259,7 @@ All the translations for this repo will be listed below:
 ## 7. Expression vs Statement
 
 ### Articles
-
+- 📜 [Statements Vs. Expressions - Josh W Comeau](https://www.joshwcomeau.com/javascript/statements-vs-expressions/)
 - 📜 [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
 - 📜 [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
 - 📜 [JavaScript Function — Declaration vs Expression — Ravi Roshan](https://medium.com/@raviroshan.talk/javascript-function-declaration-vs-expression-f5873b8c7b38)
@@ -270,6 +270,7 @@ All the translations for this repo will be listed below:
 
 - 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
 - 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
+- 🎥 [Function expression in JavaScript — Telusko](https://youtu.be/37ly8tCGFWA)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -304,6 +305,7 @@ All the translations for this repo will be listed below:
 - 🎥 [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
 **[⬆ Back to Top](#table-of-contents)**
+
 
 ---
 
@@ -585,6 +587,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript: Object.assign() — Thiago S. Adriano](https://codeburst.io/javascript-object-assign-bc9696dcbb6e)
 - 📜 [How to deep clone a JavaScript Object — Flavio Copes](https://flaviocopes.com/how-to-clone-javascript-object/)
 - 📜 [Object.create(): When and Why to Use — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
+- 📜 [The Difference Between Object.assign() and Object.create() in JavaScript — Shaik Wasef](https://javascript.plainenglish.io/difference-between-object-assign-and-object-create-in-javascript-6f3ee100f99d)
 
 ### Videos
 
@@ -787,6 +790,7 @@ All the translations for this repo will be listed below:
 - 📜 [Intro to Recursion — Brad Newman](https://medium.com/@newmanbradm/intro-to-recursion-984a8bd50f4b)
 - 📜 [Accio Recursion!: Your New Favorite JavaScript Spell — Leanne Cabey](https://medium.com/datadriveninvestor/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3)
 - 📜 [Recursion Explained (with Examples) — Christina](https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m)
+- 📜 [How JavaScript works: Recursion in JavaScript, What It Is, and How it is used. — Ukpaiugochi] (https://blog.sessionstack.com/how-javascript-works-recursion-in-javascript-what-it-is-and-how-it-is-used-eef3d734f20d)
 
 ### Videos
 
@@ -950,6 +954,7 @@ All the translations for this repo will be listed below:
 - 📜 [Data Structures: Objects and Arrays ― Chris Nwamba](https://scotch.io/courses/10-need-to-know-javascript-concepts/data-structures-objects-and-arrays)
 - 📜 [Data structures in JavaScript — Benoit Vallon](http://blog.benoitvallon.com/data-structures-in-javascript/data-structures-in-javascript/)
 - 📜 [Playing with Data Structures in Javascript — Anish K.](https://blog.cloudboost.io/playing-with-data-structures-in-javascript-stack-a55ebe50f29d)
+- 📜 [Stack and Queue in JavaScript - Leonardo Maldonado ](https://www.telerik.com/blogs/stack-queue-javascript)
 - 📜 [The Little Guide of Queue in JavaScript — Germán Cutraro](https://hackernoon.com/the-little-guide-of-queue-in-javascript-4f67e79260d9)
 - 📜 [All algorithms writing with JavaScript in the book 'Algorithms Fourth Edition'](https://github.com/barretlee/algorithms)
 - 📜 [Collection of classic computer science paradigms in JavaScript](https://github.com/nzakas/computer-science-in-javascript)
@@ -958,6 +963,7 @@ All the translations for this repo will be listed below:
 - 📜 [Data Structures: Understanding Graphs — Rachel Hawa](https://medium.com/javascript-in-plain-english/data-structures-understanding-graphs-82509d35e6b5)
 - 📜 [Data Structures Two Ways: Linked List (Pt 1) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-2n61)
 - 📜 [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
+- 📜 [JavaScript Data Structures : Tree - 30 seconds of code ](https://www.30secondsofcode.org/articles/s/js-data-structures-tree)
 - 📜 [Graph Data Structures Explained in JavaScript — Adrian Mejia](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
 
 ### Videos
@@ -1006,6 +1012,7 @@ All the translations for this repo will be listed below:
 - 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
+- 📜 [Algorithm Interview Questions and Answers (JS)](https://shinjukudev.medium.com/algorithm-interview-questions-and-answers-js-c44f0872b9b2)
 
 **[⬆ Back to Top](#table-of-contents)**
 
