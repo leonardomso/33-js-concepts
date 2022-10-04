@@ -1,0 +1,1112 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>index</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__left">
+    <div class="stackedit__toc">
+      
+<ul>
+<li>
+<ul>
+<li><a href="#introduction">Introduction</a></li>
+<li><a href="#community">Community</a></li>
+<li><a href="#a-idtable-of-contentstable-of-contentsa">Table of Contents</a></li>
+<li><a href="#call-stack">1. Call Stack</a></li>
+<li><a href="#primitive-types">2. Primitive Types</a></li>
+<li><a href="#value-types-and-reference-types">3. Value Types and Reference Types</a></li>
+<li><a href="#implicit-explicit-nominal-structuring-and-duck-typing">4. Implicit, Explicit, Nominal, Structuring and Duck Typing</a></li>
+<li><a href="#vs--vs-typeof">5. == vs === vs typeof</a></li>
+<li><a href="#function-scope-block-scope-and-lexical-scope">6. Function Scope, Block Scope and Lexical Scope</a></li>
+<li><a href="#expression-vs-statement">7. Expression vs Statement</a></li>
+<li><a href="#iife-modules-and-namespaces">8. IIFE, Modules and Namespaces</a></li>
+<li><a href="#message-queue-and-event-loop">9. Message Queue and Event Loop</a></li>
+<li><a href="#settimeout-setinterval-and-requestanimationframe">10. setTimeout, setInterval and requestAnimationFrame</a></li>
+<li><a href="#javascript-engines">11. JavaScript Engines</a></li>
+<li><a href="#bitwise-operators-type-arrays-and-array-buffers">12. Bitwise Operators, Type Arrays and Array Buffers</a></li>
+<li><a href="#dom-and-layout-trees">13. DOM and Layout Trees</a></li>
+<li><a href="#factories-and-classes">14. Factories and Classes</a></li>
+<li><a href="#this-call-apply-and-bind">15. this, call, apply and bind</a></li>
+<li><a href="#new-constructor-instanceof-and-instances">16. new, Constructor, instanceof and Instances</a></li>
+<li><a href="#prototype-inheritance-and-prototype-chain">17. Prototype Inheritance and Prototype Chain</a></li>
+<li><a href="#object.create-and-object.assign">18. Object.create and Object.assign</a></li>
+<li><a href="#map-reduce-filter">19. map, reduce, filter</a></li>
+<li><a href="#pure-functions-side-effects-state-mutation-and-event-propagation">20. Pure Functions, Side Effects, State Mutation and Event Propagation</a></li>
+<li><a href="#closures">21. Closures</a></li>
+<li><a href="#high-order-functions">22. High Order Functions</a></li>
+<li><a href="#recursion">23. Recursion</a></li>
+<li><a href="#collections-and-generators">24. Collections and Generators</a></li>
+<li><a href="#promises">25. Promises</a></li>
+<li><a href="#asyncawait">26. async/await</a></li>
+<li><a href="#data-structures">27. Data Structures</a></li>
+<li><a href="#expensive-operation-and-big-o-notation">28. Expensive Operation and Big O Notation</a></li>
+<li><a href="#algorithms">29. Algorithms</a></li>
+<li><a href="#inheritance-polymorphism-and-code-reuse">30. Inheritance, Polymorphism and Code Reuse</a></li>
+<li><a href="#design-patterns">31. Design Patterns</a></li>
+<li><a href="#partial-applications-currying-compose-and-pipe">32. Partial Applications, Currying, Compose and Pipe</a></li>
+<li><a href="#clean-code">33. Clean Code</a></li>
+</ul>
+</li>
+</ul>
+
+    </div>
+  </div>
+  <div class="stackedit__right">
+    <div class="stackedit__html">
+      <h1 align="center">
+<br>
+  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width="200&quot;"></a>
+  <br>
+    <br>
+  33 Concepts Every JavaScript Developer Should Know
+  <br><br>
+</h1>
+<p><a href="https://twitter.com/leonardomso"><img src="https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge" alt="Follow me"></a></p>
+<h2 id="introduction">Introduction</h2>
+<p>This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by <a href="https://twitter.com/stephenthecurt">Stephen Curtis</a> and you can read it <a href="https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1">here</a>.</p>
+<p><strong>🚀 Considered by GitHub as one of the <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">top open source projects of 2018!</a></strong></p>
+<h2 id="community">Community</h2>
+<p>Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.</p>
+<p>All the translations for this repo will be listed below:</p>
+<ul>
+<li><a href="https://github.com/eldrinf/33-js-concepts-albanian.git">Shqip (Albanian)</a> — Eldrin Ereqi</li>
+<li><a href="https://github.com/amrsekilly/33-js-concepts">اَلْعَرَبِيَّةُ‎ (Arabic)</a> — Amr Elsekilly</li>
+<li><a href="https://github.com/stephentian/33-js-concepts">汉语 (Chinese)</a> — Re Tian</li>
+<li><a href="https://github.com/tiagoboeing/33-js-concepts">Português do Brasil (Brazilian Portuguese) </a> — Tiago Boeing</li>
+<li><a href="https://github.com/yjs03057/33-js-concepts.git">한국어 (Korean)</a> — Suin Lee</li>
+<li><a href="https://github.com/adonismendozaperez/33-js-conceptos">Español (Spanish)</a> — Adonis Mendoza</li>
+<li><a href="https://github.com/ilker0/33-js-concepts">Türkçe (Turkish)</a> — İlker Demir</li>
+<li><a href="https://github.com/gumennii/33-js-concepts">русский язык (Russian)</a> — Mihail Gumennii</li>
+<li><a href="https://github.com/nguyentranchung/33-js-concepts">Tiếng Việt (Vietnamese)</a> — Nguyễn Trần Chung</li>
+<li><a href="https://github.com/lip3k/33-js-concepts">Polski (Polish)</a> — Dawid Lipinski</li>
+<li><a href="https://github.com/majidalavizadeh/33-js-concepts">فارسی (Persian)</a> — Majid Alavizadeh</li>
+<li><a href="https://github.com/rijdz/33-js-concepts">Bahasa Indonesia (Indonesian)</a> — Rijdzuan Sampoerna</li>
+<li><a href="https://github.com/robinmetral/33-concepts-js">Français (French)</a> — Robin Métral</li>
+<li><a href="https://github.com/vikaschauhan/33-js-concepts">हिन्दी (Hindi)</a> — Vikas Chauhan</li>
+<li><a href="https://github.com/DimitrisZx/33-js-concepts">Ελληνικά (Greek)</a> — Dimitris Zarachanis</li>
+<li><a href="https://github.com/oimo23/33-js-concepts">日本語 (Japanese)</a> — oimo23</li>
+<li><a href="https://github.com/burhannn/33-js-concepts">Deutsch (German)</a> — burhannn</li>
+<li><a href="https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation">украї́нська мо́ва (Ukrainian)</a> — Andrew Savetchuk</li>
+<li><a href="https://github.com/ududsha/33-js-concepts">සිංහල (Sinhala)</a> — Udaya Shamendra</li>
+<li><a href="https://github.com/Donearm/33-js-concepts">Italiano (Italian)</a> — Gianluca Fiore</li>
+<li><a href="https://github.com/chrys-elrak/33-js-concepts">Malagasy (Madagascar)</a> — Chrys Rakotonimanana</li>
+</ul>
+<hr>
+<h2 id="a-idtable-of-contentstable-of-contentsa"><a id="table-of-contents">Table of Contents</a></h2>
+<ol>
+<li><strong><a href="#1-call-stack">Call Stack</a></strong></li>
+<li><strong><a href="#2-primitive-types">Primitive Types</a></strong></li>
+<li><strong><a href="#3-value-types-and-reference-types">Value Types and Reference Types</a></strong></li>
+<li><strong><a href="#4-implicit-explicit-nominal-structuring-and-duck-typing">Implicit, Explicit, Nominal, Structuring and Duck Typing</a></strong></li>
+<li><strong><a href="#5--vs--vs-typeof">== vs === vs typeof</a></strong></li>
+<li><strong><a href="#6-function-scope-block-scope-and-lexical-scope">Function Scope, Block Scope and Lexical Scope</a></strong></li>
+<li><strong><a href="#7-expression-vs-statement">Expression vs Statement</a></strong></li>
+<li><strong><a href="#8-iife-modules-and-namespaces">IIFE, Modules and Namespaces</a></strong></li>
+<li><strong><a href="#9-message-queue-and-event-loop">Message Queue and Event Loop</a></strong></li>
+<li><strong><a href="#10-settimeout-setinterval-and-requestanimationframe">setTimeout, setInterval and requestAnimationFrame</a></strong></li>
+<li><strong><a href="#11-javascript-engines">JavaScript Engines</a></strong></li>
+<li><strong><a href="#12-bitwise-operators-type-arrays-and-array-buffers">Bitwise Operators, Type Arrays and Array Buffers</a></strong></li>
+<li><strong><a href="#13-dom-and-layout-trees">DOM and Layout Trees</a></strong></li>
+<li><strong><a href="#14-factories-and-classes">Factories and Classes</a></strong></li>
+<li><strong><a href="#15-this-call-apply-and-bind">this, call, apply and bind</a></strong></li>
+<li><strong><a href="#16-new-constructor-instanceof-and-instances">new, Constructor, instanceof and Instances</a></strong></li>
+<li><strong><a href="#17-prototype-inheritance-and-prototype-chain">Prototype Inheritance and Prototype Chain</a></strong></li>
+<li><strong><a href="#18-objectcreate-and-objectassign">Object.create and Object.assign</a></strong></li>
+<li><strong><a href="#19-map-reduce-filter">map, reduce, filter</a></strong></li>
+<li><strong><a href="#20-pure-functions-side-effects-state-mutation-and-event-propagation">Pure Functions, Side Effects, State Mutation and Event Propagation</a></strong></li>
+<li><strong><a href="#21-closures">Closures</a></strong></li>
+<li><strong><a href="#22-high-order-functions">High Order Functions</a></strong></li>
+<li><strong><a href="#23-recursion">Recursion</a></strong></li>
+<li><strong><a href="#24-collections-and-generators">Collections and Generators</a></strong></li>
+<li><strong><a href="#25-promises">Promises</a></strong></li>
+<li><strong><a href="#26-asyncawait">async/await</a></strong></li>
+<li><strong><a href="#27-data-structures">Data Structures</a></strong></li>
+<li><strong><a href="#28-expensive-operation-and-big-o-notation">Expensive Operation and Big O Notation</a></strong></li>
+<li><strong><a href="#29-algorithms">Algorithms</a></strong></li>
+<li><strong><a href="#30-inheritance-polymorphism-and-code-reuse">Inheritance, Polymorphism and Code Reuse</a></strong></li>
+<li><strong><a href="#31-design-patterns">Design Patterns</a></strong></li>
+<li><strong><a href="#32-partial-applications-currying-compose-and-pipe">Partial Applications, Currying, Compose and Pipe</a></strong></li>
+<li><strong><a href="#33-clean-code">Clean Code</a></strong></li>
+</ol>
+<hr>
+<h2 id="call-stack">1. Call Stack</h2>
+<h3 id="reference">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Glossary/Call_stack">Call Stack — MDN</a></li>
+</ul>
+<h3 id="articles">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec">Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4">Understanding the JavaScript Call Stack — Charles Freeborn</a></li>
+<li>📜 <a href="https://web.archive.org/web/20180701233338/https://www.valentinog.com/blog/js-execution-context-call-stack/">Javascript: What Is The Execution Context? What Is The Call Stack? — Valentino Gagliardi</a></li>
+<li>📜 <a href="https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0">What is the JS Event Loop and Call Stack? — Jess Telford</a></li>
+<li>📜 <a href="https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0">Understanding Execution Context and Execution Stack in Javascript — Sukhjinder Arora</a></li>
+<li>📜 <a href="https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf">How JavaScript Works: An Overview of the Engine, the Runtime, and the Call Stack — Alexander Zlatkov</a></li>
+<li>📜 <a href="https://tylermcginnis.com/ultimate-guide-to-execution-contexts-hoisting-scopes-and-closures-in-javascript/">The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis</a></li>
+<li>📜 <a href="https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o">How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar</a></li>
+</ul>
+<h3 id="videos">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=w6QGEiQceOM">Javascript: the Call Stack explained — Coding Blocks India</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=W8AeMrVtFLY">The JS Call Stack Explained In 9 Minutes — Colt Steele</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=w7QWQlkLY_s">What is the Call Stack? — Eric Traub</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Q2sFmqvpBe0">The Call Stack — Kevin Drumm</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Z6a1cLyq7Ac&amp;list=PLWrQZnG8l0E4kd1T_nyuVoxQUaYEWFgcD">Understanding JavaScript Execution — Codesmith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Nt-qa_LlUH0">The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">What the heck is the event loop anyway? — Philip Roberts</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=ygA5U7Wgsg8">La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=iLWTnMzWtj4&amp;list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP">How JavaScript Code is executed? ❤️&amp; Call Stack — Akshay Saini</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="primitive-types">2. Primitive Types</h2>
+<h3 id="reference-1">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values">JavaScript data types and data structures — MDN</a></li>
+</ul>
+<h3 id="articles-1">Articles</h3>
+<ul>
+<li>📜 <a href="http://2ality.com/2012/04/number-encoding.html">How numbers are encoded in JavaScript — Dr. Axel Rauschmayer</a></li>
+<li>📜 <a href="https://indepth.dev/posts/1139/here-is-what-you-need-to-know-about-javascripts-number-type">What You Need to Know About JavaScript Number Type — Max Wizard K</a></li>
+<li>📜 <a href="https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/">What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy</a></li>
+<li>📜 <a href="https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/">The Secret Life of JavaScript Primitives — Angus Croll</a></li>
+<li>📜 <a href="https://flow.org/en/docs/types/primitives/">Primitive Types — Flow</a></li>
+<li>📜 <a href="https://dev.to/d4nyll/not-everything-in-javascript-is-an-object">(Not) Everything in JavaScript is an Object — Daniel Li</a></li>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values">JavaScript data types and data structures — MDN</a></li>
+<li>📜 <a href="https://blog.bitsrc.io/diving-deeper-in-javascripts-objects-318b1e13dc12">Diving Deeper in JavaScripts Objects — Arfat Salman</a></li>
+<li>📜 <a href="https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c">The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji</a></li>
+<li>📜 <a href="https://javascript.info/object-toprimitive">Object to primitive conversion — JavaScript.info</a></li>
+</ul>
+<h3 id="videos-1">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=9ooYYRLdg_g">JavaScript Reference vs Primitive Types — Academind</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=HsbWQsSCE5Y">JavaScript Primitive Types — Simon Sez IT</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=e-_mDyqm2oU">Value Types and Reference Types in JavaScript — Programming with Mosh</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=qw3j0A3DIzQ">JavaScript Primitive Data Types — Avelx</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=MqHDDtVYJRI">Everything you never wanted to know about JavaScript numbers — Bartek Szopka</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=B4Bbmei_thw">What are variables in Javascript? — JS For Everyone</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=cC65D2q5f8I">TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="value-types-and-reference-types">3. Value Types and Reference Types</h2>
+<h3 id="articles-2">Articles</h3>
+<ul>
+<li>📜 <a href="https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0">Explaining Value vs. Reference in Javascript — Arnav Aggarwal</a></li>
+<li>📜 <a href="https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c">Primitive Types &amp; Reference Types in JavaScript — Bran van der Meer</a></li>
+<li>📜 <a href="https://medium.com/@benastontweet/lesson-1b-javascript-fundamentals-380f601ba851">Value Types, Reference Types and Scope in JavaScript — Ben Aston</a></li>
+<li>📜 <a href="https://medium.com/dailyjs/back-to-roots-javascript-value-vs-reference-8fb69d587a18">Back to roots: JavaScript Value vs Reference — Miro Koczka</a></li>
+<li>📜 <a href="https://hackernoon.com/grasp-by-value-and-by-reference-in-javascript-7ed75efa1293">Grasp “By Value” and “By Reference” in JavaScript — Léna Faure</a></li>
+<li>📜 <a href="https://hackernoon.com/javascript-reference-and-copy-variables-b0103074fdf0">JavaScript Reference and Copy Variables — Vítor Capretz</a></li>
+<li>📜 <a href="http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/">JavaScript Primitive vs Reference Values</a></li>
+<li>📜 <a href="https://stackoverflow.com/questions/6605640/javascript-by-reference-vs-by-value">JavaScript by Reference vs. by Value — nrabinowitz</a></li>
+<li>📜 <a href="https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f">JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin</a></li>
+</ul>
+<h3 id="videos-2">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=E-dAnFdq8k8">Javascript Pass by Value vs Pass by Reference — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=fD0t_DKREbE">JavaScript Value vs Reference Types — Programming with Mosh</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=AvkyOrWkuQc">VALORES vs REFERENCIAS en JAVASCRIPT - La Cocina del Código</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="implicit-explicit-nominal-structuring-and-duck-typing">4. Implicit, Explicit, Nominal, Structuring and Duck Typing</h2>
+<h3 id="articles-3">Articles</h3>
+<ul>
+<li>📜 <a href="https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23">What you need to know about Javascript’s Implicit Coercion — Promise Tochi</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839">JavaScript Type Coercion Explained — Alexey Samoshkin</a></li>
+<li>📜 <a href="https://hackernoon.com/javascript-coercion-explained-545c895213d3">Javascript Coercion Explained — Ben Garrison</a></li>
+<li>📜 <a href="https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript">What exactly is Type Coercion in Javascript? - Stack Overflow</a></li>
+</ul>
+<h3 id="videos-3">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=qGyqzN0bjhc&amp;t">== ? === ??? …#@^% - Shirmung Bielefeld</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=b04Q_vyqEG8">Coercion in Javascript - Hitesh Choudhary</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=z4-8wMSPJyI">JavaScript Questions: What is Coercion? - Steven Hancock</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=C5fr0LZLMAs">Typing: Static vs Dynamic, Weak vs. Strong - Codexpanse</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=0ei4nb49GKo">EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código</a></li>
+</ul>
+<h3 id="books">Books</h3>
+<ul>
+<li><a href="https://github.com/getify/You-Dont-Know-JS/tree/1st-ed">You Don’t Know JS, 1st Edition: Types &amp; Grammar — Kyle Simpson</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="vs--vs-typeof">5. == vs === vs typeof</h2>
+<h3 id="articles-4">Articles</h3>
+<ul>
+<li>📜 <a href="https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a">JavaScript Double Equals vs. Triple Equals — Brandon Morelli</a></li>
+<li>📜 <a href="https://bytearcher.com/articles/equality-comparison-operator-javascript/">Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki</a></li>
+<li>📜 <a href="https://www.codementor.io/javascript/tutorial/double-equals-and-coercion-in-javascript">== vs === JavaScript: Double Equals and Coercion — AJ Meyghani</a></li>
+<li>📜 <a href="https://www.impressivewebs.com/why-use-triple-equals-javascipt/">Why Use the Triple-Equals Operator in JavaScript? — Louis Lazaris</a></li>
+<li>📜 <a href="https://www.oreilly.com/learning/what-is-the-difference-between-and-in-javascript">What is the difference between == and === in JavaScript? — Craig Buckler</a></li>
+<li>📜 <a href="https://stackoverflow.com/questions/3787901/why-javascripts-typeof-always-return-object">Why javascript’s typeof always return “object”? — Stack Overflow</a></li>
+<li>📜 <a href="http://tobyho.com/2011/01/28/checking-types-in-javascript/">Checking Types in Javascript — Toby Ho</a></li>
+<li>📜 <a href="https://webbjocke.com/javascript-check-data-types/">How to better check data types in JavaScript — Webbjocke</a></li>
+<li>📜 <a href="https://tomeraberba.ch/html/post/checking-for-the-absence-of-a-value-in-javascript.html">Checking for the Absence of a Value in JavaScript — Tomer Aberbach</a></li>
+</ul>
+<h3 id="videos-4">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=ol_su88I3kw">JavaScript - The typeof operator — Java Brains</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=qPYhTPt_SbQ">Javascript typeof operator — DevDelight</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="function-scope-block-scope-and-lexical-scope">6. Function Scope, Block Scope and Lexical Scope</h2>
+<h3 id="books-1">Books</h3>
+<ul>
+<li><a href="https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures">You Don’t Know JS Yet, 2nd Edition: Scope &amp; Closures — Kyle Simpson</a></li>
+</ul>
+<h3 id="articles-5">Articles</h3>
+<ul>
+<li>📜 <a href="https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99">JavaScript Functions — Understanding The Basics — Brandon Morelli</a></li>
+<li>📜 <a href="http://www.deadcoderising.com/2017-04-11-es6-var-let-and-const-the-battle-between-function-scope-and-block-scope/">The battle between Function Scope and Block Scope — Marius Herring</a></li>
+<li>📜 <a href="https://www.scaler.com/topics/javascript/javascript-functions/">Functions in JavaScript - Deepa Pandey</a></li>
+<li>📜 <a href="http://adripofjavascript.com/blog/drips/emulating-block-scope-in-javascript.html">Emulating Block Scope in JavaScript — Josh Clanton</a></li>
+<li>📜 <a href="https://medium.com/@josephcardillo/the-difference-between-function-and-block-scope-in-javascript-4296b2322abe">The Difference Between Function and Block Scope in JavaScript — Joseph Cardillo</a></li>
+<li>📜 <a href="https://edgecoders.com/function-scopes-and-block-scopes-in-javascript-25bbd7f293d7">Function Scopes and Block Scopes in JavaScript — Samer Buna</a></li>
+<li>📜 <a href="http://ryanmorr.com/understanding-scope-and-context-in-javascript/">Understanding Scope and Context in JavaScript — Ryan Morr</a></li>
+<li>📜 <a href="https://css-tricks.com/javascript-scope-closures/">JavaScript Scope and Closures — Zell Liew</a></li>
+<li>📜 <a href="https://developer.telerik.com/topics/web-development/understanding-scope-in-javascript/">Understanding Scope in JavaScript — Wissam Abirached</a></li>
+<li>📜 <a href="http://speakingjs.com/es5/ch16.html">Speaking JavaScript - Variables: Scopes, Environments, and Closures — Dr. Axel Rauschmayer</a></li>
+<li>📜 <a href="https://scotch.io/tutorials/understanding-scope-in-javascript">Understanding Scope in JavaScript ― Hammad Ahmed</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/when-to-use-a-function-declarations-vs-a-function-expression-70f15152a0a0">When to use a function declaration vs. a function expression ― Amber Wilkie</a></li>
+<li>📜 <a href="https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai">A JavaScript Fundamentals Cheat Sheet: Scope, Context, and “this” ― Alexandra Fren</a></li>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope">Functions / Function scope ― MDN</a></li>
+</ul>
+<h3 id="videos-5">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=SBwoFkRjZvE">What Makes Javascript Weird … and Awesome pt. 4 — LearnCode.academy</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=dhp57T3p760">Variable Scope in JavaScript — Kirupa Chinnathambi</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=aK_nuUAdr8E">JavaScript Block Scope and Function Scope — mmtuts</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=GhNA0r10MmA">What the Heck is Lexical Scope? — NWCalvank</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=FyWdrCZZavQ">Variable Scope — Steve Griffith</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="expression-vs-statement">7. Expression vs Statement</h2>
+<h3 id="articles-6">Articles</h3>
+<ul>
+<li>📜 <a href="https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2">All you need to know about Javascript’s Expressions, Statements and Expression Statements — Promise Tochi</a></li>
+<li>📜 <a href="https://www.sitepoint.com/function-expressions-vs-declarations/">Function Expressions vs Function Declarations — Paul Wilkins</a></li>
+<li>📜 <a href="https://medium.com/@raviroshan.talk/javascript-function-declaration-vs-expression-f5873b8c7b38">JavaScript Function — Declaration vs Expression — Ravi Roshan</a></li>
+<li>📜 <a href="https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052">Function Declarations vs. Function Expressions — Mandeep Singh</a></li>
+<li>📜 <a href="https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/">Function Declarations vs. Function Expressions — Anguls Croll</a></li>
+</ul>
+<h3 id="videos-6">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=WVyCrI1cHi8">Expressions vs. Statements in JavaScript — Hexlet</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=3jDpNGJkupA">JavaScript - Expression vs. Statement — WebTunings</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="iife-modules-and-namespaces">8. IIFE, Modules and Namespaces</h2>
+<h3 id="articles-7">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6">Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju</a></li>
+<li>📜 <a href="https://hashnode.com/post/do-es6-modules-make-the-case-of-iifes-obsolete-civ96wet80scqgc538un20es0">Do ES6 Modules make the case of IIFEs obsolete?</a></li>
+<li>📜 <a href="https://www.jvandemo.com/a-10-minute-primer-to-javascript-modules-module-formats-module-loaders-and-module-bundlers/">A 10 minute primer to JavaScript modules, module formats, module loaders and module bundlers ― Jurgen Van de Moere</a></li>
+<li>📜 <a href="http://exploringjs.com/es6/ch_modules.html">Modules ― Exploring JS</a></li>
+<li>📜 <a href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/">ES modules: A cartoon deep-dive — Lin Clark</a></li>
+<li>📜 <a href="https://www.sitepoint.com/understanding-es6-modules/">Understanding ES6 Modules — Craig Buckler</a></li>
+<li>📜 <a href="https://blog.cloud66.com/an-overview-of-es6-modules-in-javascript/">An overview of ES6 Modules in JavaScript — Brent Graham</a></li>
+<li>📜 <a href="https://ponyfoo.com/articles/es6-modules-in-depth">ES6 Modules in Depth — Nicolás Bevacqua</a></li>
+<li>📜 <a href="https://medium.com/dailyjs/es6-modules-node-js-and-the-michael-jackson-solution-828dc244b8b">ES6 modules, Node.js and the Michael Jackson Solution — Alberto Gimeno</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc">JavaScript Modules: A Beginner’s Guide — Preethi Kasireddy</a></li>
+<li>📜 <a href="https://developers.google.com/web/fundamentals/primers/modules">Using JavaScript modules on the web — Addy Osmani &amp; Mathias Bynens</a></li>
+<li>📜 <a href="https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5">IIFE: Immediately Invoked Function Expressions — Parwinder</a></li>
+<li>📜 <a href="https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02">Javascript Module Bundlers — Vanshu Hassija</a></li>
+</ul>
+<h3 id="videos-7">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=3cbiZV4H22c">Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=I5EntfMeIIQ">Understanding JavaScript IIFE — Sheo Narayan</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=_3oSWwapPKQ">JavaScript Modules: ES6 Import and Export — Kyle Robinson</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=aQr2bV1BPyE">ES6 - Modules — Ryan Christiani</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=fIP4pjAqCtQ">ES6 Modules in the Real World — Sam Thorogood</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=5P04OK6KlXA">ES6 Modules — TempleCoding</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Xd7zgPFwVX8&amp;">JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="message-queue-and-event-loop">9. Message Queue and Event Loop</h2>
+<h3 id="articles-8">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4">JavaScript Event Loop Explained — Anoop Raveendran</a></li>
+<li>📜 <a href="https://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/">The JavaScript Event Loop: Explained — Erin Sweson-Healey</a></li>
+<li>📜 <a href="https://hackernoon.com/understanding-js-the-event-loop-959beae3ac40">Understanding JS: The Event Loop — Alexander Kondov</a></li>
+<li>📜 <a href="https://www.zeolearn.com/magazine/understanding-the-javascript-event-loop">Understanding the JavaScript Event Loop — Ashish Gupta</a></li>
+<li>📜 <a href="https://flaviocopes.com/javascript-event-loop/">The JavaScript Event Loop — Flavio Copes</a></li>
+<li>📜 <a href="https://blog.sessionstack.com/how-javascript-works-event-loop-and-the-rise-of-async-programming-5-ways-to-better-coding-with-2f077c4438b5">How JavaScript works: Event loop — Alexander Zlatkov</a></li>
+<li>📜 <a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/">Tasks, microtasks, queues and schedules — Jake Archibald</a></li>
+<li>📜 <a href="https://dev.to/presto412/visualising-the-javascript-event-loop-with-a-pizza-restaurant-analogy-47a8">Visualising the JavaScript Event Loop with a Pizza Restaurant analogy — Priyansh Jain</a></li>
+<li>📜 <a href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif">JavaScript Visualized: Event Loop — Lydia Hallie</a></li>
+</ul>
+<h3 id="videos-8">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">What the heck is the event loop anyway? | JSConf EU — Philip Roberts</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=XzXIMZMN9k4">JavaScript Event Loop — ComScience Simplified</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=6MXRNXXgP_0">I’m stuck in an Event Loop — Philip Roberts</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=cCOL7MC4Pl0">In The Loop - Jake Archibald | JSConf.Asia 2018</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Eqq2Rb7LzYE">Desmitificando el Event Loop (Spanish)</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="settimeout-setinterval-and-requestanimationframe">10. setTimeout, setInterval and requestAnimationFrame</h2>
+<h3 id="articles-9">Articles</h3>
+<ul>
+<li>📜 <a href="https://javascript.info/settimeout-setinterval">setTimeout and setInterval — JavaScript.Info</a></li>
+<li>📜 <a href="https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9">Why not to use setInterval — Akanksha Sharma</a></li>
+<li>📜 <a href="https://develoger.com/settimeout-vs-setinterval-cff85142555b">setTimeout VS setInterval — Develoger</a></li>
+<li>📜 <a href="https://css-tricks.com/using-requestanimationframe/">Using requestAnimationFrame — Chris Coyier</a></li>
+<li>📜 <a href="http://www.javascriptkit.com/javatutors/requestanimationframe.shtml">Understanding JavaScript’s requestAnimationFrame() — JavaScript Kit</a></li>
+<li>📜 <a href="https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/">Handling time intervals in JavaScript - Amit Merchant</a></li>
+</ul>
+<h3 id="videos-9">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=6bPKyl8WYWI">Javascript: How setTimeout and setInterval works — Coding Blocks India</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=TbCgGWe8LN8">setTimeout and setInterval in JavaScript — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=0VVJSvlUgtg">JavaScript Timers — Steve Griffith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=mVKfrWCOB60">JavaScript setTimeOut and setInterval Explained — Theodore Anderson</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="javascript-engines">11. JavaScript Engines</h2>
+<h3 id="articles-10">Articles</h3>
+<ul>
+<li>📜 <a href="http://www.softwaremag.com/javascript-engines/">JavaScript Engines — Jen Looper</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964">Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead</a></li>
+<li>📜 <a href="https://medium.com/dailyjs/understanding-v8s-bytecode-317d46c94775">Understanding V8’s Bytecode — Franziska Hinkelmann</a></li>
+<li>📜 <a href="https://www.mediacurrent.com/blog/brief-history-googles-v8-javascript-engine/">A Brief History of Google’s V8 Javascript Engine — Clair Smith</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/javascript-essentials-why-you-should-know-how-the-engine-works-c2cc0d321553">JavaScript essentials: why you should know how the engine works - Rainer Hahnekamp</a></li>
+<li>📜 <a href="https://mathiasbynens.be/notes/shapes-ics">JavaScript engine fundamentals: Shapes and Inline Caches</a></li>
+<li>📜 <a href="https://mathiasbynens.be/notes/prototypes">JavaScript engine fundamentals: optimizing prototypes</a></li>
+<li>📜 <a href="https://v8.dev/blog/elements-kinds">How V8 optimizes array operations</a></li>
+</ul>
+<h3 id="videos-10">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=5nmpokoRaZI">JavaScript Engines: The Good Parts™ — Mathias Bynens &amp; Benedikt Meurer</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=2WJL19wDH68">JS Engine EXPOSED 🔥 Google’s V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="bitwise-operators-type-arrays-and-array-buffers">12. Bitwise Operators, Type Arrays and Array Buffers</h2>
+<h3 id="articles-11">Articles</h3>
+<ul>
+<li>📜 <a href="https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4">Programming with JS: Bitwise Operations — Alexander Kondov</a></li>
+<li>📜 <a href="https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5">Using JavaScript’s Bitwise Operators in Real Life — ian m</a></li>
+<li>📜 <a href="https://www.w3resource.com/javascript/operators/bitwise-operator.php">JavaScript Bitwise Operators — w3resource</a></li>
+<li>📜 <a href="https://medium.com/bother7-blog/bitwise-operators-in-javascript-65c4c69be0d3">Bitwise Operators in Javascript — Joe Cha</a></li>
+<li>📜 <a href="https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04">A Comprehensive Primer on Binary Computation and Bitwise Operators in Javascript — Paul Brown</a></li>
+<li>📜 <a href="https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript">How can I understand Bitwise operation in JavaScript?</a></li>
+</ul>
+<h3 id="videos-11">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=mesu75PTDC8">JavaScript Bitwise Operators — Programming with Mosh</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="dom-and-layout-trees">13. DOM and Layout Trees</h2>
+<h3 id="books-2">Books</h3>
+<ul>
+<li>📜 <a href="https://eloquentjavascript.net/14_dom.html">Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model</a></li>
+</ul>
+<h3 id="articles-12">Articles</h3>
+<ul>
+<li>📜 <a href="https://www.digitalocean.com/community/tutorials/introduction-to-the-dom">How To Understand and Modify the DOM in JavaScript — Tania Rascia</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d">What’s the Document Object Model, and why you should know how to use it — Leonardo Maldonado</a></li>
+<li>📜 <a href="https://www.guru99.com/how-to-use-dom-and-events-in-javascript.html">JavaScript DOM Tutorial with Example — Guru99</a></li>
+<li>📜 <a href="https://css-tricks.com/dom/">What is the DOM? — Chris Coyier</a></li>
+<li>📜 <a href="https://zellwk.com/blog/dom-traversals/">Traversing the DOM with JavaScript — Zell Liew</a></li>
+<li>📜 <a href="https://javascript.info/dom-nodes">DOM Tree</a></li>
+<li>📜 <a href="https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e">How to traverse the DOM in Javascript — Vojislav Grujić</a></li>
+<li>📜 <a href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction">Render Tree Construction — Ilya Grigorik</a></li>
+<li>📜 <a href="https://bitsofco.de/what-exactly-is-the-dom/">What exactly is the DOM?</a></li>
+</ul>
+<h3 id="videos-12">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=FIORjGvT0kk">JavaScript DOM — The Net Ninja</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=0ik6X4DJKCc">JavaScript DOM Crash Course — Traversy Media</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="factories-and-classes">14. Factories and Classes</h2>
+<h3 id="articles-13">Articles</h3>
+<ul>
+<li>📜 <a href="https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript">How To Use Classes in JavaScript — Tania Rascia</a></li>
+<li>📜 <a href="https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677">Javascript Classes — Under The Hood — Majid</a></li>
+<li>📜 <a href="https://www.javascriptjanuary.com/blog/es6-classes">ES6 Classes — Nathaniel Foster</a></li>
+<li>📜 <a href="https://scotch.io/tutorials/better-javascript-with-es6-pt-ii-a-deep-dive-into-classes">Better JavaScript with ES6, Pt. II: A Deep Dive into Classes ― Peleke Sengstacke</a></li>
+<li>📜 <a href="https://medium.com/front-end-hacking/understand-the-factory-design-pattern-in-plain-javascript-20b348c832bd">Understand the Factory Design Pattern in Plain JavaScript — Aditya Agarwal</a></li>
+<li>📜 <a href="https://atendesigngroup.com/blog/factory-functions-javascript">Factory Functions in JavaScript — Josh Miller</a></li>
+<li>📜 <a href="https://medium.com/@SntsDev/the-factory-pattern-in-js-es6-78f0afad17e9">The Factory Pattern in JS ES6 — SnstsDev</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15">Class vs Factory function: exploring the way forward — Cristi Salcescu</a></li>
+<li>📜 <a href="https://medium.com/@robertgrosse/how-es6-classes-really-work-and-how-to-build-your-own-fd6085eb326a">How ES6 classes really work and how to build your own — Robert Grosse</a></li>
+<li>📜 <a href="https://jordankasper.com/understanding-super-in-javascript">Understanding <code>super</code> in JavaScript</a></li>
+<li>📜 <a href="https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm">An Easy Guide To Understanding Classes In JavaScript</a></li>
+</ul>
+<h3 id="videos-13">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=jpegXpQpb3o">JavaScript Factory Functions — Programming with Mosh</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=ImwrezYhw4w">Factory Functions in JavaScript — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=R7-IwpH80UE">Javascript Tutorial Function Factories — Crypto Chan</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="this-call-apply-and-bind">15. this, call, apply and bind</h2>
+<h3 id="reference-2">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call">call() — MDN</a></li>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind">bind() — MDN</a></li>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply">apply() — MDN</a></li>
+</ul>
+<h3 id="articles-14">Articles</h3>
+<ul>
+<li>📜 <a href="https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b">Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale</a></li>
+<li>📜 <a href="https://www.codementor.io/niladrisekhardutta/how-to-call-apply-and-bind-in-javascript-8i1jca6jp">How-to: call() , apply() and bind() in JavaScript — Niladri Sekhar Dutta</a></li>
+<li>📜 <a href="http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/">JavaScript’s Apply, Call, and Bind Methods are Essential for JavaScript Professionals — Richard Bovell</a></li>
+<li>📜 <a href="https://tylermcginnis.com/this-keyword-call-apply-bind-javascript/">WTF is this - Understanding the this keyword, call, apply, and bind in JavaScript — Tyler McGinnis</a></li>
+<li>📜 <a href="https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb">Javascript: call(), apply() and bind() — Omer Goldberg</a></li>
+<li>📜 <a href="https://medium.com/@ivansifrim/the-differences-between-call-apply-bind-276724bb825b">The difference between call / apply / bind — Ivan Sifrim</a></li>
+<li>📜 <a href="https://dev.to/ritik_dev_js/what-the-hack-is-call-apply-bind-in-javascript-11ce">What the hack is call, apply, bind in JavaScript — Ritik</a></li>
+<li>📜 <a href="https://thenewstack.io/mastering-javascript-callbacks-bind-apply-call/">Mastering ‘this’ in JavaScript: Callbacks and bind(), apply(), call() — Michelle Gienow</a></li>
+<li>📜 <a href="https://dev.to/kbk0125/javascripts-apply-call-and-bind-explained-by-hosting-a-cookout-32jo">JavaScript’s apply, call, and bind explained by hosting a cookout — Kevin Kononenko</a></li>
+<li>📜 <a href="https://www.eigenx.com/blog/https/mediumcom/eigen-x/how-and-when-to-use-bind-call-and-apply-in-javascript-77b6f42898fb">How AND When to use bind, call, and apply in Javascript — Eigen X</a></li>
+<li>📜 <a href="https://dev.to/ycmjason/let-me-explain-to-you-what-is-this-javascript-44ja">Let me explain to you what is <code>this</code>. (Javascript) — Jason Yu</a></li>
+<li>📜 <a href="https://medium.com/quick-code/understanding-the-this-keyword-in-javascript-cb76d4c7c5e8">Understanding the “this” Keyword in JavaScript — Pavan</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/how-to-understand-the-keyword-this-and-context-in-javascript-cd624c6b74b8">How to understand the keyword this and context in JavaScript — Lukas Gisder-Dubé</a></li>
+<li>📜 <a href="https://dev.to/_hridaysharma/what-the-heck-is-this-in-javascript-37n1">What the heck is this in Javascript? — Hridayesh Sharma</a></li>
+<li>📜 <a href="https://dev.to/steelvoltage/this-and-bind-in-javascript-2pam">This and Bind In Javascript — Brian Barbour</a></li>
+<li>📜 <a href="https://dev.to/canderson93/3-techniques-for-maintaining-your-sanity-using-this-in-javascript-3idf">3 Techniques for Maintaining Your Sanity Using “This” in JavaScript — Carl</a></li>
+<li>📜 <a href="https://dev.to/aakashsr/mastering-the-javascript-this-keyword-4pfa">Mastering the JavaScript “this” Keyword — Aakash Srivastav</a></li>
+<li>📜 <a href="https://dev.to/sargalias/this-binding-in-javascript-4-new-binding-2p1n">This binding in JavaScript – 4. New binding — Spyros Argalias</a></li>
+<li>📜 <a href="https://dev.to/thatgalnatalie/a-quick-intro-to-this-in-javascript-2mhp">A quick intro to ‘this’ in JavaScript — Natalie Smith</a></li>
+<li>📜 <a href="https://dev.to/cat__logic/explaining-javascript-this-to-my-cat-1kig">Explaining JavaScript ‘this’ to my cat — Andrey K</a></li>
+<li>📜 <a href="https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g">A conversation with the ‘this’ keyword in Javascript — Karen Efereyan</a></li>
+<li>📜 <a href="https://jscurious.com/what-are-call-apply-and-bind-in-javascript/">What are call(), apply() and bind() in JavaScript — Amitav Mishra</a></li>
+<li>📜 <a href="https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d">Understanding ‘this’ binding in JavaScript — Yasemin Cidem</a></li>
+</ul>
+<h3 id="videos-14">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=c0mLRpw-9rI">JavaScript call, apply and bind — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=AYVYxezrMWA">JavaScript Practical Applications of Call, Apply and Bind functions— techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Uy0NOXLBraE">JavaScript (call, bind, apply) — curious aatma</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=AOSYY1_np_4">Understanding Functions and ‘this’ In The World of ES2017 — Bryan Hughes</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=GhbhD1HR5vk">bind and this - Object Creation in JavaScript - FunFunFunction</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=uBdH0iB1VDM">JS Function Methods call(), apply(), and bind() — Steve Griffith</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="new-constructor-instanceof-and-instances">16. new, Constructor, instanceof and Instances</h2>
+<h3 id="articles-15">Articles</h3>
+<ul>
+<li>📜 <a href="https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e">JavaScript For Beginners: the ‘new’ operator — Brandon Morelli</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c">Let’s demystify JavaScript’s ‘new’ keyword — Cynthia Lee</a></li>
+<li>📜 <a href="https://javascript.info/constructor-new">Constructor, operator “new” — JavaScript.Info</a></li>
+<li>📜 <a href="https://css-tricks.com/understanding-javascript-constructors/">Understanding JavaScript Constructors — Faraz Kelhini</a></li>
+<li>📜 <a href="https://openclassrooms.com/en/courses/3523231-learn-to-code-with-javascript/4379006-use-constructor-functions">Use Constructor Functions — Openclassrooms</a></li>
+<li>📜 <a href="http://2ality.com/2017/08/type-right.html">Beyond <code>typeof</code> and <code>instanceof</code>: simplifying dynamic type checks — Dr. Axel Rauschmayer</a></li>
+<li>📜 <a href="https://appendto.com/2016/10/what-is-the-instanceof-operator-in-javascript/">What Is the Instanceof Operator in JavaScript — appendTo</a></li>
+<li>📜 <a href="https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac">Function and Object, instances of each other — Kiro Risk</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="prototype-inheritance-and-prototype-chain">17. Prototype Inheritance and Prototype Chain</h2>
+<h3 id="reference-3">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">Inheritance and the prototype chain — MDN</a></li>
+</ul>
+<h3 id="articles-16">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b">Javascript : Prototype vs Class — Valentin PARSY</a></li>
+<li>📜 <a href="https://mathiasbynens.be/notes/prototypes">JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-prototype-cb29d82b8809">JavaScript Prototype — NC Patro</a></li>
+<li>📜 <a href="https://www.codementor.io/sandeepranjan2007/prototype-in-javascipt-knbve0lqo">Prototype in Javascript — Sandeep Ranjan</a></li>
+<li>📜 <a href="https://hackernoon.com/prototypes-in-javascript-5bba2990e04b">Prototypes in JavaScript — Rupesh Mishra</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/prototype-in-js-busted-5547ec68872">Prototype in JavaScript: it’s quirky, but here’s how it works — Pranav Jindal</a></li>
+<li>📜 <a href="https://hackernoon.com/understanding-javascript-prototype-and-inheritance-d55a9a23bde2">Understanding JavaScript: Prototype and Inheritance — Alexander Kondov</a></li>
+<li>📜 <a href="https://dev.to/_hridaysharma/understanding-classes-es5-and-prototypal-inheritance-in-javascript-n8d">Understanding Classes (ES5) and Prototypal Inheritance in JavaScript — Hridayesh Sharma</a></li>
+<li>📜 <a href="https://dev.to/varundey/prototype-proto-and-prototypal-inheritance-in-javascript-2inl">prototype, <strong>proto</strong> and Prototypal inheritance in JavaScript — Varun Dey</a></li>
+<li>📜 <a href="https://javascript.info/prototype-inheritance">Prototypal Inheritance — JavaScript.Info</a></li>
+<li>📜 <a href="https://www.digitalocean.com/community/tutorials/understanding-prototypes-and-inheritance-in-javascript">How To Work with Prototypes and Inheritance in JavaScript — Tania Rascia</a></li>
+<li>📜 <a href="https://codeburst.io/master-javascript-prototypes-inheritance-d0a9a5a75c4e">Master JavaScript Prototypes &amp; Inheritance — Arnav Aggarwal</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/understanding-prototypal-inheritance-in-javascript-with-css-93b2fcda75e4">JavaScript’s Prototypal Inheritance Explained Using CSS — Nash Vail</a></li>
+<li>📜 <a href="https://gist.github.com/derhuerst/a585c4916b1c361cc6f0">Prototypal Inheritance in JavaScript — Jannis Redmann</a></li>
+<li>📜 <a href="https://scotch.io/tutorials/demystifying-es6-classes-and-prototypal-inheritance">Demystifying ES6 Classes And Prototypal Inheritance ― Neo Ighodaro</a></li>
+<li>📜 <a href="https://dev.to/danny/intro-to-prototypal-inheritance---js-9di">Intro To Prototypal Inheritance — Dharani Jayakanthan</a></li>
+<li>📜 <a href="https://dev.to/varche/let-s-build-prototypal-inheritance-in-js-56mm">Let’s Build Prototypal Inheritance in JS — var-che</a></li>
+<li>📜 <a href="https://dev.to/attacomsian/objects-prototypes-and-classes-in-javascript-3i9b">Objects, Prototypes and Classes in JavaScript — Atta</a></li>
+<li>📜 <a href="https://dev.to/ladybenko/the-magical-world-of-javascript-prototypes-1mhg">The magical world of JavaScript prototypes — Belén</a></li>
+<li>📜 <a href="https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4">Understanding Prototypal Inheritance In JavaScript — Lawrence Eagles</a></li>
+<li>📜 <a href="https://dev.to/irenejpopova/objects-and-prototypes-in-javascript-2eie">Objects and Prototypes in JavaScript — Irena Popova</a></li>
+</ul>
+<h3 id="videos-15">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=sOrtAjyk4lQ">Javascript Prototype Inheritance — Avelx</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=7oNWNlMrkpc">JavaScript Prototype Inheritance Explained pt. I — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=uIlj6_z_wL8">JavaScript Prototype Inheritance Explained pt. II — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=qMO-LTOrJaE">JavaScript Prototype Inheritance Explained — Kyle Robinson</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=G6l5CHl67HQ">Advanced Javascript - Prototypal Inheritance In 1 Minute</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=phwzuiJJPpQ">An Overview Of Classical Javascript Classes and Prototypal Inheritance — Pentacode</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=4jb4AYEyhRc">Object Oriented JavaScript - Prototype — The Net Ninja</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=2rkEbcptR64">Prototype in JavaScript — kudvenkat</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=oCwCcNvaXAQ">JavaScript Using Prototypes — O’Reilly</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=XskMWBXNbp0">A Beginner’s Guide to Javascript’s Prototype — Tyler Mcginnis</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=hS_WqkyUah8">Prototypes in Javascript - p5.js Tutorial — The Coding Train</a></li>
+</ul>
+<h3 id="books-3">Books</h3>
+<ul>
+<li><a href="https://github.com/getify/You-Dont-Know-JS/tree/1st-ed">You Don’t Know JS, 1st Edition: this &amp; Object Prototypes — Kyle Simpson</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="object.create-and-object.assign">18. Object.create and Object.assign</h2>
+<h3 id="reference-4">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">Object.create() — MDN</a></li>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign">Object.assign() — MDN</a></li>
+</ul>
+<h3 id="articles-17">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2">Object.create in JavaScript — Rupesh Mishra</a></li>
+<li>📜 <a href="https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html">Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle</a></li>
+<li>📜 <a href="http://adripofjavascript.com/blog/drips/basic-inheritance-with-object-create.html">Basic Inheritance with Object.create — Joshua Clanton</a></li>
+<li>📜 <a href="https://www.geeksforgeeks.org/object-create-javascript/">Object.create() In JavaScript — GeeksforGeeks</a></li>
+<li>📜 <a href="https://medium.com/@jonathanvox01/understanding-the-difference-between-object-create-and-the-new-operator-b2a2f4749358">Understanding the difference between Object.create() and the new operator — Jonathan Voxland</a></li>
+<li>📜 <a href="https://www.sitepoint.com/javascript-object-creation-patterns-best-practises/">JavaScript Object Creation: Patterns and Best Practices — Jeff Mott</a></li>
+<li>📜 <a href="https://alligator.io/js/dealing-with-objects/">Dealing With Objects in JavaScript With Object.assign, Object.keys and hasOwnProperty</a></li>
+<li>📜 <a href="https://scotch.io/bar-talk/copying-objects-in-javascript">Copying Objects in JavaScript ― Orinami Olatunji</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-object-assign-bc9696dcbb6e">JavaScript: Object.assign() — Thiago S. Adriano</a></li>
+<li>📜 <a href="https://flaviocopes.com/how-to-clone-javascript-object/">How to deep clone a JavaScript Object — Flavio Copes</a></li>
+<li>📜 <a href="https://dev.to/vzing/object-create-when-and-why-to-use-20m9">Object.create(): When and Why to Use — VZing</a></li>
+</ul>
+<h3 id="videos-16">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=aw7NfYhR5rc">Object.assign() explained — Aaron Writes Code</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=9Ky4X6inpi4">Object.assign() Method — techsith</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="map-reduce-filter">19. map, reduce, filter</h2>
+<h3 id="articles-18">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d">JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac</a></li>
+<li>📜 <a href="https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4">Learn map, filter and reduce in Javascript — João Miguel Cunha</a></li>
+<li>📜 <a href="https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter">JavaScript’s Map, Reduce, and Filter — Dan Martensen</a></li>
+<li>📜 <a href="https://code.tutsplus.com/tutorials/how-to-use-map-filter-reduce-in-javascript--cms-26209">How to Use Map, Filter, &amp; Reduce in JavaScript — Peleke Sengstacke</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-learn-to-chain-map-filter-and-reduce-acd2d0562cd4">JavaScript — Learn to Chain Map, Filter, and Reduce — Brandon Morelli</a></li>
+<li>📜 <a href="https://codeburst.io/write-beautiful-javascript-with-%CE%BB-fp-es6-350cd64ab5bf">Javascript data structure with map, reduce, filter and ES6 — Deepak Gupta</a></li>
+<li>📜 <a href="https://hackernoon.com/understanding-map-filter-and-reduce-in-javascript-5df1c7eee464">Understanding map, filter and reduce in Javascript — Luuk Gruijs</a></li>
+<li>📜 <a href="https://hackernoon.com/functional-programming-in-js-map-filter-reduce-pt-5-308a205fdd5f">Functional Programming in JS: map, filter, reduce (Pt. 5) — Omer Goldberg</a></li>
+<li>📜 <a href="https://wsvincent.com/functional-javascript-map-filter-reduce/">JavaScript: Map, Filter, Reduce — William S. Vincent</a></li>
+<li>📜 <a href="https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/">Arrow Functions: Fat and Concise Syntax in JavaScript — Kyle Pennell</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-arrow-functions-for-beginners-926947fc0cdc">JavaScript: Arrow Functions for Beginners — Brandon Morelli</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/when-and-why-you-should-use-es6-arrow-functions-and-when-you-shouldnt-3d851d7f0b26">When (and why) you should use ES6 arrow functions — and when you shouldn’t — Cynthia Lee</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-learn-understand-arrow-functions-fe2083533946">JavaScript — Learn &amp; Understand Arrow Functions — Brandon Morelli</a></li>
+<li>📜 <a href="https://medium.com/podiihq/javascript-arrow-functions-27d4c3334b83">(JavaScript )=&gt; Arrow functions — sigu</a></li>
+<li>📜 <a href="https://medium.com/@panderson.dev/javascript-reduce-79aab078da23">Javascript.reduce() — Paul Anderson</a></li>
+<li>📜 <a href="https://gofore.com/en/why-you-should-replace-foreach/">Why you should replace forEach with map and filter in JavaScript — Roope Hakulinen</a></li>
+<li>📜 <a href="https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d">Simplify your JavaScript – Use .map(), .reduce(), and .filter() — Etienne Talbot</a></li>
+<li>📜 <a href="https://blog.codeanalogies.com/2018/07/24/javascripts-reduce-method-explained-by-going-on-a-diet/">JavaScript’s Reduce Method Explained By Going On a Diet — Kevin Kononenko</a></li>
+<li>📜 <a href="https://medium.com/@amiratak88/difference-between-map-filter-and-reduce-in-javascript-822ff79d5160">Difference between map, filter and reduce in JavaScript — Amirata Khodaparast</a></li>
+<li>📜 <a href="https://hackernoon.com/map-filter-reduce-ebbed4be4201">Map⇄Filter⇄Reduce↻ — ashay mandwarya</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/finding-your-way-with-map-aecb8ca038f6">Finding Your Way With .map() — Brandon Wozniewicz</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/how-to-write-your-own-map-filter-and-reduce-functions-in-javascript-ab1e35679d26">How to write your own map, filter and reduce functions in JavaScript — Hemand Nair</a></li>
+<li>📜 <a href="https://www.freecodecamp.org/news/manipulating-arrays-in-javascript/">How to Manipulate Arrays in JavaScript — Bolaji Ayodeji</a></li>
+<li>📜 <a href="https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f">How to simplify your codebase with map(), reduce(), and filter() in JavaScript — Alex Permyakov</a></li>
+<li>📜 <a href="https://dev.to/pickleat/map-filter-and-reduce-2efb">.map(), .filter(), and .reduce() — Andy Pickle</a></li>
+<li>📜 <a href="https://dev.to/chrisachard/map-filter-reduce-crash-course-5gan">Map/Filter/Reduce Crash Course — Chris Achard</a></li>
+<li>📜 <a href="https://medium.com/@js_tut/map-filter-and-reduce-animated-7fe391a35a47">Map, Filter and Reduce – Animated — JavaScript Teacher</a></li>
+<li>📜 <a href="https://dev.to/uptheirons78/map-filter-reduce-and-others-arrays-iterators-you-must-know-to-become-an-algorithms-wizard-4209">Map, Filter, Reduce and others Arrays Iterators You Must Know to Become an Algorithms Wizard — Mauro Bono</a></li>
+<li>📜 <a href="https://medium.com/better-programming/how-to-javascripts-map-vs-filter-vs-reduce-80d87a5a0a24">How to Use JavaScript’s .map, .filter, and .reduce — Avery Duffin</a></li>
+<li>📜 <a href="https://towardsdatascience.com/javascript-performance-test-for-vs-for-each-vs-map-reduce-filter-find-32c1113f19d7">Javascript performance test - for vs for each vs (map, reduce, filter, find) — Deepak Gupta</a></li>
+<li>📜 <a href="https://medium.com/javascript-in-plain-english/using-map-filter-and-reduce-properly-50e07f80c8b2">Using .map(), .filter() and .reduce() properly — Sasanka Kudagoda</a></li>
+<li>📜 <a href="https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj">Mastering the JavaScript Reduce method ✂️ — sanderdebr</a></li>
+<li>📜 <a href="https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/">JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp</a></li>
+</ul>
+<h3 id="videos-17">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=UXiYii0Y7Nw">Map, Filter and Reduce — Lydia Hallie</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=vytzLlY_wmU">Functional JavaScript: Map, forEach, Reduce, Filter — Theodore Anderson</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=qTeeVd8hOFY">JavaScript Array superpowers: Map, Filter, Reduce (part I) — Michael Rosata</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=gIm9xLYudL0">JavaScript Array superpowers: Map, Filter, Reduce (part 2) — Michael Rosata</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=zYBeEPxNSbw">JavaScript Higher Order Functions - Filter, Map, Sort &amp; Reduce — Epicop</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=4qWlqD0yYTU">[Array Methods 2/3] .filter + .map + .reduce — CodeWithNick</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=6sQDTgOqh-I">Arrow functions in JavaScript - What, Why and How — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=e-5obm1G_FY&amp;t=1521s">Learning Functional Programming with JavaScript — Anjana Vakil - JSUnconf</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=bCqtb-Z5YGQ&amp;t=17s">Map - Parte 2 JavaScript - Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Wl98eZpkp-c">Reduce basics - Part 3 of FP in JavaScript - Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=1DMolJ2FrNY&amp;t=621s">Reduce Advanced - Part 4 of FP in JavaScript - Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=IXp06KekEjM">reduce Array Method | JavaScript Tutorial - Florin Pop</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=P4RAFdZDn3M">map Array Method | JavaScript Tutorial - Florin Pop</a></li>
+<li>🎥 <a href="https://youtu.be/Ah7-PPjQ5Ls">Different array methods in 1 minute | Midudev (Spanish)</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="pure-functions-side-effects-state-mutation-and-event-propagation">20. Pure Functions, Side Effects, State Mutation and Event Propagation</h2>
+<h3 id="articles-19">Articles</h3>
+<ul>
+<li>📜 <a href="https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c">Javascript and Functional Programming — Pure Functions — Omer Goldberg</a></li>
+<li>📜 <a href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976">Master the JavaScript Interview: What is a Pure Function? — Eric Elliott</a></li>
+<li>📜 <a href="https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c">JavaScript: What Are Pure Functions And Why Use Them? — James Jeffery</a></li>
+<li>📜 <a href="http://www.nicoespeon.com/en/2015/01/pure-functions-javascript/">Pure functions in JavaScript — @nicoespeon</a></li>
+<li>📜 <a href="https://www.sitepoint.com/functional-programming-pure-functions/">Functional Programming: Pure Functions — Arne Brasseur</a></li>
+<li>📜 <a href="https://appdividend.com/2017/04/10/pure-functions-in-javascript/">Pure Functions In Javascript — Krunal</a></li>
+<li>📜 <a href="https://alistapart.com/article/making-your-javascript-pure">Making your JavaScript Pure — Jack Franklin</a></li>
+<li>📜 <a href="https://medium.com/@fknussel/arrays-objects-and-mutations-6b23348b54aa">Arrays, Objects and Mutations — Federico Knüssel</a></li>
+<li>📜 <a href="https://medium.com/dailyjs/the-state-of-immutability-169d2cd11310">The State of Immutability — Maciej Sikora</a></li>
+<li>📜 <a href="https://medium.com/zurvin/hablemos-de-inmutabilidad-3dc65d290783">Hablemos de Inmutabilidad — Kike Sanchez</a></li>
+<li>📜 <a href="https://jrsinclair.com/articles/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/">How to deal with dirty side effects in your pure functional JavaScript — James Sinclair</a></li>
+<li>📜 <a href="https://davidwalsh.name/preventing-sideeffects-javascript">Preventing Side Effects in JavaScript — David Walsh</a></li>
+<li>📜 <a href="https://scotch.io/tutorials/wielding-pure-functions-in-javascript-and-function-composition">Wielding Pure Functions in JavaScript and Function Composition — Peleke Sengstacke</a></li>
+<li>📜 <a href="https://wsvincent.com/javascript-pure-functions/">JavaScript: Pure Functions — William S. Vincent</a></li>
+<li>📜 <a href="https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1">Functional programming paradigms in modern JavaScript: Pure functions — Alexander Kondov</a></li>
+<li>📜 <a href="https://blog.bitsrc.io/understanding-javascript-mutation-and-pure-functions-7231cc2180d3">Understanding Javascript Mutation and Pure Functions — Chidume Nnamdi</a></li>
+<li>📜 <a href="https://medium.com/@bluepnume/functional-ish-javascript-205c05d0ed08">Functional-ish JavaScript — Daniel Brain</a></li>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events">Event Propagation — MDN</a></li>
+<li>📜 <a href="https://javascript.info/bubbling-and-capturing">Event Propagation — Bubbling and capturing</a></li>
+</ul>
+<h3 id="videos-18">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=dZ41D6LDSBg">Pure Functions — Hexlet</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Jh_Uzqzz_wM">Pure Functions - Functional Programming in JavaScript — Paul McBride</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=frT3H-eBmPc">JavaScript Pure Functions — Seth Alexander</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=AHbRVJzpB54">JavaScript Pure vs Impure Functions Explained — Theodore Anderson</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=BMUiFMZr7vk">Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=JYc7gr9Ehl0">Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="closures">21. Closures</h2>
+<h3 id="reference-5">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">Closures — MDN</a></li>
+<li>📜 <a href="https://javascript.info/closure">Closure — JavaScript.Info</a></li>
+</ul>
+<h3 id="articles-20">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8">I never understood JavaScript closures — Olivier De Meulder</a></li>
+<li>📜 <a href="http://javascriptissexy.com/understand-javascript-closures-with-ease/">Understand JavaScript Closures With Ease — Richard Bovell</a></li>
+<li>📜 <a href="https://codeburst.io/understanding-javascript-closures-da6aab330302">Understanding JavaScript Closures — Codesmith</a></li>
+<li>📜 <a href="https://codeburst.io/understand-closures-in-javascript-d07852fa51e7">Understand Closures in JavaScript — Brandon Morelli</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/javascript-closures-simplified-d0d23fa06ba4">A simple guide to help you understand closures in JavaScript — Prashant Ram</a></li>
+<li>📜 <a href="https://scotch.io/tutorials/understanding-javascript-closures-a-practical-approach">Understanding JavaScript Closures: A Practical Approach — Paul Upendo</a></li>
+<li>📜 <a href="https://hackernoon.com/understanding-javascript-closures-4188edf5ea1b">Understanding JavaScript: Closures — Alexander Kondov</a></li>
+<li>📜 <a href="https://hackernoon.com/how-to-use-javascript-closures-with-confidence-85cd1f841a6b">How to use JavaScript closures with confidence — Léna Faure</a></li>
+<li>📜 <a href="https://howchoo.com/g/mge2mji2mtq/javascript-closures-by-example">JavaScript closures by example — tyler</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-closures-and-scope-3784c75b9290">JavaScript — Closures and Scope — Alex Aitken</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/discover-the-power-of-closures-in-javascript-5c472a7765d7">Discover the power of closures in JavaScript — Cristi Salcescu</a></li>
+<li>📜 <a href="https://tylermcginnis.com/ultimate-guide-to-execution-contexts-hoisting-scopes-and-closures-in-javascript/">The Ultimate Guide to Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis</a></li>
+<li>📜 <a href="http://reallifejs.com/the-meat/getting-closure/">Getting Closure — RealLifeJS</a></li>
+<li>📜 <a href="https://dev.to/ritik_dev_js/what-the-hack-is-closure-currying-and-iife-in-javascript-32m9">Closure, Currying and IIFE in JavaScript — Ritik</a></li>
+<li>📜 <a href="https://blog.bitsrc.io/a-beginners-guide-to-closures-in-javascript-97d372284dda">Understanding Closures in JavaScript — Sukhjinder Arora</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/a-basic-guide-to-closures-in-javascript-9fc8b7e3463e">A basic guide to Closures in JavaScript — Parathan Thiyagalingam</a></li>
+<li>📜 <a href="https://dev.to/steelvoltage/closures-using-memoization-3597">Closures: Using Memoization — Brian Barbour</a></li>
+<li>📜 <a href="https://medium.com/better-programming/a-brief-introduction-to-closures-and-lexical-scoping-in-javascript-8a5866496232">A Brief Introduction to Closures and Lexical Scoping in JavaScript — Ashutosh K Singh</a></li>
+<li>📜 <a href="https://dev.to/stereobooster/demystify-closures-5g42">Demystify Closures — stereobooster</a></li>
+<li>📜 <a href="https://dev.to/boywithsilverwings/scopes-and-closures-javascript-concepts-4dfj">Scopes and Closures - JavaScript Concepts — Agney Menon</a></li>
+<li>📜 <a href="https://dev.to/mattpopovich/understanding-closures-in-javascript-3k0d">Understanding Closures in JavaScript — Matt Popovich</a></li>
+<li>📜 <a href="https://whatthefuck.is/closure">whatthefuck.is · A Closure - Dan Abramov</a></li>
+<li>📜 <a href="https://dev.to/brandonleboeuf/closure-in-javascript-49n7">Closures in JavaScript can… - Brandon LeBoeuf</a></li>
+</ul>
+<h3 id="videos-19">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=XTAzsODSCsM">JavaScript The Hard Parts: Closure, Scope &amp; Execution Context - Codesmith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=71AtaJpJHw0">Javascript Closure — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=CQqwU2Ixu-U">Closures — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=-xqJo5VRP4A">Closures in JavaScript — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=yiEeiMN2Khs">JavaScript Closures 101: What is a closure? — JavaScript Tutorials</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=1JsJx1x35c0">Closures — freeCodeCamp</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=-rLrGAXK8WE">JavaScript Closures — CodeWorkr</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=qikxEIxsXco">Closures in JS  - Akshay Saini</a></li>
+<li>🎥 <a href="https://youtu.be/xa8lhVwQBw4">CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="high-order-functions">22. High Order Functions</h2>
+<h3 id="books-4">Books</h3>
+<ul>
+<li>📜 <a href="https://eloquentjavascript.net/05_higher_order.html">Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions</a></li>
+</ul>
+<h3 id="articles-21">Articles</h3>
+<ul>
+<li>📜 <a href="https://www.sitepoint.com/higher-order-functions-javascript/">Higher-Order Functions in JavaScript — M. David Green</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528">Higher Order Functions: Using Filter, Map and Reduce for More Maintainable Code — Guido Schmitz</a></li>
+<li>📜 <a href="https://hackernoon.com/effective-functional-javascript-first-class-and-higher-order-functions-713fde8df50a">First-class and Higher Order Functions: Effective Functional JavaScript — Hugo Di Francesco</a></li>
+<li>📜 <a href="https://www.lullabot.com/articles/higher-order-functions-in-javascript">Higher Order Functions in JavaScript — John Hannah</a></li>
+<li>📜 <a href="https://derickbailey.com/2015/10/21/fun-with-higher-order-functions-in-javascript/">Fun With Higher Order Functions In JavaScript — Derick</a></li>
+<li>📜 <a href="https://github.com/pedroapfilho/high-order-functions">Just a reminder on how to use high order functions — Pedro Filho</a></li>
+<li>📜 <a href="https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad">Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora</a></li>
+<li>📜 <a href="https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb">Higher Order Functions - A pragmatic approach — emmanuel ikwuoma</a></li>
+</ul>
+<h3 id="videos-20">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=rRgD1yVwIvE">JavaScript Higher Order Functions &amp; Arrays — Traversy Media</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=BMUiFMZr7vk">Higher Order Functions — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=dTlpYnmBW9I">Higher Order Functions in Javascript — Raja Yogan</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=GYRMNp1SKXA">Higher Order Iterators in JavaScript — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=H4awPsyugS0">Higher Order Functions in JavaScript — The Coding Train</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=7E8ctomPQJw">Part 1: An Introduction to Callbacks and Higher Order Functions - Codesmith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=28MXziDZkE4">Part 2: Understanding Why We Need Higher Order Functions - Codesmith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=HkWxvB1RJq0">Higher-Order Functions ft. Functional Programming - Akshay Saini</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="recursion">23. Recursion</h2>
+<h3 id="articles-22">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f">Recursion in JavaScript — Kevin Ennis</a></li>
+<li>📜 <a href="https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03">Understanding Recursion in JavaScript — Zak Frisch</a></li>
+<li>📜 <a href="https://codeburst.io/learn-and-understand-recursion-in-javascript-b588218e87ea">Learn and Understand Recursion in JavaScript — Brandon Morelli</a></li>
+<li>📜 <a href="https://www.sitepoint.com/recursion-functional-javascript/">Recursion in Functional JavaScript — M. David Green</a></li>
+<li>📜 <a href="https://hackernoon.com/programming-with-js-recursion-31371e2bf808">Programming with JS: Recursion — Alexander Kondov</a></li>
+<li>📜 <a href="https://dev.to/simov/anonymous-recursion-in-javascript">Anonymous Recursion in JavaScript — simo</a></li>
+<li>📜 <a href="http://www.jstips.co/en/javascript/recursion-iteration-and-tail-calls-in-js/">Recursion, iteration and tail calls in JS — loverajoel</a></li>
+<li>📜 <a href="https://www.thecodingdelight.com/understanding-recursion-javascript/">Understanding Recursion in JavaScript with Confidence — Jay</a></li>
+<li>📜 <a href="https://medium.com/@newmanbradm/intro-to-recursion-984a8bd50f4b">Intro to Recursion — Brad Newman</a></li>
+<li>📜 <a href="https://medium.com/datadriveninvestor/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3">Accio Recursion!: Your New Favorite JavaScript Spell — Leanne Cabey</a></li>
+<li>📜 <a href="https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m">Recursion Explained (with Examples) — Christina</a></li>
+</ul>
+<h3 id="videos-21">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=VtG0WAUvq2w">Recursion In JavaScript — techsith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=k7-N8R0-KY4">Recursion — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=vLhHyGTkjCs">Recursion and Recursive Functions — Hexlet</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=kGXVsd8pBLw">Recursion: Recursion() — JS Monthly — Lucas da Costa</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=uyjsR9eNTIw">Recursive Function in JavaScript — kudvenkat</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Mv9NEXX1VHc">What on Earth is Recursion? — Computerphile</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=9NO5dXSlbv8">Javascript Tutorial 34: Introduction To Recursion — codedamn</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=FmiQr4nfoPQ">Recursion, Iteration, and JavaScript: A Love Story | JSHeroes 2018 — Anjana Vakil</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=lMBVwYrmFZQ&amp;ab_channel=ColtSteele">Recursion crash course - Colt Steele</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="collections-and-generators">24. Collections and Generators</h2>
+<h3 id="reference-6">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator">Generator — MDN web docs</a></li>
+</ul>
+<h3 id="articles-23">Articles</h3>
+<ul>
+<li>📜 <a href="https://hacks.mozilla.org/2015/06/es6-in-depth-collections/">ES6 In Depth: Collections — Jason Orendorff</a></li>
+<li>📜 <a href="https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/">ES6 Collections: Using Map, Set, WeakMap, WeakSet — Kyle Pennell</a></li>
+<li>📜 <a href="https://ponyfoo.com/articles/es6-weakmaps-sets-and-weaksets-in-depth">ES6 WeakMaps, Sets, and WeakSets in Depth — Nicolás Bevacqua</a></li>
+<li>📜 <a href="https://alligator.io/js/sets-introduction/">Introduction to Sets in JavaScript — Alligator.io</a></li>
+<li>📜 <a href="https://alligator.io/js/maps-introduction/">Introduction to Maps in JavaScript — Alligator.io</a></li>
+<li>📜 <a href="https://javascript.info/map-set-weakmap-weakset">Map, Set, WeakMap and WeakSet — JavaScript.Info</a></li>
+<li>📜 <a href="https://dev.to/mildrenben/maps-in-es6---a-quick-guide-35pk">Maps in ES6 - A Quick Guide — Ben Mildren</a></li>
+<li>📜 <a href="https://medium.com/front-end-hacking/es6-set-vs-array-what-and-when-efc055655e1a">ES6 — Set vs Array — What and when? — Maya Shavin</a></li>
+<li>📜 <a href="https://medium.com/front-end-hacking/es6-map-vs-object-what-and-when-b80621932373">ES6 — Map vs Object — What and when? — Maya Shavin</a></li>
+<li>📜 <a href="http://www.deadcoderising.com/es6-working-with-sets-in-javascript/">ES6: Working with Sets in JavaScript — Dead Code Rising</a></li>
+<li>📜 <a href="https://codeburst.io/array-vs-set-vs-map-vs-object-real-time-use-cases-in-javascript-es6-47ee3295329b">Array vs Set vs Map vs Object — Real-time use cases in Javascript (ES6/ES7) — Rajesh Babu</a></li>
+<li>📜 <a href="https://dev.to/claireparker/how-to-create-an-array-of-unique-values-in-javascript-using-sets-5dg6">How to create an array of unique values in JavaScript using Sets — Claire Parker-Jones</a></li>
+<li>📜 <a href="https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e">What You Should Know About ES6 Maps — Just Chris</a></li>
+<li>📜 <a href="https://ponyfoo.com/articles/es6-maps-in-depth">ES6 Maps in Depth — Nicolás Bevacqua</a></li>
+<li>📜 <a href="https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e">What are JavaScript Generators and how to use them — Vladislav Stepanov</a></li>
+<li>📜 <a href="https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5">Understanding JavaScript Generators With Examples — Arfat Salman</a></li>
+<li>📜 <a href="https://davidwalsh.name/es6-generators">The Basics of ES6 Generators — Kyle Simpson</a></li>
+<li>📜 <a href="https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224">An Introduction to JavaScript Generators — Alice Kallaugher</a></li>
+</ul>
+<h3 id="videos-22">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=ycohYSx5h9w">JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=m4abICrldQI">The Differences between ES6 Maps and Sets — Steve Griffith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=QO07THdLWQo">Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="promises">25. Promises</h2>
+<h3 id="reference-7">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise — MDN</a></li>
+</ul>
+<h3 id="articles-24">Articles</h3>
+<ul>
+<li>📜 <a href="https://scotch.io/tutorials/javascript-promises-for-dummies">JavaScript Promises for Dummies ― Jecelyn Yeen</a></li>
+<li>📜 <a href="https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1">Understanding promises in JavaScript — Gokul N K</a></li>
+<li>📜 <a href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261">Master the JavaScript Interview: What is a Promise? — Eric Elliott</a></li>
+<li>📜 <a href="https://www.sitepoint.com/overview-javascript-promises/">An Overview of JavaScript Promises — Sandeep Panda</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/promises-in-javascript-explained-277b98850de">How to use Promises in JavaScript — Prashant Ram</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/how-to-implement-promises-in-javascript-1ce2680a7f51">Implementing Promises In JavaScript — Maciej Cieslar</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-promises-explained-with-simple-real-life-analogies-dd6908092138">JavaScript: Promises explained with simple real life analogies — Shruti Kapoor</a></li>
+<li>📜 <a href="http://exploringjs.com/es6/ch_promises.html">Promises for Asynchronous Programming — Exploring JS</a></li>
+<li>📜 <a href="https://blog.codeanalogies.com/2018/08/26/javascript-promises-explained-by-gambling-at-a-casino/">JavaScript Promises Explained By Gambling At A Casino — Kevin Kononenko</a></li>
+<li>📜 <a href="https://medium.com/datafire-io/es6-promises-patterns-and-anti-patterns-bbb21a5d0918">ES6 Promises: Patterns and Anti-Patterns — Bobby Brennan</a></li>
+<li>📜 <a href="https://codeburst.io/a-simple-guide-to-es6-promises-d71bacd2e13a">A Simple Guide to ES6 Promises — Brandon Morelli</a></li>
+<li>📜 <a href="https://codeburst.io/the-es6-promises-87a979ab27e4">The ES6 Promises — Manoj Singh Negi</a></li>
+<li>📜 <a href="https://ponyfoo.com/articles/es6-promises-in-depth">ES6 Promises in Depth — Nicolás Bevacqua</a></li>
+<li>📜 <a href="https://codeburst.io/playing-with-javascript-promises-a-comprehensive-approach-25ab752c78c3">Playing with Javascript Promises: A Comprehensive Approach — Rajesh Babu</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/how-to-write-a-javascript-promise-4ed8d44292b8">How to Write a JavaScript Promise — Brandon Wozniewicz</a></li>
+<li>📜 <a href="https://medium.com/@andrewly07/a-coding-writers-guide-an-introduction-to-es6-promises-9ff9f9e88f6c">A Coding Writer’s Guide: An Introduction To ES6 Promises — Andrew Ly</a></li>
+<li>📜 <a href="https://dev.to/itnext/reverse-engineering-understand-promises-1jfc">Understanding Promises in JavaScript — Chris Noring</a></li>
+<li>📜 <a href="https://dev.to/zellwk/converting-callbacks-to-promises-nhn">Converting callbacks to promises — Zell Liew</a></li>
+<li>📜 <a href="https://medium.com/dailyjs/javascript-promises-zero-to-hero-plus-cheat-sheet-64d75051cffa">JavaScript Promises: Zero To Hero Plus Cheat Sheet — Joshua Saunders</a></li>
+<li>📜 <a href="https://dev.to/boywithsilverwings/promises-javascript-concepts-293c">Promises - JavaScript concepts — Agney Menon</a></li>
+<li>📜 <a href="https://dev.to/iggredible/javascript-promise-101-3idl">Javascript <code>Promise</code> 101 — Igor Irianto</a></li>
+<li>📜 <a href="https://dev.to/sunnysingh/simplify-javascript-promises-4djb">Simplify JavaScript Promises — Sunny Singh</a></li>
+<li>📜 <a href="https://medium.com/better-programming/the-low-down-on-promises-af4a96bbb95f">The Lowdown on Promises — Aphinya Dechalert</a></li>
+<li>📜 <a href="https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke">JavaScript Visualized: Promises &amp; Async/Await — Lydia Hallie</a></li>
+<li>📜 <a href="https://dev.to/peterklingelhofer/promises-in-javascript-3h5k">Promises in JavaScript — Peter Klingelhofer</a></li>
+<li>📜 <a href="https://dev.to/somedood/best-practices-for-es6-promises-36da">Best Practices for ES6 Promises — Basti Ortiz</a></li>
+<li>📜 <a href="https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd">Lo que debemos saber de EScript 2020 — Kike Sanchez</a></li>
+<li>📜 <a href="https://javascript.info/promise-basics">Promise Basics - javascript.info</a></li>
+</ul>
+<h3 id="videos-23">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=vQ3MoXnKfuQ">Let’s Learn ES6 - Promises — Ryan Christiani</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=XJEHuBZQ5dU">JavaScript ES6 / ES2015 Promises — Traversy Media</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=2d7s3spWAzo">Promises — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=f8IgdnYIwOU">Error Handling Promises in JavaScript — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=QO4NXhWo_NM">Promises Part 1 - Topics of JavaScript/ES6 — The Coding Train</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=RvYYCGs45L4">JavaScript Promise in 100 Seconds</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="asyncawait">26. async/await</h2>
+<h3 id="reference-8">Reference</h3>
+<ul>
+<li>📜 <a href="https://javascript.info/async-await">async/await — JavaScript.Info</a></li>
+</ul>
+<h3 id="books-5">Books</h3>
+<ul>
+<li>📜 <a href="https://eloquentjavascript.net/11_async.html">Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming</a></li>
+<li>📜 <a href="http://exploringjs.com/es6/ch_async.html">Exploring JS: Asynchronous Programming</a></li>
+</ul>
+<h3 id="articles-25">Articles</h3>
+<ul>
+<li>📜 <a href="https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c">Understanding async/await in Javascript — Gokul N K</a></li>
+<li>📜 <a href="https://alligator.io/js/async-functions/">Exploring Async/Await Functions in JavaScript — Alligator.io</a></li>
+<li>📜 <a href="https://scotch.io/tutorials/asynchronous-javascript-using-async-await">Asynchronous Javascript using async/await — Joy Warugu</a></li>
+<li>📜 <a href="https://flaviocopes.com/javascript-async-await/">Modern Asynchronous JavaScript with async/await — Flavio Copes</a></li>
+<li>📜 <a href="https://www.toptal.com/javascript/asynchronous-javascript-async-await-tutorial">Asynchronous JavaScript: From Callback Hell to Async and Await — Demir Selmanovic</a></li>
+<li>📜 <a href="https://medium.com/@_bengarrison/javascript-es8-introducing-async-await-functions-7a471ec7de8a">Javascript — ES8 Introducing async/await Functions — Ben Garrison</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/avoiding-the-async-await-hell-c77a0fb71c4c">How to escape async/await hell — Aditya Agarwal</a></li>
+<li>📜 <a href="https://ponyfoo.com/articles/understanding-javascript-async-await">Understanding JavaScript’s async await — Nicolás Bevacqua</a></li>
+<li>📜 <a href="https://techbrij.com/javascript-async-await-parallel-sequence">JavaScript Async/Await: Serial, Parallel and Complex Flow — TechBrij</a></li>
+<li>📜 <a href="https://blog.pusher.com/promises-async-await/">From JavaScript Promises to Async/Await: why bother? — Chris Nwamba</a></li>
+<li>📜 <a href="https://www.sitepoint.com/flow-control-callbacks-promises-async-await/">Flow Control in Modern JS: Callbacks to Promises to Async/Await — Craig Buckler</a></li>
+<li>📜 <a href="https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba">JavaScript: Promises and Why Async/Await Wins the Battle — Nick Parsons</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/improve-your-asynchronous-javascript-code-with-async-and-await-c02fc3813eda">How to improve your asynchronous Javascript code with async and await — Indrek Lasn</a></li>
+<li>📜 <a href="https://medium.com/@micksheridan.24/making-fetches-easy-with-async-await-8a1246efa1f6">Making Fetches Easy With Async Await — Mickey Sheridan</a></li>
+<li>📜 <a href="https://dev.to/gafi/7-reasons-to-always-use-async-await-over-plain-promises-tutorial-4ej9">7 Reasons Why JavaScript Async/Await Is Better Than Plain Promises — Mostafa Gaafar</a></li>
+<li>📜 <a href="https://dev.to/jscrambler/asynchronous-operations-in-javascript-2p6b">Asynchronous Operations in JavaScript — Jscrambler</a></li>
+<li>📜 <a href="https://dev.to/joeyhub/async-await-a-slight-design-flaw-2h2j">Async/await: A slight design flaw. — Joey</a></li>
+<li>📜 <a href="https://medium.com/better-programming/should-i-use-promises-or-async-await-126ab5c98789">JavaScript: Promises or async-await — Gokul N K</a></li>
+<li>📜 <a href="https://dev.to/zhiyuanamos/async-await-from-zero-to-hero-a22">Async / Await: From Zero to Hero — Zhi Yuan</a></li>
+<li>📜 <a href="https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke">JavaScript Visualized: Promises &amp; Async/Await — Lydia Hallie</a></li>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await">Making asynchronous programming easier with async and await — MDN</a></li>
+<li>📜 <a href="https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/">JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream</a></li>
+</ul>
+<h3 id="videos-24">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=9YkUCxvaLEk">Async + Await — Wes Bos</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=SrNQS8J67zc">Asynchrony: Under the Hood — Shelley Vohr</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=568g8hxJJp4&amp;index=3&amp;list=PL0zVEGEvSaeHJppaRLrqjeTPnCH6">async/await in JavaScript - What, Why and How — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=XO77Fib9tSI&amp;index=3&amp;list=PLRqwX-V7Uu6bKLPQvPRNNE65kBL62mVfx">async/await Part 1 - Topics of JavaScript/ES8 — The Coding Train</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=chavThlNz3s&amp;index=4&amp;list=PLRqwX-V7Uu6bKLPQvPRNNE65kBL62mVfx">async/await Part 2 - Topics of JavaScript/ES8 — The Coding Train</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=krAYA4rvbdA">Complete Guide to JS Async &amp; Await ES2017/ES8 — Colt Steele</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=_9vgd9XKlDQ">Tips for using async/await in JavaScript — James Q Quick</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="data-structures">27. Data Structures</h2>
+<h3 id="articles-26">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c">Data Structures in JavaScript — Thon Ly</a></li>
+<li>📜 <a href="https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb">Algorithms and Data Structures in JavaScript — Oleksii Trekhleb</a></li>
+<li>📜 <a href="https://scotch.io/courses/10-need-to-know-javascript-concepts/data-structures-objects-and-arrays">Data Structures: Objects and Arrays ― Chris Nwamba</a></li>
+<li>📜 <a href="http://blog.benoitvallon.com/data-structures-in-javascript/data-structures-in-javascript/">Data structures in JavaScript — Benoit Vallon</a></li>
+<li>📜 <a href="https://blog.cloudboost.io/playing-with-data-structures-in-javascript-stack-a55ebe50f29d">Playing with Data Structures in Javascript — Anish K.</a></li>
+<li>📜 <a href="https://hackernoon.com/the-little-guide-of-queue-in-javascript-4f67e79260d9">The Little Guide of Queue in JavaScript — Germán Cutraro</a></li>
+<li>📜 <a href="https://github.com/barretlee/algorithms">All algorithms writing with JavaScript in the book ‘Algorithms Fourth Edition’</a></li>
+<li>📜 <a href="https://github.com/nzakas/computer-science-in-javascript">Collection of classic computer science paradigms in JavaScript</a></li>
+<li>📜 <a href="https://github.com/jamiebuilds/itsy-bitsy-data-structures">All the things you didn’t know you wanted to know about data structures</a></li>
+<li>📜 <a href="https://dev.to/miku86/series/3259">JavaScript Data Structures: 40 Part Series — miku86</a></li>
+<li>📜 <a href="https://medium.com/javascript-in-plain-english/data-structures-understanding-graphs-82509d35e6b5">Data Structures: Understanding Graphs — Rachel Hawa</a></li>
+<li>📜 <a href="https://dev.to/freddieduffield/data-structures-two-ways-linked-list-2n61">Data Structures Two Ways: Linked List (Pt 1) — Freddie Duffield</a></li>
+<li>📜 <a href="https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60">Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield</a></li>
+<li>📜 <a href="https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn">Graph Data Structures Explained in JavaScript — Adrian Mejia</a></li>
+</ul>
+<h3 id="videos-25">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=H_EBPZgiAas&amp;list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa">Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Gj5qBheGOEo&amp;list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ">Data Structures and Algorithms in JavaScript — freeCodeCamp</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Ymh_AurrMbA">Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=41GSinwoMYA&amp;ab_channel=Academind">JavaScript Data Structures: Getting Started — Academind</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="expensive-operation-and-big-o-notation">28. Expensive Operation and Big O Notation</h2>
+<h3 id="articles-27">Articles</h3>
+<ul>
+<li>📜 <a href="https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b">Big O Notation in Javascript — César Antón Dorantes</a></li>
+<li>📜 <a href="https://medium.com/javascript-scene/time-complexity-big-o-notation-1a4310c3ee4b">Time Complexity/Big O Notation — Tim Roberts</a></li>
+<li>📜 <a href="https://medium.com/@gmedina229/big-o-in-javascript-36ff67766051">Big O in JavaScript — Gabriela Medina</a></li>
+<li>📜 <a href="https://www.bradoncode.com/blog/2012/04/big-o-algorithm-examples-in-javascript.html">Big O Search Algorithms in JavaScript — Bradley Braithwaite</a></li>
+<li>📜 <a href="https://www.jenniferbland.com/time-complexity-analysis-in-javascript/">Time Complexity Analysis in JavaScript — Jennifer Bland</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/time-is-complex-but-priceless-f0abd015063c">Algorithms in plain English: time complexity and Big-O Notation — Michael Olorunnisola</a></li>
+<li>📜 <a href="https://dev.to/lofiandcode/an-introduction-to-big-o-notation-210o">An Introduction to Big O Notation — Joseph Trettevik</a></li>
+</ul>
+<h3 id="videos-26">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=HgA5VOFan5E">JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=KatlvCFHPRo">Essential Big O for JavaScript Developers — Dave Smith</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=ALl86xJiTD8">Big O Notation - Time Complexity Analysis — WebTunings</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="algorithms">29. Algorithms</h2>
+<h3 id="articles-28">Articles</h3>
+<ul>
+<li>📜 <a href="https://github.com/Crizstian/data-structure-and-algorithms-with-ES6">Data Structures and Algorithms using ES6</a></li>
+<li>📜 <a href="https://github.com/trekhleb/javascript-algorithms">Algorithms and data structures implemented in JavaScript with explanations and links to further readings</a></li>
+<li>📜 <a href="http://www.thatjsdude.com/interview/js1.html">JS: Interview Algorithm</a></li>
+<li>📜 <a href="https://medium.com/siliconwat/algorithms-in-javascript-b0bed68f4038">Algorithms in JavaScript — Thon Ly</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/javascript-objects-square-brackets-and-algorithms-e9a2916dc158">JavaScript Objects, Square Brackets and Algorithms — Dmitri Grabov</a></li>
+<li>📜 <a href="https://github.com/felipernb/algorithms.js">Atwood’s Law applied to CS101 - Classic algorithms and data structures implemented in JavaScript</a></li>
+<li>📜 <a href="https://github.com/yangshun/lago">Data Structures and Algorithms library in JavaScript</a></li>
+<li>📜 <a href="https://github.com/idosela/algorithms-in-javascript">Collection of computer science algorithms and data structures written in JavaScript</a></li>
+<li>📜 <a href="https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3">Algorithms and Data Structures in JavaScript — Oleksii Trekhleb</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="inheritance-polymorphism-and-code-reuse">30. Inheritance, Polymorphism and Code Reuse</h2>
+<h3 id="reference-9">Reference</h3>
+<ul>
+<li>📜 <a href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance">Inheritance in JavaScript — MDN</a></li>
+<li>📜 <a href="https://javascript.info/class-inheritance">Class inheritance, super — JavaScript.Info</a></li>
+</ul>
+<h3 id="articles-29">Articles</h3>
+<ul>
+<li>📜 <a href="https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f">Inheritance in JavaScript — Rupesh Mishra</a></li>
+<li>📜 <a href="https://www.sitepoint.com/simple-inheritance-javascript/">Simple Inheritance with JavaScript — David Catuhe</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-inheritance-25fe61ab9f85">JavaScript — Inheritance, delegation patterns and Object linking — NC Patro</a></li>
+<li>📜 <a href="https://blog.knoldus.com/object-oriented-javascript-polymorphism-with-examples/">Object Oriented JavaScript: Polymorphism with examples — Knoldus Blogs</a></li>
+<li>📜 <a href="https://medium.com/yld-engineering-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2">Program Like Proteus — A beginner’s guide to polymorphism in Javascript — Sam Galson</a></li>
+<li>📜 <a href="https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/">Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott</a></li>
+</ul>
+<h3 id="videos-27">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=yXlFR81tDBM">Inheritance in JavaScript — kudvenkat</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=RBLIm5LMrmc">JavaScript ES6 Classes and Inheritance — Traversy Media</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=zdovG9cuEBA">Polymorphism in JavaScript — kudvenkat</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="design-patterns">31. Design Patterns</h2>
+<h3 id="books-6">Books</h3>
+<ul>
+<li>📜 <a href="https://addyosmani.com/resources/essentialjsdesignpatterns/book/">Learning JavaScript Design Patterns — Addy Osmani </a></li>
+</ul>
+<h3 id="articles-30">Articles</h3>
+<ul>
+<li>📜 <a href="https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know">4 JavaScript Design Patterns You Should Know — Devan Patel</a></li>
+<li>📜 <a href="https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15">JavaScript Design Patterns – Beginner’s Guide to Mobile Web Development — Soumyajit Pathak</a></li>
+<li>📜 <a href="https://medium.com/front-end-hacking/javascript-design-patterns-ed9d4c144c81">JavaScript Design Patterns — Akash Pal</a></li>
+<li>📜 <a href="https://seesparkbox.com/foundry/javascript_design_patterns">Javascript Design Patterns: What They Are &amp; How To Use Them — Patrick Simpson</a></li>
+<li>📜 <a href="https://blog.bitsrc.io/understanding-design-patterns-in-javascript-13345223f2dd">JavaScript Design Patterns: Understanding Design Patterns in JavaScript - Sukhjinder Arora</a></li>
+<li>📜 <a href="https://github.com/fbeline/Design-Patterns-JS">All the 23 (GoF) design patterns implemented in Javascript — Felipe Beline</a></li>
+<li>📜 <a href="https://medium.com/better-programming/the-power-of-the-module-pattern-in-javascript-3c73f7cd10e8">The Power of the Module Pattern in JavaScript — jsmanifest</a></li>
+<li>📜 <a href="https://dev.to/omensah/design-patterns-for-developers-using-javascript----part-one--b3e">Design Patterns for Developers using JavaScript pt. I — Oliver Mensah</a></li>
+<li>📜 <a href="https://dev.to/omensah/design-patterns-for-developers-using-javascript---part-two--3p39">Design Patterns for Developers using JavaScript pt. II — Oliver Mensah</a></li>
+<li>📜 <a href="https://levelup.gitconnected.com/design-patterns-in-modern-javascript-development-ec84d8be06ca">Design patterns in modern JavaScript development</a></li>
+<li>📜 <a href="https://dev.to/carlillo/understanding-design-patterns-iterator-using-dev-to-and-medium-social-networks-3bdd">Understanding Design Patterns: Iterator using Dev.to and Medium social networks! — Carlos Caballero</a></li>
+<li>📜 <a href="https://dev.to/kristijanfistrek/javascript-design-patterns-factory-pattern-562p">JavaScript Design Patterns - Factory Pattern — KristijanFištrek</a></li>
+<li>📜 <a href="https://medium.com/javascript-in-plain-english/javascript-design-pattern-module-pattern-555737eccecd">JavaScript Design Pattern — Module Pattern - Factory Pattern — Moon</a></li>
+<li>📜 <a href="https://medium.com/better-programming/design-patterns-null-object-5ee839e37892">Design Patterns: Null Object - Carlos Caballero</a></li>
+<li>📜 <a href="https://dev.to/francescoxx/strategy-pattern-5oh">Strategy Pattern - Francesco Ciulla</a></li>
+<li>📜 <a href="https://dev.to/francescoxx/adapter-pattern-5bjk">Adapter Pattern - Francesco Ciulla</a></li>
+<li>📜 <a href="https://dev.to/jsmanifest/the-power-of-composite-pattern-in-javascript-2732">The Power of Composite Pattern in JavaScript - jsmanifest</a></li>
+<li>📜 <a href="https://dev.to/bytebodger/in-defense-of-defensive-programming-k45">In Defense of Defensive Programming - Adam Nathaniel Davis</a></li>
+</ul>
+<h3 id="videos-28">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.udacity.com/course/javascript-design-patterns--ud989">JavaScript Design Patterns — Udacity</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=hO7mzO83N1Q">JavaScript Patterns for 2017 — Scott Allen</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="partial-applications-currying-compose-and-pipe">32. Partial Applications, Currying, Compose and Pipe</h2>
+<h3 id="books-7">Books</h3>
+<ul>
+<li>📜 <a href="https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md">Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson</a></li>
+</ul>
+<h3 id="articles-31">Articles</h3>
+<ul>
+<li>📜 <a href="https://www.codementor.io/michelre/use-function-composition-in-javascript-gkmxos5mj">Use function composition in JavaScript — Rémi</a></li>
+<li>📜 <a href="https://blog.benestudio.co/currying-in-javascript-es6-540d2ad09400">Currying in JavaScript ES6 — Adam Bene</a></li>
+<li>📜 <a href="https://medium.com/@pragyan88/writing-middleware-composition-and-currying-elegance-in-javascript-8b15c98a541b">Composition and Currying Elegance in JavaScript — Pragyan Das</a></li>
+<li>📜 <a href="https://hackernoon.com/javascript-functional-composition-for-every-day-use-22421ef65a10">Functional JavaScript: Function Composition For Every Day Use — Joel Thoms</a></li>
+<li>📜 <a href="https://medium.com/@acparas/what-i-learned-today-july-2-2017-ab9a46dbf85f">Functional Composition: compose() and pipe() — Anton Paras</a></li>
+<li>📜 <a href="http://busypeoples.github.io/post/functional-composing-javascript/">Why The Hipsters Compose Everything: Functional Composing In JavaScript — A. Sharif</a></li>
+<li>📜 <a href="https://jrsinclair.com/articles/2016/gentle-introduction-to-functional-javascript-functions/">A Gentle Introduction to Functional JavaScript pt III: Functions for making functions — James Sinclair</a></li>
+<li>📜 <a href="https://jsleao.wordpress.com/2015/02/22/curry-and-compose-why-you-should-be-using-something-like-ramda-in-your-code/">Curry And Compose (why you should be using something like ramda in your code) — jsanchesleao</a></li>
+<li>📜 <a href="https://vanslaars.io/post/create-pipe-function/">Function Composition in JavaScript with Pipe — Andy Van Slaars</a></li>
+<li>📜 <a href="https://developer.telerik.com/featured/practical-functional-javascript-ramda/">Practical Functional JavaScript with Ramda — Andrew D’Amelio, Yuri Takhteyev</a></li>
+<li>📜 <a href="https://hackernoon.com/the-beauty-in-partial-application-currying-and-function-composition-d885bdf0d574">The beauty in Partial Application, Currying, and Function Composition — Joel Thoms</a></li>
+<li>📜 <a href="https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8">Curry or Partial Application? — Eric Elliott</a></li>
+<li>📜 <a href="http://benalman.com/news/2012/09/partial-application-in-javascript/">Partial Application in JavaScript — Ben Alman</a></li>
+<li>📜 <a href="https://hackernoon.com/partial-application-of-functions-dbe7d9b80760">Partial Application of Functions — Functional Reactive Ninja</a></li>
+<li>📜 <a href="https://codeburst.io/javascript-currying-vs-partial-application-4db5b2442be8">Currying vs Partial Application — Deepak Gupta</a></li>
+<li>📜 <a href="http://raganwald.com/2015/04/01/partial-application.html">Partial Application in ECMAScript 2015 — Ragan Wald</a></li>
+<li>📜 <a href="https://joecortopassi.com/articles/functional-composition-in-javascript/">Functional Composition in Javascript — Joe Cortopassi</a></li>
+<li>📜 <a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536">So You Want to be a Functional Programmer pt. I — Charles Scalfani</a></li>
+<li>📜 <a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-2-7005682cec4a">So You Want to be a Functional Programmer pt. II — Charles Scalfani</a></li>
+<li>📜 <a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-3-1b0fd14eb1a7">So You Want to be a Functional Programmer pt. III — Charles Scalfani</a></li>
+<li>📜 <a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-4-18fbe3ea9e49">So You Want to be a Functional Programmer pt. IV — Charles Scalfani</a></li>
+<li>📜 <a href="https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-5-c70adc9cf56a">So You Want to be a Functional Programmer pt. V — Charles Scalfani</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/an-introduction-to-the-basic-principles-of-functional-programming-a2c2a15c84">An introduction to the basic principles of Functional Programming — TK</a></li>
+<li>📜 <a href="https://medium.com/the-renaissance-developer/concepts-of-functional-programming-in-javascript-6bc84220d2aa">Concepts of Functional Programming in Javascript — TK</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/an-introduction-to-functional-programming-style-in-javascript-71fcc050f064">An Introduction to Functional Programming Style in JavaScript — JavaScript Teacher</a></li>
+<li>📜 <a href="https://medium.freecodecamp.org/a-practical-guide-to-writing-more-functional-javascript-db49409f71">A practical guide to writing more functional JavaScript — Nadeesha Cabral</a></li>
+<li>📜 <a href="https://dev.to/benlesh/a-simple-explanation-of-functional-pipe-in-javascript-2hbj">A simple explanation of functional pipe in JavaScript — Ben Lesh</a></li>
+</ul>
+<h3 id="videos-29">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Wl2ejJOqHUU">Compose vs Pipe: Functional Programming in JavaScript — Chyld Studios</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=jigHxo9YR30">JavaScript Functional Programing: Compose — Theodore Anderson</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=mth5WpEc4Qs">Function Composition - Functional JavaScript — NWCalvank</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Uam37AlzPYw">JavaScript Function Composition Explained — Theodore Anderson</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=VGB9HbL1GHk">Let’s code with function composition — Fun Fun Function</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=DzLkRsUN2vE">Partial Application vs. Currying — NWCalvank</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=jkebgHEcvac">JavaScript Partial Application — Theodore Anderson</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=75W8UPQ5l7k&amp;t=261s">call, apply and bind method in JavaScript</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+<hr>
+<h2 id="clean-code">33. Clean Code</h2>
+<h3 id="articles-32">Articles</h3>
+<ul>
+<li>📜 <a href="https://www.freecodecamp.org/news/clean-coding-for-beginners/">Clean Code Explained – A Practical Introduction to Clean Coding for Beginners — freeCodeCamp</a></li>
+<li>📜 <a href="https://github.com/ryanmcdermott/clean-code-javascript">Clean Code concepts adapted for JavaScript — Ryan McDermott</a></li>
+<li>📜 <a href="https://www.atyantik.com/clean-code-practices-javascript/">Clean Code Practice: How to write clean code — Tirth Bodawala</a></li>
+<li>📜 <a href="https://blog.risingstack.com/javascript-clean-coding-best-practices-node-js-at-scale/">JavaScript Clean Coding Best Practices — András Tóth</a></li>
+<li>📜 <a href="https://medium.com/@kevin_peters/function-parameters-in-javascript-clean-code-4caac109159b">Function parameters in JavaScript Clean Code — Kevin Peters</a></li>
+<li>📜 <a href="https://codeburst.io/keeping-your-code-clean-d30bcffd1a10">Keeping your code clean — Samuel James</a></li>
+<li>📜 <a href="https://www.sitepoint.com/modern-javascript-best-practices/">Best Practices for Using Modern JavaScript Syntax — M. David Green</a></li>
+<li>📜 <a href="https://github.com/cross-js/cross-js">best practices for cross node/web development - Jimmy Wärting</a></li>
+<li>📜 <a href="https://dev.to/ganderzz/on-writing-clean-code-57cm">Writing Clean Code - Dylan Paulus</a></li>
+<li>📜 <a href="https://dev.to/nityeshaga/writing-clean-code-and-the-practice-of-programming-actionable-advice-for-beginners-5f0k">Writing Clean Code and The Practice of Programming - Nityesh Agarwal</a></li>
+<li>📜 <a href="https://dev.to/d_ir/clean-code-dirty-code-human-code-6nm">Clean code, dirty code, human code - Daniel Irvine</a></li>
+<li>📜 <a href="https://dev.to/taillogs/practical-ways-to-write-better-javascript-26d4">Practical Ways to Write Better JavaScript - Ryland G</a></li>
+<li>📜 <a href="https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75">The Must-Know Clean Code Principles - Kesk on Medium</a></li>
+<li>📜 <a href="https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/">The Clean Code Book - Robert C Martin</a></li>
+</ul>
+<h3 id="videos-30">Videos</h3>
+<ul>
+<li>🎥 <a href="https://www.youtube.com/watch?v=Mus_vwhTCq0">JavaScript Pro Tips - Code This, NOT That</a></li>
+<li>🎥 <a href="https://www.youtube.com/watch?v=b9c5GmmS7ks&amp;list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&amp;index=1">Clean Code playlist - Beau teaches</a></li>
+</ul>
+<p><strong><a href="#table-of-contents">⬆ Back to Top</a></strong></p>
+
+    </div>
+  </div>
+</body>
+
+</html>
