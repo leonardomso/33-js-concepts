@@ -830,6 +830,9 @@ All the translations for this repo will be listed below:
 - 📜 [Understanding JavaScript Generators With Examples — Arfat Salman](https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
 - 📜 [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
 - 📜 [An Introduction to JavaScript Generators — Alice Kallaugher](https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224)
+- 📜 [Map in JavaScript and when it's a better choice than Object - Amitav Mishra](https://jscurious.com/map-in-javascript-and-how-it-is-better-than-object)
+- 📜 [Set object in JavaScript to store unique values - Amitav Mishra](https://jscurious.com/javascript-set-object-to-store-unique-values)
+- 📜 [Generator functions in JavaScript - Amitav Mishra](https://jscurious.com/generator-functions-in-javascript)
 
 ### Videos
 
@@ -877,6 +880,7 @@ All the translations for this repo will be listed below:
 - 📜 [Best Practices for ES6 Promises — Basti Ortiz](https://dev.to/somedood/best-practices-for-es6-promises-36da)
 - 📜 [Lo que debemos saber de EScript 2020 — Kike Sanchez](https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd)
 - 📜 [Promise Basics - javascript.info](https://javascript.info/promise-basics)
+- 📜 [A brief guide to Promises in JavaScript - Amitav Mishra](https://jscurious.com/a-brief-guide-to-promises-in-javascript)
 
 ### Videos
 
@@ -926,6 +930,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript Visualized: Promises & Async/Await — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
 - 📜 [Making asynchronous programming easier with async and await — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await)
 - 📜 [JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
+- [Understanding async and await in JavaScript - Amitav Mishra](https://jscurious.com/understanding-async-and-await-in-javascript)
 
 ### Videos
 
