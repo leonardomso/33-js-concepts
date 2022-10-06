@@ -13,13 +13,15 @@
 
 এই রিপোসিটোরিটি তৈরী করার উদ্দেশ্য হলো ডেভেলপারদেরকে তাদের জাভাস্ক্রিপ্ট এর ধারণা গুলোকে আরো পরিষ্কার করতে সাহায্য করা। এটি প্রয়োজনীয় নয়, তবে ভবিষ্যতে পড়ার জন্য একটি গাইড। এটি [Stephen Curtis](https://twitter.com/stephenthecurt) এর একটি লেখার উপর ভিত্তি করে লেখা এবং আপনি চাইলে এটি [এখানে](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) পড়তে পারেন।
 
-**🚀 গিটহাব দ্বারা বিবেচিত [2018 সালের শীর্ষ ওপেন সোর্স প্রকল্পগুলির!](https://blog.github.com/2018-12-13-new-open-source-projects/)** মধ্যে একটি।  
+**🚀 গিটহাব দ্বারা বিবেচিত [2018 সালের শীর্ষ ওপেন সোর্স প্রকল্পগুলির](https://blog.github.com/2018-12-13-new-open-source-projects/)** মধ্যে একটি!  
 
-## Community
+## কমিউনিটি
 
 Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
-All the translations for this repo will be listed below:
+নির্দ্বিধায় আপনি একটি PR জমা দিতে পারেন আপনার নিজের রিক্যাপ বা রিভিউ এর একটি লিংক যুক্ত করে। আপনি যদ রিপোটি আপনার নিজ ভাষায় অনুবাদ করতে চান, দয়া করে নির্দ্বিধায় আপনি করতে পারেন। 
+
+এই রিপোর সকল অনুবাদ নিম্নে তালিকাভুক্ত থাকবে:
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
@@ -45,15 +47,15 @@ All the translations for this repo will be listed below:
 
 ---
 
-## <a id="table-of-contents">Table of Contents</a>
+## <a id="table-of-contents">সূচিপত্র</a>
 
-1. **[Call Stack](#1-call-stack)**
-2. **[Primitive Types](#2-primitive-types)**
-3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
-5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Expression vs Statement](#7-expression-vs-statement)**
+1. **[কল স্ট্যাক](#1-call-stack)**
+2. **[প্রিমিটিভ টাইপস](#2-primitive-types)**
+3. **[ভ্যালু টাইপস এবং রেফারেন্স টাইপস](#3-value-types-and-reference-types)**
+4. **[ইমপ্লিসিট, এক্সপ্লিসিট, নমিনাল, স্ট্রাকচারিং এবং ডাক টাইপিং](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+5. **[== বনাম === বনাম typeof](#5--vs--vs-typeof)**
+6. **[ফাংশন স্কোপ, ব্লক স্কোপ এবং লেক্সিক্যাল স্কোপ](#6-function-scope-block-scope-and-lexical-scope)**
+7. **[এক্সপ্রেশন vs ষ্টেটমেন্ট](#7-expression-vs-statement)**
 8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
 9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
 10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
