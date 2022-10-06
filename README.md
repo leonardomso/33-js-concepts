@@ -277,6 +277,12 @@ All the translations for this repo will be listed below:
 
 ## 8. IIFE, Modules and Namespaces
 
+### Reference
+
+- 📜 [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
+- 📜 [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
+- 📜 [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
+
 ### Articles
 
 - 📜 [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
