@@ -42,6 +42,7 @@
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
+- [বাংলা (Bengali)](https://github.com/coderDaiyan/33-js-concepts) — Abdallah Daiyan
 
 ---
 
