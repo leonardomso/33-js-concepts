@@ -48,49 +48,49 @@
 
 ## <a id="table-of-contents">সূচিপত্র</a>
 
-1. **[কল স্ট্যাক](#1-call-stack)**
-2. **[প্রিমিটিভ টাইপস](#2-primitive-types)**
-3. **[ভ্যালু টাইপস এবং রেফারেন্স টাইপস](#3-value-types-and-reference-types)**
-4. **[ইমপ্লিসিট, এক্সপ্লিসিট, নমিনাল, স্ট্রাকচারিং এবং ডাক টাইপিং](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
-5. **[== বনাম === বনাম typeof](#5--vs--vs-typeof)**
-6. **[ফাংশন স্কোপ, ব্লক স্কোপ এবং লেক্সিক্যাল স্কোপ](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[এক্সপ্রেশন vs ষ্টেটমেন্ট](#7-expression-vs-statement)**
-8. **[ইফি, মডিউলস এবং নেমস্পেসেস](#8-iife-modules-and-namespaces)**
-9. **[মেসেজ কিউ এবং ইভেন্ট লুপ](#9-message-queue-and-event-loop)**
-10. **[সেট টাইমআউট, সেট ইন্টারভাল and রিকুয়েস্ট এনিমেশন ফ্রেম](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[জাভাস্ক্রিপ্ট এর ইঞ্জিন সমূহ](#11-javascript-engines)**
-12. **[বিটওয়াইজ অপারেটরস, টাইপ এরেস এবং এরে বাফার্স](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[ডম এবং লেয়াউট ট্রিস](#13-dom-and-layout-trees)**
-14. **[ফ্যাক্টরিস এবং ক্লাসেস](#14-factories-and-classes)**
-15. **[দিস, কল, এপ্লাই এবং বাইন্ড](#15-this-call-apply-and-bind)**
-16. **[নিউ, কন্সট্রাক্টর, ইন্সটেন্সঅফ এবং ইনস্টেনসেস](#16-new-constructor-instanceof-and-instances)**
-17. **[প্রোটোটাইপ ইনহেরিটেন্স এবং প্রোটোটাইপ চেইন](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create এবং Object.assign](#18-objectcreate-and-objectassign)**
-19. **[ম্যাপ, রিডিউস এবং ফিল্টার](#19-map-reduce-filter)**
-20. **[পিউর ফাংশনস, সাইড ইফেক্টস, স্টেট মিউটেশন এবং ইভেন্ট প্রোপাগেশন](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
-21. **[ক্লোজারস](#21-closures)**
-22. **[হাই অর্ডার ফাংশনস](#22-high-order-functions)**
-23. **[রিকারর্শন](#23-recursion)**
-24. **[কালেকশন্স এবং জেনারেটর্স](#24-collections-and-generators)**
-25. **[প্রমিজেস](#25-promises)**
-26. **[async/await](#26-asyncawait)**
-27. **[ডাটা স্ট্রাকচার্স](#27-data-structures)**
-28. **[এক্সপেন্সিভ অপারেশন এবং বিগ O নোটেশন](#28-expensive-operation-and-big-o-notation)**
-29. **[এলগরিদমস](#29-algorithms)**
-30. **[ইনহেরিটেন্স, পলিমরফিসম এবং কোড রিইউজ](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[ডিজাইন প্যাটার্ন্স](#31-design-patterns)**
-32. **[পার্শিয়াল এপ্লিকেশনস, কারিয়িং, কম্পোজ এবং পাইপ](#32-partial-applications-currying-compose-and-pipe)**
-33. **[ক্লিন কোড](#33-clean-code)**
+১. **[কল স্ট্যাক](#1-call-stack)**
+২. **[প্রিমিটিভ টাইপস](#2-primitive-types)**
+৩. **[ভ্যালু টাইপস এবং রেফারেন্স টাইপস](#3-value-types-and-reference-types)**
+৪. **[ইমপ্লিসিট, এক্সপ্লিসিট, নমিনাল, স্ট্রাকচারিং এবং ডাক টাইপিং](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+৫. **[== বনাম === বনাম typeof](#5--vs--vs-typeof)**
+৬. **[ফাংশন স্কোপ, ব্লক স্কোপ এবং লেক্সিক্যাল স্কোপ](#6-function-scope-block-scope-and-lexical-scope)**
+৭. **[এক্সপ্রেশন vs ষ্টেটমেন্ট](#7-expression-vs-statement)**
+৮. **[ইফি, মডিউলস এবং নেমস্পেসেস](#8-iife-modules-and-namespaces)**
+৯. **[মেসেজ কিউ এবং ইভেন্ট লুপ](#9-message-queue-and-event-loop)**
+১০. **[সেট টাইমআউট, সেট ইন্টারভাল and রিকুয়েস্ট এনিমেশন ফ্রেম](#10-settimeout-setinterval-and-requestanimationframe)**
+১১. **[জাভাস্ক্রিপ্ট এর ইঞ্জিন সমূহ](#11-javascript-engines)**
+১২. **[বিটওয়াইজ অপারেটরস, টাইপ এরেস এবং এরে বাফার্স](#12-bitwise-operators-type-arrays-and-array-buffers)**
+১৩. **[ডম এবং লেয়াউট ট্রিস](#13-dom-and-layout-trees)**
+১৪. **[ফ্যাক্টরিস এবং ক্লাসেস](#14-factories-and-classes)**
+১৫. **[দিস, কল, এপ্লাই এবং বাইন্ড](#15-this-call-apply-and-bind)**
+১৬. **[নিউ, কন্সট্রাক্টর, ইন্সটেন্সঅফ এবং ইনস্টেনসেস](#16-new-constructor-instanceof-and-instances)**
+১৭. **[প্রোটোটাইপ ইনহেরিটেন্স এবং প্রোটোটাইপ চেইন](#17-prototype-inheritance-and-prototype-chain)**
+১৮. **[Object.create এবং Object.assign](#18-objectcreate-and-objectassign)**
+১৯. **[ম্যাপ, রিডিউস এবং ফিল্টার](#19-map-reduce-filter)**
+২০. **[পিউর ফাংশনস, সাইড ইফেক্টস, স্টেট মিউটেশন এবং ইভেন্ট প্রোপাগেশন](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
+২১. **[ক্লোজারস](#21-closures)**
+২২. **[হাই অর্ডার ফাংশনস](#22-high-order-functions)**
+২৩. **[রিকারর্শন](#23-recursion)**
+২৪. **[কালেকশন্স এবং জেনারেটর্স](#24-collections-and-generators)**
+২৫. **[প্রমিজেস](#25-promises)**
+২৬. **[async/await](#26-asyncawait)**
+২৭. **[ডাটা স্ট্রাকচার্স](#27-data-structures)**
+২৮. **[এক্সপেন্সিভ অপারেশন এবং বিগ O নোটেশন](#28-expensive-operation-and-big-o-notation)**
+২৯. **[এলগরিদমস](#29-algorithms)**
+৩০. **[ইনহেরিটেন্স, পলিমরফিসম এবং কোড রিইউজ](#30-inheritance-polymorphism-and-code-reuse)**
+৩১. **[ডিজাইন প্যাটার্ন্স](#31-design-patterns)**
+৩২. **[পার্শিয়াল এপ্লিকেশনস, কারিয়িং, কম্পোজ এবং পাইপ](#32-partial-applications-currying-compose-and-pipe)**
+৩৩. **[ক্লিন কোড](#33-clean-code)**
 
 ---
 
-## 1. Call Stack
+## ১. কল স্ট্যাক
 
-### Reference
+### রেফারেন্স
 
 - 📜 [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### Articles
+### আর্টিকেলস
 
 - 📜 [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
 - 📜 [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -101,7 +101,7 @@
 - 📜 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://tylermcginnis.com/ultimate-guide-to-execution-contexts-hoisting-scopes-and-closures-in-javascript/)
 - 📜 [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
 
-### Videos
+### ভিডিও সমূহ
 
 - 🎥 [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
 - 🎥 [The JS Call Stack Explained In 9 Minutes — Colt Steele](https://www.youtube.com/watch?v=W8AeMrVtFLY)
@@ -113,11 +113,11 @@
 - 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
 - 🎥 [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ উপরে ফিরে যান](#table-of-contents)**
 
 ---
 
-## 2. Primitive Types
+## 2. প্রিমিটিভ টাইপস
 
 ### Reference
 
@@ -146,7 +146,7 @@
 - 🎥 [What are variables in Javascript? — JS For Everyone](https://www.youtube.com/watch?v=B4Bbmei_thw)
 - 🎥 [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ উপরে ফিরে যান](#table-of-contents)**
 
 ---
 
