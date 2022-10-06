@@ -12,9 +12,9 @@
 ## Utangulizo
 
 Hazina hii ilitengenezwa na nia ya kuwasaidia wasanidi programu kutambua dhana za JavaScript. Haihitajijiki, lakini ni nguzo ya masomo ya baadaye. Msingi wake ni makala yaliyoandikwa na [Stephen Curtis]
-(https://twitter.com/stephenthecurt) na unaweza kuyasomea hapa[here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+(https://twitter.com/stephenthecurt) na unaweza kuyasomea hapa [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 Zingatizwa na GitHub kama moja ya[miradi wazi zinazoongoza za 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 Zingatizwa na GitHub kama moja ya [miradi wazi zinazoongoza za 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
 ## Jamii
 
@@ -49,38 +49,38 @@ Tafsiri zote za hazina hii yatatajwa hapa chini:
 ## <a id="table-of-contents">Jedwali ya Yaliyomo</a>
 
 1. **[Call Stack](#1-call-stack)**
-2. **[Aina za Awali](#2-primitive-types)**
-3. **[Aina za Thamani na Aina za Marejeleo](#3-value-types-and-reference-types)**
+2. **[Aina za Awali](#2-aina-za-awali)**
+3. **[Aina za Thamani na Aina za Marejeleo](#3-aina-za-thamani-na-aina-za-marejeleo)**
 4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
 5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Upeo wa Utendaji, Upeo wa Kuzuia na Upeo wa Lexical](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Usemi dhidi ukilinganishwa na Taarifa](#7-expression-vs-statement)**
+6. **[Upeo wa Utendaji, Upeo wa Kuzuia na Upeo wa Lexical](#6-upeo-wa-utendaji-upeo-wa-kuzuia-na-upeo-wa-lexical)**
+7. **[Usemi dhidi ukilinganishwa na Taarifa](#7-usemi-dhidi-ukilinganishwa-na-taarifa)**
 8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Foleni ya Ujumbe na Kipindi cha Tukio](#9-message-queue-and-event-loop)**
+9. **[Foleni ya Ujumbe na Kipindi cha Tukio](#9-foleni-ya-ujumbe-na-kipindi-cha-tukio)**
 10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[Injini ya JavaScript](#11-javascript-engines)**
+11. **[Injini ya JavaScript](#11-injini-za-javascript)**
 12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
 13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
+14. **[Factories and Classes](#14-viwanda-na-madarasa)**
 15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
 16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
+17. **[Prototype Inheritance and Prototype Chain](#17-urithi-wa-mfano-na-mnyororo-wa-mfano)**
 18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
 20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
-21. **[Vifungo](#21-closures)**
-22. **[Kazi za Agizo la Juu](#22-high-order-functions)**
-23. **[Kujirudia](#23-recursion)**
-24. **[Collections and Generators](#24-collections-and-generators)**
-25. **[Ahadi](#25-promises)**
-26. **[async/subiri](#26-asyncawait)**
-27. **[Miundo ya Data](#27-data-structures)**
-28. **[Uendeshaji Ghali na Nukuu kubwa ya O](#28-expensive-operation-and-big-o-notation)**
+21. **[Vifungo](#21-vifungo)**
+22. **[Kazi za Agizo la Juu](#22-kazi-za-agizo-la-juu)**
+23. **[Kujirudia](#23-kujirudia)**
+24. **[Collections and Generators](#24-mikusanyiko-na-jenereta)**
+25. **[Ahadi](#25-ahadi)**
+26. **[async/subiri](#26-asyncsubiri)**
+27. **[Miundo ya Data](#27-miundo-ya-data)**
+28. **[Uendeshaji Ghali na Nukuu kubwa ya O](#28-uendeshaji-ghali-na-nukuu-kubwa-ya-o)**
 29. **[Algorithms](#29-algorithms)**
-30. **[Urithi, Polymorphism na Utumiaji Tena wa Kanuni](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Miundo ya Kubuni](#31-design-patterns)**
+30. **[Urithi, Polymorphism na Utumiaji Tena wa Kanuni](#30-urithi-polymorphism-na-utumiaji-tena-wa-kanuni)**
+31. **[Miundo ya Kubuni](#31-miundo-ya-kubuni)**
 32. **[Maombi ya Sehemu, Currying, Tunga na Bomba](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Safi Kanuni](#33-clean-code)**
+33. **[Safi Kanuni](#33-kanuni-safi)**
 
 ---
 
@@ -692,7 +692,7 @@ Tafsiri zote za hazina hii yatatajwa hapa chini:
 
 ---
 
-## 21. Kifungo
+## 21. Vifungo
 
 ### Rejea
 
@@ -971,7 +971,7 @@ Tafsiri zote za hazina hii yatatajwa hapa chini:
 
 ---
 
-## 28. Uendeshaji Ghali na Nukuu kubwa ya O(O Notation)
+## 28. Uendeshaji Ghali na Nukuu kubwa ya O
 
 ### Makala
 
