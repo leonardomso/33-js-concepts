@@ -9,18 +9,18 @@
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
-## Introduction
+## Utangulizo
 
 Hazina hii ilitengenezwa na nia ya kuwasaidia wasanidi programu kutambua dhana za JavaScript. Haihitajijiki, lakini ni nguzo ya masomo ya baadaye. Msingi wake ni makala yaliyoandikwa na [Stephen Curtis]
 (https://twitter.com/stephenthecurt) na unaweza kuyasomea hapa[here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 Zingatizwa na GitHub kama moja ya[miradi wazi zinazoongoza za 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## Jamii
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+Uko na huru ya kuwasilisha PR na kuongeza kiungo kwa maoni yako. Ukitaka kutafsiri hazina hii kwa lugha yako asili, una uhuru wa kufanya hivo.
 
-All the translations for this repo will be listed below:
+Tafsiri zote za hazina hii yatatajwa hapa chini:
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
@@ -46,7 +46,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## <a id="table-of-contents">Table of Contents</a>
+## <a id="table-of-contents">Jedwali ya Yaliyomo</a>
 
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitive Types](#2-primitive-types)**
