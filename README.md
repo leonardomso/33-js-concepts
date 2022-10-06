@@ -17,8 +17,6 @@
 
 ## কমিউনিটি
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
-
 নির্দ্বিধায় আপনি একটি PR জমা দিতে পারেন আপনার নিজের রিক্যাপ বা রিভিউ এর একটি লিংক যুক্ত করে। আপনি যদ রিপোটি আপনার নিজ ভাষায় অনুবাদ করতে চান, দয়া করে নির্দ্বিধায় আপনি করতে পারেন। 
 
 এই রিপোর সকল অনুবাদ নিম্নে তালিকাভুক্ত থাকবে:
