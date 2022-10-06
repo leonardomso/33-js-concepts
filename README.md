@@ -55,32 +55,32 @@
 5. **[== বনাম === বনাম typeof](#5--vs--vs-typeof)**
 6. **[ফাংশন স্কোপ, ব্লক স্কোপ এবং লেক্সিক্যাল স্কোপ](#6-function-scope-block-scope-and-lexical-scope)**
 7. **[এক্সপ্রেশন vs ষ্টেটমেন্ট](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[JavaScript Engines](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
-15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
-19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
-21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-high-order-functions)**
-23. **[Recursion](#23-recursion)**
-24. **[Collections and Generators](#24-collections-and-generators)**
-25. **[Promises](#25-promises)**
+8. **[ইফি, মডিউলস এবং নেমস্পেসেস](#8-iife-modules-and-namespaces)**
+9. **[মেসেজ কিউ এবং ইভেন্ট লুপ](#9-message-queue-and-event-loop)**
+10. **[সেট টাইমআউট, সেট ইন্টারভাল and রিকুয়েস্ট এনিমেশন ফ্রেম](#10-settimeout-setinterval-and-requestanimationframe)**
+11. **[জাভাস্ক্রিপ্ট এর ইঞ্জিন সমূহ](#11-javascript-engines)**
+12. **[বিটওয়াইজ অপারেটরস, টাইপ এরেস এবং এরে বাফার্স](#12-bitwise-operators-type-arrays-and-array-buffers)**
+13. **[ডম এবং লেয়াউট ট্রিস](#13-dom-and-layout-trees)**
+14. **[ফ্যাক্টরিস এবং ক্লাসেস](#14-factories-and-classes)**
+15. **[দিস, কল, এপ্লাই এবং বাইন্ড](#15-this-call-apply-and-bind)**
+16. **[নিউ, কন্সট্রাক্টর, ইন্সটেন্সঅফ এবং ইনস্টেনসেস](#16-new-constructor-instanceof-and-instances)**
+17. **[প্রোটোটাইপ ইনহেরিটেন্স এবং প্রোটোটাইপ চেইন](#17-prototype-inheritance-and-prototype-chain)**
+18. **[Object.create এবং Object.assign](#18-objectcreate-and-objectassign)**
+19. **[ম্যাপ, রিডিউস এবং ফিল্টার](#19-map-reduce-filter)**
+20. **[পিউর ফাংশনস, সাইড ইফেক্টস, স্টেট মিউটেশন এবং ইভেন্ট প্রোপাগেশন](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
+21. **[ক্লোজারস](#21-closures)**
+22. **[হাই অর্ডার ফাংশনস](#22-high-order-functions)**
+23. **[রিকারর্শন](#23-recursion)**
+24. **[কালেকশন্স এবং জেনারেটর্স](#24-collections-and-generators)**
+25. **[প্রমিজেস](#25-promises)**
 26. **[async/await](#26-asyncawait)**
-27. **[Data Structures](#27-data-structures)**
-28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms](#29-algorithms)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Design Patterns](#31-design-patterns)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code](#33-clean-code)**
+27. **[ডাটা স্ট্রাকচার্স](#27-data-structures)**
+28. **[এক্সপেন্সিভ অপারেশন এবং বিগ O নোটেশন](#28-expensive-operation-and-big-o-notation)**
+29. **[এলগরিদমস](#29-algorithms)**
+30. **[ইনহেরিটেন্স, পলিমরফিসম এবং কোড রিইউজ](#30-inheritance-polymorphism-and-code-reuse)**
+31. **[ডিজাইন প্যাটার্ন্স](#31-design-patterns)**
+32. **[পার্শিয়াল এপ্লিকেশনস, কারিয়িং, কম্পোজ এবং পাইপ](#32-partial-applications-currying-compose-and-pipe)**
+33. **[ক্লিন কোড](#33-clean-code)**
 
 ---
 
