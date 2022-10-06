@@ -3,7 +3,7 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  Dhana 33 kila msanidi programu wa JavaScript anafaa kutambua
   <br><br>
 </h1>
 
@@ -11,7 +11,8 @@
 
 ## Introduction
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Hazina hii ilitengenezwa na nia ya kuwasaidia wasanidi programu kutambua dhana za JavaScript. Haihitajijiki, lakini ni nguzo ya masomo ya baadaye. Msingi wake ni makala yaliyoandikwa na [Stephen Curtis]
+(https://twitter.com/stephenthecurt) na unaweza kuyasomea hapa[here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
 **🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
