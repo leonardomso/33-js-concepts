@@ -43,7 +43,7 @@ Tafsiri zote za hazina hii yatatajwa hapa chini:
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
 - [Italiano (Kiitaliano)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
-
+- [Swahili (Swahili)](https://github.com/taylorhelene/33-js-concepts) — Taylor Helen
 ---
 
 ## <a id="table-of-contents">Jedwali ya Yaliyomo</a>
