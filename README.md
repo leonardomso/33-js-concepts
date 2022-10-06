@@ -3,15 +3,17 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  ৩৩টি জাভাস্ক্রিপ্ট এর বিষয় যা প্রতিটি ডেভেলপার এর জানা দরকার।
   <br><br>
 </h1>
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
-## Introduction
+## পরিচিতি
 
 This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+
+এই রিপোসিটোরিটি তৈরী করার উদ্দেশ্য হলো ডেভেলপারদেরকে তাদের জাভাস্ক্রিপ্ট এর ধারণা গুলোকে আরো পরিষ্কার করতে সাহায্য করা। এটি প্রয়োজনীয় নয়, তবে ভবিষ্যতে পড়ার জন্য একটি গাইড। এটি [Stephen Curtis](https://twitter.com/stephenthecurt) এর একটি লেখার উপর ভিত্তি করে লেখা এবং আপনি চাইলে এটি [এখানে](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) পড়তে পারেন।
 
 **🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
