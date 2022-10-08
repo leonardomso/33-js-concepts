@@ -1039,6 +1039,10 @@ All the translations for this repo will be listed below:
 
 ## 31. Design Patterns
 
+### Reference
+
+- 📜[Design Patterns - Patterns.dev](https://www.patterns.dev/posts/#design-patterns)
+
 ### Books
 
 - 📜 [Learning JavaScript Design Patterns — Addy Osmani ](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
