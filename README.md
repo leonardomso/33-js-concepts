@@ -42,6 +42,7 @@ All the translations for this repo will be listed below:
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
+- [मराठी (Marathi)](https://github.com/prajwalprogrammer/33-js-concepts) —  Prajwal Achwale
 
 ---
 
