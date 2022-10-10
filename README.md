@@ -11,10 +11,12 @@
 
 ## پێشەکی
 
-ئەم ژێدەرە ( سەرچاوە) یە بۆ مەبەستی یارمەتی دانی گەشەپێدەران دروستکراوە تاوەکو شارەزاببن لە چەمکەکانی جاڤاسکریپت. ئەم چەمکانە داواکراو نین لە گەشە پێدەران بەڵکو ڕێگا نیشاندەرێکە بۆ لێکؤڵینەوە لە داهاتوودا.
-ئەم چەمکانە لەسەر بنەمای یەکێک لە ووتارەکانی بەرێز [ستیڤن کورتیس ](https://twitter.com/stephenthecurt) نووسراوە کە ئەتوان [لێرەوە](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) ئەو ووتارە بخوێنەوە.
+ئەم ژێدەرە (سەرچاوە) یە بۆ مەبەستی یارمەتی دانی گەشەپێدەران دروستکراوە تاوەکو شارەزاببن لە چەمکەکانی جاڤاسکریپت. ئەم چەمکانە داواکراو نین لە گەشە پێدەران بەڵکو ڕێگا نیشاندەرێکە بۆ لێکۆڵینەوە لە داهاتوودا.
+ئەم چەمکانە لەسەر بنەمای یەکێک لە وووتارەکانی بەرێز [ستیڤن کورتیس ](https://twitter.com/stephenthecurt) نووسراوە کە ئەتوان [لێرەوە](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) ئەو ووتارە بخوێنەوە.
 
-**بەیەکیک لە (https://blog.github.com/2018-12-13-new-open-source-projects/)[باشترین پڕۆژەی سەرچاوەکراوی ساڵی ٢٠١٨] دەست نیشان کراوە GitHub  ئەم ژێدەرە لە لایەن 🚀**
+**🚀 ئەم ژێدەرە ( سەرچاوە)  بە یەکیک لە باشترین (/https://blog.github.com/2018-12-13-new-open-source-projects)[پرۆژەی سەرچاوەکراوی ساڵی ٢٠١٨] لە لایەن GitHub وە دەست نیشان کراوە.**
+
+**دەست نیشان کراوە GitHub  ئەم ژێدەرە لە لایەن 🚀 **
 
 ## کۆمەڵگەی گەشەپێدەران
 
@@ -91,7 +93,7 @@
 
 - 📜 [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
 - 📜 [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -124,7 +126,7 @@
 
 - 📜 [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
 - 📜 [What You Need to Know About JavaScript Number Type — Max Wizard K](https://indepth.dev/posts/1139/here-is-what-you-need-to-know-about-javascripts-number-type)
@@ -153,7 +155,7 @@
 
 ## 3. Value Types and سەرچاوە Types
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Explaining Value vs. سەرچاوە in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-سەرچاوە-in-javascript-647a975e12a0)
 - 📜 [Primitive Types & سەرچاوە Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
@@ -177,7 +179,7 @@
 
 ## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
 - 📜 [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
@@ -202,10 +204,10 @@
 
 ## 5. == vs === vs typeof
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
-- 📜 [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/وتارەکان/equality-comparison-operator-javascript/)
+- 📜 [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/ووتارەکان/equality-comparison-operator-javascript/)
 - 📜 [== vs === JavaScript: Double Equals and Coercion — AJ Meyghani](https://www.codementor.io/javascript/tutorial/double-equals-and-coercion-in-javascript)
 - 📜 [Why Use the Triple-Equals Operator in JavaScript? — Louis Lazaris](https://www.impressivewebs.com/why-use-triple-equals-javascipt/)
 - 📜 [What is the difference between == and === in JavaScript? — Craig Buckler](https://www.oreilly.com/learning/what-is-the-difference-between-and-in-javascript)
@@ -229,7 +231,7 @@
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
 - 📜 [The battle between Function Scope and Block Scope — Marius Herring](http://www.deadcoderising.com/2017-04-11-es6-var-let-and-const-the-battle-between-function-scope-and-block-scope/)    
@@ -260,7 +262,7 @@
 
 ## 7. Expression vs Statement
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
 - 📜 [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
@@ -279,7 +281,7 @@
 
 ## 8. IIFE, Modules and Namespaces
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
 - 📜 [Do ES6 Modules make the case of IIFEs obsolete?](https://hashnode.com/post/do-es6-modules-make-the-case-of-iifes-obsolete-civ96wet80scqgc538un20es0)
@@ -288,7 +290,7 @@
 - 📜 [ES modules: A cartoon deep-dive — Lin Clark](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
 - 📜 [Understanding ES6 Modules — Craig Buckler](https://www.sitepoint.com/understanding-es6-modules/)
 - 📜 [An overview of ES6 Modules in JavaScript — Brent Graham](https://blog.cloud66.com/an-overview-of-es6-modules-in-javascript/)
-- 📜 [ES6 Modules in Depth — Nicolás Bevacqua](https://ponyfoo.com/وتارەکان/es6-modules-in-depth)
+- 📜 [ES6 Modules in Depth — Nicolás Bevacqua](https://ponyfoo.com/ووتارەکان/es6-modules-in-depth)
 - 📜 [ES6 modules, Node.js and the Michael Jackson Solution — Alberto Gimeno](https://medium.com/dailyjs/es6-modules-node-js-and-the-michael-jackson-solution-828dc244b8b)
 - 📜 [JavaScript Modules: A Beginner’s Guide — Preethi Kasireddy](https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc)
 - 📜 [Using JavaScript modules on the web — Addy Osmani & Mathias Bynens](https://developers.google.com/web/fundamentals/primers/modules)
@@ -311,7 +313,7 @@
 
 ## 9. Message Queue and Event Loop
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
 - 📜 [The JavaScript Event Loop: Explained — Erin Sweson-Healey](https://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/)
@@ -337,7 +339,7 @@
 
 ## 10. setTimeout, setInterval and requestAnimationFrame
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
 - 📜 [Why not to use setInterval — Akanksha Sharma](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
@@ -359,7 +361,7 @@
 
 ## 11. JavaScript Engines
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
 - 📜 [Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
@@ -381,7 +383,7 @@
 
 ## 12. Bitwise Operators, Type Arrays and Array Buffers
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
 - 📜 [Using JavaScript’s Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
@@ -404,7 +406,7 @@
 
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
 - 📜 [What’s the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
@@ -427,7 +429,7 @@
 
 ## 14. Factories and Classes
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [How To Use Classes in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
 - 📜 [Javascript Classes — Under The Hood — Majid](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
@@ -459,7 +461,7 @@
 - 📜 [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/سەرچاوە/Global_objects/Function/bind)
 - 📜 [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/سەرچاوە/Global_Objects/Function/apply)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
 - 📜 [How-to: call() , apply() and bind() in JavaScript — Niladri Sekhar Dutta](https://www.codementor.io/niladrisekhardutta/how-to-call-apply-and-bind-in-javascript-8i1jca6jp)
@@ -500,7 +502,7 @@
 
 ## 16. new, Constructor, instanceof and Instances
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [JavaScript For Beginners: the ‘new’ operator — Brandon Morelli](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
 - 📜 [Let’s demystify JavaScript’s ‘new’ keyword — Cynthia Lee](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
@@ -521,7 +523,7 @@
 
 - 📜 [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Javascript : Prototype vs Class — Valentin PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
 - 📜 [JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens](https://mathiasbynens.be/notes/prototypes)
@@ -574,7 +576,7 @@
 - 📜 [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/سەرچاوە/Global_Objects/Object/create)
 - 📜 [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/سەرچاوە/Global_Objects/Object/assign)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Object.create in JavaScript — Rupesh Mishra](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
 - 📜 [Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
@@ -599,7 +601,7 @@
 
 ## 19. map, reduce, filter
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
 - 📜 [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
@@ -658,7 +660,7 @@
 
 ## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
 - 📜 [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
@@ -670,7 +672,7 @@
 - 📜 [Arrays, Objects and Mutations — Federico Knüssel](https://medium.com/@fknussel/arrays-objects-and-mutations-6b23348b54aa)
 - 📜 [The State of Immutability — Maciej Sikora](https://medium.com/dailyjs/the-state-of-immutability-169d2cd11310)
 - 📜 [Hablemos de Inmutabilidad — Kike Sanchez](https://medium.com/zurvin/hablemos-de-inmutabilidad-3dc65d290783)
-- 📜 [How to deal with dirty side effects in your pure functional JavaScript — James Sinclair](https://jrsinclair.com/وتارەکان/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
+- 📜 [How to deal with dirty side effects in your pure functional JavaScript — James Sinclair](https://jrsinclair.com/ووتارەکان/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
 - 📜 [Preventing Side Effects in JavaScript — David Walsh](https://davidwalsh.name/preventing-sideeffects-javascript)
 - 📜 [Wielding Pure Functions in JavaScript and Function Composition — Peleke Sengstacke](https://scotch.io/tutorials/wielding-pure-functions-in-javascript-and-function-composition)
 - 📜 [JavaScript: Pure Functions — William S. Vincent](https://wsvincent.com/javascript-pure-functions/)
@@ -700,7 +702,7 @@
 - 📜 [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 - 📜 [Closure — JavaScript.Info](https://javascript.info/closure)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [I never understood JavaScript closures — Olivier De Meulder](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
 - 📜 [Understand JavaScript Closures With Ease — Richard Bovell](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
@@ -748,12 +750,12 @@
 
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Higher-Order Functions in JavaScript — M. David Green](https://www.sitepoint.com/higher-order-functions-javascript/)
 - 📜 [Higher Order Functions: Using Filter, Map and Reduce for More Maintainable Code — Guido Schmitz](https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528)
 - 📜 [First-class and Higher Order Functions: Effective Functional JavaScript — Hugo Di Francesco](https://hackernoon.com/effective-functional-javascript-first-class-and-higher-order-functions-713fde8df50a)
-- 📜 [Higher Order Functions in JavaScript — John Hannah](https://www.lullabot.com/وتارەکان/higher-order-functions-in-javascript)
+- 📜 [Higher Order Functions in JavaScript — John Hannah](https://www.lullabot.com/ووتارەکان/higher-order-functions-in-javascript)
 - 📜 [Fun With Higher Order Functions In JavaScript — Derick](https://derickbailey.com/2015/10/21/fun-with-higher-order-functions-in-javascript/)
 - 📜 [Just a reminder on how to use high order functions — Pedro Filho](https://github.com/pedroapfilho/high-order-functions)
 - 📜 [Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
@@ -776,7 +778,7 @@
 
 ## 23. Recursion
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Recursion in JavaScript — Kevin Ennis](https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f)
 - 📜 [Understanding Recursion in JavaScript — Zak Frisch](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
@@ -812,11 +814,11 @@
 
 - 📜 [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/سەرچاوە/Global_Objects/Generator)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [ES6 In Depth: Collections — Jason Orendorff](https://hacks.mozilla.org/2015/06/es6-in-depth-collections/)
 - 📜 [ES6 Collections: Using Map, Set, WeakMap, WeakSet — Kyle Pennell](https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/)
-- 📜 [ES6 WeakMaps, Sets, and WeakSets in Depth — Nicolás Bevacqua](https://ponyfoo.com/وتارەکان/es6-weakmaps-sets-and-weaksets-in-depth)
+- 📜 [ES6 WeakMaps, Sets, and WeakSets in Depth — Nicolás Bevacqua](https://ponyfoo.com/ووتارەکان/es6-weakmaps-sets-and-weaksets-in-depth)
 - 📜 [Introduction to Sets in JavaScript — Alligator.io](https://alligator.io/js/sets-introduction/)
 - 📜 [Introduction to Maps in JavaScript — Alligator.io](https://alligator.io/js/maps-introduction/)
 - 📜 [Map, Set, WeakMap and WeakSet — JavaScript.Info](https://javascript.info/map-set-weakmap-weakset)
@@ -827,7 +829,7 @@
 - 📜 [Array vs Set vs Map vs Object — Real-time use cases in Javascript (ES6/ES7) — Rajesh Babu](https://codeburst.io/array-vs-set-vs-map-vs-object-real-time-use-cases-in-javascript-es6-47ee3295329b)
 - 📜 [How to create an array of unique values in JavaScript using Sets — Claire Parker-Jones](https://dev.to/claireparker/how-to-create-an-array-of-unique-values-in-javascript-using-sets-5dg6)
 - 📜 [What You Should Know About ES6 Maps — Just Chris](https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e)
-- 📜 [ES6 Maps in Depth — Nicolás Bevacqua](https://ponyfoo.com/وتارەکان/es6-maps-in-depth)
+- 📜 [ES6 Maps in Depth — Nicolás Bevacqua](https://ponyfoo.com/ووتارەکان/es6-maps-in-depth)
 - 📜 [What are JavaScript Generators and how to use them — Vladislav Stepanov](https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e)
 - 📜 [Understanding JavaScript Generators With Examples — Arfat Salman](https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
 - 📜 [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
@@ -849,7 +851,7 @@
 
 - 📜 [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/سەرچاوە/Global_Objects/Promise)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [JavaScript Promises for Dummies ― Jecelyn Yeen](https://scotch.io/tutorials/javascript-promises-for-dummies)
 - 📜 [Understanding promises in JavaScript — Gokul N K](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
@@ -863,7 +865,7 @@
 - 📜 [ES6 Promises: Patterns and Anti-Patterns — Bobby Brennan](https://medium.com/datafire-io/es6-promises-patterns-and-anti-patterns-bbb21a5d0918)
 - 📜 [A Simple Guide to ES6 Promises — Brandon Morelli](https://codeburst.io/a-simple-guide-to-es6-promises-d71bacd2e13a)
 - 📜 [The ES6 Promises — Manoj Singh Negi](https://codeburst.io/the-es6-promises-87a979ab27e4)
-- 📜 [ES6 Promises in Depth — Nicolás Bevacqua](https://ponyfoo.com/وتارەکان/es6-promises-in-depth)
+- 📜 [ES6 Promises in Depth — Nicolás Bevacqua](https://ponyfoo.com/ووتارەکان/es6-promises-in-depth)
 - 📜 [Playing with Javascript Promises: A Comprehensive Approach — Rajesh Babu](https://codeburst.io/playing-with-javascript-promises-a-comprehensive-approach-25ab752c78c3)
 - 📜 [How to Write a JavaScript Promise — Brandon Wozniewicz](https://medium.freecodecamp.org/how-to-write-a-javascript-promise-4ed8d44292b8)
 - 📜 [A Coding Writer’s Guide: An Introduction To ES6 Promises — Andrew Ly](https://medium.com/@andrewly07/a-coding-writers-guide-an-introduction-to-es6-promises-9ff9f9e88f6c)
@@ -904,7 +906,7 @@
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 - 📜 [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Understanding async/await in Javascript — Gokul N K](https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c)
 - 📜 [Exploring Async/Await Functions in JavaScript — Alligator.io](https://alligator.io/js/async-functions/)
@@ -913,11 +915,11 @@
 - 📜 [Asynchronous JavaScript: From Callback Hell to Async and Await — Demir Selmanovic](https://www.toptal.com/javascript/asynchronous-javascript-async-await-tutorial)
 - 📜 [Javascript — ES8 Introducing async/await Functions — Ben Garrison](https://medium.com/@_bengarrison/javascript-es8-introducing-async-await-functions-7a471ec7de8a)
 - 📜 [How to escape async/await hell — Aditya Agarwal](https://medium.freecodecamp.org/avoiding-the-async-await-hell-c77a0fb71c4c)
-- 📜 [Understanding JavaScript’s async await — Nicolás Bevacqua](https://ponyfoo.com/وتارەکان/understanding-javascript-async-await)
+- 📜 [Understanding JavaScript’s async await — Nicolás Bevacqua](https://ponyfoo.com/ووتارەکان/understanding-javascript-async-await)
 - 📜 [JavaScript Async/Await: Serial, Parallel and Complex Flow — TechBrij](https://techbrij.com/javascript-async-await-parallel-sequence)
 - 📜 [From JavaScript Promises to Async/Await: why bother? — Chris Nwamba](https://blog.pusher.com/promises-async-await/)
 - 📜 [Flow Control in Modern JS: Callbacks to Promises to Async/Await — Craig Buckler](https://www.sitepoint.com/flow-control-callbacks-promises-async-await/)
-- 📜 [JavaScript: Promises and Why Async/Await Wins the Battle — Nick Parsons](https://dzone.com/وتارەکان/javascript-promises-and-why-asyncawait-wins-the-ba)
+- 📜 [JavaScript: Promises and Why Async/Await Wins the Battle — Nick Parsons](https://dzone.com/ووتارەکان/javascript-promises-and-why-asyncawait-wins-the-ba)
 - 📜 [How to improve your asynchronous Javascript code with async and await — Indrek Lasn](https://medium.freecodecamp.org/improve-your-asynchronous-javascript-code-with-async-and-await-c02fc3813eda)
 - 📜 [Making Fetches Easy With Async Await — Mickey Sheridan](https://medium.com/@micksheridan.24/making-fetches-easy-with-async-await-8a1246efa1f6)
 - 📜 [7 Reasons Why JavaScript Async/Await Is Better Than Plain Promises — Mostafa Gaafar](https://dev.to/gafi/7-reasons-to-always-use-async-await-over-plain-promises-tutorial-4ej9)
@@ -945,7 +947,7 @@
 
 ## 27. Data Structures
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Data Structures in JavaScript — Thon Ly](https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb)
@@ -975,7 +977,7 @@
 
 ## 28. Expensive Operation and Big O Notation
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Big O Notation in Javascript — César Antón Dorantes](https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b)
 - 📜 [Time Complexity/Big O Notation — Tim Roberts](https://medium.com/javascript-scene/time-complexity-big-o-notation-1a4310c3ee4b)
@@ -997,7 +999,7 @@
 
 ## 29. Algorithms
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Data Structures and Algorithms using ES6](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
 - 📜 [Algorithms and data structures implemented in JavaScript with explanations and links to further readings](https://github.com/trekhleb/javascript-algorithms)
@@ -1020,7 +1022,7 @@
 - 📜 [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 - 📜 [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Inheritance in JavaScript — Rupesh Mishra](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
 - 📜 [Simple Inheritance with JavaScript — David Catuhe](https://www.sitepoint.com/simple-inheritance-javascript/)
@@ -1045,7 +1047,7 @@
 
 - 📜 [Learning JavaScript Design Patterns — Addy Osmani ](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
 - 📜 [JavaScript Design Patterns – Beginner's Guide to Mobile Web Development — Soumyajit Pathak](https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15)
@@ -1081,7 +1083,7 @@
 
 - 📜 [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Use function composition in JavaScript — Rémi](https://www.codementor.io/michelre/use-function-composition-in-javascript-gkmxos5mj)
 - 📜 [Currying in JavaScript ES6 — Adam Bene](https://blog.benestudio.co/currying-in-javascript-es6-540d2ad09400)
@@ -1089,7 +1091,7 @@
 - 📜 [Functional JavaScript: Function Composition For Every Day Use — Joel Thoms](https://hackernoon.com/javascript-functional-composition-for-every-day-use-22421ef65a10)
 - 📜 [Functional Composition: compose() and pipe() — Anton Paras](https://medium.com/@acparas/what-i-learned-today-july-2-2017-ab9a46dbf85f)
 - 📜 [Why The Hipsters Compose Everything: Functional Composing In JavaScript — A. Sharif](http://busypeoples.github.io/post/functional-composing-javascript/)
-- 📜 [A Gentle Introduction to Functional JavaScript pt III: Functions for making functions — James Sinclair](https://jrsinclair.com/وتارەکان/2016/gentle-introduction-to-functional-javascript-functions/)
+- 📜 [A Gentle Introduction to Functional JavaScript pt III: Functions for making functions — James Sinclair](https://jrsinclair.com/ووتارەکان/2016/gentle-introduction-to-functional-javascript-functions/)
 - 📜 [Curry And Compose (why you should be using something like ramda in your code) — jsanchesleao](https://jsleao.wordpress.com/2015/02/22/curry-and-compose-why-you-should-be-using-something-like-ramda-in-your-code/)
 - 📜 [Function Composition in JavaScript with Pipe — Andy Van Slaars](https://vanslaars.io/post/create-pipe-function/)
 - 📜 [Practical Functional JavaScript with Ramda — Andrew D'Amelio, Yuri Takhteyev](https://developer.telerik.com/featured/practical-functional-javascript-ramda/)
@@ -1099,7 +1101,7 @@
 - 📜 [Partial Application of Functions — Functional Reactive Ninja](https://hackernoon.com/partial-application-of-functions-dbe7d9b80760)
 - 📜 [Currying vs Partial Application — Deepak Gupta](https://codeburst.io/javascript-currying-vs-partial-application-4db5b2442be8)
 - 📜 [Partial Application in ECMAScript 2015 — Ragan Wald](http://raganwald.com/2015/04/01/partial-application.html)
-- 📜 [Functional Composition in Javascript — Joe Cortopassi](https://joecortopassi.com/وتارەکان/functional-composition-in-javascript/)
+- 📜 [Functional Composition in Javascript — Joe Cortopassi](https://joecortopassi.com/ووتارەکان/functional-composition-in-javascript/)
 - 📜 [So You Want to be a Functional Programmer pt. I — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536)
 - 📜 [So You Want to be a Functional Programmer pt. II — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-2-7005682cec4a)
 - 📜 [So You Want to be a Functional Programmer pt. III — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-3-1b0fd14eb1a7)
@@ -1128,7 +1130,7 @@
 
 ## 33. Clean Code
 
-### وتارەکان
+### ووتارەکان
 
 - 📜 [Clean Code Explained – A Practical Introduction to Clean Coding for Beginners — freeCodeCamp](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
 - 📜 [Clean Code concepts adapted for JavaScript — Ryan McDermott](https://github.com/ryanmcdermott/clean-code-javascript)
