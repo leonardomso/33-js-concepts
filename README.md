@@ -22,7 +22,7 @@ Feel free to submit a PR adding a link to your own recaps or reviews. If you wan
 All the translations for this repo will be listed below:
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
-- [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly 
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Português do Brasil (Brazilian Portuguese) ](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 - [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
@@ -162,6 +162,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript Primitive vs Reference Values](http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/)
 - 📜 [JavaScript by Reference vs. by Value — nrabinowitz](https://stackoverflow.com/questions/6605640/javascript-by-reference-vs-by-value)
 - 📜 [JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
+- 📜 [Difference between `null` and `undefined`](https://codeburst.io/javascript-whats-the-difference-between-null-undefined-37793b5bfce6)
 
 ### Videos
 
