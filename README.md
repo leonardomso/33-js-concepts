@@ -1028,6 +1028,11 @@ All the translations for this repo will be listed below:
 - 📜 [Object Oriented JavaScript: Polymorphism with examples — Knoldus Blogs](https://blog.knoldus.com/object-oriented-javascript-polymorphism-with-examples/)
 - 📜 [Program Like Proteus — A beginner’s guide to polymorphism in Javascript — Sam Galson](https://medium.com/yld-engineering-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2)
 - 📜 [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
+- 📜 [How to use OOP in JavaScript
+- Omotola Shogunle](https://blog.oshogunle.com/how-to-use-oop-in-javascript-ckemxzcw804ow8cs122ikhob0/)
+
+
+
 
 ### Videos
 
