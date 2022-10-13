@@ -66,7 +66,7 @@ Tutte le traduzioni di questo archivio sono elencate qui sotto:
 20. **[Funzioni Pure, Effetti Collatterali e Mutamenti di Stato](#20-funzioni-pure-effetti-collaterali-e-mutamenti-di-stato)**
 21. **[Closures](#21-closures)**
 22. **[Funzioni di Ordine Superiore](#22-funzioni-di-ordine-superiore)**
-23. **[Ricorsività](#23-ricorsivita)**
+23. **[Ricorsività](#23-ricorsività)**
 24. **[Collections e Generators](#24-collections-e-generators)**
 25. **[Promesse](#25-promesse)**
 26. **[async/await](#26-asyncawait)**
