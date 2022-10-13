@@ -837,6 +837,7 @@ All the translations for this repo will be listed below:
 
 ### Reference
 
+- 📜 [JavaScript Promises — English](https://www.w3schools.com/js/js_promise.asp)- Nihar Vira    
 - 📜 [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
 ### Articles
