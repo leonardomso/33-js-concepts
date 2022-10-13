@@ -44,7 +44,8 @@
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
 - [کوردی (Kurdish)](https://github.com/rebiiin/33-js-concepts) — Rebin Qadir
-
+- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  Arif Waram
+- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
 ---
 
 ## <a id="table-of-contents">ناوەڕۆک</a>
@@ -164,6 +165,7 @@
 - 📜 [JavaScript Primitive vs سەرچاوە Values](http://www.javascripttutorial.net/javascript-primitive-vs-سەرچاوە-values/)
 - 📜 [JavaScript by سەرچاوە vs. by Value — nrabinowitz](https://stackoverflow.com/questions/6605640/javascript-by-سەرچاوە-vs-by-value)
 - 📜 [JavaScript Interview Prep: Primitive vs. سەرچاوە Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-سەرچاوە-types-3o4f)
+- 📜 [JavaScript map vs. forEach: When to Use Each One - Sajal Soni] (https://code.tutsplus.com/tutorials/javascript-map-vs-foreach-when-to-use-each-one--cms-38365)
 
 ### ڤیدیۆکان
 
@@ -330,6 +332,7 @@
 - 🎥 [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
 - 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 - 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
+- 🎥 [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
 
 **[⬆ گەڕانەوە بۆ سەرەوە](#table-of-contents)**
 
