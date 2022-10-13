@@ -43,6 +43,7 @@ All the translations for this repo will be listed below:
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
 - [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  Arif Waram
+- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
 ---
 
 ## <a id="table-of-contents">Table of Contents</a>
@@ -162,6 +163,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript Primitive vs Reference Values](http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/)
 - 📜 [JavaScript by Reference vs. by Value — nrabinowitz](https://stackoverflow.com/questions/6605640/javascript-by-reference-vs-by-value)
 - 📜 [JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
+- 📜 [JavaScript map vs. forEach: When to Use Each One - Sajal Soni] (https://code.tutsplus.com/tutorials/javascript-map-vs-foreach-when-to-use-each-one--cms-38365)
 
 ### Videos
 
@@ -328,6 +330,7 @@ All the translations for this repo will be listed below:
 - 🎥 [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
 - 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 - 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
+- 🎥 [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
 
 **[⬆ Back to Top](#table-of-contents)**
 
