@@ -73,7 +73,7 @@ Tutte le traduzioni di questo archivio sono elencate qui sotto:
 27. **[Strutture Dati](#27-strutture-dati)**
 28. **[Operazione Costosa e Notazione O-grande](#28-operazione-costosa-e-notazione-o-grande)**
 29. **[Algoritmi](#29-algoritmi)**
-30. **[Ereditarietà, Polimorfismo e Riutilizzo del Codice](#30-ereditarieta-polimorfismo-e-riutilizzo-del-codice)**
+30. **[Ereditarietà, Polimorfismo e Riutilizzo del Codice](#30-ereditarietà-polimorfismo-e-riutilizzo-del-codice)**
 31. **[Design Patterns](#31-design-patterns)**
 32. **[Partial Applications, Currying, Compose e Pipe](#32-partial-applications-currying-compose-e-pipe)**
 33. **[Codice Pulito](#33-codice-pulito)**
