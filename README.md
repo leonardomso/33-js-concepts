@@ -83,6 +83,10 @@ All the translations for this repo will be listed below:
 
 ---
 
+### Learn basics of Javascript quickly
+
+- 🎥 [Javascript: Namaste Javascript: Explained by Akash saini](https://www.youtube.com/watch?v=pN6jk0uUrD8&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
+
 ## 1. Call Stack
 
 ### Reference
