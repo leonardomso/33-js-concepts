@@ -15,33 +15,34 @@
 
 **🚀গিটহাব দ্বারা বিবেচ্য [২০১৮ সালের শীর্ষ ওপেন সোর্স প্রকল্পগুলির মধ্যে একটি!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## কমিউনিটি
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+আপনি যদি এই রিপজিটরিটিকে আপনার স্থানীয় ভাষায় অনুবাদ করতে চান, অনুগ্রহ করে নির্দ্বিধায় তা করুন। আপনার নিজের রিক্যাপ বা রিভিউতে একটি লিঙ্ক যোগ করে, নির্দ্বিধায় একটি পুল রিকিউয়েস্ট জমা দিন।
 
-All the translations for this repo will be listed below:
+এই রিপজিটরির সমস্ত অনুবাদ নীচে তালিকাভুক্ত করা হলঃ
 
-- [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
-- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
-- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
-- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
-- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
-- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
-- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
-- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
-- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
-- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
-- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
-- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
-- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  Arif Waram
-- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
+- [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — আমর এলসেকিলি
+- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — রে তিয়ান
+- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — টিয়াগো বোয়িং
+- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — সুইন লি
+- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — অ্যাডোনিস মেন্ডোজা
+- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — ইলকার ডেমির
+- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — মিখাইল হুমেনি
+- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — নগুয়েন ট্রান চুং
+- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — ডেভিড লিপিনস্কি
+- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — মজিদ আলাভিজাদেহ
+- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — রিজডজুয়ান সম্পুর্ন
+- [Français (French)](https://github.com/robinmetral/33-concepts-js) — রবিন মেট্রাল
+- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — বিকাশ চৌহান
+- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — দিমিত্রিস জারাচানিস
+- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — ঐম২৩
+- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — বুরহাননন
+- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — আন্দ্রেভ সেভেচুক
+- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — উদয় শমেন্দ্র
+- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — জিয়ানলুকা ফিওরে
+- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  আরিফ ওয়ারাম
+- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — মারিও এস্ট্রাদা
+- [বাংলা (Bengali)](https://github.com/crescentpartha/33-js-concepts) - ক্রিসেন্ট দেব নাথ পার্থ
 
 ---
 
