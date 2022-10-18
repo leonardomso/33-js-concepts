@@ -7,6 +7,45 @@
   <br><br>
 </h1>
 
+[![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
+
+## Introductie
+
+Deze repository is gemaakt met de bedoeling ontwikkelaars te helpen hun concepten in JavaScript onder de knie te krijgen. Het is geen vereiste, maar een leidraad voor toekomstige studies. Het is gebaseerd op een artikel geschreven door [Stephen Curtis](https://twitter.com/stephenthecurt) en je kunt het [hier lezen](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+
+**🚀 Door GitHub beschouwd als een van [de beste open source-projecten van 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+
+## Community
+
+Voel je vrij om een PR (pull request) in te dienen met een link naar je eigen samenvattingen of recensies. Als u de repo in uw moedertaal wilt vertalen, kunt u dat gerust doen.
+
+Alle vertalingen voor deze repo worden hieronder vermeld:
+
+- [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
+- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
+- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
+- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
+- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
+- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
+- [Nederlands (Dutch)](https://github.com/Peter-The-Great/33-js-concepts) — Peter The Great
+- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
+- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
+- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
+- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  Arif Waram
+- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
+
+---
+
 ## <a id="table-of-contents">Inhoudsopgave</a>
 
 1. **[Call Stack](#1-call-stack)**
