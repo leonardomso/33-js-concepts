@@ -3,84 +3,84 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  জাভাস্ক্রিপ্টের 33 টি ধারণা প্রতিটি  ডেভলাপারের জানা উচিত
+  33 Concepts Every JavaScript Developer Should Know
   <br><br>
 </h1>
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
-## ভূমিকা
+## Introduction
 
-এই রিপজিটরিটি জাভাস্ক্রিপ্ট ডেভলাপারদের জাভাস্ক্রিপ্টের  ধারণাগুলি আয়ত্ত করতে সহায়তা করার উদ্দেশ্যে তৈরি করা হয়েছিল। ভবিষ্যতের অধ্যয়নের জন্য একটি গাইড হিসেবে এর প্রয়োজনীয়তা আছে। এটি [স্টিফেন কার্টিসের](https://twitter.com/stephenthecurt) লেখা একটি নিবন্ধের উপর ভিত্তি করে লেখা এবং আপনি এটি [এখানে](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) পড়তে পারেন।
+This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀গিটহাব দ্বারা বিবেচ্য [২০১৮ সালের শীর্ষ ওপেন সোর্স প্রকল্পগুলির মধ্যে একটি!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## কমিউনিটি
+## Community
 
-আপনি যদি এই রিপজিটরিটিকে আপনার স্থানীয় ভাষায় অনুবাদ করতে চান, অনুগ্রহ করে নির্দ্বিধায় তা করুন। আপনার নিজের রিক্যাপ বা রিভিউতে একটি লিঙ্ক যোগ করে, নির্দ্বিধায় একটি পুল রিকিউয়েস্ট জমা দিন।
+Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
-এই রিপজিটরির সমস্ত অনুবাদ নীচে তালিকাভুক্ত করা হলঃ
+All the translations for this repo will be listed below:
 
-- [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — আমর এলসেকিলি
-- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — রে তিয়ান
-- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — টিয়াগো বোয়িং
-- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — সুইন লি
-- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — অ্যাডোনিস মেন্ডোজা
-- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — ইলকার ডেমির
-- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — মিখাইল হুমেনি
-- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — নগুয়েন ট্রান চুং
-- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — ডেভিড লিপিনস্কি
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — মজিদ আলাভিজাদেহ
-- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — রিজডজুয়ান সম্পুর্ন
-- [Français (French)](https://github.com/robinmetral/33-concepts-js) — রবিন মেট্রাল
-- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — বিকাশ চৌহান
-- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — দিমিত্রিস জারাচানিস
-- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — ঐম২৩
-- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — বুরহাননন
-- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — আন্দ্রেভ সেভেচুক
-- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — উদয় শমেন্দ্র
-- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — জিয়ানলুকা ফিওরে
-- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  আরিফ ওয়ারাম
-- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — মারিও এস্ট্রাদা
+- [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
+- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
+- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
+- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
+- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
+- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
+- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
+- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
+- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
+- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  Arif Waram
+- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
 - [বাংলা (Bengali)](https://github.com/crescentpartha/33-js-concepts) - ক্রিসেন্ট দেব নাথ পার্থ
 
 ---
 
-## <a id="table-of-contents">Table of Contents (সুচিপত্র)</a>
+## <a id="table-of-contents">Table of Contents</a>
 
-1. **[Call Stack - (কল স্ট্যাক)](#1-call-stack)**
-2. **[Primitive Types - (প্রিমিটিভ টাইপ)](#2-primitive-types)**
-3. **[Value Types and Reference Types - (ভেলু টাইপ এবং রেফারেন্স টাইপ)](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing - (ইমপ্লিসিট, এক্সপ্লিসিট, নমিনাল, স্ট্রাকচারিং এবং ডাক টাইপিং)](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
-5. **[== vs === vs typeof - (== এবং === এবং টাইপঅফ এর মধ্যে পার্থক্য)](#5--vs--vs-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope - (ফাংশন স্কোপ, ব্লক স্কোপ এবং লেক্সিকাল স্কোপ)](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Expression vs Statement - (এক্সপ্রেশান এবং স্টেটমেন্ট এর মধ্যে পার্থক্য)](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces - (IIFE, মডিউল এবং নেমস্পেস)](#8-iife-modules-and-namespaces)**
-9. **[Message Queue and Event Loop - (মেসেজ কিউ এবং ইভেন্ট লুপ)](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame - (সেট-টাইম-আউট, সেট-ইন্টার্ভাল, এবং রিকিউয়েস্ট-এনিমেশন-ফ্রেম)](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[JavaScript Engines - (জাভাস্ক্রিপ্ট ইঞ্জিন)](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers - (বিটওয়াইজ অপারেটর, টাইপ অ্যারে এবং অ্যারে বাফার)](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM and Layout Trees - (ডম এন্ড লেআউট ট্রি)](#13-dom-and-layout-trees)**
-14. **[Factories and Classes - (ফ্যাক্টরি এন্ড ক্লাস)](#14-factories-and-classes)**
-15. **[this, call, apply and bind - (দিস, কল, অ্যাপলাই এন্ড বাইন্ড)](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances - (নিউ, কন্সট্রাক্টর, ইন্সট্যান্সওফ এন্ড ইন্স্টান্সেস)](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain - (প্রোটোটাইপ ইনহেরিটেন্স এন্ড প্রোটোটাইপ চেন)](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign - (অবজেক্ট.ক্রিয়েট এন্ড অবজেক্ট.এসাইন)](#18-objectcreate-and-objectassign)**
-19. **[map, reduce, filter - (ম্যাপ, রেডুস, ফিল্টার)](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects, State Mutation and Event Propagation - (পিওর ফাংশন, সাইড এফেক্টস, স্টেট মিউটেশন এন্ড ইভেন্ট প্রোপাগেশন)](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
-21. **[Closures - (ক্লোজার্স)](#21-closures)**
-22. **[High Order Functions - (হাই অর্ডার ফাংশন)](#22-high-order-functions)**
-23. **[Recursion - (রেকারশন)](#23-recursion)**
-24. **[Collections and Generators - (কলেকশন্স এন্ড জেনারেটার্স)](#24-collections-and-generators)**
-25. **[Promises - (প্রমিসেস)](#25-promises)**
-26. **[async/await - (অ্যাসিঙ্ক/অ্যাওয়েট)](#26-asyncawait)**
-27. **[Data Structures - (ডাটা স্ট্রাকচার)](#27-data-structures)**
-28. **[Expensive Operation and Big O Notation - (এক্সপেন্সিভ অপারেশন এন্ড বিগ ও নোটেশন)](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms - (অ্যালগোরিদম)](#29-algorithms)**
-30. **[Inheritance, Polymorphism and Code Reuse - (ইনহেরিটেন্স, পলিমরফিজম এন্ড কোড রিইওজ)](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Design Patterns - (ডিসাইন প্যাটার্ন্স)](#31-design-patterns)**
-32. **[Partial Applications, Currying, Compose and Pipe - (পার্শিয়াল অ্যাপ্লিকেশনস, কার্র্য়িং, কম্পউস এন্ড পাইপ)](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code - (ক্লিন কোড)](#33-clean-code)**
+1. **[Call Stack](#1-call-stack)**
+2. **[Primitive Types](#2-primitive-types)**
+3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
+4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+5. **[== vs === vs typeof](#5--vs--vs-typeof)**
+6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
+7. **[Expression vs Statement](#7-expression-vs-statement)**
+8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
+9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
+10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+11. **[JavaScript Engines](#11-javascript-engines)**
+12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
+13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
+14. **[Factories and Classes](#14-factories-and-classes)**
+15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
+16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
+17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
+18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+19. **[map, reduce, filter](#19-map-reduce-filter)**
+20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
+21. **[Closures](#21-closures)**
+22. **[High Order Functions](#22-high-order-functions)**
+23. **[Recursion](#23-recursion)**
+24. **[Collections and Generators](#24-collections-and-generators)**
+25. **[Promises](#25-promises)**
+26. **[async/await](#26-asyncawait)**
+27. **[Data Structures](#27-data-structures)**
+28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
+29. **[Algorithms](#29-algorithms)**
+30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
+31. **[Design Patterns](#31-design-patterns)**
+32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
+33. **[Clean Code](#33-clean-code)**
 
 ---
 
