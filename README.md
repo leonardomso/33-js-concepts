@@ -42,7 +42,7 @@ All the translations for this repo will be listed below:
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  Arif Waram
 - [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
-
+- [English (English)](https://github.com/sudhanshutech/33-js-concepts) — Sudhanshu Dasgupta
 ---
 
 ## <a id="table-of-contents">Table of Contents</a>
@@ -80,6 +80,7 @@ All the translations for this repo will be listed below:
 31. **[Design Patterns](#31-design-patterns)**
 32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Clean Code](#33-clean-code)**
+34. **[Cross-Origin Resource Sharing(CORS)](#34-cross-origin-resource-sharing)**
 
 ---
 
@@ -1139,3 +1140,28 @@ All the translations for this repo will be listed below:
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 
 **[⬆ Back to Top](#table-of-contents)**
+    
+---
+
+## 34. Cross-Origin Resource Sharing (CORS)
+    
+## Reference
+
+- 📜 [Cross-Origin Resource Sharing (CORS)](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS)
+- 📜 [cors installation and configuration](https://www.npmjs.com/package/cors)
+    
+### Articles
+
+- 📜 [Complete Guide to CORS](https://reflectoring.io/complete-guide-to-cors/)
+- 📜 [Authoritative guide to CORS (Cross-Origin Resource Sharing) for REST APIs](https://www.moesif.com/blog/technical/cors/Authoritative-Guide-to-CORS-Cross-Origin-Resource-Sharing-for-REST-APIs/)
+- 📜 [Web Security: Cross-Origin Resource Sharing (CORS)](https://blog.learncodeonline.in/web-security-cross-origin-resource-sharing-cors)
+- 📜 [Understanding CORS- Medium](https://medium.com/@baphemot/understanding-cors-18ad6b478e2b)
+
+### Videos
+
+- 🎥 [CORS, Preflight Request, OPTIONS Method | Access Control Allow Origin Error Explained](https://www.youtube.com/watch?v=tcLW5d0KAYE)
+- 🎥 [Learn CORS In 6 Minutes](https://www.youtube.com/watch?v=PNtFSVU-YTI)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
