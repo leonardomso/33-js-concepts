@@ -392,6 +392,8 @@ All the translations for this repo will be listed below:
 
 - 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
+- 🎥 [JavaScript Beginners Tutorial 12 | Bitwise Operators](https://www.youtube.com/watch?v=UexYxYFOkYY)
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
