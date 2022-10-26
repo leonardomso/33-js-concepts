@@ -42,6 +42,7 @@ All the translations for this repo will be listed below:
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) —  Arif Waram
 - [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
+- [తెలుగు (Telugu)](https://github.com/koushik395/33-js-concepts) — Koushik Boddapalli
 
 ---
 
@@ -1139,3 +1140,4 @@ All the translations for this repo will be listed below:
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 
 **[⬆ Back to Top](#table-of-contents)**
+
