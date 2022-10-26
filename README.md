@@ -3,23 +3,23 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 ప్రతి జావాస్క్రిప్ట్ డెవలపర్ తెలుసుకోవాలి
   <br><br>
 </h1>
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
-## Introduction
+## పరిచయం
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+ఈ రిపోజిటరీ జావాస్క్రిప్ట్‌లో డెవలపర్‌లకు వారి భావనలను నేర్చుకోవడంలో సహాయపడే ఉద్దేశ్యంతో సృష్టించబడింది.ఇది అవసరం కాదు, భవిష్యత్ అధ్యయనాలకు మార్గదర్శి.ఇది [స్టీఫెన్ కర్టిస్] (https://twitter.com/stefefentecurt) రాసిన వ్యాసం ఆధారంగా మరియు మీరు దీన్ని చదవవచ్చు[here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 గితుబ్ ఒకటిగా పరిగణించబడుతుంది [2018 యొక్క టాప్ ఓపెన్ సోర్స్ ప్రాజెక్టులు!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## సంఘం
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+మీ స్వంత రీక్యాప్‌లు లేదా సమీక్షలకు లింక్‌ను జోడించే PR ని సమర్పించడానికి సంకోచించకండి.మీరు రెపోను మీ స్థానిక భాషలోకి అనువదించాలనుకుంటే, దయచేసి సంకోచించకండి.
 
-All the translations for this repo will be listed below:
+ఈ రెపో కోసం అన్ని అనువాదాలు క్రింద ఇవ్వబడతాయి:
 
 - [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
@@ -45,7 +45,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## <a id="table-of-contents">Table of Contents</a>
+## <a id="table-of-contents">విషయ సూచిక</a>
 
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitive Types](#2-primitive-types)**
@@ -83,45 +83,45 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 1. Call Stack
+## 1. కాల్ స్టాక్
 
-### Reference
+### సూచన
 
 - 📜 [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### Articles
+### వ్యాసాలు
 
-- 📜 [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
-- 📜 [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
-- 📜 [Javascript: What Is The Execution Context? What Is The Call Stack? — Valentino Gagliardi](https://web.archive.org/web/20180701233338/https://www.valentinog.com/blog/js-execution-context-call-stack/)
-- 📜 [What is the JS Event Loop and Call Stack? — Jess Telford](https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0)
-- 📜 [Understanding Execution Context and Execution Stack in Javascript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
-- 📜 [How JavaScript Works: An Overview of the Engine, the Runtime, and the Call Stack — Alexander Zlatkov](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)
-- 📜 [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
+- 📜 [జావాస్క్రిప్ట్ కాల్ స్టాక్, ఈవెంట్ లూప్స్ - గౌరవ్ పాండ్వియా](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
+- 📜 [జావాస్క్రిప్ట్ కాల్ స్టాక్‌ను అర్థం చేసుకోవడం - చార్లెస్ ఫ్రీబోర్న్](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
+- 📜 [జావాస్క్రిప్ట్: అమలు సందర్భం ఏమిటి?కాల్ స్టాక్ అంటే ఏమిటి?- వాలెంటినో గాగ్లియార్డి](https://web.archive.org/web/20180701233338/https://www.valentinog.com/blog/js-execution-context-call-stack/)
+- 📜 [JS ఈవెంట్ లూప్ మరియు కాల్ స్టాక్ అంటే ఏమిటి?- జెస్ టెల్ఫోర్డ్](https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0)
+- 📜 [జావాస్క్రిప్ట్‌లో అమలు సందర్భం మరియు అమలు స్టాక్‌ను అర్థం చేసుకోవడం - సుఖ్జిందర్ అరోరా](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
+- 📜 [జావాస్క్రిప్ట్ ఎలా పనిచేస్తుంది: ఇంజిన్, రన్‌టైమ్ మరియు కాల్ స్టాక్ యొక్క అవలోకనం - అలెగ్జాండర్ జ్లాట్కోవ్](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)
+- 📜 [జావాస్క్రిప్ట్ హుడ్ కింద ఎలా పనిచేస్తుంది: జావాస్క్రిప్ట్ ఇంజిన్, హీప్ మరియు, కాల్ స్టాక్ యొక్క అవలోకనం - బిపిన్ రాజభార్](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
 
-### Videos
+### వీడియోలు
 
-- 🎥 [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
-- 🎥 [The JS Call Stack Explained In 9 Minutes — Colt Steele](https://www.youtube.com/watch?v=W8AeMrVtFLY)
-- 🎥 [What is the Call Stack? — Eric Traub](https://www.youtube.com/watch?v=w7QWQlkLY_s)
-- 🎥 [The Call Stack — Kevin Drumm](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
-- 🎥 [Understanding JavaScript Execution — Codesmith](https://www.youtube.com/watch?v=Z6a1cLyq7Ac&list=PLWrQZnG8l0E4kd1T_nyuVoxQUaYEWFgcD)
-- 🎥 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
-- 🎥 [What the heck is the event loop anyway? — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
-- 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
-- 🎥 [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
+- 🎥 [జావాస్క్రిప్ట్: కాల్ స్టాక్ వివరించబడింది - కోడింగ్ బ్లాక్స్ ఇండియా](https://www.youtube.com/watch?v=w6QGEiQceOM)
+- 🎥 [JS కాల్ స్టాక్ 9 నిమిషాల్లో వివరించబడింది - కోల్ట్ స్టీల్](https://www.youtube.com/watch?v=W8AeMrVtFLY)
+- 🎥 [కాల్ స్టాక్ అంటే ఏమిటి?- ఎరిక్ ట్రాబ్](https://www.youtube.com/watch?v=w7QWQlkLY_s)
+- 🎥 [కాల్ స్టాక్ - కెవిన్ డ్రమ్మ్](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
+- 🎥 [జావాస్క్రిప్ట్ అమలును అర్థం చేసుకోవడం - కోడెస్మిత్](https://www.youtube.com/watch?v=Z6a1cLyq7Ac&list=PLWrQZnG8l0E4kd1T_nyuVoxQUaYEWFgcD)
+- 🎥 [జావాస్క్రిప్ట్‌లో అమలు సందర్భాలు, ఎగురవేయడం, స్కోప్‌లు మరియు మూసివేతలకు అంతిమ గైడ్ - టైలర్ మెక్‌గిన్నిస్](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
+- 🎥 [ఏమైనప్పటికీ ఈవెంట్ లూప్ అంటే ఏమిటి?- ఫిలిప్ రాబర్ట్స్](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+- 🎥 [జావాస్క్రిప్ట్ యొక్క అమలు స్టాక్ (కాల్ స్టాక్) - కోడ్ కిచెన్](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
+- 🎥 [జావాస్క్రిప్ట్ కోడ్ ఎలా అమలు చేయబడుతుంది?❤ & కాల్ స్టాక్ - అక్షయ్ సీని] (https://www.youtube.com/watch?v=ilwtnmzwtj4&list=pllasxeu85e9cq32glcvavr9vnauccpvnp)
 
-**[⬆ Back to Top](#table-of-contents)**
+** [⬆ తిరిగి పైకి] (#టేబుల్-ఆఫ్-కాంటెంట్స్) **
 
 ---
 
-## 2. Primitive Types
+## 2. ఆదిమ రకాలు
 
-### Reference
+### సూచన
 
 - 📜 [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
 - 📜 [What You Need to Know About JavaScript Number Type — Max Wizard K](https://indepth.dev/posts/1139/here-is-what-you-need-to-know-about-javascripts-number-type)
@@ -134,7 +134,7 @@ All the translations for this repo will be listed below:
 - 📜 [The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
 - 📜 [Object to primitive conversion — JavaScript.info](https://javascript.info/object-toprimitive)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - 🎥 [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
@@ -144,13 +144,13 @@ All the translations for this repo will be listed below:
 - 🎥 [What are variables in Javascript? — JS For Everyone](https://www.youtube.com/watch?v=B4Bbmei_thw)
 - 🎥 [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
 
 ---
 
-## 3. Value Types and Reference Types
+## 3.విలువ రకాలు మరియు సూచన రకాలు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
 - 📜 [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
@@ -163,7 +163,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
 - 📜 [JavaScript map vs. forEach: When to Use Each One - Sajal Soni] (<https://code.tutsplus.com/tutorials/javascript-map-vs-foreach-when-to-use-each-one--cms-38365>)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
 - 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
@@ -173,16 +173,16 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. అవ్యక్త, స్పష్టమైన, నామమాత్ర, నిర్మాణ మరియు బాతు టైపింగ్
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
 - 📜 [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
 - 📜 [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
 - 📜 [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
 
-### Videos
+###వీడియోలు
 
 - 🎥 [== ? === ??? ...#@^% - Shirmung Bielefeld](https://www.youtube.com/watch?v=qGyqzN0bjhc&t)
 - 🎥 [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
@@ -190,17 +190,17 @@ All the translations for this repo will be listed below:
 - 🎥 [Typing: Static vs Dynamic, Weak vs. Strong - Codexpanse](https://www.youtube.com/watch?v=C5fr0LZLMAs)
 - 🎥 [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
 
-### Books
+### పుస్తకాలు
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
 
 ---
 
 ## 5. == vs === vs typeof
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
 - 📜 [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
@@ -212,7 +212,7 @@ All the translations for this repo will be listed below:
 - 📜 [How to better check data types in JavaScript — Webbjocke](https://webbjocke.com/javascript-check-data-types/)
 - 📜 [Checking for the Absence of a Value in JavaScript — Tomer Aberbach](https://tomeraberba.ch/html/post/checking-for-the-absence-of-a-value-in-javascript.html)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
@@ -221,13 +221,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 6. Function Scope, Block Scope and Lexical Scope
+## 6. ఫంక్షన్ స్కోప్, బ్లాక్ స్కోప్ మరియు లెక్సికల్ స్కోప్
 
-### Books
+### పుస్తకాలు
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
 - 📜 [The battle between Function Scope and Block Scope — Marius Herring](http://www.deadcoderising.com/2017-04-11-es6-var-let-and-const-the-battle-between-function-scope-and-block-scope/)
@@ -243,7 +243,7 @@ All the translations for this repo will be listed below:
 - 📜 [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and “this” ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
 - 📜 [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [What Makes Javascript Weird ... and Awesome pt. 4 — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
 - 🎥 [Variable Scope in JavaScript — Kirupa Chinnathambi](https://www.youtube.com/watch?v=dhp57T3p760)
@@ -255,9 +255,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 7. Expression vs Statement
+## 7. వ్యక్తీకరణ vs స్టేట్మెంట్
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
 - 📜 [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
@@ -265,7 +265,7 @@ All the translations for this repo will be listed below:
 - 📜 [Function Declarations vs. Function Expressions — Mandeep Singh](https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052)
 - 📜 [Function Declarations vs. Function Expressions — Anguls Croll](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
 - 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
@@ -274,9 +274,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 8. IIFE, Modules and Namespaces
+## 8. ఐఫ్, మాడ్యూల్స్ మరియు నేమ్‌స్పేస్‌లు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
 - 📜 [Do ES6 Modules make the case of IIFEs obsolete?](https://hashnode.com/post/do-es6-modules-make-the-case-of-iifes-obsolete-civ96wet80scqgc538un20es0)
@@ -292,7 +292,7 @@ All the translations for this repo will be listed below:
 - 📜 [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
 - 📜 [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
 - 🎥 [Understanding JavaScript IIFE — Sheo Narayan](https://www.youtube.com/watch?v=I5EntfMeIIQ)
@@ -306,9 +306,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 9. Message Queue and Event Loop
+## 9. సందేశ క్యూ మరియు ఈవెంట్ లూప్
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
 - 📜 [The JavaScript Event Loop: Explained — Erin Sweson-Healey](https://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/)
@@ -320,7 +320,7 @@ All the translations for this repo will be listed below:
 - 📜 [Visualising the JavaScript Event Loop with a Pizza Restaurant analogy — Priyansh Jain](https://dev.to/presto412/visualising-the-javascript-event-loop-with-a-pizza-restaurant-analogy-47a8)
 - 📜 [JavaScript Visualized: Event Loop — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - 🎥 [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
@@ -333,9 +333,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 10. setTimeout, setInterval and requestAnimationFrame
+## 10. setTimeout, setInterval మరియు requestainamationframe
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
 - 📜 [Why not to use setInterval — Akanksha Sharma](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
@@ -344,7 +344,7 @@ All the translations for this repo will be listed below:
 - 📜 [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
 - 📜 [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
 - 🎥 [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
@@ -355,9 +355,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 11. JavaScript Engines
+## 11. జావాస్క్రిప్ట్ ఇంజన్లు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
 - 📜 [Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
@@ -368,7 +368,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript engine fundamentals: optimizing prototypes](https://mathiasbynens.be/notes/prototypes)
 - 📜 [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 - 🎥 [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
@@ -377,9 +377,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 12. బిట్‌వైస్ ఆపరేటర్లు, టైప్ అర్రేలు మరియు అర్రే బఫర్‌లు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
 - 📜 [Using JavaScript’s Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
@@ -388,7 +388,7 @@ All the translations for this repo will be listed below:
 - 📜 [A Comprehensive Primer on Binary Computation and Bitwise Operators in Javascript — Paul Brown](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
 - 📜 [How can I understand Bitwise operation in JavaScript?](https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 
@@ -396,13 +396,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 13. DOM and Layout Trees
+## 13. డోమ్ మరియు లేఅవుట్ చెట్లు
 
-### Books
+### పుస్తకాలు
 
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
 - 📜 [What’s the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
@@ -414,7 +414,7 @@ All the translations for this repo will be listed below:
 - 📜 [Render Tree Construction — Ilya Grigorik](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
 - 📜 [What exactly is the DOM?](https://bitsofco.de/what-exactly-is-the-dom/)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
@@ -423,9 +423,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 14. Factories and Classes
+## 14. కర్మాగారాలు మరియు తరగతులు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [How To Use Classes in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
 - 📜 [Javascript Classes — Under The Hood — Majid](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
@@ -438,7 +438,7 @@ All the translations for this repo will be listed below:
 - 📜 [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
 - 📜 [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript Factory Functions — Programming with Mosh](https://www.youtube.com/watch?v=jpegXpQpb3o)
 - 🎥 [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
@@ -448,15 +448,15 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 15. this, call, apply and bind
+## 15. ఇది, కాల్ చేయండి, దరఖాస్తు చేసుకోండి మరియు బంధించండి
 
-### Reference
+### సూచన
 
 - 📜 [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 - 📜 [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
 - 📜 [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
 - 📜 [How-to: call() , apply() and bind() in JavaScript — Niladri Sekhar Dutta](https://www.codementor.io/niladrisekhardutta/how-to-call-apply-and-bind-in-javascript-8i1jca6jp)
@@ -481,7 +481,7 @@ All the translations for this repo will be listed below:
 - 📜 [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
 - 📜 [Understanding 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript call, apply and bind — techsith](https://www.youtube.com/watch?v=c0mLRpw-9rI)
 - 🎥 [JavaScript Practical Applications of Call, Apply and Bind functions— techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
@@ -494,9 +494,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 16. new, Constructor, instanceof and Instances
+## 16. క్రొత్త, కన్స్ట్రక్టర్, ఉదాహరణ మరియు సందర్భాలు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [JavaScript For Beginners: the ‘new’ operator — Brandon Morelli](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
 - 📜 [Let’s demystify JavaScript’s ‘new’ keyword — Cynthia Lee](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
@@ -511,13 +511,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. ప్రోటోటైప్ వారసత్వం మరియు ప్రోటోటైప్ గొలుసు
 
-### Reference
+### సూచన
 
 - 📜 [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Javascript : Prototype vs Class — Valentin PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
 - 📜 [JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens](https://mathiasbynens.be/notes/prototypes)
@@ -541,7 +541,7 @@ All the translations for this repo will be listed below:
 - 📜 [Understanding Prototypal Inheritance In JavaScript — Lawrence Eagles](https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4)
 - 📜 [Objects and Prototypes in JavaScript — Irena Popova](https://dev.to/irenejpopova/objects-and-prototypes-in-javascript-2eie)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Javascript Prototype Inheritance — Avelx](https://www.youtube.com/watch?v=sOrtAjyk4lQ)
 - 🎥 [JavaScript Prototype Inheritance Explained pt. I — techsith](https://www.youtube.com/watch?v=7oNWNlMrkpc)
@@ -555,7 +555,7 @@ All the translations for this repo will be listed below:
 - 🎥 [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 - 🎥 [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
-### Books
+### పుస్తకాలు
 
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
@@ -563,14 +563,14 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. ఆబ్జెక్ట్. సృష్టించడం మరియు ఆబ్జెక్ట్.అసిగ్నిగ్
 
-### Reference
+### సూచన
 
 - 📜 [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 - 📜 [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Object.create in JavaScript — Rupesh Mishra](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
 - 📜 [Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
@@ -583,7 +583,7 @@ All the translations for this repo will be listed below:
 - 📜 [How to deep clone a JavaScript Object — Flavio Copes](https://flaviocopes.com/how-to-clone-javascript-object/)
 - 📜 [Object.create(): When and Why to Use — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - 🎥 [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
@@ -592,9 +592,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 19. map, reduce, filter
+## 19. మ్యాప్, తగ్గించండి, ఫిల్టర్
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
 - 📜 [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
@@ -630,7 +630,7 @@ All the translations for this repo will be listed below:
 - 📜 [Mastering the JavaScript Reduce method ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
 - 📜 [JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Map, Filter and Reduce — Lydia Hallie](https://www.youtube.com/watch?v=UXiYii0Y7Nw)
 - 🎥 [Functional JavaScript: Map, forEach, Reduce, Filter — Theodore Anderson](https://www.youtube.com/watch?v=vytzLlY_wmU)
@@ -647,13 +647,13 @@ All the translations for this repo will be listed below:
 - 🎥 [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
 - 🎥 [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
 
 ---
 
-## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
+## 20. స్వచ్ఛమైన విధులు, దుష్ప్రభావాలు, రాష్ట్ర మ్యుటేషన్ మరియు ఈవెంట్ ప్రచారం
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
 - 📜 [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
@@ -675,7 +675,7 @@ All the translations for this repo will be listed below:
 - 📜 [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 - 📜 [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Pure Functions — Hexlet](https://www.youtube.com/watch?v=dZ41D6LDSBg)
 - 🎥 [Pure Functions - Functional Programming in JavaScript — Paul McBride](https://www.youtube.com/watch?v=Jh_Uzqzz_wM)
@@ -684,18 +684,18 @@ All the translations for this repo will be listed below:
 - 🎥 [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
 - 🎥 [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
 
 ---
 
-## 21. Closures
+## 21. మూసివేతలు
 
-### Reference
+### సూచన
 
 - 📜 [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 - 📜 [Closure — JavaScript.Info](https://javascript.info/closure)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [I never understood JavaScript closures — Olivier De Meulder](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
 - 📜 [Understand JavaScript Closures With Ease — Richard Bovell](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
@@ -720,7 +720,7 @@ All the translations for this repo will be listed below:
 - 📜 [whatthefuck.is · A Closure - Dan Abramov](https://whatthefuck.is/closure)
 - 📜 [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript The Hard Parts: Closure, Scope & Execution Context - Codesmith](https://www.youtube.com/watch?v=XTAzsODSCsM)
 - 🎥 [Javascript Closure — techsith](https://www.youtube.com/watch?v=71AtaJpJHw0)
@@ -732,17 +732,17 @@ All the translations for this repo will be listed below:
 - 🎥 [Closures in JS  - Akshay Saini](https://www.youtube.com/watch?v=qikxEIxsXco)
 - 🎥 [CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre](https://youtu.be/xa8lhVwQBw4)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
 
 ---
 
-## 22. High Order Functions
+## 22. హై ఆర్డర్ ఫంక్షన్లు
 
-### Books
+### పుస్తకాలు
 
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Higher-Order Functions in JavaScript — M. David Green](https://www.sitepoint.com/higher-order-functions-javascript/)
 - 📜 [Higher Order Functions: Using Filter, Map and Reduce for More Maintainable Code — Guido Schmitz](https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528)
@@ -752,7 +752,7 @@ All the translations for this repo will be listed below:
 - 📜 [Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
 - 📜 [Higher Order Functions - A pragmatic approach — emmanuel ikwuoma](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript Higher Order Functions & Arrays — Traversy Media](https://www.youtube.com/watch?v=rRgD1yVwIvE)
 - 🎥 [Higher Order Functions — Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
@@ -767,9 +767,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 23. Recursion
+## 23. పునరావృతం
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Recursion in JavaScript — Kevin Ennis](https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f)
 - 📜 [Understanding Recursion in JavaScript — Zak Frisch](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
@@ -782,7 +782,7 @@ All the translations for this repo will be listed below:
 - 📜 [Accio Recursion!: Your New Favorite JavaScript Spell — Leanne Cabey](https://medium.com/datadriveninvestor/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3)
 - 📜 [Recursion Explained (with Examples) — Christina](https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Recursion In JavaScript — techsith](https://www.youtube.com/watch?v=VtG0WAUvq2w)
 - 🎥 [Recursion — Fun Fun Function](https://www.youtube.com/watch?v=k7-N8R0-KY4)
@@ -798,13 +798,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 24. Collections and Generators
+## 24. సేకరణలు మరియు జనరేటర్లు
 
-### Reference
+### సూచన
 
 - 📜 [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [ES6 In Depth: Collections — Jason Orendorff](https://hacks.mozilla.org/2015/06/es6-in-depth-collections/)
 - 📜 [ES6 Collections: Using Map, Set, WeakMap, WeakSet — Kyle Pennell](https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/)
@@ -823,7 +823,7 @@ All the translations for this repo will be listed below:
 - 📜 [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
 - 📜 [An Introduction to JavaScript Generators — Alice Kallaugher](https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media](https://www.youtube.com/watch?v=ycohYSx5h9w)
 - 🎥 [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
@@ -833,13 +833,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 25. Promises
+## 25. వాగ్దానాలు
 
-### Reference
+### సూచన
 
 - 📜 [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [JavaScript Promises for Dummies ― Jecelyn Yeen](https://scotch.io/tutorials/javascript-promises-for-dummies)
 - 📜 [Understanding promises in JavaScript — Gokul N K](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
@@ -870,7 +870,7 @@ All the translations for this repo will be listed below:
 - 📜 [Lo que debemos saber de EScript 2020 — Kike Sanchez](https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd)
 - 📜 [Promise Basics - javascript.info](https://javascript.info/promise-basics)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Let's Learn ES6 - Promises — Ryan Christiani](https://www.youtube.com/watch?v=vQ3MoXnKfuQ)
 - 🎥 [JavaScript ES6 / ES2015 Promises — Traversy Media](https://www.youtube.com/watch?v=XJEHuBZQ5dU)
@@ -883,18 +883,18 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 26. async/await
+## 26. అసిన్క్/వేచి ఉండండి
 
-### Reference
+### సూచన
 
 - 📜 [async/await — JavaScript.Info](https://javascript.info/async-await)
 
-### Books
+### పుస్తకాలు
 
 - 📜 [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 - 📜 [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Understanding async/await in Javascript — Gokul N K](https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c)
 - 📜 [Asynchronous Javascript using async/await — Joy Warugu](https://scotch.io/tutorials/asynchronous-javascript-using-async-await)
@@ -917,7 +917,7 @@ All the translations for this repo will be listed below:
 - 📜 [Making asynchronous programming easier with async and await — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await)
 - 📜 [JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Async + Await — Wes Bos](https://www.youtube.com/watch?v=9YkUCxvaLEk)
 - 🎥 [Asynchrony: Under the Hood — Shelley Vohr](https://www.youtube.com/watch?v=SrNQS8J67zc)
@@ -927,13 +927,13 @@ All the translations for this repo will be listed below:
 - 🎥 [Complete Guide to JS Async & Await ES2017/ES8 — Colt Steele](https://www.youtube.com/watch?v=krAYA4rvbdA)
 - 🎥 [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
 
 ---
 
-## 27. Data Structures
+## 27. డేటా నిర్మాణాలు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Data Structures in JavaScript — Thon Ly](https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb)
@@ -950,7 +950,7 @@ All the translations for this repo will be listed below:
 - 📜 [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
 - 📜 [Graph Data Structures Explained in JavaScript — Adrian Mejia](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
 - 🎥 [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
@@ -961,9 +961,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 28. ఖరీదైన ఆపరేషన్ మరియు బిగ్ ఓ సంజ్ఞామానం
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Big O Notation in Javascript — César Antón Dorantes](https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b)
 - 📜 [Time Complexity/Big O Notation — Tim Roberts](https://medium.com/javascript-scene/time-complexity-big-o-notation-1a4310c3ee4b)
@@ -973,7 +973,7 @@ All the translations for this repo will be listed below:
 - 📜 [Algorithms in plain English: time complexity and Big-O Notation — Michael Olorunnisola](https://medium.freecodecamp.org/time-is-complex-but-priceless-f0abd015063c)
 - 📜 [An Introduction to Big O Notation — Joseph Trettevik](https://dev.to/lofiandcode/an-introduction-to-big-o-notation-210o)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
 - 🎥 [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
@@ -983,9 +983,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 29. Algorithms
+## 29. అల్గోరిథంలు
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Data Structures and Algorithms using ES6](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
 - 📜 [Algorithms and data structures implemented in JavaScript with explanations and links to further readings](https://github.com/trekhleb/javascript-algorithms)
@@ -1001,14 +1001,14 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 30. వారసత్వం, పాలిమార్ఫిజం మరియు కోడ్ పునర్వినియోగం
 
-### Reference
+### సూచన
 
 - 📜 [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 - 📜 [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Inheritance in JavaScript — Rupesh Mishra](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
 - 📜 [Simple Inheritance with JavaScript — David Catuhe](https://www.sitepoint.com/simple-inheritance-javascript/)
@@ -1017,7 +1017,7 @@ All the translations for this repo will be listed below:
 - 📜 [Program Like Proteus — A beginner’s guide to polymorphism in Javascript — Sam Galson](https://medium.com/yld-engineering-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2)
 - 📜 [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
 - 🎥 [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
@@ -1027,13 +1027,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 31. Design Patterns
+## 31. డిజైన్ నమూనాలు
 
-### Books
+### పుస్తకాలు
 
 - 📜 [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
 - 📜 [JavaScript Design Patterns – Beginner's Guide to Mobile Web Development — Soumyajit Pathak](https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15)
@@ -1054,22 +1054,22 @@ All the translations for this repo will be listed below:
 - 📜 [The Power of Composite Pattern in JavaScript - jsmanifest](https://dev.to/jsmanifest/the-power-of-composite-pattern-in-javascript-2732)
 - 📜 [In Defense of Defensive Programming - Adam Nathaniel Davis](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 - 🎥 [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
 
 ---
 
-## 32. Partial Applications, Currying, Compose and Pipe
+## 32. పాక్షిక అనువర్తనాలు, కూర, కంపోజ్ మరియు పైపు
 
-### Books
+### పుస్తకాలు
 
 - 📜 [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Use function composition in JavaScript — Rémi](https://www.codementor.io/michelre/use-function-composition-in-javascript-gkmxos5mj)
 - 📜 [Currying in JavaScript ES6 — Adam Bene](https://blog.benestudio.co/currying-in-javascript-es6-540d2ad09400)
@@ -1099,7 +1099,7 @@ All the translations for this repo will be listed below:
 - 📜 [A practical guide to writing more functional JavaScript — Nadeesha Cabral](https://medium.freecodecamp.org/a-practical-guide-to-writing-more-functional-javascript-db49409f71)
 - 📜 [A simple explanation of functional pipe in JavaScript — Ben Lesh](https://dev.to/benlesh/a-simple-explanation-of-functional-pipe-in-javascript-2hbj)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [Compose vs Pipe: Functional Programming in JavaScript — Chyld Studios](https://www.youtube.com/watch?v=Wl2ejJOqHUU)
 - 🎥 [JavaScript Functional Programing: Compose — Theodore Anderson](https://www.youtube.com/watch?v=jigHxo9YR30)
@@ -1114,9 +1114,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 33. Clean Code
+## 33. క్లీన్ కోడ్
 
-### Articles
+### వ్యాసాలు
 
 - 📜 [Clean Code Explained – A Practical Introduction to Clean Coding for Beginners — freeCodeCamp](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
 - 📜 [Clean Code concepts adapted for JavaScript — Ryan McDermott](https://github.com/ryanmcdermott/clean-code-javascript)
@@ -1133,9 +1133,9 @@ All the translations for this repo will be listed below:
 - 📜 [The Must-Know Clean Code Principles - Kesk on Medium](https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75)
 - 📜 [The Clean Code Book - Robert C Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
 
-### Videos
+### వీడియోలు
 
 - 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ తిరిగి పైకి](#table-of-contents)**
