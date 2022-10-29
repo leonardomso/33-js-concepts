@@ -216,6 +216,7 @@ All the translations for this repo will be listed below:
 
 - 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
+- 🎥 [JavaScript "==" VS "===" — Web Dev Simplified](https://www.youtube.com/watch?v=C5ZVC4HHgIg)
 
 **[⬆ Back to Top](#table-of-contents)**
 
