@@ -918,6 +918,7 @@ All the translations for this repo will be listed below:
 - 📜 [JavaScript Visualized: Promises & Async/Await — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
 - 📜 [Making asynchronous programming easier with async and await — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await)
 - 📜 [JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
+- 📜 [Better Than Promises - JavaScript Async/Await](https://blog.webdevsimplified.com/2021-11/async-await/)
 
 ### Videos
 
@@ -928,6 +929,7 @@ All the translations for this repo will be listed below:
 - 🎥 [async/await Part 2 - Topics of JavaScript/ES8 — The Coding Train](https://www.youtube.com/watch?v=chavThlNz3s&index=4&list=PLRqwX-V7Uu6bKLPQvPRNNE65kBL62mVfx)
 - 🎥 [Complete Guide to JS Async & Await ES2017/ES8 — Colt Steele](https://www.youtube.com/watch?v=krAYA4rvbdA)
 - 🎥 [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
+- 🎥 [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
 
 **[⬆ Back to Top](#table-of-contents)**
 
