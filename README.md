@@ -956,6 +956,8 @@ All the translations for this repo will be listed below:
 - 🎥 [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
 - 🎥 [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
 - 🎥 [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
+- 🎥 [JavaScript Data Structures - Codevolution](https://www.youtube.com/watch?v=poGEVboh9Rw&list=PLC3y8-rFHvwg6nsAOfC5Is18KB2DrVOJy)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -996,6 +998,10 @@ All the translations for this repo will be listed below:
 - 📜 [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
+
+### Videos
+
+- 🎥 [JavaScript Algorithms — Codevolution](https://www.youtube.com/watch?v=coqQwbDezUA&list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
 
 **[⬆ Back to Top](#table-of-contents)**
 
