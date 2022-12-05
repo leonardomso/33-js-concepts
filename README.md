@@ -888,6 +888,7 @@ All the translations for this repo will be listed below:
 - 🎥 [Error Handling Promises in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=f8IgdnYIwOU)
 - 🎥 [Promises Part 1 - Topics of JavaScript/ES6 — The Coding Train](https://www.youtube.com/watch?v=QO4NXhWo_NM)
 - 🎥 [JavaScript Promise in 100 Seconds](https://www.youtube.com/watch?v=RvYYCGs45L4)
+- 🎥 [JavaScript Promise in 9 Minutes](https://youtu.be/3NjdOtHpcBM)
 - 🎥 [JavaScript Promises In 10 Minutes — Web Dev Simplified ](https://www.youtube.com/watch?v=DHvZLI7Db8E)
 
 **[⬆ Back to Top](#table-of-contents)**
