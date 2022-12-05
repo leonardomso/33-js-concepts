@@ -632,6 +632,7 @@ All the translations for this repo will be listed below:
 - 📜 [Using .map(), .filter() and .reduce() properly — Sasanka Kudagoda](https://medium.com/javascript-in-plain-english/using-map-filter-and-reduce-properly-50e07f80c8b2)
 - 📜 [Mastering the JavaScript Reduce method ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
 - 📜 [JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
+- 📜 [Array Map in JavaScript. A simple method made simpler](https://blog.usman-s.me/array-map-in-javascript-a-simple-method-made-simpler/)
 
 ### Videos
 
