@@ -250,6 +250,7 @@ All the translations for this repo will be listed below:
 - 🎥 [JavaScript Block Scope and Function Scope — mmtuts](https://www.youtube.com/watch?v=aK_nuUAdr8E)
 - 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
 - 🎥 [Variable Scope — Steve Griffith](https://www.youtube.com/watch?v=FyWdrCZZavQ)
+- 🎥 [Javascript Tutorials for Beginners — Mosh Hemadani](https://www.youtube.com/watch?v=W6NZfCO5SIk)
 
 **[⬆ Back to Top](#table-of-contents)**
 
