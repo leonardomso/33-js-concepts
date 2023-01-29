@@ -227,7 +227,7 @@ All the translations for this repo will be listed below:
 
 ## 6. Function Scope, Block Scope and Lexical Scope
 
-    ### <b>Books</b>
+    ### <b>Books </b>
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
