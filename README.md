@@ -9,7 +9,7 @@
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
-    ## <b>Introduction </b> 
+## Introduction 
 
 This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
@@ -21,7 +21,7 @@ Feel free to submit a PR adding a link to your own recaps or reviews. If you wan
 
 All the translations for this repo will be listed below:
 
-- [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 - [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
@@ -636,7 +636,6 @@ All the translations for this repo will be listed below:
 - 📜 [Using .map(), .filter() and .reduce() properly — Sasanka Kudagoda](https://medium.com/javascript-in-plain-english/using-map-filter-and-reduce-properly-50e07f80c8b2)
 - 📜 [Mastering the JavaScript Reduce method ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
 - 📜 [JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
-- 📜 [Array Map in JavaScript. A simple method made simpler](https://blog.usman-s.me/array-map-in-javascript-a-simple-method-made-simpler/)
 
 ### Videos
 
