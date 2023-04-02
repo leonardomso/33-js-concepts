@@ -1148,6 +1148,18 @@ All the translations for this repo will be listed below:
 - 📜 [The Must-Know Clean Code Principles - Kesk on Medium](https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75)
 - 📜 [The Clean Code Book - Robert C Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
 
+### opening the link new tab####
+
+<button onclick=opentab()>Click on this video</button>
+
+<script>
+
+function opentab(){
+  window.open("https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75","_blank")
+}
+
+In  this using the example i have used the functality of the javascript when the person jyust click it will open on to the new tab I think it may help you please let me know your advice for more to contribuation
+
 ### Videos
 
 - 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
