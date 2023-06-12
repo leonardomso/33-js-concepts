@@ -50,7 +50,7 @@
 
 ## <a id="table-of-contents">Змест</a>
 
-1. **[Стэк выклікаў](#1-call-stack)**
+1. **[Стэк выклікаў](#1-стэк-выклікаў)** - Call Stack
 2. **[Primitive Types](#2-primitive-types)**
 3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
 4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
@@ -86,11 +86,11 @@
 
 ---
 
-## 1. Стэк выклікаў
+## 1. Стэк выклікаў (Call Stack)
 
-### Reference
+### Даведка
 
-- 📜 [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
+- 📜 [Стэк выклікаў — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
 ### Articles
 
@@ -120,7 +120,7 @@
 
 ## 2. Primitive Types
 
-### Reference
+### Даведка
 
 - 📜 [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
@@ -527,7 +527,7 @@
 
 ## 17. Prototype Inheritance and Prototype Chain
 
-### Reference
+### Даведка
 
 - 📜 [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
@@ -579,7 +579,7 @@
 
 ## 18. Object.create and Object.assign
 
-### Reference
+### Даведка
 
 - 📜 [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 - 📜 [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
@@ -704,7 +704,7 @@
 
 ## 21. Closures
 
-### Reference
+### Даведка
 
 - 📜 [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 - 📜 [Closure — JavaScript.Info](https://javascript.info/closure)
@@ -817,7 +817,7 @@
 
 ## 24. Collections and Generators
 
-### Reference
+### Даведка
 
 - 📜 [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
 
@@ -852,7 +852,7 @@
 
 ## 25. Promises
 
-### Reference
+### Даведка
 
 - 📜 [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
@@ -905,7 +905,7 @@
 
 ## 26. async/await
 
-### Reference
+### Даведка
 
 - 📜 [async/await — JavaScript.Info](https://javascript.info/async-await)
 
@@ -1024,7 +1024,7 @@
 
 ## 30. Inheritance, Polymorphism and Code Reuse
 
-### Reference
+### Даведка
 
 - 📜 [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 - 📜 [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
