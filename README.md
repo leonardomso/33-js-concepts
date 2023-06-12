@@ -50,7 +50,7 @@
 
 ## <a id="table-of-contents">Змест</a>
 
-1. **[Стэк выклікаў](#1-стэк-выклікаў)** - Call Stack
+1. **[Стэк выклікаў](#1-стэк-выклікаў-call-stack)** - Call Stack
 2. **[Primitive Types](#2-primitive-types)**
 3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
 4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
