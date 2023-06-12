@@ -60,16 +60,16 @@
 8. **[IIFE, модулі і прасторы імёнаў](#8-iife-модулі-і-прасторы-імёнаў-iife-modules-and-namespaces)** - IIFE, Modules and Namespaces
 9. **[Чарга паведамленняў і цыкл падзей](#9-чарга-паведамленняў-і-цыкл-падзей-message-queue-and-event-loop)** - Message Queue and Event Loop
 10. **[setTimeout, setInterval i requestAnimationFrame](#10-settimeout-setinterval-i-requestanimationframe)**
-11. **[JavaScript Engines](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
-15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+11. **[Рухавікі JavaScript](#11-рухавікі-javascript-javascript-engines)** - JavaScript Engines
+12. **[Пабітавыя аператары, масівы тыпаў і буферы масіваў](#12-пабітавыя-аператары-масівы-тыпаў-і-буферы-масіваў-bitwise-operators-type-arrays-and-array-buffers)** - Bitwise Operators, Type Arrays and Array Buffers
+13. **[DOM і дрэвы макета](#13-dom-і-дрэвы-макета-dom-and-layout-trees)** - DOM and Layout Trees
+14. **[Фабрыкі і класы](#14-фабрыкі-і-класы)**
+15. **[this, call, apply i bind](#15-this-call-apply-i-bind)**
+16. **[new, канструктар, instanceof i асобнікi](#16-new-канструктар-instanceof-i-асобнікi)**
+17. **[Наследаванне прататыпаў і ланцужок прататыпаў](#17-наследаванне-прататыпаў-і-ланцужок-прататыпаў-prototype-inheritance-and-prototype-chain)** - Prototype Inheritance and Prototype Chain
+18. **[Object.create i Object.assign](#18-objectcreate-i-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
+20. **[Чыстыя функцыі, пабочныя эфекты, мутацыя стану і распаўсюджванне падзей](#20-чыстыя-функцыі-пабочныя-эфекты-мутацыя-стану-і-распаўсюджванне-падзей-pure-functions-side-effects-state-mutation-and-event-propagation)** - Pure Functions, Side Effects, State Mutation and Event Propagation
 21. **[Closures](#21-closures)**
 22. **[High Order Functions](#22-high-order-functions)**
 23. **[Recursion](#23-recursion)**
@@ -364,7 +364,7 @@
 
 ---
 
-## 11. JavaScript Engines
+## 11. Рухавікі JavaScript (JavaScript Engines)
 
 ### Артыкулы
 
@@ -388,7 +388,7 @@
 
 ---
 
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 12. Пабітавыя аператары, масівы тыпаў і буферы масіваў (Bitwise Operators, Type Arrays and Array Buffers)
 
 ### Артыкулы
 
@@ -410,7 +410,7 @@
 
 ---
 
-## 13. DOM and Layout Trees
+## 13. DOM і дрэвы макета (DOM and Layout Trees)
 
 ### Кнігі
 
@@ -437,7 +437,7 @@
 
 ---
 
-## 14. Factories and Classes
+## 14. Фабрыкі і класы
 
 ### Артыкулы
 
@@ -462,7 +462,7 @@
 
 ---
 
-## 15. this, call, apply and bind
+## 15. this, call, apply i bind
 
 ### Даведка
 
@@ -508,7 +508,7 @@
 
 ---
 
-## 16. new, Constructor, instanceof and Instances
+## 16. new, канструктар, instanceof i асобнікi
 
 ### Артыкулы
 
@@ -525,7 +525,7 @@
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. Наследаванне прататыпаў і ланцужок прататыпаў (Prototype Inheritance and Prototype Chain)
 
 ### Даведка
 
@@ -577,7 +577,7 @@
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. Object.create i Object.assign
 
 ### Даведка
 
@@ -665,7 +665,7 @@
 
 ---
 
-## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
+## 20. Чыстыя функцыі, пабочныя эфекты, мутацыя стану і распаўсюджванне падзей (Pure Functions, Side Effects, State Mutation and Event Propagation)
 
 ### Артыкулы
 
