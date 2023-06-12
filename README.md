@@ -52,14 +52,14 @@
 
 1. **[Стэк выклікаў](#1-стэк-выклікаў-call-stack)** - Call Stack
 2. **[Прымітыўныя тыпы](#2-прымітыўныя-тыпы-primitive-types)** - Primitive Types
-3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
-5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+3. **[Тыпы са значэннем і спасылачныя тыпы](#3-тыпы-са-значэннем-і-спасылачныя-тыпы-value-types-and-reference-types)** - Value Types and Reference Types
+4. **[Няяўны, відавочны, намінальны, структурны і качыны тып](#4-няяўны-відавочны-намінальны-структурны-і-качыны-тып-implicit-explicit-nominal-structuring-and-duck-typing)** - Implicit, Explicit, Nominal, Structuring and Duck Typing
+5. **[== супраць === супраць typeof](#5--супраць--супраць-typeof)**
+6. **[Вобласць функцыi, вобласць блока і лексічная вобласць](#6-вобласць-функцыi-вобласць-блока-і-лексічная-вобласць-function-scope-block-scope-and-lexical-scope)** - Function Scope, Block Scope and Lexical Scope
+7. **[Выраз супраць заявы](#7-выраз-супраць-заявы-expression-vs-statement)** - Expression vs Statement
+8. **[IIFE, модулі і прасторы імёнаў](#8-iife-модулі-і-прасторы-імёнаў-iife-modules-and-namespaces)** - IIFE, Modules and Namespaces
+9. **[Чарга паведамленняў і цыкл падзей](#9-чарга-паведамленняў-і-цыкл-падзей-message-queue-and-event-loop)** - Message Queue and Event Loop
+10. **[setTimeout, setInterval i requestAnimationFrame](#10-settimeout-setinterval-i-requestanimationframe)**
 11. **[JavaScript Engines](#11-javascript-engines)**
 12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
 13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
@@ -152,7 +152,7 @@
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. Тыпы са значэннем і спасылачныя тыпы (Value Types and Reference Types)
 
 ### Артыкулы
 
@@ -178,7 +178,7 @@
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. Няяўны, відавочны, намінальны, структурны і качыны тып (Implicit, Explicit, Nominal, Structuring and Duck Typing)
 
 ### Артыкулы
 
@@ -203,7 +203,7 @@
 
 ---
 
-## 5. == vs === vs typeof
+## 5. == супраць === супраць typeof
 
 ### Артыкулы
 
@@ -229,7 +229,7 @@
 
 ---
 
-## 6. Function Scope, Block Scope and Lexical Scope
+## 6. Вобласць функцыi, вобласць блока і лексічная вобласць (Function Scope, Block Scope and Lexical Scope)
 
 ### Кнігі
 
@@ -264,7 +264,7 @@
 
 ---
 
-## 7. Expression vs Statement
+## 7. Выраз супраць заявы (Expression vs Statement)
 
 ### Артыкулы
 
@@ -283,7 +283,7 @@
 
 ---
 
-## 8. IIFE, Modules and Namespaces
+## 8. IIFE, модулі і прасторы імёнаў (IIFE, Modules and Namespaces)
 
 ### Артыкулы
 
@@ -315,7 +315,7 @@
 
 ---
 
-## 9. Message Queue and Event Loop
+## 9. Чарга паведамленняў і цыкл падзей (Message Queue and Event Loop)
 
 ### Артыкулы
 
@@ -342,7 +342,7 @@
 
 ---
 
-## 10. setTimeout, setInterval and requestAnimationFrame
+## 10. setTimeout, setInterval i requestAnimationFrame
 
 ### Артыкулы
 
