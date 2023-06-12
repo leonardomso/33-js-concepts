@@ -1,20 +1,20 @@
 
-# Contribution
-This project would not be possible without your help and support and we appreciate your willingness to contribute!
+# Уклад
+Гэты праект быў бы немагчымы без вашай дапамогі і падтрымкі, і мы цэнім вашу гатоўнасць унесці свой уклад!
 
-### Creating New Translation
+### Стварэнне новага перакладу
 
-In order to create a new translation, you need to follow these steps:
+Каб стварыць новы пераклад, вам неабходна выканаць наступныя дзеянні:
 
-* Fork the [main repo](https://github.com/leonardomso/33-js-concepts).
-* Add yourself to the watch list of the main repo to keep up with changes.
-* Translate the repo on your forked repo.
-* Go to the [main repo](https://github.com/leonardomso/33-js-concepts) and edit the README.md to include your translated repo link there.
-* Inside the **Community**, add a new line with the link for your translated repo like: 
-	* [Your language in native form (English name)](link to your repo here) — Your Name
-	* e.g. `[日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23`
-* Create a new Pull Request with the name "Add *your language here*" translation.
-* Now, just wait for the merge! 
+* Зрабiце форк (fork) [асноўнага рэпазітара](https://github.com/leonardomso/33-js-concepts).
+* Дадайце сябе ў спіс назірання галоўнага рэпазітара, каб не адставаць ад змен.
+* Перакладзіце рэпазітар у сваiм разгалінаваным рэпазітары.
+* Перайдзіце да [галоўнага сховішча](https://github.com/leonardomso/33-js-concepts) і адрэдагуйце README.md, каб уключыць туды вашу перакладзеную спасылку на сховішча.
+* Унутры **Супольнасці** (**Community**) дадайце новы радок са спасылкай на ваш перакладзены рэпазітар, напрыклад: 
+	* [Назва вашай мовы на роднай мове (англійская назва)] (спасылка на ваш рэпазiтар тут) — Ваша імя
+	* напрыклад: `[日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23`
+* Стварыце новы Pull Request з назвай «Add *тут ваша назва мовы на ангельскай*».
+* Зараз проста чакайце аб'яднання (merge)! 
 
-## License
-By contributing, you agree that your contributions will be licensed under its [MIT license](./LICENSE).
+## Ліцэнзія
+Робячы ўклад, вы згаджаецеся з тым, што вашы ўклады будуць ліцэнзаваны ў адпаведнасці з гэтай [ліцэнзіяй MIT](./LICENSE).
