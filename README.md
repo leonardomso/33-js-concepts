@@ -1,25 +1,25 @@
 ﻿<h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
+  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 канцэпцыі, якія павінен ведаць кожны распрацоўшчык JS" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 канцэпцыі, якія павінен ведаць кожны распрацоўшчык JavaScript
   <br><br>
 </h1>
 
 [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso)
 
-## Introduction 
+## Уводзіны 
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by [Stephen Curtis](https://twitter.com/stephenthecurt) and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Гэта сховішча было створана з мэтай дапамагчы распрацоўнікам асвоіць іх канцэпцыі ў JavaScript. Гэта не патрабаванне, а кіраўніцтва для будучых даследаванняў. Яно заснавана на артыкуле [Стывена Керціса] (https://twitter.com/stephenthecurt) і вы можаце прачытаць яго [тут](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 GitHub лiчыць яго адным з [лепшых праектаў з адкрытым зыходным кодам 2018 года!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## Супольнасць
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+Не саромейцеся адпраўляць PR, дадаючы спасылку на свае ўласныя рэзюмэ або агляды. Калі вы хочаце перакласці рэпазітар на сваю родную мову, зрабіце гэта.
 
-All the translations for this repo will be listed below:
+Усе пераклады для гэтага рэпазітара будуць пералічаны ніжэй:
 
 - [(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
@@ -44,12 +44,13 @@ All the translations for this repo will be listed below:
 - [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
 - [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
 - [Ethiopian (አማርኛ)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
+- [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
 
 ---
 
-## <a id="table-of-contents">Table of Contents</a>
+## <a id="table-of-contents">Змест</a>
 
-1. **[Call Stack](#1-call-stack)**
+1. **[Стэк выклікаў](#1-call-stack)**
 2. **[Primitive Types](#2-primitive-types)**
 3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
 4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
@@ -85,7 +86,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 1. Call Stack
+## 1. Стэк выклікаў
 
 ### Reference
 
