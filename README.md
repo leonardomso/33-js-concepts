@@ -70,19 +70,19 @@
 18. **[Object.create i Object.assign](#18-objectcreate-i-objectassign)**
 19. **[map, reduce, filter](#19-map-reduce-filter)**
 20. **[Чыстыя функцыі, пабочныя эфекты, мутацыя стану і распаўсюджванне падзей](#20-чыстыя-функцыі-пабочныя-эфекты-мутацыя-стану-і-распаўсюджванне-падзей-pure-functions-side-effects-state-mutation-and-event-propagation)** - Pure Functions, Side Effects, State Mutation and Event Propagation
-21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-high-order-functions)**
-23. **[Recursion](#23-recursion)**
-24. **[Collections and Generators](#24-collections-and-generators)**
-25. **[Promises](#25-promises)**
+21. **[Закрыцці](#21-закрыцці-closures)** - Closures
+22. **[Функцыі высокага парадку](#22-функцыі-высокага-парадку-high-order-functions)** - High Order Functions
+23. **[Рэкурсія](#23-рэкурсія)**
+24. **[Калекцыі і генератары](#24-калекцыі-і-генератары)**
+25. **[Абяцанні](#25-абяцанні-promises)** - Promises
 26. **[async/await](#26-asyncawait)**
-27. **[Data Structures](#27-data-structures)**
-28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms](#29-algorithms)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Design Patterns](#31-design-patterns)**
+27. **[Структуры даных](#27-структуры-даных)**
+28. **[Дарагая аперацыя і абазначэнне Big O](#28-дарагая-аперацыя-і-абазначэнне-big-o-expensive-operation-and-big-o-notation)** - Expensive Operation and Big O Notation
+29. **[Алгарытмы](#29-алгарытмы)**
+30. **[Наследаванне, палімарфізм і паўторнае выкарыстанне кода](#30-наследаванне-палімарфізм-і-паўторнае-выкарыстанне-кода)**
+31. **[Шаблоны праектавання](#31-шаблоны-праектавання)**
 32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code](#33-clean-code)**
+33. **[Чысты код](#33-чысты-код)**
 
 ---
 
@@ -702,7 +702,7 @@
 
 ---
 
-## 21. Closures
+## 21. Закрыцці (Closures)
 
 ### Даведка
 
@@ -753,7 +753,7 @@
 
 ---
 
-## 22. High Order Functions
+## 22. Функцыі высокага парадку (High Order Functions)
 
 ### Кнігі
 
@@ -784,7 +784,7 @@
 
 ---
 
-## 23. Recursion
+## 23. Рэкурсія
 
 ### Артыкулы
 
@@ -815,7 +815,7 @@
 
 ---
 
-## 24. Collections and Generators
+## 24. Калекцыі і генератары
 
 ### Даведка
 
@@ -850,7 +850,7 @@
 
 ---
 
-## 25. Promises
+## 25. Абяцанні (Promises)
 
 ### Даведка
 
@@ -953,7 +953,7 @@
 
 ---
 
-## 27. Data Structures
+## 27. Структуры даных (Data Structures)
 
 ### Артыкулы
 
@@ -983,7 +983,7 @@
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 28. Дарагая аперацыя і абазначэнне Big O (Expensive Operation and Big O Notation)
 
 ### Артыкулы
 
@@ -1004,7 +1004,7 @@
 
 ---
 
-## 29. Algorithms
+## 29. Алгарытмы
 
 ### Артыкулы
 
@@ -1022,7 +1022,7 @@
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 30. Наследаванне, палімарфізм і паўторнае выкарыстанне кода
 
 ### Даведка
 
@@ -1048,7 +1048,7 @@
 
 ---
 
-## 31. Design Patterns
+## 31. Шаблоны праектавання
 
 ### Кнігі
 
@@ -1135,7 +1135,7 @@
 
 ---
 
-## 33. Clean Code
+## 33. Чысты код
 
 ### Артыкулы
 
