@@ -691,6 +691,7 @@ All the translations for this repo will be listed below:
 - 📜 [Functional-ish JavaScript — Daniel Brain](https://medium.com/@bluepnume/functional-ish-javascript-205c05d0ed08)
 - 📜 [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 - 📜 [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
+- 📜 [What are side effects in JS and what we can do about them — Matheus Ferreira](https://matheus13f.medium.com/what-are-side-effects-in-js-and-what-we-can-do-about-then-e83eeb9aafd4)
 
 ### Videos
 
