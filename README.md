@@ -114,6 +114,8 @@ All the translations for this repo will be listed below:
 - 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
 - 🎥 [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
 
+
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -1040,6 +1042,11 @@ All the translations for this repo will be listed below:
 - 📜 [Object Oriented JavaScript: Polymorphism with examples — Knoldus Blogs](https://blog.knoldus.com/object-oriented-javascript-polymorphism-with-examples/)
 - 📜 [Program Like Proteus — A beginner’s guide to polymorphism in Javascript — Sam Galson](https://medium.com/yld-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2)
 - 📜 [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
+- 📜 [How to use OOP in JavaScript
+- Omotola Shogunle](https://blog.oshogunle.com/how-to-use-oop-in-javascript-ckemxzcw804ow8cs122ikhob0/)
+
+
+
 
 ### Videos
 
@@ -1160,5 +1167,7 @@ All the translations for this repo will be listed below:
 
 - 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
+- 🎥 [JavaScript Tutorial for Beginners - Full Course in 12 Hours (2022) - Clever Programmer
+](https://www.youtube.com/watch?v=lI1ae4REbFM)
 
 **[⬆ Back to Top](#table-of-contents)**
