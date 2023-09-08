@@ -21,7 +21,7 @@ Ushbu repozitoriy developerlarga JS-da tushunchalarini mukammallashtirishga yord
 
 O'zingizning sharhlaringizga havola qo'shib, PR - ni yuboring. Agar siz ushbu repozitoriyni o'z tilingizga tarjima qilmoqchi bo'lsangiz, iltimos, o'zingizni erkin his eting.
 
-Bu repo uchun hamma tarjimalar pastda ko'rsarilgan:
+Bu repo uchun hamma tarjimalar pastda ko'rsatilgan:
 
 - [O'zbekcha](https://github.com/smnv-shokh/33-js-concepts) — Shohruh Usmonov
 - [Arabcha](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
