@@ -14,7 +14,7 @@
 
 Ushbu repozitoriy developerlarga JS-da tushunchalarini mukammallashtirishga yordam berish maqsadida yaratilgan. Bu talab emas, balki kelajakdagi tadqiqotlar uchun qo'llanma. Bu [Stiven Kertis](https://twitter.com/stephenthecurt) tomonidan yozilgan maqolaga asoslangan va siz uni [bu yerda](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) o'qishingiz mumkin.
 
-** 🚀 GitHub tomonidan [eng zo'r opensource loyiha](https://blog.github.com/2018-12-13-new-open-source-projects/)lardan biri deb tan olingan **
+🚀 GitHub tomonidan [eng zo'r opensource loyiha](https://blog.github.com/2018-12-13-new-open-source-projects/)lardan biri deb tan olingan
 
 
 ## Hamjamiyat
