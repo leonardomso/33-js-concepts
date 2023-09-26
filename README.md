@@ -46,6 +46,7 @@ All the translations for this repo will be listed below:
 - [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
 - [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
 - [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
+- [Urdu (اردو)](https://github.com/yasir2002/33-js-concepts) — Yasir Nawaz
 
 ---
 
