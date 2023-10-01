@@ -1166,3 +1166,20 @@ All the translations for this repo will be listed below:
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 
 **[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 34. Error Handling
+
+### Articles
+
+- 📜 [A Definitive Guide to Handling Errors in JavaScript - Kinsta](https://kinsta.com/blog/errors-in-javascript/)
+- 📜 [Effective JavaScript Error Handling for More Reliable and Robust Applications - Medium](https://javascript.plainenglish.io/effective-javascript-error-handling-for-more-reliable-and-robust-applications-3ca801643f08)
+- 📜 [Error handling in JavaScript](https://www.tutorialsteacher.com/javascript/javascript-error-handling)
+- 📜 [Error Handling in JavaScript — A Beginner’s Guide](https://experiencestack.co/error-handling-in-javascript-a-beginners-guide-78ed18be0179)
+
+### Videos
+- 🎥 [try, catch, finally, throw - error handling in JavaScript - FreeCodeCamp](https://youtu.be/cFTFtuEQ-10?si=xUFt_iGJrlaMLVEF)
+- 🎥 [How to Handle Errors - Basics of Error Handling in JavaScript - Tutorial - dcode](https://youtu.be/G8Jux_bsIXU?si=xJUTnLV22pxQYYSO)
+
+**[⬆ Back to Top](#table-of-contents)**
