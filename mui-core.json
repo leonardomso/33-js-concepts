@@ -1,0 +1,28 @@
+{
+  "repository": {
+    "name": "MUI Core",
+    "description": "A collection of React UI component libraries",
+    "url": "https://github.com/mui/core",
+    "license": "MIT",
+    "homepage": "https://mui.com/core/",
+    "languages": ["JavaScript", "CSS"],
+    "contributors": [
+      {
+        "name": "John Doe",
+        "username": "johndoe",
+        "contributions": 100
+      },
+      {
+        "name": "Jane Smith",
+        "username": "janesmith",
+        "contributions": 50
+      }
+    ]
+  },
+  "dependencies": {
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "@mui/material": "^5.0.0",
+    "axios": "^0.21.4"
+  }
+}
