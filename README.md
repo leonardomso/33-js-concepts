@@ -85,6 +85,7 @@ All the translations for this repo will be listed below:
 31. **[Design Patterns](#31-design-patterns)**
 32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
 33. **[Clean Code](#33-clean-code)**
+34. **[Error Handling](#34-error-handling)**
 
 ---
 
