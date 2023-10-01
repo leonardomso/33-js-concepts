@@ -90,6 +90,9 @@ All the translations for this repo will be listed below:
 
 ## 1. Call Stack
 
+# Start with basics
+- 📜 [15 JavaScript concepts that every JavaScript Programmer must know - Mihir Panchal](https://madasamy.medium.com/15-javascript-concepts-that-every-nodejs-programmer-must-to-know-6894f5157cb7)
+
 ### Reference
 
 - 📜 [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
