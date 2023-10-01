@@ -92,7 +92,7 @@ All the translations for this repo will be listed below:
 
 ### Reference
 
-- 📜 [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
+- <a href="[https://github.com/leonardomso/33](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)">📜 Call Stack — MDN</a>
 
 ### Articles
 
