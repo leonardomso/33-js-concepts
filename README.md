@@ -776,9 +776,7 @@ All the translations for this repo will be listed below:
 - 📜 [Higher Order Functions - A pragmatic approach — emmanuel ikwuoma](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
 <<<<<<< HEAD
 - 📜 [Simplifying Higher-Order Functions in JavaScript: A Beginner’s Guide — Deepak Kumar](https://medium.com/@devwithdeepak/simplifying-higher-order-functions-in-javascript-a-beginners-guide-76b41ebcc771)
-=======
-- 📜 [Simplifying Higher Order Functions in JavaScript: A Beginner’s Guide — Deepak Kumar](https://medium.com/@devwithdeepak/simplifying-higher-order-functions-in-javascript-a-beginners-guide-76b41ebcc771)
->>>>>>> 299b14893960b538d1b5fbe16a177594a00c911d
+
 
 
 ### Videos
