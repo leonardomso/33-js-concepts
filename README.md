@@ -42,12 +42,14 @@ All the translations for this repo will be listed below:
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
 - [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
+- [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
 - [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
 - [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
 - [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
 - [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
 - [Urdu (اردو)](https://github.com/yasir2002/33-js-concepts) — Yasir Nawaz
 - [Marathi (मराठी)](https://github.com/dhruvchandak30/33-js-concepts) - Dhruv Chandak
+- [हिन्दी (Hindi)](https://github.com/milostivyy/33-js-concepts) — Mahima Chauhan
 
 ---
 
@@ -1063,6 +1065,7 @@ All the translations for this repo will be listed below:
 
 ### Articles
 
+- 📜 [JavaScript Design Patterns – Explained with Examples — Germán Cocca](https://www.freecodecamp.org/news/javascript-design-patterns-explained/)
 - 📜 [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
 - 📜 [JavaScript Design Patterns – Beginner's Guide to Mobile Web Development — Soumyajit Pathak](https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15)
 - 📜 [JavaScript Design Patterns — Akash Pal](https://medium.com/front-end-hacking/javascript-design-patterns-ed9d4c144c81)
