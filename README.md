@@ -356,6 +356,7 @@ All the translations for this repo will be listed below:
 - 📜 [Using requestAnimationFrame — Chris Coyier](https://css-tricks.com/using-requestanimationframe/)
 - 📜 [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
 - 📜 [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
+- 📜 [Debounce – How to Delay a Function in JavaScript - Ondrej Polesny](https://www.freecodecamp.org/news/javascript-debounce-example/)
 
 ### Videos
 
