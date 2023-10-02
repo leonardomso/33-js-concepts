@@ -1050,6 +1050,8 @@ All the translations for this repo will be listed below:
 
 - 🎥 [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
 - 🎥 [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
+  https://youtu.be/TScmRTAWi5Q
+- 🎥 [Classes, Object & Inheritance in JavaScript OOP in Hindi](https://youtu.be/TScmRTAWi5Q)
 - 🎥 [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
 **[⬆ Back to Top](#table-of-contents)**
