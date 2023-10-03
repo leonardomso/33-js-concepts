@@ -12,7 +12,9 @@
 
 ## પરિચય
 
-આ ભંડાર વિકાસકર્તાઓને JavaScriptમાં તેમની વિભાવનાઓને નિપુણ બનાવવામાં મદદ કરવાના હેતુથી બનાવવામાં આવ્યું હતું. તે આવશ્યકતા નથી, પરંતુ ભવિષ્યના અભ્યાસ માટે માર્ગદર્શિકા છે. તે [સ્ટીફન કર્ટિસ](https://twitter.com/stephenthecurt) દ્વારા લખાયેલા લેખ પર આધારિત છે અને તમે તેને [અહીં](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript) વાંચી શકો છો. -વિકાસકર્તા-જાણવું જોઈએ-13dd720a90d1).
+
+This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+
 
 **🚀 GitHub દ્વારા [2018 ના ટોચના ઓપન સોર્સ પ્રોજેક્ટ્સમાંના એક તરીકે ગણવામાં આવે છે!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
@@ -30,26 +32,27 @@
 - [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — ઇલકર ડેમિર
 - [русский язык (રશિયન)](https://github.com/gumennii/33-js-concepts) — મિહેલ ગુમેની
 - [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [પોલીશ (પોલિશ)](https://github.com/lip3k/33-js-concepts) — ડેવિડ લિપિન્સકી
-- [فارسی (ફારસી)](https://github.com/majidalavizadeh/33-js-concepts) — માજિદ અલવિઝાદેહ
-- [બહાસા ઇન્ડોનેશિયા (ઇન્ડોનેશિયન)](https://github.com/rijdz/33-js-concepts) — રિજડઝુઆન સંપોર્ના
-- [Français (ફ્રેન્ચ)](https://github.com/robinmetral/33-concepts-js) — રોબિન મેટ્રાલ
-- [હિન્દી (હિન્દી)](https://github.com/vikaschauhan/33-js-concepts) — વિકાસ ચૌહાણ
-- [Ελληνικά (ગ્રીક)](https://github.com/DimitrisZx/33-js-concepts) — દિમિત્રિસ ઝરાચાનિસ
-- [日本語 (જાપાનીઝ)](https://github.com/oimo23/33-js-concepts) — oimo23
-- [ડ્યુશ (જર્મન)](https://github.com/burhannn/33-js-concepts) — burhannn
-- [украї́нська мо́ва (યુક્રેનિયન)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — એન્ડ્રુ સેવેચ્યુક
-- [සිංහල (સિંહલા)](https://github.com/ududsha/33-js-concepts) — ઉદયા શમેન્દ્ર
-- [ઇટાલિયન (ઇટાલિયન)](https://github.com/Donearm/33-js-concepts) — જિયાનલુકા ફિઓરે
-- [ภาษาไทย (થાઈ)](https://github.com/ninearif/33-js-concepts) — આરિફ વારમ
-- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — મારિયો એસ્ટ્રાડા
-- [સ્વેન્સ્કા (સ્વીડિશ)](https://github.com/FenixHongell/33-js-concepts/) — ફેનિક્સ હોંગેલ
-- [ខ្មែរ (ખ્મેર)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
-- [አማርኛ (ઇથોપિયન)](https://github.com/hmhard/33-js-concepts) - મિનિયાહિલ કેબેડે(ምንያህል ከበደ)
-- [Беларуская мова (બેલારુસિયન)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
-- [ઓ'ઝબેકચા (ઉઝ્બેક)](https://github.com/smnv-shokh/33-js-concepts) — શોખરુખ ઉસ્મોનોવ
-- [ઉર્દુ (اردو)](https://github.com/yasir2002/33-js-concepts) — યાસિર નવાઝ
-- [હિન્દી (હિન્દી)](https://github.com/milostivyy/33-js-concepts) — મહિમા ચૌહાણ
+- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
+- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
+- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
+- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
+- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
+- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
+- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
+- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
+- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
+- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
+- [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
+- [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
+- [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
+- [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
+- [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
+- [Urdu (اردو)](https://github.com/yasir2002/33-js-concepts) — Yasir Nawaz
+- [हिन्दी (Hindi)](https://github.com/milostivyy/33-js-concepts) — Mahima Chauhan
+- [বাংলা (Bengali)](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia
 
 ---
 
@@ -131,18 +134,13 @@
 
 ### લેખો
 
-- 📜 [જાવાસ્ક્રિપ્ટમાં આદિમ અને બિન-આદિમ ડેટા-પ્રકાર - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
-- 📜 [જાવાસ્ક્રિપ્ટ ચલો (પ્રારંભિક વિચાર)](https://robiul.dev/javascript-variables-beginner-thinking)
-- 📜 [જાવાસ્ક્રિપ્ટમાં નંબરો કેવી રીતે એન્કોડ કરવામાં આવે છે — ડૉ. એક્સેલ રાઉશમેયર](http://2ality.com/2012/04/number-encoding.html)
-- 📜 [જાવાસ્ક્રિપ્ટ નંબરના પ્રકાર વિશે તમારે શું જાણવાની જરૂર છે — મેક્સ વિઝાર્ડ K](https://indepth.dev/posts/1139/here-is-what-you-need-to-know-about-javascripts-number- પ્રકાર)
-- 📜 [દરેક JavaScript ડેવલપરને ફ્લોટિંગ પોઈન્ટ નંબર્સ વિશે શું જાણવું જોઈએ — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point -સંખ્યા/)
-- 📜 [ધ સિક્રેટ લાઈફ ઓફ જાવાસ્ક્રિપ્ટ પ્રિમિટિવ્સ — એંગસ ક્રોલ](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
-- 📜 [આદિમ પ્રકારો — પ્રવાહ](https://flow.org/en/docs/types/primitives/)
-- 📜 [(નહીં) JavaScript માં બધું એક ઑબ્જેક્ટ છે — ડેનિયલ લિ](https://dev.to/d4nyll/not-everything-in-javascript-is-an-object)
-- 📜 [જાવાસ્ક્રિપ્ટ ડેટા પ્રકારો અને ડેટા સ્ટ્રક્ચર્સ — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
-- 📜 [જાવાસ્ક્રિપ્ટ ઑબ્જેક્ટ્સમાં ઊંડાણપૂર્વક ડાઇવિંગ — અરફત સલમાન](https://blog.bitsrc.io/diving-deeper-in-javascripts-objects-318b1e13dc12)
-- 📜 [જાવાસ્ક્રિપ્ટમાં ઑબ્જેક્ટ.ફ્રીઝ() વિ કોન્સ્ટ વચ્ચેનો તફાવત — બોલાજી અયોદેજી](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c )
-- 📜 [આદિમ રૂપાંતરણનો હેતુ — JavaScript.info](https://javascript.info/object-toprimitive)
+- 📜 [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
+- 📜 [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
+- 📜 [Javascript: What Is The Execution Context? What Is The Call Stack? — Valentino Gagliardi](https://medium.com/@valentinog/javascript-what-is-the-execution-context-what-is-the-call-stack-bd23c78f10d1)
+- 📜 [What is the JS Event Loop and Call Stack? — Jess Telford](https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0)
+- 📜 [Understanding Execution Context and Execution Stack in Javascript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
+- 📜 [How JavaScript Works: An Overview of the Engine, the Runtime, and the Call Stack — Alexander Zlatkov](https://blog.sessionstack.com/how-does-javascript-actually-work-part-1-b0bacc073cf)
+- 📜 [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
 
 ### વિડિઓઝ
 
@@ -400,12 +398,14 @@
 
 ### લેખો
 
-- 📜 [JS સાથે પ્રોગ્રામિંગ: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
-- 📜 [વાસ્તવિક જીવનમાં JavaScriptના Bitwise ઑપરેટર્સનો ઉપયોગ — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
-- 📜 [JavaScript Bitwise ઑપરેટર્સ — w3resource](https://www.w3resource.com/javascript/operators/bitwise-operator.php)
-- 📜 [જાવાસ્ક્રિપ્ટમાં બિટવાઈસ ઓપરેટર્સ — જો ચા](https://medium.com/bother7-blog/bitwise-operators-in-javascript-65c4c69be0d3)
-- 📜 [જાવાસ્ક્રિપ્ટમાં બાઈનરી કોમ્પ્યુટેશન અને બીટવાઈસ ઓપરેટર્સ પર એક વ્યાપક પ્રાઈમર — પોલ બ્રાઉન](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript -81acf8341f04)
-- 📜 [હું JavaScriptમાં Bitwise ઑપરેશન કેવી રીતે સમજી શકું?](https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript)
+- 📜 [Javascript setTimeout - All you need to know](https://robiul.dev/javascript-settimeout-all-you-need-to-know)
+- 📜 [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
+- 📜 [Why not to use setInterval — Akanksha Sharma](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
+- 📜 [setTimeout VS setInterval — Develoger](https://develoger.com/settimeout-vs-setinterval-cff85142555b)
+- 📜 [Using requestAnimationFrame — Chris Coyier](https://css-tricks.com/using-requestanimationframe/)
+- 📜 [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
+- 📜 [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
+- 📜 [Debounce – How to Delay a Function in JavaScript - Ondrej Polesny](https://www.freecodecamp.org/news/javascript-debounce-example/)
 
 ### વિડિઓઝ
 
