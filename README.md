@@ -530,7 +530,8 @@ All the translations for this repo will be listed below:
 - 📜 [Beyond `typeof` and `instanceof`: simplifying dynamic type checks — Dr. Axel Rauschmayer](http://2ality.com/2017/08/type-right.html)
 - 📜 [What Is the Instanceof Operator in JavaScript — appendTo](https://appendto.com/2016/10/what-is-the-instanceof-operator-in-javascript/)
 - 📜 [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
-
+- 📜 [JavaScript instanceof operator](https://flexiple.com/javascript/instanceof-javascript)
+  
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
