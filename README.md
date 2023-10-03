@@ -11,7 +11,7 @@
 
 ## Įvadas 
 
-Šis repozitorija buvo sukurta su tikslu padėti programuotojams gilintis į JavaScript sąvokas. Jos nėra privalomos, bet tai puikus gidas tobulėjimui. Čia remiamasi straipsniu, parašytu Stephen Curtis, kurį galite perskaityti [čia].(https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Šis repozitorija buvo sukurta su tikslu padėti programuotojams gilintis į JavaScript sąvokas. Jos nėra privalomos, bet tai puikus gidas tobulėjimui. Čia remiamasi straipsniu, parašytu Stephen Curtis, kurį galite perskaityti [čia](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
 
 <!-- **🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)** -->
