@@ -1165,6 +1165,8 @@ All the translations for this repo will be listed below:
 - 📜 [Practical Ways to Write Better JavaScript - Ryland G](https://dev.to/taillogs/practical-ways-to-write-better-javascript-26d4)
 - 📜 [The Must-Know Clean Code Principles - Kesk on Medium](https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75)
 - 📜 [The Clean Code Book - Robert C Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
+- 📜 [How to use destructuring in JavaScript to write cleaner, more powerful code - freecodecamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
+- 📜 [Write Clean Code Using JavaScript Object Destructuring - Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
 
 ### Videos
 
