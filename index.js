@@ -3,5 +3,5 @@
 
     This project was inspired by an article written by Stephen Curtis. 
 
-    Any kind of contribution is welcome. Feel free to contribute.
+    Any kind of contribution is welcome. Feel free to contribute. ***
 */
