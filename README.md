@@ -1029,6 +1029,10 @@ All the translations for this repo will be listed below:
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
+### Videos
+- 🎥 [Data Structures in JavaScript — codevolution](https://www.youtube.com/watch?v=poGEVboh9Rw&list=PLC3y8-rFHvwg6nsAOfC5Is18KB2DrVOJy)
+- 🎥 [ES6 Operators, Data Structures & String — procademy](https://www.youtube.com/watch?v=5yGoon0Jnm4&list=PL1BztTYDF-QPMwbOB-gRHM_vPKxDAJ-h0)
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
