@@ -51,6 +51,7 @@ All the translations for this repo will be listed below:
 - [Marathi (मराठी)](https://github.com/dhruvchandak30/33-js-concepts) - Dhruv Chandak
 - [हिन्दी (Hindi)](https://github.com/milostivyy/33-js-concepts) — Mahima Chauhan
 - [বাংলা (Bengali)](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia
+- [ગુજરાતી (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
 
 ---
 
