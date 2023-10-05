@@ -964,7 +964,48 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 27. Data Structures
+## 27. JavaScript API
+Web storage API, Web geolocation API, web forms API, Web History API
+
+### Articles
+- 📜 [Web Storage API - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)
+- 📜 [How to use Web Storage API? - Jatin Sharma](https://dev.to/j471n/how-to-use-web-storage-api-3o28)
+- 📜 [The Web Storage API in JavaScript Explained With Examples - Mehdi Aoussiad](https://javascript.plainenglish.io/the-web-storage-api-in-javascript-explained-with-examples-85a5fac65155)
+- 📜 [How to Use the Web Storage API - Chidume Nnamdi ](https://blog.bitsrc.io/localstorage-sessionstorage-the-web-storage-of-the-web-6b7ca51c8b2a)
+- 📜 [Web Storage API - Explain Like I'm Five - Patrick](https://blog.thepatik.com/web-storage-api-explain-like-im-five)
+- 📜 [localStorage in JavaScript: A complete guide - Nosa Obaseki ](https://blog.logrocket.com/localstorage-javascript-complete-guide/)
+- 📜 [Geolocation API - MDN](https://developer.mozilla.org/en-US/docs/Web/API/Geolocation_API)
+- 📜 [JavaScript Geolocation API Tutorial – How to Get a User's Location in JS - FreeCodeCamp](https://www.freecodecamp.org/news/how-to-get-user-location-with-javascript-geolocation-api/)
+- 📜 [JavaScript Geolocation - Javascript Tutorial](https://www.javascripttutorial.net/web-apis/javascript-geolocation/)
+- 📜 [Javascript Geolocation API Tutorial with Examples - o7planning](https://o7planning.org/12407/javascript-geolocation-api)
+- 📜 [Using the Geolocation AP - Alligator.io](https://www.digitalocean.com/community/tutorials/js-geolocation-api)
+- 📜 [A Beginner’s Guide To Using Geo API - Emad Bin Abid ](https://blog.apilayer.com/a-beginners-guide-to-using-geo-ip-api/)
+- 📜 [Web forms — Working with user data - MDN](https://developer.mozilla.org/en-US/docs/Learn/Forms)
+- 📜 [Webforms - JS API Methods - Salesmate](https://support.salesmate.io/hc/en-us/articles/4408683937305-Webforms-JS-API-Methods)
+- 📜 [History API - MDN](https://developer.mozilla.org/en-US/docs/Web/API/History_API)
+- 📜 [How to use History API on JavaScript - Javascript Jeep](https://medium.com/javascript-dots/how-to-use-history-api-on-javascript-401e4673cd5f)
+- 📜 [How the Javascript History API Works - FJOLT](https://fjolt.com/article/javascript-web-history)
+- 📜 [Javascript History API Tutorial with Examples - o7planning](https://o7planning.org/12403/javascript-history-api)
+- 📜 [An Overview of the JavaScript History API - Sandeep Panda](https://www.sitepoint.com/an-overview-and-usage-of-javascript-history-api/)
+
+### Videos
+- 🎥 [JavaScript LocalStorage and Session Storage API Tutorial - Dave Gray](https://www.youtube.com/watch?v=zmFDvFwj6-8)
+- 🎥 [Web Storage - Giraffe Academy](https://www.youtube.com/watch?v=CflECDZSyd8)
+- 🎥 [Local Storage for Beginners - OpenJavaScript ](https://www.youtube.com/watch?v=-ZRDZyUjEEI)
+- 🎥 [Using the Geolocation API - dcode](https://www.youtube.com/watch?v=916M64DuRnk)
+- 🎥 [Get users location with Javascript geolocation - iEatWebsites](https://www.youtube.com/watch?v=VK9F8BWrOgY)
+- 🎥 [Geolocation Web API - Working with Data and APIs in JavaScript](https://www.youtube.com/watch?v=3ls013DBcww)
+- 🎥 [How to Get a User's Current Location from the Browser with the Geolocation API](https://www.youtube.com/watch?v=OvDu9c8PYrk)
+- 🎥 [Getting the user's location with JavaScript (Geolocation API tutorial) - Jonah Lawrence • Dev Pro Tips](https://www.youtube.com/watch?v=JdJ2VBbYYTQ)
+- 🎥 [Using the History API - dcode](https://www.youtube.com/watch?v=4GqUAaLgpgs)
+- 🎥 [Browser history tutorial - Beau teaches JavaScript - freecodecamp](https://www.youtube.com/watch?v=C9vsQkMu5gk)
+- 🎥 [Exploring the History pushState and replaceState Methods - Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=j1ZHuyhHApg)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 28. Data Structures
 
 ### Articles
 
@@ -994,7 +1035,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 29. Expensive Operation and Big O Notation
 
 ### Articles
 
@@ -1015,7 +1056,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 29. Algorithms
+## 30. Algorithms
 
 ### Articles
 
@@ -1033,7 +1074,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 31. Inheritance, Polymorphism and Code Reuse
 
 ### Reference
 
@@ -1060,7 +1101,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 31. Design Patterns
+## 32. Design Patterns
 
 ### Books
 
@@ -1097,7 +1138,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 32. Partial Applications, Currying, Compose and Pipe
+## 33. Partial Applications, Currying, Compose and Pipe
 
 ### Books
 
@@ -1148,7 +1189,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 33. Clean Code
+## 34. Clean Code
 
 ### Articles
 
