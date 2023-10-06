@@ -128,7 +128,8 @@ All the translations for this repo will be listed below:
 - 🎥 [What the heck is the event loop anyway? — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
 - 🎥 [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
-
+- 🎥 [Call Stacks - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
+    
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
