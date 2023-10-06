@@ -21,6 +21,9 @@ Feel free to submit a PR adding a link to your own recaps or reviews. If you wan
 
 All the translations for this repo will be listed below:
 
+- [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
+- [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
 - [(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
