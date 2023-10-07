@@ -320,6 +320,8 @@ Ní ilẹ ẹkọ yii, awọn iṣẹta lati ṣe itumọ yẹ ki o wọn jẹ k
 - 📜 [Using JavaScript modules on the web — Addy Osmani & Mathias Bynens](https://developers.google.com/web/fundamentals/primers/modules)
 - 📜 [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
 - 📜 [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
+- 📜 [Asynchronous Module Loading - Packt Pub](https://subscription.packtpub.com/book/programming/9781785880650/10/ch10lvl1sec54/introducing-asynchronous-module-definition)
+- 📜 [WebAssembly (Wasm) Modules](https://developer.mozilla.org/en-US/docs/WebAssembly/JavaScript_interface/Module)
 
 ### Awọn Fíìmù
 
