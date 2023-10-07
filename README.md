@@ -519,6 +519,8 @@ All the translations for this repo will be listed below:
 - 📜 [A conversation with the 'this' keyword in Javascript — Karen Efereyan](https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g)
 - 📜 [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
 - 📜 [Understanding 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
+- 📜 [Top 7 tricky questions of 'this' keyword](https://dmitripavlutin.com/javascript-this-interview-questions/)
+    
 
 ### Videos
 
