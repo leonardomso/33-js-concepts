@@ -60,7 +60,7 @@
 - [ગુજરાતી (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
 - [سنڌي (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
 - [भोजपुरी (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
-- [ਪੰਜਾਬੀ (Punjabi)](https://github.com/amanr-dev/33-js-concepts) — Aman Rawat
+- [ਪੰਜਾਬੀ (Punjabi)](https://github.com/amanr-dev/33-js-concepts/tree/amandev) — Aman Rawat
 
 ---
 
