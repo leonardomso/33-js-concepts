@@ -256,6 +256,7 @@ All the translations for this repo will be listed below:
 ### Articles
 
 - 📜 [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
+- 📜 [The battle between Function Scope and Block Scope — Marius Herring](http://www.deadcoderising.com/2017-04-11-es6-var-let-and-const-the-battle-between-function-scope-and-block-scope/)
 - 📜 [Var, Let, and Const – What's the Difference?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
 - 📜 [Functions in JavaScript - Deepa Pandey](https://www.scaler.com/topics/javascript/javascript-functions/)
 - 📜 [Emulating Block Scope in JavaScript — Josh Clanton](http://adripofjavascript.com/blog/drips/emulating-block-scope-in-javascript.html)
@@ -295,6 +296,8 @@ All the translations for this repo will be listed below:
 ### Videos
 
 - 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
+- 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
+- 🎥 [Javascript Function Expression Vs Declaration For Beginners — Dev Material](https://www.youtube.com/watch?v=qz7Nq1tV7Io)
 - 🎥 [The difference between an expression and a statement in JavaScript](https://youtu.be/eWTuFoBYiwg)
 
 **[⬆ Back to Top](#table-of-contents)**
