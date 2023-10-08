@@ -351,6 +351,8 @@ All the translations for this repo will be listed below:
 - 🎥 [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
 - 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 - 🎥 [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
+- 🎥 [What is an IIFE? | Javascript IIFE Function Expressions Explained - Dave Gray](https://www.youtube.com/watch?v=8GDk8sj0YgQ)
+- 🎥 [IIFE modules & Namespaces in Javascript - JS Bundle](https://www.youtube.com/watch?v=Pbi7ypZKfeI)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -378,6 +380,9 @@ All the translations for this repo will be listed below:
 - 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
 - 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
 - 🎥 [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
+- 🎥 [Call Stack, Callback Queue, and Event Loop - kite withyou](https://www.youtube.com/watch?v=FVZ-A_Akros&t=199s)
+- 🎥 [JavaScript Event Loop: How it Works and Why it Matters in 5 Minutes - James Q Quick](https://www.youtube.com/watch?v=lqLSNG_79lI)
+- 🎥 [JavaScript Tutorial | Call Stack, Event Loop & Callback Queue  - Anagh Technologies Inc.](https://www.youtube.com/watch?v=gI_AsVBxXrE)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -402,7 +407,9 @@ All the translations for this repo will be listed below:
 - 🎥 [TRUST ISSUES with setTimeout() — Akshay Saini ](https://youtu.be/nqsPmuicJJc?si=4FXKlZfqiJUqO2Y4)                  
 - 🎥 [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
 - 🎥 [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
-- 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)   
+- 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
+- 🎥 [javascript : setTimeout, setInterval, and requestAnimationFrame - Full Stack Life](https://www.youtube.com/watch?v=eCpDweOvEMg)
+- 🎥 [Meet the Timers: setTimeout, setInterval, and requestAnimationFrame - KIRUPA](https://www.youtube.com/watch?v=zucCjXApXOU)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -429,6 +436,10 @@ All the translations for this repo will be listed below:
 - 🎥 [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
 - 🎥 [How JavaScript Code is executed? How Javascript works behind the scenes](https://youtu.be/iLWTnMzWtj4)   
 - 🎥 [Understanding the V8 JavaScript Engine - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
+- 🎥 [How Javascript Engine Works ? - Sathelli Srikanth](https://www.youtube.com/watch?v=q3Wsoa7wfDg)
+- 🎥 [What are Javascript engines - Hitesh Choudhary](https://www.youtube.com/watch?v=BMKWdLX9w3M)
+- 🎥 [How the JavaScript engine works!! Source to byte code JS V8 engine explained - Chris Hay](https://www.youtube.com/watch?v=LLxNAw4CVTs)
+  
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -451,6 +462,9 @@ All the translations for this repo will be listed below:
 - 🎥 [Bitwise Operators and WHY we use them — Alex Hyett](https://www.youtube.com/watch?v=igIjGxF2J-w)
 - 🎥 [JS Bitwise Operators and Binary Numbers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=RRyxCmLX_ag)
 - 🎥 [Deep Dive into Blobs, Files, and ArrayBuffers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=ScZZoHj7mqY)
+- 🎥 [Bitwise Operators - codedamn](https://www.youtube.com/watch?v=FkeMrW3SGJE)
+- 🎥 [Typed Arrays - codebubb](https://www.youtube.com/watch?v=a0A739c6eHk)
+- 🎥 [Array buffer and views in Javascript - Logan Lee](https://www.youtube.com/watch?v=hDY8Z3ntpLk)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -479,6 +493,10 @@ All the translations for this repo will be listed below:
 
 - 🎥 [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
+- 🎥 [JavaScript DOM Manipulation – Full Course for Beginners - freeCodeCamp.org](https://www.youtube.com/watch?v=5fb2aPlgoys)
+- 🎥 [What is DOM | Document Object Model | Beginner Tutorial - Automation Step by Step](https://www.youtube.com/watch?v=ipkjfvl40s0)
+- 🎥 [What Is the DOM - Syntax](https://www.youtube.com/watch?v=i_T33FSl254)
+- 🎥 [What Is Dom Tree in 10 Minutes - Monsterlessons Academy](https://www.youtube.com/watch?v=wRrofv4WUcU)
 
 **[⬆ Back to Top](#table-of-contents)**
 
