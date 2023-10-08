@@ -304,6 +304,12 @@
 
 ## 8. IIFE, Modules and Namespaces
 
+### ਹਵਾਲਾ
+
+- 📜 [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
+- 📜 [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
+- 📜 [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
+
 ### ਲੇਖ
 
 - 📜 [ਮੁਹਾਰਤ ਹਾਸਲ ਕਰਨਾ ਤੁਰੰਤ-ਲਗਾਵਾਇਆ Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
@@ -519,6 +525,7 @@
 - 📜 [A conversation with the 'this' keyword in Javascript — Karen Efereyan](https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g)
 - 📜 [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
 - 📜 [ਸਮਝ 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
+- 📜 [Top 7 tricky questions of 'this' keyword](https://dmitripavlutin.com/javascript-this-interview-questions/)
 
 ### ਵੀਡੀਓਜ਼
 
@@ -1047,6 +1054,10 @@
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
+### ਵੀਡੀਓਜ਼
+
+- 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
+
 **[⬆ ਵਾਪਸ ਸਿਖਰ 'ਤੇ](#table-of-contents)**
 
 ---
@@ -1079,6 +1090,10 @@
 ---
 
 ## 31. Design Patterns
+
+### ਹਵਾਲਾ
+
+- 📜[Design Patterns - Patterns.dev](https://www.patterns.dev/posts/#design-patterns)
 
 ### ਕਿਤਾਬਾਂ
 
