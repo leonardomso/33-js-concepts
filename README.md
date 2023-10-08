@@ -308,12 +308,6 @@
 
 ## 8. IIFE, Modules and Namespaces
 
-### Reference
-
-- 📜 [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
-- 📜 [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
-- 📜 [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
-
 ### ਹਵਾਲਾ
 
 - 📜 [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
@@ -535,7 +529,8 @@
 - 📜 [Explaining JavaScript 'this' to my cat — Andrey K](https://dev.to/cat__logic/explaining-javascript-this-to-my-cat-1kig)
 - 📜 [A conversation with the 'this' keyword in Javascript — Karen Efereyan](https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g)
 - 📜 [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
-- 📜 [Understanding 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
+- 📜 [ਸਮਝ 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
+- 📜 [Top 7 tricky questions of 'this' keyword](https://dmitripavlutin.com/javascript-this-interview-questions/)
 
 ### ਵੀਡੀਓਜ਼
 
@@ -1064,14 +1059,6 @@
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
-### Videos
-
-- 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
-
-### Videos
-
-- 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
-
 ### ਵੀਡੀਓਜ਼
 
 - 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
@@ -1109,15 +1096,11 @@
 
 ## 31. Design Patterns
 
-### Reference
+### ਹਵਾਲਾ <!-- ref -->
 
 - 📜[Design Patterns - Patterns.dev](https://www.patterns.dev/posts/#design-patterns)
 
-### ਹਵਾਲਾ
-
-- 📜[Design Patterns - Patterns.dev](https://www.patterns.dev/posts/#design-patterns)
-
-### ਕਿਤਾਬਾਂ
+### ਕਿਤਾਬਾਂ <!-- books -->
 
 - 📜 [JavaScript ਡਿਜ਼ਾਈਨ ਪੈਟਰਨ ਸਿੱਖਣਾ — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 
