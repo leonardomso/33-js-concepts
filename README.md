@@ -1027,6 +1027,7 @@ All the translations for this repo will be listed below:
 - 📜 [Data Structures Two Ways: Linked List (Pt 1) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-2n61)
 - 📜 [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
 - 📜 [Graph Data Structures Explained in JavaScript — Adrian Mejia](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
+- 📜 [6 JavaScript data structures you must know — Amanda Fawcett](https://www.educative.io/blog/javascript-data-structures)
 
 ### Videos
 
