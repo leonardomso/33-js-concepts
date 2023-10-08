@@ -1227,3 +1227,40 @@ All the translations for this repo will be listed below:
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 
 **[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 34. JavaScript WebAPI's
+
+### Articles
+
+- 📜 [ Introduction to all WebAPI ](https://www.knowledgehut.com/blog/web-development/javascript-web-apis)
+- 📜 [⭐ Complete Guide to Axios HTTP Client ](https://reflectoring.io/tutorial-guide-axios/)
+- 📜 [⭐ JavaScript Fetch API ](https://www.javascripttutorial.net/javascript-fetch-api/)
+- 📜 [⭐ Local Storage, Session Storage And Cookies ](https://www.geeksforgeeks.org/difference-between-local-storage-session-storage-and-cookies/)
+- 📜 [ WebGL: 2D and 3D graphics for the web ](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API)
+- 📜 [⭐ WebRTC- WebAPI for audio and video streaming ](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API)
+- 📜 [ The Navigator Clipboard API in JavaScript ](https://dev.to/darkmavis1980/the-navigator-clipboard-api-in-javascript-38gn)
+- 📜 [ How to Use the Web Share API ](https://css-tricks.com/how-to-use-the-web-share-api/)
+- 📜 [ Web History API ](https://www.w3schools.com/js/js_api_history.asp)
+- 📜 [ Web Workers API ](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)
+- 📜 [ The WebSocket API (WebSockets) ](https://ably.com/topic/websockets#:~:text=The%20WebSocket%20protocol%20enables%20ongoing,data%20transfer%20in%20web%20applications.)
+- 📜 [ WebOTP API ](https://developer.chrome.com/blog/cross-device-webotp/)
+- 📜 [ How to Use the Web Share API ](https://css-tricks.com/how-to-use-the-web-share-api/)
+- 📜 [ Screen Capture API concepts and usage ](https://udn.realityripple.com/docs/Web/API/Screen_Capture_API)
+- 📜 [ Payment Request concepts and usage ](https://www.freecodecamp.org/news/payment-request-api-javascript/)
+- 📜 [ All other web API's ](https://developer.mozilla.org/en-US/docs/Web/API)
+
+
+### Videos
+
+- 🎥 [ WebGL Tutorial for amazing animation ](https://www.youtube.com/playlist?list=PLjcVFFANLS5zH_PeKC6I8p0Pt1hzph_rt)
+- 🎥 [⭐ JavaScript Cookies vs Local Storage vs Session Storage ](https://www.youtube.com/watch?v=GihQAC1I39Q)
+- 🎥 [⭐ Fetch API - JavaScript Tutorial for beginners ](https://www.youtube.com/watch?v=ubw2hdQIl4E)
+- 🎥 [ WebRTC- WebAPI for audio and video streaming ](https://www.youtube.com/watch?v=jUh9RlO8y18&list=PL34gl7XmgyxT4p6-nMgddxdl18S1Xpczr)
+- 🎥 [⭐ Axios Crash Course | HTTP Library ](https://www.youtube.com/watch?v=6LyagkoRWYA)
+- 🎥 [ Web Sockets ](https://www.youtube.com/watch?v=ZKEqqIO7n-k
+)
+
+
+**[⬆ Back to Top](#table-of-contents)**
