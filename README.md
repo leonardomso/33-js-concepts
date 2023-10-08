@@ -45,6 +45,7 @@
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
 - [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
+- [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) - Jānis Īvāns
 - [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) - Amanuel Dagnachew
 - [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
 - [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
@@ -257,6 +258,7 @@
 ### ਲੇਖ
 
 - 📜 [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
+- 📜 [The battle between Function Scope and Block Scope — Marius Herring](http://www.deadcoderising.com/2017-04-11-es6-var-let-and-const-the-battle-between-function-scope-and-block-scope/)
 - 📜 [Var, Let, and Const – What's the Difference?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
 - 📜 [Functions in JavaScript - Deepa Pandey](https://www.scaler.com/topics/javascript/javascript-functions/)
 - 📜 [Emulating Block Scope in JavaScript — Josh Clanton](http://adripofjavascript.com/blog/drips/emulating-block-scope-in-javascript.html)
@@ -296,6 +298,8 @@
 ### ਵੀਡੀਓਜ਼
 
 - 🎥 [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
+- 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
+- 🎥 [Javascript Function Expression Vs Declaration For Beginners — Dev Material](https://www.youtube.com/watch?v=qz7Nq1tV7Io)
 - 🎥 [The difference between an expression and a statement in JavaScript](https://youtu.be/eWTuFoBYiwg)
 
 **[⬆ ਵਾਪਸ ਸਿਖਰ 'ਤੇ](#table-of-contents)**
@@ -303,6 +307,12 @@
 ---
 
 ## 8. IIFE, Modules and Namespaces
+
+### Reference
+
+- 📜 [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
+- 📜 [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
+- 📜 [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
 
 ### ਹਵਾਲਾ
 
@@ -458,6 +468,7 @@
 - 📜 [How to traverse the DOM in Javascript — Vojislav Grujić](https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e)
 - 📜 [Render Tree Construction — Ilya Grigorik](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
 - 📜 [What exactly is the DOM?](https://bitsofco.de/what-exactly-is-the-dom/)
+- 📜 [JavaScript DOM](https://www.javascripttutorial.net/javascript-dom/)
 
 ### ਵੀਡੀਓਜ਼
 
@@ -524,8 +535,7 @@
 - 📜 [Explaining JavaScript 'this' to my cat — Andrey K](https://dev.to/cat__logic/explaining-javascript-this-to-my-cat-1kig)
 - 📜 [A conversation with the 'this' keyword in Javascript — Karen Efereyan](https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g)
 - 📜 [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
-- 📜 [ਸਮਝ 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
-- 📜 [Top 7 tricky questions of 'this' keyword](https://dmitripavlutin.com/javascript-this-interview-questions/)
+- 📜 [Understanding 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
 
 ### ਵੀਡੀਓਜ਼
 
@@ -1054,6 +1064,14 @@
 - 📜 [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 - 📜 [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
+### Videos
+
+- 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
+
+### Videos
+
+- 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
+
 ### ਵੀਡੀਓਜ਼
 
 - 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
@@ -1090,6 +1108,10 @@
 ---
 
 ## 31. Design Patterns
+
+### Reference
+
+- 📜[Design Patterns - Patterns.dev](https://www.patterns.dev/posts/#design-patterns)
 
 ### ਹਵਾਲਾ
 
