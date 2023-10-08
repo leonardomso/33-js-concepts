@@ -497,6 +497,9 @@ All the translations for this repo will be listed below:
 - 🎥 [What is DOM | Document Object Model | Beginner Tutorial - Automation Step by Step](https://www.youtube.com/watch?v=ipkjfvl40s0)
 - 🎥 [What Is the DOM - Syntax](https://www.youtube.com/watch?v=i_T33FSl254)
 - 🎥 [What Is Dom Tree in 10 Minutes - Monsterlessons Academy](https://www.youtube.com/watch?v=wRrofv4WUcU)
+- 🎥 [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
+- 🎥 [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -1234,6 +1237,8 @@ All the translations for this repo will be listed below:
 - 📜 [Practical Ways to Write Better JavaScript - Ryland G](https://dev.to/taillogs/practical-ways-to-write-better-javascript-26d4)
 - 📜 [The Must-Know Clean Code Principles - Kesk on Medium](https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75)
 - 📜 [The Clean Code Book - Robert C Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
+- 📜 [How to use destructuring in JavaScript to write cleaner, more powerful code - freecodecamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
+- 📜 [Write Clean Code Using JavaScript Object Destructuring - Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
 
 ### Videos
 
