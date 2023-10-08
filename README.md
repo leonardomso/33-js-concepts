@@ -130,6 +130,8 @@ All the translations for this repo will be listed below:
 - 🎥 [La PILA DE EJECUCIÓN (Call Stack) de JavaScript — La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
 - 🎥 [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
 - 🎥 [Call Stacks - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
+- 🎥 [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
+- 🎥 [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
     
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -165,6 +167,7 @@ All the translations for this repo will be listed below:
 - 🎥 [Everything you never wanted to know about JavaScript numbers — Bartek Szopka](https://www.youtube.com/watch?v=MqHDDtVYJRI)
 - 🎥 [What are variables in Javascript? — JS For Everyone](https://www.youtube.com/watch?v=B4Bbmei_thw)
 - 🎥 [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
+- 🎥 [Data Type in JavaScript - ScholarHat](https://www.youtube.com/watch?v=aFDvBjVjCh8)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -190,7 +193,8 @@ All the translations for this repo will be listed below:
 - 🎥 [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
 - 🎥 [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
 - 🎥 [VALORES vs REFERENCIAS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=AvkyOrWkuQc)
-- 🎥 [JavaScript - Reference vs Primitive Values/ Types - Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g) 
+- 🎥 [JavaScript - Reference vs Primitive Values/ Types - Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
+- 🎥 [Value Types and Reference Types in JavaScript - Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -212,6 +216,7 @@ All the translations for this repo will be listed below:
 - 🎥 [JavaScript Questions: What is Coercion? - Steven Hancock](https://www.youtube.com/watch?v=z4-8wMSPJyI)
 - 🎥 [Typing: Static vs Dynamic, Weak vs. Strong - Codexpanse](https://www.youtube.com/watch?v=C5fr0LZLMAs)
 - 🎥 [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
+- 🎥 [Duck Typing in Javascript - Techmaker Studio](https://www.youtube.com/watch?v=oEpgyoMEkrM)
 
 ### Books
 
@@ -243,6 +248,8 @@ All the translations for this repo will be listed below:
 - 🎥 [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - 🎥 [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
 - 🎥 [JavaScript "==" VS "===" — Web Dev Simplified](https://www.youtube.com/watch?v=C5ZVC4HHgIg)
+- 🎥 [=== vs == in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=a0S1iG3TgP0)
+- 🎥 [The typeof operator in JS - CodeVault](https://www.youtube.com/watch?v=NSS5WRcv7yM)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -279,6 +286,9 @@ All the translations for this repo will be listed below:
 - 🎥 [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
 - 🎥 [Variable Scope — Steve Griffith](https://www.youtube.com/watch?v=FyWdrCZZavQ)
 - 🎥 [Javascript Tutorials for Beginners — Mosh Hemadani](https://www.youtube.com/watch?v=W6NZfCO5SIk)
+- 🎥 [JavaScript Block scope vs Function scope - nivek](https://www.youtube.com/watch?v=IaTztAtoNEY)
+- 🎥 [Lexical scoping in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=qT5S7GgIioE)
+ 
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -300,6 +310,8 @@ All the translations for this repo will be listed below:
 - 🎥 [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
 - 🎥 [Javascript Function Expression Vs Declaration For Beginners — Dev Material](https://www.youtube.com/watch?v=qz7Nq1tV7Io)
 - 🎥 [The difference between an expression and a statement in JavaScript](https://youtu.be/eWTuFoBYiwg)
+- 🎥 [Expression in javascript | Statement in javascript - Sathelli Srikanth](https://www.youtube.com/watch?v=cVDs3TZ-kXs)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
