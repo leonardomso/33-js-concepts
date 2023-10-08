@@ -134,7 +134,7 @@
 - 🎥 [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
 - 🎥 [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ ਵਾਪਸ ਸਿਖਰ 'ਤੇ](#table-of-contents)**
 
 ---
 
