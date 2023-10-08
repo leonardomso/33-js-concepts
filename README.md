@@ -467,6 +467,8 @@ All the translations for this repo will be listed below:
 
 - 🎥 [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
+- 🎥 [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
+- 🎥 [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
 
 **[⬆ Back to Top](#table-of-contents)**
 
