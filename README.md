@@ -1227,5 +1227,7 @@ All the translations for this repo will be listed below:
 
 - 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
+- 🎥 [JavaScript Best Practices and Coding Conventions - Write Clean Code](https://youtu.be/RMN_bkZ1KM0?si=Ssg3cNZ_DB7CIwKQ)
+- 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
 
 **[⬆ Back to Top](#table-of-contents)**
