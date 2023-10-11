@@ -278,6 +278,8 @@ All the translations for this repo will be listed below:
 -  [When to use a function declaration vs. a function expression ― Amber Wilkie](https://medium.freecodecamp.org/when-to-use-a-function-declarations-vs-a-function-expression-70f15152a0a0)
 -  [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and “this” ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
 -  [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
+-  [Lexical Scope in JavaScript — geeksforgeek](https://www.geeksforgeeks.org/lexical-scope-in-javascript/)
+-  [JavaScript Scope — w3schools](https://www.w3schools.com/js/js_scope.asp)
 
 ### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
@@ -289,6 +291,7 @@ All the translations for this repo will be listed below:
 - [Javascript Tutorials for Beginners — Mosh Hemadani](https://www.youtube.com/watch?v=W6NZfCO5SIk)
 - [JavaScript Block scope vs Function scope - nivek](https://www.youtube.com/watch?v=IaTztAtoNEY)
 - [Lexical scoping in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=qT5S7GgIioE)
+- [Learn JavaScript Scoping In 10 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=TkFN6e9ZDMw&ab_channel=WebDevSimplified)
  
 
 **[⬆ Back to Top](#table-of-contents)**
