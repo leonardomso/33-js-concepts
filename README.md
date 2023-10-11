@@ -702,6 +702,7 @@ All the translations for this repo will be listed below:
 ### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Map, Filter and Reduce — Lydia Hallie](https://www.youtube.com/watch?v=UXiYii0Y7Nw)
+- [Map, Filter and Reduce - Akshaay Saini](https://youtu.be/zdp0zrpKzIE?si=6QusFzD6tmwn-el4)
 - [Functional JavaScript: Map, forEach, Reduce, Filter — Theodore Anderson](https://www.youtube.com/watch?v=vytzLlY_wmU)
 - [JavaScript Array superpowers: Map, Filter, Reduce (part I) — Michael Rosata](https://www.youtube.com/watch?v=qTeeVd8hOFY)
 - [JavaScript Array superpowers: Map, Filter, Reduce (part 2) — Michael Rosata](https://www.youtube.com/watch?v=gIm9xLYudL0)
