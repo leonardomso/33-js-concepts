@@ -1231,5 +1231,33 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
+---
+
+## 34. JS Web APIs
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+
+-  [Introduction to Web APIs - What is a Web API?](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Client-side_web_APIs/Introduction)
+-  [Introduction to JavaScript APIs - How does an API work?](https://www.knowledgehut.com/blog/web-development/javascript-web-apis)
+-  [A list of all the APIs that are available - Have a look](https://developer.mozilla.org/en-US/docs/Web/API)
+-  [A history and future of Web APIs - Researrch Paper](https://www.researchgate.net/publication/274527941_A_history_and_future_of_Web_APIs)
+-  [Web API Design - A Book by Brian Mulloy](https://pages.apigee.com/rs/apigee/images/api-design-ebook-2012-03.pdf)
+-  [Web API in short - Your favourite wikipedia for you](https://en.wikipedia.org/wiki/Web_API)
+-  [JavaScript Web APIs Series](https://dev.to/olodocoder/javascript-web-apis-series-introduction-fjk)
+
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
+
+-  [What is a Web API - Learn in 5 mins by Apna College](https://youtu.be/XGa4onZP66Q?si=Ki-P8pFWoXJVNvSJ)
+-  [Want to know more about APIs? - A detailed explanation by FreeCodeCamp](https://youtu.be/WXsD0ZgxjRw?si=8Y2zISQFUOeHJiLZ)
+-  [Get to know about Web APIs in Hindi - Chai aur Code](https://youtu.be/0PaWV3wIfkM?si=MvRKBSLaxkes8qEc)
+-  [Full HTTP Networking Course – Fetch and REST APIs in JavaScript - FreeCodeCamp](https://youtu.be/2JYT5f2isg4?si=RRHOrMFsMnCjTrPM)
+-  [Get to know about Web APIs in Hindi - Chai aur Code](https://youtu.be/0PaWV3wIfkM?si=MvRKBSLaxkes8qEc)
+-  [Tutorial on Fetching API data and Displaying API data inside table - Step by Step](https://youtu.be/vvjaRIM4Bjs?si=ufNTkekRCX8RlMr8)
+-  [Let's learn the use of Web APIs with an interesting project - Image Search App by Tech2 etc](https://youtu.be/oaliV2Dp7WQ?si=vsYgHTYIWoINdiUP)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
 ## <img  align= center width=50px height=50px src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> License <a id = "License"></a>
 This software is licensed under MIT License, See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
