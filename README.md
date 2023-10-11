@@ -457,31 +457,42 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 13. DOM and Layout Trees
+# 13. DOM and Layout Trees
 
-### Books
+## Books
 
--  [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
+- [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+## Articles
 
--  [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
--  [What’s the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
--  [JavaScript DOM Tutorial with Example — Guru99](https://www.guru99.com/how-to-use-dom-and-events-in-javascript.html)
--  [What is the DOM? — Chris Coyier](https://css-tricks.com/dom/)
--  [Traversing the DOM with JavaScript — Zell Liew](https://zellwk.com/blog/dom-traversals/)
--  [DOM Tree](https://javascript.info/dom-nodes)
--  [How to traverse the DOM in Javascript — Vojislav Grujić](https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e)
--  [Render Tree Construction — Ilya Grigorik](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
--  [What exactly is the DOM?](https://bitsofco.de/what-exactly-is-the-dom/)
--  [JavaScript DOM](https://www.javascripttutorial.net/javascript-dom/)
+- [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
+- [What’s the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
+- [JavaScript DOM Tutorial with Example — Guru99](https://www.guru99.com/how-to-use-dom-and-events-in-javascript.html)
+- [What is the DOM? — Chris Coyier](https://css-tricks.com/dom/)
+- [Traversing the DOM with JavaScript — Zell Liew](https://zellwk.com/blog/dom-traversals/)
+- [DOM Tree](https://javascript.info/dom-nodes)
+- [How to traverse the DOM in Javascript — Vojislav Grujić](https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e)
+- [Render Tree Construction — Ilya Grigorik](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
+- [What exactly is the DOM?](https://bitsofco.de/what-exactly-is-the-dom/)
+- [JavaScript DOM](https://www.javascripttutorial.net/javascript-dom/)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
+## Videos
 
 - [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 - [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
 - [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
+
+## Online Courses
+
+- [Complete JavaScript and the DOM Course (Udemy)](https://www.udemy.com/course/javascript-dom-tutorial/)
+- [Front-End JavaScript Frameworks: Angular (Coursera)](https://www.coursera.org/specializations/angular)
+- [Modern JavaScript (ES6, ES7, and ES8) for Beginners (Udemy)](https://www.udemy.com/course/modern-javascript-for-beginners/)
+
+## Interactive Resources
+
+- [MDN Web Docs: Introduction to the DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction)
+- [DOM Enlightenment (Interactive Book)](http://domenlightenment.com/)
 
 **[⬆ Back to Top](#table-of-contents)**
 
