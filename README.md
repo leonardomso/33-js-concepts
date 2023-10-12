@@ -1063,6 +1063,9 @@ All the translations for this repo will be listed below:
 ### Videos
 
 - 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
+- 🎥 [Dynamic Programming - Learn to Solve Algorithmic Problems & Coding Challenges - FreeCodeCamp](https://www.youtube.com/watch?v=oBt53YbR9Kk&t=1021s)
+- 🎥 [Data Structures and Algorithms in Javascript | DSA with JS - RoadsideCoder](https://www.youtube.com/playlist?list=PLKhlp2qtUcSZtJefDThsXcsAbRBCSTgW4)
+- 🎥 [Javascript Algorithms + Data Structures - KodingKevin](https://www.youtube.com/playlist?list=PLn2ipk-jqgZiAHiA70hOxAj8RMUeqYNK3)
 
 **[⬆ Back to Top](#table-of-contents)**
 
