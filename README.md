@@ -1064,15 +1064,29 @@ d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> �
 -  [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
 -  [Unlocking the Power of Polymorphism in JavaScript: A Deep Dive](https://prototypr.io/post/unlocking-the-power-of-polymorphism-in-javascript-a-deep-dive)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
-
-- [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
-- [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
-- [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/javascript-promises-explained-with-simple-real-life-analogies-dd6908092138)
+- [ಅಸಿಂಕ್ರೊನಸ್ ಪ್ರೋಗ್ರಾಮಿಂಗ್‌ಗಾಗಿ ಭರವಸೆಗಳು — ಎಕ್ಸ್‌ಪ್ಲೋರಿಂಗ್ JS](http://exploringjs.com/es6/ch_promises.html)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳು ಕ್ಯಾಸಿನೊದಲ್ಲಿ ಜೂಜಿನ ಮೂಲಕ ವಿವರಿಸಲಾಗಿದೆ - ಕೆವಿನ್ ಕೊನೊನೆಂಕೊ](https://blog.codeanalogies.com/2018/08/26/javascript-promises-explained-by-gambling-at-a-casino/)
+- [ES6 ಭರವಸೆಗಳು: ಮಾದರಿಗಳು ಮತ್ತು ವಿರೋಧಿ ಮಾದರಿಗಳು — ಬಾಬಿ ಬ್ರೆನ್ನನ್](https://medium.com/datafire-io/es6-promises-patterns-and-anti-patterns-bbb21a5d0918)
+- [ES6 ಭರವಸೆಗಳಿಗೆ ಸರಳ ಮಾರ್ಗದರ್ಶಿ - ಬ್ರಾಂಡನ್ ಮೊರೆಲ್ಲಿ](https://codeburst.io/a-simple-guide-to-es6-promises-d71bacd2e13a)
+- [ದಿ ES6 ಪ್ರಾಮಿಸಸ್ — ಮನೋಜ್ ಸಿಂಗ್ ನೇಗಿ](https://codeburst.io/the-es6-promises-87a979ab27e4)
+- [ES6 ಪ್ರಾಮಿಸಸ್ ಇನ್ ಡೆಪ್ತ್ — ನಿಕೋಲಸ್ ಬೆವಾಕ್ವಾ](https://ponyfoo.com/articles/es6-promises-in-depth)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳೊಂದಿಗೆ ಪ್ಲೇಯಿಂಗ್: ಎ ಕಾಂಪ್ರಹೆನ್ಸಿವ್ ಅಪ್ರೋಚ್ — ರಾಜೇಶ್ ಬಾಬು](https://codeburst.io/playing-with-javascript-promises-a-comprehensive-approach-25ab752c78c3)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಪ್ರಾಮಿಸ್ ಬರೆಯುವುದು ಹೇಗೆ - ಬ್ರಾಂಡನ್ ವೋಜ್ನಿವಿಕ್ಜ್](https://medium.freecodecamp.org/how-to-write-a-javascript-promise-4ed8d44292b8)
+- [ಒಂದು ಕೋಡಿಂಗ್ ರೈಟರ್ಸ್ ಗೈಡ್: ES6 ಭರವಸೆಗಳಿಗೆ ಒಂದು ಪರಿಚಯ - ಆಂಡ್ರ್ಯೂ ಲೈ](https://medium.com/@andrewly07/a-coding-writers-guide-an-introduction-to-es6-promises-9ff9f9e88f6c)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್‌ನಲ್ಲಿ ಭರವಸೆಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುವುದು — ಕ್ರಿಸ್ ನೋರಿಂಗ್](https://dev.to/itnext/reverse-engineering-understand-promises-1jfc)
+- [ಕಾಲ್‌ಬ್ಯಾಕ್‌ಗಳನ್ನು ಭರವಸೆಗಳಾಗಿ ಪರಿವರ್ತಿಸುವುದು - Zell Liew](https://dev.to/zellwk/converting-callbacks-to-promises-nhn)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳು: ಶೂನ್ಯದಿಂದ ಹೀರೋ ಪ್ಲಸ್ ಚೀಟ್ ಶೀಟ್ — ಜೋಶುವಾ ಸೌಂಡರ್ಸ್](https://medium.com/dailyjs/javascript-promises-zero-to-hero-plus-cheat-sheet-64d75051cffa)
+- [ಭರವಸೆಗಳು - ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಪರಿಕಲ್ಪನೆಗಳು — ಆಗ್ನಿ ಮೆನನ್](https://dev.to/boywithsilverwings/promises-javascript-concepts-293c)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ `ಪ್ರಾಮಿಸ್` 101 — ಇಗೊರ್ ಇರಿಯಾಂಟೊ](https://dev.to/iggredible/javascript-promise-101-3idl)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳನ್ನು ಸರಳಗೊಳಿಸಿ — ಸನ್ನಿ ಸಿಂಗ್](https://dev.to/sunnysingh/simplify-javascript-promises-4djb)
+- [ದಿ ಲೋಡೌನ್ ಆನ್ ಪ್ರಾಮಿಸಸ್ - ಅಫಿನ್ಯಾ ಡೆಚಾಲರ್ಟ್](https://medium.matcha.fyi/the-low-down-on-promises-af4a96bbb95f)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ದೃಶ್ಯೀಕರಿಸಲಾಗಿದೆ: ಪ್ರಾಮಿಸಸ್ ಮತ್ತು ಅಸಿಂಕ್/ನಿರೀಕ್ಷೆ — ಲಿಡಿಯಾ ಹ್ಯಾಲಿ](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್‌ನಲ್ಲಿ ಭರವಸೆಗಳು — ಪೀಟರ್ ಕ್ಲಿಂಗಲ್‌ಹೋಫರ್](https://dev.to/peterklingelhofer/promises-in-javascript-3h5k)
+- [ES6 ಭರವಸೆಗಳಿಗೆ ಉತ್ತಮ ಅಭ್ಯಾಸಗಳು — Basti Ortiz](https://dev.to/somedood/best-practices-for-es6-promises-36da)
+- [Lo que debemos saber de EScript 2020 — Kike Sanchez](https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd)
+- [ಪ್ರಾಮಿಸ್ ಬೇಸಿಕ್ಸ್ - javascript.info](https://javascript.info/promise-basics)
+- [ಸಂಪೂರ್ಣ ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಪ್ರಾಮಿಸ್ ಗೈಡ್](https://blog.webdevsimplified.com/2021-09/javascript-promises)
 
 ## 31. Design Patterns
 
@@ -1086,25 +1100,29 @@ d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> �
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
--  [JavaScript Design Patterns – Explained with Examples — Germán Cocca](https://www.freecodecamp.org/news/javascript-design-patterns-explained/)
--  [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
--  [JavaScript Design Patterns – Beginner's Guide to Mobile Web Development — Soumyajit Pathak](https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15)
--  [JavaScript Design Patterns — Akash Pal](https://medium.com/front-end-hacking/javascript-design-patterns-ed9d4c144c81)
--  [Javascript Design Patterns: What They Are & How To Use Them — Patrick Simpson](https://seesparkbox.com/foundry/javascript_design_patterns)
--  [JavaScript Design Patterns: Understanding Design Patterns in JavaScript - Sukhjinder Arora](https://blog.bitsrc.io/understanding-design-patterns-in-javascript-13345223f2dd)
--  [All the 23 (GoF) design patterns implemented in Javascript — Felipe Beline](https://github.com/fbeline/Design-Patterns-JS)
--  [The Power of the Module Pattern in JavaScript — jsmanifest](https://medium.com/better-programming/the-power-of-the-module-pattern-in-javascript-3c73f7cd10e8)
--  [Design Patterns for Developers using JavaScript pt. I — Oliver Mensah](https://dev.to/omensah/design-patterns-for-developers-using-javascript----part-one--b3e)
--  [Design Patterns for Developers using JavaScript pt. II — Oliver Mensah](https://dev.to/omensah/design-patterns-for-developers-using-javascript---part-two--3p39)
--  [Design patterns in modern JavaScript development](https://levelup.gitconnected.com/design-patterns-in-modern-javascript-development-ec84d8be06ca)
--  [Understanding Design Patterns: Iterator using Dev.to and Medium social networks! — Carlos Caballero](https://dev.to/carlillo/understanding-design-patterns-iterator-using-dev-to-and-medium-social-networks-3bdd)
--  [JavaScript Design Patterns - Factory Pattern — KristijanFištrek](https://dev.to/kristijanfistrek/javascript-design-patterns-factory-pattern-562p)
--  [JavaScript Design Pattern — Module Pattern - Factory Pattern — Moon](https://medium.com/javascript-in-plain-english/javascript-design-pattern-module-pattern-555737eccecd)
--  [Design Patterns: Null Object - Carlos Caballero](https://medium.com/better-programming/design-patterns-null-object-5ee839e37892)
--  [Strategy Pattern - Francesco Ciulla](https://dev.to/francescoxx/strategy-pattern-5oh)
--  [Adapter Pattern - Francesco Ciulla](https://dev.to/francescoxx/adapter-pattern-5bjk)
--  [The Power of Composite Pattern in JavaScript - jsmanifest](https://dev.to/jsmanifest/the-power-of-composite-pattern-in-javascript-2732)
--  [In Defense of Defensive Programming - Adam Nathaniel Davis](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
+javascript-promises-explained-with-simple-real-life-analogies-dd6908092138)
+- [ಅಸಿಂಕ್ರೊನಸ್ ಪ್ರೋಗ್ರಾಮಿಂಗ್‌ಗಾಗಿ ಭರವಸೆಗಳು — ಎಕ್ಸ್‌ಪ್ಲೋರಿಂಗ್ JS](http://exploringjs.com/es6/ch_promises.html)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳು ಕ್ಯಾಸಿನೊದಲ್ಲಿ ಜೂಜಿನ ಮೂಲಕ ವಿವರಿಸಲಾಗಿದೆ - ಕೆವಿನ್ ಕೊನೊನೆಂಕೊ](https://blog.codeanalogies.com/2018/08/26/javascript-promises-explained-by-gambling-at-a-casino/)
+- [ES6 ಭರವಸೆಗಳು: ಮಾದರಿಗಳು ಮತ್ತು ವಿರೋಧಿ ಮಾದರಿಗಳು — ಬಾಬಿ ಬ್ರೆನ್ನನ್](https://medium.com/datafire-io/es6-promises-patterns-and-anti-patterns-bbb21a5d0918)
+- [ES6 ಭರವಸೆಗಳಿಗೆ ಸರಳ ಮಾರ್ಗದರ್ಶಿ - ಬ್ರಾಂಡನ್ ಮೊರೆಲ್ಲಿ](https://codeburst.io/a-simple-guide-to-es6-promises-d71bacd2e13a)
+- [ದಿ ES6 ಪ್ರಾಮಿಸಸ್ — ಮನೋಜ್ ಸಿಂಗ್ ನೇಗಿ](https://codeburst.io/the-es6-promises-87a979ab27e4)
+- [ES6 ಪ್ರಾಮಿಸಸ್ ಇನ್ ಡೆಪ್ತ್ — ನಿಕೋಲಸ್ ಬೆವಾಕ್ವಾ](https://ponyfoo.com/articles/es6-promises-in-depth)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳೊಂದಿಗೆ ಪ್ಲೇಯಿಂಗ್: ಎ ಕಾಂಪ್ರಹೆನ್ಸಿವ್ ಅಪ್ರೋಚ್ — ರಾಜೇಶ್ ಬಾಬು](https://codeburst.io/playing-with-javascript-promises-a-comprehensive-approach-25ab752c78c3)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಪ್ರಾಮಿಸ್ ಬರೆಯುವುದು ಹೇಗೆ - ಬ್ರಾಂಡನ್ ವೋಜ್ನಿವಿಕ್ಜ್](https://medium.freecodecamp.org/how-to-write-a-javascript-promise-4ed8d44292b8)
+- [ಒಂದು ಕೋಡಿಂಗ್ ರೈಟರ್ಸ್ ಗೈಡ್: ES6 ಭರವಸೆಗಳಿಗೆ ಒಂದು ಪರಿಚಯ - ಆಂಡ್ರ್ಯೂ ಲೈ](https://medium.com/@andrewly07/a-coding-writers-guide-an-introduction-to-es6-promises-9ff9f9e88f6c)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್‌ನಲ್ಲಿ ಭರವಸೆಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳುವುದು — ಕ್ರಿಸ್ ನೋರಿಂಗ್](https://dev.to/itnext/reverse-engineering-understand-promises-1jfc)
+- [ಕಾಲ್‌ಬ್ಯಾಕ್‌ಗಳನ್ನು ಭರವಸೆಗಳಾಗಿ ಪರಿವರ್ತಿಸುವುದು - Zell Liew](https://dev.to/zellwk/converting-callbacks-to-promises-nhn)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳು: ಶೂನ್ಯದಿಂದ ಹೀರೋ ಪ್ಲಸ್ ಚೀಟ್ ಶೀಟ್ — ಜೋಶುವಾ ಸೌಂಡರ್ಸ್](https://medium.com/dailyjs/javascript-promises-zero-to-hero-plus-cheat-sheet-64d75051cffa)
+- [ಭರವಸೆಗಳು - ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಪರಿಕಲ್ಪನೆಗಳು — ಆಗ್ನಿ ಮೆನನ್](https://dev.to/boywithsilverwings/promises-javascript-concepts-293c)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ `ಪ್ರಾಮಿಸ್` 101 — ಇಗೊರ್ ಇರಿಯಾಂಟೊ](https://dev.to/iggredible/javascript-promise-101-3idl)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಭರವಸೆಗಳನ್ನು ಸರಳಗೊಳಿಸಿ — ಸನ್ನಿ ಸಿಂಗ್](https://dev.to/sunnysingh/simplify-javascript-promises-4djb)
+- [ದಿ ಲೋಡೌನ್ ಆನ್ ಪ್ರಾಮಿಸಸ್ - ಅಫಿನ್ಯಾ ಡೆಚಾಲರ್ಟ್](https://medium.matcha.fyi/the-low-down-on-promises-af4a96bbb95f)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ದೃಶ್ಯೀಕರಿಸಲಾಗಿದೆ: ಪ್ರಾಮಿಸಸ್ ಮತ್ತು ಅಸಿಂಕ್/ನಿರೀಕ್ಷೆ — ಲಿಡಿಯಾ ಹ್ಯಾಲಿ](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
+- [ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್‌ನಲ್ಲಿ ಭರವಸೆಗಳು — ಪೀಟರ್ ಕ್ಲಿಂಗಲ್‌ಹೋಫರ್](https://dev.to/peterklingelhofer/promises-in-javascript-3h5k)
+- [ES6 ಭರವಸೆಗಳಿಗೆ ಉತ್ತಮ ಅಭ್ಯಾಸಗಳು — Basti Ortiz](https://dev.to/somedood/best-practices-for-es6-promises-36da)
+- [Lo que debemos saber de EScript 2020 — Kike Sanchez](https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd)
+- [ಪ್ರಾಮಿಸ್ ಬೇಸಿಕ್ಸ್ - javascript.info](https://javascript.info/promise-basics)
+- [ಸಂಪೂರ್ಣ ಜಾವಾಸ್ಕ್ರಿಪ್ಟ್ ಪ್ರಾಮಿಸ್ ಗೈಡ್](https://blog.webdevsimplified.com/2021-09/javascript-promises)in-defense-of-defensive-programming-k45)
 
 ### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
