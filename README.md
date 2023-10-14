@@ -716,7 +716,7 @@ All the translations for this repo will be listed below:
 - [reduce Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=IXp06KekEjM)
 - [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
 - [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
-
+- [Array Method Map |  Coding Addict (English) ](https://www.youtube.com/watch?v=80KX6aD9R7M&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=2)
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -957,6 +957,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Promise in 100 Seconds](https://www.youtube.com/watch?v=RvYYCGs45L4)
 - [JavaScript Promise in 9 Minutes](https://youtu.be/3NjdOtHpcBM)
 - [JavaScript Promises In 10 Minutes — Web Dev Simplified ](https://www.youtube.com/watch?v=DHvZLI7Db8E)
+-[JavaScipt Promises | Coding Addict](https://www.youtube.com/watch?v=IBjmTlShf6U&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=15)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -996,6 +997,7 @@ All the translations for this repo will be listed below:
 -  [Making asynchronous programming easier with async and await — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await)
 -  [JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
 -  [Better Than Promises - JavaScript Async/Await](https://blog.webdevsimplified.com/2021-11/async-await/)
+- [Async / Await | Coding Addict](https://www.youtube.com/watch?v=iHrVo5fvmzE&list=PLnHJACx3NwAfRUcuKaYhZ6T5NRIpzgNGJ&index=17)
 
 ### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
@@ -1058,6 +1060,7 @@ All the translations for this repo will be listed below:
 - [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
 - [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
 - [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
+-[Big O notation - Data Structures & Algorithms Tutorial #2 | Measuring time complexity - CodeBasics](https://www.youtube.com/watch?v=IR_S8BC8KI0)
 
 **[⬆ Back to Top](#table-of-contents)**
 
