@@ -3,7 +3,7 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 Conceptus Omnis JavaScript Developer Scire debet
   <br><br>
 </h1>
 
@@ -11,61 +11,62 @@
 
 <!-- [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso) -->
 
-## Introduction 
+## Introductio
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+Repositorium hoc creatum est cum intentione tincidunt adiuvandi notiones suas in JavaScript. Non postulatio, sed studiorum futurarum dux est. Fundatur in articulo per Stephanum Curtis scriptum et hoc legere potes [hic].(https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 Consideratus a GitHub ut unus e [top aperto fonte incepta 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## Communitas
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+Libenter sentire PR submittere nexum addendo ad proprias reficiendas vel aestimationes. Si reponam in linguam tuam transferre vis, libenter id fac placet.
 
-All the translations for this repo will be listed below:
+Omnes translationes huius repo in infra recensentur:
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
-- [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
-- [(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [اَلْعَرَبِيَّةُ (Arabice)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [Bulgarica (Bulgarica)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
+- [(Arabice)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [Latina (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
-- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Brazilian Portuguese Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Chinese (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Latina (Hispanica)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Turcicum (Turcicum)](https://github.com/ilker0/33-js-concepts) — İlker Demir
+[Languages-language (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 - [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
-- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
-- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
+- [Polish (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+— [Persarum (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+[Lingua Indonesiaca (Indonesiaca)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
+- [French (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
+- [Hindi (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
 - [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
-- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
-- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
-- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
-- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
-- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
-- [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
+- [日本語 (Iaponica)](https://github.com/oimo23/33-js-concepts) — oimo23
+- [German (German)](https://github.com/burhannn/33-js-concepts) — burhannn
+- [Lingua Ucraina:](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
+- [Sinhala (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
+- [Italian (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
+- [Malagasia (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
 - [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) - Jānis Īvāns
-- [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) - Amanuel Dagnachew
-- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
-- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
+- [Latina (Oromo)](https://github.com/Amandagne/33-js-concepts) - Amanuel Dagnachew
+- [Lingua Thai (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
+- [Catalan (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
 - [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
-- [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
-- [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
-- [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
-- [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
+- [Khmer (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
+- [Aethiopic (Aethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
+- [Hispanica Belarusiana)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
+- [Ozbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
 - [Urdu (اردو)](https://github.com/yasir2002/33-js-concepts) — Yasir Nawaz
-- [Marathi (मराठी)](https://github.com/dhruvchandak30/33-js-concepts) - Dhruv Chandak
-- [हिन्दी (Hindi)](https://github.com/milostivyy/33-js-concepts) — Mahima Chauhan
-- [বাংলা (Bengali)](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia
-- [ગુજરાતી (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
-- [سنڌي (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
-- [भोजपुरी (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
+- [Marathi (Marathi)](https://github.com/dhruvchandak30/33-js-concepts) - Dhruv Chandak
+- [Hindi (Hindi)](https://github.com/milostivyy/33-js-concepts) — Mahima Chauhan
+- [Latina (Bengali)](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia
+- [Gujarati (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
+- [Sindhi (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
+- [Bhojpuri (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
+- [Latin](https://github.com/SanchitYadav2005/33-js-concepts) - Sanchit Yadav
 
 ---
-## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
+## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Tabula contentorum</a>
 
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitive Types](#2-primitive-types)**
@@ -103,7 +104,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 1. Call Stack
+## 1. vocationem Stack
 
 ### Reference
 
@@ -138,7 +139,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Primitive Types
+## 2. Primitivae species
 
 ### Reference
 
@@ -174,7 +175,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. Types et species valorem Reference
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -201,7 +202,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. Implicitum, Explicit, Nominale, Structure et Duck Typing
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -219,7 +220,7 @@ All the translations for this repo will be listed below:
 - [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
 - [Duck Typing in Javascript - Techmaker Studio](https://www.youtube.com/watch?v=oEpgyoMEkrM)
 
-### Books
+### Libri
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
@@ -258,7 +259,7 @@ All the translations for this repo will be listed below:
 
 ## 6. Function Scope, Block Scope and Lexical Scope
 
-### Books
+### Libri
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
@@ -295,7 +296,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 7. Expression vs Statement
+## 7. Expressio nobis Statement
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -318,7 +319,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 8. IIFE, Modules and Namespaces
+## 8. IIFE, Moduli et Spatii
 
 ### Reference
 
@@ -357,7 +358,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 9. Message Queue and Event Loop
+## 9. Nuntius Queue et Event Loop
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -435,7 +436,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 12. Bitwise Operators, Type Arrays et Forum Buffers
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -459,7 +460,7 @@ All the translations for this repo will be listed below:
 
 ## 13. DOM and Layout Trees
 
-### Books
+### Libri
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
@@ -487,7 +488,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 14. Factories and Classes
+## 14. Officina et Classes
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -512,7 +513,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 15. this, call, apply and bind
+## 15. hoc vocate, applica et liga
 
 ### Reference
 
@@ -561,7 +562,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 16. new, Constructor, instanceof and Instances
+## 16. nova, Constructor, Instantia et Instantiae
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -579,7 +580,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. Prototypum haereditatis et prototypum Catenae
 
 ### Reference
 
@@ -623,7 +624,7 @@ All the translations for this repo will be listed below:
 - [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 - [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
-### Books
+### Libri
 
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
@@ -631,7 +632,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. Object.create et Object.assign
 
 ### Reference
 
@@ -661,7 +662,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 19. map, reduce, filter
+## 19. map, minuere, sparguntur
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -721,7 +722,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
+## 20. Purae functiones, Side Effectus, res publica Mutatio et Vicis Propaganda
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -758,7 +759,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 21. Closures
+## 21. Commissuras
 
 ### Reference
 
@@ -810,9 +811,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 22. High Order Functions
+## 22. Superioris Ordinis functiones
 
-### Books
+### Libri
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
@@ -874,7 +875,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 24. Collections and Generators
+## 24. Collectiones et Generatores
 
 ### Reference
 
@@ -909,7 +910,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 25. Promises
+## 25. Promissa
 
 ### Reference
 
@@ -962,13 +963,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 26. async/await
+## 26. async / expectamus
 
 ### Reference
 
 -  [async/await — JavaScript.Info](https://javascript.info/async-await)
 
-### Books
+### Libri
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 -  [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
@@ -1042,7 +1043,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 28. Pretiosa operatio et Big Domine Notatio
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1063,7 +1064,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 29. Algorithms
+## 29. Algorithmus
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1088,7 +1089,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 30. Hereditas, Polymorphismus et Code Reuse
 
 ### Reference
 
@@ -1121,7 +1122,7 @@ All the translations for this repo will be listed below:
 
 - [Design Patterns - Patterns.dev](https://www.patterns.dev/posts/#design-patterns)
 
-### Books
+### Libri
 
 -  [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 
@@ -1156,9 +1157,9 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 32. Partial Applications, Currying, Compose and Pipe
+## 32. Applicationes partiales, Currying, compone et Pipe
 
-### Books
+### Libri
 
 -  [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
@@ -1207,7 +1208,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 33. Clean Code
+## 33. Mundus Code
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
