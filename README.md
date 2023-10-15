@@ -101,8 +101,8 @@ All the translations for this repo will be listed below:
  * 🎥 [Understanding JavaScript Execution — Codesmith](https://www.youtube.com/watch?v=Z6a1cLyq7Ac&list=PLWrQZnG8l0E4kd1T_nyuVoxQUaYEWFgcD)
  * 🎥 [Call Stack & Event Loop — movies com](https://www.youtube.com/watch?v=mk0lu9MKBto)
  * 🎥 [The Ultimate Guide to Execution Contexts, Hoisting, Scopes, and Closures in JavaScript — Tyler McGinnis](https://www.youtube.com/watch?v=Nt-qa_LlUH0)
-
-**[⬆ Back to Top](#table-of-contents)**
+* 🎥 [Call Stack & Event Loop — movies com](https://www.youtube.com/watch?v=mk0lu9MKBto)
+**[ Introduction to Veriables in js- Telusco](https://www.youtube.com/watch?v=TOkU5HxES1o&list=PLsyeobzWxl7rrvgG7MLNIMSTzVCDZZcT4&index=4&pp=iAQB)**
 
 ---
 
