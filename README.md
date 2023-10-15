@@ -63,6 +63,7 @@ All the translations for this repo will be listed below:
 - [ગુજરાતી (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
 - [سنڌي (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
 - [भोजपुरी (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
+- [বাংলা (Bengali)](https://github.com/debalinadas05/33-js-concepts) — Debalina Das 
 
 ---
 ## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
@@ -507,7 +508,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Factory Functions — Programming with Mosh](https://www.youtube.com/watch?v=jpegXpQpb3o)
 - [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
 - [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
-
+- [Factory Function vs. Constructor vs. Class - ColorCode](https://youtu.be/fbuyliXlDGI?si=9OVYuUGkL7BuXo2G)
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -622,6 +623,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Using Prototypes — O'Reilly](https://www.youtube.com/watch?v=oCwCcNvaXAQ)
 - [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 - [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
+- [JavaScript Prototypal inheritance - ColorCode](https://youtu.be/1UTqFAjYx1k?si=ZnSDIM6sDgCxsbHA)
 
 ### Books
 
@@ -804,6 +806,7 @@ All the translations for this repo will be listed below:
 - [Closures in JS - Akshay Saini](https://www.youtube.com/watch?v=qikxEIxsXco)
 - [CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre](https://youtu.be/xa8lhVwQBw4)
 - [Learn Closures In 7 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=3a0I8ICR1Vg)
+- [Closures Explained in 100 Seconds- Fireship](https://youtu.be/vKJpN5FAeF4?si=XStedqVE-YZrpW_Y)
 
 
 **[⬆ Back to Top](#table-of-contents)**
@@ -836,6 +839,7 @@ All the translations for this repo will be listed below:
 - [Part 1: An Introduction to Callbacks and Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=7E8ctomPQJw)
 - [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
 - [Higher-Order Functions ft. Functional Programming - Akshay Saini](https://www.youtube.com/watch?v=HkWxvB1RJq0)
+-[Higher Order Functions - ColorCode](https://youtu.be/0aKZvNNf8BA?si=vqu5BL2ZEWIESNLX)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -869,6 +873,8 @@ All the translations for this repo will be listed below:
 - [Recursion, Iteration, and JavaScript: A Love Story | JSHeroes 2018 — Anjana Vakil](https://www.youtube.com/watch?v=FmiQr4nfoPQ)
 - [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
 - [What Is Recursion - In Depth - Web Dev Simplified](https://www.youtube.com/watch?v=6oDQaB2one8)
+- [Best Javascript Recursion Explanation - DevSage](https://youtu.be/LteNqj4DFD8?si=_253Kk_U-ffd8lPo)
+- [Recursion in 100 Seconds - Fireship](https://youtu.be/rf60MejMz3E?si=RTLDSYzPNH3gmA7S)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -1008,6 +1014,7 @@ All the translations for this repo will be listed below:
 - [Complete Guide to JS Async & Await ES2017/ES8 — Colt Steele](https://www.youtube.com/watch?v=krAYA4rvbdA)
 - [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
 - [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
+- [How Async Javascript works (Callback Hell, Promises, Async Await, Call Stack and more) - developedbyed](https://youtu.be/1Z7FjG--F20?si=pnxbv9wt2P3GJfeW)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -1038,6 +1045,7 @@ All the translations for this repo will be listed below:
 - [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
 - [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
 - [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
+- [ JavaScript Data structure — Codevolution](https://youtu.be/poGEVboh9Rw?si=3vOKscPUIbbRuFBl)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -1111,7 +1119,7 @@ All the translations for this repo will be listed below:
 - [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
 - [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
 - [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
-
+- [Inheritance vs Composition — Bo Qian](https://youtu.be/tXFqS31ZOFM?si=BEgLTZCvx6F4gHl-)
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -1152,6 +1160,8 @@ All the translations for this repo will be listed below:
 
 - [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 - [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
+- [Constructor Pattern in JavaScript - Code with Ahsan](https://youtu.be/uFyj0_n1uD8?si=BltIVudlBKY4brU5)
+- [10 Design Patterns Explained in 10 Minutes - Fireship](https://youtu.be/tv-_1er1mWI?si=LqaUzk36VHNc9kos)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -1203,6 +1213,8 @@ All the translations for this repo will be listed below:
 - [Partial Application vs. Currying — NWCalvank](https://www.youtube.com/watch?v=DzLkRsUN2vE)
 - [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 - [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
+- [Pipe Functions and Compose Functions - Dave Gray](https://youtu.be/kclGXphtmVg?si=eXr2gLays-Dzq688)
+- [Closures, Currying and Partial Application - Closures, Currying and Partial Application](https://youtu.be/zNR-AS9NFS4?si=uiJz0QEs28oHmKQn)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -1234,6 +1246,8 @@ All the translations for this repo will be listed below:
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 - 🎥 [JavaScript Best Practices and Coding Conventions - Write Clean Code](https://youtu.be/RMN_bkZ1KM0?si=Ssg3cNZ_DB7CIwKQ)
 - 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
+- 🎥 [Write clean code in JavaScript - dcode](https://youtu.be/b59AgnPOGxc?si=6qmk6-uqYb7v0E1s)
+- 🎥 [Javascript clean code examples - Adrian Twarog](https://youtu.be/-d-jrxy6YbE?si=gf_-TCg8xTDO1itV)
 
 **[⬆ Back to Top](#table-of-contents)**
 
