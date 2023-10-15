@@ -23,46 +23,48 @@ Feel free to submit a PR adding a link to your own recaps or reviews. If you wan
 
 All the translations for this repo will be listed below:
 
-- [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
-- [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
-- [(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
-- [اَلْعَرَبِيَّةُ(Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
-- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
-- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
-- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
-- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
-- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
-- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
-- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
-- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
-- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
-- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
-- [Malagasy (Madagascar)](https://github.com/chrys-elrak/33-js-concepts) — Chrys Rakotonimanana
-- [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) - Jānis Īvāns
-- [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) - Amanuel Dagnachew
-- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
-- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
-- [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
-- [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
-- [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
-- [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
-- [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
-- [Urdu (اردو)](https://github.com/yasir2002/33-js-concepts) — Yasir Nawaz
-- [Marathi (मराठी)](https://github.com/dhruvchandak30/33-js-concepts) - Dhruv Chandak
-- [हिन्दी (Hindi)](https://github.com/milostivyy/33-js-concepts) — Mahima Chauhan
-- [বাংলা (Bengali)](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia
-- [ગુજરાતી (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
-- [سنڌي (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
-- [भोजपुरी (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
+| Language                             | Translator                        |
+|--------------------------------------|----------------------------------|
+| Shqip (Albanian)                     | Eldrin Ereqi                     |
+| اَلْعَرَبِيَّةُ‎ (Arabic)           | Amr Elsekilly                    |
+| Български (Bulgarian)               | thewebmasterp                    |
+| 汉语 (Chinese)                       | Re Tian                          |
+| اَلْعَرَبِيَّةُ(Arabic)             | Amr Elsekilly                    |
+| Português do Brasil (Brazilian Portuguese) | Tiago Boeing             |
+| 한국어 (Korean)                      | Suin Lee                         |
+| Español (Spanish)                   | Adonis Mendoza                   |
+| Türkçe (Turkish)                     | İlker Demir                      |
+| русский язык (Russian)               | Mihail Gumennii                  |
+| Tiếng Việt (Vietnamese)              | Nguyễn Trần Chung               |
+| Polski (Polish)                      | Dawid Lipinski                   |
+| فارسی (Persian)                     | Majid Alavizadeh                 |
+| Bahasa Indonesia (Indonesian)       | Rijdzuan Sampoerna               |
+| Français (French)                   | Robin Métral                     |
+| हिन्दी (Hindi)                      | Vikas Chauhan                    |
+| Ελληνικά (Greek)                    | Dimitris Zarachanis              |
+| 日本語 (Japanese)                    | oimo23                           |
+| Deutsch (German)                    | burhannn                         |
+| украї́нська мо́ва (Ukrainian)         | Andrew Savetchuk                 |
+| සිංහල (Sinhala)                   | Udaya Shamendra                  |
+| Italiano (Italian)                   | Gianluca Fiore                   |
+| Malagasy (Madagascar)               | Chrys Rakotonimanana             |
+| Latviešu (Latvian)                   | Jānis Īvāns                     |
+| Afaan Oromoo (Oromo)                | Amanuel Dagnachew               |
+| ภาษาไทย (Thai)                     | Arif Waram                       |
+| Català (Catalan)                   | Mario Estrada                    |
+| Svenska (Swedish)                   | Fenix Hongell                    |
+| ខ្មែរ (Khmer)                     | Chrea Chanchhunneng              |
+| አማርኛ (Ethiopian)                 | Miniyahil Kebede(ምንያህል ከበደ) |
+| Беларуская мова (Belarussian)       | Dzianis Yafimau                  |
+| O'zbekcha (Uzbek)                   | Shokhrukh Usmonov                |
+| Urdu (اردو)                         | Yasir Nawaz                      |
+| Marathi (मराठी)                    | Dhruv Chandak                    |
+| हिन्दी (Hindi)                      | Mahima Chauhan                   |
+| বাংলা (Bengali)                     | Jisan Mia                        |
+| ગુજરાતી (Gujarati)                | Vatsal Bhuva                     |
+| سنڌي (Sindhi)                      | Sunny Gandhwani                  |
+| भोजपुरी (Bhojpuri)                | Pronay Debnath                   |
+
 
 ---
 ## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
