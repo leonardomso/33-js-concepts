@@ -158,6 +158,7 @@ All the translations for this repo will be listed below:
 -  [Diving Deeper in JavaScripts Objects — Arfat Salman](https://blog.bitsrc.io/diving-deeper-in-javascripts-objects-318b1e13dc12)
 -  [The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
 -  [Object to primitive conversion — JavaScript.info](https://javascript.info/object-toprimitive)
+- [Methods of primitives - Javascript.info](https://javascript.info/primitives-methods)
 
 ### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
@@ -1059,6 +1060,10 @@ All the translations for this repo will be listed below:
 - [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
 - [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
 - [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
+- [Learn Big O Notation In 12 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=itn09C2ZB9Y)
+- [JavaScript Algorithms: Big-O Notation - Codevolution](https://www.youtube.com/watch?v=3yUuo7TqMW8)
+- [JavaScript Algorithms Crash Course: Learn Algorithms & "Big O" from the Ground Up! - Academind](https://www.youtube.com/watch?v=JgWm6sQwS_I)
+- [Big O Notation - Data Structures and Algorithms in Javascript - RoadSideCoder](https://www.youtube.com/watch?v=LaexPVi1VRE)
 
 **[⬆ Back to Top](#table-of-contents)**
 
