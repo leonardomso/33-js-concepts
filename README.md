@@ -101,7 +101,7 @@ All the translations for this repo will be listed below:
 30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
 31. **[Design Patterns](#31-design-patterns)**
 32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code](#33-clean-code)**
+33. **[Clean Code, The Spread operator and Destructuring](#33-clean-code)**
 
 ---
 
@@ -1208,7 +1208,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 33. Clean Code
+## 33. Clean Code, The Spread operator, The Rest operator and Destructuring
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1227,6 +1227,9 @@ All the translations for this repo will be listed below:
 - [The Clean Code Book - Robert C Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
 - [How to use destructuring in JavaScript to write cleaner, more powerful code - freecodecamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
 - [Write Clean Code Using JavaScript Object Destructuring - Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
+- [Destructuring in JavaScript - Alvin Okoro](https://www.freecodecamp.org/news/destructuring-patterns-javascript-arrays-and-objects/)
+- [Array vs Object Destructuring in JavaScript – What’s the Difference](https://www.freecodecamp.org/news/array-vs-object-destructuring-in-javascript/)
+- [JavaScript Rest vs Spread Operator – What’s the Difference](https://www.freecodecamp.org/news/javascript-rest-vs-spread-operators/#:~:text=But%20these%20two%20operators%20are,expands%20iterables%20into%20individual%20elements.)
 
 ### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
@@ -1234,6 +1237,8 @@ All the translations for this repo will be listed below:
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 - 🎥 [JavaScript Best Practices and Coding Conventions - Write Clean Code](https://youtu.be/RMN_bkZ1KM0?si=Ssg3cNZ_DB7CIwKQ)
 - 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
+- 🎥 [Destructuring in ES6 - Beau teaches JavaScript](https://youtu.be/-vR3a11Wzt0?si=pITB9fmBHdNnHANd)
+- 🎥 [...spread operator and rest operator - Beau teaches JavaScript](https://youtu.be/iLx4ma8ZqvQ?si=hjqEfZhTRAI9OrEA)
 
 **[⬆ Back to Top](#table-of-contents)**
 
