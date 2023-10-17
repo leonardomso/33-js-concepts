@@ -957,6 +957,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Promise in 100 Seconds](https://www.youtube.com/watch?v=RvYYCGs45L4)
 - [JavaScript Promise in 9 Minutes](https://youtu.be/3NjdOtHpcBM)
 - [JavaScript Promises In 10 Minutes — Web Dev Simplified ](https://www.youtube.com/watch?v=DHvZLI7Db8E)
+- [Promises | Ep 02 Season 02 - Namaste JavaScript - Akshay Saini ](https://youtu.be/ap-6PPAuK1Y?si=Ri1fopXeYjlrHzpf)
 
 **[⬆ Back to Top](#table-of-contents)**
 
