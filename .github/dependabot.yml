@@ -3,6 +3,6 @@ updates:
   - package-ecosystem: "npm"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
 notifications:
   - type: "github"
