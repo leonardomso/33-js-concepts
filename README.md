@@ -138,7 +138,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Primitive Types
+## 2. Primitive Types.
 
 ### Reference
 
