@@ -407,6 +407,8 @@ All the translations for this repo will be listed below:
 - [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
 - [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
 - [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
+- [setInterval and setTimeout - Beau teaches JavaScript](https://youtu.be/kOcFZV3c75I?si=B7xko4_mg-b-vjwo)
+- [The javaScript method setInterval EXPLAINED in 5 minutes!](https://youtu.be/GhePFBkdNYk?si=lU30-Odv5tn5o9Nm)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -1134,8 +1136,12 @@ All the translations for this repo will be listed below:
 
 ### Books
 
+<<<<<<< HEAD
+
+- # [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 - [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 - [Pro JavaScript Design Patterns — Ross Harmes and Dustin Diaz](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
+  > > > > > > > 484b8ed6a05f364639aa813c8a32277a0235677b
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1248,7 +1254,11 @@ All the translations for this repo will be listed below:
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
 - 🎥 [JavaScript Best Practices and Coding Conventions - Write Clean Code](https://youtu.be/RMN_bkZ1KM0?si=Ssg3cNZ_DB7CIwKQ)
 - 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
+  <<<<<<< HEAD
+- 🎥 [Destructuring in ES6 - Beau teaches JavaScript](https://youtu.be/-vR3a11Wzt0?si=pITB9fmBHdNnHANd)
+- # 🎥 [...spread operator and rest operator - Beau teaches JavaScript](https://youtu.be/iLx4ma8ZqvQ?si=hjqEfZhTRAI9OrEA)
 - 🎥 [Tips On Learning How To Code](https://www.youtube.com/watch?v=0wHyoBPc6zs)
+  > > > > > > > 484b8ed6a05f364639aa813c8a32277a0235677b
 
 **[⬆ Back to Top](#table-of-contents)**
 
