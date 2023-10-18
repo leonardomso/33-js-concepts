@@ -872,6 +872,8 @@ All the translations for this repo will be listed below:
 - [Recursion, Iteration, and JavaScript: A Love Story | JSHeroes 2018 — Anjana Vakil](https://www.youtube.com/watch?v=FmiQr4nfoPQ)
 - [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
 - [What Is Recursion - In Depth - Web Dev Simplified](https://www.youtube.com/watch?v=6oDQaB2one8)
+- [Data Structures in Javascript ( Recursion ) - RoadsideCoder](https://www.youtube.com/watch?v=DICBCBZn_L4)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
