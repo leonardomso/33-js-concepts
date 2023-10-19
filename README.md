@@ -64,6 +64,7 @@ All the translations for this repo will be listed below:
 - [سنڌي (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
 - [भोजपुरी (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
 - [ਪੰਜਾਬੀ (Punjabi)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
+- [ಕನ್ನಡ (Kannada)](https://github.com/Shubhamkashyap1601/33-js-concepts) — Shubham Kashyap
 - [Kiswahili (Swahili)](https://github.com/Bratajit-03/33-js-concepts) — Bratajit Das
 
 ---
