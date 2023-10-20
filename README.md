@@ -1,4 +1,4 @@
-<h1 align="center">
+![1200px-Tululipi4 svg](https://github.com/dhanesh12twice/33-js-concepts/assets/75358658/5d994567-913b-49f8-8805-e908409517a4)<h1 align="center">
 <br>
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
@@ -66,6 +66,7 @@ All the translations for this repo will be listed below:
 - [ਪੰਜਾਬੀ (Punjabi)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
 - [ಕನ್ನಡ (Kannada)](https://github.com/Shubhamkashyap1601/33-js-concepts) — Shubham Kashyap
 - [Kiswahili (Swahili)](https://github.com/Bratajit-03/33-js-concepts) — Bratajit Das
+- [ ދިވެހި (Maldivian)](https://github.com/Bratajit-03/33-js-concepts) -- Dhanesh 
 
 ---
 ## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
