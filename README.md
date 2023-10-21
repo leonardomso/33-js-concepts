@@ -661,6 +661,7 @@ All the translations for this repo will be listed below:
 
 - [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
+- [Object.create() explained — Fun Fun Function](https://youtu.be/CDFN1VatiJA?si=HsPkVglnudyNoVFw)
 
 **[⬆ Back to Top](#table-of-contents)**
 
