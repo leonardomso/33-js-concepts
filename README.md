@@ -136,7 +136,11 @@ All the translations for this repo will be listed below:
 - [Call Stacks - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
 - [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
 - [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
-    
+
+### <img align= center width=40px height=40px src="https://i.postimg.cc/BZTPL7D8/interview.png"> Interview Preparation
+
+- [The Call Stack — Baeldung](https://www.baeldung.com/cs/call-stack)
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -174,6 +178,11 @@ All the translations for this repo will be listed below:
 - [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 - [Data Type in JavaScript - ScholarHat](https://www.youtube.com/watch?v=aFDvBjVjCh8)
 
+### <img align= center width=40px height=40px src="https://i.postimg.cc/BZTPL7D8/interview.png"> Interview Preparation
+
+- [Java Type System Interview Questions — Baeldung](https://www.baeldung.com/java-type-system-interview-questions)
+- [20 Data Type Interview Questions and Answers — Climb The Ladder](https://climbtheladder.com/data-type-interview-questions/)
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -201,6 +210,11 @@ All the translations for this repo will be listed below:
 - [JavaScript - Reference vs Primitive Values/ Types - Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - [Value Types and Reference Types in JavaScript - Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
 
+### <img align= center width=40px height=40px src="https://i.postimg.cc/BZTPL7D8/interview.png"> Interview Preparation
+
+- [Generics, Reference Types, Value Types, and Interview Questions — Steve Michelotti](https://stevemichelotti.com/generics-reference-types-value-types-and-interview-questions/)
+- [Value Type and Reference Type — Tutorials Teacher](https://www.tutorialsteacher.com/csharp/csharp-value-type-and-reference-type)
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -226,6 +240,10 @@ All the translations for this repo will be listed below:
 ### Books
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
+
+### <img align= center width=40px height=40px src="https://i.postimg.cc/BZTPL7D8/interview.png"> Interview Preparation
+
+- [Duck Typing vs Structural Typing vs Nominal Typing — Medium](https://medium.com/higher-order-functions/duck-typing-vs-structural-typing-vs-nominal-typing-e0881860bf10)
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -255,6 +273,11 @@ All the translations for this repo will be listed below:
 - [JavaScript "==" VS "===" — Web Dev Simplified](https://www.youtube.com/watch?v=C5ZVC4HHgIg)
 - [=== vs == in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=a0S1iG3TgP0)
 - [The typeof operator in JS - CodeVault](https://www.youtube.com/watch?v=NSS5WRcv7yM)
+
+### <img align= center width=40px height=40px src="https://i.postimg.cc/BZTPL7D8/interview.png"> Interview Preparation
+
+- [Difference between typeof === and typeof == — Stack Overflow](https://stackoverflow.com/questions/66633677/difference-between-typeof-and-typeof)
+- [Understanding ==, === and typeof in JavaScript — Code Burst](https://codeburst.io/understanding-and-typeof-in-javascript-af0af3860bef)
 
 **[⬆ Back to Top](#table-of-contents)**
 
