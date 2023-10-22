@@ -1225,7 +1225,7 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 33. Clean Code, The Spread operator, The Rest operator and Destructuring
+## 33. Clean Code, Spread operator, Rest operator and Destructuring
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
