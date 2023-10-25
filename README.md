@@ -1098,6 +1098,7 @@ All the translations for this repo will be listed below:
 - 🎥 [Javascript Algorithms + Data Structures - KodingKevin](https://www.youtube.com/playlist?list=PLn2ipk-jqgZiAHiA70hOxAj8RMUeqYNK3)
 - 🎥 [JavaScript Data Structures: Getting Started - Academind](https://www.youtube.com/watch?v=41GSinwoMYA)
 - 🎥 [Algorithms and Data Structures - The Coding Train (Daniel Shiffman)](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH)
+- 🎥 [Modern JavaScript Tutorial - Net Ninja](https://www.youtube.com/playlist?list=PL4cUxeGkcC9haFPT7J25Q9GRB_ZkFrQAc)
 
 **[⬆ Back to Top](#table-of-contents)**
 
