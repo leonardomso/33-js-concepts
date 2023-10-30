@@ -3,7 +3,7 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+    எல்லோரும் அறிவிப்பு வேண்டும் JavaScript மேம்பட்ட பெருமைகள் 33
   <br><br>
 </h1>
 
@@ -11,17 +11,18 @@
 
 <!-- [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso) -->
 
-## Introduction 
+## அறிமுக
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+இந்த சேகரம் உருவாக்கப்பட்டு, படிக்க உதவ உள்ளது மெம்பர்கள் JavaScript உரிப்புகளை மேம்படுத்த உத்தியோகப் பணியில் விளக்குவதற்கு. இது ஒரு கோரணம் அல்ல, எதிர்கால படிப்பில் ஒரு வழி வழி. இது Stephen Curtis அனால் எழுதப்பட்ட ஒரு கட்டுரையின் அடிப்படையில் உள்ளது, மேலும் அதை [இங்கே](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) படியுங்கள்.
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 GitHub உடன் ஒருவரது 2018-பார்த்த மூலம் ஒரு [சிறந்த காணெடுக்கின்ற திறமை பயன்படுத்தல் திட்டம் என்று பரிகாரமானிருந்தது!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## சமூகம்
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+உங்கள் தாளைக் கண்டறித்து, உங்கள் உரிமை அல்லால் பரிமர்பித்த ஒரு மேம்பட்ட உத்திரம் சேர்த்து, ஒரு பரிமர்பித்த உத்திரம் ஆகமுள்ளதாக உள்ளது. உங்கள் தொடர்ந்த மொழியில் இந்த சேகரம் மொழிகளை மீட்க விரும்பினால், தயவுசெய்து அதை செய்ய வாய்ப்பு கொடுக்கவும்.
 
-All the translations for this repo will be listed below:
+இந்த சேகரங்கள் பற்றிய அனைத்து மொழிகளுக்கும் பின்னிட்ட கீழே படிக்கப்படும்:
+
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
