@@ -72,43 +72,43 @@
 ---
 ## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">ବିଷୟବସ୍ତୁର ସାରଣୀ</a>
 
-1. **[Call Stack](#1-call-stack)**
-2. **[Primitive Types](#2-primitive-types)**
-3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
-5. **[== vs === vs typeof](#5--vs--vs-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
-7. **[Expression vs Statement](#7-expression-vs-statement)**
-8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
-9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
-11. **[JavaScript Engines](#11-javascript-engines)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
-13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
-14. **[Factories and Classes](#14-factories-and-classes)**
-15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
-16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
-17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
-18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
-19. **[map, reduce, filter](#19-map-reduce-filter)**
-20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
-21. **[Closures](#21-closures)**
-22. **[High Order Functions](#22-high-order-functions)**
-23. **[Recursion](#23-recursion)**
-24. **[Collections and Generators](#24-collections-and-generators)**
-25. **[Promises](#25-promises)**
+1. **[Call Stack](#1-କଲ୍-ଷ୍ଟାକ)**
+2. **[Primitive Types](#2-ପ୍ରାଥମିକ-ପ୍ରକାରଗୁଡିକ)**
+3. **[Value Types and Reference Types](#3-ମୂଲ୍ୟ-ପରକାର-ଏବଂ-ସନ୍ଦର୍ଭ-ପ୍ରକାର)**
+4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-ଅସ୍ପଷ୍ଟ,-ସ୍ପଷ୍ଟ,-ନାମକରଣ,-ଗଠନ-ଏବଂ-ଡକ୍-ଟାଇପିଂ)**
+5. **[== vs === vs typeof](#5-==-ବନାମ-===-ବନାମ-typeof)**
+6. **[Function Scope, Block Scope and Lexical Scope](#6-ଫଙ୍କସନ୍-ସ୍କୋପ୍,-ବ୍ଲକ୍-ସ୍କୋପ୍-ଏବଂ-ଲେକ୍ସିକାଲ୍-ସ୍କୋପ୍)**
+7. **[Expression vs Statement](#7-ଅଭିବ୍ୟକ୍ତି-ବନାମ-ଷ୍ଟେଟମେଣ୍ଟ)**
+8. **[IIFE, Modules and Namespaces](#8-IIFE,-ମଡ୍ୟୁଲ୍-ଏବଂ-ନାମ-ସ୍ଥାନ)**
+9. **[Message Queue and Event Loop](#9-ମେସେଜ୍-କ୍ୟୁ-ଏବଂ-ଇଭେଣ୍ଟ-ଲୁପ୍)**
+10. **[setTimeout, setInterval and requestAnimationFrame](#10-ସେଟ୍-ଟାଇମଆଉଟ୍,-ସେଟ୍-ଇଣ୍ଟରଭାଲ୍-ଗ-ଅନୁରୋଧ-ଅନୁରୋଧ-ଆନିମେସନ୍-ଫ୍ରେମ୍)**
+11. **[JavaScript Engines](#11-ଜାଭାସ୍କ୍ରିପ୍ଟ-ଇଞ୍ଜିନ୍)**
+12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-ବିଟୱାଇସ୍-ଅପରେଟର୍ସ,-ଟାଇପ୍-ଆରେ-ଏବଂ-ଆରେ-ବଫର୍)**
+13. **[DOM and Layout Trees](#13-DOM-ଏବଂ-ଲେଆଉଟ୍-ଗଛ)**
+14. **[Factories and Classes](#14-କାରଖାନା-ଏବଂ-ଶ୍ରେଣୀଗୁଡିକ)**
+15. **[this, call, apply and bind](#15-ଏହା,-କଲ୍,-ପ୍ରୟୋଗ-ଏବଂ-ବାନ୍ଧ)**
+16. **[new, Constructor, instanceof and Instances](#16-ନୂତନ,-କନଷ୍ଟ୍ରକ୍ଟର,-ଇନଷ୍ଟାଣ୍ଟ-ଏବଂ-ଇନଷ୍ଟାନ୍ସ)**
+17. **[Prototype Inheritance and Prototype Chain](#17-ପ୍ରୋଟୋଟାଇପ୍-ଉତ୍ତରାଧିକାର-ଏବଂ-ପ୍ରୋଟୋଟାଇପ୍-ଶୃଙ୍ଖଳା)**
+18. **[Object.create and Object.assign](#18-objectcreate-ଏବଂ-objectassign)**
+19. **[map, reduce, filter](#19-ମାନଚିତ୍ର,-ହ୍ରାସ,-ଫିଲ୍ଟର୍)**
+20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-ଶୁଦ୍ଧ-କାର୍ଯ୍ୟ,-ପାର୍ଶ୍ୱ-ପ୍ରତିକ୍ରିୟା,-ରାଜ୍ୟ-ପରିବର୍ତ୍ତନ-ଏବଂ-ଘଟଣା-ପ୍ରଚାର)**
+21. **[Closures](#21-ବନ୍ଦ)**
+22. **[High Order Functions](#22-ଉଚ୍ଚ-ଅର୍ଡର-କାର୍ଯ୍ୟଗୁଡ଼ିକ)**
+23. **[Recursion](#23-ପୁନରାବୃତ୍ତି)**
+24. **[Collections and Generators](#24-ସଂଗ୍ରହ-ଏବଂ-ଜେନେରେଟର)**
+25. **[Promises](#25-ପ୍ରତିଜ୍ଞା)**
 26. **[async/await](#26-asyncawait)**
-27. **[Data Structures](#27-data-structures)**
-28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
-29. **[Algorithms](#29-algorithms)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
-31. **[Design Patterns](#31-design-patterns)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
-33. **[Clean Code](#33-clean-code)**
+27. **[Data Structures](#27-ଡାଟା-ଗଠନ)**
+28. **[Expensive Operation and Big O Notation](#28-ବ୍ୟୟବହୁଳ-ଅପରେସନ୍-ଏବଂ-ବିଗ୍-ହେ-ନୋଟେସନ୍)**
+29. **[Algorithms](#29-ଆଲଗୋରିଦମ)**
+30. **[Inheritance, Polymorphism and Code Reuse](#30-ଉତ୍ତରାଧିକାରୀ,-ପଲିମୋର୍ଫିଜିମ୍-ଏବଂ-କୋଡ୍-ପୁନ-use-ବ୍ୟବହାର)**
+31. **[Design Patterns](#31-ଡିଜାଇନ୍-ପାଟର୍ନସ୍)**
+32. **[Partial Applications, Currying, Compose and Pipe](#32-ଆଂଶିକ-ପ୍ରୟୋଗ,-କ୍ୟୁରିଙ୍ଗ,-ରଚନା-ଏବଂ-ପାଇପ୍)**
+33. **[Clean Code](#33-କ୍ଲିନ୍-କୋଡ୍)**
 
 ---
 
-## 1. ଷ୍ଟାକକୁ କଲ୍ କରନ୍ତୁ
+## 1. କଲ୍ ଷ୍ଟାକ
 
 ### ସନ୍ଦର୍ଭ
 
@@ -181,7 +181,7 @@
 
 ---
 
-## 3. ମୂଲ୍ୟ ପ୍ରକାର ଏବଂ ସନ୍ଦର୍ଭ ପ୍ରକାର |
+## 3. ମୂଲ୍ୟ ପ୍ରକାର ଏବଂ ସନ୍ଦର୍ଭ ପ୍ରକାର
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
 
@@ -208,7 +208,7 @@
 
 ---
 
-## 4. ଅସ୍ପଷ୍ଟ, ସ୍ପଷ୍ଟ, ନାମକରଣ, ଗଠନ ଏବଂ ଡକ୍ ଟାଇପିଂ |
+## 4. ଅସ୍ପଷ୍ଟ, ସ୍ପଷ୍ଟ, ନାମକରଣ, ଗଠନ ଏବଂ ଡକ୍ ଟାଇପିଂ
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
 
@@ -263,7 +263,7 @@
 
 ---
 
-## 6. ଫଙ୍କସନ୍ ସ୍କୋପ୍, ବ୍ଲକ୍ ସ୍କୋପ୍ ଏବଂ ଲେକ୍ସିକାଲ୍ ସ୍କୋପ୍ |
+## 6. ଫଙ୍କସନ୍ ସ୍କୋପ୍, ବ୍ଲକ୍ ସ୍କୋପ୍ ଏବଂ ଲେକ୍ସିକାଲ୍ ସ୍କୋପ୍
 
 ### ପୁସ୍ତକ
 
@@ -332,7 +332,7 @@
 
 ---
 
-## 8. IIFE, ମଡ୍ୟୁଲ୍ ଏବଂ ନାମ ସ୍ଥାନ |
+## 8. IIFE, ମଡ୍ୟୁଲ୍ ଏବଂ ନାମ ସ୍ଥାନ
 
 ### ସନ୍ଦର୍ଭ
 
@@ -371,7 +371,7 @@
 
 ---
 
-## 9. ମେସେଜ୍ କ୍ୟୁ ଏବଂ ଇଭେଣ୍ଟ ଲୁପ୍ |
+## 9. ମେସେଜ୍ କ୍ୟୁ ଏବଂ ଇଭେଣ୍ଟ ଲୁପ୍
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
 
@@ -399,7 +399,7 @@
 
 ---
 
-## 10. setTimeout, setInterval ଏବଂ requestAnimationFrame |
+## 10. ସେଟ୍ ଟାଇମଆଉଟ୍, ସେଟ୍ ଇଣ୍ଟରଭାଲ୍ ଗ ଅନୁରୋଧ ଅନୁରୋଧ ଆନିମେସନ୍ ଫ୍ରେମ୍
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
 
@@ -424,7 +424,7 @@
 
 ---
 
-## 11. ଜାଭାସ୍କ୍ରିପ୍ଟ ଇଞ୍ଜିନ୍ |
+## 11. ଜାଭାସ୍କ୍ରିପ୍ଟ ଇଞ୍ଜିନ୍
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
 
@@ -451,7 +451,7 @@
 
 ---
 
-## 12. ବିଟୱାଇସ୍ ଅପରେଟର୍ସ, ଟାଇପ୍ ଆରେ ଏବଂ ଆରେ ବଫର୍ |
+## 12. ବିଟୱାଇସ୍ ଅପରେଟର୍ସ, ଟାଇପ୍ ଆରେ ଏବଂ ଆରେ ବଫର୍
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
 
@@ -473,7 +473,7 @@
 
 ---
 
-## 13. DOM ଏବଂ ଲେଆଉଟ୍ ଗଛ |
+## 13. DOM ଏବଂ ଲେଆଉଟ୍ ଗଛ
 
 ### ପୁସ୍ତକ
 
@@ -504,7 +504,7 @@
 
 ---
 
-## 14. କାରଖାନା ଏବଂ ଶ୍ରେଣୀଗୁଡିକ |
+## 14. କାରଖାନା ଏବଂ ଶ୍ରେଣୀଗୁଡିକ
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
 
@@ -529,7 +529,7 @@
 
 ---
 
-## 15. ଏହା, କଲ୍, ପ୍ରୟୋଗ ଏବଂ ବାନ୍ଧ |
+## 15. ଏହା, କଲ୍, ପ୍ରୟୋଗ ଏବଂ ବାନ୍ଧ
 
 ### ସନ୍ଦର୍ଭ
 
