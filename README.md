@@ -1242,6 +1242,7 @@ All the translations for this repo will be listed below:
 -  [Clean Code concepts adapted for JavaScript — Ryan McDermott](https://github.com/ryanmcdermott/clean-code-javascript)
 -  [Clean Code Practice: How to write clean code — Tirth Bodawala](https://www.atyantik.com/clean-code-practices-javascript/)
 -  [Function parameters in JavaScript Clean Code — Kevin Peters](https://medium.com/@kevin_peters/function-parameters-in-javascript-clean-code-4caac109159b)
+-  [JavaScript Clean Coding Best Practices](https://blog.risingstack.com/javascript-clean-coding-best-practices-node-js-at-scale/)
 -  [Keeping your code clean — Samuel James](https://codeburst.io/keeping-your-code-clean-d30bcffd1a10)
 -  [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
 -  [best practices for cross node/web development - Jimmy Wärting](https://github.com/cross-js/cross-js)
