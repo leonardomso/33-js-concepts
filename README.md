@@ -3,7 +3,7 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 ଧାରଣା ପ୍ରତ୍ୟେକ ଜାଭାସ୍କ୍ରିପ୍ଟ ଡେଭଲପର୍ ଜାଣିବା ଉଚିତ୍ |
   <br><br>
 </h1>
 
@@ -11,17 +11,17 @@
 
 <!-- [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso) -->
 
-## Introduction 
+## ପରିଚୟ 
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+ଜାଭାସ୍କ୍ରିପ୍ଟରେ ଡେଭଲପର୍ମାନଙ୍କୁ ସେମାନଙ୍କର ଧାରଣାକୁ ଆୟତ୍ତ କରିବାରେ ସାହାଯ୍ୟ କରିବା ଉଦ୍ଦେଶ୍ୟରେ ଏହି ସଂଗ୍ରହାଳୟ ସୃଷ୍ଟି କରାଯାଇଥିଲା | ଏହା ଏକ ଆବଶ୍ୟକତା ନୁହେଁ, କିନ୍ତୁ ଭବିଷ୍ୟତ ଅଧ୍ୟୟନ ପାଇଁ ଏକ ଗାଇଡ୍ | ଏହା ଷ୍ଟିଫେନ୍ କାର୍ଟିସ୍ ଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏକ ଆର୍ଟିକିଲ ଉପରେ ଆଧାରିତ ଏବଂ ଆପଣ ଏହାକୁ ପ read ିପାରିବେ [ଏଠାରେ](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 GitHub ଦ୍ୱାରା [2018 ର ଶୀର୍ଷ ମୁକ୍ତ ଉତ୍ସ ପ୍ରକଳ୍ପଗୁଡିକ ମଧ୍ୟରୁ ଗୋଟିଏ ଭାବରେ ବିବେଚନା କରାଯାଏ!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## ସମ୍ପ୍ରଦାୟ
 
-Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+ଆପଣଙ୍କର ନିଜ ରିକାପ୍ସ କିମ୍ବା ରିଭ୍ୟୁରେ ଏକ ଲିଙ୍କ୍ ଯୋଡି ଏକ PR ଦାଖଲ କରିବାକୁ ମାଗନ୍ତୁ | ଯଦି ଆପଣ ରେପୋକୁ ଆପଣଙ୍କର ମାତୃଭାଷାରେ ଅନୁବାଦ କରିବାକୁ ଚାହାଁନ୍ତି, ଦୟାକରି ଏହା କରିବାକୁ ମୁକ୍ତ ମନ ଦିଅନ୍ତୁ |
 
-All the translations for this repo will be listed below:
+ଏହି ରେପୋ ପାଇଁ ସମସ୍ତ ଅନୁବାଦ ନିମ୍ନରେ ତାଲିକାଭୁକ୍ତ ହେବ:
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
@@ -67,6 +67,7 @@ All the translations for this repo will be listed below:
 - [ಕನ್ನಡ (Kannada)](https://github.com/Shubhamkashyap1601/33-js-concepts) — Shubham Kashyap
 - [Kiswahili (Swahili)](https://github.com/Bratajit-03/33-js-concepts) — Bratajit Das
 - [தமிழ் (Tamil)](https://github.com/Jaimin25/33-js-concepts) - Jaimin Chovatia
+- [ଓଡିଆ (Oriya)](https://github.com/jamestitus299/33-js-concepts) - James Titus
 
 ---
 ## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
