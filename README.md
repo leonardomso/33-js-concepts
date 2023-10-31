@@ -1,9 +1,9 @@
 <h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 ଧାରଣା ପ୍ରତ୍ୟେକ JS ବିକାଶକାରୀ ଜାଣିବା ଉଚିତ୍" width="200" /></a>
+  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width="200" /></a>
   <br>
     <br>
-  33 ଧାରଣା ପ୍ରତ୍ୟେକ ଜାଭାସ୍କ୍ରିପ୍ଟ ଡେଭଲପର୍ ଜାଣିବା ଉଚିତ୍ |
+  33 Concepts Every JavaScript Developer Should Know
   <br><br>
 </h1>
 
@@ -11,17 +11,17 @@
 
 <!-- [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso) -->
 
-## ପରିଚୟ 
+## Introduction 
 
-ଜାଭାସ୍କ୍ରିପ୍ଟରେ ଡେଭଲପର୍ମାନଙ୍କୁ ସେମାନଙ୍କର ଧାରଣାକୁ ଆୟତ୍ତ କରିବାରେ ସାହାଯ୍ୟ କରିବା ଉଦ୍ଦେଶ୍ୟରେ ଏହି ସଂଗ୍ରହାଳୟ ସୃଷ୍ଟି କରାଯାଇଥିଲା | ଏହା ଏକ ଆବଶ୍ୟକତା ନୁହେଁ, କିନ୍ତୁ ଭବିଷ୍ୟତ ଅଧ୍ୟୟନ ପାଇଁ ଏକ ଗାଇଡ୍ | ଏହା ଷ୍ଟିଫେନ୍ କାର୍ଟିସ୍ ଙ୍କ ଦ୍ୱାରା ଲିଖିତ ଏକ ଆର୍ଟିକିଲ ଉପରେ ଆଧାରିତ ଏବଂ ଆପଣ ଏହାକୁ ପ read ିପାରିବେ [ଏଠାରେ](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 GitHub ଦ୍ୱାରା [2018 ର ଶୀର୍ଷ ମୁକ୍ତ ଉତ୍ସ ପ୍ରକଳ୍ପଗୁଡିକ ମଧ୍ୟରୁ ଗୋଟିଏ ଭାବରେ ବିବେଚନା କରାଯାଏ!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## ସମ୍ପ୍ରଦାୟ
+## Community
 
-ଆପଣଙ୍କର ନିଜ ରିକାପ୍ସ କିମ୍ବା ରିଭ୍ୟୁରେ ଏକ ଲିଙ୍କ୍ ଯୋଡି ଏକ PR ଦାଖଲ କରିବାକୁ ମାଗନ୍ତୁ | ଯଦି ଆପଣ ରେପୋକୁ ଆପଣଙ୍କର ମାତୃଭାଷାରେ ଅନୁବାଦ କରିବାକୁ ଚାହାଁନ୍ତି, ଦୟାକରି ଏହା କରିବାକୁ ମୁକ୍ତ ମନ ଦିଅନ୍ତୁ |
+Feel free to submit a PR adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
-ଏହି ରେପୋ ପାଇଁ ସମସ୍ତ ଅନୁବାଦ ନିମ୍ନରେ ତାଲିକାଭୁକ୍ତ ହେବ:
+All the translations for this repo will be listed below:
 
 - [Shqip (Albanian)](https://github.com/eldrinf/33-js-concepts-albanian.git) — Eldrin Ereqi
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
@@ -67,54 +67,53 @@
 - [ಕನ್ನಡ (Kannada)](https://github.com/Shubhamkashyap1601/33-js-concepts) — Shubham Kashyap
 - [Kiswahili (Swahili)](https://github.com/Bratajit-03/33-js-concepts) — Bratajit Das
 - [தமிழ் (Tamil)](https://github.com/Jaimin25/33-js-concepts) - Jaimin Chovatia
-- [ଓଡିଆ (Oriya)](https://github.com/jamestitus299/33-js-concepts) - James Titus
 
 ---
-## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">ବିଷୟବସ୍ତୁର ସାରଣୀ</a>
+## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
 
-1. **[Call Stack](#1-କଲ୍-ଷ୍ଟାକ)**
-2. **[Primitive Types](#2-ପ୍ରାଥମିକ-ପ୍ରକାରଗୁଡିକ)**
-3. **[Value Types and Reference Types](#3-ମୂଲ୍ୟ-ପରକାର-ଏବଂ-ସନ୍ଦର୍ଭ-ପ୍ରକାର)**
-4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-ଅସ୍ପଷ୍ଟ,-ସ୍ପଷ୍ଟ,-ନାମକରଣ,-ଗଠନ-ଏବଂ-ଡକ୍-ଟାଇପିଂ)**
-5. **[== vs === vs typeof](#5-==-ବନାମ-===-ବନାମ-typeof)**
-6. **[Function Scope, Block Scope and Lexical Scope](#6-ଫଙ୍କସନ୍-ସ୍କୋପ୍,-ବ୍ଲକ୍-ସ୍କୋପ୍-ଏବଂ-ଲେକ୍ସିକାଲ୍-ସ୍କୋପ୍)**
-7. **[Expression vs Statement](#7-ଅଭିବ୍ୟକ୍ତି-ବନାମ-ଷ୍ଟେଟମେଣ୍ଟ)**
-8. **[IIFE, Modules and Namespaces](#8-IIFE,-ମଡ୍ୟୁଲ୍-ଏବଂ-ନାମ-ସ୍ଥାନ)**
-9. **[Message Queue and Event Loop](#9-ମେସେଜ୍-କ୍ୟୁ-ଏବଂ-ଇଭେଣ୍ଟ-ଲୁପ୍)**
-10. **[setTimeout, setInterval and requestAnimationFrame](#10-ସେଟ୍-ଟାଇମଆଉଟ୍,-ସେଟ୍-ଇଣ୍ଟରଭାଲ୍-ଗ-ଅନୁରୋଧ-ଅନୁରୋଧ-ଆନିମେସନ୍-ଫ୍ରେମ୍)**
-11. **[JavaScript Engines](#11-ଜାଭାସ୍କ୍ରିପ୍ଟ-ଇଞ୍ଜିନ୍)**
-12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-ବିଟୱାଇସ୍-ଅପରେଟର୍ସ,-ଟାଇପ୍-ଆରେ-ଏବଂ-ଆରେ-ବଫର୍)**
-13. **[DOM and Layout Trees](#13-DOM-ଏବଂ-ଲେଆଉଟ୍-ଗଛ)**
-14. **[Factories and Classes](#14-କାରଖାନା-ଏବଂ-ଶ୍ରେଣୀଗୁଡିକ)**
-15. **[this, call, apply and bind](#15-ଏହା,-କଲ୍,-ପ୍ରୟୋଗ-ଏବଂ-ବାନ୍ଧ)**
-16. **[new, Constructor, instanceof and Instances](#16-ନୂତନ,-କନଷ୍ଟ୍ରକ୍ଟର,-ଇନଷ୍ଟାଣ୍ଟ-ଏବଂ-ଇନଷ୍ଟାନ୍ସ)**
-17. **[Prototype Inheritance and Prototype Chain](#17-ପ୍ରୋଟୋଟାଇପ୍-ଉତ୍ତରାଧିକାର-ଏବଂ-ପ୍ରୋଟୋଟାଇପ୍-ଶୃଙ୍ଖଳା)**
-18. **[Object.create and Object.assign](#18-objectcreate-ଏବଂ-objectassign)**
-19. **[map, reduce, filter](#19-ମାନଚିତ୍ର,-ହ୍ରାସ,-ଫିଲ୍ଟର୍)**
-20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-ଶୁଦ୍ଧ-କାର୍ଯ୍ୟ,-ପାର୍ଶ୍ୱ-ପ୍ରତିକ୍ରିୟା,-ରାଜ୍ୟ-ପରିବର୍ତ୍ତନ-ଏବଂ-ଘଟଣା-ପ୍ରଚାର)**
-21. **[Closures](#21-ବନ୍ଦ)**
-22. **[High Order Functions](#22-ଉଚ୍ଚ-ଅର୍ଡର-କାର୍ଯ୍ୟଗୁଡ଼ିକ)**
-23. **[Recursion](#23-ପୁନରାବୃତ୍ତି)**
-24. **[Collections and Generators](#24-ସଂଗ୍ରହ-ଏବଂ-ଜେନେରେଟର)**
-25. **[Promises](#25-ପ୍ରତିଜ୍ଞା)**
+1. **[Call Stack](#1-call-stack)**
+2. **[Primitive Types](#2-primitive-types)**
+3. **[Value Types and Reference Types](#3-value-types-and-reference-types)**
+4. **[Implicit, Explicit, Nominal, Structuring and Duck Typing](#4-implicit-explicit-nominal-structuring-and-duck-typing)**
+5. **[== vs === vs typeof](#5--vs--vs-typeof)**
+6. **[Function Scope, Block Scope and Lexical Scope](#6-function-scope-block-scope-and-lexical-scope)**
+7. **[Expression vs Statement](#7-expression-vs-statement)**
+8. **[IIFE, Modules and Namespaces](#8-iife-modules-and-namespaces)**
+9. **[Message Queue and Event Loop](#9-message-queue-and-event-loop)**
+10. **[setTimeout, setInterval and requestAnimationFrame](#10-settimeout-setinterval-and-requestanimationframe)**
+11. **[JavaScript Engines](#11-javascript-engines)**
+12. **[Bitwise Operators, Type Arrays and Array Buffers](#12-bitwise-operators-type-arrays-and-array-buffers)**
+13. **[DOM and Layout Trees](#13-dom-and-layout-trees)**
+14. **[Factories and Classes](#14-factories-and-classes)**
+15. **[this, call, apply and bind](#15-this-call-apply-and-bind)**
+16. **[new, Constructor, instanceof and Instances](#16-new-constructor-instanceof-and-instances)**
+17. **[Prototype Inheritance and Prototype Chain](#17-prototype-inheritance-and-prototype-chain)**
+18. **[Object.create and Object.assign](#18-objectcreate-and-objectassign)**
+19. **[map, reduce, filter](#19-map-reduce-filter)**
+20. **[Pure Functions, Side Effects, State Mutation and Event Propagation](#20-pure-functions-side-effects-state-mutation-and-event-propagation)**
+21. **[Closures](#21-closures)**
+22. **[High Order Functions](#22-high-order-functions)**
+23. **[Recursion](#23-recursion)**
+24. **[Collections and Generators](#24-collections-and-generators)**
+25. **[Promises](#25-promises)**
 26. **[async/await](#26-asyncawait)**
-27. **[Data Structures](#27-ଡାଟା-ଗଠନ)**
-28. **[Expensive Operation and Big O Notation](#28-ବ୍ୟୟବହୁଳ-ଅପରେସନ୍-ଏବଂ-ବିଗ୍-ହେ-ନୋଟେସନ୍)**
-29. **[Algorithms](#29-ଆଲଗୋରିଦମ)**
-30. **[Inheritance, Polymorphism and Code Reuse](#30-ଉତ୍ତରାଧିକାରୀ,-ପଲିମୋର୍ଫିଜିମ୍-ଏବଂ-କୋଡ୍-ପୁନ-use-ବ୍ୟବହାର)**
-31. **[Design Patterns](#31-ଡିଜାଇନ୍-ପାଟର୍ନସ୍)**
-32. **[Partial Applications, Currying, Compose and Pipe](#32-ଆଂଶିକ-ପ୍ରୟୋଗ,-କ୍ୟୁରିଙ୍ଗ,-ରଚନା-ଏବଂ-ପାଇପ୍)**
-33. **[Clean Code](#33-କ୍ଲିନ୍-କୋଡ୍)**
+27. **[Data Structures](#27-data-structures)**
+28. **[Expensive Operation and Big O Notation](#28-expensive-operation-and-big-o-notation)**
+29. **[Algorithms](#29-algorithms)**
+30. **[Inheritance, Polymorphism and Code Reuse](#30-inheritance-polymorphism-and-code-reuse)**
+31. **[Design Patterns](#31-design-patterns)**
+32. **[Partial Applications, Currying, Compose and Pipe](#32-partial-applications-currying-compose-and-pipe)**
+33. **[Clean Code](#33-clean-code)**
 
 ---
 
-## 1. କଲ୍ ଷ୍ଟାକ
+## 1. Call Stack
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
--  [ଷ୍ଟାକକୁ କଲ୍ କରନ୍ତୁ — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
+-  [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 - [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
 - [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -125,7 +124,7 @@
 -  [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
 -  [The JS Call stack Explained in 9 minutes](https://www.youtube.com/watch?v=W8AeMrVtFLY) - Colt Steel (YouTube)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
 - [The JS Call Stack Explained In 9 Minutes — Colt Steele](https://www.youtube.com/watch?v=W8AeMrVtFLY)
@@ -140,17 +139,17 @@
 - [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
 - [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
     
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ |](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 2. ପ୍ରାଥମିକ ପ୍ରକାରଗୁଡିକ
+## 2. Primitive Types
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Primitive and Non-primitive data-types in JavaScript - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
 -  [Javascript variables (Beginner thinking)](https://robiul.dev/javascript-variables-beginner-thinking)
@@ -166,7 +165,7 @@
 -  [Object to primitive conversion — JavaScript.info](https://javascript.info/object-toprimitive)
 - [Methods of primitives - Javascript.info](https://javascript.info/primitives-methods)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
@@ -177,13 +176,13 @@
 - [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 - [Data Type in JavaScript - ScholarHat](https://www.youtube.com/watch?v=aFDvBjVjCh8)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 3. ମୂଲ୍ୟ ପ୍ରକାର ଏବଂ ସନ୍ଦର୍ଭ ପ୍ରକାର
+## 3. Value Types and Reference Types
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
 -  [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
@@ -196,7 +195,7 @@
 -  [JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
 -  [JavaScript map vs. forEach: When to Use Each One - Sajal Soni](https://code.tutsplus.com/tutorials/javascript-map-vs-foreach-when-to-use-each-one--cms-38365)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
 - [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
@@ -204,20 +203,20 @@
 - [JavaScript - Reference vs Primitive Values/ Types - Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - [Value Types and Reference Types in JavaScript - Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 4. ଅସ୍ପଷ୍ଟ, ସ୍ପଷ୍ଟ, ନାମକରଣ, ଗଠନ ଏବଂ ଡକ୍ ଟାଇପିଂ
+## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
 -  [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
 -  [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
 -  [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [== ? === ??? ...#@^% - Shirmung Bielefeld](https://www.youtube.com/watch?v=qGyqzN0bjhc&t)
 - [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
@@ -226,17 +225,17 @@
 - [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
 - [Duck Typing in Javascript - Techmaker Studio](https://www.youtube.com/watch?v=oEpgyoMEkrM)
 
-### ପୁସ୍ତକ
+### Books
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 5. == ବନାମ === ବନାମ typeof
+## 5. == vs === vs typeof
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
 -  [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
@@ -251,7 +250,7 @@
 -  [Difference between == and === in JavaScript — GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-double-equal-vs-triple-equal-javascript/)
 -  [=== vs == Comparision in JavaScript — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-triple-equals-sign-vs-double-equals-sign-comparison-operators-explained-with-examples/)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
@@ -259,17 +258,17 @@
 - [=== vs == in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=a0S1iG3TgP0)
 - [The typeof operator in JS - CodeVault](https://www.youtube.com/watch?v=NSS5WRcv7yM)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 6. ଫଙ୍କସନ୍ ସ୍କୋପ୍, ବ୍ଲକ୍ ସ୍କୋପ୍ ଏବଂ ଲେକ୍ସିକାଲ୍ ସ୍କୋପ୍
+## 6. Function Scope, Block Scope and Lexical Scope
 
-### ପୁସ୍ତକ
+### Books
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
 -  [The battle between Function Scope and Block Scope — Marius Herring](http://www.deadcoderising.com/2017-04-11-es6-var-let-and-const-the-battle-between-function-scope-and-block-scope/)
@@ -286,7 +285,7 @@
 -  [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and “this” ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
 -  [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [What Makes Javascript Weird ... and Awesome pt. 4 — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
 - [Variable Scope in JavaScript — Kirupa Chinnathambi](https://www.youtube.com/watch?v=dhp57T3p760)
@@ -298,13 +297,13 @@
 - [Lexical scoping in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=qT5S7GgIioE)
  
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 7. ଅଭିବ୍ୟକ୍ତି ବନାମ ଷ୍ଟେଟମେଣ୍ଟ
+## 7. Expression vs Statement
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
 -  [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
@@ -319,7 +318,7 @@
 - 📜 [Function Declarations vs. Function Expressions — Mandeep Singh](https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052)
 - 📜 [Function Declarations vs. Function Expressions — Anguls Croll](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
 - [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
@@ -328,19 +327,19 @@
 - [Expression in javascript | Statement in javascript - Sathelli Srikanth](https://www.youtube.com/watch?v=cVDs3TZ-kXs)
 
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 8. IIFE, ମଡ୍ୟୁଲ୍ ଏବଂ ନାମ ସ୍ଥାନ
+## 8. IIFE, Modules and Namespaces
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
 -  [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
 -  [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
 -  [JavaScript Immediately Invoked Function Expression — javascripttutorial.net](https://www.javascripttutorial.net/javascript-immediately-invoked-function-expression-iife/)
@@ -357,7 +356,7 @@
 -  [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
 -  [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
 - [Understanding JavaScript IIFE — Sheo Narayan](https://www.youtube.com/watch?v=I5EntfMeIIQ)
@@ -367,13 +366,13 @@
 - [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 - [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 9. ମେସେଜ୍ କ୍ୟୁ ଏବଂ ଇଭେଣ୍ଟ ଲୁପ୍
+## 9. Message Queue and Event Loop
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
 -  [The JavaScript Event Loop: Explained — Erin Sweson-Healey](https://blog.carbonfive.com/2013/10/27/the-javascript-event-loop-explained/)
@@ -385,7 +384,7 @@
 -  [Visualising the JavaScript Event Loop with a Pizza Restaurant analogy — Priyansh Jain](https://dev.to/presto412/visualising-the-javascript-event-loop-with-a-pizza-restaurant-analogy-47a8)
 -  [JavaScript Visualized: Event Loop — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
@@ -395,13 +394,13 @@
 - [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
 - [JavaScript Event Loop: How it Works and Why it Matters in 5 Minutes - James Q Quick](https://www.youtube.com/watch?v=6lbBaM18X3g)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 10. ସେଟ୍ ଟାଇମଆଉଟ୍, ସେଟ୍ ଇଣ୍ଟରଭାଲ୍ ଗ ଅନୁରୋଧ ଅନୁରୋଧ ଆନିମେସନ୍ ଫ୍ରେମ୍
+## 10. setTimeout, setInterval and requestAnimationFrame
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Javascript setTimeout - All you need to know](https://robiul.dev/javascript-settimeout-all-you-need-to-know)
 -  [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
@@ -412,7 +411,7 @@
 -  [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
 -  [Debounce – How to Delay a Function in JavaScript - Ondrej Polesny](https://www.freecodecamp.org/news/javascript-debounce-example/)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
 - [TRUST ISSUES with setTimeout() — Akshay Saini ](https://youtu.be/nqsPmuicJJc?si=4FXKlZfqiJUqO2Y4)                  
@@ -420,13 +419,13 @@
 - [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
 - [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)   
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 11. ଜାଭାସ୍କ୍ରିପ୍ଟ ଇଞ୍ଜିନ୍
+## 11. JavaScript Engines
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Is javascript compiled or interpreted language?](https://robiul.dev/is-javascript-compiled-or-interpreted-language)
 -  [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
@@ -439,7 +438,7 @@
 -  [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
 -  [JavaScript Internals: JavaScript engine, Run-time environment & setTimeout Web API — Rupesh Mishra](https://blog.bitsrc.io/javascript-internals-javascript-engine-run-time-environment-settimeout-web-api-eeed263b1617)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 - [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
@@ -447,13 +446,13 @@
 - [Understanding the V8 JavaScript Engine - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
 - [JavaScript Under The Hood - JavaScript Engine Overview - Traversy Media](https://www.youtube.com/watch?v=oc6faXVc54E)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 12. ବିଟୱାଇସ୍ ଅପରେଟର୍ସ, ଟାଇପ୍ ଆରେ ଏବଂ ଆରେ ବଫର୍
+## 12. Bitwise Operators, Type Arrays and Array Buffers
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
 -  [Using JavaScript’s Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
@@ -462,24 +461,24 @@
 -  [A Comprehensive Primer on Binary Computation and Bitwise Operators in Javascript — Paul Brown](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
 -  [How can I understand Bitwise operation in JavaScript?](https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 - [Bitwise Operators and WHY we use them — Alex Hyett](https://www.youtube.com/watch?v=igIjGxF2J-w)
 - [JS Bitwise Operators and Binary Numbers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=RRyxCmLX_ag)
 - [Deep Dive into Blobs, Files, and ArrayBuffers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=ScZZoHj7mqY)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 13. DOM ଏବଂ ଲେଆଉଟ୍ ଗଛ
+## 13. DOM and Layout Trees
 
-### ପୁସ୍ତକ
+### Books
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
 -  [What’s the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
@@ -493,20 +492,20 @@
 -  [JavaScript DOM](https://www.javascripttutorial.net/javascript-dom/)
 -  [Traversing the Dom with Javascript](https://www.youtube.com/watch?v=Pr4LLrmDLLo) - Steve Griffith (YouTube)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 - [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
 - [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 14. କାରଖାନା ଏବଂ ଶ୍ରେଣୀଗୁଡିକ
+## 14. Factories and Classes
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [How To Use Classes in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
 -  [Javascript Classes — Under The Hood — Majid](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
@@ -519,25 +518,25 @@
 -  [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
 -  [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript Factory Functions — Programming with Mosh](https://www.youtube.com/watch?v=jpegXpQpb3o)
 - [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
 - [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 15. ଏହା, କଲ୍, ପ୍ରୟୋଗ ଏବଂ ବାନ୍ଧ
+## 15. this, call, apply and bind
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 -  [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
 -  [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
 -  [How-to: call() , apply() and bind() in JavaScript — Niladri Sekhar Dutta](https://www.codementor.io/niladrisekhardutta/how-to-call-apply-and-bind-in-javascript-8i1jca6jp)
@@ -564,7 +563,7 @@
 -  [Top 7 tricky questions of 'this' keyword](https://dmitripavlutin.com/javascript-this-interview-questions/)
     
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript call, apply and bind — techsith](https://www.youtube.com/watch?v=c0mLRpw-9rI)
 - [JavaScript Practical Applications of Call, Apply and Bind functions— techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
@@ -574,13 +573,13 @@
 - [JS Function Methods call(), apply(), and bind() — Steve Griffith](https://www.youtube.com/watch?v=uBdH0iB1VDM)
 - [call, apply and bind method in JavaScript — Akshay Saini](https://www.youtube.com/watch?v=75W8UPQ5l7k)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 16. ନୂତନ, କନଷ୍ଟ୍ରକ୍ଟର, ଇନଷ୍ଟାଣ୍ଟ ଏବଂ ଇନଷ୍ଟାନ୍ସ
+## 16. new, Constructor, instanceof and Instances
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript For Beginners: the ‘new’ operator — Brandon Morelli](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
 -  [Let’s demystify JavaScript’s ‘new’ keyword — Cynthia Lee](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
@@ -592,17 +591,17 @@
 -  [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 -  [JavaScript instanceof operator](https://flexiple.com/javascript/instanceof-javascript)
   
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 17. ପ୍ରୋଟୋଟାଇପ୍ ଉତ୍ତରାଧିକାର ଏବଂ ପ୍ରୋଟୋଟାଇପ୍ ଶୃଙ୍ଖଳା
+## 17. Prototype Inheritance and Prototype Chain
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Javascript : Prototype vs Class — Valentin PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
 -  [JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens](https://mathiasbynens.be/notes/prototypes)
@@ -626,7 +625,7 @@
 -  [Understanding Prototypal Inheritance In JavaScript — Lawrence Eagles](https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4)
 -  [Objects and Prototypes in JavaScript — Irena Popova](https://dev.to/irenejpopova/objects-and-prototypes-in-javascript-2eie)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Javascript Prototype Inheritance — Avelx](https://www.youtube.com/watch?v=sOrtAjyk4lQ)
 - [JavaScript Prototype Inheritance Explained pt. I — techsith](https://www.youtube.com/watch?v=7oNWNlMrkpc)
@@ -640,22 +639,22 @@
 - [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 - [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
-### ପୁସ୍ତକ
+### Books
 
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 18. Object.create ଏବଂ Object.assign
+## 18. Object.create and Object.assign
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 -  [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Object.create in JavaScript — Rupesh Mishra](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
 -  [Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
@@ -669,18 +668,18 @@
 -  [How to deep clone a JavaScript Object — Flavio Copes](https://flaviocopes.com/how-to-clone-javascript-object/)
 -  [Object.create(): When and Why to Use — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 19. ମାନଚିତ୍ର, ହ୍ରାସ, ଫିଲ୍ଟର୍
+## 19. map, reduce, filter
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
 -  [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
@@ -716,7 +715,7 @@
 -  [Mastering the JavaScript Reduce method ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
 -  [JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Map, Filter and Reduce — Lydia Hallie](https://www.youtube.com/watch?v=UXiYii0Y7Nw)
 - [Map, Filter and Reduce - Akshaay Saini](https://youtu.be/zdp0zrpKzIE?si=6QusFzD6tmwn-el4)
@@ -734,13 +733,13 @@
 - [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
 - [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 20. ଶୁଦ୍ଧ କାର୍ଯ୍ୟ, ପାର୍ଶ୍ୱ ପ୍ରତିକ୍ରିୟା, ରାଜ୍ୟ ପରିବର୍ତ୍ତନ ଏବଂ ଘଟଣା ପ୍ରଚାର
+## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
 -  [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
@@ -752,7 +751,7 @@
 -  [Arrays, Objects and Mutations — Federico Knüssel](https://medium.com/@fknussel/arrays-objects-and-mutations-6b23348b54aa)
 -  [The State of Immutability — Maciej Sikora](https://medium.com/dailyjs/the-state-of-immutability-169d2cd11310)
 -  [Hablemos de Inmutabilidad — Kike Sanchez](https://medium.com/zurvin/hablemos-de-inmutabilidad-3dc65d290783)
--  [How to deal with dirty side effects in your pure functional JavaScript — James Sinclair](https://jrsinclair.com/ପ୍ରବନ୍ଧଗୁଡିକ/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
+-  [How to deal with dirty side effects in your pure functional JavaScript — James Sinclair](https://jrsinclair.com/articles/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
 -  [Preventing Side Effects in JavaScript — David Walsh](https://davidwalsh.name/preventing-sideeffects-javascript)
 -  [Wielding Pure Functions in JavaScript and Function Composition — Peleke Sengstacke](https://scotch.io/tutorials/wielding-pure-functions-in-javascript-and-function-composition)
 -  [JavaScript: Pure Functions — William S. Vincent](https://wsvincent.com/javascript-pure-functions/)
@@ -762,7 +761,7 @@
 -  [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 -  [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Pure Functions — Hexlet](https://www.youtube.com/watch?v=dZ41D6LDSBg)
 - [Pure Functions - Functional Programming in JavaScript — Paul McBride](https://www.youtube.com/watch?v=Jh_Uzqzz_wM)
@@ -771,18 +770,18 @@
 - [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
 - [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 21. ବନ୍ଦ
+## 21. Closures
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 -  [Closure — JavaScript.Info](https://javascript.info/closure)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [I never understood JavaScript closures — Olivier De Meulder](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
 -  [Understand JavaScript Closures With Ease — Richard Bovell](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
@@ -808,7 +807,7 @@
 -  [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
 -  [Do you know Closures - Mohamed Khaled](https://dev.to/this_mkhy/do-you-know-es6-part-3-advanced-3fcl#Closures-2)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript The Hard Parts: Closure, Scope & Execution Context - Codesmith](https://www.youtube.com/watch?v=XTAzsODSCsM)
 - [Namaste Javascript by Akshay Saini](https://youtu.be/qikxEIxsXco?si=fGFgUHuaOW49Wg9p)
@@ -823,27 +822,27 @@
 - [Learn Closures In 7 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=3a0I8ICR1Vg)
 
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 22. ଉଚ୍ଚ ଅର୍ଡର କାର୍ଯ୍ୟଗୁଡ଼ିକ
+## 22. High Order Functions
 
-### ପୁସ୍ତକ
+### Books
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Higher-Order Functions in JavaScript — M. David Green](https://www.sitepoint.com/higher-order-functions-javascript/)
 -  [Higher Order Functions: Using Filter, Map and Reduce for More Maintainable Code — Guido Schmitz](https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528)
 -  [First-class and Higher Order Functions: Effective Functional JavaScript — Hugo Di Francesco](https://hackernoon.com/effective-functional-javascript-first-class-and-higher-order-functions-713fde8df50a)
--  [Higher Order Functions in JavaScript — John Hannah](https://www.lullabot.com/ପ୍ରବନ୍ଧଗୁଡିକ/higher-order-functions-in-javascript)
+-  [Higher Order Functions in JavaScript — John Hannah](https://www.lullabot.com/articles/higher-order-functions-in-javascript)
 -  [Just a reminder on how to use high order functions — Pedro Filho](https://github.com/pedroapfilho/high-order-functions)
 -  [Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
 -  [Higher Order Functions - A pragmatic approach — emmanuel ikwuoma](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript Higher Order Functions & Arrays — Traversy Media](https://www.youtube.com/watch?v=rRgD1yVwIvE)
 - [Higher Order Functions — Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
@@ -854,13 +853,13 @@
 - [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
 - [Higher-Order Functions ft. Functional Programming - Akshay Saini](https://www.youtube.com/watch?v=HkWxvB1RJq0)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 23. ପୁନରାବୃତ୍ତି
+## 23. Recursion
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Recursion in JavaScript — Kevin Ennis](https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f)
 -  [Understanding Recursion in JavaScript — Zak Frisch](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
@@ -874,7 +873,7 @@
 -  [Accio Recursion!: Your New Favorite JavaScript Spell — Leanne Cabey](https://medium.datadriveninvestor.com/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3)
 -  [Recursion Explained (with Examples) — Christina](https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Recursion In JavaScript — techsith](https://www.youtube.com/watch?v=VtG0WAUvq2w)
 - [Recursion — Fun Fun Function](https://www.youtube.com/watch?v=k7-N8R0-KY4)
@@ -887,21 +886,21 @@
 - [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
 - [What Is Recursion - In Depth - Web Dev Simplified](https://www.youtube.com/watch?v=6oDQaB2one8)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 24. ସଂଗ୍ରହ ଏବଂ ଜେନେରେଟର
+## 24. Collections and Generators
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [ES6 In Depth: Collections — Jason Orendorff](https://hacks.mozilla.org/2015/06/es6-in-depth-collections/)
 -  [ES6 Collections: Using Map, Set, WeakMap, WeakSet — Kyle Pennell](https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/)
--  [ES6 WeakMaps, Sets, and WeakSets in Depth — Nicolás Bevacqua](https://ponyfoo.com/ପ୍ରବନ୍ଧଗୁଡିକ/es6-weakmaps-sets-and-weaksets-in-depth)
+-  [ES6 WeakMaps, Sets, and WeakSets in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-weakmaps-sets-and-weaksets-in-depth)
 -  [Map, Set, WeakMap and WeakSet — JavaScript.Info](https://javascript.info/map-set-weakmap-weakset)
 -  [Maps in ES6 - A Quick Guide — Ben Mildren](https://dev.to/mildrenben/maps-in-es6---a-quick-guide-35pk)
 -  [ES6 — Set vs Array — What and when? — Maya Shavin](https://medium.com/front-end-hacking/es6-set-vs-array-what-and-when-efc055655e1a)
@@ -910,30 +909,30 @@
 -  [Array vs Set vs Map vs Object — Real-time use cases in Javascript (ES6/ES7) — Rajesh Babu](https://codeburst.io/array-vs-set-vs-map-vs-object-real-time-use-cases-in-javascript-es6-47ee3295329b)
 -  [How to create an array of unique values in JavaScript using Sets — Claire Parker-Jones](https://dev.to/claireparker/how-to-create-an-array-of-unique-values-in-javascript-using-sets-5dg6)
 -  [What You Should Know About ES6 Maps — Just Chris](https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e)
--  [ES6 Maps in Depth — Nicolás Bevacqua](https://ponyfoo.com/ପ୍ରବନ୍ଧଗୁଡିକ/es6-maps-in-depth)
+-  [ES6 Maps in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-maps-in-depth)
 -  [What are JavaScript Generators and how to use them — Vladislav Stepanov](https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e)
 -  [Understanding JavaScript Generators With Examples — Arfat Salman](https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
 -  [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
 -  [An Introduction to JavaScript Generators — Alice Kallaugher](https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media](https://www.youtube.com/watch?v=ycohYSx5h9w)
 - [JavaScript ES6 / ES2015 - \[11\] Generators - Traversy Media](https://www.youtube.com/watch?v=dcP039DYzmE)
 - [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
 - [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 25. ପ୍ରତିଜ୍ଞା
+## 25. Promises
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Promises for Dummies ― Jecelyn Yeen](https://scotch.io/tutorials/javascript-promises-for-dummies)
 -  [Understanding promises in JavaScript — Gokul N K](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
@@ -965,7 +964,7 @@
 -  [Promise Basics - javascript.info](https://javascript.info/promise-basics)
 -  [The Complete JavaScript Promise Guide](https://blog.webdevsimplified.com/2021-09/javascript-promises)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Let's Learn ES6 - Promises — Ryan Christiani](https://www.youtube.com/watch?v=vQ3MoXnKfuQ)
 - [JavaScript ES6 / ES2015 Promises — Traversy Media](https://www.youtube.com/watch?v=XJEHuBZQ5dU)
@@ -977,22 +976,22 @@
 - [JavaScript Promises In 10 Minutes — Web Dev Simplified ](https://www.youtube.com/watch?v=DHvZLI7Db8E)
 - [Promises | Ep 02 Season 02 - Namaste JavaScript - Akshay Saini ](https://youtu.be/ap-6PPAuK1Y?si=Ri1fopXeYjlrHzpf)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
 ## 26. async/await
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [async/await — JavaScript.Info](https://javascript.info/async-await)
 
-### ପୁସ୍ତକ
+### Books
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 -  [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Understanding async/await in Javascript — Gokul N K](https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c)
 -  [Asynchronous Javascript using async/await — Joy Warugu](https://scotch.io/tutorials/asynchronous-javascript-using-async-await)
@@ -1000,11 +999,11 @@
 -  [Asynchronous JavaScript: From Callback Hell to Async and Await — Demir Selmanovic](https://www.toptal.com/javascript/asynchronous-javascript-async-await-tutorial)
 -  [Javascript — ES8 Introducing async/await Functions — Ben Garrison](https://medium.com/@_bengarrison/javascript-es8-introducing-async-await-functions-7a471ec7de8a)
 -  [How to escape async/await hell — Aditya Agarwal](https://medium.freecodecamp.org/avoiding-the-async-await-hell-c77a0fb71c4c)
--  [Understanding JavaScript’s async await — Nicolás Bevacqua](https://ponyfoo.com/ପ୍ରବନ୍ଧଗୁଡିକ/understanding-javascript-async-await)
+-  [Understanding JavaScript’s async await — Nicolás Bevacqua](https://ponyfoo.com/articles/understanding-javascript-async-await)
 -  [JavaScript Async/Await: Serial, Parallel and Complex Flow — TechBrij](https://techbrij.com/javascript-async-await-parallel-sequence)
 -  [From JavaScript Promises to Async/Await: why bother? — Chris Nwamba](https://blog.pusher.com/promises-async-await/)
 -  [Flow Control in Modern JS: Callbacks to Promises to Async/Await — Craig Buckler](https://www.sitepoint.com/flow-control-callbacks-promises-async-await/)
--  [JavaScript: Promises and Why Async/Await Wins the Battle — Nick Parsons](https://dzone.com/ପ୍ରବନ୍ଧଗୁଡିକ/javascript-promises-and-why-asyncawait-wins-the-ba)
+-  [JavaScript: Promises and Why Async/Await Wins the Battle — Nick Parsons](https://dzone.com/articles/javascript-promises-and-why-asyncawait-wins-the-ba)
 -  [How to improve your asynchronous Javascript code with async and await — Indrek Lasn](https://medium.freecodecamp.org/improve-your-asynchronous-javascript-code-with-async-and-await-c02fc3813eda)
 -  [Making Fetches Easy With Async Await — Mickey Sheridan](https://medium.com/@micksheridan.24/making-fetches-easy-with-async-await-8a1246efa1f6)
 -  [7 Reasons Why JavaScript Async/Await Is Better Than Plain Promises — Mostafa Gaafar](https://dev.to/gafi/7-reasons-to-always-use-async-await-over-plain-promises-tutorial-4ej9)
@@ -1016,7 +1015,7 @@
 -  [JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
 -  [Better Than Promises - JavaScript Async/Await](https://blog.webdevsimplified.com/2021-11/async-await/)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Asynchronous JavaScript Crash Course](https://www.youtube.com/watch?v=exBgWAIeIeg)
 - [Async + Await — Wes Bos](https://www.youtube.com/watch?v=9YkUCxvaLEk)
@@ -1028,13 +1027,13 @@
 - [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
 - [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 27. ଡାଟା ଗଠନ
+## 27. Data Structures
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Data Structures in JavaScript — Thon Ly](https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c)
 -  [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb)
@@ -1051,20 +1050,20 @@
 -  [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
 -  [Graph Data Structures Explained in JavaScript — Adrian Mejia](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
 - [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
 - [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
 - [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 28. ବ୍ୟୟବହୁଳ ଅପରେସନ୍ ଏବଂ ବିଗ୍ ହେ ନୋଟେସନ୍
+## 28. Expensive Operation and Big O Notation
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Big O Notation in Javascript — César Antón Dorantes](https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b)
 -  [Time Complexity/Big O Notation — Tim Roberts](https://medium.com/javascript-scene/time-complexity-big-o-notation-1a4310c3ee4b)
@@ -1073,7 +1072,7 @@
 -  [Algorithms in plain English: time complexity and Big-O Notation — Michael Olorunnisola](https://medium.freecodecamp.org/time-is-complex-but-priceless-f0abd015063c)
 -  [An Introduction to Big O Notation — Joseph Trettevik](https://dev.to/lofiandcode/an-introduction-to-big-o-notation-210o)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
 - [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
@@ -1083,13 +1082,13 @@
 - [JavaScript Algorithms Crash Course: Learn Algorithms & "Big O" from the Ground Up! - Academind](https://www.youtube.com/watch?v=JgWm6sQwS_I)
 - [Big O Notation - Data Structures and Algorithms in Javascript - RoadSideCoder](https://www.youtube.com/watch?v=LaexPVi1VRE)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 29. ଆଲଗୋରିଦମ
+## 29. Algorithms
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Data Structures and Algorithms using ES6](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
 -  [Algorithms and data structures implemented in JavaScript with explanations and links to further readings](https://github.com/trekhleb/javascript-algorithms)
@@ -1101,7 +1100,7 @@
 -  [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 -  [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
 - 🎥 [Dynamic Programming - Learn to Solve Algorithmic Problems & Coding Challenges - FreeCodeCamp](https://www.youtube.com/watch?v=oBt53YbR9Kk&t=1021s)
@@ -1110,18 +1109,18 @@
 - 🎥 [JavaScript Data Structures: Getting Started - Academind](https://www.youtube.com/watch?v=41GSinwoMYA)
 - 🎥 [Algorithms and Data Structures - The Coding Train (Daniel Shiffman)](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 30. ଉତ୍ତରାଧିକାରୀ, ପଲିମୋର୍ଫିଜିମ୍ ଏବଂ କୋଡ୍ ପୁନ use ବ୍ୟବହାର
+## 30. Inheritance, Polymorphism and Code Reuse
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 -  [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 -  [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Inheritance in JavaScript — Rupesh Mishra](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
 -  [Simple Inheritance with JavaScript — David Catuhe](https://www.sitepoint.com/simple-inheritance-javascript/)
@@ -1131,28 +1130,28 @@
 -  [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
 -  [Unlocking the Power of Polymorphism in JavaScript: A Deep Dive](https://prototypr.io/post/unlocking-the-power-of-polymorphism-in-javascript-a-deep-dive)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
 - [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
 - [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 31. ଡିଜାଇନ୍ ପାଟର୍ନସ୍
+## 31. Design Patterns
 
-### ସନ୍ଦର୍ଭ
+### Reference
 
 - [Design Patterns - Patterns.dev](https://www.patterns.dev/posts/#design-patterns)
 
-### ପୁସ୍ତକ
+### Books
 
 -  [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 -  [Pro JavaScript Design Patterns — Ross Harmes and Dustin Diaz](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Design Patterns – Explained with Examples — Germán Cocca](https://www.freecodecamp.org/news/javascript-design-patterns-explained/)
 -  [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
@@ -1175,22 +1174,22 @@
 -  [In Defense of Defensive Programming - Adam Nathaniel Davis](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
 -  [JavaScript Patterns Workshop — Lydia Hallie](https://javascriptpatterns.vercel.app/patterns)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 - [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 32. ଆଂଶିକ ପ୍ରୟୋଗ, କ୍ୟୁରିଙ୍ଗ, ରଚନା ଏବଂ ପାଇପ୍
+## 32. Partial Applications, Currying, Compose and Pipe
 
-### ପୁସ୍ତକ
+### Books
 
 -  [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Use function composition in JavaScript — Rémi](https://www.codementor.io/michelre/use-function-composition-in-javascript-gkmxos5mj)
 -  [Currying in JavaScript ES6 — Adam Bene](https://blog.benestudio.co/currying-in-javascript-es6-540d2ad09400)
@@ -1220,7 +1219,7 @@
 -  [A practical guide to writing more functional JavaScript — Nadeesha Cabral](https://medium.freecodecamp.org/a-practical-guide-to-writing-more-functional-javascript-db49409f71)
 -  [A simple explanation of functional pipe in JavaScript — Ben Lesh](https://dev.to/benlesh/a-simple-explanation-of-functional-pipe-in-javascript-2hbj)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - [Compose vs Pipe: Functional Programming in JavaScript — Chyld Studios](https://www.youtube.com/watch?v=Wl2ejJOqHUU)
 - [JavaScript Functional Programing: Compose — Theodore Anderson](https://www.youtube.com/watch?v=jigHxo9YR30)
@@ -1231,13 +1230,13 @@
 - [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 - [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ---
 
-## 33. କ୍ଲିନ୍ କୋଡ୍
+## 33. Clean Code
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> ପ୍ରବନ୍ଧଗୁଡିକ
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Clean Code Explained – A Practical Introduction to Clean Coding for Beginners — freeCodeCamp](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
 -  [Clean Code concepts adapted for JavaScript — Ryan McDermott](https://github.com/ryanmcdermott/clean-code-javascript)
@@ -1255,7 +1254,7 @@
 -  [How to use destructuring in JavaScript to write cleaner, more powerful code - freecodecamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
 -  [Write Clean Code Using JavaScript Object Destructuring - Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
 
-### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> ଭିଡିଓଗୁଡିକ
+### <img  align= center width=50px height=50px src="https://camo.githubusercontent.com/bbbcc076f47d621aeab7bc4a6d8b3cfa2e13b78bda9dd0dcd97c64ebe5b0b64c/68747470733a2f2f696d672e67656e69616c2e6c792f3566393136303830363461643939306336656531323233372f62643731393561332d613862622d343934622d386136642d6166343864643464656234622e6769663f67656e69616c2631363433353837323030303633"> Videos
 
 - 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
@@ -1263,7 +1262,7 @@
 - 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
 - 🎥 [Tips On Learning How To Code](https://www.youtube.com/watch?v=0wHyoBPc6zs)
 
-**[⬆ ଶୀର୍ଷକୁ ଫେରନ୍ତୁ](#ବିଷୟବସ୍ତୁର-ସାରଣୀ)**
+**[⬆ Back to Top](#table-of-contents)**
 
 ## <img  align= center width=50px height=50px src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> License <a id = "License"></a>
-ଏହି ସଫ୍ଟୱେର୍ MIT ଲାଇସେନ୍ସ ଅଧୀନରେ ଲାଇସେନ୍ସପ୍ରାପ୍ତ, ଦେଖନ୍ତୁ [ଲାଇସେନ୍ସ](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+This software is licensed under MIT License, See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
