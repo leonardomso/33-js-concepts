@@ -1,6 +1,6 @@
 <h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 ଧାରଣା ପ୍ରତ୍ୟେକ JS ବିକାଶକାରୀ ଜାଣିବା ଉଚିତ୍" width=200" /></a>
+  <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 ଧାରଣା ପ୍ରତ୍ୟେକ JS ବିକାଶକାରୀ ଜାଣିବା ଉଚିତ୍" width="200" /></a>
   <br>
     <br>
   33 ଧାରଣା ପ୍ରତ୍ୟେକ ଜାଭାସ୍କ୍ରିପ୍ଟ ଡେଭଲପର୍ ଜାଣିବା ଉଚିତ୍ |
