@@ -7,10 +7,6 @@
   <br><br>
 </h1>
 
-[![Twitter](https://img.shields.io/twitter/url/https/twitter.com/leonardomso.svg?style=social&label=Follow%20%40leonardomso)](https://twitter.com/leonardomso)
-
-<!-- [![Follow me](https://img.shields.io/twitter/follow/leonardomso.svg?style=for-the-badge)](https://twitter.com/leonardomso) -->
-
 ## Introduction 
 
 This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
