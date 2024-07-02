@@ -2,22 +2,23 @@
 <br>
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
-    <br>
-  33 Concepts Every JavaScript Developer Should Know
-  <br><br>
+  <br>
+    33 अवधारणाएँ जो प्रत्येक जावास्क्रिप्ट डेवलपर को जाननी चाहिए
+  <br>
+  <br>
 </h1>
 
-## Introduction 
+## परिचय 
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+यह भंडार इस उद्देश्य के साथ बनाया गया था कि इससे डेवलपर्स को जावास्क्रिप्ट में अपने सिद्धांतों को महारत हासिल करने में मदद मिले। यह एक अनिवार्यता नहीं है, बल्कि भविष्य के अध्ययन के लिए एक मार्गदर्शक है। यह स्टीफन कर्टिस द्वारा लिखे गए एक लेख पर आधारित है और आप इसे पढ़ सकते हैं। [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-**🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
+**🚀गिटहब द्वारा इनमें से एक के रूप में माना जाता है [2018 के शीर्ष ओपन सोर्स प्रोजेक्ट्स में से एक!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## समुदाय
 
 Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
-All the translations for this repo will be listed below:
+इस भंडार के लिए सभी अनुवाद नीचे सूचीबद्ध होंगे:
 
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
@@ -29,7 +30,7 @@ All the translations for this repo will be listed below:
 - [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 - [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
 - [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
 - [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
 - [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
 - [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
@@ -60,9 +61,11 @@ All the translations for this repo will be listed below:
 - [Latin (Latin)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
 - [മലയാളം (Malayalam)](https://github.com/Stark-Akshay/33-js-concepts) — Akshay Manoj
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgeav
+-[हिन्दी (Hindi)](https://github.com/ArchProtios/33-js-concepts)
 
 ---
-## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
+## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s">
+<a id="table-of-contents">Table of Contents</a>
 
 1. **[Call Stack](#1-call-stack)**
 2. **[Primitive Types](#2-primitive-types)**
@@ -102,7 +105,7 @@ All the translations for this repo will be listed below:
 
 ## 1. Call Stack
 
-### Reference
+### संदर्भ
 
 -  [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
@@ -131,13 +134,13 @@ All the translations for this repo will be listed below:
 - [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
 - [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
     
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 2. Primitive Types
 
-### Reference
+### संदर्भ
 
 -  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
@@ -168,7 +171,7 @@ All the translations for this repo will be listed below:
 - [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 - [Data Type in JavaScript - ScholarHat](https://www.youtube.com/watch?v=aFDvBjVjCh8)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -196,7 +199,7 @@ All the translations for this repo will be listed below:
 - [JavaScript - Reference vs Primitive Values/ Types - Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - [Value Types and Reference Types in JavaScript - Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -218,11 +221,11 @@ All the translations for this repo will be listed below:
 - [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
 - [Duck Typing in Javascript - Techmaker Studio](https://www.youtube.com/watch?v=oEpgyoMEkrM)
 
-### Books
+### किताबें
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -250,13 +253,13 @@ All the translations for this repo will be listed below:
 - [=== vs == in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=a0S1iG3TgP0)
 - [The typeof operator in JS - CodeVault](https://www.youtube.com/watch?v=NSS5WRcv7yM)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 6. Function Scope, Block Scope and Lexical Scope
 
-### Books
+### किताबें
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
@@ -288,7 +291,7 @@ All the translations for this repo will be listed below:
 - [Lexical scoping in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=qT5S7GgIioE)
  
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -318,13 +321,13 @@ All the translations for this repo will be listed below:
 - [Expression in javascript | Statement in javascript - Sathelli Srikanth](https://www.youtube.com/watch?v=cVDs3TZ-kXs)
 
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 8. IIFE, Modules and Namespaces
 
-### Reference
+### संदर्भ
 
 -  [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
 -  [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
@@ -357,7 +360,7 @@ All the translations for this repo will be listed below:
 - [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 - [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -383,7 +386,7 @@ All the translations for this repo will be listed below:
 - [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
 - [JavaScript Event Loop: How it Works and Why it Matters in 5 Minutes - James Q Quick](https://www.youtube.com/watch?v=6lbBaM18X3g)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -408,7 +411,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
 - [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)   
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -435,7 +438,7 @@ All the translations for this repo will be listed below:
 - [Understanding the V8 JavaScript Engine - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
 - [JavaScript Under The Hood - JavaScript Engine Overview - Traversy Media](https://www.youtube.com/watch?v=oc6faXVc54E)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -457,13 +460,13 @@ All the translations for this repo will be listed below:
 - [JS Bitwise Operators and Binary Numbers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=RRyxCmLX_ag)
 - [Deep Dive into Blobs, Files, and ArrayBuffers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=ScZZoHj7mqY)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 13. DOM and Layout Trees
 
-### Books
+### किताबें
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
@@ -488,7 +491,7 @@ All the translations for this repo will be listed below:
 - [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
 - [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -513,13 +516,13 @@ All the translations for this repo will be listed below:
 - [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
 - [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 15. this, call, apply and bind
 
-### Reference
+### संदर्भ
 
 -  [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 -  [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
@@ -561,7 +564,7 @@ All the translations for this repo will be listed below:
 - [call, apply and bind method in JavaScript — Akshay Saini](https://www.youtube.com/watch?v=75W8UPQ5l7k)
 - .[Javascript Interview Questions ( Call, Bind and Apply ) - Polyfills, Output Based, Explicit Binding - Roadside Coder] (https://youtu.be/VkmUOktYDAU?si=SdvLZ8FBmephPxjS)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -578,13 +581,13 @@ All the translations for this repo will be listed below:
 -  [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 -  [JavaScript instanceof operator](https://flexiple.com/javascript/instanceof-javascript)
   
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 17. Prototype Inheritance and Prototype Chain
 
-### Reference
+### संदर्भ
 
 -  [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
@@ -625,18 +628,18 @@ All the translations for this repo will be listed below:
 - [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 - [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
-### Books
+### किताबें
 
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
-- [The Principles of Object-Oriented JavaScript - Nicholas C. Zakas](https://www.google.com.pk/books/edition/The_Principles_of_Object_Oriented_JavaSc/rorlAwAAQBAJ?hl=en&gbpv=1&pg=PP1&printsec=frontcover)
+- [The Principles of Object-Oriented JavaScript - Nicholas C. Zakas](https://www.google.com.pk/किताबें/edition/The_Principles_of_Object_Oriented_JavaSc/rorlAwAAQBAJ?hl=en&gbpv=1&pg=PP1&printsec=frontcover)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 18. Object.create and Object.assign
 
-### Reference
+### संदर्भ
 
 -  [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 -  [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
@@ -661,7 +664,7 @@ All the translations for this repo will be listed below:
 - [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -721,7 +724,7 @@ All the translations for this repo will be listed below:
 - [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
 - [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -756,13 +759,13 @@ All the translations for this repo will be listed below:
 - [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
 - [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 21. Closures
 
-### Reference
+### संदर्भ
 
 -  [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 -  [Closure — JavaScript.Info](https://javascript.info/closure)
@@ -808,13 +811,13 @@ All the translations for this repo will be listed below:
 - [Learn Closures In 7 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=3a0I8ICR1Vg)
 
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 22. High Order Functions
 
-### Books
+### किताबें
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
@@ -839,7 +842,7 @@ All the translations for this repo will be listed below:
 - [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
 - [Higher-Order Functions ft. Functional Programming - Akshay Saini](https://www.youtube.com/watch?v=HkWxvB1RJq0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -872,13 +875,13 @@ All the translations for this repo will be listed below:
 - [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
 - [What Is Recursion - In Depth - Web Dev Simplified](https://www.youtube.com/watch?v=6oDQaB2one8)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 24. Collections and Generators
 
-### Reference
+### संदर्भ
 
 -  [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
 
@@ -907,13 +910,13 @@ All the translations for this repo will be listed below:
 - [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
 - [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 25. Promises
 
-### Reference
+### संदर्भ
 
 -  [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
@@ -962,17 +965,17 @@ All the translations for this repo will be listed below:
 - [JavaScript Promises In 10 Minutes — Web Dev Simplified ](https://www.youtube.com/watch?v=DHvZLI7Db8E)
 - [Promises | Ep 02 Season 02 - Namaste JavaScript - Akshay Saini ](https://youtu.be/ap-6PPAuK1Y?si=Ri1fopXeYjlrHzpf)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 26. async/await
 
-### Reference
+### संदर्भ
 
 -  [async/await — JavaScript.Info](https://javascript.info/async-await)
 
-### Books
+### किताबें
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 -  [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
@@ -1013,7 +1016,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
 - [Promise async and await in javascript — Hitesh Choudhary](https://youtu.be/Gjbr21JLfgg?si=SDCVKr9ONw2GsNdT)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -1043,7 +1046,7 @@ All the translations for this repo will be listed below:
 - [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
 - [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -1068,7 +1071,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Algorithms Crash Course: Learn Algorithms & "Big O" from the Ground Up! - Academind](https://www.youtube.com/watch?v=JgWm6sQwS_I)
 - [Big O Notation - Data Structures and Algorithms in Javascript - RoadSideCoder](https://www.youtube.com/watch?v=LaexPVi1VRE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -1095,13 +1098,13 @@ All the translations for this repo will be listed below:
 - 🎥 [JavaScript Data Structures: Getting Started - Academind](https://www.youtube.com/watch?v=41GSinwoMYA)
 - 🎥 [Algorithms and Data Structures - The Coding Train (Daniel Shiffman)](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 30. Inheritance, Polymorphism and Code Reuse
 
-### Reference
+### संदर्भ
 
 -  [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 -  [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
@@ -1122,13 +1125,13 @@ All the translations for this repo will be listed below:
 - [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
 - [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 31. Design Patterns
 
-### Books
+### किताबें
 
 -  [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 -  [Pro JavaScript Design Patterns — Ross Harmes and Dustin Diaz](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
@@ -1160,13 +1163,13 @@ All the translations for this repo will be listed below:
 - [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 - [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
 ## 32. Partial Applications, Currying, Compose and Pipe
 
-### Books
+### किताबें
 
 -  [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
@@ -1208,7 +1211,7 @@ All the translations for this repo will be listed below:
 - [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 - [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ---
 
@@ -1240,7 +1243,8 @@ All the translations for this repo will be listed below:
 - 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
 - 🎥 [Tips On Learning How To Code](https://www.youtube.com/watch?v=0wHyoBPc6zs)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[शीर्ष पर वापस जाएं ↑](#table-of-contents)**
 
 ## <img  align= center width=50px height=50px src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> License <a id = "License"></a>
-This software is licensed under MIT License, See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+यह सॉफ़्टवेयर MIT लाइसेंस के अंतर्गत लाइसेंस दिया गया है। अधिक जानकारी के लिए [लाइसेंस](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) देखें। © लियोनार्डो माल्डोनाडो।
+
