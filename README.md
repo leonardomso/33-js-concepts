@@ -30,7 +30,7 @@ Feel free to submit a PR by adding a link to your own recaps or reviews. If you 
 - [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 - [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
 - [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
 - [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
 - [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
 - [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
