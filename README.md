@@ -130,6 +130,7 @@ All the translations for this repo will be listed below:
 - [Call Stacks - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
 - [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
 - [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
+- [La PILA DE EJECUCIÓN (Call Stack) de JAVASCRIPT | JS en ESPAÑOL - La Cocina del Código](https://www.youtube.com/watch?v=ygA5U7Wgsg8)
     
 **[⬆ Back to Top](#table-of-contents)**
 
