@@ -1232,6 +1232,7 @@ All the translations for this repo will be listed below:
 -  [The Clean Code Book - Robert C Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
 -  [How to use destructuring in JavaScript to write cleaner, more powerful code - freecodecamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
 -  [Write Clean Code Using JavaScript Object Destructuring - Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
+- [JavaScript Clean Coding Best Practices](https://blog.risingstack.com/javascript-clean-coding-best-practices-node-js-at-scale/)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
