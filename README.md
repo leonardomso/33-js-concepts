@@ -950,6 +950,7 @@ All the translations for this repo will be listed below:
 -  [Promise Basics - javascript.info](https://javascript.info/promise-basics)
 -  [The Complete JavaScript Promise Guide](https://blog.webdevsimplified.com/2021-09/javascript-promises)
 -  [Promise Chaining - javascript.info](https://javascript.info/promise-chaining)
+-  [JavaScript's way to deal with asynchronous data](https://medium.com/stackademic/javascripts-way-to-deal-with-asynchronous-data-492f5c022537)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
