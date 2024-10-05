@@ -1245,3 +1245,53 @@ All the translations for this repo will be listed below:
 
 ## <img  align= center width=50px height=50px src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> License <a id = "License"></a>
 This software is licensed under MIT License, See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+
+
+**[⬆ Back to Top](#table-of-contents)**
+
+
+## 34. JS Generator Function
+
+ JavaScript Generator Function that simplifies asynchronous data fetching and iteration. The generator pattern allows for powerful control over iteration and can be integrated into various real-world applications, especially when working with asynchronous tasks like data fetching or handling streams of information.
+
+
+## Code Example
+
+Here's a sample code snippet showing the use of a JavaScript generator function:
+
+```js
+function* fetchData() {
+    const data = yield fetch('https://api.example.com/data');
+    const response = yield data.json();
+    return response;
+}
+
+const iterator = fetchData();
+iterator.next().value
+    .then(data => iterator.next(data).value)
+    .then(response => console.log(response));
+```
+
+In this example:
+- The generator function `fetchData()` fetches asynchronous data from an API.
+- The `yield` keyword pauses the function, and `next()` is used to resume execution.
+
+## Resources
+
+### Articles
+- **Understanding Generators in JavaScript**: This article provides an in-depth overview of how generator functions work and their use cases. [Link to Article](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
+- 🚀 https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*
+- 🚀 https://www.geeksforgeeks.org/javascript-function-generator/
+- 🚀 https://www.scaler.com/topics/javascript-generator/
+### Book
+- **JavaScript: The Good Parts** by Douglas Crockford: This book covers essential JavaScript concepts, including generator functions. ISBN: 978-0596517748
+
+### Video
+- **JavaScript Generators Tutorial**: A comprehensive video tutorial explaining generator functions and their practical applications in JavaScript.
+  [Link to Video](https://www.youtube.com/watch?v=ImwrezYhw4w)
+
+
+## <img  align= center width=50px height=50px src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> License <a id = "License"></a>
+This software is licensed under MIT License, See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+
+---
