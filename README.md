@@ -464,6 +464,10 @@ All the translations for this repo will be listed below:
 
 ## 13. DOM and Layout Trees
 
+### Reference
+
+- [Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
+
 ### Books
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
