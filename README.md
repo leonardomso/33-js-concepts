@@ -466,7 +466,7 @@ All the translations for this repo will be listed below:
 
 ### Reference
 
-- [Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
+- [Document Object Model (DOM) — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
 
 ### Books
 
