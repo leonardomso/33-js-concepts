@@ -63,6 +63,11 @@ All the translations for this repo will be listed below:
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 
 ---
+
+<h3>The world's best book for Javascript is "Eloquent JavaScript" by Marijn Haverbeke. </h3>
+<h4> <a href="https://a.co/d/80X8VN9"> Link </a> </h4>
+
+---
 ## <img  align= center width=50px height=50px src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif?cid=6c09b952m4j3poopinf91rquev6qy4e8avu0bflq1e0vh4gp&ep=v1_internal_gif_by_id&rid=giphy.gif&ct=s"> <a id="table-of-contents">Table of Contents</a>
 
 1. **[Call Stack](#1-call-stack)**
