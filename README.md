@@ -1013,6 +1013,7 @@ All the translations for this repo will be listed below:
 - [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
 - [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
 - [Promise async and await in javascript — Hitesh Choudhary](https://youtu.be/Gjbr21JLfgg?si=SDCVKr9ONw2GsNdT)
+- [async await | Namaste JavaScript - Season 02 - Ep 04](https://www.youtube.com/watch?v=6nv3qy3oNkc)
 
 **[⬆ Back to Top](#table-of-contents)**
 
