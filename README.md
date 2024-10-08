@@ -1053,6 +1053,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 - [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
 - [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
 - [Promise async and await in javascript — Hitesh Choudhary](https://youtu.be/Gjbr21JLfgg?si=SDCVKr9ONw2GsNdT)
+- [JavaScript ASYNC/AWAIT is easy](https://youtu.be/9j1dZwFEJ-c?si=ww6YfTRGGZz96B2f)
 
 **[⬆ Back to Top](#table-of-contents)**
 
