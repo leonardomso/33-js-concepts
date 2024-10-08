@@ -1247,5 +1247,30 @@ All the translations for this repo will be listed below:
 
 **[⬆ Back to Top](#table-of-contents)**
 
+---
+
+## 34. ECMAScript
+
+### Reference
+
+- [ECMAScript Specification — ECMA International](https://www.ecma-international.org/publications/standards/Ecma-262.htm)
+
+### <img align=center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+
+- [A Comprehensive Guide to ECMAScript — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide)
+- [Understanding ECMAScript 6 — Nicholas C. Zakas](https://www.sitepoint.com/understanding-es6/)
+- [ECMAScript: What’s New in ES2020 — Flavio Copes](https://flaviocopes.com/es2020/)
+- [The Evolution of JavaScript: A Look at ECMAScript — Smashing Magazine](https://www.smashingmagazine.com/2020/05/evolution-javascript/)
+- [The History of JavaScript and ECMAScript — Toptal](https://www.toptal.com/javascript/complete-guide-to-javascript-history)
+
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+
+- [ECMAScript 6: New Features — Academind](https://www.youtube.com/watch?v=6s6XgFqjG0c)
+- [JavaScript: Understanding ECMAScript 6 — Maximilian Schwarzmüller](https://www.youtube.com/watch?v=12VR08p0Iow)
+- [ECMAScript 2022 in 100 Seconds — Fireship](https://www.youtube.com/watch?v=ERQBBhVCCn8)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+
 ## <img  align= center width=50px height=50px src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> License <a id = "License"></a>
 This software is licensed under MIT License, See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
