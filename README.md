@@ -507,6 +507,7 @@ All the translations for this repo will be listed below:
 -  [How ES6 classes really work and how to build your own — Robert Grosse](https://medium.com/@robertgrosse/how-es6-classes-really-work-and-how-to-build-your-own-fd6085eb326a)
 -  [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
 -  [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
+-[Javascript Promises vs Async Await EXPLAINED! — Dev Ed by Roberts Dev Talk]()
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
