@@ -947,6 +947,8 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 - [JavaScript ES6 / ES2015 - \[11\] Generators - Traversy Media](https://www.youtube.com/watch?v=dcP039DYzmE)
 - [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
 - [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
+- [The Power of JS Generators by Anjana Vakil](https://youtu.be/gu3FfmgkwUc?si=SjeCHwpBiv-zMx7n)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
