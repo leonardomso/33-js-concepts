@@ -1284,5 +1284,27 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 **[⬆ Back to Top](#table-of-contents)**
 
+
+
+---
+
+## 🚀 How to Contribute
+
+We'd ❤️ to have your help in making this repository better! If you're passionate about JavaScript and want to contribute, here's how you can get involved:
+
+### 💡 Ways to Contribute:
+- 📚 **Add examples**, resources, or explanations to any concept.
+- 🛠️ **Improve documentation** and code snippets for clarity.
+- 🌟 **Suggest or introduce new JavaScript concepts** that aren't covered yet.
+
+Check out our [Contributing Guidelines](./CONTRIBUTING.md) to get started and learn more about how to contribute effectively.
+
+Together, let's build a comprehensive JavaScript resource! 💪
+
+---
+
+
+
+
 ## <img  align= center width=50px height=50px src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> License <a id = "License"></a>
 This software is licensed under MIT License, See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
