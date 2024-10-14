@@ -834,6 +834,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 -  [whatthefuck.is · A Closure - Dan Abramov](https://whatthefuck.is/closure)
 -  [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
 -  [Do you know Closures - Mohamed Khaled](https://dev.to/this_mkhy/do-you-know-es6-part-3-advanced-3fcl#Closures-2)
+-  [Understanding JavaScript Closures With Examples - Trevor I. Lasn](https://www.trevorlasn.com/blog/understanding-javascript-closures)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
