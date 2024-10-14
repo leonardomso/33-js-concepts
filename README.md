@@ -462,6 +462,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 -  [JavaScript engine fundamentals: optimizing prototypes](https://mathiasbynens.be/notes/prototypes)
 -  [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
 -  [JavaScript Internals: JavaScript engine, Run-time environment & setTimeout Web API — Rupesh Mishra](https://blog.bitsrc.io/javascript-internals-javascript-engine-run-time-environment-settimeout-web-api-eeed263b1617)
+-  [Introduction to Javascript Engines - GeeksforGeeks](https://www.geeksforgeeks.org/introduction-to-javascript-engines/)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
