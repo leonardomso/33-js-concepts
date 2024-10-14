@@ -434,6 +434,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 -  [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
 -  [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
 -  [Debounce – How to Delay a Function in JavaScript - Ondrej Polesny](https://www.freecodecamp.org/news/javascript-debounce-example/)
+-  [setImmediate() vs setTimeout()](https://www.trevorlasn.com/blog/setimmediate-vs-settimeout-in-javascript)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
