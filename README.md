@@ -163,7 +163,7 @@ Primitive values are directly assigned to a variable, and when you manipulate a 
 -  [The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
 -  [Object to primitive conversion — JavaScript.info](https://javascript.info/object-toprimitive)
 - [Methods of primitives - Javascript.info](https://javascript.info/primitives-methods)
--  [What are the Primitive Data Types in JavaScript ? - Scaler](https://www.scaler.com/topics/what-are-the-primitive-data-types-in-javascript/)
+- [What are the Primitive Data Types in JavaScript ? - Scaler](https://www.scaler.com/topics/what-are-the-primitive-data-types-in-javascript/)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
