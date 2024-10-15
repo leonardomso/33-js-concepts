@@ -152,6 +152,7 @@ Primitive values are directly assigned to a variable, and when you manipulate a 
 
 -  [Primitive and Non-primitive data-types in JavaScript - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
 -  [Javascript variables (Beginner thinking)](https://robiul.dev/javascript-variables-beginner-thinking)
+-  [Mastering JavaScript Basics: Variables, Data Types, and Functions- Shivam Goswami](https://shivamgoswami.hashnode.dev/mastering-javascript-basics)
 -  [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
 -  [What You Need to Know About JavaScript Number Type — Max Wizard K](https://indepth.dev/posts/1139/here-is-what-you-need-to-know-about-javascripts-number-type)
 -  [What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
