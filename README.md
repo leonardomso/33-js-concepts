@@ -309,6 +309,7 @@ Lexical Scope: Refers to how variable access is determined based on the physical
 -  [When to use a function declaration vs. a function expression ― Amber Wilkie](https://medium.freecodecamp.org/when-to-use-a-function-declarations-vs-a-function-expression-70f15152a0a0)
 -  [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and “this” ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
 -  [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
+-  [Understanding "this" in functions and objects ― Temiloluwa Akintade](https://github.com/Temi-Tade/Vanilla-js/blob/main/js-concepts/this%20keyword%20in%20objects.md)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
