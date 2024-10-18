@@ -3,7 +3,7 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  ஒவ்வொரு ஜாவாஸ்கிரிப்ட் டெவலப்பரும் தெரிந்து கொள்ள வேண்டிய 33 கருத்துக்கள்
   <br><br>
 </h1>
 
