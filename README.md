@@ -26,6 +26,7 @@ All the translations for this repo will be listed below:
 - [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
 - [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
 - [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Azərbaycanca (Azerbaijani language)](https://github.com/Sakhinamammadzade/33-js-concepts) — Sakina Mammadzade
 - [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
 - [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
 - [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
