@@ -267,6 +267,7 @@ All the translations for this repo will be listed below:
 -  [Functions in JavaScript - Deepa Pandey](https://www.scaler.com/topics/javascript/javascript-functions/)
 -  [Emulating Block Scope in JavaScript — Josh Clanton](http://adripofjavascript.com/blog/drips/emulating-block-scope-in-javascript.html)
 -  [The Difference Between Function and Block Scope in JavaScript — Joseph Cardillo](https://medium.com/@josephcardillo/the-difference-between-function-and-block-scope-in-javascript-4296b2322abe)
+-  [The Difference Between Function, Block, and Lexical Scope — Abdullah Faraj](https://topinterns.io/blog/article/45)
 -  [Function Scopes and Block Scopes in JavaScript — Samer Buna](https://edgecoders.com/function-scopes-and-block-scopes-in-javascript-25bbd7f293d7)
 -  [Understanding Scope and Context in JavaScript — Ryan Morr](http://ryanmorr.com/understanding-scope-and-context-in-javascript/)
 -  [JavaScript Scope and Closures — Zell Liew](https://css-tricks.com/javascript-scope-closures/)
