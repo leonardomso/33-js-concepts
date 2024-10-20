@@ -423,6 +423,11 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 10. setTimeout, setInterval and requestAnimationFrame
+setTimeout schedules a function to execute once after a specified delay (in milliseconds). Useful for delaying actions or executing code asynchronously.
+
+setInterval repeatedly calls a function at specified time intervals (in milliseconds) until cleared. Ideal for executing tasks periodically.
+
+requestAnimationFrame schedules a function to run before the next browser repaint, ensuring smooth animations. It’s more efficient than setInterval for UI updates.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -448,6 +453,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 11. JavaScript Engines
+JavaScript Engines execute JavaScript code by converting it into machine-readable instructions. Popular engines include V8 (Chrome, Node.js), SpiderMonkey (Firefox), JavaScriptCore (Safari), and Chakra (Edge). They use JIT compilation for faster performance.
 
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
@@ -477,6 +483,13 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 12. Bitwise Operators, Type Arrays and Array Buffers
+Bitwise operators perform operations directly on the binary representation of numbers. They are useful for tasks like setting flags or manipulating individual bits.
+Examples:
+& (AND), | (OR), ^ (XOR), ~ (NOT), << (Left Shift), >> (Right Shift)
+
+Typed Arrays provide efficient handling of binary data by offering views for different data types (e.g., Int8Array, Float32Array). They allow direct interaction with raw memory, useful for tasks like multimedia processing and WebGL.
+
+An ArrayBuffer is a fixed-length block of memory that stores binary data. It serves as a low-level buffer, which can be accessed via Typed Arrays to manipulate the data efficiently.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -499,6 +512,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 13. DOM and Layout Trees
+The DOM is a structured representation of an HTML or XML document, where elements are organized as a tree of nodes. It allows JavaScript to dynamically access, modify, or delete elements and attributes on a webpage.
+
+The Layout Tree is a rendering structure created by the browser from the DOM and CSSOM (CSS Object Model). It determines the visible elements on the page and calculates their position and size for rendering.
 
 ### Reference
 
@@ -534,6 +550,10 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 14. Factories and Classes
+A factory function is a regular function that returns objects. It allows the creation of multiple similar objects without using classes. Factories are useful for encapsulation and avoiding the complexity of this in JavaScript.
+
+A class is a blueprint for creating objects with shared properties and methods. Introduced in ES6, classes provide a cleaner syntax for defining object-oriented code using the constructor and methods.
+
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -559,6 +579,13 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 15. this, call, apply and bind
+The this keyword refers to the context in which a function is executed. Its value depends on how the function is called (e.g., in an object, globally, or via a specific binding).
+
+call() invokes a function immediately with a specific this context and arguments passed individually.
+
+apply() works like call(), but arguments are passed as an array.
+
+bind() returns a new function with this bound to a specified object, but does not invoke the function immediately.
 
 ### Reference
 
@@ -607,6 +634,13 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 16. new, Constructor, instanceof and Instances
+The new keyword creates a new object instance from a constructor function or class. It initializes properties and binds this to the new object.
+
+A constructor is a special function or method used to initialize an object’s properties when creating instances. In classes, it’s defined using the constructor method.
+
+instanceof checks if an object is an instance of a particular class or constructor, returning a boolean.
+
+An instance is an individual object created from a class or constructor function. It holds the properties and methods defined by the constructor or class.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -624,6 +658,10 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 17. Prototype Inheritance and Prototype Chain
+Prototype inheritance allows objects to inherit properties and methods from another object through their prototype. In JavaScript, every object has a hidden [[Prototype]] link that refers to another object (its prototype). This allows reusing functionality across multiple objects.
+
+The prototype chain is the series of objects linked through their prototypes. When accessing a property or method on an object, JavaScript will traverse up the chain until it finds the property, or reach null at the end of the chain if it's not found.
+
 
 ### Reference
 
@@ -676,6 +714,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 18. Object.create and Object.assign
+Object.create() creates a new object with a specified prototype. It allows setting up inheritance between objects by linking the new object’s [[Prototype]] to the given prototype object.
+
+Object.assign() copies properties from one or more source objects to a target object. It’s useful for merging objects or cloning shallow objects.
 
 ### Reference
 
@@ -707,6 +748,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 19. map, reduce, filter
+The map() method creates a new array by applying a provided function to each element of the original array. It does not modify the original array.
+
+The reduce() method executes a reducer function on each element of the array, resulting in a single output value. It can be used for summing values, flattening arrays, or accumulating results.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -767,6 +811,13 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
+A pure function is a function that, given the same input, always returns the same output without causing any side effects. Pure functions do not rely on or modify external state, making them predictable and easier to test.
+
+A side effect occurs when a function modifies some state outside its own scope or interacts with the outside world (e.g., changing a global variable, manipulating DOM elements, or making network requests). Functions with side effects can lead to unpredictable behavior.
+
+State mutation refers to changing the state of an object or variable after it has been created. In functional programming, state should ideally remain immutable to prevent unintended side effects. Immutable data structures help maintain predictable application behavior.
+
+Event propagation is the process by which an event travels through the DOM hierarchy. It occurs in two phases: capturing (from the root to the target) and bubbling (from the target back up to the root). Developers can control event handling by specifying which phase to use.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -802,6 +853,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 21. Closures
+A closure is a function that retains access to its lexical scope, even when the function is executed outside that scope. Closures allow for the creation of private variables and encapsulation, making them powerful for data hiding and maintaining state in JavaScript.
 
 ### Reference
 
@@ -885,6 +937,11 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 23. Recursion
+Recursion is a programming technique where a function calls itself in order to solve a problem. It breaks down complex problems into simpler subproblems, making it easier to reach a solution. A recursive function typically has two main components:
+
+Base Case: A condition that stops the recursion, preventing infinite loops.
+Recursive Case: The part of the function that calls itself with modified arguments, working toward the base case.
+
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -918,6 +975,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 24. Collections and Generators
+Collections in JavaScript refer to data structures that store multiple values. They provide a way to manage and manipulate groups of data efficiently.
+
+Generators are special functions in JavaScript that can be paused and resumed, allowing for the creation of iterators. They are defined using the function* syntax and use the yield keyword to yield values one at a time, making them useful for handling asynchronous operations or producing sequences of values.
 
 ### Reference
 
@@ -953,6 +1013,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 25. Promises
+A promise in JavaScript is an object that represents the eventual completion (or failure) of an asynchronous operation and its resulting value. Promises provide a more manageable way to handle asynchronous operations compared to traditional callback functions.
 
 ### Reference
 
@@ -1008,6 +1069,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 26. async/await
+async/await is a modern syntax in JavaScript that simplifies working with promises and asynchronous code, making it easier to read and write. It allows you to write asynchronous code that looks synchronous, improving clarity and reducing the complexity of promise chaining.
 
 ### Reference
 
@@ -1059,6 +1121,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 27. Data Structures
+Data structures are specialized formats for organizing, processing, and storing data in a computer. They enable efficient access and modification of data, playing a crucial role in algorithm design and optimization.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1089,6 +1152,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 28. Expensive Operation and Big O Notation
+Data structures are specialized formats for organizing, processing, and storing data in a computer. They enable efficient access and modification of data, playing a crucial role in algorithm design and optimization.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1114,6 +1178,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 29. Algorithms
+An algorithm is a step-by-step procedure or formula for solving a specific problem or performing a computation. Algorithms are fundamental to computer science and programming, as they provide a clear set of instructions for processing data, making decisions, and performing tasks.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1141,6 +1206,11 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 30. Inheritance, Polymorphism and Code Reuse
+Inheritance allows classes to inherit properties and methods from other classes, promoting code reuse and a hierarchical structure.
+
+Polymorphism enables methods to be used in different contexts, allowing for flexibility and the ability to define a common interface for different classes.
+
+Code Reuse enhances development efficiency by utilizing existing code, thereby reducing duplication and improving maintainability.
 
 ### Reference
 
@@ -1168,6 +1238,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 31. Design Patterns
+Design patterns are proven solutions to common software design problems. They provide templates for building software in a way that enhances code reusability, maintainability, and scalability. Design patterns are categorized into three main types: Creational, Structural, and Behavioral patterns.
 
 ### Books
 
@@ -1206,6 +1277,11 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 32. Partial Applications, Currying, Compose and Pipe
+Partial Applications allow you to create new functions by fixing some arguments of existing functions.
+
+Currying transforms a function with multiple arguments into a sequence of single-argument functions, enhancing reusability.
+
+Compose enables function composition from right to left, while Pipe allows for left-to-right function application, improving code readability and flow.
 
 ### Books
 
@@ -1254,6 +1330,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 33. Clean Code
+Clean Code refers to a set of principles and practices aimed at writing code that is easy to read, understand, and maintain. It emphasizes clarity and simplicity, making it easier for developers to collaborate, debug, and extend applications.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
