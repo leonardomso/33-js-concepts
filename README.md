@@ -60,6 +60,7 @@ All the translations for this repo will be listed below:
 - [Latin (Latin)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
 - [മലയാളം (Malayalam)](https://github.com/Stark-Akshay/33-js-concepts) — Akshay Manoj
 - [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) - Ayomide Bajulaye
+- [Urdu (اردو)](https://github.com/AFurqanHassan/33-js-concepts) — Ahmad Furqan Hassan
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 
 ---
