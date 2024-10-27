@@ -423,7 +423,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 ---
 
 ## 10. setTimeout, setInterval and requestAnimationFrame
-
+In Javascript, setTimeout is a method that executes a function after a specified delay (in milliseconds). It's useful for delaying actions or running code once after a certain period. setInterval is a method that repeatedly executes a function at specified intervals (in milliseconds). It’s used for tasks that need to run continuously, like updating a timer. requestAnimationFrame is a method that is specifically for animations. It tells the browser to perform an animation and calls a function right before the next repaint, providing a smoother visual experience and better performance for animations. These concepts are important in Javascript.
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Javascript setTimeout - All you need to know](https://robiul.dev/javascript-settimeout-all-you-need-to-know)
