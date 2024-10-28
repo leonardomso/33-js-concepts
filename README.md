@@ -3,22 +3,23 @@
   <a href="https://github.com/leonardomso/33"><img src="https://i.imgur.com/dsHmk6H.jpg" alt="33 Concepts Every JS Developer Should Know" width=200" /></a>
   <br>
     <br>
-  33 Concepts Every JavaScript Developer Should Know
+  33 ప్రతి జావాస్క్రిప్ట్ డెవలపర్ తెలుసుకోవలసిన కాన్సెప్ట్‌లు
   <br><br>
 </h1>
 
-## Introduction 
+## పరిచయం 
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+జావాస్క్రిప్ట్‌లో డెవలపర్‌లు తమ భావనలను నేర్చుకోవడంలో సహాయపడే ఉద్దేశ్యంతో ఈ రిపోజిటరీ సృష్టించబడింది. ఇది అవసరం కాదు, భవిష్యత్తు అధ్యయనాలకు మార్గదర్శకం. ఇది స్టీఫెన్ కర్టిస్ రాసిన వ్యాసం ఆధారంగా రూపొందించబడింది మరియు మీరు దీన్ని [ఇక్కడ](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
 **🚀 Considered by GitHub as one of the [top open source projects of 2018!](https://blog.github.com/2018-12-13-new-open-source-projects/)**
 
-## Community
+## సంఘం
 
-Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+మీ స్వంత రీక్యాప్‌లు లేదా సమీక్షలకు లింక్‌ను జోడించడం ద్వారా PRని సమర్పించడానికి సంకోచించకండి. మీరు రెపోను మీ మాతృభాషలోకి అనువదించాలనుకుంటే, దయచేసి సంకోచించకండి.
 
 All the translations for this repo will be listed below:
 
+- [తెలుగు(Telugu)](https://github.com/shashankch2003/33-js-concepts) - shashank cheere
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
@@ -101,14 +102,13 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 1. Call Stack
+## 1. కాల్ స్టాక్
 
-The call stack is a mechanism that the JavaScript interpreter uses to keep track of function execution within a program. In JavaScript, functions are executed in the order they are called. The call stack follows the Last In, First Out (LIFO) principle, meaning that the last function pushed onto the stack is the first one to be executed.
+కాల్ స్టాక్ అనేది ప్రోగ్రామ్‌లోని ఫంక్షన్ ఎగ్జిక్యూషన్‌ను ట్రాక్ చేయడానికి జావాస్క్రిప్ట్ ఇంటర్‌ప్రెటర్ ఉపయోగించే మెకానిజం. జావాస్క్రిప్ట్‌లో, ఫంక్షన్‌లు వాటిని పిలిచే క్రమంలో అమలు చేయబడతాయి. కాల్ స్టాక్ లాస్ట్ ఇన్, ఫస్ట్ అవుట్ (LIFO) సూత్రాన్ని అనుసరిస్తుంది, అంటే స్టాక్‌పైకి నెట్టబడిన చివరి ఫంక్షన్ మొదట అమలు చేయబడుతుంది.
 
-According to the ECMAScript specification, the call stack is defined as part of the execution context. Whenever a function is called, a new execution context is created and placed at the top of the stack. Once the function completes, its execution context is removed from the stack, and control returns to the previous context. This helps manage synchronous code execution, as each function call must complete before the next one can begin.
+ECMAScript స్పెసిఫికేషన్ ప్రకారం, కాల్ స్టాక్ అమలు సందర్భంలో భాగంగా నిర్వచించబడింది. ఒక ఫంక్షన్‌ని పిలిచినప్పుడల్లా, కొత్త అమలు సందర్భం సృష్టించబడుతుంది మరియు స్టాక్ ఎగువన ఉంచబడుతుంది. ఫంక్షన్ పూర్తయిన తర్వాత, దాని అమలు సందర్భం స్టాక్ నుండి తీసివేయబడుతుంది మరియు నియంత్రణ మునుపటి సందర్భానికి తిరిగి వస్తుంది. ఇది సింక్రోనస్ కోడ్ అమలును నిర్వహించడంలో సహాయపడుతుంది, ఎందుకంటే ప్రతి ఫంక్షన్ కాల్ తదుపరిది ప్రారంభించడానికి ముందు పూర్తి చేయాలి.
 
-### Reference
-
+### సూచన
 -  [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
@@ -139,13 +139,12 @@ According to the ECMAScript specification, the call stack is defined as part of 
 
 ---
 
-## 2. Primitive Types
-According to the ECMAScript specification, JavaScript has six primitive data types: string, number, bigint, boolean, undefined, and symbol. These types are immutable, meaning their values cannot be altered. There is also a special primitive type called null, which represents the intentional absence of any object value.
+## 2. ఆదిమ రకాలు
+ECMAScript స్పెసిఫికేషన్ ప్రకారం, JavaScript ఆరు ఆదిమ డేటా రకాలను కలిగి ఉంది: స్ట్రింగ్, నంబర్, బిగింట్, బూలియన్, నిర్వచించబడలేదు మరియు చిహ్నం. ఈ రకాలు మార్పులేనివి, అంటే వాటి విలువలు మార్చబడవు. శూన్య అని పిలువబడే ఒక ప్రత్యేక ఆదిమ రకం కూడా ఉంది, ఇది ఏదైనా వస్తువు విలువ యొక్క ఉద్దేశపూర్వకంగా లేకపోవడాన్ని సూచిస్తుంది.
 
-Primitive values are directly assigned to a variable, and when you manipulate a primitive type, you're working directly on the value. Unlike objects, primitives do not have properties or methods, but JavaScript automatically wraps primitive values with object counterparts when necessary (e.g., when calling methods on strings).
+ఆదిమ విలువలు నేరుగా వేరియబుల్‌కు కేటాయించబడతాయి మరియు మీరు ఆదిమ రకాన్ని మార్చినప్పుడు, మీరు నేరుగా విలువపై పని చేస్తున్నారు. ఆబ్జెక్ట్‌ల వలె కాకుండా, ఆదిమలకు లక్షణాలు లేదా పద్ధతులు ఉండవు, అయితే అవసరమైనప్పుడు (ఉదా., స్ట్రింగ్‌లపై పద్ధతులను కాల్ చేస్తున్నప్పుడు) జావాస్క్రిప్ట్ స్వయంచాలకంగా ఆబ్జెక్ట్ ప్రతిరూపాలతో ఆదిమ విలువలను చుట్టేస్తుంది.
 
-### Reference
-
+### సూచన
 -  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
@@ -179,7 +178,7 @@ Primitive values are directly assigned to a variable, and when you manipulate a 
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. విలువ రకాలు మరియు సూచన రకాలు
 According to the ECMAScript specification, value types are stored directly in the location that the variable accesses. These include types like number, string, boolean, undefined, bigint, symbol, and null. When you assign a value type to a variable, the value itself is stored.
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
@@ -208,19 +207,18 @@ According to the ECMAScript specification, value types are stored directly in th
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
-The ECMAScript specification defines JavaScript as a dynamically typed language, meaning that types are associated with values rather than variables, and type checking occurs at runtime. There are various ways JavaScript manages types:
+## 4. అవ్యక్త, స్పష్టమైన, నామమాత్ర, నిర్మాణ మరియు డక్ టైపింగ్
+ECMAScript స్పెసిఫికేషన్ జావాస్క్రిప్ట్‌ని డైనమిక్‌గా టైప్ చేసిన భాషగా నిర్వచిస్తుంది, అంటే రకాలు వేరియబుల్స్ కాకుండా విలువలతో అనుబంధించబడి ఉంటాయి మరియు టైప్ చెకింగ్ రన్‌టైమ్‌లో జరుగుతుంది. JavaScript రకాలను నిర్వహించడానికి వివిధ మార్గాలు ఉన్నాయి:
 
-Implicit Typing (or Type Coercion): This occurs when JavaScript automatically converts one data type to another when required. For instance, JavaScript might convert a string to a number during an arithmetic operation. While this can simplify some code, it can also lead to unexpected results if not handled carefully.
+ఇంప్లిసిట్ టైపింగ్ (లేదా టైప్ బలవంతం): అవసరమైనప్పుడు JavaScript స్వయంచాలకంగా ఒక డేటా రకాన్ని మరొకదానికి మార్చినప్పుడు ఇది జరుగుతుంది. ఉదాహరణకు, JavaScript అంకగణిత ఆపరేషన్ సమయంలో స్ట్రింగ్‌ను సంఖ్యగా మార్చవచ్చు. ఇది కొంత కోడ్‌ను సులభతరం చేయగలిగినప్పటికీ, జాగ్రత్తగా నిర్వహించకపోతే ఊహించని ఫలితాలకు దారితీయవచ్చు.
 
-Explicit Typing: Unlike implicit typing, explicit typing involves manually converting a value from one type to another using functions like Number(), String(), or Boolean().
+స్పష్టమైన టైపింగ్: అవ్యక్త టైపింగ్ కాకుండా, స్పష్టమైన టైపింగ్‌లో సంఖ్య(), స్ట్రింగ్(), లేదా బూలియన్() వంటి ఫంక్షన్‌లను ఉపయోగించి విలువను ఒక రకం నుండి మరొక రకంకి మాన్యువల్‌గా మార్చడం ఉంటుంది.
 
-Nominal Typing: JavaScript doesn't natively support nominal typing, where types are explicitly declared and checked. However, TypeScript, a superset of JavaScript, brings this feature to help catch type errors during development.
+నామమాత్రపు టైపింగ్: జావాస్క్రిప్ట్ నామమాత్రపు టైపింగ్‌కు స్థానికంగా మద్దతు ఇవ్వదు, ఇక్కడ రకాలు స్పష్టంగా ప్రకటించబడతాయి మరియు తనిఖీ చేయబడతాయి. అయినప్పటికీ, టైప్‌స్క్రిప్ట్, జావాస్క్రిప్ట్ యొక్క సూపర్‌సెట్, అభివృద్ధి సమయంలో టైప్ ఎర్రర్‌లను క్యాచ్ చేయడంలో సహాయపడటానికి ఈ ఫీచర్‌ని తీసుకువస్తుంది.
 
-Structuring Typing: In this type system, types are based on the structure or properties of the data. JavaScript is a structurally typed language where objects are compatible if they share the same structure (i.e., the same set of properties and methods).
+స్ట్రక్చరింగ్ టైపింగ్: ఈ రకం సిస్టమ్‌లో, రకాలు డేటా యొక్క నిర్మాణం లేదా లక్షణాలపై ఆధారపడి ఉంటాయి. JavaScript అనేది నిర్మాణాత్మకంగా టైప్ చేయబడిన భాష, ఇక్కడ వస్తువులు ఒకే నిర్మాణాన్ని (అంటే, ఒకే విధమైన లక్షణాలు మరియు పద్ధతులు) పంచుకుంటే వాటికి అనుకూలంగా ఉంటాయి.
 
-Duck Typing: This is a concept where an object's suitability is determined by the presence of certain properties and methods, rather than by the actual type of the object. JavaScript relies heavily on duck typing, where behavior is inferred from an object's properties rather than its declared type.
-
+డక్ టైపింగ్: ఇది వస్తువు యొక్క వాస్తవ రకాన్ని బట్టి కాకుండా నిర్దిష్ట లక్షణాలు మరియు పద్ధతుల ఉనికిని బట్టి ఒక వస్తువు యొక్క అనుకూలత నిర్ణయించబడే భావన. JavaScript డక్ టైపింగ్‌పై ఎక్కువగా ఆధారపడుతుంది, ఇక్కడ ప్రవర్తన దాని డిక్లేర్డ్ రకం కంటే వస్తువు యొక్క లక్షణాల నుండి ఊహించబడుతుంది.
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
@@ -246,15 +244,14 @@ Duck Typing: This is a concept where an object's suitability is determined by th
 
 ---
 
-## 5. == vs === vs typeof
- According to the ECMAScript specification, JavaScript includes both strict (===) and loose (==) equality operators, which behave differently when comparing values. Here's a breakdown:
+## 5. == vs === vs రకం
+ ECMAScript స్పెసిఫికేషన్ ప్రకారం, JavaScript కఠినమైన (===) మరియు వదులైన (==) సమానత్వ ఆపరేటర్‌లను కలిగి ఉంటుంది, ఇవి విలువలను పోల్చినప్పుడు భిన్నంగా ప్రవర్తిస్తాయి. ఇక్కడ విచ్ఛిన్నం ఉంది:
 
-== (Loose Equality): This operator performs type coercion before comparing two values. If the values are of different types, JavaScript will attempt to convert one or both values to a common type before comparison, which can lead to unexpected results.
+== (లూస్ ఈక్వాలిటీ): ఈ ఆపరేటర్ రెండు విలువలను పోల్చడానికి ముందు టైప్ బలవంతం చేస్తాడు. విలువలు వివిధ రకాలుగా ఉంటే, సరిపోల్చడానికి ముందు JavaScript ఒకటి లేదా రెండు విలువలను సాధారణ రకానికి మార్చడానికి ప్రయత్నిస్తుంది, ఇది ఊహించని ఫలితాలకు దారి తీస్తుంది.
 
-=== (Strict Equality): This operator compares both the value and the type without any type coercion. If the two values are not of the same type, the comparison will return false.
+=== (స్ట్రిక్ట్ ఈక్వాలిటీ): ఈ ఆపరేటర్ ఏ రకమైన బలవంతం లేకుండా విలువ మరియు రకం రెండింటినీ పోలుస్తుంది. రెండు విలువలు ఒకే రకమైనవి కానట్లయితే, పోలిక తప్పుగా చూపబడుతుంది.
 
-typeof Operator: The typeof operator is used to check the data type of a variable. While it's generally reliable, there are certain quirks, like how typeof null returns "object" instead of "null", due to a long-standing behavior in JavaScript's implementation.
-
+టైప్ ఆఫ్ ఆపరేటర్: వేరియబుల్ యొక్క డేటా రకాన్ని తనిఖీ చేయడానికి టైప్ ఆఫ్ ఆపరేటర్ ఉపయోగించబడుతుంది. ఇది సాధారణంగా నమ్మదగినది అయినప్పటికీ, జావాస్క్రిప్ట్ అమలులో దీర్ఘకాలిక ప్రవర్తన కారణంగా, "శూన్యం"కి బదులుగా "వస్తువు" టైప్ ఆఫ్ శూన్య ఎలా తిరిగి వస్తుంది వంటి కొన్ని విచిత్రాలు ఉన్నాయి.
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
@@ -281,16 +278,16 @@ typeof Operator: The typeof operator is used to check the data type of a variabl
 
 ---
 
-## 6. Function Scope, Block Scope and Lexical Scope
- The ECMAScript specification outlines three key types of scope:
+## 6. ఫంక్షన్ స్కోప్, బ్లాక్ స్కోప్ మరియు లెక్సికల్ స్కోప్
+ ECMAScript స్పెసిఫికేషన్ మూడు కీలక రకాల స్కోప్‌లను వివరిస్తుంది:
 
-Function Scope: Variables declared within a function using var are only accessible within that function. This scope isolates variables from being accessed outside of the function where they are declared.
+ఫంక్షన్ స్కోప్: var ఉపయోగించి ఫంక్షన్‌లో ప్రకటించబడిన వేరియబుల్స్ ఆ ఫంక్షన్‌లో మాత్రమే యాక్సెస్ చేయబడతాయి. ఈ స్కోప్ వేరియబుల్స్ డిక్లేర్డ్ చేయబడిన ఫంక్షన్ వెలుపల యాక్సెస్ చేయకుండా వేరు చేస్తుంది.
 
-Block Scope: Introduced with ES6, variables declared with let and const are block-scoped. This means they are only accessible within the specific block {} in which they are defined, such as inside loops or conditionals.
+బ్లాక్ స్కోప్: ES6తో పరిచయం చేయబడింది, లెట్ మరియు కాన్స్ట్‌తో డిక్లేర్ చేయబడిన వేరియబుల్స్ బ్లాక్-స్కోప్డ్. దీనర్థం అవి నిర్వచించబడిన నిర్దిష్ట బ్లాక్ {} లోపల లూప్‌లు లేదా షరతులు వంటివి మాత్రమే అందుబాటులో ఉంటాయి.
 
-Lexical Scope: Refers to how variable access is determined based on the physical location of the variables in the code. Functions are lexically scoped, meaning that they can access variables from their parent scope.
+లెక్సికల్ స్కోప్: కోడ్‌లోని వేరియబుల్స్ యొక్క భౌతిక స్థానం ఆధారంగా వేరియబుల్ యాక్సెస్ ఎలా నిర్ణయించబడుతుందో సూచిస్తుంది. విధులు లెక్సికల్ స్కోప్డ్‌గా ఉంటాయి, అంటే అవి వాటి పేరెంట్ స్కోప్ నుండి వేరియబుల్స్‌ను యాక్సెస్ చేయగలవు.
 
-### Books
+### పుస్తకాలు
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
@@ -330,9 +327,8 @@ Lexical Scope: Refers to how variable access is determined based on the physical
 
 ---
 
-## 7. Expression vs Statement
-According to the ECMAScript specification, expressions produce a value, and statements are instructions to perform an action, such as variable assignment or control flow. Function declarations are hoisted and can be called before they are defined in the code, while function expressions are not hoisted and must be defined before being invoked.
-
+## 7. వ్యక్తీకరణ vs ప్రకటన
+ECMAScript స్పెసిఫికేషన్ ప్రకారం, వ్యక్తీకరణలు విలువను ఉత్పత్తి చేస్తాయి మరియు స్టేట్‌మెంట్‌లు వేరియబుల్ అసైన్‌మెంట్ లేదా కంట్రోల్ ఫ్లో వంటి చర్యను నిర్వహించడానికి సూచనలు. ఫంక్షన్ డిక్లరేషన్‌లు ఎగురవేయబడతాయి మరియు అవి కోడ్‌లో నిర్వచించబడక ముందే కాల్ చేయవచ్చు, అయితే ఫంక్షన్ ఎక్స్‌ప్రెషన్‌లు ఎగురవేయబడవు మరియు తప్పనిసరిగా అమలు చేయబడే ముందు నిర్వచించబడాలి.
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
@@ -356,9 +352,9 @@ According to the ECMAScript specification, expressions produce a value, and stat
 
 ---
 
-## 8. IIFE, Modules and Namespaces
-With the introduction of ES6 modules, the role of IIFEs in scope isolation has diminished but they still remain relevant.
-### Reference
+## 8. IIFE, మాడ్యూల్స్ మరియు నేమ్‌స్పేస్‌లు
+ES6 మాడ్యూల్‌ల పరిచయంతో, స్కోప్ ఐసోలేషన్‌లో IIFEల పాత్ర తగ్గిపోయింది కానీ అవి ఇప్పటికీ సంబంధితంగానే ఉన్నాయి.
+### సూచన
 
 -  [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
 -  [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
@@ -395,8 +391,8 @@ With the introduction of ES6 modules, the role of IIFEs in scope isolation has d
 
 ---
 
-## 9. Message Queue and Event Loop
-The Event Loop is a critical part of JavaScript’s concurrency model, ensuring non-blocking behavior by processing tasks in an asynchronous manner. Understanding how it interacts with the Message Queue and Microtasks is key to mastering JavaScript behavior.
+## 9. మెసేజ్ క్యూ మరియు ఈవెంట్ లూప్
+ఈవెంట్ లూప్ అనేది జావాస్క్రిప్ట్ యొక్క కాన్కరెన్సీ మోడల్‌లో కీలకమైన భాగం, అసమకాలిక పద్ధతిలో టాస్క్‌లను ప్రాసెస్ చేయడం ద్వారా నాన్-బ్లాకింగ్ ప్రవర్తనను నిర్ధారిస్తుంది. ఇది మెసేజ్ క్యూ మరియు మైక్రోటాస్క్‌లతో ఎలా ఇంటరాక్ట్ అవుతుందో అర్థం చేసుకోవడం JavaScript ప్రవర్తనను మాస్టరింగ్ చేయడానికి కీలకం.
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
@@ -422,8 +418,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 10. setTimeout, setInterval and requestAnimationFrame
-
+## 10. సెట్ టైమ్ అవుట్, సెట్ ఇంటర్వెల్ మరియు రిక్వెస్ట్ యానిమేషన్ ఫ్రేమ్
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [Javascript setTimeout - All you need to know](https://robiul.dev/javascript-settimeout-all-you-need-to-know)
@@ -447,7 +442,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 11. JavaScript Engines
+## 11. జావాస్క్రిప్ట్ ఇంజన్లు
 
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
@@ -475,8 +470,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
-
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 12. బిట్‌వైస్ ఆపరేటర్‌లు, టైప్ అర్రేలు మరియు అర్రే బఫర్‌లు
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -498,9 +492,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 13. DOM and Layout Trees
+## 13. DOM మరియు లేఅవుట్ చెట్లు
 
-### Reference
+### సూచన
 
 - [Document Object Model (DOM) — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
 
@@ -532,8 +526,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
-
-## 14. Factories and Classes
+## 14. ఫ్యాక్టరీలు మరియు తరగతులు
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -557,10 +550,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
+## 15. ఈ, కాల్, దరఖాస్తు మరియు బైండ్
 
-## 15. this, call, apply and bind
-
-### Reference
+### సూచన
 
 -  [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 -  [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
@@ -605,8 +597,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
-
-## 16. new, Constructor, instanceof and Instances
+## 16. కొత్త, కన్స్ట్రక్టర్, ఇన్‌స్టాన్స్ ఆఫ్ మరియు ఇన్‌స్టాన్స్
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -623,9 +614,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. ప్రోటోటైప్ ఇన్హెరిటెన్స్ మరియు ప్రోటోటైప్ చైన్
 
-### Reference
+### సూచన
 
 -  [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
@@ -675,9 +666,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. Object.create మరియు Object.assign
 
-### Reference
+### సూచన
 
 -  [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 -  [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
@@ -706,7 +697,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 19. map, reduce, filter
+## 19. మ్యాప్, తగ్గించు, ఫిల్టర్
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -765,8 +756,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
-
-## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
+## 20. స్వచ్ఛమైన విధులు, సైడ్ ఎఫెక్ట్స్, స్టేట్ మ్యుటేషన్ మరియు ఈవెంట్ ప్రచారం
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -801,9 +791,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 21. Closures
+## 21. మూసివేతలు
 
-### Reference
+### సూచన
 
 -  [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 -  [Closure — JavaScript.Info](https://javascript.info/closure)
@@ -853,9 +843,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 22. High Order Functions
+## 22. హై ఆర్డర్ విధులు
 
-### Books
+### పుస్తకాలు
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
@@ -884,7 +874,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 23. Recursion
+## 23. పునరావృతం
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -917,9 +907,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 24. Collections and Generators
+## 24. సేకరణలు మరియు జనరేటర్లు
 
-### Reference
+### సూచన
 
 -  [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
 
@@ -952,7 +942,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 25. Promises
+## 25. వాగ్దానాలు
 
 ### Reference
 
@@ -1007,13 +997,13 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 26. async/await
+## 26. సమకాలీకరణ/నిరీక్షణ
 
-### Reference
+### సూచన
 
--  [async/await — JavaScript.Info](https://javascript.info/async-await)
+- [async/await — JavaScript.Info](https://javascript.info/async-await)
 
-### Books
+### పుస్తకాలు
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 -  [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
@@ -1058,7 +1048,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 27. Data Structures
+## 27. డేటా స్ట్రక్చర్స్
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1088,7 +1078,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 28. ఖరీదైన ఆపరేషన్ మరియు బిగ్ O నొటేషన్
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1113,7 +1103,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 29. Algorithms
+## 29. అల్గోరిథంలు
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
@@ -1140,9 +1130,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 30. వారసత్వం, పాలిమార్ఫిజం మరియు కోడ్ పునర్వినియోగం
 
-### Reference
+### సూచన
 
 -  [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 -  [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
@@ -1167,10 +1157,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 31. Design Patterns
+## 31. డిజైన్ నమూనాలు
 
-### Books
-
+### పుస్తకాలు
 -  [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 -  [Pro JavaScript Design Patterns — Ross Harmes and Dustin Diaz](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
 
@@ -1205,9 +1194,9 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 32. Partial Applications, Currying, Compose and Pipe
+## 32. పాక్షిక అప్లికేషన్లు, కర్రీయింగ్, కంపోజ్ మరియు పైప్
 
-### Books
+### పుస్తకాలు
 
 -  [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
@@ -1253,7 +1242,7 @@ The Event Loop is a critical part of JavaScript’s concurrency model, ensuring 
 
 ---
 
-## 33. Clean Code
+## 33. క్లీన్ కోడ్
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
