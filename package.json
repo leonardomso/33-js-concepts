@@ -32,5 +32,8 @@
     "Node.js",
     "NodeJS",
     "Node"
-  ]
+  ],
+  "dependencies": {
+    "33-js-concepts": "file:"
+  }
 }
