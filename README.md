@@ -134,6 +134,7 @@ According to the ECMAScript specification, the call stack is defined as part of 
 - [Call Stacks - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
 - [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
 - [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
+- [JavaScript Visualized - Event Loop, Web APIs, (Micro)task Queue — Lydia Hallie](https://www.youtube.com/watch?v=eiC58R16hb8)
     
 **[⬆ Back to Top](#table-of-contents)**
 
