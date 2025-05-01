@@ -171,6 +171,7 @@ All the translations for this repo will be listed below:
 -  [The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
 -  [Object to primitive conversion — JavaScript.Info](https://javascript.info/object-toprimitive)
 - [Methods of primitives - Javascript.info](https://javascript.info/primitives-methods)
+- [What are the Primitive Data Types in JavaScript ? - Scaler](https://www.scaler.com/topics/what-are-the-primitive-data-types-in-javascript/)
 
 ### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
