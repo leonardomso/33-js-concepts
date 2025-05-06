@@ -366,6 +366,40 @@ According to the ECMAScript specification, expressions produce a value, and stat
 With the introduction of ES6 modules, the role of IIFEs in scope isolation has diminished but they still remain relevant.
 ### Reference
 
+
+- 📜 [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
+- 📜 [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
+- 📜 [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
+
+### Articles
+
+- 📜 [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
+- 📜 [JavaScript Immediately Invoked Function Expression — javascripttutorial.net](https://www.javascripttutorial.net/javascript-immediately-invoked-function-expression-iife/)
+- 📜 [Do ES6 Modules make the case of IIFEs obsolete?](https://hashnode.com/post/do-es6-modules-make-the-case-of-iifes-obsolete-civ96wet80scqgc538un20es0)
+- 📜 [A 10 minute primer to JavaScript modules, module formats, module loaders and module bundlers ― Jurgen Van de Moere](https://www.jvandemo.com/a-10-minute-primer-to-javascript-modules-module-formats-module-loaders-and-module-bundlers/)
+- 📜 [Modules ― Exploring JS](http://exploringjs.com/es6/ch_modules.html)
+- 📜 [ES modules: A cartoon deep-dive — Lin Clark](https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/)
+- 📜 [Understanding ES6 Modules — Craig Buckler](https://www.sitepoint.com/understanding-es6-modules/)
+- 📜 [An overview of ES6 Modules in JavaScript — Brent Graham](https://blog.cloud66.com/an-overview-of-es6-modules-in-javascript/)
+- 📜 [ES6 Modules in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-modules-in-depth)
+- 📜 [ES6 modules, Node.js and the Michael Jackson Solution — Alberto Gimeno](https://medium.com/dailyjs/es6-modules-node-js-and-the-michael-jackson-solution-828dc244b8b)
+- 📜 [JavaScript Modules: A Beginner’s Guide — Preethi Kasireddy](https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc)
+- 📜 [Using JavaScript modules on the web — Addy Osmani & Mathias Bynens](https://developers.google.com/web/fundamentals/primers/modules)
+- 📜 [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
+- 📜 [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
+
+### Videos
+
+- 🎥 [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
+- 🎥 [Understanding JavaScript IIFE — Sheo Narayan](https://www.youtube.com/watch?v=I5EntfMeIIQ)
+- 🎥 [JavaScript Modules: ES6 Import and Export — Kyle Robinson](https://www.youtube.com/watch?v=_3oSWwapPKQ)
+- 🎥 [ES6 - Modules — Ryan Christiani](https://www.youtube.com/watch?v=aQr2bV1BPyE)
+- 🎥 [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
+- 🎥 [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
+- 🎥 [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
+- 🎥 [What is an IIFE? | Javascript IIFE Function Expressions Explained - Dave Gray](https://www.youtube.com/watch?v=8GDk8sj0YgQ)
+- 🎥 [IIFE modules & Namespaces in Javascript - JS Bundle](https://www.youtube.com/watch?v=Pbi7ypZKfeI)
+=======
 -  [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
 -  [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
 -  [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
@@ -395,6 +429,7 @@ With the introduction of ES6 modules, the role of IIFEs in scope isolation has d
 - [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 - [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
+
 **[⬆ Back to Top](#table-of-contents)**
 
 ---
@@ -413,6 +448,17 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
+
+- 🎥 [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+- 🎥 [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
+- 🎥 [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
+- 🎥 [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
+- 🎥 [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
+- 🎥 [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
+- 🎥 [Call Stack, Callback Queue, and Event Loop - kite withyou](https://www.youtube.com/watch?v=FVZ-A_Akros&t=199s)
+- 🎥 [JavaScript Event Loop: How it Works and Why it Matters in 5 Minutes - James Q Quick](https://www.youtube.com/watch?v=lqLSNG_79lI)
+- 🎥 [JavaScript Tutorial | Call Stack, Event Loop & Callback Queue  - Anagh Technologies Inc.](https://www.youtube.com/watch?v=gI_AsVBxXrE)
+=======
 - [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
 - [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
@@ -439,11 +485,21 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
+
+- 🎥 [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
+- 🎥 [TRUST ISSUES with setTimeout() — Akshay Saini ](https://youtu.be/nqsPmuicJJc?si=4FXKlZfqiJUqO2Y4)                  
+- 🎥 [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
+- 🎥 [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
+- 🎥 [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)
+- 🎥 [javascript : setTimeout, setInterval, and requestAnimationFrame - Full Stack Life](https://www.youtube.com/watch?v=eCpDweOvEMg)
+- 🎥 [Meet the Timers: setTimeout, setInterval, and requestAnimationFrame - KIRUPA](https://www.youtube.com/watch?v=zucCjXApXOU)
+=======
 - [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
 - [TRUST ISSUES with setTimeout() — Akshay Saini ](https://youtu.be/nqsPmuicJJc?si=4FXKlZfqiJUqO2Y4)                  
 - [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
 - [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
 - [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)   
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -465,12 +521,23 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
+
+- 🎥 [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
+- 🎥 [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
+- 🎥 [How JavaScript Code is executed? How Javascript works behind the scenes](https://youtu.be/iLWTnMzWtj4)   
+- 🎥 [Understanding the V8 JavaScript Engine - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
+- 🎥 [How Javascript Engine Works ? - Sathelli Srikanth](https://www.youtube.com/watch?v=q3Wsoa7wfDg)
+- 🎥 [What are Javascript engines - Hitesh Choudhary](https://www.youtube.com/watch?v=BMKWdLX9w3M)
+- 🎥 [How the JavaScript engine works!! Source to byte code JS V8 engine explained - Chris Hay](https://www.youtube.com/watch?v=LLxNAw4CVTs)
+  
+=======
 - [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 - [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
 - [How JavaScript Code is executed? How Javascript works behind the scenes](https://youtu.be/iLWTnMzWtj4)   
 - [Understanding the V8 JavaScript Engine - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
 - [JavaScript Under The Hood - JavaScript Engine Overview - Traversy Media](https://www.youtube.com/watch?v=oc6faXVc54E)
 - [Arindam Paul - JavaScript VM internals, EventLoop, Async and ScopeChains](https://www.youtube.com/watch?v=QyUFheng6J0)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
@@ -489,6 +556,14 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
+- 🎥 [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
+- 🎥 [Bitwise Operators and WHY we use them — Alex Hyett](https://www.youtube.com/watch?v=igIjGxF2J-w)
+- 🎥 [JS Bitwise Operators and Binary Numbers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=RRyxCmLX_ag)
+- 🎥 [Deep Dive into Blobs, Files, and ArrayBuffers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=ScZZoHj7mqY)
+- 🎥 [Bitwise Operators - codedamn](https://www.youtube.com/watch?v=FkeMrW3SGJE)
+- 🎥 [Typed Arrays - codebubb](https://www.youtube.com/watch?v=a0A739c6eHk)
+- 🎥 [Array buffer and views in Javascript - Logan Lee](https://www.youtube.com/watch?v=hDY8Z3ntpLk)
+=======
 - [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 - [Bitwise Operators and WHY we use them — Alex Hyett](https://www.youtube.com/watch?v=igIjGxF2J-w)
 - [JS Bitwise Operators and Binary Numbers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=RRyxCmLX_ag)
@@ -524,10 +599,20 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
+- 🎥 [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
+- 🎥 [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
+- 🎥 [JavaScript DOM Manipulation – Full Course for Beginners - freeCodeCamp.org](https://www.youtube.com/watch?v=5fb2aPlgoys)
+- 🎥 [What is DOM | Document Object Model | Beginner Tutorial - Automation Step by Step](https://www.youtube.com/watch?v=ipkjfvl40s0)
+- 🎥 [What Is the DOM - Syntax](https://www.youtube.com/watch?v=i_T33FSl254)
+- 🎥 [What Is Dom Tree in 10 Minutes - Monsterlessons Academy](https://www.youtube.com/watch?v=wRrofv4WUcU)
+- 🎥 [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
+- 🎥 [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
+=======
 - [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
 - [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
 - [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
+
 
 **[⬆ Back to Top](#table-of-contents)**
 
