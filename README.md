@@ -436,6 +436,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
 -  [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
 -  [Debounce – How to Delay a Function in JavaScript - Ondrej Polesny](https://www.freecodecamp.org/news/javascript-debounce-example/)
+-  [setImmediate() vs setTimeout()](https://www.trevorlasn.com/blog/setimmediate-vs-settimeout-in-javascript)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
@@ -831,6 +832,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [whatthefuck.is · A Closure - Dan Abramov](https://whatthefuck.is/closure)
 -  [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
 -  [Do you know Closures - Mohamed Khaled](https://dev.to/this_mkhy/do-you-know-es6-part-3-advanced-3fcl#Closures-2)
+-  [Understanding JavaScript Closures With Examples - Trevor I. Lasn](https://www.trevorlasn.com/blog/understanding-javascript-closures)
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
