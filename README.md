@@ -157,9 +157,11 @@ All the translations for this repo will be listed below:
 ### Reference
 
 -  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
+-  [Know more about ECMAScript (in detail)](https://262.ecma-international.org/)
 
 ### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
+-  [Introduction to ECMAScript (ES6) - GeeksforGeeks](https://www.geeksforgeeks.org/introduction-to-es6/)
 -  [Primitive and Non-primitive data-types in JavaScript - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
 -  [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
 -  [What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
@@ -986,6 +988,8 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Promise Basics - javascript.info](https://javascript.info/promise-basics)
 -  [The Complete JavaScript Promise Guide](https://blog.webdevsimplified.com/2021-09/javascript-promises)
 -  [Promise Chaining - javascript.info](https://javascript.info/promise-chaining)
+-  [Promise vs Observables(subscribe)](https://www.stackchief.com/tutorials/JavaScript%20Observables%20in%205%20Minutes)
+
 
 ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
 
