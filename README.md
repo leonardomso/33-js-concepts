@@ -70,6 +70,7 @@ All the translations for this repo will be listed below:
 - [മലയാളം (Malayalam)](https://github.com/Stark-Akshay/33-js-concepts) — Akshay Manoj
 - [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) - Ayomide Bajulaye
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
+- [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
 
 <hr>
 
