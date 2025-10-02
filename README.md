@@ -30,7 +30,7 @@ This repository was created with the intention of helping developers master thei
 
 ## **Community**
 
-<div align="left">
+<div dir="ltr">
 Feel free to submit a PR by adding a link to your own recaps or reviews.  
 If you want to translate the repo into your native language, please do so.
 
