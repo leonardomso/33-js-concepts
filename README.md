@@ -31,6 +31,7 @@ Feel free to submit a PR by adding a link to your own recaps or reviews. If you 
 All the translations for this repo will be listed below:
 
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+
 - [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
@@ -57,6 +58,7 @@ All the translations for this repo will be listed below:
 - [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
 - [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
 - [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
+- [English(English)](https://github.com/leonardomso/33-js-concepts) - Muhammed Rahil Nazar
 - [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
 - [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
 - [Urdu (اردو)](https://github.com/sudoyasir/33-js-concepts) — Yasir Nawaz
@@ -71,7 +73,7 @@ All the translations for this repo will be listed below:
 - [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) - Ayomide Bajulaye
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
-- [தமிழ் (Tamil)] (https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [தமிழ் (Tamil)](https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
 
 <hr>
 
