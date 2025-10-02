@@ -28,8 +28,6 @@ This repository was created with the intention of helping developers master thei
 
 ---
 
----
-
 ## **Community**
 
 Feel free to submit a PR by adding a link to your own recaps or reviews.  
