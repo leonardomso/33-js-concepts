@@ -111,6 +111,8 @@ All the translations for this repo will be listed below:
 32. [**Partial Applications, Currying, Compose and Pipe**](#32-partial-applications-currying-compose-and-pipe)
 33. [**Clean Code**](#33-clean-code)
 34. [**this in functions and objects**](#34-this-in-functions-and-objects)
+35. [**JavaScript Challenging Questions for Interviews**](#35-javascript-challenging-questions-for-interviews)
+
 
 
 
@@ -1314,6 +1316,27 @@ This software is licensed under MIT License. See [License](https://github.com/le
 
 **[⬆ Back to Top](#table-of-contents)**
 
+
+---
+
+## 35. JavaScript Challenging Questions for Interviews
+
+### Reference
+
+- [50 JavaScript Interview Questions — Edureka](https://www.edureka.co/blog/interview-questions/javascript-interview-questions/)
+- [Top 30 JavaScript Interview Questions — Guru99](https://www.guru99.com/javascript-interview-questions.html)
+
+### <img align=center width=40 height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+
+- [JavaScript Interview Questions — JavaScript.Info](https://javascript.info/interview-questions)
+- [Challenging JavaScript Questions — GeeksforGeeks](https://www.geeksforgeeks.org/javascript-interview-questions/)
+
+### <img align=center width=40 height=40px src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
+
+- [JavaScript Interview Questions — Techsith](https://www.youtube.com/watch?v=K3x2MdzI7p8)
+- [Top 50 JavaScript Interview Questions — Edureka](https://www.youtube.com/watch?v=h3l1dGnK4sk)
+
+**[⬆ Back to Top](#table-of-contents)**
 
 <hr>
 
