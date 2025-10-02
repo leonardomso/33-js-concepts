@@ -24,9 +24,7 @@
 
 ## Introduction
 
-This repository was created with the intention of helping developers master their concepts in JavaScript.  
-It is not a requirement, but a guide for future studies.  
-Based on an article by Stephen Curtis, you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+This repository was created with the intention of helping developers master their concepts in JavaScript.It is not a requirement, but a guide for future studies.Based on an article by Stephen Curtis, you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
 ---
 
