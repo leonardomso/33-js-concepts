@@ -30,6 +30,7 @@ Based on an article by Stephen Curtis, you can read it [here](https://medium.com
 
 ---
 
+<div align="left">
 ## Community
 
 Feel free to submit a PR by adding a link to your own recaps or reviews.  
@@ -75,6 +76,7 @@ All the translations for this repo will be listed below:
 - [Yoruba](https://github.com/ayobaj/33-js-concepts) — Ayomide Bajulaye
 - [Hebrew](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Tamil](https://github.com/UdayaKrishnanM/33-js-concepts) — Udaya Krishnan M
+</div>
 
 ---
 
