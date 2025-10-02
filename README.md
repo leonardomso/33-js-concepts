@@ -26,6 +26,8 @@ This repository was created with the intention of helping developers master thei
 
 ## Community
 
+<div dir="ltr">
+
 Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
 All the translations for this repo will be listed below:
@@ -71,6 +73,8 @@ All the translations for this repo will be listed below:
 - [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) — Ayomide Bajulaye
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [தமிழ் (Tamil)](https://github.com/UdayaKrishnanM/33-js-concepts) — Udaya Krishnan M
+
+</div>
 
 <hr>
 
