@@ -110,6 +110,9 @@ All the translations for this repo will be listed below:
 31. [**Design Patterns**](#31-design-patterns)
 32. [**Partial Applications, Currying, Compose and Pipe**](#32-partial-applications-currying-compose-and-pipe)
 33. [**Clean Code**](#33-clean-code)
+34. [**this in functions and objects**](#34-this-in-functions-and-objects)
+
+
 
 <hr>
 
@@ -1283,6 +1286,34 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 This software is licensed under MIT License. See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
 
 **[⬆ Back to Top](#table-of-contents)**
+
+
+---
+
+## 34. this in functions and objects
+
+### Reference
+
+- [Understanding `this` in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+- [JavaScript `this` Keyword Explained — DigitalOcean](https://www.digitalocean.com/community/tutorials/understanding-the-this-keyword-in-javascript)
+- [Mastering `this` in JS — Flavio Copes](https://flaviocopes.com/javascript-this/)
+- [JavaScript `this` Keyword for Beginners — freeCodeCamp](https://www.freecodecamp.org/news/javascript-this-keyword/)
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+
+- [Understanding `this` in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)
+- [JavaScript `this` Keyword Explained — DigitalOcean](https://www.digitalocean.com/community/tutorials/understanding-the-this-keyword-in-javascript)
+- [Mastering `this` in JS — Flavio Copes](https://flaviocopes.com/javascript-this/)
+- [JavaScript `this` Keyword for Beginners — freeCodeCamp](https://www.freecodecamp.org/news/javascript-this-keyword/)
+
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+
+- [JavaScript `this` Explained — Fun Fun Function](https://www.youtube.com/watch?v=gvicrj31JOM)
+- [Understanding `this` in JavaScript — Academind](https://www.youtube.com/watch?v=Ukg_U3CnJWI)
+- [JavaScript `this` Keyword Tutorial — Programming with Mosh](https://www.youtube.com/watch?v=qoSksQ4s_hg)
+
+**[⬆ Back to Top](#table-of-contents)**
+
 
 <hr>
 
