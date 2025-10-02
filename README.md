@@ -1,8 +1,9 @@
 <h1 align="center">
-<br>
-  <a href="https://github.com/leonardomso/33"><img src="github-image.png" alt="33 Concepts Every JS Developer Should Know"></a>
   <br>
-    <br>
+  <a href="https://github.com/leonardomso/33">
+    <img src="github-image.png" alt="33 Concepts Every JS Developer Should Know">
+  </a>
+  <br><br>
   <strong>33 Concepts Every JavaScript Developer Should Know</strong>
   <br><br>
 </h1>
@@ -14,71 +15,70 @@
     <a href="#table-of-contents">Table of Contents</a> •
     <a href="#license">License</a>
   </p>
+  <strong>🚀 Considered by GitHub as one of the 
+    <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">top open source projects of 2018!</a>
+  </strong>
 </div>
 
-<div align="center">
-  <strong>🚀 Considered by GitHub as one of the <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">top open source projects of 2018!</a></strong>
-</div>
+---
 
 ## Introduction
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+This repository was created with the intention of helping developers master their concepts in JavaScript.  
+It is not a requirement, but a guide for future studies.  
+Based on an article by Stephen Curtis, you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+
+---
 
 ## Community
 
-<p align="left">
-
-Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+Feel free to submit a PR by adding a link to your own recaps or reviews.  
+If you want to translate the repo into your native language, please do so.
 
 All the translations for this repo will be listed below:
 
-- [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) — thewebmasterp
-- [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
-- [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
-- [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
-- [Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
-- [Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir
-- [русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
-- [Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
-- [Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
-- [فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
-- [Bahasa Indonesia (Indonesian)](https://github.com/rijdz/33-js-concepts) — Rijdzuan Sampoerna
-- [Français (French)](https://github.com/robinmetral/33-concepts-js) — Robin Métral
-- [हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
-- [Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
-- [日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23
-- [Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn
-- [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
-- [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
-- [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
-- [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) — Jānis Īvāns
-- [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) — Amanuel Dagnachew
-- [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
-- [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
-- [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
-- [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
-- [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) — Miniyahil Kebede
-- [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
-- [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
-- [Urdu (اردو)](https://github.com/sudoyasir/33-js-concepts) — Yasir Nawaz
-- [हिन्दी (Hindi)](https://github.com/milostivyy/33-js-concepts) — Mahima Chauhan
-- [বাংলা (Bengali)](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia
-- [ગુજરાતી (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
-- [سنڌي (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
-- [भोजपुरी (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
-- [ਪੰਜਾਬੀ (Punjabi)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
-- [Latin (Latin)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
-- [മലയാളം (Malayalam)](https://github.com/Stark-Akshay/33-js-concepts) — Akshay Manoj
-- [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) — Ayomide Bajulaye
-- [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
-- [தமிழ் (Tamil)](https://github.com/UdayaKrishnanM/33-js-concepts) — Udaya Krishnan M
+- [Arabic](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
+- [Bulgarian](https://github.com/thewebmasterp/33-js-concepts) — thewebmasterp
+- [Chinese](https://github.com/stephentian/33-js-concepts) — Re Tian
+- [Brazilian Portuguese](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
+- [Korean](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
+- [Spanish](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza
+- [Turkish](https://github.com/ilker0/33-js-concepts) — İlker Demir
+- [Russian](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii
+- [Vietnamese](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung
+- [Polish](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski
+- [Persian](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh
+- [Hindi](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan
+- [Greek](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis
+- [Japanese](https://github.com/oimo23/33-js-concepts) — oimo23
+- [German](https://github.com/burhannn/33-js-concepts) — burhannn
+- [Ukrainian](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
+- [Sinhala](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
+- [Italian](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
+- [Latvian](https://github.com/ANormalStick/33-js-concepts) — Jānis Īvāns
+- [Oromo](https://github.com/Amandagne/33-js-concepts) — Amanuel Dagnachew
+- [Thai](https://github.com/ninearif/33-js-concepts) — Arif Waram
+- [Catalan](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
+- [Swedish](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
+- [Khmer](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
+- [Ethiopian](https://github.com/hmhard/33-js-concepts) — Miniyahil Kebede
+- [Belarusian](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
+- [Uzbek](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
+- [Urdu](https://github.com/sudoyasir/33-js-concepts) — Yasir Nawaz
+- [Bengali](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia
+- [Gujarati](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva
+- [Sindhi](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani
+- [Bhojpuri](https://github.com/debnath003/33-js-concepts) — Pronay Debnath
+- [Punjabi](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
+- [Latin](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
+- [Malayalam](https://github.com/Stark-Akshay/33-js-concepts) — Akshay Manoj
+- [Yoruba](https://github.com/ayobaj/33-js-concepts) — Ayomide Bajulaye
+- [Hebrew](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
+- [Tamil](https://github.com/UdayaKrishnanM/33-js-concepts) — Udaya Krishnan M
 
-</p>
+---
 
-<hr>
-
-## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="table-of-contents">Table of Contents</a>
+## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> Table of Contents
 
 1. [**Call Stack**](#1-call-stack)
 2. [**Primitive Types**](#2-primitive-types)
