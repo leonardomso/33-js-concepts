@@ -37,7 +37,7 @@ If you want to translate the repo into your native language, please do so.
 
 All the translations for this repo will be listed below:
 
-- [Amr Elsekilly](https://github.com/amrsekilly/33-js-concepts) — اَلْعَرَبِيَّةُ‎ (Arabic)
+- [Amr Elsekilly](https://github.com/amrsekilly/33-js-concepts) — اَلْعَرَبِيَّةُ‎ [Arabic](https://github.com/amrsekilly/33-js-concepts)
 - [thewebmasterp](https://github.com/thewebmasterp/33-js-concepts) — Български (Bulgarian)
 - [Re Tian](https://github.com/stephentian/33-js-concepts) — 汉语 (Chinese)
 - [Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts) — Português do Brasil (Brazilian Portuguese)
