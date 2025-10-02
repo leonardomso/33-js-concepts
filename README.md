@@ -30,54 +30,50 @@ This repository was created with the intention of helping developers master thei
 
 ## **Community**
 
-<div style="text-align: left;">
-
+<div align="left">
 Feel free to submit a PR by adding a link to your own recaps or reviews.  
 If you want to translate the repo into your native language, please do so.
 
 All the translations for this repo will be listed below:
 
-<ul>
-<li>[اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly</li>
-<li>[Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) — thewebmasterp</li>
-<li>[汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian</li>
-<li>[Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing</li>
-<li>[한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee</li>
-<li>[Español (Spanish)](https://github.com/adonismendozaperez/33-js-conceptos) — Adonis Mendoza</li>
-<li>[Türkçe (Turkish)](https://github.com/ilker0/33-js-concepts) — İlker Demir</li>
-<li>[русский язык (Russian)](https://github.com/gumennii/33-js-concepts) — Mihail Gumennii</li>
-<li>[Tiếng Việt (Vietnamese)](https://github.com/nguyentranchung/33-js-concepts) — Nguyễn Trần Chung</li>
-<li>[Polski (Polish)](https://github.com/lip3k/33-js-concepts) — Dawid Lipinski</li>
-<li>[فارسی (Persian)](https://github.com/majidalavizadeh/33-js-concepts) — Majid Alavizadeh</li>
-<li>[हिन्दी (Hindi)](https://github.com/vikaschauhan/33-js-concepts) — Vikas Chauhan</li>
-<li>[Ελληνικά (Greek)](https://github.com/DimitrisZx/33-js-concepts) — Dimitris Zarachanis</li>
-<li>[日本語 (Japanese)](https://github.com/oimo23/33-js-concepts) — oimo23</li>
-<li>[Deutsch (German)](https://github.com/burhannn/33-js-concepts) — burhannn</li>
-<li>[украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk</li>
-<li>[සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra</li>
-<li>[Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore</li>
-<li>[Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) — Jānis Īvāns</li>
-<li>[Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) — Amanuel Dagnachew</li>
-<li>[ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram</li>
-<li>[Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada</li>
-<li>[Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell</li>
-<li>[ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng</li>
-<li>[አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) — Miniyahil Kebede</li>
-<li>[Беларуская мова (Belarusian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau</li>
-<li>[O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov</li>
-<li>[Urdu (اردو)](https://github.com/sudoyasir/33-js-concepts) — Yasir Nawaz</li>
-<li>[বাংলা (Bengali)](https://github.com/Jisan-mia/33-js-concepts) — Jisan Mia</li>
-<li>[ગુજરાતી (Gujarati)](https://github.com/VatsalBhuva11/33-js-concepts) — Vatsal Bhuva</li>
-<li>[سنڌي (Sindhi)](https://github.com/Sunny-unik/33-js-concepts) — Sunny Gandhwani</li>
-<li>[भोजपुरी (Bhojpuri)](https://github.com/debnath003/33-js-concepts) — Pronay Debnath</li>
-<li>[ਪੰਜਾਬੀ (Punjabi)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak</li>
-<li>[Latin (Latin)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak</li>
-<li>[മലയാളം (Malayalam)](https://github.com/Stark-Akshay/33-js-concepts) — Akshay Manoj</li>
-<li>[Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) — Ayomide Bajulaye</li>
-<li>[עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea</li>
-<li>[தமிழ் (Tamil)](https://github.com/UdayaKrishnanM/33-js-concepts) — Udaya Krishnan M</li>
-</ul>
-
+- اَلْعَرَبِيَّةُ‎ (Arabic) — [Amr Elsekilly](https://github.com/amrsekilly/33-js-concepts)
+- Български (Bulgarian) — [thewebmasterp](https://github.com/thewebmasterp/33-js-concepts)
+- 汉语 (Chinese) — [Re Tian](https://github.com/stephentian/33-js-concepts)
+- Português do Brasil (Brazilian Portuguese) — [Tiago Boeing](https://github.com/tiagoboeing/33-js-concepts)
+- 한국어 (Korean) — [Suin Lee](https://github.com/yjs03057/33-js-concepts.git)
+- Español (Spanish) — [Adonis Mendoza](https://github.com/adonismendozaperez/33-js-conceptos)
+- Türkçe (Turkish) — [İlker Demir](https://github.com/ilker0/33-js-concepts)
+- русский язык (Russian) — [Mihail Gumennii](https://github.com/gumennii/33-js-concepts)
+- Tiếng Việt (Vietnamese) — [Nguyễn Trần Chung](https://github.com/nguyentranchung/33-js-concepts)
+- Polski (Polish) — [Dawid Lipinski](https://github.com/lip3k/33-js-concepts)
+- فارسی (Persian) — [Majid Alavizadeh](https://github.com/majidalavizadeh/33-js-concepts)
+- हिन्दी (Hindi) — [Vikas Chauhan](https://github.com/vikaschauhan/33-js-concepts)
+- Ελληνικά (Greek) — [Dimitris Zarachanis](https://github.com/DimitrisZx/33-js-concepts)
+- 日本語 (Japanese) — [oimo23](https://github.com/oimo23/33-js-concepts)
+- Deutsch (German) — [burhannn](https://github.com/burhannn/33-js-concepts)
+- украї́нська мо́ва (Ukrainian) — [Andrew Savetchuk](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation)
+- සිංහල (Sinhala) — [Udaya Shamendra](https://github.com/ududsha/33-js-concepts)
+- Italiano (Italian) — [Gianluca Fiore](https://github.com/Donearm/33-js-concepts)
+- Latviešu (Latvian) — [Jānis Īvāns](https://github.com/ANormalStick/33-js-concepts)
+- Afaan Oromoo (Oromo) — [Amanuel Dagnachew](https://github.com/Amandagne/33-js-concepts)
+- ภาษาไทย (Thai) — [Arif Waram](https://github.com/ninearif/33-js-concepts)
+- Català (Catalan) — [Mario Estrada](https://github.com/marioestradaf/33-js-concepts)
+- Svenska (Swedish) — [Fenix Hongell](https://github.com/FenixHongell/33-js-concepts/)
+- ខ្មែរ (Khmer) — [Chrea Chanchhunneng](https://github.com/Chhunneng/33-js-concepts)
+- አማርኛ (Ethiopian) — [Miniyahil Kebede](https://github.com/hmhard/33-js-concepts)
+- Беларуская мова (Belarusian) — [Dzianis Yafimau](https://github.com/Yafimau/33-js-concepts)
+- O'zbekcha (Uzbek) — [Shokhrukh Usmonov](https://github.com/smnv-shokh/33-js-concepts)
+- Urdu (اردو) — [Yasir Nawaz](https://github.com/sudoyasir/33-js-concepts)
+- বাংলা (Bengali) — [Jisan Mia](https://github.com/Jisan-mia/33-js-concepts)
+- ગુજરાતી (Gujarati) — [Vatsal Bhuva](https://github.com/VatsalBhuva11/33-js-concepts)
+- سنڌي (Sindhi) — [Sunny Gandhwani](https://github.com/Sunny-unik/33-js-concepts)
+- भोजपुरी (Bhojpuri) — [Pronay Debnath](https://github.com/debnath003/33-js-concepts)
+- ਪੰਜਾਬੀ (Punjabi) — [Harsh Dev Pathak](https://github.com/Harshdev098/33-js-concepts)
+- Latin (Latin) — [Harsh Dev Pathak](https://github.com/Harshdev098/33-js-concepts)
+- മലയാളം (Malayalam) — [Akshay Manoj](https://github.com/Stark-Akshay/33-js-concepts)
+- Yorùbá (Yoruba) — [Ayomide Bajulaye](https://github.com/ayobaj/33-js-concepts)
+- עברית‎ (Hebrew) — [Refael Yzgea](https://github.com/rafyzg/33-js-concepts)
+- தமிழ் (Tamil) — [Udaya Krishnan M](https://github.com/UdayaKrishnanM/33-js-concepts)
 </div>
 
 ---
