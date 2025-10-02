@@ -30,8 +30,9 @@ Based on an article by Stephen Curtis, you can read it [here](https://medium.com
 
 ---
 
-<div align="left">
 ## Community
+
+<div align="left">
 
 Feel free to submit a PR by adding a link to your own recaps or reviews.  
 If you want to translate the repo into your native language, please do so.
