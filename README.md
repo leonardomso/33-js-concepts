@@ -110,6 +110,7 @@ All the translations for this repo will be listed below:
 31. [**Design Patterns**](#31-design-patterns)
 32. [**Partial Applications, Currying, Compose and Pipe**](#32-partial-applications-currying-compose-and-pipe)
 33. [**Clean Code**](#33-clean-code)
+34. [**JavaScript Interview Questions**](#34-javascript-interview-questions)
 
 <hr>
 
@@ -1283,6 +1284,71 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 - 🎥 [Tips On Learning How To Code](https://www.youtube.com/watch?v=0wHyoBPc6zs)
 
 **[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 34. JavaScript Interview Questions
+
+<p>This section covers challenging JavaScript questions commonly asked in technical interviews. These questions test deep understanding of core JavaScript concepts including closures, hoisting, the event loop, context binding, asynchronous programming, and more. Each question includes detailed explanations to help you understand not just the answer, but the underlying principles.</p>
+
+<p>Understanding these concepts is crucial for JavaScript developers as they reveal how the language works internally and help identify common pitfalls and best practices in real-world applications.</p>
+
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+
+- [123 Essential JavaScript Interview Questions — toptal](https://www.toptal.com/javascript/interview-questions)
+- [JavaScript Interview Questions & Answers — Sudheer Jonna](https://github.com/sudheerj/javascript-interview-questions)
+- [70 JavaScript Interview Questions — dev.to](https://dev.to/macmacky/70-javascript-interview-questions-5gfi)
+- [JavaScript Interview Questions — InterviewBit](https://www.interviewbit.com/javascript-interview-questions/)
+- [Top 50 JavaScript Interview Questions and Answers — Edureka](https://www.edureka.co/blog/interview-questions/javascript-interview-questions/)
+- [JavaScript Interview Questions and Answers — GeeksforGeeks](https://www.geeksforgeeks.org/javascript-interview-questions-and-answers/)
+- [37 Essential JavaScript Interview Questions — Toptal](https://www.toptal.com/javascript/interview-questions)
+- [JavaScript Tricky Questions — Amit Sheen](https://dev.to/aman_singh/javascript-tricky-questions-2jhl)
+- [Common JavaScript Interview Questions — freeCodeCamp](https://www.freecodecamp.org/news/common-javascript-questions-and-answers/)
+- [JavaScript Interview Questions You'll Most Likely Be Asked — Vibhor Kumar](https://www.amazon.com/JavaScript-Interview-Questions-Most-Likely/dp/1946383031)
+- [Advanced JavaScript Interview Questions — Tyler McGinnis](https://tylermcginnis.com/javascript-interview-questions/)
+- [JavaScript Interview Questions and Answers — TutorialsPoint](https://www.tutorialspoint.com/javascript/javascript_interview_questions.htm)
+- [React Interview Questions & Answers — Sudheer Jonna](https://github.com/sudheerj/reactjs-interview-questions)
+- [Front End Interview Handbook — Yangshun Tay](https://github.com/yangshun/front-end-interview-handbook)
+- [JavaScript Questions — Lydia Hallie](https://github.com/lydiahallie/javascript-questions)
+
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
+
+- 🎥 [JavaScript Interview Questions and Answers — Akshay Saini](https://www.youtube.com/watch?v=ak-R2jJOjWU)
+- 🎥 [Top 25 JavaScript Interview Questions — Traversy Media](https://www.youtube.com/watch?v=t3sQlM3lqXA)
+- 🎥 [JavaScript Interview Questions — Clever Programmer](https://www.youtube.com/watch?v=2md4HQNRqJA)
+- 🎥 [Advanced JavaScript Interview Questions — Code Step By Step](https://www.youtube.com/watch?v=polQuStbIGI)
+- 🎥 [JavaScript Interview Questions and Answers — edureka!](https://www.youtube.com/watch?v=5pYZWr4_S1M)
+- 🎥 [JavaScript Interview Questions — Programming with Mosh](https://www.youtube.com/watch?v=oy1d4duL2ak)
+- 🎥 [Tricky JavaScript Interview Questions — Steve Griffith](https://www.youtube.com/watch?v=6x4IDn7Ln3k)
+- 🎥 [JavaScript Interview Preparation — FreeCodeCamp](https://www.youtube.com/watch?v=PkZNo7MFNFg)
+- 🎥 [Most Asked JavaScript Interview Questions — Codevolution](https://www.youtube.com/watch?v=CIWHuP8n_KA)
+- 🎥 [JavaScript Interview Questions — The Net Ninja](https://www.youtube.com/watch?v=5K9JrGDk3bc)
+
+### Interview Topics Covered
+
+#### Core JavaScript Concepts
+- **Variable Hoisting**: `var`, `let`, `const` behavior and temporal dead zone
+- **Scope and Closures**: Function scope, block scope, lexical scoping
+- **this Keyword**: Context binding, arrow functions vs regular functions
+- **Prototypes and Inheritance**: Prototype chain, Object.create, class inheritance
+- **Event Loop**: Call stack, task queue, microtasks, macrotasks
+
+#### Asynchronous Programming
+- **Promises**: Promise states, chaining, error handling
+- **async/await**: Syntax, error handling, parallel execution
+- **Callbacks**: Callback hell, handling asynchronous operations
+- **Event Handling**: Event bubbling, capturing, delegation
+
+#### Advanced Topics
+- **Functional Programming**: Higher-order functions, currying, partial application
+- **Data Structures**: Arrays, objects, Maps, Sets, WeakMap, WeakSet
+- **Error Handling**: try/catch, custom errors, promise rejection
+- **Performance**: Debouncing, throttling, memoization
+- **ES6+ Features**: Destructuring, spread operator, template literals, modules
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
 
 ## <img align="center" width="35" height="35" src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> <a id="license">License</a>
 
