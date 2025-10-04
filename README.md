@@ -3,32 +3,32 @@
   <a href="https://github.com/leonardomso/33"><img src="github-image.png" alt="33 Concepts Every JS Developer Should Know"></a>
   <br>
     <br>
-  <strong>33 Concepts Every JavaScript Developer Should Know</strong>
+  <strong>प्रत्येक JavaScript डेव्हलपरला माहित असाव्यात अशा ३३ संकल्पना</strong>
   <br><br>
 </h1>
 
 <div align="center">
   <p>
-    <a href="#introduction">Introduction</a> •
-    <a href="#community">Community</a> •
-    <a href="#table-of-contents">Table of Contents</a> •
-    <a href="#license">License</a>
+    <a href="#परिचय">परिचय</a> •
+    <a href="#समुदाय">समुदाय</a> •
+    <a href="#विषयसूची">विषयसूची</a> •
+    <a href="#परवाना">परवाना</a>
   </p>
 </div>
 
 <div align="center">
-  <strong>🚀 Considered by GitHub as one of the <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">top open source projects of 2018!</a></strong>
+  <strong>🚀 GitHub द्वारा <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">२०१८ च्या सर्वोत्तम ओपन सोर्स प्रकल्पांपैकी एक</a> मानले गेले!</strong>
 </div>
 
-## Introduction 
+## परिचय 
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+हे रिपॉझिटरी JavaScript मधील संकल्पनांमध्ये प्रभुत्व मिळवण्यासाठी डेव्हलपरना मदत करण्याच्या उद्देशाने तयार केले गेले आहे. हे आवश्यक नाही, परंतु भविष्यातील अभ्यासासाठी एक मार्गदर्शक आहे. हे Stephen Curtis यांनी लिहिलेल्या लेखावर आधारित आहे आणि तुम्ही ते [येथे](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1) वाचू शकता.
 
-## Community
+## समुदाय
 
-Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+तुमच्या स्वतःच्या सारांश किंवा पुनरावलोकनांच्या लिंक जोडून PR सबमिट करण्यास मोकळ्या मनाने करा. जर तुम्हाला या रेपोचे तुमच्या मातृभाषेत भाषांतर करायचे असेल, तर कृपया मोकळेपणाने करा.
 
-All the translations for this repo will be listed below:
+या रेपोसाठी सर्व भाषांतरे खाली सूचीबद्ध केली जातील:
 
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
@@ -72,44 +72,45 @@ All the translations for this repo will be listed below:
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
 - [தமிழ் (Tamil)] (https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [मराठी (Marathi)](https://github.com/SKSHAMKAUSHAL/33-js-concepts) — SKSHAM KAUSHAL
 
 <hr>
 
-## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="table-of-contents">Table of Contents</a>
+## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="विषयसूची">विषयसूची</a>
 
-1. [**Call Stack**](#1-call-stack)
-2. [**Primitive Types**](#2-primitive-types)
-3. [**Value Types and Reference Types**](#3-value-types-and-reference-types)
-4. [**Implicit, Explicit, Nominal, Structuring and Duck Typing**](#4-implicit-explicit-nominal-structuring-and-duck-typing)
-5. [**== vs === vs typeof**](#5--vs--vs-typeof)
-6. [**Function Scope, Block Scope and Lexical Scope**](#6-function-scope-block-scope-and-lexical-scope)
-7. [**Expression vs Statement**](#7-expression-vs-statement)
-8. [**IIFE, Modules and Namespaces**](#8-iife-modules-and-namespaces)
-9. [**Message Queue and Event Loop**](#9-message-queue-and-event-loop)
-10. [**setTimeout, setInterval and requestAnimationFrame**](#10-settimeout-setinterval-and-requestanimationframe)
-11. [**JavaScript Engines**](#11-javascript-engines)
-12. [**Bitwise Operators, Type Arrays and Array Buffers**](#12-bitwise-operators-type-arrays-and-array-buffers)
-13. [**DOM and Layout Trees**](#13-dom-and-layout-trees)
-14. [**Factories and Classes**](#14-factories-and-classes)
-15. [**this, call, apply and bind**](#15-this-call-apply-and-bind)
-16. [**new, Constructor, instanceof and Instances**](#16-new-constructor-instanceof-and-instances)
-17. [**Prototype Inheritance and Prototype Chain**](#17-prototype-inheritance-and-prototype-chain)
-18. [**Object.create and Object.assign**](#18-objectcreate-and-objectassign)
-19. [**map, reduce, filter**](#19-map-reduce-filter)
-20. [**Pure Functions, Side Effects, State Mutation and Event Propagation**](#20-pure-functions-side-effects-state-mutation-and-event-propagation)
-21. [**Closures**](#21-closures)
-22. [**High Order Functions**](#22-high-order-functions)
-23. [**Recursion**](#23-recursion)
-24. [**Collections and Generators**](#24-collections-and-generators)
-25. [**Promises**](#25-promises)
-26. [**async/await**](#26-asyncawait)
-27. [**Data Structures**](#27-data-structures)
-28. [**Expensive Operation and Big O Notation**](#28-expensive-operation-and-big-o-notation)
-29. [**Algorithms**](#29-algorithms)
-30. [**Inheritance, Polymorphism and Code Reuse**](#30-inheritance-polymorphism-and-code-reuse)
-31. [**Design Patterns**](#31-design-patterns)
-32. [**Partial Applications, Currying, Compose and Pipe**](#32-partial-applications-currying-compose-and-pipe)
-33. [**Clean Code**](#33-clean-code)
+१. [**कॉल स्टॅक**](#1-call-stack)
+२. [**आदिम प्रकार**](#2-primitive-types)
+३. [**मूल्य प्रकार आणि संदर्भ प्रकार**](#3-value-types-and-reference-types)
+४. [**अस्पष्ट, स्पष्ट, नामांकित, संरचनात्मक आणि डक टायपिंग**](#4-implicit-explicit-nominal-structuring-and-duck-typing)
+५. [**== vs === vs typeof**](#5--vs--vs-typeof)
+६. [**फंक्शन स्कोप, ब्लॉक स्कोप आणि लेक्सिकल स्कोप**](#6-function-scope-block-scope-and-lexical-scope)
+७. [**एक्सप्रेशन vs स्टेटमेंट**](#7-expression-vs-statement)
+८. [**IIFE, मॉड्यूल्स आणि नेमस्पेसेस**](#8-iife-modules-and-namespaces)
+९. [**मेसेज क्यू आणि इव्हेंट लूप**](#9-message-queue-and-event-loop)
+१०. [**setTimeout, setInterval आणि requestAnimationFrame**](#10-settimeout-setinterval-and-requestanimationframe)
+११. [**JavaScript इंजिन्स**](#11-javascript-engines)
+१२. [**बिटवाइज ऑपरेटर्स, टाइप अॅरेज आणि अॅरे बफर्स**](#12-bitwise-operators-type-arrays-and-array-buffers)
+१३. [**DOM आणि लेआउट ट्रीज**](#13-dom-and-layout-trees)
+१४. [**फॅक्टरीज आणि क्लासेस**](#14-factories-and-classes)
+१५. [**this, call, apply आणि bind**](#15-this-call-apply-and-bind)
+१६. [**new, Constructor, instanceof आणि Instances**](#16-new-constructor-instanceof-and-instances)
+१७. [**प्रोटोटाइप इन्हेरिटन्स आणि प्रोटोटाइप चेन**](#17-prototype-inheritance-and-prototype-chain)
+१८. [**Object.create आणि Object.assign**](#18-objectcreate-and-objectassign)
+१९. [**map, reduce, filter**](#19-map-reduce-filter)
+२०. [**शुद्ध फंक्शन्स, साइड इफेक्ट्स, स्टेट म्यूटेशन आणि इव्हेंट प्रोपगेशन**](#20-pure-functions-side-effects-state-mutation-and-event-propagation)
+२१. [**क्लोजर्स**](#21-closures)
+२२. [**हाय ऑर्डर फंक्शन्स**](#22-high-order-functions)
+२३. [**रिकर्शन**](#23-recursion)
+२४. [**कलेक्शन्स आणि जेनरेटर्स**](#24-collections-and-generators)
+२५. [**प्रॉमिसेस**](#25-promises)
+२६. [**async/await**](#26-asyncawait)
+२७. [**डेटा स्ट्रक्चर्स**](#27-data-structures)
+२८. [**महाग ऑपरेशन आणि बिग O नोटेशन**](#28-expensive-operation-and-big-o-notation)
+२९. [**अल्गोरिदम**](#29-algorithms)
+३०. [**इन्हेरिटन्स, पॉलिमॉर्फिझम आणि कोड रीयूज**](#30-inheritance-polymorphism-and-code-reuse)
+३१. [**डिझाइन पॅटर्न्स**](#31-design-patterns)
+३२. [**पार्शियल अॅप्लिकेशन्स, करींग, कंपोज आणि पाइप**](#32-partial-applications-currying-compose-and-pipe)
+३३. [**क्लीन कोड**](#33-clean-code)
 
 <hr>
 
