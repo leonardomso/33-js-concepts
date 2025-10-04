@@ -31,7 +31,7 @@ Feel free to submit a PR by adding a link to your own recaps or reviews. If you 
 All the translations for this repo will be listed below:
 
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
-- [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
+- [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) — thewebmasterp
 - [汉语 (Chinese)](https://github.com/stephentian/33-js-concepts) — Re Tian
 - [Português do Brasil (Brazilian Portuguese)](https://github.com/tiagoboeing/33-js-concepts) — Tiago Boeing
 - [한국어 (Korean)](https://github.com/yjs03057/33-js-concepts.git) — Suin Lee
@@ -50,13 +50,13 @@ All the translations for this repo will be listed below:
 - [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
-- [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) - Jānis Īvāns
-- [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) - Amanuel Dagnachew
+- [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) — Jānis Īvāns
+- [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) — Amanuel Dagnachew
 - [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
 - [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
 - [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
 - [ខ្មែរ (Khmer)](https://github.com/Chhunneng/33-js-concepts) — Chrea Chanchhunneng
-- [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) - Miniyahil Kebede(ምንያህል ከበደ)
+- [አማርኛ (Ethiopian)](https://github.com/hmhard/33-js-concepts) — Miniyahil Kebede
 - [Беларуская мова (Belarussian)](https://github.com/Yafimau/33-js-concepts) — Dzianis Yafimau
 - [O'zbekcha (Uzbek)](https://github.com/smnv-shokh/33-js-concepts) — Shokhrukh Usmonov
 - [Urdu (اردو)](https://github.com/sudoyasir/33-js-concepts) — Yasir Nawaz
@@ -68,12 +68,11 @@ All the translations for this repo will be listed below:
 - [ਪੰਜਾਬੀ (Punjabi)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
 - [Latin (Latin)](https://github.com/Harshdev098/33-js-concepts) — Harsh Dev Pathak
 - [മലയാളം (Malayalam)](https://github.com/Stark-Akshay/33-js-concepts) — Akshay Manoj
-- [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) - Ayomide Bajulaye
+- [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) — Ayomide Bajulaye
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
-- [தமிழ் (Tamil)] (https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [தமிழ் (Tamil)](https://github.com/UdayaKrishnanM/33-js-concepts) — Udaya Krishnan M
 
-<hr>
 
 ## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="table-of-contents">Table of Contents</a>
 
