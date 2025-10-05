@@ -1,11 +1,32 @@
 <h1 align="center">
 <br>
-  <a href="https://github.com/leonardomso/33"><img src="github-image.png" alt="33 Concepts Every JS Developer Should Know"></a>
+  <a href="https://github.com/leonardomso/33"><img src="github-image.png" alt="33 JavaScript Concepts Repository Logo - Comprehensive guide to JavaScript fundamentals"></a>
   <br>
     <br>
   <strong>33 Concepts Every JavaScript Developer Should Know</strong>
   <br><br>
 </h1>
+
+<div align="center">
+  <!-- GitHub Badges -->
+  <a href="https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/leonardomso/33-js-concepts?style=flat-square" alt="License: MIT">
+  </a>
+  <a href="https://github.com/leonardomso/33-js-concepts/stargazers">
+    <img src="https://img.shields.io/github/stars/leonardomso/33-js-concepts?style=flat-square" alt="GitHub Stars">
+  </a>
+  <a href="https://github.com/leonardomso/33-js-concepts/issues">
+    <img src="https://img.shields.io/github/issues/leonardomso/33-js-concepts?style=flat-square" alt="Open Issues">
+  </a>
+  <a href="https://github.com/leonardomso/33-js-concepts/pulls">
+    <img src="https://img.shields.io/github/issues-pr/leonardomso/33-js-concepts?style=flat-square" alt="PRs Welcome">
+  </a>
+</div>
+
+<!-- Badge Utility Explanation -->
+<div align="center" style="margin-top: 10px; font-size: 14px; color: #666;">
+  <em>These badges provide quick project insights: License type, community popularity (stars), active issues, and contribution opportunities.</em>
+</div>
 
 <div align="center">
   <p>
@@ -123,7 +144,7 @@ All the translations for this repo will be listed below:
 
 -  [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png" alt="Article section icon - Book representing educational content"> Articles
 
 -  [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
 -  [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -160,7 +181,7 @@ All the translations for this repo will be listed below:
 
 -  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png" alt="Article section icon - Book representing educational content"> Articles
 
 -  [Primitive and Non-primitive data-types in JavaScript - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
 -  [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
@@ -195,7 +216,7 @@ All the translations for this repo will be listed below:
 
 <p>Reference types, on the other hand, are objects stored in the heap. Variables assigned to reference types actually store references (pointers) to the objects, not the objects themselves. When you assign a reference type to another variable, both variables reference the same object in memory.</p>
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png" alt="Article section icon - Book representing educational content"> Articles
 
 -  [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
 -  [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
@@ -268,7 +289,7 @@ All the translations for this repo will be listed below:
 
 typeof Operator: The typeof operator is used to check the data type of a variable. While it's generally reliable, there are certain quirks, like how typeof null returns "object" instead of "null", due to a long-standing behavior in JavaScript's implementation.
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png" alt="Article section icon - Book representing educational content"> Articles
 
 -  [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
 -  [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
@@ -282,7 +303,7 @@ typeof Operator: The typeof operator is used to check the data type of a variabl
 -  [Difference between == and === in JavaScript — GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-double-equal-vs-triple-equal-javascript/)
 -  [=== vs == Comparision in JavaScript — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-triple-equals-sign-vs-double-equals-sign-comparison-operators-explained-with-examples/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="Video section icon - Film reel representing video content"/>  Videos
 
 - [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
@@ -307,7 +328,7 @@ Lexical Scope: Refers to how variable access is determined based on the physical
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png" alt="Article section icon - Book representing educational content"> Articles
 
 -  [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
 -  [Var, Let, and Const – What's the Difference?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
@@ -322,7 +343,7 @@ Lexical Scope: Refers to how variable access is determined based on the physical
 -  [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and "this" ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
 -  [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="Video section icon - Film reel representing video content"/>  Videos
 
 - [What Makes Javascript Weird ... and Awesome pt. 4 — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
 - [Variable Scope in JavaScript — Kirupa Chinnathambi](https://www.youtube.com/watch?v=dhp57T3p760)
@@ -351,7 +372,7 @@ According to the ECMAScript specification, expressions produce a value, and stat
 - [Expression statement — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/Expression_statement)
 
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="Video section icon - Film reel representing video content"/>  Videos
 
 - [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
 - [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
@@ -387,7 +408,7 @@ With the introduction of ES6 modules, the role of IIFEs in scope isolation has d
 -  [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
 -  [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="Video section icon - Film reel representing video content"/>  Videos
 
 - [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
 - [Understanding JavaScript IIFE — Sheo Narayan](https://www.youtube.com/watch?v=I5EntfMeIIQ)
@@ -413,7 +434,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [JavaScript Visualized: Event Loop — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif)
 - [Understanding and Optimizing JavaScript's Event Loop — Xiuer Old](https://medium.com/javascript-zone/understanding-and-optimizing-javascripts-event-loop-717ae0095038#:~:text=The%20event%20loop%20is%20the,%2Dblocking%20I%2FO%20operations.)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="Video section icon - Film reel representing video content"/>  Videos
 
 - [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
