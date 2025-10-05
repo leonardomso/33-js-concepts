@@ -1015,6 +1015,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 -  [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
+-  [You Don't Know JS: Async & Performance - Kyle Simpson](https://www.amazon.de/-/en/You-Dont-Know-JS-Performance/dp/1491904224)
 
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
