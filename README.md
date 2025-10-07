@@ -72,6 +72,7 @@ All the translations for this repo will be listed below:
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
 - [தமிழ் (Tamil)] (https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [मराठी (Marathi)](https://github.com/VinayKhedkar/33-js-concepts) — Vinay Khedkar
 
 <hr>
 
