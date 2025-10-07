@@ -3,16 +3,17 @@
   <a href="https://github.com/leonardomso/33"><img src="github-image.png" alt="33 Concepts Every JS Developer Should Know"></a>
   <br>
     <br>
-  <strong>33 Concepts Every JavaScript Developer Should Know</strong>
-  <br><br>
+  <strong>33 जरूरी असूल जो हर जावास्क्रिप्ट डेवलपर नै बेरा होना चाहिए</strong>
+    <br>
+  <br>
 </h1>
 
 <div align="center">
   <p>
-    <a href="#introduction">Introduction</a> •
-    <a href="#community">Community</a> •
-    <a href="#table-of-contents">Table of Contents</a> •
-    <a href="#license">License</a>
+    <a href="#introduction">## जाण-पहचाण</a> •
+    <a href="#community">## कौम</a> •
+    <a href="#table-of-contents">## बिषय-सूची</a> •
+    <a href="#license">## लाइसेंस</a>
   </p>
 </div>
 
@@ -20,15 +21,15 @@
   <strong>🚀 Considered by GitHub as one of the <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">top open source projects of 2018!</a></strong>
 </div>
 
-## Introduction 
+## जाण-पहचाण
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+यो भंडार (repository) इस मंशा तई बणाया गया सै के डेवलपर्स नै जावास्क्रिप्ट के अपने असूलां पर पकड़ बणाण में मदद मिलै. यो कोई ज़रूरी कोन्या, पर आगै पढ़ण खातर एक गाइड ज़रूर सै. यो स्टीफन कर्टिस द्वारा लिखे गए एक लेख पर आधारित सै, अर तुमें इन्नै [इबकै पढ़ सको] हो. (https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-## Community
+## कौम
 
-Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+आप अपनी ख़ुद की समरी (recaps) या रिव्यु का लिंक जोड़ कै एक पुल रिक्वेस्ट (PR) भेज सकौ हो। जै तूँ इस भंडार (repo) नै अपनी मादरी ज़बान (native language) में अनुवाद करना चाहो, तो जी कर कै कर सकौ हो।
 
-All the translations for this repo will be listed below:
+इस भंडार कै सारे अनुवाद नीचै लिखे जाँगे:
 
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
@@ -72,6 +73,7 @@ All the translations for this repo will be listed below:
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
 - [தமிழ் (Tamil)] (https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [हरियाणवी (Haryanvi)](https://github.com/LakshayJoshi7/33-js-concepts) — Lakshay Joshi
 
 <hr>
 
@@ -113,17 +115,17 @@ All the translations for this repo will be listed below:
 
 <hr>
 
-## 1. Call Stack
+## 1. काल स्टैक
 
-<p>The call stack is a mechanism that the JavaScript interpreter uses to keep track of function execution within a program. In JavaScript, functions are executed in the order they are called. The call stack follows the Last In, First Out (LIFO) principle, meaning that the last function pushed onto the stack is the first one to be executed.</p>
+<p>काल स्टैक एक ऐसा तन्त्र (mechanism) सै, जिसका इस्तेमाल जावास्क्रिप्ट दुभाषिया (interpreter) एक प्रोग्राम कै भीतर फंक्शन नै चलाण का हिसाब राखण खातर करै सै। जावास्क्रिप्ट में, फंक्शन उसी क्रम में चालै सैं जिस क्रम में उन्हें बुलाया जावै सै। काल स्टैक पिछला अन्दर, पहला बाहर (LIFO) सिद्धांत पर काम करै सै, मतलब यो सै कि जो आखिरी फंक्शन स्टैक में धकेला जावै सै, वोए सबसे पहला चालै सै।</p>
 
-<p>According to the ECMAScript specification, the call stack is defined as part of the execution context. Whenever a function is called, a new execution context is created and placed at the top of the stack. Once the function completes, its execution context is removed from the stack, and control returns to the previous context. This helps manage synchronous code execution, as each function call must complete before the next one can begin.</p>
+<p>ECMAScript नियम कै हिसाब तँ, काल स्टैक नै "चालू होण आळे सन्दर्भ" (execution context) का एक हिस्सा बताया गया सै। जब भी कोई फंक्शन बुलाया जावै सै, तो एक नया चालू होण आळा सन्दर्भ बण जावै सै और स्टैक कै ऊपरले हिस्से में धर दिया जावै सै। ज्यों ही फंक्शन पूरा हो जावै सै, तो उस का चालू होण आळा सन्दर्भ स्टैक तँ हटा दिया जावै सै, और नियंत्रण पहले आळे सन्दर्भ कै धौरै वापिस भाज्जै सै। या चीज़ एक साथ चालण आळे (synchronous) कोड नै संभालण में मदद करै सै, क्यूंकि हर फंक्शन नै पूरा होणा ज़रूरी सै ताकै अगला चाल सकै।</p>
 
-### Reference
+### सन्दर्भ
 
 -  [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
 -  [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
@@ -133,7 +135,7 @@ All the translations for this repo will be listed below:
 -  [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
 -  [The JS Call stack Explained in 9 minutes](https://www.youtube.com/watch?v=W8AeMrVtFLY) - Colt Steel (YouTube)
 
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 -  [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
 -  [The JS Call Stack Explained In 9 Minutes — Colt Steele](https://www.youtube.com/watch?v=W8AeMrVtFLY)
@@ -150,11 +152,11 @@ All the translations for this repo will be listed below:
 
 ---
 
-## 2. Primitive Types
+## 2. साधारण प्रकार
 
-<p>According to the ECMAScript specification, JavaScript has six primitive data types: string, number, bigint, boolean, undefined, and symbol. These types are immutable, meaning their values cannot be altered. There is also a special primitive type called null, which represents the intentional absence of any object value.</p>
+<p>ECMAScript नियम कै हिसाब तँ, जावास्क्रिप्ट में छै (6) साधारण डेटा प्रकार सैं: स्ट्रिंग (string), नंबर (number), बिगइंट (bigint), बूलियन (boolean), अनडिफाइंड (undefined), अर सिंबल (symbol)। यो प्रकार "बदलण आळे कोन्या" (immutable) सैं, मतलब इनके मूल्य बदले कोनी जा सकैं। एक ख़ास साधारण प्रकार नल (null) भी सै, जो किसी भी ऑब्जेक्ट का जानबूझकर गैर-हाज़िर होणा बतावै सै।</p>
 
-<p>Primitive values are directly assigned to a variable, and when you manipulate a primitive type, you're working directly on the value. Unlike objects, primitives do not have properties or methods, but JavaScript automatically wraps primitive values with object counterparts when necessary (e.g., when calling methods on strings).</p>
+<p>साधारण मूल्य सीधे एक वैरिएबल नै दिए जावैं सैं, और जब तूँ एक साधारण प्रकार नै बदळो सै, तो तूँ सीधे मूल्य पर काम करै सै। ऑब्जेक्ट्स तँ अलग, साधारण प्रकार में गुण (properties) या तरीके (methods) कोनी होंदे, पर जब ज़रूरी होवै सै तो जावास्क्रिप्ट अपने आप साधारण मूल्यां नै ऑब्जेक्ट्स तँ लपेट देवै सै (जैड़ै, स्ट्रिंग पर कोई तरीका बुलाण लाग जावै)।</p>
 
 ### Reference
 
