@@ -18,7 +18,8 @@
 </div>
 
 <div align="center">
-  <strong>🚀 Considered by GitHub as one of the <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">top open source projects of 2018!</a></strong>
+  <strong>🚀 गिटहब (GitHub) नै 2018 कै सब तँ <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">बेहतरीन ओपन सोर्स प्रोजेक्ट्स (open source projects) में तँ एक मान्या!</a>
+  </strong>
 </div>
 
 ## जाण-पहचाण
@@ -77,7 +78,7 @@
 
 <hr>
 
-## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="table-of-contents">Table of Contents</a>
+## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="table-of-contents">बिषय-सूची</a>
 
 1. [**Call Stack**](#1-call-stack)
 2. [**Primitive Types**](#2-primitive-types)
@@ -148,7 +149,7 @@
 -  [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
 -  [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
     
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -158,7 +159,7 @@
 
 <p>साधारण मूल्य सीधे एक वैरिएबल नै दिए जावैं सैं, और जब तूँ एक साधारण प्रकार नै बदळो सै, तो तूँ सीधे मूल्य पर काम करै सै। ऑब्जेक्ट्स तँ अलग, साधारण प्रकार में गुण (properties) या तरीके (methods) कोनी होंदे, पर जब ज़रूरी होवै सै तो जावास्क्रिप्ट अपने आप साधारण मूल्यां नै ऑब्जेक्ट्स तँ लपेट देवै सै (जैड़ै, स्ट्रिंग पर कोई तरीका बुलाण लाग जावै)।</p>
 
-### Reference
+### सन्दर्भ
 
 -  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
@@ -187,7 +188,7 @@
 - [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
 - [Data Type in JavaScript - ScholarHat](https://www.youtube.com/watch?v=aFDvBjVjCh8)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -218,7 +219,7 @@
 - [JavaScript - Reference vs Primitive Values/ Types - Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - [Value Types and Reference Types in JavaScript - Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -257,7 +258,7 @@
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -292,7 +293,7 @@ typeof ऑपरेटर: typeof ऑपरेटर का इस्तेम�
 - [=== vs == in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=a0S1iG3TgP0)
 - [The typeof operator in JS - CodeVault](https://www.youtube.com/watch?v=NSS5WRcv7yM)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -334,7 +335,7 @@ typeof ऑपरेटर: typeof ऑपरेटर का इस्तेम�
 - [Lexical scoping in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=qT5S7GgIioE)
 - [Modern Scope Handling in JavaScript (ES6 and Beyond) -Prashant Dewangan ](https://www.youtube.com/watch?v=zMseUdOR7z8)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -360,7 +361,7 @@ ECMAScript नियम कै हिसाब तँ, एक्सप्रे�
 - [Expression in javascript | Statement in javascript - Sathelli Srikanth](https://www.youtube.com/watch?v=cVDs3TZ-kXs)
 
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -398,7 +399,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
 - [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -425,7 +426,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
 - [JavaScript Event Loop: How it Works and Why it Matters in 5 Minutes - James Q Quick](https://www.youtube.com/watch?v=6lbBaM18X3g)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -449,7 +450,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
 - [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)   
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -475,7 +476,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript Under The Hood - JavaScript Engine Overview - Traversy Media](https://www.youtube.com/watch?v=oc6faXVc54E)
 - [Arindam Paul - JavaScript VM internals, EventLoop, Async and ScopeChains](https://www.youtube.com/watch?v=QyUFheng6J0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -497,7 +498,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JS Bitwise Operators and Binary Numbers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=RRyxCmLX_ag)
 - [Deep Dive into Blobs, Files, and ArrayBuffers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=ScZZoHj7mqY)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -532,7 +533,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
 - [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -557,7 +558,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
 - [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -605,7 +606,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
 - .[Javascript Interview Questions ( Call, Bind and Apply ) - Polyfills, Output Based, Explicit Binding - Roadside Coder] (https://youtu.be/VkmUOktYDAU?si=SdvLZ8FBmephPxjS)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -622,7 +623,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 -  [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
 -  [JavaScript instanceof operator](https://flexiple.com/javascript/instanceof-javascript)
   
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -674,7 +675,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 - [The Principles of Object-Oriented JavaScript - Nicholas C. Zakas](https://www.google.com.pk/books/edition/The_Principles_of_Object_Oriented_JavaSc/rorlAwAAQBAJ?hl=en&gbpv=1&pg=PP1&printsec=frontcover)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -704,7 +705,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -763,7 +764,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
 - [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -798,7 +799,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
 - [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -850,7 +851,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Learn Closures In 7 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=3a0I8ICR1Vg)
 
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -881,7 +882,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
 - [Higher-Order Functions ft. Functional Programming - Akshay Saini](https://www.youtube.com/watch?v=HkWxvB1RJq0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -914,7 +915,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
 - [What Is Recursion - In Depth - Web Dev Simplified](https://www.youtube.com/watch?v=6oDQaB2one8)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -948,7 +949,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
 - [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1002,7 +1003,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript Promises In 10 Minutes — Web Dev Simplified ](https://www.youtube.com/watch?v=DHvZLI7Db8E)
 - [Promises | Ep 02 Season 02 - Namaste JavaScript - Akshay Saini ](https://youtu.be/ap-6PPAuK1Y?si=Ri1fopXeYjlrHzpf)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1052,7 +1053,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
 - [Promise async and await in javascript — Hitesh Choudhary](https://youtu.be/Gjbr21JLfgg?si=SDCVKr9ONw2GsNdT)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1082,7 +1083,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
 - [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1107,7 +1108,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript Algorithms Crash Course: Learn Algorithms & "Big O" from the Ground Up! - Academind](https://www.youtube.com/watch?v=JgWm6sQwS_I)
 - [Big O Notation - Data Structures and Algorithms in Javascript - RoadSideCoder](https://www.youtube.com/watch?v=LaexPVi1VRE)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1134,7 +1135,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - 🎥 [JavaScript Data Structures: Getting Started - Academind](https://www.youtube.com/watch?v=41GSinwoMYA)
 - 🎥 [Algorithms and Data Structures - The Coding Train (Daniel Shiffman)](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1161,7 +1162,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
 - [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1199,7 +1200,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 - [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1246,7 +1247,7 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
 - [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ---
 
@@ -1277,13 +1278,13 @@ ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invok
 - 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
 - 🎥 [Tips On Learning How To Code](https://www.youtube.com/watch?v=0wHyoBPc6zs)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 ## <img align="center" width="35" height="35" src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> <a id="license">License</a>
 
 यो सॉफ्टवेयर MIT लाइसेंस कै तहत सै। अर बेरा करण खातर [लाइसेंस](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) नै देखियो ©Leonardo Maldonado।
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ फेर ऊपर](#table-of-contents)**
 
 <hr>
 
