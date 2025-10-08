@@ -162,7 +162,7 @@
 
 -  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Primitive and Non-primitive data-types in JavaScript - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
 -  [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
@@ -176,7 +176,7 @@
 -  [Object to primitive conversion — JavaScript.Info](https://javascript.info/object-toprimitive)
 - [Methods of primitives - Javascript.info](https://javascript.info/primitives-methods)
 
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
 - [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
@@ -191,13 +191,13 @@
 
 ---
 
-## 3. Value Types and Reference Types
+## 3. मूल्य-आधारित अर संदर्भ-आधारित प्रकार
 
-<p>According to the ECMAScript specification, value types are stored directly in the location that the variable accesses. These include types like number, string, boolean, undefined, bigint, symbol, and null. When you assign a value type to a variable, the value itself is stored.</p>
+<p>ECMAScript नियम कै हिसाब तँ, मूल्य-आधारित प्रकार सीधे उस जगहां पर जमा (store) करे जावैं सैं, जिस्से वैरिएबल पहुँच (access) करै सै। इनमां नंबर, स्ट्रिंग, बूलियन, अनडिफाइंड, बिगइंट, सिंबल, अर नल जये प्रकार शामिल सैं। जब तूँ एक मूल्य-आधारित प्रकार नै एक वैरिएबल नै देवो सै, तो मूल्य ख़ुद जमा हो जावै सै।</p>
 
-<p>Reference types, on the other hand, are objects stored in the heap. Variables assigned to reference types actually store references (pointers) to the objects, not the objects themselves. When you assign a reference type to another variable, both variables reference the same object in memory.</p>
+<p>दूसरी तरफ, संदर्भ-आधारित प्रकार वो ऑब्जेक्ट सैं जो हीप (heap) में जमा हो सैं। वो वैरिएबल जिन्हें संदर्भ-आधारित प्रकार दिए जावैं सैं, वे असल में ऑब्जेक्ट्स कै संदर्भ (pointers) नै जमा करै सैं, न कि ख़ुद ऑब्जेक्ट नै। जब तूँ एक संदर्भ-आधारित प्रकार नै दूसरे वैरिएबल नै देवो सै, तो दोनों वैरिएबल मेमोरी में एकै ऑब्जेक्ट नै दर्शावैं सैं।</p>
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
 -  [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
@@ -210,7 +210,7 @@
 -  [JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
 -  [JavaScript map vs. forEach: When to Use Each One - Sajal Soni](https://code.tutsplus.com/tutorials/javascript-map-vs-foreach-when-to-use-each-one--cms-38365)
 
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
 - [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
@@ -222,28 +222,28 @@
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 4. अप्रकट, प्रकट, नामकरण, ढाँचा अर डक टाइपिंग
 
-<p>The ECMAScript specification defines JavaScript as a dynamically typed language, meaning that types are associated with values rather than variables, and type checking occurs at runtime. There are various ways JavaScript manages types:</p>
+<p>ECMAScript नियम कै हिसाब तँ, जावास्क्रिप्ट नै डायनैमिक रूप तँ टाइप करी गई ज़बान बताया गया सै, मतलब यो सै कि प्रकार (types) वैरिएबल की बजाय मूल्यां तँ जुड़े हों सैं, अर प्रकार की जाँच (type checking) कोड चालण कै टैम (runtime) पर होवै सै। जावास्क्रिप्ट प्रकार नै कई तरीकां तँ संभालै सै:</p>
 
-<p><strong>Implicit Typing (or Type Coercion):</strong> This occurs when JavaScript automatically converts one data type to another when required. For instance, JavaScript might convert a string to a number during an arithmetic operation. While this can simplify some code, it can also lead to unexpected results if not handled carefully.</p>
+<p><strong>अप्रकट टाइपिंग (Implicit Typing) (या प्रकार मजबूरी/Type Coercion):</strong> या तब होवै सै जब ज़रूरत पड़ण पर जावास्क्रिप्ट अपने आप एक डेटा प्रकार नै दूसरे में बदळ देवै सै। मिसाल खातर, गणित कै काम (arithmetic operation) कै दौरान जावास्क्रिप्ट एक स्ट्रिंग नै नंबर में बदळ सकै सै। यो तरीक़ा कुछ कोड नै आसान तो कर सकै सै, पर जै ध्यान तँ ना संभालया जावै तो अण-सोची दिक्कतें भी पैदा कर सकै सै।</p>
 
-<p><strong>Explicit Typing:</strong> Unlike implicit typing, explicit typing involves manually converting a value from one type to another using functions like Number(), String(), or Boolean().</p>
+<p><strong>प्रकट टाइपिंग (Explicit Typing):</strong> अप्रकट टाइपिंग तँ उलट, प्रकट टाइपिंग में फ़ंक्शन जैड़ै Number(), String(), या Boolean() का इस्तेमाल करकै तूँ ख़ुद मूल्य नै एक प्रकार तँ दूसरे में बदळो सै।</p>
 
-<p><strong>Nominal Typing:</strong> JavaScript doesn't natively support nominal typing, where types are explicitly declared and checked. However, TypeScript, a superset of JavaScript, brings this feature to help catch type errors during development.</p>
+<p><strong>नामकरण टाइपिंग (Nominal Typing):</strong> जावास्क्रिप्ट में नामकरण टाइपिंग पैदाइश तँ (natively) कोनी होवै, जिस्में प्रकार नै साफ़-साफ़ बताणा और जाँचणा पड़ै सै। हाँलांकि, टाइपस्क्रिप्ट (जावास्क्रिप्ट का एक बड़ा रूप) या सुविधा ल्यावै सै ताकै डेवलपमेंट कै दौरान प्रकार की ग़लतियाँ नै पकड़ी जा सकैं।</p>
 
-<p><strong>Structural Typing:</strong> In this type system, types are based on the structure or properties of the data. JavaScript is a structurally typed language where objects are compatible if they share the same structure (i.e., the same set of properties and methods).</p>
+<p><strong>ढाँचागत टाइपिंग (Structural Typing):</strong> इस प्रकार कै सिस्टम में, प्रकार डेटा कै ढाँचै (structure) या गुणां (properties) पर आधारित हों सैं। जावास्क्रिप्ट एक ढाँचागत रूप तँ टाइप करी गई ज़बान सै, जित ऑब्जेक्ट तभी ठीक मान्या जावै सै जब उनमां एक जैसा ढाँचा हो (म्हणै, एक जैसे गुण अर तरीके हों)।</p>
 
-<p><strong>Duck Typing:</strong> This is a concept where an object's suitability is determined by the presence of certain properties and methods, rather than by the actual type of the object. JavaScript relies heavily on duck typing, where behavior is inferred from an object's properties rather than its declared type.</p>
+<p><strong>डक टाइपिंग (Duck Typing):</strong> यो एक असूल सै जित एक ऑब्जेक्ट काम करन खातर ठीक सै या कोन्या, यो ऑब्जेक्ट कै असल प्रकार की बजाय उसमें मौजूद खास गुणां अर तरीकां तँ तय होवै सै। जावास्क्रिप्ट डक टाइपिंग पर घणा निर्भर करै सै, जित ऑब्जेक्ट का बर्ताव उसकी बताई गई टाइप की बजाय उसके गुणां तँ अनुमान लगाया जावै सै।</p>
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
 -  [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
 -  [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
 -  [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
 
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [== ? === ??? ...#@^% - Shirmung Bielefeld](https://www.youtube.com/watch?v=qGyqzN0bjhc&t)
 - [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
@@ -253,7 +253,7 @@
 - [Duck Typing in Javascript - Techmaker Studio](https://www.youtube.com/watch?v=oEpgyoMEkrM)
 - [Duck Typing in Javascript - Programming with Kartik](https://youtu.be/e4X1KAuk6Bs?si=krZKbsM2i3tmIl2G)
 
-### Books
+### किताबें
 
 - [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 
@@ -261,16 +261,16 @@
 
 ---
 
-## 5. == vs === vs typeof
- According to the ECMAScript specification, JavaScript includes both strict (===) and loose (==) equality operators, which behave differently when comparing values. Here's a breakdown:
+## 5. दो बराबर (==) vs तीन बराबर (===) vs टाइप-ऑफ़ (typeof)
+ECMAScript नियम कै हिसाब तँ, जावास्क्रिप्ट में दोनों तरह कै बराबरी ऑपरेटर सैं: सख्त (===) अर ढिला (==), जो मूल्य नै मिलाण कै टैम अलग-अलग तरीका तँ काम करै सैं। यो उनका ब्यौरा सै:
 
-== (Loose Equality): This operator performs type coercion before comparing two values. If the values are of different types, JavaScript will attempt to convert one or both values to a common type before comparison, which can lead to unexpected results.
+== (ढिली बराबरी/Loose Equality): यो ऑपरेटर दो मूल्यां नै मिलाण तँ पहलियाँ प्रकार नै मजबूरी तँ बदळ देवै सै (type coercion)। जै मूल्य अलग-अलग प्रकार कै हों, तो जावास्क्रिप्ट मिलाण तँ पहलियाँ एक या दोनों नै एक आम प्रकार में बदलण की कोशिश करै सै, जिस तँ अण-सोचें नतीजे आ सकैं सैं।
 
-=== (Strict Equality): This operator compares both the value and the type without any type coercion. If the two values are not of the same type, the comparison will return false.
+=== (सख्त बराबरी/Strict Equality): यो ऑपरेटर बिना किसी प्रकार की मजबूरी कै, मूल्य अर प्रकार दोनों नै मिलावै सै। जै दोनो मूल्य एकै प्रकार कै कोनी हों, तो यो मिलान ग़लत (false) देवै सै।
 
-typeof Operator: The typeof operator is used to check the data type of a variable. While it's generally reliable, there are certain quirks, like how typeof null returns "object" instead of "null", due to a long-standing behavior in JavaScript's implementation.
+typeof ऑपरेटर: typeof ऑपरेटर का इस्तेमाल एक वैरिएबल का डेटा प्रकार (data type) जाँचण खातर होवै सै। हाँलाकि यो आमतौर पर ठीक-ठाक सै, पर इसमें कुछ कमी सैं, जैड़ै typeof null नै जावास्क्रिप्ट की पुरानी बनावट कै कारण "नुल" की बजाय "ऑब्जेक्ट" बतावै सै।
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
 -  [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
@@ -284,7 +284,7 @@ typeof Operator: The typeof operator is used to check the data type of a variabl
 -  [Difference between == and === in JavaScript — GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-double-equal-vs-triple-equal-javascript/)
 -  [=== vs == Comparision in JavaScript — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-triple-equals-sign-vs-double-equals-sign-comparison-operators-explained-with-examples/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
 - [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
@@ -296,20 +296,18 @@ typeof Operator: The typeof operator is used to check the data type of a variabl
 
 ---
 
-## 6. Function Scope, Block Scope and Lexical Scope
- The ECMAScript specification outlines three key types of scope:
+## 6. फंक्शन स्कोप, ब्लॉक स्कोप अर लेक्सिकल स्कोप
+फंक्शन स्कोप (Function Scope): वो वैरिएबल जो एक फंक्शन कै भीतर var का इस्तेमाल करकै बताए जावैं सैं, वे बस उस फंक्शन कै भीतर ए पहुँचण खातर मिलै सैं। यो स्कोप वैरिएबलां नै उस फंक्शन तँ बाहर पहुँचण तँ रोकै सै जित वे बताए गए सैं।
 
-Function Scope: Variables declared within a function using var are only accessible within that function. This scope isolates variables from being accessed outside of the function where they are declared.
+ब्लॉक स्कोप (Block Scope): ES6 तँ शुरू होकै, let अर const तँ बताए गए वैरिएबल ब्लॉक-स्कोप्ड हों सैं। इस का मतलब यो सै कि वे बस उस खास ब्लॉक {} कै भीतर ए पहुँचण खातर मिलै सैं जिस्में वे बताए गए सैं, जैड़ै लूप (loops) या शर्त (conditionals) कै भीतर।
 
-Block Scope: Introduced with ES6, variables declared with let and const are block-scoped. This means they are only accessible within the specific block {} in which they are defined, such as inside loops or conditionals.
+लेक्सिकल स्कोप (Lexical Scope): यो बतावै सै कि वैरिएबल तक पहुँच नै कोड में वैरिएबलां की भौतिक जगहां (physical location) कै हिसाब तँ किसां तय करा जावै सै। फंक्शन लेक्सिकली स्कोप्ड हों सैं, मतलब वे अपने पेटेंट स्कोप (parent scope) कै वैरिएबलां तक पहुँच सकै सैं।
 
-Lexical Scope: Refers to how variable access is determined based on the physical location of the variables in the code. Functions are lexically scoped, meaning that they can access variables from their parent scope.
-
-### Books
+### किताबें
 
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
 -  [Var, Let, and Const – What's the Difference?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
@@ -324,7 +322,7 @@ Lexical Scope: Refers to how variable access is determined based on the physical
 -  [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and "this" ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
 -  [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [What Makes Javascript Weird ... and Awesome pt. 4 — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
 - [Variable Scope in JavaScript — Kirupa Chinnathambi](https://www.youtube.com/watch?v=dhp57T3p760)
@@ -340,10 +338,10 @@ Lexical Scope: Refers to how variable access is determined based on the physical
 
 ---
 
-## 7. Expression vs Statement
-According to the ECMAScript specification, expressions produce a value, and statements are instructions to perform an action, such as variable assignment or control flow. Function declarations are hoisted and can be called before they are defined in the code, while function expressions are not hoisted and must be defined before being invoked.
+## 7. एक्सप्रेशन (Expression) बनाम स्टेटमेंट (Statement)
+ECMAScript नियम कै हिसाब तँ, एक्सप्रेशन (Expression) एक मूल्य (value) पैदा करै सै, अर स्टेटमेंट (Statement) एक काम नै पूरा करण खातर हुकम हों सैं, जैड़ै वैरिएबल नै मूल्य देणा या कंट्रोल फ़्लो। फंक्शन घोषणा (Function declarations) नै होइस्ट कर दिया जावै सै अर उन्हें कोड में बताण तँ पहल्यां भी बुलाया जा सकै सै, जबकि फंक्शन एक्सप्रेशन (Function expressions) नै होइस्ट कोनी करा जांदा, अर उन्हें चलाण तँ पहल्यां बताणा ज़रूरी सै।
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
 -  [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
@@ -353,7 +351,7 @@ According to the ECMAScript specification, expressions produce a value, and stat
 - [Expression statement — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/Expression_statement)
 
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
 - [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
@@ -366,15 +364,16 @@ According to the ECMAScript specification, expressions produce a value, and stat
 
 ---
 
-## 8. IIFE, Modules and Namespaces
-With the introduction of ES6 modules, the role of IIFEs in scope isolation has diminished but they still remain relevant.
-### Reference
+## 8. IIFE, मॉड्यूल अर नेमस्पेस
+ES6 मॉड्यूल्स कै आंण तँ, IIFEs (Immediatly Invoked Function Expressions) का स्कोप नै अलग राखण का रोल थोड़ा कम हो गया सै, पर वे आज भी ज़रूरी सैं।
+
+### सन्दर्भ
 
 -  [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
 -  [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
 -  [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
 -  [JavaScript Immediately Invoked Function Expression — javascripttutorial.net](https://www.javascripttutorial.net/javascript-immediately-invoked-function-expression-iife/)
@@ -389,7 +388,7 @@ With the introduction of ES6 modules, the role of IIFEs in scope isolation has d
 -  [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
 -  [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
 - [Understanding JavaScript IIFE — Sheo Narayan](https://www.youtube.com/watch?v=I5EntfMeIIQ)
@@ -403,9 +402,10 @@ With the introduction of ES6 modules, the role of IIFEs in scope isolation has d
 
 ---
 
-## 9. Message Queue and Event Loop
-The Event Loop is a critical part of JavaScript's concurrency model, ensuring non-blocking behavior by processing tasks in an asynchronous manner. Understanding how it interacts with the Message Queue and Microtasks is key to mastering JavaScript behavior.
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+## 9. मैसेज कतार अर इवेंट लूप
+इवेंट लूप जावास्क्रिप्ट कै कन्करेंसी मॉडल (concurrency model) का एक ज़रूरी हिस्सा सै, जो अतुल्यकालिक (asynchronous) तरीके तँ काम नै निपटा कै नॉन-ब्लॉकिंग बर्ताव नै पक्का करै सै। जावास्क्रिप्ट कै बर्ताव पर पूरी पकड़ बणाण खातर यो समझणा ज़रूरी सै कि इवेंट लूप मैसेज कतार (Message Queue) अर माइक्रोटास्क (Microtasks) कै साथ किसां काम करै सै।
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
 -  [Understanding JS: The Event Loop — Alexander Kondov](https://hackernoon.com/understanding-js-the-event-loop-959beae3ac40)
@@ -415,7 +415,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [JavaScript Visualized: Event Loop — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif)
 - [Understanding and Optimizing JavaScript's Event Loop — Xiuer Old](https://medium.com/javascript-zone/understanding-and-optimizing-javascripts-event-loop-717ae0095038#:~:text=The%20event%20loop%20is%20the,%2Dblocking%20I%2FO%20operations.)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
 - [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
@@ -429,9 +429,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 10. setTimeout, setInterval and requestAnimationFrame
+## 10. setTimeout, setInterval अर requestAnimationFrame
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
 -  [Why not to use setInterval — Akanksha Sharma](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
@@ -441,7 +441,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
 -  [Debounce – How to Delay a Function in JavaScript - Ondrej Polesny](https://www.freecodecamp.org/news/javascript-debounce-example/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
 - [TRUST ISSUES with setTimeout() — Akshay Saini ](https://youtu.be/nqsPmuicJJc?si=4FXKlZfqiJUqO2Y4)                  
@@ -453,10 +453,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 11. JavaScript Engines
+## 11. जावास्क्रिप्ट इंजन
 
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
 -  [Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
@@ -467,7 +466,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
 -  [JavaScript Internals: JavaScript engine, Run-time environment & setTimeout Web API — Rupesh Mishra](https://blog.bitsrc.io/javascript-internals-javascript-engine-run-time-environment-settimeout-web-api-eeed263b1617)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
 - [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
@@ -480,9 +479,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 12. बिटवाइज़ ऑपरेटर, टाइप एरे अर एरे बफर
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
 -  [Using JavaScript's Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
@@ -491,7 +490,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [A Comprehensive Primer on Binary Computation and Bitwise Operators in javascript — Paul Brown](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
 -  [How can I understand Bitwise operation in JavaScript?](https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
 - [Bitwise Operators and WHY we use them — Alex Hyett](https://www.youtube.com/watch?v=igIjGxF2J-w)
@@ -502,17 +501,17 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 13. DOM and Layout Trees
+## 13. DOM अर लेआउट ट्री
 
-### Reference
+### सन्दर्भ
 
 - [Document Object Model (DOM) — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
 
-### Books
+### किताबें
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
 -  [What's the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
@@ -526,7 +525,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [JavaScript DOM](https://www.javascripttutorial.net/javascript-dom/)
 -  [Traversing the Dom with Javascript](https://www.youtube.com/watch?v=Pr4LLrmDLLo) - Steve Griffith (YouTube)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
 - [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
@@ -537,9 +536,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 14. Factories and Classes
+## 14. फैक्ट्री अर क्लास
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [How To Use Classes in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
 -  [Javascript Classes — Under The Hood — Majid](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
@@ -552,7 +551,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
 -  [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript Factory Functions — Programming with Mosh](https://www.youtube.com/watch?v=jpegXpQpb3o)
 - [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
@@ -562,15 +561,15 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 15. this, call, apply and bind
+## 15. यह (this), कॉल, अप्लाई अर बाइंड
 
-### Reference
+### सन्दर्भ
 
 -  [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
 -  [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
 -  [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
 -  [JavaScript's Apply, Call, and Bind Methods are Essential for JavaScript Professionals — Richard Bovell](http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/)
@@ -595,7 +594,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Top 7 tricky questions of 'this' keyword](https://dmitripavlutin.com/javascript-this-interview-questions/)
     
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript call, apply and bind — techsith](https://www.youtube.com/watch?v=c0mLRpw-9rI)
 - [JavaScript Practical Applications of Call, Apply and Bind functions— techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
@@ -610,9 +609,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 16. new, Constructor, instanceof and Instances
+## 16. न्यू (new), कंस्ट्रक्टर, उदाहरण-की (instanceof) अर उदाहरण
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript For Beginners: the 'new' operator — Brandon Morelli](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
 -  [Let's demystify JavaScript's 'new' keyword — Cynthia Lee](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
@@ -627,13 +626,13 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. प्रोटोटाइप विरासत अर प्रोटोटाइप चैन
 
-### Reference
+### सन्दर्भ
 
 -  [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Javascript : Prototype vs Class — Valentin PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
 -  [JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens](https://mathiasbynens.be/notes/prototypes)
@@ -656,7 +655,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Understanding Prototypal Inheritance In JavaScript — Lawrence Eagles](https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4)
 -  [Objects and Prototypes in JavaScript — Irena Popova](https://dev.to/irenejpopova/objects-and-prototypes-in-javascript-2eie)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Javascript Prototype Inheritance — Avelx](https://www.youtube.com/watch?v=sOrtAjyk4lQ)
 - [JavaScript Prototype Inheritance Explained pt. I — techsith](https://www.youtube.com/watch?v=7oNWNlMrkpc)
@@ -670,7 +669,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 - [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
 - [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
-### Books
+### किताबें
 
 - [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
 - [The Principles of Object-Oriented JavaScript - Nicholas C. Zakas](https://www.google.com.pk/books/edition/The_Principles_of_Object_Oriented_JavaSc/rorlAwAAQBAJ?hl=en&gbpv=1&pg=PP1&printsec=frontcover)
@@ -679,14 +678,14 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. Object.create अर Object.assign
 
-### Reference
+### सन्दर्भ
 
 -  [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 -  [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Object.create in JavaScript — Rupesh Mishra](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
 -  [Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
@@ -700,7 +699,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [How to deep clone a JavaScript Object — Flavio Copes](https://flaviocopes.com/how-to-clone-javascript-object/)
 -  [Object.create(): When and Why to Use — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
@@ -709,9 +708,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 19. map, reduce, filter
+## 19. मैप, रिड्यूस, फिल्टर
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
 -  [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
@@ -746,7 +745,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Mastering the JavaScript Reduce method ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
 -  [JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Map, Filter and Reduce — Lydia Hallie](https://www.youtube.com/watch?v=UXiYii0Y7Nw)
 - [Map, Filter and Reduce - Akshaay Saini](https://youtu.be/zdp0zrpKzIE?si=6QusFzD6tmwn-el4)
@@ -768,9 +767,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
+## 20. शुद्ध फंक्शन, साइड इफेक्ट, स्टेट म्यूटेशन अर इवेंट प्रोपेगेशन
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
 -  [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
@@ -790,7 +789,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 -  [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Pure Functions — Hexlet](https://www.youtube.com/watch?v=dZ41D6LDSBg)
 - [Pure Functions - Functional Programming in JavaScript — Paul McBride](https://www.youtube.com/watch?v=Jh_Uzqzz_wM)
@@ -803,14 +802,14 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 21. Closures
+## 21. क्लोजर
 
-### Reference
+### सन्दर्भ
 
 -  [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 -  [Closure — JavaScript.Info](https://javascript.info/closure)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [I never understood JavaScript closures — Olivier De Meulder](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
 -  [Understand JavaScript Closures With Ease — Richard Bovell](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
@@ -836,7 +835,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
 -  [Do you know Closures - Mohamed Khaled](https://dev.to/this_mkhy/do-you-know-es6-part-3-advanced-3fcl#Closures-2)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript The Hard Parts: Closure, Scope & Execution Context - Codesmith](https://www.youtube.com/watch?v=XTAzsODSCsM)
 - [Namaste Javascript by Akshay Saini](https://youtu.be/qikxEIxsXco?si=fGFgUHuaOW49Wg9p)
@@ -855,13 +854,13 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 22. High Order Functions
+## 22. हाई ऑर्डर फंक्शन
 
-### Books
+### किताबें
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Higher-Order Functions in JavaScript — M. David Green](https://www.sitepoint.com/higher-order-functions-javascript/)
 -  [Higher Order Functions: Using Filter, Map and Reduce for More Maintainable Code — Guido Schmitz](https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528)
@@ -871,7 +870,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
 -  [Higher Order Functions - A pragmatic approach — emmanuel ikwuoma](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript Higher Order Functions & Arrays — Traversy Media](https://www.youtube.com/watch?v=rRgD1yVwIvE)
 - [Higher Order Functions — Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
@@ -886,9 +885,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 23. Recursion
+## 23. पुनरावर्तन
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Recursion in JavaScript — Kevin Ennis](https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f)
 -  [Understanding Recursion in JavaScript — Zak Frisch](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
@@ -902,7 +901,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Accio Recursion!: Your New Favorite JavaScript Spell — Leanne Cabey](https://medium.datadriveninvestor.com/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3)
 -  [Recursion Explained (with Examples) — Christina](https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Recursion In JavaScript — techsith](https://www.youtube.com/watch?v=VtG0WAUvq2w)
 - [Recursion — Fun Fun Function](https://www.youtube.com/watch?v=k7-N8R0-KY4)
@@ -919,13 +918,13 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 24. Collections and Generators
+## 24. कलेक्शन अर जेनरेटर
 
-### Reference
+### सन्दर्भ
 
 -  [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [ES6 Collections: Using Map, Set, WeakMap, WeakSet — Kyle Pennell](https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/)
 -  [ES6 WeakMaps, Sets, and WeakSets in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-weakmaps-sets-and-weaksets-in-depth)
@@ -942,7 +941,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
 -  [An Introduction to JavaScript Generators — Alice Kallaugher](https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media](https://www.youtube.com/watch?v=ycohYSx5h9w)
 - [JavaScript ES6 / ES2015 - \[11\] Generators - Traversy Media](https://www.youtube.com/watch?v=dcP039DYzmE)
@@ -953,13 +952,13 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 25. Promises
+## 25. प्रॉमिस
 
-### Reference
+### सन्दर्भ
 
 -  [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript Promises for Dummies ― Jecelyn Yeen](https://scotch.io/tutorials/javascript-promises-for-dummies)
 -  [Understanding promises in JavaScript — Gokul N K](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
@@ -991,7 +990,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [The Complete JavaScript Promise Guide](https://blog.webdevsimplified.com/2021-09/javascript-promises)
 -  [Promise Chaining - javascript.info](https://javascript.info/promise-chaining)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Let's Learn ES6 - Promises — Ryan Christiani](https://www.youtube.com/watch?v=vQ3MoXnKfuQ)
 - [JavaScript ES6 / ES2015 Promises — Traversy Media](https://www.youtube.com/watch?v=XJEHuBZQ5dU)
@@ -1007,18 +1006,18 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 26. async/await
+## 26. एसिंक/अवेट
 
-### Reference
+### सन्दर्भ
 
 -  [async/await — JavaScript.Info](https://javascript.info/async-await)
 
-### Books
+### किताबें
 
 -  [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
 -  [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Understanding async/await in Javascript — Gokul N K](https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c)
 -  [Asynchronous Javascript using async/await — Joy Warugu](https://scotch.io/tutorials/asynchronous-javascript-using-async-await)
@@ -1040,7 +1039,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
 -  [Better Than Promises - JavaScript Async/Await](https://blog.webdevsimplified.com/2021-11/async-await/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Asynchronous JavaScript Crash Course](https://www.youtube.com/watch?v=exBgWAIeIeg)
 - [Async + Await — Wes Bos](https://www.youtube.com/watch?v=9YkUCxvaLEk)
@@ -1057,9 +1056,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 27. Data Structures
+## 27. डेटा स्ट्रक्चर
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Data Structures in JavaScript — Thon Ly](https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c)
 -  [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb)
@@ -1076,7 +1075,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
 -  [Graph Data Structures Explained in JavaScript — Adrian Mejia](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
 - [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
@@ -1087,9 +1086,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 28. महंगी ऑपरेशन अर बिग O नोटेशन
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Big O Notation in Javascript — César Antón Dorantes](https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b)
 -  [Time Complexity/Big O Notation — Tim Roberts](https://medium.com/javascript-scene/time-complexity-big-o-notation-1a4310c3ee4b)
@@ -1098,7 +1097,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Algorithms in plain English: time complexity and Big-O Notation — Michael Olorunnisola](https://medium.freecodecamp.org/time-is-complex-but-priceless-f0abd015063c)
 -  [An Introduction to Big O Notation — Joseph Trettevik](https://dev.to/lofiandcode/an-introduction-to-big-o-notation-210o)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
 - [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
@@ -1112,9 +1111,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 29. Algorithms
+## 29. एल्गोरिथम
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Data Structures and Algorithms using ES6](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
 -  [Algorithms and data structures implemented in JavaScript with explanations and links to further readings](https://github.com/trekhleb/javascript-algorithms)
@@ -1126,7 +1125,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
 -  [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
 - 🎥 [Dynamic Programming - Learn to Solve Algorithmic Problems & Coding Challenges - FreeCodeCamp](https://www.youtube.com/watch?v=oBt53YbR9Kk&t=1021s)
@@ -1139,14 +1138,14 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 30. विरासत, पॉलीमॉर्फिज्म अर कोड का दोबारा इस्तेमाल
 
-### Reference
+### सन्दर्भ
 
 -  [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 -  [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Inheritance in JavaScript — Rupesh Mishra](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
 -  [Simple Inheritance with JavaScript — David Catuhe](https://www.sitepoint.com/simple-inheritance-javascript/)
@@ -1156,7 +1155,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
 -  [Unlocking the Power of Polymorphism in JavaScript: A Deep Dive](https://prototypr.io/post/unlocking-the-power-of-polymorphism-in-javascript-a-deep-dive)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
 - [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
@@ -1166,14 +1165,14 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 31. Design Patterns
+## 31. डिज़ाइन पैटर्न
 
-### Books
+### किताबें
 
 -  [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 -  [Pro JavaScript Design Patterns — Ross Harmes and Dustin Diaz](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [JavaScript Design Patterns – Explained with Examples — Germán Cocca](https://www.freecodecamp.org/news/javascript-design-patterns-explained/)
 -  [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
@@ -1195,7 +1194,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [In Defense of Defensive Programming - Adam Nathaniel Davis](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
 -  [JavaScript Patterns Workshop — Lydia Hallie](https://javascriptpatterns.vercel.app/patterns)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
 - [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
@@ -1204,13 +1203,13 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 32. Partial Applications, Currying, Compose and Pipe
+## 32. आंशिक एप्लीकेशन, करिंग, कंपोज़ अर पाइप
 
-### Books
+### किताबें
 
 -  [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Composition and Currying Elegance in JavaScript — Pragyan Das](https://medium.com/@pragyan88/writing-middleware-composition-and-currying-elegance-in-javascript-8b15c98a541b)
 -  [Functional JavaScript: Function Composition For Every Day Use — Joel Thoms](https://hackernoon.com/javascript-functional-composition-for-every-day-use-22421ef65a10)
@@ -1236,7 +1235,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [A practical guide to writing more functional JavaScript — Nadeesha Cabral](https://medium.freecodecamp.org/a-practical-guide-to-writing-more-functional-javascript-db49409f71)
 -  [A simple explanation of functional pipe in JavaScript — Ben Lesh](https://dev.to/benlesh/a-simple-explanation-of-functional-pipe-in-javascript-2hbj)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - [Compose vs Pipe: Functional Programming in JavaScript — Chyld Studios](https://www.youtube.com/watch?v=Wl2ejJOqHUU)
 - [JavaScript Functional Programing: Compose — Theodore Anderson](https://www.youtube.com/watch?v=jigHxo9YR30)
@@ -1251,9 +1250,9 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ---
 
-## 33. Clean Code
+## 33. साफ कोड
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> लेख
 
 -  [Clean Code Explained – A Practical Introduction to Clean Coding for Beginners — freeCodeCamp](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
 -  [Clean Code concepts adapted for JavaScript — Ryan McDermott](https://github.com/ryanmcdermott/clean-code-javascript)
@@ -1270,7 +1269,7 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 -  [How to use destructuring in JavaScript to write cleaner, more powerful code - freecodecamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
 -  [Write Clean Code Using JavaScript Object Destructuring - Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  वीडियो
 
 - 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
 - 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
@@ -1282,13 +1281,13 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 ## <img align="center" width="35" height="35" src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> <a id="license">License</a>
 
-This software is licensed under MIT License. See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+यो सॉफ्टवेयर MIT लाइसेंस कै तहत सै। अर बेरा करण खातर [लाइसेंस](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) नै देखियो ©Leonardo Maldonado।
 
 **[⬆ Back to Top](#table-of-contents)**
 
 <hr>
 
 <div align="center">
-  <strong>Happy Learning! ⭐</strong>
-  <p>If you find this repository helpful, please consider giving it a star!</p>
+  <strong>राम-राम ⭐</strong>
+  <p>जै तनै यो भंडार (repository) मददगार लागै सै, तो इसनै एक सितारा (star) देण की सोचियो!</p>
 </div>
