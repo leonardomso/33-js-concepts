@@ -110,6 +110,21 @@ All the translations for this repo will be listed below:
 31. [**Design Patterns**](#31-design-patterns)
 32. [**Partial Applications, Currying, Compose and Pipe**](#32-partial-applications-currying-compose-and-pipe)
 33. [**Clean Code**](#33-clean-code)
+34. [**Event Delegation**](#34-event-delegation)  
+35. [**Debouncing and Throttling**](#35-debouncing-and-throttling)  
+36. [**JavaScript Memory Management**](#36-javascript-memory-management)  
+37. [**Web Workers and Multi-threading (Advanced)**](#37-web-workers-and-multi-threading-advanced)  
+38. [**Proxy and Reflect (Advanced)**](#38-proxy-and-reflect-advanced)  
+39. [**Hoisting in JavaScript**](#40-hoisting-in-javascript)  
+40. [**Closures**](#41-closures)  
+41. [**Modules and Import/Export (ES6 Modules)**](#42-modules-and-importexport-es6-modules)  
+42. [**Template Literals and Tagged Templates**](#43-template-literals-and-tagged-templates)  
+43. [**Destructuring Assignment**](#43-destructuring-assignment)  
+44. [**Spread and Rest Operators**](#44-spread-and-rest-operators)  
+45. [**Optional Chaining and Nullish Coalescing**](#45-optional-chaining-and-nullish-coalescing)  
+46. [**Template Literals and String Interpolation**](#46-template-literals-and-string-interpolation)  
+47. [**Short-Circuit Evaluation (&&, ||, ??)**](#47-short-circuit-evaluation-&&-||-??)  
+48. [**Type Conversion and Coercion**](#48-type-conversion-and-coercion)  
 
 <hr>
 
@@ -1419,6 +1434,232 @@ Together, they enable **metaprogramming** — code that manipulates behavior dyn
 ## <img align="center" width="35" height="35" src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> <a id="license">License</a>
 
 This software is licensed under MIT License. See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+
+**[⬆ Back to Top](#table-of-contents)**
+
+## 39. Hoisting in JavaScript
+
+Hoisting is JavaScript’s behavior of moving **variable and function declarations** to the top of their scope before execution.  
+Understanding hoisting prevents bugs related to `var`, `let`, `const`, and function expressions.
+
+### Books
+
+- _You Don’t Know JS: Scope & Closures — Kyle Simpson_  
+- _Eloquent JavaScript — Marijn Haverbeke_  
+- _JavaScript: The Definitive Guide — David Flanagan_  
+
+### Articles
+
+- [Hoisting — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)  
+- [JavaScript Hoisting Explained — FreeCodeCamp](https://www.freecodecamp.org/news/hoisting-in-javascript/)  
+- [Understanding Hoisting — DigitalOcean](https://www.digitalocean.com/community/tutorials/understanding-hoisting-in-javascript)  
+- [JavaScript Hoisting with Examples — Scaler Topics](https://www.scaler.com/topics/javascript-hoisting/)  
+
+### Videos
+
+- [JavaScript Hoisting — Akshay Saini](https://www.youtube.com/watch?v=ZxC7l4dw0eU)  
+- [Hoisting in JS Explained — Web Dev Simplified](https://www.youtube.com/watch?v=_2kHW07b1xg)  
+- [Hoisting in JavaScript in 5 minutes — Simplilearn](https://www.youtube.com/watch?v=Jj1ZXs0y8WQ)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 40. Closures
+
+A **closure** occurs when a function retains access to its lexical scope even after executing outside of it.  
+Closures are useful for private variables, callbacks, and module patterns.
+
+### Books
+
+- _You Don’t Know JS: Scope & Closures — Kyle Simpson_  
+- _JavaScript: The Good Parts — Douglas Crockford_  
+- _Eloquent JavaScript — Marijn Haverbeke_  
+
+### Articles
+
+- [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)  
+- [Understanding Closures — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-closures/)  
+- [JavaScript Closures Explained — Tania Rascia](https://www.taniarascia.com/understanding-javascript-closures/)  
+- [Practical Closure Examples — Scaler Topics](https://www.scaler.com/topics/javascript-closures/)  
+
+### Videos
+
+- [Closures in JavaScript — Akshay Saini (Namaste JavaScript)](https://www.youtube.com/watch?v=3a0I8ICR1Vg)  
+- [Closures Explained Simply — Fireship](https://www.youtube.com/watch?v=1JsJx1x35c0)  
+- [JavaScript Closures Made Easy — Web Dev Simplified](https://www.youtube.com/watch?v=9U3IhLAnSxM)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 41. Modules and Import/Export (ES6 Modules)
+
+ES6 introduced **import/export syntax** for modularizing code. Modules improve maintainability by separating logic into files.
+
+### Books
+
+- _Understanding ES6 — Nicholas Zakas_  
+- _JavaScript: The Definitive Guide — David Flanagan_  
+- _Eloquent JavaScript — Marijn Haverbeke_  
+
+### Articles
+
+- [JavaScript Modules — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)  
+- [ES6 Modules Explained — Tania Rascia](https://www.taniarascia.com/es6-modules-a-beginner-s-guide/)  
+- [Understanding ES Modules — FreeCodeCamp](https://www.freecodecamp.org/news/es6-modules/)  
+- [Module Pattern vs ES6 Modules — Medium](https://medium.com/swlh/javascript-module-pattern-vs-es6-modules-44e8f5f3f7f4)  
+
+### Videos
+
+- [JavaScript Modules Crash Course — Traversy Media](https://www.youtube.com/watch?v=cRHQNNcYf6s)  
+- [ES6 Modules Explained — Fireship](https://www.youtube.com/watch?v=7yLg1y4qSmk)  
+- [Import & Export in JavaScript — Codevolution](https://www.youtube.com/watch?v=eZqL2nQ4Y4c)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 42. Template Literals and Tagged Templates
+
+Template literals (`` ` ``) allow **multiline strings**, **interpolation**, and **tagged templates** for custom processing (e.g., localization, HTML sanitization).
+
+### Books
+
+- _Eloquent JavaScript — Marijn Haverbeke_  
+- _JavaScript: The Definitive Guide — David Flanagan_  
+- _You Don’t Know JS: Scope & Closures — Kyle Simpson_  
+
+### Articles
+
+- [Template Literals — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)  
+- [Understanding Template Literals — DigitalOcean](https://www.digitalocean.com/community/tutorials/understanding-template-literals-in-javascript)  
+- [Tagged Templates in JavaScript — LogRocket](https://blog.logrocket.com/tagged-templates-in-javascript/)  
+- [JavaScript Template Literals with Examples — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-template-literals/)  
+
+### Videos
+
+- [Template Literals in JavaScript — Programming with Mosh](https://www.youtube.com/watch?v=5N6uF1v4p8M)  
+- [Tagged Templates — Web Dev Simplified](https://www.youtube.com/watch?v=a7RkZ9M0Gwo)  
+- [Template Literals Explained — Fireship](https://www.youtube.com/watch?v=b_6IT47o8wI)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+## 43. Destructuring Assignment
+
+Destructuring allows you to extract values from **arrays** or **objects** into separate variables.  
+It improves readability and works well with APIs and nested objects.
+
+### Articles
+
+- [Destructuring Assignment — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)  
+- [Understanding JavaScript Destructuring — FreeCodeCamp](https://www.freecodecamp.org/news/destructuring-in-javascript/)  
+- [ES6 Destructuring in Depth — DigitalOcean](https://www.digitalocean.com/community/tutorials/es6-destructuring-in-depth)  
+
+### Videos
+
+- [Destructuring in JavaScript — Traversy Media](https://www.youtube.com/watch?v=NIq3qLaHCIs)  
+- [Destructuring Made Easy — Web Dev Simplified](https://www.youtube.com/watch?v=CrUgzLsd5uw)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 44. Spread and Rest Operators
+
+The `...` operator can **spread** arrays/objects into individual elements or **collect** multiple values into a parameter.  
+Useful in function arguments, cloning, and merging data.
+
+### Articles
+
+- [Spread Syntax — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax)  
+- [Understanding Spread and Rest Operators — FreeCodeCamp](https://www.freecodecamp.org/news/spread-vs-rest-operators-in-javascript/)  
+- [Rest Parameters and Spread Operator — DigitalOcean](https://www.digitalocean.com/community/tutorials/js-rest-and-spread-operators)  
+
+### Videos
+
+- [Spread & Rest Operator — Programming with Mosh](https://www.youtube.com/watch?v=i1gJ0hG8pFI)  
+- [JavaScript Spread Operator — Fireship](https://www.youtube.com/watch?v=7d96gFcoquc)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 45. Optional Chaining and Nullish Coalescing
+
+Optional chaining `?.` safely accesses nested properties.  
+Nullish coalescing `??` returns a default value only if the left-hand side is `null` or `undefined`.
+
+### Articles
+
+- [Optional Chaining — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining)  
+- [Nullish Coalescing Operator — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing_operator)  
+- [Modern JavaScript Features: Optional Chaining — FreeCodeCamp](https://www.freecodecamp.org/news/optional-chaining-in-javascript/)  
+- [Optional Chaining vs. Logical OR — DigitalOcean](https://www.digitalocean.com/community/tutorials/js-optional-chaining-vs-logical-or)  
+
+### Videos
+
+- [Optional Chaining & Nullish Coalescing — Fireship](https://www.youtube.com/watch?v=bj7ALp0JheA)  
+- [Optional Chaining in JavaScript — Web Dev Simplified](https://www.youtube.com/watch?v=9fM4Zr8TsdU)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 46. Template Literals and String Interpolation
+
+Template literals (`` ` ``) allow embedding variables and expressions using `${}` and support multi-line strings.
+
+### Articles
+
+- [Template Literals — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals)  
+- [JavaScript Template Literals — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-template-literals/)  
+- [Understanding Template Strings — DigitalOcean](https://www.digitalocean.com/community/tutorials/understanding-template-strings-in-javascript)  
+
+### Videos
+
+- [Template Literals Explained — Programming with Mosh](https://www.youtube.com/watch?v=5N6uF1v4p8M)  
+- [Template Literals — Traversy Media](https://www.youtube.com/watch?v=G2nXJOGt1f8)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 47. Short-Circuit Evaluation (&&, ||, ??)
+
+Logical operators can **short-circuit** to make concise conditional expressions.  
+Example: `user && user.name` safely accesses a property, `a || b` returns the first truthy value.
+
+### Articles
+
+- [Short-Circuit Evaluation — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Short-circuiting)  
+- [JavaScript Short Circuiting — FreeCodeCamp](https://www.freecodecamp.org/news/short-circuiting-in-javascript/)  
+- [Using Logical Operators Efficiently — DigitalOcean](https://www.digitalocean.com/community/tutorials/js-short-circuit-evaluation)  
+
+### Videos
+
+- [Short Circuit Evaluation — Akshay Saini](https://www.youtube.com/watch?v=a6z9vJwh3lE)  
+- [JavaScript Logical Operators — Web Dev Simplified](https://www.youtube.com/watch?v=vmJ2ZMn9byM)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 48. Type Conversion and Coercion
+
+JavaScript automatically converts between types in expressions (**type coercion**).  
+Understanding it prevents bugs and unexpected behavior.
+
+### Articles
+
+- [Type Conversion — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#Type_conversion)  
+- [Type Coercion Explained — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-type-coercion/)  
+- [JavaScript Type Conversion — W3Schools](https://www.w3schools.com/js/js_type_conversion.asp)  
+
+### Videos
+
+- [Type Coercion — Akshay Saini](https://www.youtube.com/watch?v=ZRf0SdfQjX8)  
+- [Type Conversion Explained — Web Dev Simplified](https://www.youtube.com/watch?v=Qk2WQwW9c7Y)  
 
 **[⬆ Back to Top](#table-of-contents)**
 
