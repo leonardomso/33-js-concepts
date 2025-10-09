@@ -1278,11 +1278,6 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 **[⬆ Back to Top](#table-of-contents)**
 
-## <img align="center" width="35" height="35" src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> <a id="license">License</a>
-
-This software is licensed under MIT License. See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
-
-**[⬆ Back to Top](#table-of-contents)**
 
 ## 34. Event Delegation
 
@@ -1421,6 +1416,11 @@ Together, they enable **metaprogramming** — code that manipulates behavior dyn
 **[⬆ Back to Top](#table-of-contents)**
 
 
+## <img align="center" width="35" height="35" src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> <a id="license">License</a>
+
+This software is licensed under MIT License. See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+
+**[⬆ Back to Top](#table-of-contents)**
 
 
 <hr>
