@@ -1284,6 +1284,145 @@ This software is licensed under MIT License. See [License](https://github.com/le
 
 **[⬆ Back to Top](#table-of-contents)**
 
+## 34. Event Delegation
+
+Event delegation is a technique that uses **event bubbling** to efficiently handle events on multiple elements.  
+Instead of adding event listeners to each child element, a single listener is placed on a parent element, reducing memory usage and simplifying dynamic content handling.
+
+### Books
+
+- _You Don’t Know JS: Up & Going — Kyle Simpson_  
+- _JavaScript: The Definitive Guide — David Flanagan_  
+- _Eloquent JavaScript — Marijn Haverbeke_  
+
+### Articles
+
+- [Event Delegation in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events#event_delegation)  
+- [Understanding Event Delegation in JavaScript — Tania Rascia](https://www.taniarascia.com/event-delegation-javascript/)  
+- [A Deep Dive into Event Delegation — Dmitri Pavlutin](https://dmitripavlutin.com/javascript-event-delegation/)  
+
+### Videos
+
+- [Event Delegation in JavaScript — Web Dev Simplified](https://www.youtube.com/watch?v=jqU3uaRgQyQ)  
+- [Event Bubbling and Capturing — Kevin Powell](https://www.youtube.com/watch?v=F1anRyL37lE)  
+- [Event Delegation — Akshay Saini](https://www.youtube.com/watch?v=VLVdjLbXdm0)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 35. Debouncing and Throttling
+
+These are optimization techniques that control how often expensive functions run during frequent events (like scrolling, resizing, or typing).  
+- **Debounce:** Waits for a pause before executing a function.  
+- **Throttle:** Ensures a function runs only once per set time interval.  
+
+### Books
+
+- _High Performance JavaScript — Nicholas Zakas_  
+- _Effective JavaScript — David Herman_  
+- _JavaScript Patterns — Stoyan Stefanov_  
+
+### Articles
+
+- [Debounce and Throttle in JavaScript — David Walsh](https://davidwalsh.name/javascript-debounce-function)  
+- [Throttling and Debouncing in JavaScript — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-debounce-example/)  
+- [Understanding Throttling and Debouncing — CSS-Tricks](https://css-tricks.com/debouncing-throttling-explained-examples/)  
+
+### Videos
+
+- [Debounce vs Throttle — Akshay Saini (Namaste JavaScript)](https://www.youtube.com/watch?v=Zo-6_y3jsH8)  
+- [Debouncing and Throttling Explained — Web Dev Simplified](https://www.youtube.com/watch?v=cjIswDCKgu0)  
+- [Throttle vs Debounce — Fireship](https://www.youtube.com/watch?v=2nfgbCAnkIM)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 36. JavaScript Memory Management
+
+JavaScript handles memory allocation and garbage collection automatically, but developers should still understand **references**, **closures**, and **leaks** to avoid performance issues.  
+Memory leaks occur when references prevent unused objects from being freed.
+
+### Books
+
+- _Understanding ECMAScript 6 — Nicholas Zakas_  
+- _JavaScript: The Good Parts — Douglas Crockford_  
+- _Eloquent JavaScript — Marijn Haverbeke_  
+
+### Articles
+
+- [Memory Management — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management)  
+- [JavaScript Memory Leaks — Dmitri Pavlutin](https://dmitripavlutin.com/javascript-memory-leaks/)  
+- [Understanding Garbage Collection in JavaScript — Flavio Copes](https://flaviocopes.com/javascript-garbage-collection/)  
+
+### Videos
+
+- [Memory Management in JavaScript — Fireship](https://www.youtube.com/watch?v=Lz1-Y3dD-1E)  
+- [Garbage Collection Explained — Akshay Saini](https://www.youtube.com/watch?v=iRZouP6MU8I)  
+- [How Memory Works in JavaScript — Techsith](https://www.youtube.com/watch?v=xppompv1DBg)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 37. Web Workers and Multi-threading (Advanced)
+
+Web Workers let you run JavaScript code in background threads.  
+They prevent blocking the main UI thread, allowing heavy tasks like computation or file processing to run concurrently.
+
+### Books
+
+- _High Performance Browser Networking — Ilya Grigorik_  
+- _Professional JavaScript for Web Developers — Nicholas Zakas_  
+- _You Don’t Know JS Yet: Scope & Closures — Kyle Simpson_  
+
+### Articles
+
+- [Using Web Workers — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers)  
+- [A Practical Guide to Web Workers — Smashing Magazine](https://www.smashingmagazine.com/2020/02/web-workers-practical-guide/)  
+- [Web Workers Deep Dive — LogRocket Blog](https://blog.logrocket.com/web-workers-in-javascript/)  
+
+### Videos
+
+- [Web Workers Explained — Fireship](https://www.youtube.com/watch?v=X57mh8tKkgE)  
+- [Web Workers Crash Course — Traversy Media](https://www.youtube.com/watch?v=4r6WdaY3SOA)  
+- [How to Use Web Workers — The Net Ninja](https://www.youtube.com/watch?v=5jsj1a5VjLI)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 38. Proxy and Reflect (Advanced)
+
+The **Proxy** object lets you intercept and redefine fundamental operations like property access or assignment.  
+The **Reflect API** complements Proxy by providing default behavior methods for manipulating objects safely.
+
+Together, they enable **metaprogramming** — code that manipulates behavior dynamically.
+
+### Books
+
+- _Understanding ECMAScript 6 — Nicholas Zakas_  
+- _JavaScript: The Definitive Guide — David Flanagan_  
+- _Exploring ES6 — Axel Rauschmayer_  
+
+### Articles
+
+- [Proxy and Reflect — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)  
+- [A Deep Dive into JavaScript Proxies — Flavio Copes](https://flaviocopes.com/javascript-proxy/)  
+- [JavaScript Reflect API Explained — LogRocket Blog](https://blog.logrocket.com/javascript-reflect-api-explained/)  
+
+### Videos
+
+- [JavaScript Proxy and Reflect Explained — Fireship](https://www.youtube.com/watch?v=V-DX27p29z8)  
+- [Proxy Objects in JavaScript — Web Dev Simplified](https://www.youtube.com/watch?v=qqs3jE6Ed5Y)  
+- [Proxy and Reflect in Depth — Akshay Saini](https://www.youtube.com/watch?v=pahO5XjnfLA)  
+
+**[⬆ Back to Top](#table-of-contents)**
+
+
+
+
 <hr>
 
 <div align="center">
