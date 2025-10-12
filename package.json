@@ -13,6 +13,8 @@
   },
   "homepage": "https://github.com/leonardomso/33#readme",
   "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

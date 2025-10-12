@@ -10,6 +10,7 @@
 <div align="center">
   <p>
     <a href="#introduction">Introduction</a> •
+    <a href="#interactive-learning">Interactive Learning</a> •
     <a href="#community">Community</a> •
     <a href="#table-of-contents">Table of Contents</a> •
     <a href="#license">License</a>
@@ -23,6 +24,53 @@
 ## Introduction 
 
 This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+
+## 🎮 Interactive Learning
+
+**NEW!** Now you can learn and test JavaScript concepts interactively! We've added a plug-and-play GUI that lets you:
+
+- 📚 Browse all 33 JavaScript concepts in an organized list
+- 💻 Write and test code in a live editor
+- 🔍 Search for specific concepts
+- ▶️ Execute JavaScript code directly in your browser
+- 📋 See real-time console output
+- 🎯 Learn by doing with pre-loaded examples
+
+### Getting Started with the Interactive GUI
+
+1. **Clone this repository:**
+   ```bash
+   git clone https://github.com/leonardomso/33-js-concepts.git
+   cd 33-js-concepts
+   ```
+
+2. **Start the local server:**
+   ```bash
+   node server.js
+   ```
+   
+   Or using npm:
+   ```bash
+   npm start
+   ```
+
+3. **Open your browser:**
+   Navigate to `http://localhost:3000` to start learning!
+
+### Features
+
+- ✨ **Clean, Modern Interface**: Beautiful UI with smooth interactions
+- 🔥 **Live Code Editor**: Write and test JavaScript code instantly
+- 📱 **Responsive Design**: Works on desktop, tablet, and mobile
+- 🎨 **Syntax-Friendly**: Comfortable code editing experience
+- 🚀 **Zero Dependencies**: Pure HTML, CSS, and JavaScript - no build tools needed
+- ⚡ **Instant Feedback**: See your code results immediately
+- 🎓 **Educational Examples**: Each concept comes with working code examples
+
+### Keyboard Shortcuts
+
+- `Ctrl/Cmd + Enter` - Run code
+- `Tab` - Insert 4 spaces in editor
 
 ## Community
 
