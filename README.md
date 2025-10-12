@@ -11,6 +11,7 @@
   <p>
     <a href="#introduction">Introduction</a> •
     <a href="#templates">Templates</a> •
+    <a href="./QUICKSTART.md">Quick Start</a> •
     <a href="#community">Community</a> •
     <a href="#table-of-contents">Table of Contents</a> •
     <a href="#license">License</a>
