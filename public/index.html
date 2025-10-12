@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>33 JavaScript Concepts - Interactive Learning</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🚀 33 JavaScript Concepts</h1>
+            <p>Learn and Test JavaScript Concepts Interactively</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="layout">
+            <aside class="sidebar">
+                <h2>📚 Select a Concept</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search concepts...">
+                </div>
+                <ul id="conceptsList" class="concepts-list"></ul>
+            </aside>
+
+            <section class="content">
+                <div class="concept-info">
+                    <h2 id="conceptTitle">Select a concept to get started</h2>
+                    <p id="conceptDescription"></p>
+                </div>
+
+                <div class="editor-section">
+                    <div class="editor-header">
+                        <h3>💻 Code Editor</h3>
+                        <div class="editor-actions">
+                            <button id="runBtn" class="btn btn-primary">▶ Run Code</button>
+                            <button id="clearBtn" class="btn btn-secondary">🗑️ Clear</button>
+                            <button id="resetBtn" class="btn btn-secondary">↻ Reset</button>
+                        </div>
+                    </div>
+                    <textarea id="codeEditor" class="code-editor" placeholder="Write your JavaScript code here..."></textarea>
+                </div>
+
+                <div class="output-section">
+                    <div class="output-header">
+                        <h3>📋 Console Output</h3>
+                        <button id="clearOutputBtn" class="btn btn-small">Clear Output</button>
+                    </div>
+                    <div id="output" class="output"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Built with ❤️ for JavaScript learners | <a href="https://github.com/leonardomso/33-js-concepts" target="_blank">View on GitHub</a></p>
+        </div>
+    </footer>
+
+    <script src="concepts-data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
