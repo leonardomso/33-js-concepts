@@ -10,6 +10,7 @@
 <div align="center">
   <p>
     <a href="#introduction">Introduction</a> •
+    <a href="#templates">Templates</a> •
     <a href="#community">Community</a> •
     <a href="#table-of-contents">Table of Contents</a> •
     <a href="#license">License</a>
@@ -23,6 +24,24 @@
 ## Introduction 
 
 This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+
+## Templates
+
+🎯 **NEW!** We now provide [hands-on templates](./templates) for each of the 33 concepts!
+
+Each template includes:
+- ✅ Clear explanations and examples
+- ✅ Practice exercises to test your understanding
+- ✅ Common pitfalls to avoid
+- ✅ Best practices and tips
+
+**[👉 Get Started with Templates](./templates/README.md)**
+
+Perfect for:
+- Beginners learning JavaScript fundamentals
+- Developers wanting to practice specific concepts
+- Anyone preparing for technical interviews
+- Teachers looking for structured learning materials
 
 ## Community
 
