@@ -110,6 +110,7 @@ All the translations for this repo will be listed below:
 31. [**Design Patterns**](#31-design-patterns)
 32. [**Partial Applications, Currying, Compose and Pipe**](#32-partial-applications-currying-compose-and-pipe)
 33. [**Clean Code**](#33-clean-code)
+34. [**Temporal Dead Zone (TDZ)**](#34-temporal-dead-zone-tdz)
 
 <hr>
 
@@ -1275,6 +1276,65 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 - 🎥 [JavaScript Best Practices and Coding Conventions - Write Clean Code](https://youtu.be/RMN_bkZ1KM0?si=Ssg3cNZ_DB7CIwKQ)
 - 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
 - 🎥 [Tips On Learning How To Code](https://www.youtube.com/watch?v=0wHyoBPc6zs)
+
+**[⬆ Back to Top](#table-of-contents)**
+
+---
+
+## 34. Temporal Dead Zone (TDZ)
+
+<p>The Temporal Dead Zone (TDZ) describes the period between entering a scope and the point where a <code>let</code> or <code>const</code> declaration is evaluated. During this window the identifier exists but remains uninitialized, so any access attempt throws a <code>ReferenceError</code>. This behavior encourages predictable code by preventing reads before explicit initialization.</p>
+
+<p>Like <code>var</code>, <code>let</code> and <code>const</code> declarations are hoisted, but unlike <code>var</code> they are not automatically initialized with <code>undefined</code>. The runtime establishes the TDZ for each block-scoped binding, closing it only when the declaration executes. Until then, even <code>typeof</code> cannot safely inspect the variable.</p>
+
+### Code Example
+
+```javascript
+// Using var (no TDZ — initialized with undefined)
+console.log(myVar); // undefined
+var myVar = "var is hoisted and initialized";
+
+// Using let (TDZ throws until declaration runs)
+try {
+  console.log(myLet);
+} catch (error) {
+  console.log(error.message); // Cannot access 'myLet' before initialization
+}
+
+let myLet = "let is block scoped";
+console.log(myLet); // Works after initialization
+
+// TDZ also applies inside blocks
+{
+  try {
+    console.log(blockConst);
+  } catch (error) {
+    console.log(error.message);
+  }
+  const blockConst = "TDZ ends after this line";
+  console.log(blockConst);
+}
+```
+
+<p>The TDZ also impacts default parameters and destructuring. When a default value references another <code>let</code>/<code>const</code> declared later in scope, the initialization fails because the identifier is still in its TDZ.</p>
+
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+
+-  [let — MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let#temporal_dead_zone_tdZ)
+-  [JavaScript Hoisting Explained — MDN Web Docs](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)
+-  [Understanding the Temporal Dead Zone in JavaScript — Tyler McGinnis](https://ui.dev/temporal-dead-zone)
+-  [Temporal Dead Zone (TDZ) Demystified — Dmitri Pavlutin](https://dmitripavlutin.com/javascript-temporal-dead-zone/)
+
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+
+- [Temporal Dead Zone Explained — Akshay Saini](https://www.youtube.com/watch?v=BNC6slYCj50)
+- [Understanding let and const Scope — Academind](https://www.youtube.com/watch?v=9WIJQDvt4Us)
+- [Hoisting and the TDZ — Web Dev Simplified](https://www.youtube.com/watch?v=5fF_obygkEc)
+
+### Additional Resources
+
+- [Exploring Default Parameters and TDZ — JavaScript.info](https://javascript.info/default-rest-parameters#temporal-dead-zone)
+- [Hoisting, TDZ, and Strict Mode — Kyle Simpson](https://kylesschool.com/javascript-tdz-and-hoisting)
 
 **[⬆ Back to Top](#table-of-contents)**
 
