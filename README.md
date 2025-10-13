@@ -28,7 +28,9 @@ This repository was created with the intention of helping developers master thei
 
 Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
 
-All the translations for this repo will be listed below:
+- All the translations for this repo will be listed below:
+
+- [Your language in native form (English name)](https://github.com/<your-username>/33-js-concepts) — Your Name
 
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
