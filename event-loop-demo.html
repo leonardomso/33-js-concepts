@@ -5,83 +5,190 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Event Loop: Microtasks vs Macrotasks Demo</title>
   <style>
-    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 1rem; }
-    #output { margin-top: 1rem; border: 1px solid #ddd; padding: 0.5rem; background: #fafafa; }
-    .log { padding: 0.25rem 0; font-family: monospace; }
-    .note { color: #555; font-size: 0.9rem; }
+    body { 
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; 
+      padding: 1rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    #output { 
+      margin-top: 1rem; 
+      border: 1px solid #ddd; 
+      padding: 0.5rem; 
+      background: #fafafa;
+      min-height: 200px;
+    }
+    .log { 
+      padding: 0.25rem 0; 
+      font-family: monospace;
+      display: flex;
+      align-items: center;
+    }
+    .note { 
+      color: #555; 
+      font-size: 0.9rem; 
+      margin-bottom: 1rem;
+    }
+    .macrotask { color: #2c5282; }
+    .microtask { color: #805ad5; }
+    .sync { color: #2f855a; }
+    .timestamp {
+      color: #666;
+      font-size: 0.8em;
+      margin-right: 8px;
+    }
+    button {
+      padding: 8px 16px;
+      margin: 4px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .controls {
+      margin: 1rem 0;
+      display: flex;
+      gap: 8px;
+    }
   </style>
 </head>
 <body>
-  <h1>Event Loop Demo</h1>
-  <p class="note">This page demonstrates ordering between microtasks (Promises / async) and macrotasks (setTimeout). Open the developer console to see the same logs.</p>
-
-  <button id="run">Run demo</button>
+  <h1>Event Loop: Message Queue and Microtasks Demo</h1>
+  <p class="note">This demo illustrates how the Event Loop processes tasks from the Message Queue (macrotasks) and Microtask Queue. The Message Queue handles setTimeout callbacks and DOM events, while the Microtask Queue processes Promises and async/await operations with higher priority.</p>
+  
+  <div class="controls">
+    <button id="run">Run Basic Demo</button>
+    <button id="runAdvanced">Run Advanced Demo</button>
+    <button id="triggerEvent">Trigger DOM Event</button>
+    <button id="clear">Clear Output</button>
+  </div>
+  
   <div id="output" aria-live="polite"></div>
 
   <!-- hidden element used to trigger MutationObserver -->
   <div id="trigger" style="display:none"></div>
 
   <script>
-    function log(message) {
+    function log(message, type = 'sync') {
       const out = document.getElementById('output');
       const d = document.createElement('div');
-      d.className = 'log';
-      d.textContent = message;
+      d.className = `log ${type}`;
+      
+      // Add timestamp
+      const timestamp = document.createElement('span');
+      timestamp.className = 'timestamp';
+      timestamp.textContent = new Date().toLocaleTimeString([], { hour12: false });
+      
+      const content = document.createElement('span');
+      content.textContent = message;
+      
+      d.appendChild(timestamp);
+      d.appendChild(content);
       out.appendChild(d);
-      console.log(message);
+      console.log(`${timestamp.textContent}: ${message}`);
     }
 
     function clear() {
       document.getElementById('output').innerHTML = '';
     }
 
+    // Basic demo showing core concepts
     function runDemo() {
       clear();
-      log('script start');
+      log('Script Start', 'sync');
 
       setTimeout(() => {
-        log('setTimeout 0 (macrotask)');
+        log('setTimeout 0ms (macrotask)', 'macrotask');
       }, 0);
 
       Promise.resolve()
         .then(() => {
-          log('promise then 1 (microtask)');
+          log('Promise.then 1 (microtask)', 'microtask');
         })
         .then(() => {
-          log('promise then 2 (microtask)');
+          log('Promise.then 2 (microtask)', 'microtask');
         });
 
       (async function asyncExample() {
-        log('async function start');
+        log('Async Function Start', 'sync');
         await null; // yields to microtask queue
-        log('async after await (microtask)');
+        log('After await (microtask)', 'microtask');
       })();
 
-      // MutationObserver callbacks are microtasks too
+      // MutationObserver example (microtask)
       const obs = new MutationObserver(() => {
-        log('mutation observer (microtask)');
+        log('MutationObserver callback (microtask)', 'microtask');
         obs.disconnect();
       });
       obs.observe(document.getElementById('trigger'), { attributes: true });
-      // trigger mutation
       document.getElementById('trigger').setAttribute('data-test', Date.now());
 
-      log('script end');
-
-      // Expected ordering in most browsers:
-      // script start
-      // script end
-      // async function start
-      // promise then 1 (microtask)
-      // promise then 2 (microtask)
-      // async after await (microtask)
-      // mutation observer (microtask)
-      // setTimeout 0 (macrotask)
+      log('Script End', 'sync');
     }
 
-    document.getElementById('run').addEventListener('click', runDemo);
+    // Advanced demo with more complex scenarios
+    function runAdvancedDemo() {
+      clear();
+      log('Advanced Demo Start', 'sync');
 
-    // Run automatically on load for convenience
+      // Multiple macrotasks with different delays
+      setTimeout(() => {
+        log('setTimeout 0ms (macrotask 1)', 'macrotask');
+        
+        // Nested microtask
+        Promise.resolve().then(() => {
+          log('Nested Promise in setTimeout (microtask)', 'microtask');
+        });
+      }, 0);
+
+      setTimeout(() => {
+        log('setTimeout 2000ms (macrotask 2)', 'macrotask');
+      }, 2000);
+
+      // Chain of microtasks
+      Promise.resolve()
+        .then(() => {
+          log('Promise chain 1 (microtask)', 'microtask');
+          return Promise.resolve();
+        })
+        .then(() => {
+          log('Promise chain 2 (microtask)', 'microtask');
+          // Scheduling a macrotask from microtask
+          setTimeout(() => {
+            log('setTimeout from Promise chain (macrotask)', 'macrotask');
+          }, 0);
+        });
+
+      // Async/await example
+      (async function complexAsyncExample() {
+        log('Complex Async Start', 'sync');
+        
+        await Promise.resolve();
+        log('After first await (microtask)', 'microtask');
+        
+        await Promise.resolve();
+        log('After second await (microtask)', 'microtask');
+        
+        setTimeout(() => {
+          log('setTimeout in async function (macrotask)', 'macrotask');
+        }, 1000);
+      })();
+
+      // Direct microtask scheduling
+      queueMicrotask(() => {
+        log('queueMicrotask callback (microtask)', 'microtask');
+      });
+
+      log('Advanced Demo End', 'sync');
+    }
+
+    // Event Handlers
+    document.getElementById('run').addEventListener('click', runDemo);
+    document.getElementById('runAdvanced').addEventListener('click', runAdvancedDemo);
+    document.getElementById('clear').addEventListener('click', clear);
+    document.getElementById('triggerEvent').addEventListener('click', () => {
+      log('DOM Event Handler (macrotask)', 'macrotask');
+    });
+
+    // Run basic demo on load
     window.addEventListener('load', runDemo);
   </script>
 </body>
