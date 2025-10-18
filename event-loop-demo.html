@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Event Loop: Microtasks vs Macrotasks Demo</title>
+  <style>
+    body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; padding: 1rem; }
+    #output { margin-top: 1rem; border: 1px solid #ddd; padding: 0.5rem; background: #fafafa; }
+    .log { padding: 0.25rem 0; font-family: monospace; }
+    .note { color: #555; font-size: 0.9rem; }
+  </style>
+</head>
+<body>
+  <h1>Event Loop Demo</h1>
+  <p class="note">This page demonstrates ordering between microtasks (Promises / async) and macrotasks (setTimeout). Open the developer console to see the same logs.</p>
+
+  <button id="run">Run demo</button>
+  <div id="output" aria-live="polite"></div>
+
+  <!-- hidden element used to trigger MutationObserver -->
+  <div id="trigger" style="display:none"></div>
+
+  <script>
+    function log(message) {
+      const out = document.getElementById('output');
+      const d = document.createElement('div');
+      d.className = 'log';
+      d.textContent = message;
+      out.appendChild(d);
+      console.log(message);
+    }
+
+    function clear() {
+      document.getElementById('output').innerHTML = '';
+    }
+
+    function runDemo() {
+      clear();
+      log('script start');
+
+      setTimeout(() => {
+        log('setTimeout 0 (macrotask)');
+      }, 0);
+
+      Promise.resolve()
+        .then(() => {
+          log('promise then 1 (microtask)');
+        })
+        .then(() => {
+          log('promise then 2 (microtask)');
+        });
+
+      (async function asyncExample() {
+        log('async function start');
+        await null; // yields to microtask queue
+        log('async after await (microtask)');
+      })();
+
+      // MutationObserver callbacks are microtasks too
+      const obs = new MutationObserver(() => {
+        log('mutation observer (microtask)');
+        obs.disconnect();
+      });
+      obs.observe(document.getElementById('trigger'), { attributes: true });
+      // trigger mutation
+      document.getElementById('trigger').setAttribute('data-test', Date.now());
+
+      log('script end');
+
+      // Expected ordering in most browsers:
+      // script start
+      // script end
+      // async function start
+      // promise then 1 (microtask)
+      // promise then 2 (microtask)
+      // async after await (microtask)
+      // mutation observer (microtask)
+      // setTimeout 0 (macrotask)
+    }
+
+    document.getElementById('run').addEventListener('click', runDemo);
+
+    // Run automatically on load for convenience
+    window.addEventListener('load', runDemo);
+  </script>
+</body>
+</html>

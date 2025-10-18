@@ -425,6 +425,21 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 
 **[⬆ Back to Top](#table-of-contents)**
 
+### Event Loop demo (interactive)
+
+There is a small interactive demo included in this repository to visualize microtasks vs macrotasks ordering in the browser.
+
+- File: `event-loop-demo.html`
+- How to open: double-click the file in your file manager or open it in your browser. From the repo root you can also run a simple static server, for example with Python 3:
+
+```powershell
+# from repository root
+python -m http.server 8080; # then open http://localhost:8080/event-loop-demo.html
+```
+
+The demo logs messages to the page and to the browser console showing the expected ordering between synchronous code, microtasks (Promises / async / MutationObserver) and macrotasks (setTimeout).
+
+
 ---
 
 ## 10. setTimeout, setInterval and requestAnimationFrame
