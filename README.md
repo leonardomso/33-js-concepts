@@ -127,7 +127,7 @@ When a function is called, a new **execution context** is created and pushed to 
 - [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
 ---
-
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
@@ -179,7 +179,7 @@ Primitive values are **immutable**, meaning their value cannot be changed. They 
 - [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
 ---
-
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Primitive and Non-primitive data-types in JavaScript - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
@@ -221,7 +221,7 @@ In JavaScript, variables can hold **value types** or **reference types**:
 > Understanding the difference is crucial for avoiding unintended mutations and bugs in your code.
 
 ---
-
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
@@ -264,7 +264,7 @@ JavaScript is a **dynamically typed language**, meaning types are associated wit
 - **Duck Typing**: Determines suitability by the presence of certain properties/methods rather than declared type. JS relies heavily on this concept.
 
 ---
-
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
@@ -306,7 +306,7 @@ JavaScript provides **two equality operators** and a type-checking operator:
 > Always prefer `===` over `==` to avoid implicit coercion issues.
 
 ---
-
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
@@ -350,7 +350,7 @@ JavaScript defines **three types of scope**:
 - [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
 ---
-
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
@@ -388,7 +388,7 @@ JavaScript defines **three types of scope**:
 > Function declarations are **hoisted** and can be called before they appear. Function expressions are **not hoisted** and must be defined before use.
 
 ---
-
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [All about Expressions, Statements, and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
@@ -425,7 +425,8 @@ With the introduction of ES6 modules, the role of IIFEs in scope isolation has d
 - [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
 - [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
 - [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
-
+  
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [Mastering Immediately-Invoked Function Expressions — Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
@@ -453,7 +454,8 @@ The **Event Loop** enables JavaScript to handle asynchronous operations in a non
 - **Message Queue**: Holds callback functions ready to be executed.
 - **Microtasks Queue**: Prioritized over regular tasks; includes promises and mutation observers.
 - Understanding this interaction is crucial for mastering async JavaScript behavior.
-
+  
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
@@ -477,6 +479,7 @@ The **Event Loop** enables JavaScript to handle asynchronous operations in a non
 - **setInterval**: Repeatedly executes a function at a set interval.
 - **requestAnimationFrame**: Optimized for animations, called before the next repaint.
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
@@ -501,6 +504,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - Optimize performance using **inline caches** and **hidden classes**.
 - Manage memory and the execution context.
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
@@ -523,6 +527,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - **Typed Arrays**: Array-like objects for handling binary data efficiently (`Int8Array`, `Float32Array`, etc.).
 - **ArrayBuffers**: Low-level representation of binary data; used with typed arrays for performance-sensitive operations.
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
@@ -548,6 +553,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 ### Books
 - [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 - [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
 - [What's the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
@@ -571,6 +577,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 14. Factories and Classes
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 - [How To Use Classes in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
 - [Javascript Classes — Under The Hood — Majid](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
@@ -596,6 +603,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
 - [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 - [Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
 - [JavaScript's Apply, Call, and Bind Methods are Essential — Richard Bovell](http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/)
@@ -614,6 +622,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 16. new, Constructor, instanceof and Instances
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 - [JavaScript For Beginners: the 'new' operator — Brandon Morelli](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
 - [Let's demystify JavaScript's 'new' keyword — Cynthia Lee](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
@@ -631,6 +640,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 ### References
 - [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 - [Javascript : Prototype vs Class — Valentin PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
 - [JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens](https://mathiasbynens.be/notes/prototypes)
@@ -662,6 +672,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
 - [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 - [Object.create in JavaScript — Rupesh Mishra](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
 - [Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
@@ -679,6 +690,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 19. map, reduce, filter
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 - [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
 - [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
@@ -699,6 +711,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
@@ -737,6 +750,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
 - [Closure — JavaScript.Info](https://javascript.info/closure)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [I never understood JavaScript closures — Olivier De Meulder](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
@@ -785,6 +799,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
 - [Bubbling and Capturing — JavaScript.info](https://javascript.info/bubbling-and-capturing)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Understanding Event Propagation in JavaScript — Tania Rascia](https://www.taniarascia.com/understanding-event-propagation/)
@@ -806,6 +821,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 23. Currying
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Currying in JavaScript — Eric Elliott](https://medium.com/javascript-scene/currying-in-javascript-85a392a0c59d)
@@ -826,6 +842,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 24. Partial Application
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Partial Application in JavaScript — Eric Elliott](https://medium.com/javascript-scene/partial-application-in-javascript-7c3f3c5e4b6f)
@@ -846,6 +863,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Higher-order functions — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Higher-order_function)
 - [JavaScript Higher-Order Functions — JavaScript.info](https://javascript.info/first-class-functions)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Higher-Order Functions in JavaScript — Eric Elliott](https://medium.com/javascript-scene/higher-order-functions-in-javascript-2f1a3d3f0e2d)
@@ -939,6 +957,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 28. Expensive Operations & Big O Notation
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [Big O Notation in Javascript — César Antón Dorantes](https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b)
@@ -948,6 +967,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Algorithms in Plain English: Time Complexity & Big-O Notation — Michael Olorunnisola](https://medium.freecodecamp.org/time-is-complex-but-priceless-f0abd015063c)
 - [An Introduction to Big O Notation — Joseph Trettevik](https://dev.to/lofiandcode/an-introduction-to-big-o-notation-210o)
 
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
 ###  Videos
 
 - [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
@@ -962,6 +982,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 29. Algorithms
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [Data Structures and Algorithms using ES6](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
@@ -974,6 +995,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Computer Science Algorithms in JavaScript — Idosela](https://github.com/idosela/algorithms-in-javascript)
 - [Algorithms & Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
 ### Videos
 
 - [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
@@ -992,6 +1014,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
 - [Class Inheritance, `super` — JavaScript.Info](https://javascript.info/class-inheritance)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [Inheritance in JavaScript — Rupesh Mishra](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
@@ -1002,6 +1025,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Object-Oriented JS: Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
 - [Unlocking the Power of Polymorphism in JS](https://prototypr.io/post/unlocking-the-power-of-polymorphism-in-javascript-a-deep-dive)
 
+  ### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
 ###  Videos
 
 - [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
@@ -1017,6 +1041,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
 - [Pro JavaScript Design Patterns — Ross Harmes & Dustin Diaz](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [JavaScript Design Patterns – Explained with Examples — Germán Cocca](https://www.freecodecamp.org/news/javascript-design-patterns-explained/)
@@ -1039,6 +1064,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [In Defense of Defensive Programming — Adam Nathaniel Davis](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
 - [JavaScript Patterns Workshop — Lydia Hallie](https://javascriptpatterns.vercel.app/patterns)
 
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
 ###  Videos
 
 - [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
@@ -1052,6 +1078,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 - [Functional-Light JavaScript: Ch. 3 — Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ###  Articles
 
 - [Composition and Currying Elegance in JavaScript — Pragyan Das](https://medium.com/@pragyan88/writing-middleware-composition-and-currying-elegance-in-javascript-8b15c98a541b)
@@ -1074,6 +1101,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Practical Guide to Writing Functional JS — Nadeesha Cabral](https://medium.freecodecamp.org/a-practical-guide-to-writing-more-functional-javascript-db49409f71)
 - [Functional Pipe Explained — Ben Lesh](https://dev.to/benlesh/a-simple-explanation-of-functional-pipe-in-javascript-2hbj)
 
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
 ###  Videos
 
 - [Compose vs Pipe — Chyld Studios](https://www.youtube.com/watch?v=Wl2ejJOqHUU)
@@ -1089,6 +1117,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 
 ## 33. Clean Code
 
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 ### Articles
 
 - [Clean Code Explained — freeCodeCamp](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
@@ -1106,6 +1135,7 @@ JavaScript engines like **V8**, **SpiderMonkey**, and **JavaScriptCore** parse, 
 - [Destructuring for Cleaner JS — freeCodeCamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
 - [Clean Code with Object Destructuring — Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
 
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/> Videos
 ###  Videos
 
 - [JavaScript Pro Tips — Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
