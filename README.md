@@ -71,7 +71,8 @@ All the translations for this repo will be listed below:
 - [Yorùbá (Yoruba)](https://github.com/ayobaj/33-js-concepts) - Ayomide Bajulaye
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
-- [தமிழ் (Tamil)] (https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [தமிழ் (Tamil)](https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [తెలుగు (Telugu)](https://github.com/surlogu/33-js-concepts/tree/telugu) - Logesh Rajagopal
 
 <hr>
 
