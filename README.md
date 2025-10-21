@@ -402,7 +402,44 @@ With the introduction of ES6 modules, the role of IIFEs in scope isolation has d
 ---
 
 ## 9. Message Queue and Event Loop
-The Event Loop is a critical part of JavaScript's concurrency model, ensuring non-blocking behavior by processing tasks in an asynchronous manner. Understanding how it interacts with the Message Queue and Microtasks is key to mastering JavaScript behavior.
+
+### What is the Message Queue?
+
+The **Message Queue** (also called the **Task Queue** or **Callback Queue**) is where JavaScript stores callback functions from asynchronous operations. When operations like `setTimeout`, HTTP requests, or DOM events complete, their callbacks are placed in this queue.
+
+### How the Event Loop Works
+
+The **Event Loop** is JavaScript's mechanism for handling asynchronous code. Here's how it works:
+
+1. **Monitor**: The Event Loop constantly watches the Call Stack and Message Queue
+2. **Check**: When the Call Stack is empty, it checks the Message Queue
+3. **Execute**: It takes the first callback from the queue and pushes it to the Call Stack
+4. **Repeat**: This process continues, keeping your application responsive
+
+This mechanism allows JavaScript to handle time-consuming operations (like fetching data) without freezing the browser or blocking user interactions.
+
+### Microtasks vs Macrotasks (Task Queue)
+
+ES6 introduced **Microtasks**, which have a special priority system:
+
+**Microtasks** (Higher Priority):
+- Promise callbacks (`.then()`, `.catch()`, `.finally()`)
+- `async`/`await` operations
+- `queueMicrotask()`
+
+**Macrotasks** (Lower Priority):
+- `setTimeout` / `setInterval`
+- `setImmediate`
+- I/O operations
+- UI rendering
+
+**Execution Order:**
+1. Execute current script
+2. Process ALL Microtasks in the queue
+3. Process ONE Macrotask from the Message Queue
+4. Repeat from step 2
+
+This priority system ensures Promise resolutions happen as quickly as possible, before the next task from the Message Queue runs.
 ### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
 
 -  [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
