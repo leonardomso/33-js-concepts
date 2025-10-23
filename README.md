@@ -3,32 +3,32 @@
   <a href="https://github.com/leonardomso/33"><img src="github-image.png" alt="33 Concepts Every JS Developer Should Know"></a>
   <br>
     <br>
-  <strong>33 Concepts Every JavaScript Developer Should Know</strong>
+  <strong>प्रत्येक जावास्क्रिप्ट डेव्हलपरला माहित असले पाहिजे अशा ३३ संकल्पना</strong>
   <br><br>
 </h1>
 
 <div align="center">
   <p>
-    <a href="#introduction">Introduction</a> •
-    <a href="#community">Community</a> •
-    <a href="#table-of-contents">Table of Contents</a> •
-    <a href="#license">License</a>
+    <a href="#introduction">परिचय</a> •
+    <a href="#community">समुदाय</a> •
+    <a href="#table-of-contents">अनुक्रमणिका</a> •
+    <a href="#license">परवाना</a>
   </p>
 </div>
 
 <div align="center">
-  <strong>🚀 Considered by GitHub as one of the <a href="https://blog.github.com/2018-12-13-new-open-source-projects/">top open source projects of 2018!</a></strong>
+  <strong>🚀<a href="https://blog.github.com/2018-12-13-new-open-source-projects/"> २०१८ च्या टॉप ओपन सोर्स प्रोजेक्टपैकी</a> एक म्हणून गिटहबने मानले!</strong>
 </div>
 
-## Introduction 
+## परिचय 
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+हा रिपॉझिटरी JavaScript मधील संकल्पना आत्मसात करण्यास मदत करण्याच्या उद्देशाने बनवण्यात आला आहे. हा अनिवार्य नाही, परंतु भविष्यातील अभ्यासासाठी एक मार्गदर्शक आहे. हे Stephen Curtis याच्या लेखावर आधारित आहे — तुम्ही तो इथे वाचू शकता:[medium लेख](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
-## Community
+## समुदाय
 
-Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
+तुम्ही तुमचे स्वतःचे रेकॅप किंवा पुनरावलोकन जोडून PR सबमिट करू शकता. या रिपॉझिटरीचे भाषांतर तुमच्या स्थानिक भाषेत करायचे असल्यास कृपया हे स्वतंत्रपणे करा.
 
-All the translations for this repo will be listed below:
+सर्व भाषांतर खालीलप्रमाणे सूचीबद्ध केले आहेत:
 
 - [اَلْعَرَبِيَّةُ‎ (Arabic)](https://github.com/amrsekilly/33-js-concepts) — Amr Elsekilly
 - [Български (Bulgarian)](https://github.com/thewebmasterp/33-js-concepts) - thewebmasterp
@@ -72,1221 +72,1211 @@ All the translations for this repo will be listed below:
 - [עברית‎ (Hebrew)](https://github.com/rafyzg/33-js-concepts) — Refael Yzgea
 - [Nederlands (Dutch)](https://github.com/dlvisser/33-js-concepts) — Dave Visser
 - [தமிழ் (Tamil)] (https://github.com/UdayaKrishnanM/33-js-concepts) - Udaya Krishnan M
+- [मराठी (Marathi)] (https://github.com/2005Mohammadali/33-js-concepts-marathi) - Mohammadali Shaikh
 
 <hr>
 
-## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="table-of-contents">Table of Contents</a>
+## <img align="center" width="35" height="35" src="https://media4.giphy.com/media/3hoLIVAJYkz6T0Ichp/giphy.gif"> <a id="table-of-contents">अनुक्रमणिका</a>
 
-1. [**Call Stack**](#1-call-stack)
-2. [**Primitive Types**](#2-primitive-types)
-3. [**Value Types and Reference Types**](#3-value-types-and-reference-types)
-4. [**Implicit, Explicit, Nominal, Structuring and Duck Typing**](#4-implicit-explicit-nominal-structuring-and-duck-typing)
+1. [**कॉल स्टॅक**](#1-call-stack)
+2. [**Primitive प्रकार**](#2-primitive-types)
+3. [**मूल्य प्रकार आणि संदर्भ प्रकार**](#3-value-types-and-संदर्भ:-types)
+4. [**Implicit, Explicit, Nominal, Structuring आणि Duck Typing**](#4-implicit-explicit-nominal-structuring-and-duck-typing)
 5. [**== vs === vs typeof**](#5--vs--vs-typeof)
-6. [**Function Scope, Block Scope and Lexical Scope**](#6-function-scope-block-scope-and-lexical-scope)
-7. [**Expression vs Statement**](#7-expression-vs-statement)
-8. [**IIFE, Modules and Namespaces**](#8-iife-modules-and-namespaces)
-9. [**Message Queue and Event Loop**](#9-message-queue-and-event-loop)
-10. [**setTimeout, setInterval and requestAnimationFrame**](#10-settimeout-setinterval-and-requestanimationframe)
-11. [**JavaScript Engines**](#11-javascript-engines)
-12. [**Bitwise Operators, Type Arrays and Array Buffers**](#12-bitwise-operators-type-arrays-and-array-buffers)
-13. [**DOM and Layout Trees**](#13-dom-and-layout-trees)
-14. [**Factories and Classes**](#14-factories-and-classes)
-15. [**this, call, apply and bind**](#15-this-call-apply-and-bind)
-16. [**new, Constructor, instanceof and Instances**](#16-new-constructor-instanceof-and-instances)
-17. [**Prototype Inheritance and Prototype Chain**](#17-prototype-inheritance-and-prototype-chain)
-18. [**Object.create and Object.assign**](#18-objectcreate-and-objectassign)
+6. [**फंक्शन स्कोप, ब्लॉक स्कोप आणि लेक्सिकल स्कोप**](#6-function-scope-block-scope-and-lexical-scope)
+7. [**अभिव्यक्ती (Expression) vs स्टेटमेंट (Statement)**](#7-expression-vs-statement)
+8. [**IIFE, मॉड्यूल आणि नेमस्पेस**](#8-iife-modules-and-namespaces)
+9. [**मेसेज क्व्यू आणि इव्हेंट लूप**](#9-message-queue-and-event-loop)
+10. [**setTimeout, setInterval आणि requestAnimationFrame**](#10-settimeout-setinterval-and-requestanimationframe)
+11. [**JavaScript इंजिन**](#11-javascript-engines)
+12. [**बिटवाइज ऑपरेटर, टाइप ऍरेज आणि अ‍ॅरे बफर्स**](#12-bitwise-operators-type-arrays-and-array-buffers)
+13. [**DOM आणि लेआउट ट्री**](#13-dom-and-layout-trees)
+14. [**फॅक्टरी आणि क्लासेस**](#14-factories-and-classes)
+15. [**this, call, apply आणि bind**](#15-this-call-apply-and-bind)
+16. [**new, Constructor, instanceof आणि Instances**](#16-new-constructor-instanceof-and-instances)
+17. [**प्रोटोटाइप इनहेरिटन्स आणि प्रोटोटाइप चेन**](#17-prototype-inheritance-and-prototype-chain)
+18. [**Object.create आणि Object.assign**](#18-objectcreate-and-objectassign)
 19. [**map, reduce, filter**](#19-map-reduce-filter)
-20. [**Pure Functions, Side Effects, State Mutation and Event Propagation**](#20-pure-functions-side-effects-state-mutation-and-event-propagation)
-21. [**Closures**](#21-closures)
-22. [**High Order Functions**](#22-high-order-functions)
-23. [**Recursion**](#23-recursion)
-24. [**Collections and Generators**](#24-collections-and-generators)
-25. [**Promises**](#25-promises)
+20. [**प्यूअर फंक्शन्स, साईड इफेक्ट्स, स्टेट म्युटेशन आणि इव्हेंट प्रोपेगेशन**](#20-pure-functions-side-effects-state-mutation-and-event-propagation)
+21. [**क्लोजर्स**](#21-closures)
+22. [**हाई-ऑर्डर फंक्शन्स**](#22-high-order-functions)
+23. [**रेकर्शन**](#23-recursion)
+24. [**कलेक्शन्स आणि जनरेटर**](#24-collections-and-generators)
+25. [**प्रॉमिसेस**](#25-promises)
 26. [**async/await**](#26-asyncawait)
-27. [**Data Structures**](#27-data-structures)
-28. [**Expensive Operation and Big O Notation**](#28-expensive-operation-and-big-o-notation)
-29. [**Algorithms**](#29-algorithms)
-30. [**Inheritance, Polymorphism and Code Reuse**](#30-inheritance-polymorphism-and-code-reuse)
-31. [**Design Patterns**](#31-design-patterns)
-32. [**Partial Applications, Currying, Compose and Pipe**](#32-partial-applications-currying-compose-and-pipe)
-33. [**Clean Code**](#33-clean-code)
+27. [**डेटा स्ट्रक्चर्स**](#27-data-structures)
+28. [**महागड़ काम आणि बिग O नोटेशन**](#28-expensive-operation-and-big-o-notation)
+29. [**अल्गोरिदम**](#29-algorithms)
+30. [**इनहेरिटन्स, पॉलिमॉर्फिझम आणि कोड पुनर्वापर**](#30-inheritance-polymorphism-and-code-reuse)
+31. [**डिझाईन पॅटर्न्स**](#31-design-patterns)
+32. [**पार्शियल ऍप्लिकेशन्स, करींग, कॉम्पोज आणि पाईप**](#32-partial-applications-currying-compose-and-pipe)
+33. [**क्लीन कोड**](#33-clean-code)
 
 <hr>
 
-## 1. Call Stack
+## 1. कॉल स्टॅक
 
-<p>The call stack is a mechanism that the JavaScript interpreter uses to keep track of function execution within a program. In JavaScript, functions are executed in the order they are called. The call stack follows the Last In, First Out (LIFO) principle, meaning that the last function pushed onto the stack is the first one to be executed.</p>
+<p>कॉल स्टॅक ही एक यंत्रणा आहे जी जावास्क्रिप्ट इंटरप्रिटर प्रोग्राममधील फंक्शन एक्झिक्युशनचा मागोवा ठेवण्यासाठी वापरतो. जावास्क्रिप्टमध्ये, फंक्शन्स ज्या क्रमाने कॉल केले जातात त्या क्रमाने एक्झिक्युट केले जातात. कॉल स्टॅक लास्ट इन, फर्स्ट आउट (LIFO) तत्त्वाचे पालन करतो, म्हणजेच स्टॅकवर ढकललेले शेवटचे फंक्शन हे पहिले एक्झिक्युट केले जाते.</p>
 
-<p>According to the ECMAScript specification, the call stack is defined as part of the execution context. Whenever a function is called, a new execution context is created and placed at the top of the stack. Once the function completes, its execution context is removed from the stack, and control returns to the previous context. This helps manage synchronous code execution, as each function call must complete before the next one can begin.</p>
+<p>ECMAScript स्पेसिफिकेशननुसार, कॉल स्टॅकला एक्झिक्युशन कॉन्टेक्स्टचा भाग म्हणून परिभाषित केले जाते. जेव्हा जेव्हा एखादे फंक्शन कॉल केले जाते तेव्हा एक नवीन एक्झिक्युशन कॉन्टेक्स्ट तयार केले जाते आणि स्टॅकच्या वर ठेवले जाते. एकदा फंक्शन पूर्ण झाले की, त्याचे एक्झिक्युशन कॉन्टेक्स्ट स्टॅकमधून काढून टाकले जाते आणि कंट्रोल मागील कॉन्टेक्स्टवर परत येते. हे सिंक्रोनस कोड एक्झिक्युशन व्यवस्थापित करण्यास मदत करते, कारण प्रत्येक फंक्शन कॉल पुढील कॉल सुरू होण्यापूर्वी पूर्ण होणे आवश्यक आहे.</p>
 
-### Reference
+### संदर्भ:
 
--  [Call Stack — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
+-  [कॉल स्टॅक — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Understanding Javascript Call Stack, Event Loops — Gaurav Pandvia](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
--  [Understanding the JavaScript Call Stack — Charles Freeborn](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
--  [Javascript: What Is The Execution Context? What Is The Call Stack? — Valentino Gagliardi](https://medium.com/@valentinog/javascript-what-is-the-execution-context-what-is-the-call-stack-bd23c78f10d1)
--  [What is the JS Event Loop and Call Stack? — Jess Telford](https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0)
--  [Understanding Execution Context and Execution Stack in Javascript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
--  [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
--  [The JS Call stack Explained in 9 minutes](https://www.youtube.com/watch?v=W8AeMrVtFLY) - Colt Steel (YouTube)
+-  [जावास्क्रिप्ट कॉल स्टॅक, इव्हेंट लूप समजून घेणे — गौरव पंड्या](https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec)
+-  [जावास्क्रिप्ट कॉल स्टॅक समजून घेणे — चार्ल्स फ्रीबॉर्न](https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4)
+-  [जावास्क्रिप्ट: अंमलबजावणीचा संदर्भ काय आहे? कॉल स्टॅक म्हणजे काय? — व्हॅलेंटिनो गॅग्लियार्डी](https://medium.com/@valentinog/javascript-what-is-the-execution-context-what-is-the-call-stack-bd23c78f10d1)
+-  [जेएस इव्हेंट लूप आणि कॉल स्टॅक म्हणजे काय? — जेस टेलफोर्ड](https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0)
+-  [जावास्क्रिप्टमध्ये एक्झिक्युशन संदर्भ आणि एक्झिक्युशन स्टॅक समजून घेणे — सुखजिंदर अरोरा](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
+-  [जावास्क्रिप्ट कसे काम करते: जावास्क्रिप्ट इंजिन, हीप आणि कॉल स्टॅकचा आढावा — बिपिन राजभर](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
+-  [जेएस कॉल स्टॅकचे ९ मिनिटांत स्पष्टीकरण](https://www.youtube.com/watch?v=W8AeMrVtFLY) - Colt Steel (YouTube)
 
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
--  [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
--  [The JS Call Stack Explained In 9 Minutes — Colt Steele](https://www.youtube.com/watch?v=W8AeMrVtFLY)
--  [What is the Call Stack? — Eric Traub](https://www.youtube.com/watch?v=w7QWQlkLY_s)
--  [The Call Stack — Kevin Drumm](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
--  [Understanding JavaScript Execution — Codesmith](https://www.youtube.com/watch?v=Z6a1cLyq7Ac&list=PLWrQZnG8l0E4kd1T_nyuVoxQUaYEWFgcD)
--  [What the heck is the event loop anyway? — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
--  [How JavaScript Code is executed? ❤️& Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
--  [Call Stacks - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
--  [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
--  [JavaScript Functions and the Call Stack | How does the Call stack work - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)
+-  [जावास्क्रिप्ट: कॉल स्टॅक स्पष्ट केले — कोडिंग ब्लॉक्स इंडिया](https://www.youtube.com/watch?v=w6QGEiQceOM)
+-  [जेएस कॉल स्टॅकचे ९ मिनिटांत स्पष्टीकरण — कोल्ट स्टील](https://www.youtube.com/watch?v=W8AeMrVtFLY)
+-  [कॉल स्टॅक म्हणजे काय? — एरिक ट्रॉब](https://www.youtube.com/watch?v=w7QWQlkLY_s)
+-  [द कॉल स्टॅक - केविन ड्रम](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
+-  [जावास्क्रिप्ट एक्झिक्युशन समजून घेणे — कोडस्मिथ](https://www.youtube.com/watch?v=Z6a1cLyq7Ac&list=PLWrQZnG8l0E4kd1T_nyuVoxQUaYEWFgcD)
+-  [इव्हेंट लूप म्हणजे काय? — फिलिप रॉबर्ट्स](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+-  [जावास्क्रिप्ट कोड कसा कार्यान्वित केला जातो? ❤️& कॉल स्टॅक — अक्षय सैनी](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
+-  [कॉल स्टॅक - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
+-  [जावास्क्रिप्ट कॉल स्टॅक शिका - कोडकपडेव्ह](https://www.youtube.com/watch?v=HXqXPGS96rw)
+-  [जावास्क्रिप्ट फंक्शन्स आणि कॉल स्टॅक | कॉल स्टॅक कसे काम करते - चिद्रे'जटेकट्यूटोरियल्स](https://www.youtube.com/watch?v=P6H-T4cUDR4)
     
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 2. Primitive Types
+## 2. Primitive प्रकार
 
-<p>According to the ECMAScript specification, JavaScript has six primitive data types: string, number, bigint, boolean, undefined, and symbol. These types are immutable, meaning their values cannot be altered. There is also a special primitive type called null, which represents the intentional absence of any object value.</p>
+<p>ECMAScript नुसार JavaScript मध्ये मुख्य primitive डेटा प्रकार आहेत: string, number, bigint, boolean, undefined आणि symbol. तसेच null हा एक विशेष primitive आहे जो वस्तूच्या अभावाचे संकेत करतो. प्रिमिटिव्ह मूल्ये अपरिवर्तनीय (immutable) असतात.</p>
 
-<p>Primitive values are directly assigned to a variable, and when you manipulate a primitive type, you're working directly on the value. Unlike objects, primitives do not have properties or methods, but JavaScript automatically wraps primitive values with object counterparts when necessary (e.g., when calling methods on strings).</p>
+<p>प्रिमिटिव्ह मूल्ये थेट व्हेरिएबलमध्ये जतन होतात. जेव्हा तुम्ही प्रिमिटिव्हवर ऑपरेशन करता तेव्हा मूळ मूल्यावर काम होते. JavaScript आवश्यकतेनुसार प्रिमिटिव्हसह ऑब्जेक्ट-प्रकाराची व्रॅपर बनवते (उदा. string वर method कॉल करताना).</p>
 
-### Reference
+### संदर्भ:
 
--  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
+-  [JavaScript डेटा प्रकार — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Primitive and Non-primitive data-types in JavaScript - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
--  [How numbers are encoded in JavaScript — Dr. Axel Rauschmayer](http://2ality.com/2012/04/number-encoding.html)
--  [What Every JavaScript Developer Should Know About Floating Point Numbers — Chewxy](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
--  [The Secret Life of JavaScript Primitives — Angus Croll](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
--  [Primitive Types — Flow](https://flow.org/en/docs/types/primitives/)
--  [(Not) Everything in JavaScript is an Object — Daniel Li](https://dev.to/d4nyll/not-everything-in-javascript-is-an-object)
--  [JavaScript data types and data structures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
--  [Diving Deeper in JavaScripts Objects — Arfat Salman](https://blog.bitsrc.io/diving-deeper-in-javascripts-objects-318b1e13dc12)
--  [The differences between Object.freeze() vs Const in JavaScript — Bolaji Ayodeji](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
--  [Object to primitive conversion — JavaScript.Info](https://javascript.info/object-toprimitive)
-- [Methods of primitives - Javascript.info](https://javascript.info/primitives-methods)
+-  [जावास्क्रिप्टमधील आदिम आणि अ-आदिम डेटा-प्रकार - GeeksforGeeks](https://www.geeksforgeeks.org/primitive-and-non-primitive-data-types-in-javascript)
+-  [जावास्क्रिप्टमध्ये संख्या कशा एन्कोड केल्या जातात — डॉ. अ‍ॅक्सेल रौशमेयर](http://2ality.com/2012/04/number-encoding.html)
+-  [प्रत्येक जावास्क्रिप्ट डेव्हलपरला फ्लोटिंग पॉइंट नंबर्सबद्दल काय माहित असले पाहिजे — चेवक्सी](https://blog.chewxy.com/2014/02/24/what-every-javascript-developer-should-know-about-floating-point-numbers/)
+-  [जावास्क्रिप्ट आदिमांचे गुप्त जीवन - अँगस क्रॉल](https://javascriptweblog.wordpress.com/2010/09/27/the-secret-life-of-javascript-primitives/)
+-  [आदिम प्रकार — प्रवाह](https://flow.org/en/docs/types/primitives/)
+-  [(नाही) जावास्क्रिप्टमधील प्रत्येक गोष्ट एक ऑब्जेक्ट आहे — डॅनियल ली](https://dev.to/d4nyll/not-everything-in-javascript-is-an-object)
+-  [जावास्क्रिप्ट डेटा प्रकार आणि डेटा स्ट्रक्चर्स — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values)
+-  [जावास्क्रिप्ट ऑब्जेक्ट्समध्ये अधिक खोलवर जाणे — अरफत सलमान](https://blog.bitsrc.io/diving-deeper-in-javascripts-objects-318b1e13dc12)
+-  [जावास्क्रिप्टमध्ये ऑब्जेक्ट.फ्रीज() आणि कॉन्स्टमधील फरक — बोलाजी आयोडेजी](https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c)
+-  [आदिम रूपांतरणाचा ऑब्जेक्ट — JavaScript.Info](https://javascript.info/object-toprimitive)
+- [आदिमांच्या पद्धती - Javascript.info](https://javascript.info/primitives-methods)
 
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript Reference vs Primitive Types — Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
-- [JavaScript Primitive Types — Simon Sez IT](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
-- [Value Types and Reference Types in JavaScript — Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
-- [JavaScript Primitive Data Types — Avelx](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
-- [Everything you never wanted to know about JavaScript numbers — Bartek Szopka](https://www.youtube.com/watch?v=MqHDDtVYJRI)
-- [What are variables in Javascript? — JS For Everyone](https://www.youtube.com/watch?v=B4Bbmei_thw)
-- [TIPOS DE DATOS PRIMITIVOS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
-- [Data Type in JavaScript - ScholarHat](https://www.youtube.com/watch?v=aFDvBjVjCh8)
+- [जावास्क्रिप्ट संदर्भ: विरुद्ध आदिम प्रकार — अकादमीमाइंड](https://www.youtube.com/watch?v=9ooYYRLdg_g)
+- [जावास्क्रिप्टमधील आदिम प्रकार — सायमन सेझ आयटी](https://www.youtube.com/watch?v=HsbWQsSCE5Y)
+- [मूल्य प्रकार आणि संदर्भ: जावास्क्रिप्टमधील प्रकार — मोशसह प्रोग्रामिंग](https://www.youtube.com/watch?v=e-_mDyqm2oU)
+- [जावास्क्रिप्टमधील आदिम डेटा प्रकार — एव्हेलक्स](https://www.youtube.com/watch?v=qw3j0A3DIzQ)
+- [जावास्क्रिप्ट क्रमांकांबद्दल तुम्हाला कधीही जाणून घ्यायचे नव्हते ते सर्व — बार्टेक स्झोप्का](https://www.youtube.com/watch?v=MqHDDtVYJRI)
+- [जावास्क्रिप्टमध्ये चल काय आहेत? — प्रत्येकासाठी जेएस](https://www.youtube.com/watch?v=B4Bbmei_thw)
+- [TIPOS DE DATOS PRIMITIVOS en JAVAscript - La Cocina del Código](https://www.youtube.com/watch?v=cC65D2q5f8I)
+- [जावास्क्रिप्टमधील डेटा प्रकार - स्कॉलरहॅट](https://www.youtube.com/watch?v=aFDvBjVjCh8)
 
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 3. Value Types and Reference Types
-
-<p>According to the ECMAScript specification, value types are stored directly in the location that the variable accesses. These include types like number, string, boolean, undefined, bigint, symbol, and null. When you assign a value type to a variable, the value itself is stored.</p>
-
-<p>Reference types, on the other hand, are objects stored in the heap. Variables assigned to reference types actually store references (pointers) to the objects, not the objects themselves. When you assign a reference type to another variable, both variables reference the same object in memory.</p>
-
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [Explaining Value vs. Reference in Javascript — Arnav Aggarwal](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
--  [Primitive Types & Reference Types in JavaScript — Bran van der Meer](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
--  [Value Types, Reference Types and Scope in JavaScript — Ben Aston](https://medium.com/@benastontweet/lesson-1b-javascript-fundamentals-380f601ba851)
--  [Back to roots: JavaScript Value vs Reference — Miro Koczka](https://medium.com/dailyjs/back-to-roots-javascript-value-vs-reference-8fb69d587a18)
--  [Grasp "By Value" and "By Reference" in JavaScript — Léna Faure](https://hackernoon.com/grasp-by-value-and-by-reference-in-javascript-7ed75efa1293)
--  [JavaScript Reference and Copy Variables — Vítor Capretz](https://hackernoon.com/javascript-reference-and-copy-variables-b0103074fdf0)
--  [JavaScript Primitive vs Reference Values](http://www.javascripttutorial.net/javascript-primitive-vs-reference-values/)
--  [JavaScript by Reference vs. by Value — nrabinowitz](https://stackoverflow.com/questions/6605640/javascript-by-reference-vs-by-value)
--  [JavaScript Interview Prep: Primitive vs. Reference Types — Mike Cronin](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
--  [JavaScript map vs. forEach: When to Use Each One - Sajal Soni](https://code.tutsplus.com/tutorials/javascript-map-vs-foreach-when-to-use-each-one--cms-38365)
-
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [Javascript Pass by Value vs Pass by Reference — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
-- [JavaScript Value vs Reference Types — Programming with Mosh](https://www.youtube.com/watch?v=fD0t_DKREbE)
-- [VALORES vs REFERENCIAS en JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=AvkyOrWkuQc)
-- [JavaScript - Reference vs Primitive Values/ Types - Academind](https://www.youtube.com/watch?v=9ooYYRLdg_g)
-- [Value Types and Reference Types in JavaScript - Programming with Mosh](https://www.youtube.com/watch?v=e-_mDyqm2oU)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 4. Implicit, Explicit, Nominal, Structuring and Duck Typing
+## 3. मूल्य प्रकार आणि संदर्भ प्रकार
 
-<p>The ECMAScript specification defines JavaScript as a dynamically typed language, meaning that types are associated with values rather than variables, and type checking occurs at runtime. There are various ways JavaScript manages types:</p>
+<p>ECMAScript स्पेसिफिकेशननुसार, व्हॅल्यू टाइप्स थेट व्हेरिएबल ज्या ठिकाणी प्रवेश करतो तिथे साठवले जातात. यामध्ये नंबर, स्ट्रिंग, बुलियन, अनिर्दिष्ट, बिगइंट, सिम्बॉल आणि नल सारखे प्रकार समाविष्ट आहेत. जेव्हा तुम्ही व्हेरिएबलला व्हॅल्यू टाइप नियुक्त करता तेव्हा व्हॅल्यू स्वतः साठवली जाते.</p>
 
-<p><strong>Implicit Typing (or Type Coercion):</strong> This occurs when JavaScript automatically converts one data type to another when required. For instance, JavaScript might convert a string to a number during an arithmetic operation. While this can simplify some code, it can also lead to unexpected results if not handled carefully.</p>
+<p>दुसरीकडे, संदर्भ प्रकार हे हीपमध्ये साठवलेले ऑब्जेक्ट असतात. संदर्भ प्रकारांना नियुक्त केलेले व्हेरिएबल्स प्रत्यक्षात ऑब्जेक्ट्सना संदर्भ (पॉइंटर्स) साठवतात, ऑब्जेक्ट्सना नाही. जेव्हा तुम्ही दुसऱ्या व्हेरिएबलला संदर्भ प्रकार नियुक्त करता तेव्हा दोन्ही व्हेरिएबल्स मेमरीमध्ये समान ऑब्जेक्टचा संदर्भ देतात.</p>
 
-<p><strong>Explicit Typing:</strong> Unlike implicit typing, explicit typing involves manually converting a value from one type to another using functions like Number(), String(), or Boolean().</p>
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
-<p><strong>Nominal Typing:</strong> JavaScript doesn't natively support nominal typing, where types are explicitly declared and checked. However, TypeScript, a superset of JavaScript, brings this feature to help catch type errors during development.</p>
+- [मूल्य विरुद्ध अर्थ स्पष्ट करणे: जावास्क्रिप्टमध्ये — अर्णव अग्रवाल](https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0)
+- [प्राथमिक प्रकार आणि अर्थ: जावास्क्रिप्टमधील प्रकार — ब्रान व्हॅन डेर मीर](https://gist.github.com/branneman/7fb06d8a74d7e6d4cbcf75c50fec599c)
+- [मूल्य प्रकार, अर्थ: जावास्क्रिप्टमधील प्रकार आणि व्याप्ती — बेन अ‍ॅस्टन](https://medium.com/@benastontweet/lesson-1b-javascript-fundamentals-380f601ba851)
+- [मूळांकडे परत: जावास्क्रिप्ट मूल्य विरुद्ध अर्थ: — मिरो कोक्झ्का](https://medium.com/dailyjs/back-to-roots-javascript-value-vs-reference-8fb69d587a18)
+- [जावास्क्रिप्टमध्ये "मूल्यानुसार" आणि "संदर्शन:" समजून घ्या — लेना फॉर](https://hackernoon.com/grasp-by-value-and-by-reference-in-javascript-7ed75efa1293)
+- [जावास्क्रिप्ट संदर्भ: आणि व्हेरिअबल्स कॉपी करा — व्हिटर कॅप्रेट्झ](https://hackernoon.com/javascript-reference-and-copy-variables-b0103074fdf0)
+- [जावास्क्रिप्ट आदिम विरुद्ध संदर्शन: मूल्ये](http://www.javascripttutorial.net/javascript-primitive-vs-संदर्शन:-values/)
+- [जावास्क्रिप्ट द्वारे संदर्भ: विरुद्ध मूल्य — nrabinowitz](https://stackoverflow.com/questions/6605640/javascript-by-reference-vs-by-value)
+- [जावास्क्रिप्ट मुलाखत तयारी: आदिम विरुद्ध प्रकार: प्रकार — माइक क्रोनिन](https://dev.to/mostlyfocusedmike/javascript-interview-prep-primitive-vs-reference-types-3o4f)
+- [जावास्क्रिप्ट नकाशा विरुद्ध प्रत्येकासाठी: प्रत्येकी कधी वापरावे - सजल सोनी](https://code.tutsplus.com/tutorials/javascript-map-vs-foreach-when-to-use-each-one--cms-38365)
 
-<p><strong>Structural Typing:</strong> In this type system, types are based on the structure or properties of the data. JavaScript is a structurally typed language where objects are compatible if they share the same structure (i.e., the same set of properties and methods).</p>
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-<p><strong>Duck Typing:</strong> This is a concept where an object's suitability is determined by the presence of certain properties and methods, rather than by the actual type of the object. JavaScript relies heavily on duck typing, where behavior is inferred from an object's properties rather than its declared type.</p>
+- [जावास्क्रिप्ट पास बाय व्हॅल्यू विरुद्ध पास बाय संदर्भ: — techsith](https://www.youtube.com/watch?v=E-dAnFdq8k8)
+- [जावास्क्रिप्ट व्हॅल्यू विरुद्ध संदर्भ: प्रकार — मोशसह प्रोग्रामिंग](https://www.youtube.com/watch?v=fD0t_DKREbE)
+- [जावास्क्रिप्टमध्ये मूल्य विरुद्ध संदर्भ - ला कोकिना डेल कोड](https://www.youtube.com/watch?v=AvkyOrWkuQc)
+- [जावास्क्रिप्ट - संदर्भ: विरुद्ध आदिम मूल्ये/ प्रकार - अकादमिक](https://www.youtube.com/watch?v=9ooYYRLdg_g)
+- [मूल्य प्रकार आणि संदर्भ: जावास्क्रिप्टमधील प्रकार - प्रोग्रामिंगसह मोश](https://www.youtube.com/watch?v=e-_mDyqm2oU)
 
-### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+**[⬆ वर जा](#table-of-contents)**
 
--  [What you need to know about Javascript's Implicit Coercion — Promise Tochi](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
--  [JavaScript Type Coercion Explained — Alexey Samoshkin](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
--  [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
--  [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
+---
 
-### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+## 4. Implicit, Explicit, Nominal, Structuring आणि Duck Typing
 
-- [== ? === ??? ...#@^% - Shirmung Bielefeld](https://www.youtube.com/watch?v=qGyqzN0bjhc&t)
-- [Coercion in Javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=b04Q_vyqEG8)
-- [JavaScript Questions: What is Coercion? - Steven Hancock](https://www.youtube.com/watch?v=z4-8wMSPJyI)
-- [Typing: Static vs Dynamic, Weak vs. Strong - Codexpanse](https://www.youtube.com/watch?v=C5fr0LZLMAs)
-- [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
-- [Duck Typing in Javascript - Techmaker Studio](https://www.youtube.com/watch?v=oEpgyoMEkrM)
-- [Duck Typing in Javascript - Programming with Kartik](https://youtu.be/e4X1KAuk6Bs?si=krZKbsM2i3tmIl2G)
+<p>ECMAScript स्पेसिफिकेशन जावास्क्रिप्टला गतिमानपणे टाइप केलेली भाषा म्हणून परिभाषित करते, म्हणजेच प्रकार हे व्हेरिअबल्सऐवजी मूल्यांशी संबंधित असतात आणि रनटाइमवर टाइप चेकिंग होते. जावास्क्रिप्ट प्रकार व्यवस्थापित करण्याचे विविध मार्ग आहेत:</p>
 
-### Books
+<p><strong>Implicit Typing (or Type Coercion):</strong> जेव्हा जावास्क्रिप्ट आवश्यकतेनुसार एका डेटा प्रकाराला दुसऱ्यामध्ये स्वयंचलितपणे रूपांतरित करते तेव्हा असे होते. उदाहरणार्थ, जावास्क्रिप्ट अंकगणित ऑपरेशन दरम्यान स्ट्रिंगला संख्येत रूपांतरित करू शकते. हे काही कोड सोपे करू शकते, परंतु काळजीपूर्वक हाताळले नाही तर ते अनपेक्षित परिणाम देखील देऊ शकते.</p>
 
-- [You Don't Know JS, 1st Edition: Types & Grammar — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
+<p><strong>Explicit Typing:</strong> अंतर्निहित टायपिंगच्या विपरीत, स्पष्ट टायपिंगमध्ये नंबर(), स्ट्रिंग(), किंवा बुलियन() सारख्या फंक्शन्सचा वापर करून एका प्रकारातून दुसऱ्या प्रकारात मूल्य मॅन्युअली रूपांतरित करणे समाविष्ट असते.</p>
 
-**[⬆ Back to Top](#table-of-contents)**
+<p><strong>Nominal Typing:</strong> जावास्क्रिप्ट मूळतः नाममात्र टायपिंगला समर्थन देत नाही, जिथे प्रकार स्पष्टपणे घोषित केले जातात आणि तपासले जातात. तथापि, जावास्क्रिप्टचा एक सुपरसेट, टाइपस्क्रिप्ट, विकासादरम्यान टाइप त्रुटी पकडण्यास मदत करण्यासाठी हे वैशिष्ट्य आणते.</p>
+
+<p><strong>Structural Typing:</strong> या प्रकार प्रणालीमध्ये, प्रकार डेटाच्या रचनेवर किंवा गुणधर्मांवर आधारित असतात. जावास्क्रिप्ट ही एक संरचनात्मकपणे टाइप केलेली भाषा आहे जिथे ऑब्जेक्ट्स समान रचना (म्हणजेच, गुणधर्म आणि पद्धतींचा समान संच) सामायिक केल्यास सुसंगत असतात. </p>
+
+<p><strong>Duck Typing:</strong> ही एक अशी संकल्पना आहे जिथे एखाद्या वस्तूची योग्यता त्या वस्तूच्या वास्तविक प्रकारापेक्षा विशिष्ट गुणधर्म आणि पद्धतींच्या उपस्थितीने निश्चित केली जाते. जावास्क्रिप्ट मोठ्या प्रमाणात डक टायपिंगवर अवलंबून असते, जिथे वर्तनाचा अंदाज त्याच्या घोषित प्रकारापेक्षा त्याच्या गुणधर्मांवरून काढला जातो.</p>
+
+### <img align="center" width="30" height="30" src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [जावास्क्रिप्टच्या अंतर्निहित सक्तीबद्दल तुम्हाला काय माहित असणे आवश्यक आहे — प्रॉमिस तोची](https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23)
+- [जावास्क्रिप्ट प्रकार सक्ती स्पष्ट केली — अलेक्सी समोशकिन](https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839)
+- [जावास्क्रिप्ट सक्ती स्पष्ट केली — बेन गॅरिसन](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
+- [जावास्क्रिप्टमध्ये टाइप सक्ती म्हणजे नेमके काय? - स्टॅक ओव्हरफ्लो](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
+
+### <img align="center" width="30" height="30" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [== ? === ??? ...#@^% - शिरमुंग बीलेफेल्ड](https://www.youtube.com/watch?v=qGyqzN0bjhc&t)
+- [जावास्क्रिप्टमध्ये जबरदस्ती - हितेश चौधरी](https://www.youtube.com/watch?v=b04Q_vyqEG8)
+- [जावास्क्रिप्ट प्रश्न: जबरदस्ती म्हणजे काय? - स्टीवन हॅनकॉक](https://www.youtube.com/watch?v=z4-8wMSPJyI)
+- [टायपिंग: स्टॅटिक विरुद्ध डायनॅमिक, कमकुवत विरुद्ध स्ट्राँग - कोडेक्सपॅन्स](https://www.youtube.com/watch?v=C5fr0LZLMAs)
+- [जावास्क्रिप्टमधील टिप्सची प्रणाली - कोडची कोशिका](https://www.youtube.com/watch?v=0ei4nb49GKo)
+- [जावास्क्रिप्टमध्ये डक टायपिंग - टेकमेकर स्टुडिओ](https://www.youtube.com/watch?v=oEpgyoMEkrM)
+- [जावास्क्रिप्टमध्ये डक टायपिंग - कार्तिकसह प्रोग्रामिंग](https://youtu.be/e4X1KAuk6Bs?si=krZKbsM2i3tmIl2G)
+
+### पुस्तके
+
+- [तुम्हाला जेएस माहित नाही, पहिली आवृत्ती: प्रकार आणि व्याकरण — काइल सिम्पसन](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
+
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
 ## 5. == vs === vs typeof
- According to the ECMAScript specification, JavaScript includes both strict (===) and loose (==) equality operators, which behave differently when comparing values. Here's a breakdown:
+ECMAScript स्पेसिफिकेशननुसार, JavaScript मध्ये strict (===) आणि loose (==) equality ऑपरेटर दोन्ही समाविष्ट आहेत, जे व्हॅल्यूजची तुलना करताना वेगळ्या पद्धतीने वागतात. येथे एक ब्रेकडाउन आहे:
 
-== (Loose Equality): This operator performs type coercion before comparing two values. If the values are of different types, JavaScript will attempt to convert one or both values to a common type before comparison, which can lead to unexpected results.
+== (Loose Equality): हे ऑपरेटर दोन व्हॅल्यूजची तुलना करण्यापूर्वी type coercion करते. जर व्हॅल्यूज वेगवेगळ्या प्रकारच्या असतील, तर JavaScript तुलना करण्यापूर्वी एक किंवा दोन्ही व्हॅल्यूजला सामान्य प्रकारात रूपांतरित करण्याचा प्रयत्न करेल, ज्यामुळे अनपेक्षित परिणाम होऊ शकतात.
 
-=== (Strict Equality): This operator compares both the value and the type without any type coercion. If the two values are not of the same type, the comparison will return false.
+=== (Strict Equality): हे ऑपरेटर कोणत्याही प्रकारच्या coercionशिवाय व्हॅल्यू आणि प्रकार दोन्हीची तुलना करते. जर दोन्ही व्हॅल्यूज एकाच प्रकारच्या नसतील, तर तुलना false परत करेल.
 
-typeof Operator: The typeof operator is used to check the data type of a variable. While it's generally reliable, there are certain quirks, like how typeof null returns "object" instead of "null", due to a long-standing behavior in JavaScript's implementation.
+typeof Operator: typeof operator चा वापर व्हेरिएबलचा डेटा प्रकार तपासण्यासाठी केला जातो. जरी ते सामान्यतः विश्वसनीय असले तरी, काही विशिष्ट वैशिष्ट्ये आहेत, जसे की typeof null "null" ऐवजी "object" कसे परत करते, कारण JavaScript च्या अंमलबजावणीमध्ये दीर्घकालीन वर्तन आहे.
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [JavaScript Double Equals vs. Triple Equals — Brandon Morelli](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
--  [Should I use === or == equality comparison operator in JavaScript? — Panu Pitkamaki](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
--  [Why Use the Triple-Equals Operator in JavaScript? — Louis Lazaris](https://www.impressivewebs.com/why-use-triple-equals-javascipt/)
--  [What is the difference between == and === in JavaScript? — Craig Buckler](https://www.oreilly.com/learning/what-is-the-difference-between-and-in-javascript)
--  [Why javascript's typeof always return "object"? — Stack Overflow](https://stackoverflow.com/questions/3787901/why-javascripts-typeof-always-return-object)
--  [Checking Types in Javascript — Toby Ho](http://tobyho.com/2011/01/28/checking-types-in-javascript/)
--  [How to better check data types in JavaScript — Webbjocke](https://webbjocke.com/javascript-check-data-types/)
--  [Checking for the Absence of a Value in JavaScript — Tomer Aberbach](https://tomeraberba.ch/html/post/checking-for-the-absence-of-a-value-in-javascript.html)
--  [Difference Between == and === in Javascript](https://www.scaler.com/topics/javascript/difference-between-double-equals-and-triple-equals-in-javascript/)    
--  [Difference between == and === in JavaScript — GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-double-equal-vs-triple-equal-javascript/)
--  [=== vs == Comparision in JavaScript — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-triple-equals-sign-vs-double-equals-sign-comparison-operators-explained-with-examples/)
+- [जावास्क्रिप्ट डबल इक्वल विरुद्ध ट्रिपल इक्वल — ब्रँडन मोरेली](https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a)
+- [मी जावास्क्रिप्टमध्ये === किंवा == समानता तुलना ऑपरेटर वापरावा का? — पानु पिटकमाकी](https://bytearcher.com/articles/equality-comparison-operator-javascript/)
+- [जावास्क्रिप्टमध्ये ट्रिपल-इक्वल ऑपरेटर का वापरावे? — लुई लाझारिस](https://www.impressivewebs.com/why-use-triple-equals-javascipt/)
+- [जावास्क्रिप्टमध्ये == आणि === मध्ये काय फरक आहे? — क्रेग बकलर](https://www.oreilly.com/learning/what-is-the-difference-between-and-in-javascript)
+- [जावास्क्रिप्टचा प्रकार नेहमी "ऑब्जेक्ट" का परत करतो? — स्टॅक ओव्हरफ्लो](https://stackoverflow.com/questions/3787901/why-javascripts-typeof-always-return-object)
+- [जावास्क्रिप्टमध्ये प्रकार तपासणे — टोबी हो](http://tobyho.com/2011/01/28/checking-types-in-javascript/)
+- [जावास्क्रिप्टमध्ये डेटा प्रकार कसे चांगले तपासायचे — वेबजॉक](https://webbjocke.com/javascript-check-data-types/)
+- [जावास्क्रिप्टमध्ये मूल्याची अनुपस्थिती तपासणे — टोमर अबेरबाख](https://tomeraberba.ch/html/post/checking-for-the-absence-of-a-value-in-javascript.html)
+- [== आणि === मधील फरक in जावास्क्रिप्ट](https://www.scaler.com/topics/javascript/difference-between-double-equals-and-triple-equals-in-javascript/)
+- [जावास्क्रिप्टमध्ये == आणि === मधील फरक — GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-double-equal-vs-triple-equal-javascript/)
+- [=== विरुद्ध == जावास्क्रिप्टमध्ये तुलना — फ्रीकोडकॅम्प](https://www.freecodecamp.org/news/javascript-triple-equals-sign-vs-double-equals-sign-comparison-operators-explained-with-examples/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript - The typeof operator — Java Brains](https://www.youtube.com/watch?v=ol_su88I3kw)
-- [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
-- [JavaScript "==" VS "===" — Web Dev Simplified](https://www.youtube.com/watch?v=C5ZVC4HHgIg)
-- [=== vs == in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=a0S1iG3TgP0)
-- [The typeof operator in JS - CodeVault](https://www.youtube.com/watch?v=NSS5WRcv7yM)
+- [जावास्क्रिप्ट - ऑपरेटरचा प्रकार — जावा ब्रेन्स](https://www.youtube.com/watch?v=ol_su88I3kw)
+- [जावास्क्रिप्टचा प्रकार ऑपरेटर — डेव्हडिलाईट](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
+- [जावास्क्रिप्ट "==" VS "==" — वेब डेव्ह सरलीकृत](https://www.youtube.com/watch?v=C5ZVC4HHgIg)
+- [=== वि == जावास्क्रिप्टमध्ये - हितेश चौधरी](https://www.youtube.com/watch?v=a0S1iG3TgP0)
+- [जेएस - कोडव्हॉल्टमधील ऑपरेटरचा प्रकार](https://www.youtube.com/watch?v=NSS5WRcv7yM)
 
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 6. Function Scope, Block Scope and Lexical Scope
- The ECMAScript specification outlines three key types of scope:
-
-Function Scope: Variables declared within a function using var are only accessible within that function. This scope isolates variables from being accessed outside of the function where they are declared.
-
-Block Scope: Introduced with ES6, variables declared with let and const are block-scoped. This means they are only accessible within the specific block {} in which they are defined, such as inside loops or conditionals.
-
-Lexical Scope: Refers to how variable access is determined based on the physical location of the variables in the code. Functions are lexically scoped, meaning that they can access variables from their parent scope.
-
-### Books
-
-- [You Don't Know JS Yet, 2nd Edition: Scope & Closures — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [JavaScript Functions — Understanding The Basics — Brandon Morelli](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
--  [Var, Let, and Const – What's the Difference?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
--  [Functions in JavaScript - Deepa Pandey](https://www.scaler.com/topics/javascript/javascript-functions/)
--  [Emulating Block Scope in JavaScript — Josh Clanton](http://adripofjavascript.com/blog/drips/emulating-block-scope-in-javascript.html)
--  [The Difference Between Function and Block Scope in JavaScript — Joseph Cardillo](https://medium.com/@josephcardillo/the-difference-between-function-and-block-scope-in-javascript-4296b2322abe)
--  [Understanding Scope and Context in JavaScript — Ryan Morr](http://ryanmorr.com/understanding-scope-and-context-in-javascript/)
--  [JavaScript Scope and Closures — Zell Liew](https://css-tricks.com/javascript-scope-closures/)
--  [Understanding Scope in JavaScript — Wissam Abirached](https://developer.telerik.com/topics/web-development/understanding-scope-in-javascript/)
--  [Understanding Scope in JavaScript ― Hammad Ahmed](https://scotch.io/tutorials/understanding-scope-in-javascript)
--  [When to use a function declaration vs. a function expression ― Amber Wilkie](https://medium.freecodecamp.org/when-to-use-a-function-declarations-vs-a-function-expression-70f15152a0a0)
--  [A JavaScript Fundamentals Cheat Sheet: Scope, Context, and "this" ― Alexandra Fren](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
--  [Functions / Function scope ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [What Makes Javascript Weird ... and Awesome pt. 4 — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
-- [Variable Scope in JavaScript — Kirupa Chinnathambi](https://www.youtube.com/watch?v=dhp57T3p760)
-- [JavaScript Block Scope and Function Scope — mmtuts](https://www.youtube.com/watch?v=aK_nuUAdr8E)
-- [What the Heck is Lexical Scope? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
-- [Variable Scope — Steve Griffith](https://www.youtube.com/watch?v=FyWdrCZZavQ)
-- [Javascript Tutorials for Beginners — Mosh Hemadani](https://www.youtube.com/watch?v=W6NZfCO5SIk)
-- [JavaScript Block scope vs Function scope - nivek](https://www.youtube.com/watch?v=IaTztAtoNEY)
-- [Lexical scoping in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=qT5S7GgIioE)
-- [Modern Scope Handling in JavaScript (ES6 and Beyond) -Prashant Dewangan ](https://www.youtube.com/watch?v=zMseUdOR7z8)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 7. Expression vs Statement
-According to the ECMAScript specification, expressions produce a value, and statements are instructions to perform an action, such as variable assignment or control flow. Function declarations are hoisted and can be called before they are defined in the code, while function expressions are not hoisted and must be defined before being invoked.
+## 6. फंक्शन स्कोप, ब्लॉक स्कोप आणि लेक्सिकल स्कोप
+  ECMAScript स्पेसिफिकेशनमध्ये तीन प्रमुख प्रकारचे स्कोप दिले आहेत:
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+फंक्शन स्कोप: var वापरून फंक्शनमध्ये घोषित केलेले व्हेरिएबल्स फक्त त्या फंक्शनमध्येच अॅक्सेस करण्यायोग्य असतात. हे स्कोप व्हेरिएबल्सना फंक्शनच्या बाहेर अॅक्सेस करण्यापासून वेगळे करते जिथे ते घोषित केले जातात.
 
--  [All you need to know about Javascript's Expressions, Statements and Expression Statements — Promise Tochi](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
--  [Function Expressions vs Function Declarations — Paul Wilkins](https://www.sitepoint.com/function-expressions-vs-declarations/)
--  [JavaScript Function — Declaration vs Expression — Ravi Roshan](https://medium.com/@raviroshan.talk/javascript-function-declaration-vs-expression-f5873b8c7b38)
--  [Function Declarations vs. Function Expressions — Mandeep Singh](https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052)
--  [Function Declarations vs. Function Expressions — Anguls Croll](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
-- [Expression statement — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/Expression_statement)
+ब्लॉक स्कोप: ES6 मध्ये सादर केलेले, let आणि const सह घोषित केलेले व्हेरिएबल्स ब्लॉक-स्कोप केलेले आहेत. याचा अर्थ ते फक्त त्या विशिष्ट ब्लॉक {} मध्ये अॅक्सेस करण्यायोग्य असतात ज्यामध्ये ते परिभाषित केले जातात, जसे की इनसाइड लूप किंवा कंडिशन्स.
 
+लेक्सिकल स्कोप: कोडमधील व्हेरिएबल्सच्या भौतिक स्थानाच्या आधारे व्हेरिएबल्स अॅक्सेस कसे निश्चित केले जातात याचा संदर्भ देते. फंक्शन्स लेक्सिकली स्कोप केलेले असतात, म्हणजेच ते त्यांच्या मूळ स्कोपमधून व्हेरिएबल्स अॅक्सेस करू शकतात.
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### पुस्तके
 
-- [Expressions vs. Statements in JavaScript — Hexlet](https://www.youtube.com/watch?v=WVyCrI1cHi8)
-- [JavaScript - Expression vs. Statement — WebTunings](https://www.youtube.com/watch?v=3jDpNGJkupA)
-- [Javascript Function Expression Vs Declaration For Beginners — Dev Material](https://www.youtube.com/watch?v=qz7Nq1tV7Io)
-- [The difference between an expression and a statement in JavaScript](https://youtu.be/eWTuFoBYiwg)
-- [Expression in javascript | Statement in javascript - Sathelli Srikanth](https://www.youtube.com/watch?v=cVDs3TZ-kXs)
+- [तुम्हाला जेएस अजून माहित नाही, दुसरी आवृत्ती: व्याप्ती आणि बंदिवास — काइल सिम्पसन](https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/scope-closures)
 
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
-**[⬆ Back to Top](#table-of-contents)**
+- [जावास्क्रिप्ट फंक्शन्स — मूलभूत गोष्टी समजून घेणे — ब्रँडन मोरेली](https://codeburst.io/javascript-functions-understanding-the-basics-207dbf42ed99)
+- [वार, लेट आणि कॉन्स्ट - काय फरक आहे?](https://www.freecodecamp.org/news/var-let-and-const-whats-the-difference/)
+- [जावास्क्रिप्टमधील फंक्शन्स - दीपा पांडे](https://www.scaler.com/topics/javascript/javascript-functions/)
+- [जावास्क्रिप्टमध्ये ब्लॉक स्कोपचे अनुकरण करणे — जोश क्लॅंटन](http://adripofjavascript.com/blog/drips/emulating-block-scope-in-javascript.html)
+- [जावास्क्रिप्टमधील फंक्शन आणि ब्लॉक स्कोपमधील फरक — जोसेफ कार्डिलो](https://medium.com/@josephcardillo/the-difference-between-function-and-block-scope-in-javascript-4296b2322abe)
+- [जावास्क्रिप्टमधील व्याप्ती आणि संदर्भ समजून घेणे — रायन मॉर](http://ryanmorr.com/understanding-scope-and-context-in-javascript/)
+- [जावास्क्रिप्टमधील व्याप्ती समजून घेणे — विसम अबिराचेड](https://developer.telerik.com/topics/web-development/understanding-scope-in-javascript/)
+- [जावास्क्रिप्टमधील व्याप्ती समजून घेणे ― हम्मद अहमद](https://scotch.io/tutorials/understanding-scope-in-javascript)
+- [फंक्शन डिक्लेरेशन विरुद्ध फंक्शन एक्सप्रेशन कधी वापरायचे ― अंबर विल्की](https://medium.freecodecamp.org/when-to-use-a-function-declarations-vs-a-function-expression-70f15152a0a0)
+- [जावास्क्रिप्ट फंडामेंटल्स चीट शीट: स्कोप, संदर्भ आणि "हे" ― अलेक्झांड्रा फ्रेन](https://dev.to/alexandrafren/a-javascript-fundamentals-cheat-sheet-scope-context-and-this-28ai)
+- [फंक्शन्स / फंक्शन स्कोप ― MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#function_scope)
+
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [जावास्क्रिप्टला विचित्र बनवते काय ... आणि अद्भुत भाग ४ — LearnCode.academy](https://www.youtube.com/watch?v=SBwoFkRjZvE)
+- [जावास्क्रिप्टमधील व्हेरिएबल स्कोप — किरुपा चिन्नाथंबी](https://www.youtube.com/watch?v=dhp57T3p760)
+- [जावास्क्रिप्ट ब्लॉक स्कोप आणि फंक्शन स्कोप — mmtuts](https://www.youtube.com/watch?v=aK_nuUAdr8E)
+- [लेक्सिकल स्कोप म्हणजे काय? — NWCalvank](https://www.youtube.com/watch?v=GhNA0r10MmA)
+- [व्हेरिएबल स्कोप — स्टीव्ह ग्रिफिथ](https://www.youtube.com/watch?v=FyWdrCZZavQ)
+- [नवशिक्यांसाठी जावास्क्रिप्ट ट्यूटोरियल — मोश हेमादानी](https://www.youtube.com/watch?v=W6NZfCO5SIk)
+- [जावास्क्रिप्ट ब्लॉक स्कोप विरुद्ध फंक्शन स्कोप - निवेक](https://www.youtube.com/watch?v=IaTztAtoNEY)
+- [जावास्क्रिप्टमध्ये लेक्सिकल स्कोपिंग - हितेश चौधरी](https://www.youtube.com/watch?v=qT5S7GgIioE)
+- [जावास्क्रिप्टमध्ये मॉडर्न स्कोप हँडलिंग (ES6 आणि त्याहून पुढे) -प्रशांत देवांगण](https://www.youtube.com/watch?v=zMseUdOR7z8)
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 8. IIFE, Modules and Namespaces
-With the introduction of ES6 modules, the role of IIFEs in scope isolation has diminished but they still remain relevant.
-### Reference
+## 7. अभिव्यक्ती (Expression) vs स्टेटमेंट (Statement)
+ECMAScript स्पेसिफिकेशननुसार, एक्सप्रेशन्स एक व्हॅल्यू तयार करतात आणि स्टेटमेंट्स म्हणजे हेरिएबल असाइनमेंट किंवा कंट्रोल फ्लो सारख्या कृती करण्यासाठी सूचना असतात. फंक्शन डिक्लेरेशन्स होइस्ट ल्या जातात आणि कोडमध्ये परिभाषित करण्यापूर्वी कॉल केल्या जाऊ शकतात, तर फंक्शन एक्सप्रेशन्स होइस्ट ल्या जात नाहीत आणि इनव्हॉक करण्यापूर्वी ते परिभाषित केले पाहिजेत.
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [जावास्क्रिप्टच्या एक्सप्रेशन्स, स्टेटमेंट्स आणि एक्सप्रेशन स्टेटमेंट्सबद्दल तुम्हाला जे काही माहित असणे आवश्यक आहे — प्रॉमिस तोची](https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2)
+- [फंक्शन एक्सप्रेशन्स विरुद्ध फंक्शन डिक्लेरेशन्स — पॉल विल्किन्स](https://www.sitepoint.com/function-expressions-vs-declarations/)
+- [जावास्क्रिप्ट फंक्शन — डिक्लेरेशन विरुद्ध एक्सप्रेशन — रवी रोशन](https://medium.com/@raviroshan.talk/javascript-function-declaration-vs-expression-f5873b8c7b38)
+- [फंक्शन डिक्लेरेशन्स विरुद्ध फंक्शन एक्सप्रेशन्स — मनदीप सिंग](https://medium.com/@mandeep1012/function-declarations-vs-function-expressions-b43646042052)
+- [फंक्शन डिक्लेरेशन्स विरुद्ध फंक्शन एक्सप्रेशन्स — अँगुल्स क्रॉल](https://javascriptweblog.wordpress.com/2010/07/06/function-declarations-vs-function-expressions/)
+- [अभिव्यक्ती स्टेटमेंट — MDN वेब डॉक्स](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/Expression_statement)
+
+
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [जावास्क्रिप्टमधील अभिव्यक्ती विरुद्ध विधाने — हेक्सलेट](https://www.youtube.com/watch?v=WVyCrI1cHi8)
+- [जावास्क्रिप्ट - अभिव्यक्ती विरुद्ध विधान — वेबट्यूनिंग्ज](https://www.youtube.com/watch?v=3jDpNGJkupA)
+- [जावास्क्रिप्ट फंक्शन अभिव्यक्ती विरुद्ध नवशिक्यांसाठी घोषणा — डेव्हलपमेंट मटेरियल](https://www.youtube.com/watch?v=qz7Nq1tV7Io)
+- [जावास्क्रिप्टमधील अभिव्यक्ती आणि विधानातील फरक](https://youtu.be/eWTuFoBYiwg)
+- [जावास्क्रिप्टमधील अभिव्यक्ती | जावास्क्रिप्टमधील विधान - सथेली श्रीकांत](https://www.youtube.com/watch?v=cVDs3TZ-kXs)
+
+
+**[⬆ वर जा](#table-of-contents)**
+
+---
+
+## 8. IIFE, मॉड्यूल आणि नेमस्पेस
+ES6 मॉड्यूल्सच्या परिचयानंतर, स्कोप आयसोलेशनमध्ये IIFE ची भूमिका कमी झाली आहे परंतु ते अजूनही प्रासंगिक आहेत.
+### संदर्भ:
 
 -  [IIFE — MDN](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)
 -  [Modularity — MDN](https://developer.mozilla.org/en-US/docs/Glossary/modularity)
 -  [Namespace — MDN](https://developer.mozilla.org/en-US/docs/Glossary/Namespace)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Mastering Immediately-Invoked Function Expressions ― Chandra Gundamaraju](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
--  [JavaScript Immediately Invoked Function Expression — javascripttutorial.net](https://www.javascripttutorial.net/javascript-immediately-invoked-function-expression-iife/)
--  [A 10 minute primer to JavaScript modules, module formats, module loaders and module bundlers ― Jurgen Van de Moere](https://www.jvandemo.com/a-10-minute-primer-to-javascript-modules-module-formats-module-loaders-and-module-bundlers/)
--  [Modules ― Exploring JS](http://exploringjs.com/es6/ch_modules.html)
--  [Understanding ES6 Modules — Craig Buckler](https://www.sitepoint.com/understanding-es6-modules/)
--  [An overview of ES6 Modules in JavaScript — Brent Graham](https://blog.cloud66.com/an-overview-of-es6-modules-in-javascript/)
--  [ES6 Modules in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-modules-in-depth)
--  [ES6 modules, Node.js and the Michael Jackson Solution — Alberto Gimeno](https://medium.com/dailyjs/es6-modules-node-js-and-the-michael-jackson-solution-828dc244b8b)
--  [JavaScript Modules: A Beginner's Guide — Preethi Kasireddy](https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc)
--  [Using JavaScript modules on the web — Addy Osmani & Mathias Bynens](https://developers.google.com/web/fundamentals/primers/modules)
--  [IIFE: Immediately Invoked Function Expressions — Parwinder](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
--  [Javascript Module Bundlers — Vanshu Hassija](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
+- [तात्काळ-आवाहित फंक्शन एक्सप्रेशन्सवर प्रभुत्व मिळवणे ― चंद्रा गुंडमाराजू](https://medium.com/@vvkchandra/essential-javascript-mastering-immediately-invoked-function-expressions-67791338ddc6)
+- [जावास्क्रिप्ट तात्काळ-आवाहित फंक्शन एक्सप्रेशन — javascripttutorial.net](https://www.javascripttutorial.net/javascript-immediately-invoked-function-expression-iife/)
+- [जावास्क्रिप्ट मॉड्यूल्स, मॉड्यूल फॉरमॅट्स, मॉड्यूल लोडर्स आणि मॉड्यूल बंडलर्ससाठी १० मिनिटांचा प्राइमर ― जुर्गेन व्हॅन डी मोरे](https://www.jvandemo.com/a-10-minute-primer-to-javascript-modules-module-formats-module-loaders-and-module-bundlers/)
+- [मॉड्यूल्स ― एक्सप्लोरिंग JS](http://exploringjs.com/es6/ch_modules.html)
+- [ES6 मॉड्यूल्स समजून घेणे — क्रेग बकलर](https://www.sitepoint.com/understanding-es6-modules/)
+- [जावास्क्रिप्टमधील ES6 मॉड्यूल्सचा आढावा — ब्रेंट ग्राहम](https://blog.cloud66.com/an-overview-of-es6-modules-in-javascript/)
+- [ES6 मॉड्यूल्स खोलीत — निकोलस बेवाक्वा](https://ponyfoo.com/articles/es6-modules-in-depth)
+- [ES6 मॉड्यूल्स, Node.js आणि मायकेल जॅक्सन सोल्यूशन — अल्बर्टो गिमेनो](https://medium.com/dailyjs/es6-modules-node-js-and-the-michael-jackson-solution-828dc244b8b)
+- [जावास्क्रिप्ट मॉड्यूल्स: एक नवशिक्या मार्गदर्शक — प्रीती कासिरेड्डी](https://medium.freecodecamp.org/javascript-modules-a-beginner-s-guide-783f7d7a5fcc)
+- [वेबवर जावास्क्रिप्ट मॉड्यूल वापरणे — अ‍ॅडी उस्मानी आणि मॅथियास बायनेन्स](https://developers.google.com/web/fundamentals/primers/modules)
+- [IIFE: त्वरित इनव्होक्ड फंक्शन एक्सप्रेशन्स — परविंदर](https://dev.to/bhagatparwinder/iife-immediately-invoked-function-expressions-49c5)
+- [जावास्क्रिप्ट मॉड्यूल बंडलर्स — वंशू हसीजा](https://sassy-butter-197.notion.site/Javascript-bundlers-016932b17b0744e983c2cc0db31e6f02)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [Immediately Invoked Function Expression - Beau teaches JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
-- [Understanding JavaScript IIFE — Sheo Narayan](https://www.youtube.com/watch?v=I5EntfMeIIQ)
-- [JavaScript Modules: ES6 Import and Export — Kyle Robinson](https://www.youtube.com/watch?v=_3oSWwapPKQ)
-- [ES6 - Modules — Ryan Christiani](https://www.youtube.com/watch?v=aQr2bV1BPyE)
-- [ES6 Modules in the Real World — Sam Thorogood](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
-- [ES6 Modules — TempleCoding](https://www.youtube.com/watch?v=5P04OK6KlXA)
-- [JavaScript IIFE (Immediately Invoked Function Expressions) — Steve Griffith](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
+- [तात्काळ आवाहन केलेले फंक्शन एक्सप्रेशन - ब्यू जावास्क्रिप्ट शिकवते — freeCodeCamp](https://www.youtube.com/watch?v=3cbiZV4H22c)
+- [जावास्क्रिप्ट IIFE समजून घेणे — शेओ नारायण](https://www.youtube.com/watch?v=I5EntfMeIIQ)
+- [जावास्क्रिप्ट मॉड्यूल्स: ES6 आयात आणि निर्यात — काइल रॉबिन्सन](https://www.youtube.com/watch?v=_3oSWwapPKQ)
+- [ES6 - मॉड्यूल्स — रायन क्रिस्टियानी](https://www.youtube.com/watch?v=aQr2bV1BPyE)
+- [वास्तविक जगात ES6 मॉड्यूल्स — सॅम थोरोगूड](https://www.youtube.com/watch?v=fIP4pjAqCtQ)
+- [ES6 मॉड्यूल्स — टेंपलकोडिंग](https://www.youtube.com/watch?v=5P04OK6KlXA)
+- [जावास्क्रिप्ट IIFE (तात्काळ आवाहन केलेले फंक्शन एक्सप्रेशन) — स्टीव्ह ग्रिफिथ](https://www.youtube.com/watch?v=Xd7zgPFwVX8&)
 
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 9. Message Queue and Event Loop
-The Event Loop is a critical part of JavaScript's concurrency model, ensuring non-blocking behavior by processing tasks in an asynchronous manner. Understanding how it interacts with the Message Queue and Microtasks is key to mastering JavaScript behavior.
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [JavaScript Event Loop Explained — Anoop Raveendran](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
--  [Understanding JS: The Event Loop — Alexander Kondov](https://hackernoon.com/understanding-js-the-event-loop-959beae3ac40)
--  [The JavaScript Event Loop — Flavio Copes](https://flaviocopes.com/javascript-event-loop/)
--  [Tasks, microtasks, queues and schedules — Jake Archibald](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
--  [Visualising the JavaScript Event Loop with a Pizza Restaurant analogy — Priyansh Jain](https://dev.to/presto412/visualising-the-javascript-event-loop-with-a-pizza-restaurant-analogy-47a8)
--  [JavaScript Visualized: Event Loop — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif)
-- [Understanding and Optimizing JavaScript's Event Loop — Xiuer Old](https://medium.com/javascript-zone/understanding-and-optimizing-javascripts-event-loop-717ae0095038#:~:text=The%20event%20loop%20is%20the,%2Dblocking%20I%2FO%20operations.)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [What the heck is the event loop anyway? | JSConf EU — Philip Roberts](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
-- [JavaScript Event Loop — ComScience Simplified](https://www.youtube.com/watch?v=XzXIMZMN9k4)
-- [I'm stuck in an Event Loop — Philip Roberts](https://www.youtube.com/watch?v=6MXRNXXgP_0)
-- [In The Loop - Jake Archibald | JSConf.Asia 2018](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
-- [Desmitificando el Event Loop (Spanish)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
-- [Callbacks, Sincrono, Assíncrono e Event Loop (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
-- [JavaScript Event Loop: How it Works and Why it Matters in 5 Minutes - James Q Quick](https://www.youtube.com/watch?v=6lbBaM18X3g)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 10. setTimeout, setInterval and requestAnimationFrame
+## 9. मेसेज क्व्यू आणि इव्हेंट लूप
+इव्हेंट लूप हा जावास्क्रिप्टच्या कॉन्करन्सी मॉडेलचा एक महत्त्वाचा भाग आहे, जो असिंक्रोनस पद्धतीने कार्ये प्रक्रिया करून नॉन-ब्लॉकिंग वर्तन सुनिश्चित करतो. मेसेज क्यू आणि मायक्रोटास्कशी ते कसे संवाद साधते हे समजून घेणे हे जावास्क्रिप्ट वर्तनावर प्रभुत्व मिळविण्याची गुरुकिल्ली आहे.
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+- [जावास्क्रिप्ट इव्हेंट लूप स्पष्ट केले — अनूप रवींद्रन](https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4)
+- [जेएस समजून घेणे: द इव्हेंट लूप — अलेक्झांडर कोंडोव्ह](https://hackernoon.com/understanding-js-the-event-loop-959beae3ac40)
+- [जावास्क्रिप्ट इव्हेंट लूप — फ्लेव्हियो कोप्स](https://flaviocopes.com/javascript-event-loop/)
+- [कार्ये, मायक्रोटास्क, रांगा आणि वेळापत्रक — जेक आर्चीबाल्ड](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/)
+- [पिझ्झा रेस्टॉरंटच्या सादृश्याने जावास्क्रिप्ट इव्हेंट लूपचे दृश्यमान करणे — प्रियांश जैन](https://dev.to/presto412/visualising-the-javascript-event-loop-with-a-pizza-restaurant-analogy-47a8)
+- [जावास्क्रिप्ट व्हिज्युअलाइज्ड: इव्हेंट लूप — लिडिया हॅली](https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif)
+- [जावास्क्रिप्टचा इव्हेंट लूप समजून घेणे आणि ऑप्टिमायझ करणे — झ्यूअर ओल्ड](https://medium.com/javascript-zone/understanding-and-optimizing-javascripts-event-loop-717ae0095038#:~:text=The%20event%20loop%20is%20the,%2Dblocking%20I%2FO%20operations.)
 
--  [setTimeout and setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
--  [Why not to use setInterval — Akanksha Sharma](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
--  [setTimeout VS setInterval — Develoger](https://develoger.com/settimeout-vs-setinterval-cff85142555b)
--  [Using requestAnimationFrame — Chris Coyier](https://css-tricks.com/using-requestanimationframe/)
--  [Understanding JavaScript's requestAnimationFrame() — JavaScript Kit](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
--  [Handling time intervals in JavaScript - Amit Merchant](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
--  [Debounce – How to Delay a Function in JavaScript - Ondrej Polesny](https://www.freecodecamp.org/news/javascript-debounce-example/)
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+- [इव्हेंट लूप म्हणजे काय? | JSConf EU — फिलिप रॉबर्ट्स](https://www.youtube.com/watch?v=8aGhZQkoFbQ)
+- [जावास्क्रिप्ट इव्हेंट लूप — कॉमसायन्स सिम्पलीफाइड](https://www.youtube.com/watch?v=XzXIMZMN9k4)
+- [मी एका इव्हेंट लूपमध्ये अडकलो आहे — फिलिप रॉबर्ट्स](https://www.youtube.com/watch?v=6MXRNXXgP_0)
+- [इन द लूप - जेक आर्किबाल्ड | JSConf.Asia २०१८](https://www.youtube.com/watch?v=cCOL7MC4Pl0)
+- [इव्हेंट लूपचे वर्णन (स्पॅनिश)](https://www.youtube.com/watch?v=Eqq2Rb7LzYE)
+- [कॉलबॅक, सिनक्रोनो, असिन्क्रोनो आणि इव्हेंट लूप (PT-BR)](https://www.youtube.com/watch?v=6lbBaM18X3g)
+- [जावास्क्रिप्ट इव्हेंट लूप: ते कसे कार्य करते आणि ते ५ मिनिटांत का महत्त्वाचे आहे - जेम्स क्यू क्विक](https://www.youtube.com/watch?v=6lbBaM18X3g)
 
-- [Javascript: How setTimeout and setInterval works — Coding Blocks India](https://www.youtube.com/watch?v=6bPKyl8WYWI)
-- [TRUST ISSUES with setTimeout() — Akshay Saini ](https://youtu.be/nqsPmuicJJc?si=4FXKlZfqiJUqO2Y4)                  
-- [setTimeout and setInterval in JavaScript — techsith](https://www.youtube.com/watch?v=TbCgGWe8LN8)
-- [JavaScript Timers — Steve Griffith](https://www.youtube.com/watch?v=0VVJSvlUgtg)
-- [JavaScript setTimeOut and setInterval Explained — Theodore Anderson](https://www.youtube.com/watch?v=mVKfrWCOB60)   
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 11. JavaScript Engines
-
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [JavaScript Engines — Jen Looper](http://www.softwaremag.com/javascript-engines/)
--  [Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code — DroidHead](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
--  [Understanding V8's Bytecode — Franziska Hinkelmann](https://medium.com/dailyjs/understanding-v8s-bytecode-317d46c94775)
--  [JavaScript essentials: why you should know how the engine works - Rainer Hahnekamp](https://www.freecodecamp.org/news/javascript-essentials-why-you-should-know-how-the-engine-works-c2cc0d321553)
--  [JavaScript engine fundamentals: Shapes and Inline Caches](https://mathiasbynens.be/notes/shapes-ics)
--  [JavaScript engine fundamentals: optimizing prototypes](https://mathiasbynens.be/notes/prototypes)
--  [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
--  [JavaScript Internals: JavaScript engine, Run-time environment & setTimeout Web API — Rupesh Mishra](https://blog.bitsrc.io/javascript-internals-javascript-engine-run-time-environment-settimeout-web-api-eeed263b1617)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [JavaScript Engines: The Good Parts™ — Mathias Bynens & Benedikt Meurer](https://www.youtube.com/watch?v=5nmpokoRaZI)
-- [JS Engine EXPOSED 🔥 Google's V8 Architecture 🚀 | Namaste JavaScript Ep. 16 - Akshay Saini](https://www.youtube.com/watch?v=2WJL19wDH68)
-- [How JavaScript Code is executed? How Javascript works behind the scenes](https://youtu.be/iLWTnMzWtj4)   
-- [Understanding the V8 JavaScript Engine - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
-- [JavaScript Under The Hood - JavaScript Engine Overview - Traversy Media](https://www.youtube.com/watch?v=oc6faXVc54E)
-- [Arindam Paul - JavaScript VM internals, EventLoop, Async and ScopeChains](https://www.youtube.com/watch?v=QyUFheng6J0)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 12. Bitwise Operators, Type Arrays and Array Buffers
+## 10. setTimeout, setInterval आणि requestAnimationFrame
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Programming with JS: Bitwise Operations — Alexander Kondov](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
--  [Using JavaScript's Bitwise Operators in Real Life — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
--  [JavaScript Bitwise Operators — w3resource](https://www.w3resource.com/javascript/operators/bitwise-operator.php)
--  [Bitwise Operators in Javascript — Joe Cha](https://medium.com/bother7-blog/bitwise-operators-in-javascript-65c4c69be0d3)
--  [A Comprehensive Primer on Binary Computation and Bitwise Operators in javascript — Paul Brown](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
--  [How can I understand Bitwise operation in JavaScript?](https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript)
+- [setTimeout आणि setInterval — JavaScript.Info](https://javascript.info/settimeout-setinterval)
+- [setInterval का वापरू नये — आकांक्षा शर्मा](https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9)
+- [setTimeout VS setInterval — Develoger](https://develoger.com/settimeout-vs-setinterval-cff85142555b)
+- [requestAnimationFrame वापरणे — Chris Coyier](https://css-tricks.com/using-requestanimationframe/)
+- [Javascript चे requestAnimationFrame() — JavaScript किट समजून घेणे](http://www.javascriptkit.com/javatutors/requestanimationframe.shtml)
+- [Javascript मध्ये वेळेचे अंतराल हाताळणे - अमित व्यापारी](https://www.amitmerchant.com/Handling-Time-Intervals-In-Javascript/)
+- [डीबाउन्स - जावास्क्रिप्टमध्ये फंक्शन कसे विलंबित करावे - ओंड्रेज पोलेस्नी](https://www.freecodecamp.org/news/javascript-debounce-example/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript Bitwise Operators — Programming with Mosh](https://www.youtube.com/watch?v=mesu75PTDC8)
-- [Bitwise Operators and WHY we use them — Alex Hyett](https://www.youtube.com/watch?v=igIjGxF2J-w)
-- [JS Bitwise Operators and Binary Numbers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=RRyxCmLX_ag)
-- [Deep Dive into Blobs, Files, and ArrayBuffers — Steve Griffith - Prof3ssorSt3v3](https://www.youtube.com/watch?v=ScZZoHj7mqY)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 13. DOM and Layout Trees
-
-### Reference
-
-- [Document Object Model (DOM) — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
-
-### Books
-
--  [Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model](https://eloquentjavascript.net/14_dom.html)
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [How To Understand and Modify the DOM in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
--  [What's the Document Object Model, and why you should know how to use it — Leonardo Maldonado](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
--  [JavaScript DOM Tutorial with Example — Guru99](https://www.guru99.com/how-to-use-dom-and-events-in-javascript.html)
--  [What is the DOM? — Chris Coyier](https://css-tricks.com/dom/)
--  [Traversing the DOM with JavaScript — Zell Liew](https://zellwk.com/blog/dom-traversals/)
--  [DOM Tree](https://javascript.info/dom-nodes)
--  [How to traverse the DOM in Javascript — Vojislav Grujić](https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e)
--  [Render Tree Construction — Ilya Grigorik](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
--  [What exactly is the DOM?](https://bitsofco.de/what-exactly-is-the-dom/)
--  [JavaScript DOM](https://www.javascripttutorial.net/javascript-dom/)
--  [Traversing the Dom with Javascript](https://www.youtube.com/watch?v=Pr4LLrmDLLo) - Steve Griffith (YouTube)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [JavaScript DOM — The Net Ninja](https://www.youtube.com/watch?v=FIORjGvT0kk)
-- [JavaScript DOM Crash Course — Traversy Media](https://www.youtube.com/watch?v=0ik6X4DJKCc)
-- [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
-- [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
-
-**[⬆ Back to Top](#table-of-contents)**
+- [जावास्क्रिप्ट: सेटटाइमआउट आणि सेटइंटरव्हल कसे काम करतात — कोडिंग ब्लॉक्स इंडिया](https://www.youtube.com/watch?v=6bPKyl8WYWI)
+- [सेटटाइमआउटसह विश्वासार्ह समस्या() — अक्षय सैनी ](https://youtu.be/nqsPmuicJJc?si=4FXKlZfqiJUqO2Y4)
+- [जावास्क्रिप्टमध्ये सेटटाइमआउट आणि सेटइंटरव्हल — टेकसिथ](https://www.youtube.com/watch?v=TbCgGWe8LN8)
+- [जावास्क्रिप्ट टाइमर्स — स्टीव्ह ग्रिफिथ](https://www.youtube.com/watch?v=0VVJSvlUgtg)
+- [जावास्क्रिप्ट सेटटाइमआउट आणि सेटइंटरव्हल स्पष्ट केले — थियोडोर अँडरसन](https://www.youtube.com/watch?v=mVKfrWCOB60)
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 14. Factories and Classes
+## 11. JavaScript इंजिन
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [How To Use Classes in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
--  [Javascript Classes — Under The Hood — Majid](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
--  [Better JavaScript with ES6, Pt. II: A Deep Dive into Classes ― Peleke Sengstacke](https://scotch.io/tutorials/better-javascript-with-es6-pt-ii-a-deep-dive-into-classes)
--  [Understand the Factory Design Pattern in Plain JavaScript — Aditya Agarwal](https://medium.com/front-end-hacking/understand-the-factory-design-pattern-in-plain-javascript-20b348c832bd)
--  [Factory Functions in JavaScript — Josh Miller](https://atendesigngroup.com/blog/factory-functions-javascript)
--  [The Factory Pattern in JS ES6 — SnstsDev](https://medium.com/@SntsDev/the-factory-pattern-in-js-es6-78f0afad17e9)
--  [Class vs Factory function: exploring the way forward — Cristi Salcescu](https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15)
--  [How ES6 classes really work and how to build your own — Robert Grosse](https://medium.com/@robertgrosse/how-es6-classes-really-work-and-how-to-build-your-own-fd6085eb326a)
--  [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
--  [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
+- [जावास्क्रिप्ट इंजिन्स — जेन लूपर](http://www.softwaremag.com/javascript-engines/)
+- [क्रोम व्ही८ इंजिन जावास्क्रिप्टला मशीन कोडमध्ये कसे रूपांतरित करते हे समजून घेणे — ड्रॉइडहेड](https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964)
+- [व्ही८ चा बाइटकोड समजून घेणे — फ्रांझिस्का हिंकेलमन](https://medium.com/dailyjs/understanding-v8s-bytecode-317d46c94775)
+- [जावास्क्रिप्टची आवश्यकता: इंजिन कसे कार्य करते हे तुम्हाला का माहित असले पाहिजे - रेनर हॅनकेम्प](https://www.freecodecamp.org/news/javascript-essentials-why-you-should-know-how-the-engine-works-c2cc0d321553)
+- [जावास्क्रिप्ट इंजिनची मूलतत्त्वे: आकार आणि इनलाइन कॅशे](https://mathiasbynens.be/notes/shapes-ics)
+- [जावास्क्रिप्ट इंजिनची मूलतत्त्वे: प्रोटोटाइप ऑप्टिमायझ करणे](https://mathiasbynens.be/notes/prototypes)
+- [V8 अ‍ॅरे ऑपरेशन्स कसे ऑप्टिमायझ करते](https://v8.dev/blog/elements-kinds)
+- [जावास्क्रिप्ट इंटर्नल्स: जावास्क्रिप्ट इंजिन, रन-टाइम वातावरण आणि सेटटाइमआउट वेब एपीआय — रूपेश मिश्रा](https://blog.bitsrc.io/javascript-internals-javascript-engine-run-time-environment-settimeout-web-api-eeed263b1617)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript Factory Functions — Programming with Mosh](https://www.youtube.com/watch?v=jpegXpQpb3o)
-- [Factory Functions in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ImwrezYhw4w)
-- [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
+- [जावास्क्रिप्ट इंजिन्स: द गुड पार्ट्स™ — मॅथियास बायनेन्स आणि बेनेडिक्ट म्युरर](https://www.youtube.com/watch?v=5nmpokoRaZI)
+- [जेएस इंजिन उघड झाले 🔥 गुगलचे व्ही८ आर्किटेक्चर 🚀 | नमस्ते जावास्क्रिप्ट भाग १६ - अक्षय सैनी](https://www.youtube.com/watch?v=2WJL19wDH68)
+- [जावास्क्रिप्ट कोड कसा कार्यान्वित केला जातो? जावास्क्रिप्ट पडद्यामागे कसे काम करते](https://youtu.be/iLWTnMzWtj4)
+- [V8 जावास्क्रिप्ट इंजिन समजून घेणे - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
+- [जावास्क्रिप्ट अंडर द हुड - जावास्क्रिप्ट इंजिन ओव्हरव्यू - ट्रॅव्हर्सी मीडिया](https://www.youtube.com/watch?v=oc6faXVc54E)
+- [अरिंदम पॉल - जावास्क्रिप्ट व्हीएम इंटर्नल्स, इव्हेंटलूप, असिंक आणि स्कोपचेन्स](https://www.youtube.com/watch?v=QyUFheng6J0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 15. this, call, apply and bind
+## 12. बिटवाइज ऑपरेटर, टाइप ऍरे आणि अ‍ॅरे बफर्स
 
-### Reference
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)
--  [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_objects/Function/bind)
--  [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)
+- [जेएससह प्रोग्रामिंग: बिटवाइज ऑपरेशन्स — अलेक्झांडर कोंडोव्ह](https://hackernoon.com/programming-with-js-bitwise-operations-393eb0745dc4)
+- [वास्तविक जीवनात जावास्क्रिप्टचे बिटवाइज ऑपरेटर वापरणे — ian m](https://codeburst.io/using-javascript-bitwise-operators-in-real-life-f551a731ff5)
+- [जावास्क्रिप्ट बिटवाइज ऑपरेटर — w3resource](https://www.w3resource.com/javascript/operators/bitwise-operator.php)
+- [जावास्क्रिप्टमध्ये बिटवाइज ऑपरेटर — जो चा](https://medium.com/bother7-blog/bitwise-operators-in-javascript-65c4c69be0d3)
+- [जावास्क्रिप्टमध्ये बायनरी कॉम्प्युटेशन आणि बिटवाइज ऑपरेटरवर एक व्यापक प्राइमर — पॉल ब्राउन](https://medium.com/techtrument/a-comprehensive-primer-on-binary-computation-and-bitwise-operators-in-javascript-81acf8341f04)
+- [जावास्क्रिप्टमध्ये बिटवाइज ऑपरेशन कसे समजून घ्यावे?](https://www.quora.com/How-can-I-understand-Bitwise-operation-in-JavaScript)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
--  [Grokking call(), apply() and bind() methods in JavaScript — Aniket Kudale](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
--  [JavaScript's Apply, Call, and Bind Methods are Essential for JavaScript Professionals — Richard Bovell](http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/)
--  [Javascript: call(), apply() and bind() — Omer Goldberg](https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb)
--  [The difference between call / apply / bind — Ivan Sifrim](https://medium.com/@ivansifrim/the-differences-between-call-apply-bind-276724bb825b)
--  [What the hack is call, apply, bind in JavaScript — Ritik](https://dev.to/ritik_dev_js/what-the-hack-is-call-apply-bind-in-javascript-11ce)
--  [Mastering 'this' in JavaScript: Callbacks and bind(), apply(), call() — Michelle Gienow](https://thenewstack.io/mastering-javascript-callbacks-bind-apply-call/)
--  [JavaScript's apply, call, and bind explained by hosting a cookout — Kevin Kononenko](https://dev.to/kbk0125/javascripts-apply-call-and-bind-explained-by-hosting-a-cookout-32jo)
--  [How AND When to use bind, call, and apply in Javascript — Eigen X](https://www.eigenx.com/blog/https/mediumcom/eigen-x/how-and-when-to-use-bind-call-and-apply-in-javascript-77b6f42898fb)
--  [Let me explain to you what is `this`. (Javascript) — Jason Yu](https://dev.to/ycmjason/let-me-explain-to-you-what-is-this-javascript-44ja)
--  [Understanding the "this" Keyword in JavaScript — Pavan](https://medium.com/quick-code/understanding-the-this-keyword-in-javascript-cb76d4c7c5e8)
--  [How to understand the keyword this and context in JavaScript — Lukas Gisder-Dubé](https://medium.freecodecamp.org/how-to-understand-the-keyword-this-and-context-in-javascript-cd624c6b74b8)
--  [What the heck is this in Javascript? — Hridayesh Sharma](https://dev.to/_hridaysharma/what-the-heck-is-this-in-javascript-37n1)
--  [This and Bind In Javascript — Brian Barbour](https://dev.to/steelvoltage/this-and-bind-in-javascript-2pam)
--  [3 Techniques for Maintaining Your Sanity Using "This" in JavaScript — Carl](https://dev.to/canderson93/3-techniques-for-maintaining-your-sanity-using-this-in-javascript-3idf)
--  [Mastering the JavaScript "this" Keyword — Aakash Srivastav](https://dev.to/aakashsr/mastering-the-javascript-this-keyword-4pfa)
--  [This binding in JavaScript – 4. New binding — Spyros Argalias](https://dev.to/sargalias/this-binding-in-javascript-4-new-binding-2p1n)
--  [A quick intro to 'this' in JavaScript — Natalie Smith](https://dev.to/thatgalnatalie/a-quick-intro-to-this-in-javascript-2mhp)
--  [A conversation with the 'this' keyword in Javascript — Karen Efereyan](https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g)
--  [What are call(), apply() and bind() in JavaScript — Amitav Mishra](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
--  [Understanding 'this' binding in JavaScript — Yasemin Cidem](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
--  [Top 7 tricky questions of 'this' keyword](https://dmitripavlutin.com/javascript-this-interview-questions/)
+- [जावास्क्रिप्ट बिटवाइज ऑपरेटर्स — मोशसह प्रोग्रामिंग](https://www.youtube.com/watch?v=mesu75PTDC8)
+- [बिटवाइज ऑपरेटर्स आणि आपण ते का वापरतो — अ‍ॅलेक्स हायेट](https://www.youtube.com/watch?v=igIjGxF2J-w)
+- [जेएस बिटवाइज ऑपरेटर्स आणि बायनरी नंबर्स — स्टीव्ह ग्रिफिथ - प्रोफेस3सॉरस्ट३व्ह३](https://www.youtube.com/watch?v=RRyxCmLX_ag)
+- [ब्लॉब्स, फाइल्स आणि अ‍ॅरेबफर्समध्ये खोलवर जा — स्टीव्ह ग्रिफिथ - प्रोफेस३सॉरस्ट३व्ह३](https://www.youtube.com/watch?v=ScZZoHj7mqY)
+
+**[⬆ वर जा](#table-of-contents)**
+
+---
+
+## 13. DOM आणि लेआउट ट्री
+
+### संदर्भ:
+
+- [डॉक्युमेंट ऑब्जेक्ट मॉडेल (DOM) — MDN](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)
+
+### पुस्तके
+
+-  [स्पष्ट जावास्क्रिप्ट, तिसरी आवृत्ती: अध्याय १४ - दस्तऐवज ऑब्जेक्ट मॉडेल](https://eloquentjavascript.net/14_dom.html)
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [जावास्क्रिप्टमध्ये DOM कसे समजून घ्यावे आणि त्यात बदल कसे करावे — तानिया रसिया](https://www.digitalocean.com/community/tutorials/introduction-to-the-dom)
+- [डॉक्युमेंट ऑब्जेक्ट मॉडेल म्हणजे काय आणि ते कसे वापरायचे हे तुम्हाला का माहित असले पाहिजे — लिओनार्डो माल्डोनाडो](https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d)
+- [उदाहरणासह जावास्क्रिप्ट DOM ट्यूटोरियल — Guru99](https://www.guru99.com/how-to-use-dom-and-events-in-javascript.html)
+- [DOM म्हणजे काय? — क्रिस कोयियर](https://css-tricks.com/dom/)
+- [जावास्क्रिप्ट वापरून DOM मध्ये प्रवास करणे — झेल ल्यू](https://zellwk.com/blog/dom-traversals/)
+- [DOM ट्री](https://javascript.info/dom-nodes)
+- [जावास्क्रिप्टमध्ये DOM कसे पार करावे — व्होजिस्लाव ग्रुजिक](https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e)
+- [रेंडर ट्री कन्स्ट्रक्शन — इल्या ग्रिगोरिक](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
+- [DOM म्हणजे नेमके काय?](https://bitsofco.de/what-exactly-is-the-dom/)
+- [जावास्क्रिप्ट DOM](https://www.javascripttutorial.net/javascript-dom/)
+- [जावास्क्रिप्ट वापरून डोममध्ये प्रवास करणे](https://www.youtube.com/watch?v=Pr4LLrmDLLo) - Steve Griffith (YouTube)
+
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [जावास्क्रिप्ट डीओएम — द नेट निन्जा](https://www.youtube.com/watch?v=FIORjGvT0kk)
+- [जावास्क्रिप्ट डीओएम क्रॅश कोर्स — ट्रॅव्हर्सी मीडिया](https://www.youtube.com/watch?v=0ik6X4DJKCc)
+- [जावास्क्रिप्ट डीओएम मॅनिपुलेशन पद्धती — वेब डेव्हलपमेंट सरलीकृत](https://www.youtube.com/watch?v=y17RuWkWdn8)
+- [जावास्क्रिप्ट डीओएम ट्रॅव्हर्सल पद्धती — वेब डेव्हलपमेंट सरलीकृत](https://www.youtube.com/watch?v=v7rSSy8CaYE)
+
+**[⬆ वर जा](#table-of-contents)**
+
+---
+
+## 14. फॅक्टरी आणि क्लासेस
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [जावास्क्रिप्टमध्ये वर्ग कसे वापरावे — तानिया रसिया](https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript)
+- [जावास्क्रिप्ट वर्ग — अंडर द हुड — माजिद](https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677)
+- [ES6 सह चांगले जावास्क्रिप्ट, पं. II: वर्गांमध्ये खोलवर जाणे ― पेलेके सेंगस्टॅक](https://scotch.io/tutorials/better-javascript-with-es6-pt-ii-a-deep-dive-into-classes)
+- [साध्या जावास्क्रिप्टमध्ये फॅक्टरी डिझाइन पॅटर्न समजून घ्या — आदित्य अग्रवाल](https://medium.com/front-end-hacking/understand-the-factory-design-pattern-in-plain-javascript-20b348c832bd)
+- [जावास्क्रिप्टमध्ये फॅक्टरी फंक्शन्स — जोश मिलर](https://atendesigngroup.com/blog/factory-functions-javascript)
+- [JS ES6 मध्ये फॅक्टरी पॅटर्न — SnstsDev](https://medium.com/@SntsDev/the-factory-pattern-in-js-es6-78f0afad17e9)
+- [क्लास विरुद्ध फॅक्टरी फंक्शन: पुढे जाण्याचा मार्ग एक्सप्लोर करणे — क्रिस्टी साल्सेस्कू](https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15)
+- [ES6 वर्ग खरोखर कसे कार्य करतात आणि स्वतःचे वर्ग कसे तयार करावे — रॉबर्ट ग्रोस](https://medium.com/@robertgrosse/how-es6-classes-really-work-and-how-to-build-your-own-fd6085eb326a)
+- [जावास्क्रिप्टमध्ये `सुपर` समजून घेणे](https://jordankasper.com/understanding-super-in-javascript)
+- [जावास्क्रिप्टमधील वर्ग समजून घेण्यासाठी एक सोपी मार्गदर्शक](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
+
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [जावास्क्रिप्ट फॅक्टरी फंक्शन्स — मोशसह प्रोग्रामिंग](https://www.youtube.com/watch?v=jpegXpQpb3o)
+- [जावास्क्रिप्टमधील फॅक्टरी फंक्शन्स — मजेदार फन फंक्शन](https://www.youtube.com/watch?v=ImwrezYhw4w)
+- [जावास्क्रिप्ट ट्युटोरियल फंक्शन फॅक्टरीज — क्रिप्टो चॅन](https://www.youtube.com/watch?v=R7-IwpH80UE)
+
+**[⬆ वर जा](#table-of-contents)**
+
+---
+
+## 15. this, call, apply आणि bind
+
+### संदर्भ:
+
+-  [call() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/संदर्भ:/Global_Objects/Function/call)
+-  [bind() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/संदर्भ:/Global_objects/Function/bind)
+-  [apply() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/संदर्भ:/Global_Objects/Function/apply)
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [जावास्क्रिप्टमध्ये कॉल(), अप्लाय() आणि बाइंड() पद्धतींचा वापर करणे — अनिकेत कुदळे](https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b)
+- [जावास्क्रिप्टच्या अप्लाय, कॉल आणि बाइंड पद्धती जावास्क्रिप्ट व्यावसायिकांसाठी आवश्यक आहेत — रिचर्ड बोवेल](http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/)
+- [जावास्क्रिप्ट: कॉल(), अप्लाय() आणि बाइंड() — ओमर गोल्डबर्ग](https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb)
+- [कॉल / अप्लाय / बाइंडमधील फरक — इवान सिफ्रिम](https://medium.com/@ivansifrim/the-differences-between-call-apply-bind-276724bb825b)
+- [हॅक म्हणजे जावास्क्रिप्टमध्ये कॉल, अप्लाय, बाइंड करणे — रितिक](https://dev.to/ritik_dev_js/what-the-hack-is-call-apply-bind-in-javascript-11ce)
+- [जावास्क्रिप्टमध्ये 'हे' मास्टर करणे: कॉलबॅक आणि बाइंड(), अप्लाय(), कॉल() — मिशेल गिनो](https://thenewstack.io/mastering-javascript-callbacks-bind-apply-call/)
+- [जावास्क्रिप्टचे अप्लाय, कॉल आणि बाइंड हे कुकआउट होस्ट करून स्पष्ट केले आहे — केविन कोनोनेन्को](https://dev.to/kbk0125/javascripts-apply-call-and-bind-explained-by-hosting-a-cookout-32jo)
+- [जावास्क्रिप्टमध्ये बाइंड, कॉल आणि अप्लाय कसे आणि केव्हा वापरायचे — आयगेन एक्स](https://www.eigenx.com/blog/https/mediumcom/eigen-x/how-and-when-to-use-bind-call-and-apply-in-javascript-77b6f42898fb)
+- [मी तुम्हाला 'हे' म्हणजे काय ते समजावून सांगतो. (जावास्क्रिप्ट) — जेसन यू](https://dev.to/ycmjason/let-me-explain-to-you-what-is-this-javascript-44ja)
+- [जावास्क्रिप्टमधील "हा" कीवर्ड समजून घेणे — पावन](https://medium.com/quick-code/understanding-the-this-keyword-in-javascript-cb76d4c7c5e8)
+- [जावास्क्रिप्टमधील हा आणि संदर्भ हा कीवर्ड कसा समजून घ्यावा — लुकास गिस्डर-डुबे](https://medium.freecodecamp.org/how-to-understand-the-keyword-this-and-context-in-javascript-cd624c6b74b8)
+- [जावास्क्रिप्टमध्ये हे काय आहे? — हृदयेश शर्मा](https://dev.to/_hridaysharma/what-the-heck-is-this-in-javascript-37n1)
+- [हे आणि जावास्क्रिप्टमध्ये बांधणे — ब्रायन बार्बर](https://dev.to/steelvoltage/this-and-bind-in-javascript-2pam)
+- [जावास्क्रिप्टमध्ये "हे" वापरून तुमची स्वच्छता राखण्यासाठी ३ तंत्रे — कार्ल](https://dev.to/canderson93/3-techniques-for-maintaining-your-sanity-using-this-in-javascript-3idf)
+- [जावास्क्रिप्टमध्ये "हा" कीवर्डवर प्रभुत्व मिळवणे — आकाश श्रीवास्तव](https://dev.to/aakashsr/mastering-the-javascript-this-keyword-4pfa)
+- [जावास्क्रिप्टमध्ये हे बंधन - ४. नवीन बंधन - स्पायरोस अर्गालियास](https://dev.to/sargalias/this-binding-in-javascript-4-new-binding-2p1n)
+- [जावास्क्रिप्टमधील 'हे' ची एक छोटी ओळख — नताली स्मिथ](https://dev.to/thatgalnatalie/a-quick-intro-to-this-in-javascript-2mhp)
+- [जावास्क्रिप्टमधील 'हे' कीवर्डशी संभाषण — करेन एफेरेयन](https://dev.to/developerkaren/a-conversation-with-the-this-keyword-in-javascript-3j6g)
+- [जावास्क्रिप्टमध्ये कॉल(), अप्लाय() आणि बाइंड() म्हणजे काय — अमिताव मिश्रा](https://jscurious.com/what-are-call-apply-and-bind-in-javascript/)
+- [जावास्क्रिप्टमधील 'हे' बाईंडिंग समजून घेणे — यासेमिन सिडम](https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d)
+- ['या' कीवर्डचे टॉप ७ अवघड प्रश्न](https://dmitripavlutin.com/javascript-this-interview-questions/)
     
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript call, apply and bind — techsith](https://www.youtube.com/watch?v=c0mLRpw-9rI)
-- [JavaScript Practical Applications of Call, Apply and Bind functions— techsith](https://www.youtube.com/watch?v=AYVYxezrMWA)
-- [JavaScript (call, bind, apply) — curious aatma](https://www.youtube.com/watch?v=Uy0NOXLBraE)
-- [Understanding Functions and 'this' In The World of ES2017 — Bryan Hughes](https://www.youtube.com/watch?v=AOSYY1_np_4)
-- [bind and this - Object Creation in JavaScript - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
-- [JS Function Methods call(), apply(), and bind() — Steve Griffith](https://www.youtube.com/watch?v=uBdH0iB1VDM)
-- [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
-- .[Javascript Interview Questions ( Call, Bind and Apply ) - Polyfills, Output Based, Explicit Binding - Roadside Coder] (https://youtu.be/VkmUOktYDAU?si=SdvLZ8FBmephPxjS)
+- [जावास्क्रिप्ट कॉल, अप्लाय आणि बाइंड — टेकसिथ](https://www.youtube.com/watch?v=c0mLRpw-9rI)
+- [जावास्क्रिप्ट कॉल, अप्लाय आणि बाइंड फंक्शन्सचे व्यावहारिक अनुप्रयोग— टेकसिथ](https://www.youtube.com/watch?v=AYVYxezrMWA)
+- [जावास्क्रिप्ट (कॉल, बाइंड, अप्लाय) — उत्सुक आत्मा](https://www.youtube.com/watch?v=Uy0NOXLBraE)
+- [ES2017 च्या जगात फंक्शन्स आणि 'हे' समजून घेणे — ब्रायन ह्यूजेस](https://www.youtube.com/watch?v=AOSYY1_np_4)
+- [बांध आणि हे - जावास्क्रिप्टमध्ये ऑब्जेक्ट क्रिएशन - FunFunFunction](https://www.youtube.com/watch?v=GhbhD1HR5vk)
+- [जेएस फंक्शन मेथड्स कॉल(), लागू(), आणि बांध() — स्टीव्ह ग्रिफिथ](https://www.youtube.com/watch?v=uBdH0iB1VDM)
+- [जावास्क्रिप्टमध्ये कॉल करा, लागू करा आणि बांधा पद्धत](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
+- [जावास्क्रिप्ट मुलाखत प्रश्न ( कॉल करा, बांधा आणि लागू करा ) - पॉलीफिल्स, आउटपुट आधारित, स्पष्ट बंधन - रोडसाइड कोडर] (https://youtu.be/VkmUOktYDAU?si=SdvLZ8FBmephPxjS)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 16. new, Constructor, instanceof and Instances
+## 16. new, Constructor, instanceof आणि Instances
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [JavaScript For Beginners: the 'new' operator — Brandon Morelli](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
--  [Let's demystify JavaScript's 'new' keyword — Cynthia Lee](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
--  [Constructor, operator "new" — JavaScript.Info](https://javascript.info/constructor-new)
--  [Understanding JavaScript Constructors — Faraz Kelhini](https://css-tricks.com/understanding-javascript-constructors/)
--  [Use Constructor Functions — Openclassrooms](https://openclassrooms.com/en/courses/3523231-learn-to-code-with-javascript/4379006-use-constructor-functions)
--  [Beyond `typeof` and `instanceof`: simplifying dynamic type checks — Dr. Axel Rauschmayer](http://2ality.com/2017/08/type-right.html)
--  [Function and Object, instances of each other — Kiro Risk](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
--  [JavaScript instanceof operator](https://flexiple.com/javascript/instanceof-javascript)
+- [नवशिक्यांसाठी जावास्क्रिप्ट: 'नवीन' ऑपरेटर — ब्रँडन मोरेली](https://codeburst.io/javascript-for-beginners-the-new-operator-cee35beb669e)
+- [जावास्क्रिप्टचा 'नवीन' कीवर्ड — सिंथिया ली](https://medium.freecodecamp.org/demystifying-javascripts-new-keyword-874df126184c)
+- [कन्स्ट्रक्टर, ऑपरेटर "नवीन" — JavaScript.Info](https://javascript.info/constructor-new)
+- [जावास्क्रिप्ट कन्स्ट्रक्टर्स समजून घेणे — फराज केल्हिनी](https://css-tricks.com/understanding-javascript-constructors/)
+- [कन्स्ट्रक्टर फंक्शन्स वापरा — ओपनक्लासरूम्स](https://openclassrooms.com/en/courses/3523231-learn-to-code-with-javascript/4379006-use-constructor-functions)
+- [`typeof` आणि `instanceof` च्या पलीकडे: डायनॅमिक प्रकार तपासणी सुलभ करणे — डॉ. अ‍ॅक्सेल रौशमेयर](http://2ality.com/2017/08/type-right.html)
+- [फंक्शन आणि ऑब्जेक्ट, एकमेकांचे उदाहरणे — किरो रिस्क](https://javascriptrefined.io/function-and-object-instances-of-each-other-1e1095d5faac)
+- [जावास्क्रिप्ट ऑपरेटरचे उदाहरण](https://flexiple.com/javascript/instanceof-javascript)
   
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 17. Prototype Inheritance and Prototype Chain
+## 17. प्रोटोटाइप इनहेरिटन्स आणि प्रोटोटाइप साखळी
 
-### Reference
+### संदर्भ:
 
--  [Inheritance and the prototype chain — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
+-  [वारसा आणि प्रोटोटाइप साखळी — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Javascript : Prototype vs Class — Valentin PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
--  [JavaScript engine fundamentals: optimizing prototypes — Mathias Bynens](https://mathiasbynens.be/notes/prototypes)
--  [JavaScript Prototype — NC Patro](https://codeburst.io/javascript-prototype-cb29d82b8809)
--  [Prototypes in JavaScript — Rupesh Mishra](https://hackernoon.com/prototypes-in-javascript-5bba2990e04b)
--  [Prototype in JavaScript: it's quirky, but here's how it works — Pranav Jindal](https://medium.freecodecamp.org/prototype-in-js-busted-5547ec68872)
--  [Understanding JavaScript: Prototype and Inheritance — Alexander Kondov](https://hackernoon.com/understanding-javascript-prototype-and-inheritance-d55a9a23bde2)
--  [Understanding Classes (ES5) and Prototypal Inheritance in JavaScript — Hridayesh Sharma](https://dev.to/_hridaysharma/understanding-classes-es5-and-prototypal-inheritance-in-javascript-n8d)
--  [prototype, **proto** and Prototypal inheritance in JavaScript — Varun Dey](https://dev.to/varundey/prototype-proto-and-prototypal-inheritance-in-javascript-2inl)
--  [Prototypal Inheritance — JavaScript.Info](https://javascript.info/prototype-inheritance)
--  [How To Work with Prototypes and Inheritance in JavaScript — Tania Rascia](https://www.digitalocean.com/community/tutorials/understanding-prototypes-and-inheritance-in-javascript)
--  [Master JavaScript Prototypes & Inheritance — Arnav Aggarwal](https://codeburst.io/master-javascript-prototypes-inheritance-d0a9a5a75c4e)
--  [JavaScript's Prototypal Inheritance Explained Using CSS — Nash Vail](https://medium.freecodecamp.org/understanding-prototypal-inheritance-in-javascript-with-css-93b2fcda75e4)
--  [Prototypal Inheritance in JavaScript — Jannis Redmann](https://gist.github.com/derhuerst/a585c4916b1c361cc6f0)
--  [Demystifying ES6 Classes And Prototypal Inheritance ― Neo Ighodaro](https://scotch.io/tutorials/demystifying-es6-classes-and-prototypal-inheritance)
--  [Intro To Prototypal Inheritance — Dharani Jayakanthan](https://dev.to/danny/intro-to-prototypal-inheritance---js-9di)
--  [Let's Build Prototypal Inheritance in JS — var-che](https://dev.to/varche/let-s-build-prototypal-inheritance-in-js-56mm)
--  [Objects, Prototypes and Classes in JavaScript — Atta](https://dev.to/attacomsian/objects-prototypes-and-classes-in-javascript-3i9b)
--  [The magical world of JavaScript prototypes — Belén](https://dev.to/ladybenko/the-magical-world-of-javascript-prototypes-1mhg)
--  [Understanding Prototypal Inheritance In JavaScript — Lawrence Eagles](https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4)
--  [Objects and Prototypes in JavaScript — Irena Popova](https://dev.to/irenejpopova/objects-and-prototypes-in-javascript-2eie)
+- [जावास्क्रिप्ट : प्रोटोटाइप विरुद्ध क्लास — व्हॅलेंटाईन PARSY](https://medium.com/@parsyval/javascript-prototype-vs-class-a7015d5473b)
+- [जावास्क्रिप्ट इंजिनची मूलतत्त्वे: प्रोटोटाइप ऑप्टिमायझ करणे — मॅथियास बायनेन्स](https://mathiasbynens.be/notes/prototypes)
+- [जावास्क्रिप्ट प्रोटोटाइप — NC Patro](https://codeburst.io/javascript-prototype-cb29d82b8809)
+- [जावास्क्रिप्टमधील प्रोटोटाइप — रूपेश मिश्रा](https://hackernoon.com/prototypes-in-javascript-5bba2990e04b)
+- [जावास्क्रिप्टमधील प्रोटोटाइप: ते विचित्र आहे, पण ते कसे कार्य करते ते येथे आहे — प्रणव जिंदाल](https://medium.freecodecamp.org/prototype-in-js-busted-5547ec68872)
+- [जावास्क्रिप्ट समजून घेणे: प्रोटोटाइप आणि इनहेरिटन्स — अलेक्झांडर कोंडोव्ह](https://hackernoon.com/understanding-javascript-prototype-and-inheritance-d55a9a23bde2)
+- [जावास्क्रिप्टमधील वर्ग (ES5) आणि प्रोटोटाइपल इनहेरिटन्स समजून घेणे — हृदयेश शर्मा](https://dev.to/_hridaysharma/understanding-classes-es5-and-prototypal-inheritance-in-javascript-n8d)
+- [जावास्क्रिप्टमधील प्रोटोटाइप, **प्रोटो** आणि प्रोटोटाइपल इनहेरिटन्स — वरुण डे](https://dev.to/varundey/prototype-proto-and-prototypal-inheritance-in-javascript-2inl)
+- [प्रोटोटाइपल इनहेरिटन्स — JavaScript.Info](https://javascript.info/prototype-inheritance)
+- [जावास्क्रिप्टमध्ये प्रोटोटाइप आणि इनहेरिटन्ससह कसे काम करावे — तानिया रसिया](https://www.digitalocean.com/community/tutorials/understanding-prototypes-and-inheritance-in-javascript)
+- [मास्टर जावास्क्रिप्ट प्रोटोटाइप आणि इनहेरिटन्स — अर्णव अग्रवाल](https://codeburst.io/master-javascript-prototypes-inheritance-d0a9a5a75c4e)
+- [जावास्क्रिप्टचा प्रोटोटाइपल इनहेरिटन्स CSS वापरून स्पष्ट केला आहे — नॅश वेल](https://medium.freecodecamp.org/understanding-prototypal-inheritance-in-javascript-with-css-93b2fcda75e4)
+- [प्रोटोटाइपल इनहेरिटन्स जावास्क्रिप्टमध्ये — जॅनिस रेडमन](https://gist.github.com/derhuerst/a585c4916b1c361cc6f0)
+- [ES6 वर्ग आणि प्रोटोटाइपल इनहेरिटन्सचे रहस्य उलगडणे ― निओ इघोडारो](https://scotch.io/tutorials/demystifying-es6-classes-and-prototypal-inheritance)
+- [प्रोटोटाइपल इनहेरिटन्सची ओळख — धरणी जयकांतन](https://dev.to/danny/intro-to-prototypal-inheritance---js-9di)
+- [चला JS मध्ये प्रोटोटाइपल इनहेरिटन्स तयार करूया — var-che](https://dev.to/varche/let-s-build-prototypal-inheritance-in-js-56mm)
+- [जावास्क्रिप्टमधील वस्तू, प्रोटोटाइप आणि वर्ग — अट्टा](https://dev.to/attacomsian/objects-prototypes-and-classes-in-javascript-3i9b)
+- [जावास्क्रिप्ट प्रोटोटाइपचे जादुई जग — बेलेन](https://dev.to/ladybenko/the-magical-world-of-javascript-prototypes-1mhg)
+- [जावास्क्रिप्टमधील प्रोटोटाइपल इनहेरिटन्स समजून घेणे — लॉरेन्स ईगल्स](https://dev.to/lawrence_eagles/understanding-prototypal-inheritance-in-javascript-4f31#chp-4)
+- [जावास्क्रिप्टमधील ऑब्जेक्ट्स आणि प्रोटोटाइप — इरेना पोपोवा](https://dev.to/irenejpopova/objects-and-prototypes-in-javascript-2eie)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [Javascript Prototype Inheritance — Avelx](https://www.youtube.com/watch?v=sOrtAjyk4lQ)
-- [JavaScript Prototype Inheritance Explained pt. I — techsith](https://www.youtube.com/watch?v=7oNWNlMrkpc)
-- [JavaScript Prototype Inheritance Explained pt. II — techsith](https://www.youtube.com/watch?v=uIlj6_z_wL8)
-- [JavaScript Prototype Inheritance Explained — Kyle Robinson](https://www.youtube.com/watch?v=qMO-LTOrJaE)
-- [Advanced Javascript - Prototypal Inheritance In 1 Minute](https://www.youtube.com/watch?v=G6l5CHl67HQ)
-- [An Overview Of Classical Javascript Classes and Prototypal Inheritance — Pentacode](https://www.youtube.com/watch?v=phwzuiJJPpQ)
-- [Object Oriented JavaScript - Prototype — The Net Ninja](https://www.youtube.com/watch?v=4jb4AYEyhRc)
-- [Prototype in JavaScript — kudvenkat](https://www.youtube.com/watch?v=2rkEbcptR64)
-- [JavaScript Using Prototypes — O'Reilly](https://www.youtube.com/watch?v=oCwCcNvaXAQ)
-- [A Beginner's Guide to Javascript's Prototype — Tyler Mcginnis](https://www.youtube.com/watch?v=XskMWBXNbp0)
-- [Prototypes in Javascript - p5.js Tutorial — The Coding Train](https://www.youtube.com/watch?v=hS_WqkyUah8)
+- [जावास्क्रिप्ट प्रोटोटाइप इनहेरिटन्स — एव्हेलक्स](https://www.youtube.com/watch?v=sOrtAjyk4lQ)
+- [जावास्क्रिप्ट प्रोटोटाइप इनहेरिटन्स स्पष्ट केलेले भाग १ — टेकसिथ](https://www.youtube.com/watch?v=7oNWNlMrkpc)
+- [जावास्क्रिप्ट प्रोटोटाइप इनहेरिटन्स स्पष्ट केलेले भाग १ II — techsith](https://www.youtube.com/watch?v=uIlj6_z_wL8)
+- [जावास्क्रिप्ट प्रोटोटाइप इनहेरिटन्स स्पष्ट केले — काइल रॉबिन्सन](https://www.youtube.com/watch?v=qMO-LTOrJaE)
+- [प्रगत जावास्क्रिप्ट - १ मिनिटात प्रोटोटाइपल इनहेरिटन्स](https://www.youtube.com/watch?v=G6l5CHl67HQ)
+- [शास्त्रीय जावास्क्रिप्ट वर्ग आणि प्रोटोटाइपल इनहेरिटन्सचा आढावा — पेंटाकोड](https://www.youtube.com/watch?v=phwzuiJJPpQ)
+- [ऑब्जेक्ट ओरिएंटेड जावास्क्रिप्ट - प्रोटोटाइप — द नेट निन्जा](https://www.youtube.com/watch?v=4jb4AYEyhRc)
+- [जावास्क्रिप्टमध्ये प्रोटोटाइप — kudvenkat](https://www.youtube.com/watch?v=2rkEbcptR64)
+- [प्रोटोटाइप वापरून जावास्क्रिप्ट — ओ'रेली](https://www.youtube.com/watch?v=oCwCcNvaXAQ)
+- [जावास्क्रिप्टच्या प्रोटोटाइपसाठी एक नवशिक्या मार्गदर्शक — टायलर मॅकगिनिस](https://www.youtube.com/watch?v=XskMWBXNbp0)
+- [जावास्क्रिप्टमधील प्रोटोटाइप - p5.js ट्यूटोरियल — द कोडिंग ट्रेन](https://www.youtube.com/watch?v=hS_WqkyUah8)
 
-### Books
+### पुस्तके
 
-- [You Don't Know JS, 1st Edition: this & Object Prototypes — Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
-- [The Principles of Object-Oriented JavaScript - Nicholas C. Zakas](https://www.google.com.pk/books/edition/The_Principles_of_Object_Oriented_JavaSc/rorlAwAAQBAJ?hl=en&gbpv=1&pg=PP1&printsec=frontcover)
+- [तुम्हाला माहिती नाही जेएस, पहिली आवृत्ती: हे आणि ऑब्जेक्ट प्रोटोटाइप्स — काइल सिम्पसन](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
+- [ऑब्जेक्ट-ओरिएंटेड जावास्क्रिप्टची तत्त्वे - निकोलस सी. झाकास](https://www.google.com.pk/पुस्तके/edition/The_Principles_of_Object_Oriented_JavaSc/rorlAwAAQBAJ?hl=en&gbpv=1&pg=PP1&printsec=frontcover)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 18. Object.create and Object.assign
+## 18. Object.create आणि Object.assign
 
-### Reference
+### संदर्भ:
 
--  [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create)
--  [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign)
+-  [Object.create() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/संदर्भ:/Global_Objects/Object/create)
+-  [Object.assign() — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/संदर्भ:/Global_Objects/Object/assign)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Object.create in JavaScript — Rupesh Mishra](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
--  [Object.create(): the New Way to Create Objects in JavaScript — Rob Gravelle](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
--  [Basic Inheritance with Object.create — Joshua Clanton](http://adripofjavascript.com/blog/drips/basic-inheritance-with-object-create.html)
--  [Object.create() In JavaScript — GeeksforGeeks](https://www.geeksforgeeks.org/object-create-javascript/)
--  [Understanding the difference between Object.create() and the new operator — Jonathan Voxland](https://medium.com/@jonathanvox01/understanding-the-difference-between-object-create-and-the-new-operator-b2a2f4749358)
--  [JavaScript Object Creation: Patterns and Best Practices — Jeff Mott](https://www.sitepoint.com/javascript-object-creation-patterns-best-practises/)
--  [Dealing With Objects in JavaScript With Object.assign, Object.keys and hasOwnProperty](https://www.digitalocean.com/community/tutorials/js-dealing-with-objects)
--  [Copying Objects in JavaScript ― Orinami Olatunji](https://scotch.io/bar-talk/copying-objects-in-javascript)
--  [JavaScript: Object.assign() — Thiago S. Adriano](https://codeburst.io/javascript-object-assign-bc9696dcbb6e)
--  [How to deep clone a JavaScript Object — Flavio Copes](https://flaviocopes.com/how-to-clone-javascript-object/)
--  [Object.create(): When and Why to Use — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
+- [जावास्क्रिप्टमध्ये ऑब्जेक्ट.क्रिएट — रूपेश मिश्रा](https://medium.com/@happymishra66/object-create-in-javascript-fa8674df6ed2)
+- [ऑब्जेक्ट.क्रिएट(): जावास्क्रिप्टमध्ये ऑब्जेक्ट्स तयार करण्याचा नवीन मार्ग — रॉब ग्रेव्हेल](https://www.htmlgoodies.com/beyond/javascript/object.create-the-new-way-to-create-objects-in-javascript.html)
+- [ऑब्जेक्ट.क्रिएटसह मूलभूत वारसा — जोशुआ क्लँटन](http://adripofjavascript.com/blog/drips/basic-inheritance-with-object-create.html)
+- [ऑब्जेक्ट.क्रिएट() जावास्क्रिप्टमध्ये — GeeksforGeeks](https://www.geeksforgeeks.org/object-create-javascript/)
+- [ऑब्जेक्ट.क्रिएट() आणि नवीन ऑपरेटरमधील फरक समजून घेणे — जोनाथन व्होक्सलँड](https://medium.com/@jonathanvox01/understanding-the-difference-between-object-create-and-the-new-operator-b2a2f4749358)
+- [जावास्क्रिप्ट ऑब्जेक्ट निर्मिती: नमुने आणि सर्वोत्तम पद्धती — जेफ मॉट](https://www.sitepoint.com/javascript-object-creation-patterns-best-practises/)
+- [जावास्क्रिप्टमध्ये ऑब्जेक्ट्सची डीलिंग ऑब्जेक्ट.असाइन, ऑब्जेक्ट.कीज आणि हॅजओनप्रॉपर्टीसह](https://www.digitalocean.com/community/tutorials/js-dealing-with-objects)
+- [जावास्क्रिप्टमध्ये ऑब्जेक्ट्सची कॉपी करणे ― ओरिनामी ओलाटुंजी](https://scotch.io/bar-talk/copying-objects-in-javascript)
+- [जावास्क्रिप्ट: Object.assign() — थियागो एस. एड्रियानो](https://codeburst.io/javascript-object-assign-bc9696dcbb6e)
+- [जावास्क्रिप्ट ऑब्जेक्ट डीप क्लोन कसे करावे — फ्लाविओ कोप्स](https://flaviocopes.com/how-to-clone-javascript-object/)
+- [ऑब्जेक्ट.क्रिएट(): केव्हा आणि का वापरावे — VZing](https://dev.to/vzing/object-create-when-and-why-to-use-20m9)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
 - [Object.assign() explained — Aaron Writes Code](https://www.youtube.com/watch?v=aw7NfYhR5rc)
 - [Object.assign() Method — techsith](https://www.youtube.com/watch?v=9Ky4X6inpi4)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
 ## 19. map, reduce, filter
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [JavaScript Functional Programming — map, filter and reduce — Bojan Gvozderac](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
--  [Learn map, filter and reduce in Javascript — João Miguel Cunha](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
--  [JavaScript's Map, Reduce, and Filter — Dan Martensen](https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter)
--  [How to Use Map, Filter, & Reduce in JavaScript — Peleke Sengstacke](https://code.tutsplus.com/tutorials/how-to-use-map-filter-reduce-in-javascript--cms-26209)
--  [JavaScript — Learn to Chain Map, Filter, and Reduce — Brandon Morelli](https://codeburst.io/javascript-learn-to-chain-map-filter-and-reduce-acd2d0562cd4)
--  [Javascript data structure with map, reduce, filter and ES6 — Deepak Gupta](https://codeburst.io/write-beautiful-javascript-with-%CE%BB-fp-es6-350cd64ab5bf)
--  [Understanding map, filter and reduce in Javascript — Luuk Gruijs](https://hackernoon.com/understanding-map-filter-and-reduce-in-javascript-5df1c7eee464)
--  [Functional Programming in JS: map, filter, reduce (Pt. 5) — Omer Goldberg](https://hackernoon.com/functional-programming-in-js-map-filter-reduce-pt-5-308a205fdd5f)
--  [JavaScript: Map, Filter, Reduce — William S. Vincent](https://wsvincent.com/functional-javascript-map-filter-reduce/)
--  [Arrow Functions: Fat and Concise Syntax in JavaScript — Kyle Pennell](https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/)
--  [JavaScript: Arrow Functions for Beginners — Brandon Morelli](https://codeburst.io/javascript-arrow-functions-for-beginners-926947fc0cdc)
--  [When (and why) you should use ES6 arrow functions — and when you shouldn't — Cynthia Lee](https://medium.freecodecamp.org/when-and-why-you-should-use-es6-arrow-functions-and-when-you-shouldnt-3d851d7f0b26)
--  [JavaScript — Learn & Understand Arrow Functions — Brandon Morelli](https://codeburst.io/javascript-learn-understand-arrow-functions-fe2083533946)
--  [(JavaScript )=> Arrow functions — sigu](https://medium.com/podiihq/javascript-arrow-functions-27d4c3334b83)
--  [Javascript.reduce() — Paul Anderson](https://medium.com/@panderson.dev/javascript-reduce-79aab078da23)
--  [Why you should replace forEach with map and filter in JavaScript — Roope Hakulinen](https://gofore.com/en/why-you-should-replace-foreach/)
--  [Simplify your JavaScript – Use .map(), .reduce(), and .filter() — Etienne Talbot](https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d)
--  [JavaScript's Reduce Method Explained By Going On a Diet — Kevin Kononenko](https://blog.codeanalogies.com/2018/07/24/javascripts-reduce-method-explained-by-going-on-a-diet/)
--  [Difference between map, filter and reduce in JavaScript — Amirata Khodaparast](https://medium.com/@amiratak88/difference-between-map-filter-and-reduce-in-javascript-822ff79d5160)
--  [Map⇄Filter⇄Reduce↻ — ashay mandwarya](https://hackernoon.com/map-filter-reduce-ebbed4be4201)
--  [Finding Your Way With .map() — Brandon Wozniewicz](https://medium.freecodecamp.org/finding-your-way-with-map-aecb8ca038f6)
--  [How to write your own map, filter and reduce functions in JavaScript — Hemand Nair](https://medium.freecodecamp.org/how-to-write-your-own-map-filter-and-reduce-functions-in-javascript-ab1e35679d26)
--  [How to Manipulate Arrays in JavaScript — Bolaji Ayodeji](https://www.freecodecamp.org/news/manipulating-arrays-in-javascript/)
--  [How to simplify your codebase with map(), reduce(), and filter() in JavaScript — Alex Permyakov](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f)
--  [.map(), .filter(), and .reduce() — Andy Pickle](https://dev.to/pickleat/map-filter-and-reduce-2efb)
--  [Map/Filter/Reduce Crash Course — Chris Achard](https://dev.to/chrisachard/map-filter-reduce-crash-course-5gan)
--  [Map, Filter and Reduce – Animated — JavaScript Teacher](https://medium.com/@js_tut/map-filter-and-reduce-animated-7fe391a35a47)
--  [Map, Filter, Reduce and others Arrays Iterators You Must Know to Become an Algorithms Wizard — Mauro Bono](https://dev.to/uptheirons78/map-filter-reduce-and-others-arrays-iterators-you-must-know-to-become-an-algorithms-wizard-4209)
--  [How to Use JavaScript's .map, .filter, and .reduce — Avery Duffin](https://betterprogramming.pub/how-to-javascripts-map-vs-filter-vs-reduce-80d87a5a0a24)
--  [Using .map(), .filter() and .reduce() properly — Sasanka Kudagoda](https://medium.com/javascript-in-plain-english/using-map-filter-and-reduce-properly-50e07f80c8b2)
--  [Mastering the JavaScript Reduce method ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
--  [JavaScript Map – How to Use the JS .map() Function (Array Method) — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
+- [जावास्क्रिप्ट फंक्शनल प्रोग्रामिंग — मॅप, फिल्टर आणि रिड्यूस — बोजान ग्वोज्डेरॅक](https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d)
+- [जावास्क्रिप्टमध्ये मॅप, फिल्टर आणि रिड्यूस शिका — जोआओ मिगुएल कुन्हा](https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4)
+- [जावास्क्रिप्टचा मॅप, रिड्यूस आणि फिल्टर — डॅन मार्टेनसेन](https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter)
+- [जावास्क्रिप्टमध्ये मॅप, फिल्टर आणि रिड्यूस कसे वापरावे — पेलेके सेंगस्टॅक](https://code.tutsplus.com/tutorials/how-to-use-map-filter-reduce-in-javascript--cms-26209)
+- [जावास्क्रिप्ट — नकाशा, फिल्टर आणि रिड्यूस साखळी करायला शिका — ब्रँडन मोरेली](https://codeburst.io/javascript-learn-to-chain-map-filter-and-reduce-acd2d0562cd4)
+- [नकाशा, रिड्यूस, फिल्टर आणि ES6 सह जावास्क्रिप्ट डेटा स्ट्रक्चर — दीपक गुप्ता](https://codeburst.io/write-beautiful-javascript-with-%CE%BB-fp-es6-350cd64ab5bf)
+- [जावास्क्रिप्टमध्ये नकाशा, फिल्टर आणि रिड्यूस समजून घेणे — लुक ग्रुइज](https://hackernoon.com/understanding-map-filter-and-reduce-in-javascript-5df1c7eee464)
+- [फंक्शनल प्रोग्रामिंग JS मध्ये: नकाशा, फिल्टर, कमी करा (पृष्ठ ५) — ओमर गोल्डबर्ग](https://hackernoon.com/functional-programming-in-js-map-filter-reduce-pt-5-308a205fdd5f)
+- [जावास्क्रिप्ट: नकाशा, फिल्टर, कमी करा — विल्यम एस. व्हिन्सेंट](https://wsvincent.com/functional-javascript-map-filter-reduce/)
+- [बाण कार्ये: जावास्क्रिप्टमध्ये चरबी आणि संक्षिप्त वाक्यरचना — काइल पेनेल](https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/)
+- [जावास्क्रिप्ट: नवशिक्यांसाठी बाण कार्ये — ब्रँडन मोरेली](https://codeburst.io/javascript-arrow-functions-for-beginners-926947fc0cdc)
+- [तुम्ही ES6 बाण कार्ये कधी (आणि का) वापरावीत — आणि कधी वापरू नये — सिंथिया ली](https://medium.freecodecamp.org/when-and-why-you-should-use-es6-arrow-functions-and-when-you-shouldnt-3d851d7f0b26)
+- [जावास्क्रिप्ट — बाण फंक्शन्स शिका आणि समजून घ्या — ब्रँडन मोरेली](https://codeburst.io/javascript-learn-understand-arrow-functions-fe2083533946)
+- [(जावास्क्रिप्ट) => बाण फंक्शन्स — सिगु](https://medium.com/podiihq/javascript-arrow-functions-27d4c3334b83)
+- [जावास्क्रिप्ट.reduce() — पॉल अँडरसन](https://medium.com/@panderson.dev/javascript-reduce-79aab078da23)
+- [तुम्ही forEach ला जावास्क्रिप्टमध्ये नकाशा आणि फिल्टरने का बदलावे — रूपे हाकुलिनेन](https://gofore.com/en/why-you-should-replace-foreach/)
+- [तुमची जावास्क्रिप्ट सोपी करा - .map(), .reduce(), आणि .filter() वापरा — एटिएन टॅलबोट](https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d)
+- [जावास्क्रिप्टची डाएट करून रिड्यूस करण्याची पद्धत स्पष्ट केली — केविन कोनोनेन्को](https://blog.codeanalogies.com/2018/07/24/javascripts-reduce-method-explained-by-going-on-a-diet/)
+- [जावास्क्रिप्टमध्ये मॅप, फिल्टर आणि रिड्यूसमधील फरक — अमिराता खोडापरस्त](https://medium.com/@amiratak88/difference-between-map-filter-and-reduce-in-javascript-822ff79d5160)
+- [नकाशा⇄फिल्टर⇄कमी↻ — ashay mandwarya](https://hackernoon.com/map-filter-reduce-ebbed4be4201)
+- [.map() वापरून तुमचा मार्ग शोधणे — ब्रँडन वोझ्निविझ](https://medium.freecodecamp.org/finding-your-way-with-map-aecb8ca038f6)
+- [जावास्क्रिप्टमध्ये तुमचा स्वतःचा नकाशा, फिल्टर आणि रिड्यूस फंक्शन्स कसे लिहायचे — हेमंड नायर](https://medium.freecodecamp.org/how-to-write-your-own-map-filter-and-reduce-functions-in-javascript-ab1e35679d26)
+- [कसे हाताळायचे जावास्क्रिप्टमधील अ‍ॅरे — बोलाजी आयोदेजी](https://www.freecodecamp.org/news/manipulating-arrays-in-javascript/)
+- [जावास्क्रिप्टमध्ये मॅप(), रिड्यूस() आणि फिल्टर() वापरून तुमचा कोडबेस कसा सोपा करायचा — अ‍ॅलेक्स परम्याकोव्ह](https://www.freecodecamp.org/news/15-useful-javascript-examples-of-map-reduce-and-filter-74cbbb5e0a1f)
+- [.map(), .filter(), आणि .reduce() — अँडी पिकल](https://dev.to/pickleat/map-filter-and-reduce-2efb)
+- [नकाशा/फिल्टर/कमी करा क्रॅश कोर्स — ख्रिस अचार्ड](https://dev.to/chrisachard/map-filter-reduce-crash-course-5gan)
+- [नकाशा, फिल्टर आणि रिड्यूस - अ‍ॅनिमेटेड - जावास्क्रिप्ट शिक्षक](https://medium.com/@js_tut/map-filter-and-reduce-animated-7fe391a35a47)
+- [अल्गोरिदम विझार्ड बनण्यासाठी तुम्हाला माहित असले पाहिजेत असे नकाशा, फिल्टर, रिड्यूस आणि इतर अ‍ॅरे इटरेटर्स — मौरो बोनो](https://dev.to/uptheirons78/map-filter-reduce-and-others-arrays-iterators-you-must-know-to-become-an-algorithms-wizard-4209)
+- [जावास्क्रिप्टचे .map, .filter आणि .reduce कसे वापरावे — एव्हरी डफिन](https://betterprogramming.pub/how-to-javascripts-map-vs-filter-vs-reduce-80d87a5a0a24)
+- [.map(), .filter() आणि .reduce() योग्यरित्या वापरणे — ससांका कुडागोडा](https://medium.com/javascript-in-plain-english/using-map-filter-and-reduce-properly-50e07f80c8b2)
+- [जावास्क्रिप्ट रिड्यूस पद्धतीवर प्रभुत्व मिळवणे ✂️ — sanderdebr](https://dev.to/sanderdebr/mastering-the-javascript-reduce-method-2foj)
+- [जावास्क्रिप्ट नकाशा – JS .map() फंक्शन कसे वापरावे (अ‍ॅरे पद्धत) — फ्रीकोडकॅम्प](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [Map, Filter and Reduce — Lydia Hallie](https://www.youtube.com/watch?v=UXiYii0Y7Nw)
-- [Map, Filter and Reduce - Akshaay Saini](https://youtu.be/zdp0zrpKzIE?si=6QusFzD6tmwn-el4)
-- [Functional JavaScript: Map, forEach, Reduce, Filter — Theodore Anderson](https://www.youtube.com/watch?v=vytzLlY_wmU)
-- [JavaScript Array superpowers: Map, Filter, Reduce (part I) — Michael Rosata](https://www.youtube.com/watch?v=qTeeVd8hOFY)
-- [JavaScript Array superpowers: Map, Filter, Reduce (part 2) — Michael Rosata](https://www.youtube.com/watch?v=gIm9xLYudL0)
-- [JavaScript Higher Order Functions - Filter, Map, Sort & Reduce — Epicop](https://www.youtube.com/watch?v=zYBeEPxNSbw)
-- [[Array Methods 2/3] .filter + .map + .reduce — CodeWithNick](https://www.youtube.com/watch?v=4qWlqD0yYTU)
-- [Arrow functions in JavaScript - What, Why and How — Fun Fun Function](https://www.youtube.com/watch?v=6sQDTgOqh-I)
-- [Learning Functional Programming with JavaScript — Anjana Vakil - JSUnconf](https://www.youtube.com/watch?v=e-5obm1G_FY&t=1521s)
-- [Map - Parte 2 JavaScript - Fun Fun Function](https://www.youtube.com/watch?v=bCqtb-Z5YGQ&t=17s)
-- [Reduce basics - Part 3 of FP in JavaScript - Fun Fun Function](https://www.youtube.com/watch?v=Wl98eZpkp-c)
-- [Reduce Advanced - Part 4 of FP in JavaScript - Fun Fun Function](https://www.youtube.com/watch?v=1DMolJ2FrNY&t=621s)
-- [reduce Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=IXp06KekEjM)
-- [map Array Method | JavaScript Tutorial - Florin Pop](https://www.youtube.com/watch?v=P4RAFdZDn3M)
-- [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
+- [नकाशा, फिल्टर आणि रिड्यूस — लिडिया हॅली](https://www.youtube.com/watch?v=UXiYii0Y7Nw)
+- [नकाशा, फिल्टर आणि रिड्यूस - अक्षय सैनी](https://youtu.be/zdp0zrpKzIE?si=6QusFzD6tmwn-el4)
+- [फंक्शनल जावास्क्रिप्ट: मॅप, फॉरईच, रिड्यूस, फिल्टर — थिओडोर अँडरसन](https://www.youtube.com/watch?v=vytzLlY_wmU)
+- [जावास्क्रिप्ट अ‍ॅरे सुपरपॉवर्स: मॅप, फिल्टर, रिड्यूस (भाग I) — मायकेल रोसाटा](https://www.youtube.com/watch?v=qTeeVd8hOFY)
+- [जावास्क्रिप्ट अ‍ॅरे सुपरपॉवर्स: मॅप, फिल्टर, रिड्यूस (भाग 2) — मायकेल रोसाटा](https://www.youtube.com/watch?v=gIm9xLYudL0)
+- [जावास्क्रिप्ट हायर ऑर्डर फंक्शन्स - फिल्टर, मॅप, सॉर्ट आणि रिड्यूस — एपिकॉप](https://www.youtube.com/watch?v=zYBeEPxNSbw)
+- [[अ‍ॅरे पद्धती २/३] .फिल्टर + .मॅप + .रेड्यूस — कोडविथनिक](https://www.youtube.com/watch?v=4qWlqD0yYTU)
+- [जावास्क्रिप्टमधील अ‍ॅरो फंक्शन्स - काय, का आणि कसे — मजेदार फन फंक्शन](https://www.youtube.com/watch?v=6sQDTgOqh-I)
+- [जावास्क्रिप्टसह फंक्शनल प्रोग्रामिंग शिकणे — अंजना वकील - JSUnconf](https://www.youtube.com/watch?v=e-5obm1G_FY&t=1521s)
+- [नकाशा - भाग २ जावास्क्रिप्ट - मजेदार फन फंक्शन](https://www.youtube.com/watch?v=bCqtb-Z5YGQ&t=17s)
+- [मूलभूत गोष्टी कमी करा - जावास्क्रिप्टमधील FP चा भाग ३ - फन फन फंक्शन](https://www.youtube.com/watch?v=Wl98eZpkp-c)
+- [रिड्यूस अॅडव्हान्स्ड - जावास्क्रिप्टमधील FP चा भाग ४ - फन फन फंक्शन](https://www.youtube.com/watch?v=1DMolJ2FrNY&t=621s)
+- [रिड्यूस अॅरे पद्धत | जावास्क्रिप्ट ट्यूटोरियल - फ्लोरिन पॉप](https://www.youtube.com/watch?v=IXp06KekEjM)
+- [मॅप अॅरे पद्धत | जावास्क्रिप्ट ट्यूटोरियल - फ्लोरिन पॉप](https://www.youtube.com/watch?v=P4RAFdZDn3M)
+- [१ मिनिटात वेगवेगळ्या अॅरे पद्धती | मिदुदेव (स्पॅनिश)](https://youtu.be/Ah7-PPjQ5Ls)
 
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 20. Pure Functions, Side Effects, State Mutation and Event Propagation
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [Javascript and Functional Programming — Pure Functions — Omer Goldberg](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
--  [Master the JavaScript Interview: What is a Pure Function? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
--  [JavaScript: What Are Pure Functions And Why Use Them? — James Jeffery](https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c)
--  [Pure functions in JavaScript — @nicoespeon](http://www.nicoespeon.com/en/2015/01/pure-functions-javascript/)
--  [Functional Programming: Pure Functions — Arne Brasseur](https://www.sitepoint.com/functional-programming-pure-functions/)
--  [Making your JavaScript Pure — Jack Franklin](https://alistapart.com/article/making-your-javascript-pure)
--  [Arrays, Objects and Mutations — Federico Knüssel](https://medium.com/@fknussel/arrays-objects-and-mutations-6b23348b54aa)
--  [The State of Immutability — Maciej Sikora](https://medium.com/dailyjs/the-state-of-immutability-169d2cd11310)
--  [Hablemos de Inmutabilidad — Kike Sanchez](https://medium.com/zurvin/hablemos-de-inmutabilidad-3dc65d290783)
--  [How to deal with dirty side effects in your pure functional JavaScript — James Sinclair](https://jrsinclair.com/articles/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
--  [Preventing Side Effects in JavaScript — David Walsh](https://davidwalsh.name/preventing-sideeffects-javascript)
--  [JavaScript: Pure Functions — William S. Vincent](https://wsvincent.com/javascript-pure-functions/)
--  [Functional programming paradigms in modern JavaScript: Pure functions — Alexander Kondov](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
--  [Understanding Javascript Mutation and Pure Functions — Chidume Nnamdi](https://blog.bitsrc.io/understanding-javascript-mutation-and-pure-functions-7231cc2180d3)
--  [Functional-ish JavaScript — Daniel Brain](https://medium.com/@bluepnume/functional-ish-javascript-205c05d0ed08)
--  [Event Propagation — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
--  [Event Propagation — Bubbling and capturing](https://javascript.info/bubbling-and-capturing)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [Pure Functions — Hexlet](https://www.youtube.com/watch?v=dZ41D6LDSBg)
-- [Pure Functions - Functional Programming in JavaScript — Paul McBride](https://www.youtube.com/watch?v=Jh_Uzqzz_wM)
-- [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
-- [JavaScript Pure vs Impure Functions Explained — Theodore Anderson](https://www.youtube.com/watch?v=AHbRVJzpB54)
-- [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
-- [Event Propagation - JavaScript Event Bubbling and Propagation - Steve Griffith](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 21. Closures
+## 20. प्यूअर फंक्शन्स, साईड इफेक्ट्स, स्टेट म्युटेशन आणि इव्हेंट प्रोपेगेशन
 
-### Reference
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Closures — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
--  [Closure — JavaScript.Info](https://javascript.info/closure)
+- [जावास्क्रिप्ट आणि फंक्शनल प्रोग्रामिंग — प्युअर फंक्शन्स — ओमर गोल्डबर्ग](https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c)
+- [जावास्क्रिप्ट मुलाखतीत प्रभुत्व मिळवा: प्युअर फंक्शन म्हणजे काय? — एरिक इलियट](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976)
+- [जावास्क्रिप्ट: प्युअर फंक्शन्स म्हणजे काय आणि ते का वापरावे? — जेम्स जेफरी](https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c)
+- [जावास्क्रिप्टमधील शुद्ध कार्ये — @nicoespeon](http://www.nicoespeon.com/en/2015/01/pure-functions-javascript/)
+- [फंक्शनल प्रोग्रामिंग: शुद्ध कार्ये — अर्ने ब्रासर](https://www.sitepoint.com/functional-programming-pure-functions/)
+- [तुमची जावास्क्रिप्ट शुद्ध बनवणे — जॅक फ्रँकलिन](https://alistapart.com/article/making-your-javascript-pure)
+- [अ‍ॅरे, ऑब्जेक्ट्स आणि म्युटेशन्स — फेडेरिको नुसेल](https://medium.com/@fknussel/arrays-objects-and-mutations-6b23348b54aa)
+- [द स्टेट अपरिवर्तनीयतेबद्दल — मॅसिएज सिकोरा](https://medium.com/dailyjs/the-state-of-immutability-169d2cd11310)
+- [अस्थिरतेचे आकर्षण — किके सांचेझ](https://medium.com/zurvin/hablemos-de-inmutabilidad-3dc65d290783)
+- [तुमच्या शुद्ध कार्यात्मक जावास्क्रिप्टमध्ये घाणेरड्या दुष्परिणामांना कसे सामोरे जावे — जेम्स सिंक्लेअर](https://jrsinclair.com/articles/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
+- [जावास्क्रिप्टमध्ये दुष्परिणाम रोखणे — डेव्हिड वॉल्श](https://davidwalsh.name/preventing-sideeffects-javascript)
+- [जावास्क्रिप्ट: शुद्ध कार्ये — विल्यम एस. व्हिन्सेंट](https://wsvincent.com/javascript-pure-functions/)
+- [आधुनिक जावास्क्रिप्टमधील फंक्शनल प्रोग्रामिंग पॅराडाइम्स: प्युअर फंक्शन्स — अलेक्झांडर कोंडोव्ह](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
+- [जावास्क्रिप्ट उत्परिवर्तन आणि प्युअर फंक्शन्स समजून घेणे — चिदुमे न्नामडी](https://blog.bitsrc.io/understanding-javascript-mutation-and-pure-functions-7231cc2180d3)
+- [फंक्शनल-इश जावास्क्रिप्ट — डॅनियल ब्रेन](https://medium.com/@bluepnume/functional-ish-javascript-205c05d0ed08)
+- [इव्हेंट प्रसार — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events)
+- [इव्हेंट प्रसार — बुडबुडे आणि कॅप्चरिंग](https://javascript.info/bubbling-and-capturing)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
--  [I never understood JavaScript closures — Olivier De Meulder](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
--  [Understand JavaScript Closures With Ease — Richard Bovell](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
--  [Understanding JavaScript Closures — Codesmith](https://codeburst.io/understanding-javascript-closures-da6aab330302)
--  [Understand Closures in JavaScript — Brandon Morelli](https://codeburst.io/understand-closures-in-javascript-d07852fa51e7)
--  [A simple guide to help you understand closures in JavaScript — Prashant Ram](https://medium.freecodecamp.org/javascript-closures-simplified-d0d23fa06ba4)
--  [Understanding JavaScript Closures: A Practical Approach — Paul Upendo](https://scotch.io/tutorials/understanding-javascript-closures-a-practical-approach)
--  [Understanding JavaScript: Closures — Alexander Kondov](https://hackernoon.com/understanding-javascript-closures-4188edf5ea1b)
--  [How to use JavaScript closures with confidence — Léna Faure](https://hackernoon.com/how-to-use-javascript-closures-with-confidence-85cd1f841a6b)
--  [JavaScript closures by example — tyler](https://howchoo.com/g/mge2mji2mtq/javascript-closures-by-example)
--  [JavaScript — Closures and Scope — Alex Aitken](https://codeburst.io/javascript-closures-and-scope-3784c75b9290)
--  [Discover the power of closures in JavaScript — Cristi Salcescu](https://medium.freecodecamp.org/discover-the-power-of-closures-in-javascript-5c472a7765d7)
--  [Getting Closure — RealLifeJS](http://reallifejs.com/the-meat/getting-closure/)
--  [Closure, Currying and IIFE in JavaScript — Ritik](https://dev.to/ritik_dev_js/what-the-hack-is-closure-currying-and-iife-in-javascript-32m9)
--  [Understanding Closures in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/a-beginners-guide-to-closures-in-javascript-97d372284dda)
--  [A basic guide to Closures in JavaScript — Parathan Thiyagalingam](https://medium.freecodecamp.org/a-basic-guide-to-closures-in-javascript-9fc8b7e3463e)
--  [Closures: Using Memoization — Brian Barbour](https://dev.to/steelvoltage/closures-using-memoization-3597)
--  [A Brief Introduction to Closures and Lexical Scoping in JavaScript — Ashutosh K Singh](https://betterprogramming.pub/a-brief-introduction-to-closures-and-lexical-scoping-in-javascript-8a5866496232)
--  [Demystify Closures — stereobooster](https://dev.to/stereobooster/demystify-closures-5g42)
--  [Scopes and Closures - JavaScript Concepts — Agney Menon](https://dev.to/boywithsilverwings/scopes-and-closures-javascript-concepts-4dfj)
--  [Understanding Closures in JavaScript — Matt Popovich](https://dev.to/mattpopovich/understanding-closures-in-javascript-3k0d)
--  [whatthefuck.is · A Closure - Dan Abramov](https://whatthefuck.is/closure)
--  [Closures in JavaScript can... - Brandon LeBoeuf](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
--  [Do you know Closures - Mohamed Khaled](https://dev.to/this_mkhy/do-you-know-es6-part-3-advanced-3fcl#Closures-2)
+- [शुद्ध कार्ये — हेक्सलेट](https://www.youtube.com/watch?v=dZ41D6LDSBg)
+- [शुद्ध कार्ये - जावास्क्रिप्टमधील कार्यात्मक प्रोग्रामिंग — पॉल मॅकब्राइड](https://www.youtube.com/watch?v=Jh_Uzqzz_wM)
+- [जावास्क्रिप्ट शुद्ध कार्ये — सेथ अलेक्झांडर](https://www.youtube.com/watch?v=frT3H-eBmPc)
+- [जावास्क्रिप्ट शुद्ध विरुद्ध अशुद्ध कार्ये स्पष्ट केली — थियोडोर अँडरसन](https://www.youtube.com/watch?v=AHbRVJzpB54)
+- [शुद्ध कार्ये - प्रोग्रामिंग फंक्शनल: भाग १ - मजेदार मजेदार कार्य](https://www.youtube.com/watch?v=BMUiFMZr7vk)
+- [इव्हेंट प्रसारण - जावास्क्रिप्ट कार्यक्रम बबलिंग आणि प्रसारण - स्टीव्ह ग्रिफिथ](https://www.youtube.com/watch?v=JYc7gr9Ehl0)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [JavaScript The Hard Parts: Closure, Scope & Execution Context - Codesmith](https://www.youtube.com/watch?v=XTAzsODSCsM)
-- [Namaste Javascript by Akshay Saini](https://youtu.be/qikxEIxsXco?si=fGFgUHuaOW49Wg9p)
-- [Javascript Closure — techsith](https://www.youtube.com/watch?v=71AtaJpJHw0)
-- [Closures — Fun Fun Function](https://www.youtube.com/watch?v=CQqwU2Ixu-U)
-- [Closures in JavaScript — techsith](https://www.youtube.com/watch?v=-xqJo5VRP4A)
-- [JavaScript Closures 101: What is a closure? — JavaScript Tutorials](https://www.youtube.com/watch?v=yiEeiMN2Khs)
-- [Closures — freeCodeCamp](https://www.youtube.com/watch?v=1JsJx1x35c0)
-- [JavaScript Closures — CodeWorkr](https://www.youtube.com/watch?v=-rLrGAXK8WE)
-- [Closures in JS - Akshay Saini](https://www.youtube.com/watch?v=qikxEIxsXco)
-- [CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre](https://youtu.be/xa8lhVwQBw4)
-- [Learn Closures In 7 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=3a0I8ICR1Vg)
-
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 22. High Order Functions
+## 21. क्लोजर्स
 
-### Books
+### संदर्भ:
 
--  [Eloquent JavaScript, 3rd Edition: Ch. 5 - Higher-order Functions](https://eloquentjavascript.net/05_higher_order.html)
+-  [क्लोजर्स — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)
+-  [क्लोजर्स — JavaScript.Info](https://javascript.info/closure)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Higher-Order Functions in JavaScript — M. David Green](https://www.sitepoint.com/higher-order-functions-javascript/)
--  [Higher Order Functions: Using Filter, Map and Reduce for More Maintainable Code — Guido Schmitz](https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528)
--  [First-class and Higher Order Functions: Effective Functional JavaScript — Hugo Di Francesco](https://hackernoon.com/effective-functional-javascript-first-class-and-higher-order-functions-713fde8df50a)
--  [Higher Order Functions in JavaScript — John Hannah](https://www.lullabot.com/articles/higher-order-functions-in-javascript)
--  [Just a reminder on how to use high order functions — Pedro Filho](https://github.com/pedroapfilho/high-order-functions)
--  [Understanding Higher-Order Functions in JavaScript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
--  [Higher Order Functions - A pragmatic approach — emmanuel ikwuoma](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
+- [मला जावास्क्रिप्ट क्लोजर कधीच समजले नाहीत — ऑलिव्हियर डी मेल्डर](https://medium.com/dailyjs/i-never-understood-javascript-closures-9663703368e8)
+- [जावास्क्रिप्ट क्लोजर सहजतेने समजून घ्या — रिचर्ड बोवेल](http://javascriptissexy.com/understand-javascript-closures-with-ease/)
+- [जावास्क्रिप्ट क्लोजर समजून घेणे — कोडस्मिथ](https://codeburst.io/understanding-javascript-closures-da6aab330302)
+- [जावास्क्रिप्ट क्लोजर समजून घ्या — ब्रँडन मोरेली](https://codeburst.io/understand-closures-in-javascript-d07852fa51e7)
+- [जावास्क्रिप्ट क्लोजर समजून घेण्यास मदत करण्यासाठी एक सोपी मार्गदर्शक — प्रशांत रॅम](https://medium.freecodecamp.org/javascript-closures-simplified-d0d23fa06ba4)
+- [जावास्क्रिप्ट क्लोजर समजून घेणे: एक व्यावहारिक दृष्टिकोन — पॉल उपेंडो](https://scotch.io/tutorials/understanding-javascript-closures-a-practical-approach)
+- [जावास्क्रिप्ट समजून घेणे: क्लोजर — अलेक्झांडर कोंडोव्ह](https://hackernoon.com/understanding-javascript-closures-4188edf5ea1b)
+- [जावास्क्रिप्ट क्लोजर आत्मविश्वासाने कसे वापरावे — लेना फॉर](https://hackernoon.com/how-to-use-javascript-closures-with-confidence-85cd1f841a6b)
+- [उदाहरणानुसार जावास्क्रिप्ट क्लोजर — टायलर](https://howchoo.com/g/mge2mji2mtq/javascript-closures-by-example)
+- [जावास्क्रिप्ट—क्लोजर आणि स्कोप — अ‍ॅलेक्स एटकेन](https://codeburst.io/javascript-closures-and-scope-3784c75b9290)
+- [जावास्क्रिप्टमध्ये क्लोजरची शक्ती शोधा—क्रिस्टी साल्सेस्कू](https://medium.freecodecamp.org/discover-the-power-of-closures-in-javascript-5c472a7765d7)
+- [क्लोजर मिळवणे—RealLifeJS](http://reallifejs.com/the-meat/getting-closure/)
+- [जावास्क्रिप्टमध्ये क्लोजर, करींग आणि IIFE—Ritik](https://dev.to/ritik_dev_js/what-the-hack-is-closure-currying-and-iife-in-javascript-32m9)
+- [क्लोजर समजून घेणे जावास्क्रिप्टमध्ये—सुखजिंदर अरोरा](https://blog.bitsrc.io/a-beginners-guide-to-closures-in-javascript-97d372284dda)
+- [जावास्क्रिप्टमध्ये क्लोजर करण्यासाठी एक मूलभूत मार्गदर्शक—परथन थियागलिंगम](https://medium.freecodecamp.org/a-basic-guide-to-closures-in-javascript-9fc8b7e3463e)
+- [क्लोजर: मेमोइझेशन वापरणे—ब्रायन बार्बर](https://dev.to/steelvoltage/closures-using-memoization-3597)
+- [जावास्क्रिप्टमध्ये क्लोजर आणि लेक्सिकल स्कोपिंगचा संक्षिप्त परिचय—आशुतोष के सिंग](https://betterprogramming.pub/a-brief-introduction-to-closures-and-lexical-scoping-in-javascript-8a5866496232)
+- [क्लोजर डिमिस्टिफाय करा—स्टेरिओबूस्टर](https://dev.to/stereobooster/demystify-closures-5g42)
+- [स्कोप्स आणि क्लोजर - जावास्क्रिप्ट संकल्पना—अ‍ॅग्ने मेनन](https://dev.to/boywithsilverwings/scopes-and-closures-javascript-concepts-4dfj)
+- [जावास्क्रिप्टमधील क्लोजर समजून घेणे—मॅट पोपोविच](https://dev.to/mattpopovich/understanding-closures-in-javascript-3k0d)
+- [whatthefuck.is · एक क्लोजर - डॅन अब्रामोव्ह](https://whatthefuck.is/closure)
+- [जावास्क्रिप्टमधील क्लोजर... - ब्रँडन लेबोउफ](https://dev.to/brandonleboeuf/closure-in-javascript-49n7)
+- [तुम्हाला क्लोजर माहित आहेत का - मोहम्मद खालेद](https://dev.to/this_mkhy/do-you-know-es6-part-3-advanced-3fcl#Closures-2)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript Higher Order Functions & Arrays — Traversy Media](https://www.youtube.com/watch?v=rRgD1yVwIvE)
-- [Higher Order Functions — Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
-- [Higher Order Functions in Javascript — Raja Yogan](https://www.youtube.com/watch?v=dTlpYnmBW9I)
-- [Higher Order Iterators in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=GYRMNp1SKXA)
-- [Higher Order Functions in JavaScript — The Coding Train](https://www.youtube.com/watch?v=H4awPsyugS0)
-- [Part 1: An Introduction to Callbacks and Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=7E8ctomPQJw)
-- [Part 2: Understanding Why We Need Higher Order Functions - Codesmith](https://www.youtube.com/watch?v=28MXziDZkE4)
-- [Higher-Order Functions ft. Functional Programming - Akshay Saini](https://www.youtube.com/watch?v=HkWxvB1RJq0)
+- [जावास्क्रिप्ट द हार्ड पार्ट्स: क्लोजर, स्कोप आणि एक्झिक्युशन कॉन्टेक्स्ट - कोडस्मिथ](https://www.youtube.com/watch?v=XTAzsODSCsM)
+- [नमस्ते जावास्क्रिप्ट अक्षय सैनी](https://youtu.be/qikxEIxsXco?si=fGFgUHuaOW49Wg9p)
+- [जावास्क्रिप्ट क्लोजर — टेकसिथ](https://www.youtube.com/watch?v=71AtaJpJHw0)
+- [क्लोजर — फन फन फंक्शन](https://www.youtube.com/watch?v=CQqwU2Ixu-U)
+- [जावास्क्रिप्टमधील क्लोजर — टेकसिथ](https://www.youtube.com/watch?v=-xqJo5VRP4A)
+- [जावास्क्रिप्ट क्लोजर १०१: क्लोजर म्हणजे काय? — JavaScript ट्यूटोरियल](https://www.youtube.com/watch?v=yiEeiMN2Khs)
+- [क्लोजर — freeCodeCamp](https://www.youtube.com/watch?v=1JsJx1x35c0)
+- [जावास्क्रिप्ट क्लोजर — कोडवर्कर](https://www.youtube.com/watch?v=-rLrGAXK8WE)
+- [JS मध्ये क्लोजर - अक्षय सैनी](https://www.youtube.com/watch?v=qikxEIxsXco)
+- [जावास्क्रिप्ट मध्ये क्लोजर: कसे आणि कसे कार्य करते - कार्लोस अझौस्ट्रे](https://youtu.be/xa8lhVwQBw4)
+- [७ मिनिटांत क्लोजर शिका - वेब डेव्हलपमेंट सरलीकृत](https://www.youtube.com/watch?v=3a0I8ICR1Vg)
 
-**[⬆ Back to Top](#table-of-contents)**
 
----
-
-## 23. Recursion
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [Recursion in JavaScript — Kevin Ennis](https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f)
--  [Understanding Recursion in JavaScript — Zak Frisch](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
--  [Learn and Understand Recursion in JavaScript — Brandon Morelli](https://codeburst.io/learn-and-understand-recursion-in-javascript-b588218e87ea)
--  [Recursion in Functional JavaScript — M. David Green](https://www.sitepoint.com/recursion-functional-javascript/)
--  [Programming with JS: Recursion — Alexander Kondov](https://hackernoon.com/programming-with-js-recursion-31371e2bf808)
--  [Anonymous Recursion in JavaScript — simo](https://dev.to/simov/anonymous-recursion-in-javascript)
--  [Recursion, iteration and tail calls in JS — loverajoel](http://www.jstips.co/en/javascript/recursion-iteration-and-tail-calls-in-js/)
--  [What is Recursion? A Recursive Function Explained with JavaScript Code Examples — Nathan Sebhastian](https://www.freecodecamp.org/news/what-is-recursion-in-javascript/)
--  [Intro to Recursion — Brad Newman](https://medium.com/@newmanbradm/intro-to-recursion-984a8bd50f4b)
--  [Accio Recursion!: Your New Favorite JavaScript Spell — Leanne Cabey](https://medium.datadriveninvestor.com/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3)
--  [Recursion Explained (with Examples) — Christina](https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [Recursion In JavaScript — techsith](https://www.youtube.com/watch?v=VtG0WAUvq2w)
-- [Recursion — Fun Fun Function](https://www.youtube.com/watch?v=k7-N8R0-KY4)
-- [Recursion and Recursive Functions — Hexlet](https://www.youtube.com/watch?v=vLhHyGTkjCs)
-- [Recursion: Recursion() — JS Monthly — Lucas da Costa](https://www.youtube.com/watch?v=kGXVsd8pBLw)
-- [Recursive Function in JavaScript — kudvenkat](https://www.youtube.com/watch?v=uyjsR9eNTIw)
-- [What on Earth is Recursion? — Computerphile](https://www.youtube.com/watch?v=Mv9NEXX1VHc)
-- [Javascript Tutorial 34: Introduction To Recursion — codedamn](https://www.youtube.com/watch?v=9NO5dXSlbv8)
-- [Recursion, Iteration, and JavaScript: A Love Story | JSHeroes 2018 — Anjana Vakil](https://www.youtube.com/watch?v=FmiQr4nfoPQ)
-- [Recursion crash course - Colt Steele](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
-- [What Is Recursion - In Depth - Web Dev Simplified](https://www.youtube.com/watch?v=6oDQaB2one8)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 24. Collections and Generators
+## 22. हाई-ऑर्डर फंक्शन्स
 
-### Reference
+### पुस्तके
 
--  [Generator — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)
+-  [सुस्पष्ट जावास्क्रिप्ट, तिसरी आवृत्ती: अध्याय ५ - उच्च-स्तरीय कार्ये](https://eloquentjavascript.net/05_higher_order.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [ES6 Collections: Using Map, Set, WeakMap, WeakSet — Kyle Pennell](https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/)
--  [ES6 WeakMaps, Sets, and WeakSets in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-weakmaps-sets-and-weaksets-in-depth)
--  [Map, Set, WeakMap and WeakSet — JavaScript.Info](https://javascript.info/map-set-weakmap-weakset)
--  [Maps in ES6 - A Quick Guide — Ben Mildren](https://dev.to/mildrenben/maps-in-es6---a-quick-guide-35pk)
--  [ES6 — Set vs Array — What and when? — Maya Shavin](https://medium.com/front-end-hacking/es6-set-vs-array-what-and-when-efc055655e1a)
--  [ES6 — Map vs Object — What and when? — Maya Shavin](https://medium.com/front-end-hacking/es6-map-vs-object-what-and-when-b80621932373)
--  [Array vs Set vs Map vs Object — Real-time use cases in Javascript (ES6/ES7) — Rajesh Babu](https://codeburst.io/array-vs-set-vs-map-vs-object-real-time-use-cases-in-javascript-es6-47ee3295329b)
--  [How to create an array of unique values in JavaScript using Sets — Claire Parker-Jones](https://dev.to/claireparker/how-to-create-an-array-of-unique-values-in-javascript-using-sets-5dg6)
--  [What You Should Know About ES6 Maps — Just Chris](https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e)
--  [ES6 Maps in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-maps-in-depth)
--  [What are JavaScript Generators and how to use them — Vladislav Stepanov](https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e)
--  [Understanding JavaScript Generators With Examples — Arfat Salman](https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
--  [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
--  [An Introduction to JavaScript Generators — Alice Kallaugher](https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224)
+- [जावास्क्रिप्टमध्ये उच्च-क्रम कार्ये — एम. डेव्हिड ग्रीन](https://www.sitepoint.com/higher-order-functions-javascript/)
+- [उच्च-क्रम कार्ये: अधिक देखभाल करण्यायोग्य कोडसाठी फिल्टर, मॅप आणि रिड्यूस वापरणे — गुइडो श्मिट्झ](https://medium.freecodecamp.org/higher-order-functions-in-javascript-d9101f9cf528)
+- [प्रथम-श्रेणी आणि उच्च-क्रम कार्ये: प्रभावी कार्यात्मक जावास्क्रिप्ट — ह्यूगो डी फ्रान्सिस्को](https://hackernoon.com/effective-functional-javascript-first-class-and-higher-order-functions-713fde8df50a)
+- [जावास्क्रिप्टमध्ये उच्च-क्रम कार्ये — जॉन हन्ना](https://www.lullabot.com/articles/higher-order-functions-in-javascript)
+- [उच्च-क्रम कार्ये कशी वापरायची याबद्दल फक्त एक आठवण — पेड्रो फिल्हो](https://github.com/pedroapfilho/high-order-functions)
+- [जावास्क्रिप्टमधील उच्च-क्रम फंक्शन्स समजून घेणे — सुखजिंदर अरोरा](https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad)
+- [उच्च-क्रम फंक्शन्स - एक व्यावहारिक दृष्टिकोन — इमॅन्युएल इक्वुओमा](https://dev.to/nuel_ikwuoma/higher-order-functions-a-pragmatic-approach-51fb)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript ES6 / ES2015 Set, Map, WeakSet and WeakMap — Traversy Media](https://www.youtube.com/watch?v=ycohYSx5h9w)
-- [JavaScript ES6 / ES2015 - \[11\] Generators - Traversy Media](https://www.youtube.com/watch?v=dcP039DYzmE)
-- [The Differences between ES6 Maps and Sets — Steve Griffith](https://www.youtube.com/watch?v=m4abICrldQI)
-- [Javascript Generators - THEY CHANGE EVERYTHING - ES6 Generators Harmony Generators — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
+- [जावास्क्रिप्ट हायर ऑर्डर फंक्शन्स आणि अ‍ॅरे — ट्रॅव्हर्सी मीडिया](https://www.youtube.com/watch?v=rRgD1yVwIvE)
+- [हायअर ऑर्डर फंक्शन्स — फन फन फंक्शन](https://www.youtube.com/watch?v=BMUiFMZr7vk)
+- [जावास्क्रिप्टमध्ये हायर ऑर्डर फंक्शन्स — राजा योगान](https://www.youtube.com/watch?v=dTlpYnmBW9I)
+- [जावास्क्रिप्टमध्ये हायर ऑर्डर इटरेटर्स — फन फन फंक्शन](https://www.youtube.com/watch?v=GYRMNp1SKXA)
+- [जावास्क्रिप्टमध्ये हायर ऑर्डर फंक्शन्स — द कोडिंग ट्रेन](https://www.youtube.com/watch?v=H4awPsyugS0)
+- [भाग १: कॉलबॅक आणि हायर ऑर्डर फंक्शन्सचा परिचय - कोडस्मिथ](https://www.youtube.com/watch?v=7E8ctomPQJw)
+- [भाग २: आपल्याला उच्च श्रेणीतील फंक्शन्सची आवश्यकता का आहे हे समजून घेणे - कोडस्मिथ](https://www.youtube.com/watch?v=28MXziDZkE4)
+- [उच्च श्रेणीतील फंक्शन्स ft. फंक्शनल प्रोग्रामिंग - अक्षय सैनी](https://www.youtube.com/watch?v=HkWxvB1RJq0)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 25. Promises
+## 23. रेकर्शन
 
-### Reference
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Promise — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)
+- [जावास्क्रिप्टमध्ये पुनरावृत्ती — केविन एनिस](https://medium.freecodecamp.org/recursion-in-javascript-1608032c7a1f)
+- [जावास्क्रिप्टमध्ये पुनरावृत्ती समजून घेणे — झॅक फ्रिश](https://medium.com/@zfrisch/understanding-recursion-in-javascript-992e96449e03)
+- [जावास्क्रिप्टमध्ये पुनरावृत्ती जाणून घ्या आणि समजून घ्या — ब्रँडन मोरेली](https://codeburst.io/learn-and-understand-recursion-in-javascript-b588218e87ea)
+- [फंक्शनल जावास्क्रिप्टमध्ये पुनरावृत्ती — एम. डेव्हिड ग्रीन](https://www.sitepoint.com/recursion-functional-javascript/)
+- [जेएससह प्रोग्रामिंग: पुनरावृत्ती — अलेक्झांडर कोंडोव्ह](https://hackernoon.com/programming-with-js-recursion-31371e2bf808)
+- [जावास्क्रिप्टमध्ये अनामिक पुनरावृत्ती — सिमो](https://dev.to/simov/anonymous-recursion-in-javascript)
+- [जेएसमध्ये पुनरावृत्ती, पुनरावृत्ती आणि टेल कॉल — loverajoel](http://www.jstips.co/en/javascript/recursion-iteration-and-tail-calls-in-js/)
+- [पुनरावृत्ती म्हणजे काय? जावास्क्रिप्ट कोड उदाहरणांसह स्पष्ट केलेले रिकर्सिव्ह फंक्शन — नॅथन सेभास्टियन](https://www.freecodecamp.org/news/what-is-recursion-in-javascript/)
+- [रिकर्शनची ओळख — ब्रॅड न्यूमन](https://medium.com/@newmanbradm/intro-to-recursion-984a8bd50f4b)
+- [अ‍ॅकिओ रिकर्शन!: तुमचा नवीन आवडता जावास्क्रिप्ट स्पेल — लीन कॅबे](https://medium.datadriveninvestor.com/accio-recursion-your-new-favorite-javascript-spell-7e10d3125fb3)
+- [रिकर्शन स्पष्ट केलेले (उदाहरणेसह) — क्रिस्टीना](https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
--  [JavaScript Promises for Dummies ― Jecelyn Yeen](https://scotch.io/tutorials/javascript-promises-for-dummies)
--  [Understanding promises in JavaScript — Gokul N K](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
--  [Master the JavaScript Interview: What is a Promise? — Eric Elliott](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261)
--  [An Overview of JavaScript Promises — Sandeep Panda](https://www.sitepoint.com/overview-javascript-promises/)
--  [How to use Promises in JavaScript — Prashant Ram](https://medium.freecodecamp.org/promises-in-javascript-explained-277b98850de)
--  [Implementing Promises In JavaScript — Maciej Cieslar](https://medium.freecodecamp.org/how-to-implement-promises-in-javascript-1ce2680a7f51)
--  [JavaScript: Promises explained with simple real life analogies — Shruti Kapoor](https://codeburst.io/javascript-promises-explained-with-simple-real-life-analogies-dd6908092138)
--  [Promises for Asynchronous Programming — Exploring JS](http://exploringjs.com/es6/ch_promises.html)
--  [JavaScript Promises Explained By Gambling At A Casino — Kevin Kononenko](https://blog.codeanalogies.com/2018/08/26/javascript-promises-explained-by-gambling-at-a-casino/)
--  [ES6 Promises: Patterns and Anti-Patterns — Bobby Brennan](https://medium.com/datafire-io/es6-promises-patterns-and-anti-patterns-bbb21a5d0918)
--  [A Simple Guide to ES6 Promises — Brandon Morelli](https://codeburst.io/a-simple-guide-to-es6-promises-d71bacd2e13a)
--  [The ES6 Promises — Manoj Singh Negi](https://codeburst.io/the-es6-promises-87a979ab27e4)
--  [ES6 Promises in Depth — Nicolás Bevacqua](https://ponyfoo.com/articles/es6-promises-in-depth)
--  [Playing with Javascript Promises: A Comprehensive Approach — Rajesh Babu](https://codeburst.io/playing-with-javascript-promises-a-comprehensive-approach-25ab752c78c3)
--  [How to Write a JavaScript Promise — Brandon Wozniewicz](https://medium.freecodecamp.org/how-to-write-a-javascript-promise-4ed8d44292b8)
--  [A Coding Writer's Guide: An Introduction To ES6 Promises — Andrew Ly](https://medium.com/@andrewly07/a-coding-writers-guide-an-introduction-to-es6-promises-9ff9f9e88f6c)
--  [Understanding Promises in JavaScript — Chris Noring](https://dev.to/itnext/reverse-engineering-understand-promises-1jfc)
--  [Converting callbacks to promises — Zell Liew](https://dev.to/zellwk/converting-callbacks-to-promises-nhn)
--  [JavaScript Promises: Zero To Hero Plus Cheat Sheet — Joshua Saunders](https://medium.com/dailyjs/javascript-promises-zero-to-hero-plus-cheat-sheet-64d75051cffa)
--  [Promises - JavaScript concepts — Agney Menon](https://dev.to/boywithsilverwings/promises-javascript-concepts-293c)
--  [Javascript `Promise` 101 — Igor Irianto](https://dev.to/iggredible/javascript-promise-101-3idl)
--  [Simplify JavaScript Promises — Sunny Singh](https://dev.to/sunnysingh/simplify-javascript-promises-4djb)
--  [JavaScript Visualized: Promises & Async/Await — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
--  [Promises in JavaScript — Peter Klingelhofer](https://dev.to/peterklingelhofer/promises-in-javascript-3h5k)
--  [Best Practices for ES6 Promises — Basti Ortiz](https://dev.to/somedood/best-practices-for-es6-promises-36da)
--  [Lo que debemos saber de EScript 2020 — Kike Sanchez](https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd)
--  [Promise Basics - javascript.info](https://javascript.info/promise-basics)
--  [The Complete JavaScript Promise Guide](https://blog.webdevsimplified.com/2021-09/javascript-promises)
--  [Promise Chaining - javascript.info](https://javascript.info/promise-chaining)
+- [जावास्क्रिप्टमध्ये पुनरावृत्ती — techsith](https://www.youtube.com/watch?v=VtG0WAUvq2w)
+- [पुनरावृत्ती — मजेदार मजेदार फंक्शन](https://www.youtube.com/watch?v=k7-N8R0-KY4)
+- [पुनरावृत्ती आणि पुनरावृत्ती कार्ये — हेक्सलेट](https://www.youtube.com/watch?v=vLhHyGTkjCs)
+- [पुनरावृत्ती: पुनरावृत्ती() — JS मासिक — लुकास दा कोस्टा](https://www.youtube.com/watch?v=kGXVsd8pBLw)
+- [जावास्क्रिप्टमध्ये पुनरावृत्ती कार्य — kudvenkat](https://www.youtube.com/watch?v=uyjsR9eNTIw)
+- [पुनरावृत्ती म्हणजे काय? — संगणकप्रसारक](https://www.youtube.com/watch?v=Mv9NEXX1VHc)
+- [जावास्क्रिप्ट ट्युटोरियल ३४: रिकर्शनचा परिचय — कोडेडॅमन](https://www.youtube.com/watch?v=9NO5dXSlbv8)
+- [रिकर्शन, इटरेशन आणि जावास्क्रिप्ट: एक प्रेमकथा | JSHeroes २०१८ — अंजना वकील](https://www.youtube.com/watch?v=FmiQr4nfoPQ)
+- [रिकर्शन क्रॅश कोर्स - कोल्ट स्टील](https://www.youtube.com/watch?v=lMBVwYrmFZQ&ab_channel=ColtSteele)
+- [रिकर्शन म्हणजे काय - खोलवर - वेब डेव्हलपमेंट सरलीकृत](https://www.youtube.com/watch?v=6oDQaB2one8)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+**[⬆ वर जा](#table-of-contents)**
 
-- [Let's Learn ES6 - Promises — Ryan Christiani](https://www.youtube.com/watch?v=vQ3MoXnKfuQ)
-- [JavaScript ES6 / ES2015 Promises — Traversy Media](https://www.youtube.com/watch?v=XJEHuBZQ5dU)
-- [Promises — Fun Fun Function](https://www.youtube.com/watch?v=2d7s3spWAzo)
-- [Error Handling Promises in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=f8IgdnYIwOU)
-- [Promises Part 1 - Topics of JavaScript/ES6 — The Coding Train](https://www.youtube.com/watch?v=QO4NXhWo_NM)
-- [JavaScript Promise in 100 Seconds](https://www.youtube.com/watch?v=RvYYCGs45L4)
-- [JavaScript Promise in 9 Minutes](https://youtu.be/3NjdOtHpcBM)
-- [JavaScript Promises In 10 Minutes — Web Dev Simplified ](https://www.youtube.com/watch?v=DHvZLI7Db8E)
-- [Promises | Ep 02 Season 02 - Namaste JavaScript - Akshay Saini ](https://youtu.be/ap-6PPAuK1Y?si=Ri1fopXeYjlrHzpf)
+---
 
-**[⬆ Back to Top](#table-of-contents)**
+## 24. कलेक्शन्स आणि जनरेटर
+
+### संदर्भ:
+
+-  [जनरेटर — MDN web docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/संदर्भ:/Global_Objects/Generator)
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [ES6 संग्रह: नकाशा, संच, कमकुवत नकाशा, कमकुवत सेट वापरणे — काइल पेनेल](https://www.sitepoint.com/es6-collections-map-set-weakmap-weakset/)
+- [ES6 कमकुवत नकाशा, संच आणि कमकुवत सेट खोलीत — निकोलस बेवाक्वा](https://ponyfoo.com/articles/es6-weakmaps-sets-and-weaksets-in-depth)
+- [नकाशा, संच, कमकुवत नकाशा आणि कमकुवत सेट — JavaScript.Info](https://javascript.info/map-set-weakmap-weakset)
+- [ES6 मधील नकाशे - एक जलद मार्गदर्शक — बेन मिल्ड्रेन](https://dev.to/mildrenben/maps-in-es6---a-quick-guide-35pk)
+- [ES6 — सेट विरुद्ध अ‍ॅरे — काय आणि केव्हा? — माया शविन](https://medium.com/front-end-hacking/es6-set-vs-array-what-and-when-efc055655e1a)
+- [ES6 — नकाशा विरुद्ध वस्तू — काय आणि केव्हा? — माया शविन](https://medium.com/front-end-hacking/es6-map-vs-object-what-and-when-b80621932373)
+- [अ‍ॅरे विरुद्ध सेट विरुद्ध मॅप विरुद्ध ऑब्जेक्ट — जावास्क्रिप्टमध्ये रिअल-टाइम वापराचे प्रकार (ES6/ES7) — राजेश बाबू](https://codeburst.io/array-vs-set-vs-map-vs-object-real-time-use-cases-in-javascript-es6-47ee3295329b)
+- [सेट्स वापरून जावास्क्रिप्टमध्ये अद्वितीय मूल्यांचा अ‍ॅरे कसा तयार करायचा — क्लेअर पार्कर-जोन्स](https://dev.to/claireparker/how-to-create-an-array-of-unique-values-in-javascript-using-sets-5dg6)
+- [ES6 नकाशे बद्दल तुम्हाला काय माहित असले पाहिजे — फक्त ख्रिस](https://hackernoon.com/what-you-should-know-about-es6-maps-dc66af6b9a1e)
+- [ES6 नकाशे खोलवर — निकोलस बेवाक्वा](https://ponyfoo.com/articles/es6-maps-in-depth)
+- [जावास्क्रिप्ट जनरेटर काय आहेत आणि ते कसे वापरावे — व्लादिस्लाव स्टेपानोव्ह](https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e)
+- [उदाहरणेसह जावास्क्रिप्ट जनरेटर समजून घेणे — अरफत सलमान](https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5)
+- [ES6 जनरेटरची मूलतत्त्वे — काइल सिम्पसन](https://davidwalsh.name/es6-generators)
+- [जावास्क्रिप्ट जनरेटरचा परिचय — अॅलिस कॅलागर](https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224)
+
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [जावास्क्रिप्ट ES6 / ES2015 सेट, मॅप, वीकसेट आणि वीकमॅप — ट्रॅव्हर्सी मीडिया](https://www.youtube.com/watch?v=ycohYSx5h9w)
+- [जावास्क्रिप्ट ES6 / ES2015 - \[11\] जनरेटर - ट्रॅव्हर्सी मीडिया](https://www.youtube.com/watch?v=dcP039DYzmE)
+- [ES6 नकाशे आणि सेटमधील फरक — स्टीव्ह ग्रिफिथ](https://www.youtube.com/watch?v=m4abICrldQI)
+- [जावास्क्रिप्ट जनरेटर - ते सर्वकाही बदलतात - ES6 जनरेटर हार्मनी जनरेटर — LearnCode.academy](https://www.youtube.com/watch?v=QO07THdLWQo)
+
+**[⬆ वर जा](#table-of-contents)**
+
+---
+
+## 25. प्रॉमिसेस
+
+### संदर्भ:
+
+-  [प्रॉमिस — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/संदर्भ:/Global_Objects/Promise)
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [डमींसाठी जावास्क्रिप्ट वचने ― जेसलिन यिन](https://scotch.io/tutorials/javascript-promises-for-dummies)
+- [जावास्क्रिप्टमधील वचने समजून घेणे — गोकुळ एन के](https://hackernoon.com/understanding-promises-in-javascript-13d99df067c1)
+- [जावास्क्रिप्ट मुलाखतीत प्रभुत्व मिळवा: वचन म्हणजे काय? — एरिक इलियट](https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-promise-27fc71e77261)
+- [जावास्क्रिप्ट वचनांचा आढावा — संदीप पांडा](https://www.sitepoint.com/overview-javascript-promises/)
+- [जावास्क्रिप्टमध्ये वचनांचा वापर कसा करायचा — प्रशांत राम](https://medium.freecodecamp.org/promises-in-javascript-explained-277b98850de)
+- [जावास्क्रिप्टमध्ये वचनांची अंमलबजावणी करणे — मॅकिएज सिसलर](https://medium.freecodecamp.org/how-to-implement-promises-in-javascript-1ce2680a7f51)
+- [जावास्क्रिप्ट: साध्या वास्तविक जीवनातील उपमांसह वचनांचे स्पष्टीकरण — श्रुती कपूर](https://codeburst.io/javascript-promises-explained-with-simple-real-life-analogies-dd6908092138)
+- [असिंक्रोनस प्रोग्रामिंगसाठी वचने — जेएस एक्सप्लोरिंग](http://exploringjs.com/es6/ch_promises.html)
+- [कॅसिनोमध्ये जुगार खेळून स्पष्ट केलेले जावास्क्रिप्ट वचने — केविन कोनोनेन्को](https://blog.codeanalogies.com/2018/08/26/javascript-promises-explained-by-gambling-at-a-casino/)
+- [ES6 वचने: नमुने आणि अँटी-नमुने — बॉबी ब्रेनन](https://medium.com/datafire-io/es6-promises-patterns-and-anti-patterns-bbb21a5d0918)
+- [ES6 वचनांसाठी एक साधी मार्गदर्शक — ब्रँडन मोरेली](https://codeburst.io/a-simple-guide-to-es6-promises-d71bacd2e13a)
+- [ES6 वचने — मनोज सिंग नेगी](https://codeburst.io/the-es6-promises-87a979ab27e4)
+- [ES6 वचने खोलवर — निकोलस बेवाक्वा](https://ponyfoo.com/articles/es6-promises-in-depth)
+- [जावास्क्रिप्ट वचनांसह खेळणे: एक व्यापक दृष्टिकोन — राजेश बाबू](https://codeburst.io/playing-with-javascript-promises-a-comprehensive-approach-25ab752c78c3)
+- [जावास्क्रिप्ट वचन कसे लिहावे — ब्रँडन वोझ्निविझ](https://medium.freecodecamp.org/how-to-write-a-javascript-promise-4ed8d44292b8)
+- [कोडिंग रायटर्स गाइड: ES6 प्रॉमिसेसचा परिचय — अँड्र्यू ली](https://medium.com/@andrewly07/a-coding-writers-guide-an-introduction-to-es6-promises-9ff9f9e88f6c)
+- [जावास्क्रिप्टमधील प्रॉमिसेस समजून घेणे — ख्रिस नोरिंग](https://dev.to/itnext/reverse-engineering-understand-promises-1jfc)
+- [कॉलबॅकचे प्रॉमिसेसमध्ये रूपांतर करणे — झेल लिव](https://dev.to/zellwk/converting-callbacks-to-promises-nhn)
+- [जावास्क्रिप्ट प्रॉमिसेस: झिरो टू हिरो प्लस चीट शीट — जोशुआ सॉन्डर्स](https://medium.com/dailyjs/javascript-promises-zero-to-hero-plus-cheat-sheet-64d75051cffa)
+- [वचन - जावास्क्रिप्ट संकल्पना — अ‍ॅग्नी मेनन](https://dev.to/boywithsilverwings/promises-javascript-concepts-293c)
+- [जावास्क्रिप्ट `प्रॉमिस` १०१ — इगोर इरियान्टो](https://dev.to/iggredible/javascript-promise-101-3idl)
+- [जावास्क्रिप्ट वचने सरलीकृत करा — सनी सिंग](https://dev.to/sunnysingh/simplify-javascript-promises-4djb)
+- [जावास्क्रिप्ट दृश्यमान: वचने आणि असिंक्रोनस/प्रतीक्षा — लिडिया हॅली](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
+- [जावास्क्रिप्टमधील आश्वासने — पीटर क्लिंगेलहोफर](https://dev.to/peterklingelhofer/promises-in-javascript-3h5k)
+- [ES6 आश्वासनांसाठी सर्वोत्तम पद्धती — बस्ती ऑर्टिज](https://dev.to/somedood/best-practices-for-es6-promises-36da)
+- [लो क्यू डेबमोस सेबर डी ईस्क्रिप्ट २०२० — किके सांचेझ](https://medium.com/zurvin/lo-que-debemos-saber-de-escript-2020-5fc61da5e4cd)
+- [वचन मूलभूत गोष्टी - javascript.info](https://javascript.info/promise-basics)
+- [पूर्ण जावास्क्रिप्ट वचन मार्गदर्शक](https://blog.webdevsimplified.com/2021-09/javascript-promises)
+- [वचन साखळी - javascript.info](https://javascript.info/promise-chaining)
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [चला ES6 शिकूया - वचने — रायन ख्रिस्तियानी](https://www.youtube.com/watch?v=vQ3MoXnKfuQ)
+- [जावास्क्रिप्ट ES6 / ES2015 वचने — ट्रॅव्हर्सी मीडिया](https://www.youtube.com/watch?v=XJEHuBZQ5dU)
+- [प्रॉमिसेस — फन फन फंक्शन](https://www.youtube.com/watch?v=2d7s3spWAzo)
+- [जावास्क्रिप्टमधील वचने हाताळण्यात त्रुटी — फन फन फंक्शन](https://www.youtube.com/watch?v=f8IgdnYIwOU)
+- [प्रॉमिसेस भाग १ - जावास्क्रिप्ट/ES6 चे विषय — द कोडिंग ट्रेन](https://www.youtube.com/watch?v=QO4NXhWo_NM)
+- [जावास्क्रिप्ट वचन १०० मध्ये सेकंद](https://www.youtube.com/watch?v=RvYYCGs45L4)
+- [जावास्क्रिप्ट वचन ९ मिनिटांत](https://youtu.be/3NjdOtHpcBM)
+- [जावास्क्रिप्ट वचन १० मिनिटांत — वेब डेव्हलपमेंट सरलीकृत](https://www.youtube.com/watch?v=DHvZLI7Db8E)
+- [वचन | भाग ०२ सीझन ०२ - नमस्ते जावास्क्रिप्ट - अक्षय सैनी](https://youtu.be/ap-6PPAuK1Y?si=Ri1fopXeYjlrHzpf)
+
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
 ## 26. async/await
 
-### Reference
+### संदर्भ:
 
 -  [async/await — JavaScript.Info](https://javascript.info/async-await)
 
-### Books
+### पुस्तके
 
--  [Eloquent JavaScript, 3rd Edition: Ch. 11 - Asynchronous Programming](https://eloquentjavascript.net/11_async.html)
--  [Exploring JS: Asynchronous Programming](http://exploringjs.com/es6/ch_async.html)
+-  [एलोक्वंट जावास्क्रिप्ट, तिसरी आवृत्ती: अध्याय ११ - असिंक्रोनस प्रोग्रामिंग](https://eloquentjavascript.net/11_async.html)
+-  [जेएस एक्सप्लोर करणे: असिंक्रोनस प्रोग्रामिंग](http://exploringjs.com/es6/ch_async.html)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Understanding async/await in Javascript — Gokul N K](https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c)
--  [Asynchronous Javascript using async/await — Joy Warugu](https://scotch.io/tutorials/asynchronous-javascript-using-async-await)
--  [Modern Asynchronous JavaScript with async/await — Flavio Copes](https://flaviocopes.com/javascript-async-await/)
--  [Javascript — ES8 Introducing async/await Functions — Ben Garrison](https://medium.com/@_bengarrison/javascript-es8-introducing-async-await-functions-7a471ec7de8a)
--  [How to escape async/await hell — Aditya Agarwal](https://medium.freecodecamp.org/avoiding-the-async-await-hell-c77a0fb71c4c)
--  [Understanding JavaScript's async await — Nicolás Bevacqua](https://ponyfoo.com/articles/understanding-javascript-async-await)
--  [JavaScript Async/Await: Serial, Parallel and Complex Flow — TechBrij](https://techbrij.com/javascript-async-await-parallel-sequence)
--  [From JavaScript Promises to Async/Await: why bother? — Chris Nwamba](https://blog.pusher.com/promises-async-await/)
--  [Flow Control in Modern JS: Callbacks to Promises to Async/Await — Craig Buckler](https://www.sitepoint.com/flow-control-callbacks-promises-async-await/)
--  [How to improve your asynchronous Javascript code with async and await — Indrek Lasn](https://medium.freecodecamp.org/improve-your-asynchronous-javascript-code-with-async-and-await-c02fc3813eda)
--  [Making Fetches Easy With Async Await — Mickey Sheridan](https://medium.com/@micksheridan.24/making-fetches-easy-with-async-await-8a1246efa1f6)
--  [7 Reasons Why JavaScript Async/Await Is Better Than Plain Promises — Mostafa Gaafar](https://dev.to/gafi/7-reasons-to-always-use-async-await-over-plain-promises-tutorial-4ej9)
--  [Asynchronous Operations in JavaScript — Jscrambler](https://dev.to/jscrambler/asynchronous-operations-in-javascript-2p6b)
--  [JavaScript: Promises or async-await — Gokul N K](https://medium.com/better-programming/should-i-use-promises-or-async-await-126ab5c98789)
--  [Async / Await: From Zero to Hero — Zhi Yuan](https://dev.to/zhiyuanamos/async-await-from-zero-to-hero-a22)
--  [JavaScript Visualized: Promises & Async/Await — Lydia Hallie](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
--  [Making asynchronous programming easier with async and await — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asynchronous/Async_await)
--  [JavaScript Async/Await Tutorial – Learn Callbacks, Promises, and Async/Await in JS by Making Ice Cream](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
--  [Better Than Promises - JavaScript Async/Await](https://blog.webdevsimplified.com/2021-11/async-await/)
+- [जावास्क्रिप्टमध्ये असिंक्रोनस/प्रतीक्षा समजून घेणे — गोकुल एन के](https://hackernoon.com/understanding-async-await-in-javascript-1d81bb079b2c)
+- [असिंक्रोनस/प्रतीक्षा वापरून असिंक्रोनस जावास्क्रिप्ट — जॉय वारुगु](https://scotch.io/tutorials/asynchronous-javascript-using-async-await)
+- [असिंक्रोनस/प्रतीक्षासह आधुनिक असिंक्रोनस जावास्क्रिप्ट — फ्लाविओ कोप्स](https://flaviocopes.com/javascript-async-await/)
+- [जावास्क्रिप्ट — ES8 असिंक्रोनस/प्रतीक्षा फंक्शन्स सादर करत आहे — बेन गॅरिसन](https://medium.com/@_bengarrison/javascript-es8-introducing-async-await-functions-7a471ec7de8a)
+- [असिंक्रोनस/प्रतीक्षा नरकातून कसे बाहेर पडायचे — आदित्य अग्रवाल](https://medium.freecodecamp.org/avoiding-the-async-await-hell-c77a0fb71c4c)
+- [जावास्क्रिप्टचे असिंक वेट समजून घेणे — निकोलस बेवाक्वा](https://ponyfoo.com/articles/understanding-javascript-async-await)
+- [जावास्क्रिप्ट असिंक/वेट: सिरीयल, पॅरलल आणि कॉम्प्लेक्स फ्लो — टेकब्रिज](https://techbrij.com/javascript-async-await-parallel-sequence)
+- [जावास्क्रिप्ट प्रॉमिसेसपासून असिंक/वेट पर्यंत: त्रास का? — क्रिस न्वांबा](https://blog.pusher.com/promises-async-await/)
+- [मॉडर्न जेएसमध्ये फ्लो कंट्रोल: अ‍ॅसिंक/अवेटच्या वचनांना कॉलबॅक — क्रेग बकलर](https://www.sitepoint.com/flow-control-callbacks-promises-async-await/)
+- [अ‍ॅसिंक आणि अ‍ॅवेटसह तुमचा अ‍ॅसिंक्रोनस जावास्क्रिप्ट कोड कसा सुधारायचा — इंद्रेक लासन](https://medium.freecodecamp.org/improve-your-asynchronous-javascript-code-with-async-and-await-c02fc3813eda)
+- [अ‍ॅसिंक अवेटसह फेच करणे सोपे करणे — मिकी शेरीडन](https://medium.com/@micksheridan.24/making-fetches-easy-with-async-await-8a1246efa1f6)
+- [जावास्क्रिप्ट अ‍ॅसिंक/अवेट चांगले का आहे याची ७ कारणे साध्या आश्वासनांपेक्षा — मुस्तफा गफर](https://dev.to/gafi/7-reasons-to-always-use-async-await-over-plain-promises-tutorial-4ej9)
+- [जावास्क्रिप्टमध्ये असिंक्रोनस ऑपरेशन्स — Jscrambler](https://dev.to/jscrambler/asynchronous-operations-in-javascript-2p6b)
+- [जावास्क्रिप्ट: प्रॉमिसेस किंवा असिंक्रोनस-वेट — गोकुल एन के](https://medium.com/better-programming/should-i-use-promises-or-async-await-126ab5c98789)
+- [असिंक्रोनस / वाट पहा: शून्यापासून हिरोपर्यंत — झी युआन](https://dev.to/zhiyuanamos/async-await-from-zero-to-hero-a22)
+- [जावास्क्रिप्ट व्हिज्युअलाइज्ड: प्रॉमिसेस आणि असिंक्रोनस/वेट पहा — लिडिया हॅली](https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke)
+- [अ‍ॅसिंक आणि अ‍ॅवेट वापरून अ‍ॅसिंकॉनस प्रोग्रामिंग सोपे करणे — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Asyncronous/Async_await)
+- [जावास्क्रिप्ट अ‍ॅसिंक/अ‍ॅवेट ट्युटोरियल - आईस्क्रीम बनवून JS मध्ये कॉलबॅक, प्रॉमिसेस आणि अ‍ॅसिंक/अ‍ॅवेट शिका](https://www.freecodecamp.org/news/javascript-async-await-tutorial-learn-callbacks-promises-async-await-by-making-icecream/)
+- [बेटटर दॅन प्रॉमिसेस - जावास्क्रिप्ट अ‍ॅसिंक/अ‍ॅवेट](https://blog.webdevsimplified.com/2021-11/async-await/)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [Asynchronous JavaScript Crash Course](https://www.youtube.com/watch?v=exBgWAIeIeg)
-- [Async + Await — Wes Bos](https://www.youtube.com/watch?v=9YkUCxvaLEk)
-- [Asynchrony: Under the Hood — Shelley Vohr](https://www.youtube.com/watch?v=SrNQS8J67zc)
-- [async/await in JavaScript - What, Why and How — Fun Fun Function](https://www.youtube.com/watch?v=568g8hxJJp4&index=3&list=PL0zVEGEvSaeHJppaRLrqjeTPnCH6)
-- [async/await Part 1 - Topics of JavaScript/ES8 — The Coding Train](https://www.youtube.com/watch?v=XO77Fib9tSI&index=3&list=PLRqwX-V7Uu6bKLPQvPRNNE65kBL62mVfx)
-- [async/await Part 2 - Topics of JavaScript/ES8 — The Coding Train](https://www.youtube.com/watch?v=chavThlNz3s&index=4&list=PLRqwX-V7Uu6bKLPQvPRNNE65kBL62mVfx)
-- [Complete Guide to JS Async & Await ES2017/ES8 — Colt Steele](https://www.youtube.com/watch?v=krAYA4rvbdA)
-- [Tips for using async/await in JavaScript — James Q Quick](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
-- [JavaScript Async Await — Web Dev Simplified](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
-- [Promise async and await in javascript — Hitesh Choudhary](https://youtu.be/Gjbr21JLfgg?si=SDCVKr9ONw2GsNdT)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 27. Data Structures
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [Data Structures in JavaScript — Thon Ly](https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c)
--  [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb)
--  [Data Structures: Objects and Arrays ― Chris Nwamba](https://scotch.io/courses/10-need-to-know-javascript-concepts/data-structures-objects-and-arrays)
--  [Data structures in JavaScript — Benoit Vallon](http://blog.benoitvallon.com/data-structures-in-javascript/data-structures-in-javascript/)
--  [Playing with Data Structures in Javascript — Anish K.](https://blog.cloudboost.io/playing-with-data-structures-in-javascript-stack-a55ebe50f29d)
--  [The Little Guide of Queue in JavaScript — Germán Cutraro](https://hackernoon.com/the-little-guide-of-queue-in-javascript-4f67e79260d9)
--  [All algorithms writing with JavaScript in the book 'Algorithms Fourth Edition'](https://github.com/barretlee/algorithms)
--  [Collection of classic computer science paradigms in JavaScript](https://github.com/nzakas/computer-science-in-javascript)
--  [All the things you didn't know you wanted to know about data structures](https://github.com/jamiebuilds/itsy-bitsy-data-structures)
--  [JavaScript Data Structures: 40 Part Series — miku86](https://dev.to/miku86/series/3259)
--  [Data Structures: Understanding Graphs — Rachel Hawa](https://medium.com/javascript-in-plain-english/data-structures-understanding-graphs-82509d35e6b5)
--  [Data Structures Two Ways: Linked List (Pt 1) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-2n61)
--  [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
--  [Graph Data Structures Explained in JavaScript — Adrian Mejia](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [Algorithms In Javascript | Ace Your Interview — Eduonix Learning Solutions](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
-- [Data Structures and Algorithms in JavaScript — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
-- [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
-- [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
-
-**[⬆ Back to Top](#table-of-contents)**
+- [असिंक्रोनस जावास्क्रिप्ट क्रॅश कोर्स](https://www.youtube.com/watch?v=exBgWAIeIeg)
+- [असिंक्रोनस + अवेट — वेस बॉस](https://www.youtube.com/watch?v=9YkUCxvaLEk)
+- [असिंक्रोनी: हुड अंतर्गत — शेली वोहर](https://www.youtube.com/watch?v=SrNQS8J67zc)
+- [जावास्क्रिप्टमध्ये असिंक्रोनस/अवेट - काय, का आणि कसे — मजेदार फन फंक्शन](https://www.youtube.com/watch?v=568g8hxJJp4&index=3&list=PL0zVEGEvSaeHJppaRLrqjeTPnCH6)
+- [असिंक्रोनस/अवेट भाग १ - जावास्क्रिप्ट/ES8 चे विषय — कोडींग ट्रेन](https://www.youtube.com/watch?v=XO77Fib9tSI&index=3&list=PLRqwX-V7Uu6bKLPQvPRNNE65kBL62mVfx)
+- [async/await भाग २ - जावास्क्रिप्ट/ES8 चे विषय — कोडींग ट्रेन](https://www.youtube.com/watch?v=chavThlNz3s&index=4&list=PLRqwX-V7Uu6bKLPQvPRNNE65kBL62mVfx)
+- [JS Async आणि Await ES2017/ES8 साठी संपूर्ण मार्गदर्शक — कोल्ट स्टील](https://www.youtube.com/watch?v=krAYA4rvbdA)
+- [जावास्क्रिप्टमध्ये async/await वापरण्यासाठी टिप्स — जेम्स क्यू क्विक](https://www.youtube.com/watch?v=_9vgd9XKlDQ)
+- [जावास्क्रिप्ट असिंक प्रतीक्षा — वेब डेव्हलपर सरलीकृत](https://www.youtube.com/watch?v=V_Kr9OSfDeU)
+- [जावास्क्रिप्टमध्ये असिंक आणि प्रतीक्षा करण्याचे वचन द्या — हितेश चौधरी](https://youtu.be/Gjbr21JLfgg?si=SDCVKr9ONw2GsNdT)
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 28. Expensive Operation and Big O Notation
+## 27. डेटा स्ट्रक्चर्स
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Big O Notation in Javascript — César Antón Dorantes](https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b)
--  [Time Complexity/Big O Notation — Tim Roberts](https://medium.com/javascript-scene/time-complexity-big-o-notation-1a4310c3ee4b)
--  [Big O in JavaScript — Gabriela Medina](https://medium.com/@gmedina229/big-o-in-javascript-36ff67766051)
--  [Big O Search Algorithms in JavaScript — Bradley Braithwaite](https://www.bradoncode.com/blog/2012/04/big-o-algorithm-examples-in-javascript.html)
--  [Algorithms in plain English: time complexity and Big-O Notation — Michael Olorunnisola](https://medium.freecodecamp.org/time-is-complex-but-priceless-f0abd015063c)
--  [An Introduction to Big O Notation — Joseph Trettevik](https://dev.to/lofiandcode/an-introduction-to-big-o-notation-210o)
+- [जावास्क्रिप्टमधील डेटा स्ट्रक्चर्स — थॉन ली](https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c)
+- [जावास्क्रिप्टमधील अल्गोरिदम आणि डेटा स्ट्रक्चर्स — ओलेक्सी ट्रेखलेब](https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb)
+- [डेटा स्ट्रक्चर्स: ऑब्जेक्ट्स आणि अ‍ॅरे ― ख्रिस न्वाम्बा](https://scotch.io/courses/10-need-to-know-javascript-concepts/data-structures-objects-and-arrays)
+- [जावास्क्रिप्टमधील डेटा स्ट्रक्चर्स — बेनोइट व्हॅलॉन](http://blog.benoitvallon.com/data-structures-in-javascript/data-structures-in-javascript/)
+- [जावास्क्रिप्टमधील डेटा स्ट्रक्चर्ससह खेळणे — अनिश के.](https://blog.cloudboost.io/playing-with-data-structures-in-javascript-stack-a55ebe50f29d)
+- [जावास्क्रिप्टमधील रांगेची छोटीशी मार्गदर्शक — जर्मन क्युट्रारो](https://hackernoon.com/the-little-guide-of-queue-in-javascript-4f67e79260d9)
+- ['अल्गोरिदम्स चौथी आवृत्ती' या पुस्तकात जावास्क्रिप्टसह लिहिणारे सर्व अल्गोरिदम](https://github.com/barretlee/algorithms)
+- [जावास्क्रिप्टमधील क्लासिक संगणक विज्ञान प्रतिमानांचा संग्रह](https://github.com/nzakas/computer-science-in-javascript)
+- [डेटा स्ट्रक्चर्सबद्दल तुम्हाला माहित नसलेल्या सर्व गोष्टी](https://github.com/jamiebuilds/itsy-bitsy-data-structures)
+- [जावास्क्रिप्ट डेटा स्ट्रक्चर्स: ४० भाग मालिका — miku86](https://dev.to/miku86/series/3259)
+- [डेटा स्ट्रक्चर्स: समजले जाणारे आलेख — राहेल हवा](https://medium.com/javascript-in-plain-english/data-structures-understanding-graphs-82509d35e6b5)
+- [डेटा स्ट्रक्चर्स टू वेज: लिंक्ड लिस्ट (पृष्ठ १) — फ्रेडी डफिल्ड](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-2n61)
+- [डेटा स्ट्रक्चर्स टू वेज: लिंक्ड लिस्ट (पृष्ठ २) — फ्रेडी डफिल्ड](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
+- [जावास्क्रिप्टमध्ये स्पष्ट केलेले ग्राफ डेटा स्ट्रक्चर्स — एड्रियन मेजिया](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [JavaScript: Intro to Big O Notation and Function Runtime — Eric Traub](https://www.youtube.com/watch?v=HgA5VOFan5E)
-- [Essential Big O for JavaScript Developers — Dave Smith](https://www.youtube.com/watch?v=KatlvCFHPRo)
-- [Big O Notation - Time Complexity Analysis — WebTunings](https://www.youtube.com/watch?v=ALl86xJiTD8)
-- [Learn Big O Notation In 12 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=itn09C2ZB9Y)
-- [JavaScript Algorithms: Big-O Notation - Codevolution](https://www.youtube.com/watch?v=3yUuo7TqMW8)
-- [JavaScript Algorithms Crash Course: Learn Algorithms & "Big O" from the Ground Up! - Academind](https://www.youtube.com/watch?v=JgWm6sQwS_I)
-- [Big O Notation - Data Structures and Algorithms in Javascript - RoadSideCoder](https://www.youtube.com/watch?v=LaexPVi1VRE)
-
-**[⬆ Back to Top](#table-of-contents)**
-
----
-
-## 29. Algorithms
-
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
-
--  [Data Structures and Algorithms using ES6](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
--  [Algorithms and data structures implemented in JavaScript with explanations and links to further readings](https://github.com/trekhleb/javascript-algorithms)
--  [JS: Interview Algorithm](http://www.thatjsdude.com/interview/js1.html)
--  [Algorithms in JavaScript — Thon Ly](https://medium.com/siliconwat/algorithms-in-javascript-b0bed68f4038)
--  [JavaScript Objects, Square Brackets and Algorithms — Dmitri Grabov](https://medium.freecodecamp.org/javascript-objects-square-brackets-and-algorithms-e9a2916dc158)
--  [Atwood's Law applied to CS101 - Classic algorithms and data structures implemented in JavaScript](https://github.com/felipernb/algorithms.js)
--  [Data Structures and Algorithms library in JavaScript](https://github.com/yangshun/lago)
--  [Collection of computer science algorithms and data structures written in JavaScript](https://github.com/idosela/algorithms-in-javascript)
--  [Algorithms and Data Structures in JavaScript — Oleksii Trekhleb](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
-
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- 🎥 [JavaScript Algorithms - Codevolution](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
-- 🎥 [Dynamic Programming - Learn to Solve Algorithmic Problems & Coding Challenges - FreeCodeCamp](https://www.youtube.com/watch?v=oBt53YbR9Kk&t=1021s)
-- 🎥 [Data Structures and Algorithms in Javascript | DSA with JS - RoadsideCoder](https://www.youtube.com/playlist?list=PLKhlp2qtUcSZtJefDThsXcsAbRBCSTgW4)
-- 🎥 [Javascript Algorithms + Data Structures - KodingKevin](https://www.youtube.com/playlist?list=PLn2ipk-jqgZiAHiA70hOxAj8RMUeqYNK3)
-- 🎥 [JavaScript Data Structures: Getting Started - Academind](https://www.youtube.com/watch?v=41GSinwoMYA)
-- 🎥 [Algorithms and Data Structures - The Coding Train (Daniel Shiffman)](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH)
-
-**[⬆ Back to Top](#table-of-contents)**
+- [जावास्क्रिप्टमधील अल्गोरिदम | तुमच्या मुलाखतीत यशस्वी व्हा — एडुओनिक्स लर्निंग सोल्युशन्स](https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa)
+- [जावास्क्रिप्टमधील डेटा स्ट्रक्चर्स आणि अल्गोरिदम्स — freeCodeCamp](https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ)
+- [जावास्क्रिप्ट शिकणे डेटा स्ट्रक्चर्स आणि अल्गोरिदम्स: सॉर्टिंग — पॅकेट व्हिडिओ](https://www.youtube.com/watch?v=Ymh_AurrMbA)
+- [जावास्क्रिप्ट डेटा स्ट्रक्चर्स: सुरुवात करणे — अकादमीमाइंड](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 30. Inheritance, Polymorphism and Code Reuse
+## 28. महागड काम आणि बिग O नोटेशन
 
-### Reference
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Inheritance in JavaScript — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
--  [Class inheritance, super — JavaScript.Info](https://javascript.info/class-inheritance)
+- [जावास्क्रिप्टमध्ये बिग ओ नोटेशन — सीझर अँटोन डोरांटेस](https://medium.com/cesars-tech-insights/big-o-notation-javascript-25c79f50b19b)
+- [वेळ जटिलता/बिग ओ नोटेशन — टिम रॉबर्ट्स](https://medium.com/javascript-scene/time-complexity-big-o-notation-1a4310c3ee4b)
+- [जावास्क्रिप्टमध्ये बिग ओ — गॅब्रिएला मेडिना](https://medium.com/@gmedina229/big-o-in-javascript-36ff67766051)
+- [जावास्क्रिप्टमध्ये बिग ओ सर्च अल्गोरिदम — ब्रॅडली ब्रेथवेट](https://www.bradoncode.com/blog/2012/04/big-o-algorithm-examples-in-javascript.html)
+- [साध्या भाषेत अल्गोरिदम इंग्रजी: वेळेची जटिलता आणि बिग-ओ नोटेशन — मायकेल ओलोरुनिसोला](https://medium.freecodecamp.org/time-is-complex-but-priceless-f0abd015063c)
+- [बिग ओ नोटेशनचा परिचय — जोसेफ ट्रेटेविक](https://dev.to/lofiandcode/an-introduction-to-big-o-notation-210o)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
--  [Inheritance in JavaScript — Rupesh Mishra](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
--  [Simple Inheritance with JavaScript — David Catuhe](https://www.sitepoint.com/simple-inheritance-javascript/)
--  [JavaScript — Inheritance, delegation patterns and Object linking — NC Patro](https://codeburst.io/javascript-inheritance-25fe61ab9f85)
--  [Object Oriented JavaScript: Polymorphism with examples — Knoldus Blogs](https://blog.knoldus.com/object-oriented-javascript-polymorphism-with-examples/)
--  [Program Like Proteus — A beginner's guide to polymorphism in Javascript — Sam Galson](https://medium.com/yld-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2)
--  [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
--  [Unlocking the Power of Polymorphism in JavaScript: A Deep Dive](https://prototypr.io/post/unlocking-the-power-of-polymorphism-in-javascript-a-deep-dive)
+- [जावास्क्रिप्ट: बिग ओ नोटेशन आणि फंक्शन रनटाइमचा परिचय — एरिक ट्रॉब](https://www.youtube.com/watch?v=HgA5VOFan5E)
+- [जावास्क्रिप्ट डेव्हलपर्ससाठी आवश्यक बिग ओ](https://www.youtube.com/watch?v=KatlvCFHPro)
+- [बिग ओ नोटेशन - वेळेची जटिलता विश्लेषण — वेबट्यूनिंग्ज](https://www.youtube.com/watch?v=ALl86xJiTD8)
+- [१२ मिनिटांत बिग ओ नोटेशन शिका - वेब डेव्हलपमेंट सरलीकृत](https://www.youtube.com/watch?v=itn09C2ZB9Y)
+- [जावास्क्रिप्ट अल्गोरिदम: बिग-ओ नोटेशन - कोडव्होल्यूशन](https://www.youtube.com/watch?v=3yUuo7TqMW8)
+- [जावास्क्रिप्ट अल्गोरिदम क्रॅश कोर्स: अल्गोरिदम आणि "बिग" शिका "ओ" अगदी सुरुवातीपासून! - अकादमीमाइंड](https://www.youtube.com/watch?v=JgWm6sQwS_I)
+- [बिग ओ नोटेशन - जावास्क्रिप्टमधील डेटा स्ट्रक्चर्स आणि अल्गोरिदम - रोडसाइडकोडर](https://www.youtube.com/watch?v=LaexPVi1VRE)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [Inheritance in JavaScript — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
-- [JavaScript ES6 Classes and Inheritance — Traversy Media](https://www.youtube.com/watch?v=RBLIm5LMrmc)
-- [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 31. Design Patterns
+## 29. अल्गोरिदम
 
-### Books
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Learning JavaScript Design Patterns — Addy Osmani](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
--  [Pro JavaScript Design Patterns — Ross Harmes and Dustin Diaz](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
+- [ES6 वापरून डेटा स्ट्रक्चर्स आणि अल्गोरिदम](https://github.com/Crizstian/data-structure-and-algorithms-with-ES6)
+- [जावास्क्रिप्टमध्ये स्पष्टीकरणे आणि पुढील वाचनांच्या लिंक्ससह अल्गोरिदम आणि डेटा स्ट्रक्चर्स अंमलात आणले](https://github.com/trekhleb/javascript-algorithms)
+- [JS: मुलाखत अल्गोरिदम](http://www.thatjsdude.com/interview/js1.html)
+- [जावास्क्रिप्टमधील अल्गोरिदम — थॉन ली](https://medium.com/siliconwat/algorithms-in-javascript-b0bed68f4038)
+- [जावास्क्रिप्ट ऑब्जेक्ट्स, स्क्वेअर ब्रॅकेट आणि अल्गोरिदम — दिमित्री ग्रॅबोव्ह](https://medium.freecodecamp.org/javascript-objects-square-brackets-and-algorithms-e9a2916dc158)
+- [CS101 वर लागू केलेला अ‍ॅटवुडचा कायदा - जावास्क्रिप्टमध्ये लागू केलेला क्लासिक अल्गोरिदम आणि डेटा स्ट्रक्चर्स](https://github.com/felipernb/algorithms.js)
+- [जावास्क्रिप्टमध्ये डेटा स्ट्रक्चर्स आणि अल्गोरिदम लायब्ररी](https://github.com/yangshun/lago)
+- [जावास्क्रिप्टमध्ये लिहिलेल्या संगणक विज्ञान अल्गोरिदम आणि डेटा स्ट्रक्चर्सचा संग्रह](https://github.com/idosela/algorithms-in-javascript)
+- [जावास्क्रिप्टमध्ये अल्गोरिदम आणि डेटा स्ट्रक्चर्स — ओलेक्सी ट्रेखलेब](https://dev.to/trekhleb/algorithms-and-data-structures-in-javascript-49i3)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
--  [JavaScript Design Patterns – Explained with Examples — Germán Cocca](https://www.freecodecamp.org/news/javascript-design-patterns-explained/)
--  [4 JavaScript Design Patterns You Should Know — Devan Patel](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
--  [JavaScript Design Patterns – Beginner's Guide to Mobile Web Development — Soumyajit Pathak](https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15)
--  [JavaScript Design Patterns — Akash Pal](https://medium.com/front-end-hacking/javascript-design-patterns-ed9d4c144c81)
--  [JavaScript Design Patterns: Understanding Design Patterns in JavaScript - Sukhjinder Arora](https://blog.bitsrc.io/understanding-design-patterns-in-javascript-13345223f2dd)
--  [All the 23 (GoF) design patterns implemented in Javascript — Felipe Beline](https://github.com/fbeline/Design-Patterns-JS)
--  [The Power of the Module Pattern in JavaScript — jsmanifest](https://medium.com/better-programming/the-power-of-the-module-pattern-in-javascript-3c73f7cd10e8)
--  [Design Patterns for Developers using JavaScript pt. I — Oliver Mensah](https://dev.to/omensah/design-patterns-for-developers-using-javascript----part-one--b3e)
--  [Design Patterns for Developers using JavaScript pt. II — Oliver Mensah](https://dev.to/omensah/design-patterns-for-developers-using-javascript---part-two--3p39)
--  [Design patterns in modern JavaScript development](https://levelup.gitconnected.com/design-patterns-in-modern-javascript-development-ec84d8be06ca)
--  [Understanding Design Patterns: Iterator using Dev.to and Medium social networks! — Carlos Caballero](https://dev.to/carlillo/understanding-design-patterns-iterator-using-dev-to-and-medium-social-networks-3bdd)
--  [JavaScript Design Patterns - Factory Pattern — KristijanFištrek](https://dev.to/kristijanfistrek/javascript-design-patterns-factory-pattern-562p)
--  [JavaScript Design Pattern — Module Pattern - Factory Pattern — Moon](https://medium.com/javascript-in-plain-english/javascript-design-pattern-module-pattern-555737eccecd)
--  [Design Patterns: Null Object - Carlos Caballero](https://medium.com/better-programming/design-patterns-null-object-5ee839e37892)
--  [Strategy Pattern - Francesco Ciulla](https://dev.to/francescoxx/strategy-pattern-5oh)
--  [Adapter Pattern - Francesco Ciulla](https://dev.to/francescoxx/adapter-pattern-5bjk)
--  [The Power of Composite Pattern in JavaScript - jsmanifest](https://dev.to/jsmanifest/the-power-of-composite-pattern-in-javascript-2732)
--  [In Defense of Defensive Programming - Adam Nathaniel Davis](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
--  [JavaScript Patterns Workshop — Lydia Hallie](https://javascriptpatterns.vercel.app/patterns)
+- 🎥 [जावास्क्रिप्ट अल्गोरिदम - कोडव्होल्यूशन](https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa)
+- 🎥 [डायनॅमिक प्रोग्रामिंग - अल्गोरिदमिक समस्या आणि कोडिंग आव्हाने सोडवायला शिका - फ्रीकोडकॅम्प](https://www.youtube.com/watch?v=oBt53YbR9Kk&t=1021s)
+- 🎥 [जावास्क्रिप्टमधील डेटा स्ट्रक्चर्स आणि अल्गोरिदम | JS सह DSA - रोडसाइडकोडर](https://www.youtube.com/playlist?list=PLKhlp2qtUcSZtJefDThsXcsAbRBCSTgW4)
+- 🎥 [जावास्क्रिप्ट अल्गोरिदम + डेटा स्ट्रक्चर्स - कोडिंगकेविन](https://www.youtube.com/playlist?list=PLn2ipk-jqgZiAHiA70hOxAj8RMUeqYNK3)
+- 🎥 [जावास्क्रिप्ट डेटा स्ट्रक्चर्स: सुरुवात करणे - अकादमिक](https://www.youtube.com/watch?v=41GSinwoMYA)
+- 🎥 [अल्गोरिदम आणि डेटा स्ट्रक्चर्स - द कोडिंग ट्रेन (डॅनियल शिफमन)](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6ZiZxtDDRCi6uhfTH4FilpH)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
-
-- [JavaScript Design Patterns — Udacity](https://www.udacity.com/course/javascript-design-patterns--ud989)
-- [JavaScript Patterns for 2017 — Scott Allen](https://www.youtube.com/watch?v=hO7mzO83N1Q)
-
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 32. Partial Applications, Currying, Compose and Pipe
+## 30. इनहेरिटन्स, पॉलिमॉर्फिझम आणि कोड पुनर्वापर
 
-### Books
+### संदर्भ:
 
--  [Functional-Light JavaScript: Ch. 3 - Managing Function Inputs — Kyle Simpson](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
+-  [जावास्क्रिप्ट मध्ये वारसा — MDN](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance)
+-  [वर्ग वारसा, सुपर — JavaScript.Info](https://javascript.info/class-inheritance)
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
--  [Composition and Currying Elegance in JavaScript — Pragyan Das](https://medium.com/@pragyan88/writing-middleware-composition-and-currying-elegance-in-javascript-8b15c98a541b)
--  [Functional JavaScript: Function Composition For Every Day Use — Joel Thoms](https://hackernoon.com/javascript-functional-composition-for-every-day-use-22421ef65a10)
--  [Functional Composition: compose() and pipe() — Anton Paras](https://medium.com/@acparas/what-i-learned-today-july-2-2017-ab9a46dbf85f)
--  [Why The Hipsters Compose Everything: Functional Composing In JavaScript — A. Sharif](http://busypeoples.github.io/post/functional-composing-javascript/)
--  [A Gentle Introduction to Functional JavaScript pt III: Functions for making functions — James Sinclair](https://jrsinclair.com/articles/2016/gentle-introduction-to-functional-javascript-functions/)
--  [Curry And Compose (why you should be using something like ramda in your code) — jsanchesleao](https://jsleao.wordpress.com/2015/02/22/curry-and-compose-why-you-should-be-using-something-like-ramda-in-your-code/)
--  [Function Composition in JavaScript with Pipe — Andy Van Slaars](https://vanslaars.io/post/create-pipe-function/)
--  [Practical Functional JavaScript with Ramda — Andrew D'Amelio, Yuri Takhteyev](https://developer.telerik.com/featured/practical-functional-javascript-ramda/)
--  [The beauty in Partial Application, Currying, and Function Composition — Joel Thoms](https://hackernoon.com/the-beauty-in-partial-application-currying-and-function-composition-d885bdf0d574)
--  [Curry or Partial Application? — Eric Elliott](https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8)
--  [Partial Application in JavaScript — Ben Alman](http://benalman.com/news/2012/09/partial-application-in-javascript/)
--  [Partial Application of Functions — Functional Reactive Ninja](https://hackernoon.com/partial-application-of-functions-dbe7d9b80760)
--  [Partial Application in ECMAScript 2015 — Ragan Wald](http://raganwald.com/2015/04/01/partial-application.html)
--  [So You Want to be a Functional Programmer pt. I — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536)
--  [So You Want to be a Functional Programmer pt. II — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-2-7005682cec4a)
--  [So You Want to be a Functional Programmer pt. III — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-3-1b0fd14eb1a7)
--  [So You Want to be a Functional Programmer pt. IV — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-4-18fbe3ea9e49)
--  [So You Want to be a Functional Programmer pt. V — Charles Scalfani](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-5-c70adc9cf56a)
--  [An introduction to the basic principles of Functional Programming — TK](https://medium.freecodecamp.org/an-introduction-to-the-basic-principles-of-functional-programming-a2c2a15c84)
--  [Concepts of Functional Programming in javascript — TK](https://medium.com/the-renaissance-developer/concepts-of-functional-programming-in-javascript-6bc84220d2aa)
--  [An Introduction to Functional Programming Style in JavaScript — JavaScript Teacher](https://medium.freecodecamp.org/an-introduction-to-functional-programming-style-in-javascript-71fcc050f064)
--  [A practical guide to writing more functional JavaScript — Nadeesha Cabral](https://medium.freecodecamp.org/a-practical-guide-to-writing-more-functional-javascript-db49409f71)
--  [A simple explanation of functional pipe in JavaScript — Ben Lesh](https://dev.to/benlesh/a-simple-explanation-of-functional-pipe-in-javascript-2hbj)
+- [जावास्क्रिप्टमध्ये वारसा — रूपेश मिश्रा](https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f)
+- [जावास्क्रिप्टसह साधे वारसा — डेव्हिड कॅटुहे](https://www.sitepoint.com/simple-inheritance-javascript/)
+- [जावास्क्रिप्ट — वारसा, डेलिगेशन पॅटर्न आणि ऑब्जेक्ट लिंकिंग — एनसी पॅट्रो](https://codeburst.io/javascript-inheritance-25fe61ab9f85)
+- [ऑब्जेक्ट ओरिएंटेड जावास्क्रिप्ट: उदाहरणांसह बहुरूपता — नॉल्डस ब्लॉग्स](https://blog.knoldus.com/object-oriented-javascript-polymorphism-with-examples/)
+- [प्रोग्राम लाईक प्रोटीयस — जावास्क्रिप्टमध्ये बहुरूपता करण्यासाठी एक नवशिक्या मार्गदर्शक — सॅम गॅल्सन](https://medium.com/yld-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2)
+- [ऑब्जेक्ट-ओरिएंटेड जावास्क्रिप्ट: ES6 वर्गांमध्ये खोलवर जाणे — जेफ मॉट](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
+- [जावास्क्रिप्टमध्ये बहुरूपतेची शक्ती अनलॉक करणे: एक खोलवर जाणे](https://prototypr.io/post/unlocking-the-power-of-polymorphism-in-javascript-a-deep-dive)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
 
-- [Compose vs Pipe: Functional Programming in JavaScript — Chyld Studios](https://www.youtube.com/watch?v=Wl2ejJOqHUU)
-- [JavaScript Functional Programing: Compose — Theodore Anderson](https://www.youtube.com/watch?v=jigHxo9YR30)
-- [Function Composition - Functional JavaScript — NWCalvank](https://www.youtube.com/watch?v=mth5WpEc4Qs)
-- [JavaScript Function Composition Explained — Theodore Anderson](https://www.youtube.com/watch?v=Uam37AlzPYw)
-- [Let's code with function composition — Fun Fun Function](https://www.youtube.com/watch?v=VGB9HbL1GHk)
-- [Partial Application vs. Currying — NWCalvank](https://www.youtube.com/watch?v=DzLkRsUN2vE)
-- [JavaScript Partial Application — Theodore Anderson](https://www.youtube.com/watch?v=jkebgHEcvac)
-- [call, apply and bind method in JavaScript](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
+- [जावास्क्रिप्टमध्ये वारसा — kudvenkat](https://www.youtube.com/watch?v=yXlFR81tDBM)
+- [जावास्क्रिप्ट ES6 वर्ग आणि वारसा — ट्रॅव्हर्सी मीडिया](https://www.youtube.com/watch?v=RBLIm5LMrmc)
+- [जावास्क्रिप्टमध्ये पॉलीमॉर्फिझम — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 ---
 
-## 33. Clean Code
+## 31. डिझाईन पॅटर्न्स
 
-### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> Articles
+### पुस्तके
 
--  [Clean Code Explained – A Practical Introduction to Clean Coding for Beginners — freeCodeCamp](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
--  [Clean Code concepts adapted for JavaScript — Ryan McDermott](https://github.com/ryanmcdermott/clean-code-javascript)
--  [Function parameters in JavaScript Clean Code — Kevin Peters](https://medium.com/@kevin_peters/function-parameters-in-javascript-clean-code-4caac109159b)
--  [Keeping your code clean — Samuel James](https://codeburst.io/keeping-your-code-clean-d30bcffd1a10)
--  [Best Practices for Using Modern JavaScript Syntax — M. David Green](https://www.sitepoint.com/modern-javascript-best-practices/)
--  [best practices for cross node/web development - Jimmy Wärting](https://github.com/cross-js/cross-js)
--  [Writing Clean Code - Dylan Paulus](https://dev.to/ganderzz/on-writing-clean-code-57cm)
--  [Writing Clean Code and The Practice of Programming - Nityesh Agarwal](https://dev.to/nityeshaga/writing-clean-code-and-the-practice-of-programming-actionable-advice-for-beginners-5f0k)
--  [Clean code, dirty code, human code - Daniel Irvine](https://dev.to/d_ir/clean-code-dirty-code-human-code-6nm)
--  [Practical Ways to Write Better JavaScript - Ryland G](https://dev.to/taillogs/practical-ways-to-write-better-javascript-26d4)
--  [The Must-Know Clean Code Principles - Kesk on Medium](https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75)
--  [The Clean Code Book - Robert C Martin](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
--  [How to use destructuring in JavaScript to write cleaner, more powerful code - freecodecamp](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
--  [Write Clean Code Using JavaScript Object Destructuring - Asel Siriwardena](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
+-  [जावास्क्रिप्ट डिझाइन पॅटर्न शिकणे — अ‍ॅडी उस्मानी](https://addyosmani.com/resources/essentialjsdesignpatterns/book/)
+-  [प्रो जावास्क्रिप्ट डिझाइन पॅटर्न — रॉस हार्मेस आणि डस्टिन डायझ](https://pepa.holla.cz/wp-content/uploads/2016/08/Pro-JavaScript-Design-Patterns.pdf)
 
-### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  Videos
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
 
-- 🎥 [JavaScript Pro Tips - Code This, NOT That](https://www.youtube.com/watch?v=Mus_vwhTCq0)
-- 🎥 [Clean Code playlist - Beau teaches](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
-- 🎥 [JavaScript Best Practices and Coding Conventions - Write Clean Code](https://youtu.be/RMN_bkZ1KM0?si=Ssg3cNZ_DB7CIwKQ)
-- 🎥 [JavaScript Clean Code](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
-- 🎥 [Tips On Learning How To Code](https://www.youtube.com/watch?v=0wHyoBPc6zs)
+- [जावास्क्रिप्ट डिझाइन पॅटर्न - उदाहरणांसह स्पष्ट केले - जर्मन कोक्का](https://www.freecodecamp.org/news/javascript-design-patterns-explained/)
+- [तुम्हाला माहित असले पाहिजेत असे ४ जावास्क्रिप्ट डिझाइन पॅटर्न — देवन पटेल](https://scotch.io/bar-talk/4-javascript-design-patterns-you-should-know)
+- [जावास्क्रिप्ट डिझाइन पॅटर्न - मोबाइल वेब डेव्हलपमेंटसाठी नवशिक्यांसाठी मार्गदर्शक — सौम्यजित पाठक](https://medium.com/beginners-guide-to-mobile-web-development/javascript-design-patterns-25f0faaaa15)
+- [जावास्क्रिप्ट डिझाइन पॅटर्न — आकाश पाल](https://medium.com/front-end-hacking/javascript-design-patterns-ed9d4c144c81)
+- [जावास्क्रिप्ट डिझाइन पॅटर्न: जावास्क्रिप्टमधील डिझाइन पॅटर्न समजून घेणे - सुखजिंदर अरोरा](https://blog.bitsrc.io/understanding-design-patterns-in-javascript-13345223f2dd)
+- [जावास्क्रिप्टमध्ये लागू केलेले सर्व 23 (GoF) डिझाइन पॅटर्न — फेलिप बेलाइन](https://github.com/fbeline/Design-Patterns-JS)
+- [जावास्क्रिप्टमध्ये मॉड्यूल पॅटर्नची शक्ती — jsmanifest](https://medium.com/better-programming/the-power-of-the-module-pattern-in-javascript-3c73f7cd10e8)
+- [जावास्क्रिप्ट वापरणाऱ्या डेव्हलपर्ससाठी डिझाइन पॅटर्न pt. I — ऑलिव्हर मेन्साह](https://dev.to/omensah/design-patterns-for-developers-using-javascript----part-one--b3e)
+- [जावास्क्रिप्ट वापरणाऱ्या डेव्हलपर्ससाठी डिझाइन पॅटर्न pt. II — ऑलिव्हर मेन्साह](https://dev.to/omensah/design-patterns-for-developers-using-javascript---part-two--3p39)
+- [आधुनिक जावास्क्रिप्ट विकासातील डिझाइन पॅटर्न](https://levelup.gitconnected.com/design-patterns-in-modern-javascript-development-ec84d8be06ca)
+- [डिझाइन पॅटर्न समजून घेणे: Dev.to आणि मध्यम सोशल नेटवर्क्स वापरून इटरेटर! — कार्लोस कॅबालेरो](https://dev.to/carlillo/understanding-design-patterns-iterator-using-dev-to-and-medium-social-networks-3bdd)
+- [जावास्क्रिप्ट डिझाइन पॅटर्न - फॅक्टरी पॅटर्न — क्रिस्टिजानफिस्ट्रेक](https://dev.to/kristijanfistrek/javascript-design-patterns-factory-pattern-562p)
+- [जावास्क्रिप्ट डिझाइन पॅटर्न — मॉड्यूल पॅटर्न - फॅक्टरी पॅटर्न — चंद्र](https://medium.com/javascript-in-plain-english/javascript-design-pattern-module-pattern-555737eccecd)
+- [डिझाइन पॅटर्न: नल ऑब्जेक्ट - कार्लोस कॅबालेरो](https://medium.com/better-programming/design-patterns-null-object-5ee839e37892)
+- [स्ट्रॅटेजी पॅटर्न - फ्रान्सिस्को सिउला](https://dev.to/francescoxx/strategy-pattern-5oh)
+- [अ‍ॅडॉप्टर पॅटर्न - फ्रान्सिस्को सिउला](https://dev.to/francescoxx/adapter-pattern-5bjk)
+- [जावास्क्रिप्टमधील संमिश्र पॅटर्नची शक्ती - jsmanifest](https://dev.to/jsmanifest/the-power-of-composite-pattern-in-javascript-2732)
+- [बचावात्मक प्रोग्रामिंगच्या संरक्षणात - अॅडम नॅथॅनियल डेव्हिस](https://dev.to/bytebodger/in-defense-of-defensive-programming-k45)
+- [जावास्क्रिप्ट पॅटर्न कार्यशाळा — लिडिया हॅली](https://javascriptpatterns.vercel.app/patterns)
 
-**[⬆ Back to Top](#table-of-contents)**
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [जावास्क्रिप्ट डिझाइन पॅटर्न — उडासिटी](https://www.udacity.com/course/javascript-design-patterns--ud989)
+- [२०१७ साठी जावास्क्रिप्ट पॅटर्न — स्कॉट अॅलन](https://www.youtube.com/watch?v=hO7mzO83N1Q)
+**[⬆ वर जा](#table-of-contents)**
+
+---
+
+## 32. पार्शियल ऍप्लिकेशन्स, करींग, कॉम्पोज आणि पाईप
+
+### पुस्तके
+
+-  [फंक्शनल-लाइट जावास्क्रिप्ट: अध्याय ३ - फंक्शन इनपुटचे व्यवस्थापन — काइल सिम्पसन](https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md)
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [जावास्क्रिप्टमध्ये रचना आणि करींग एलिगन्स — प्रज्ञान दास](https://medium.com/@pragyan88/writing-middleware-composition-and-currying-elegance-in-javascript-8b15c98a541b)
+- [फंक्शनल जावास्क्रिप्ट: प्रत्येक दिवसाच्या वापरासाठी फंक्शन कंपोझिशन — जोएल थॉमस](https://hackernoon.com/javascript-functional-composition-for-every-day-use-22421ef65a10)
+- [फंक्शनल कंपोझिशन: कंपोझ() आणि पाईप() — अँटोन पारस](https://medium.com/@acparas/what-i-learned-today-july-2-2017-ab9a46dbf85f)
+- [हिपस्टर्स सर्वकाही का तयार करतात: जावास्क्रिप्टमध्ये फंक्शनल कंपोझिशन — ए. शरीफ](http://busypeoples.github.io/post/functional-composing-javascript/)
+- [कार्यात्मक जावास्क्रिप्टचा सौम्य परिचय pt III: फंक्शन्स बनवण्यासाठी फंक्शन्स — जेम्स सिंक्लेअर](https://jrsinclair.com/संबंधित लेख /2016/gentle-introduction-to-functional-javascript-functions/)
+- [करी अँड कम्पोझ (तुम्ही तुमच्या कोडमध्ये रॅमडा सारखे काहीतरी का वापरावे) — jsanchesleao](https://jsleao.wordpress.com/2015/02/22/curry-and-compose-why-you-should-be-using-something-like-ramda-in-your-code/)
+- [पाइपसह जावास्क्रिप्टमध्ये फंक्शन कंपोझिशन — अँडी व्हॅन स्लार्स](https://vanslaars.io/post/create-pipe-function/)
+- [रामडासह व्यावहारिक कार्यात्मक जावास्क्रिप्ट — अँड्र्यू डी'अमेलियो, युरी तख्तेयेव](https://developer.telerik.com/featured/practical-functional-javascript-ramda/)
+- [आंशिक अनुप्रयोग, करींग आणि फंक्शन रचनेतील सौंदर्य — जोएल थॉमस](https://hackernoon.com/the-beauty-in-partial-application-currying-and-function-composition-d885bdf0d574)
+- [करींग किंवा आंशिक अनुप्रयोग? — एरिक इलियट](https://medium.com/javascript-scene/curry-or-partial-application-8150044c78b8)
+- [जावास्क्रिप्टमध्ये आंशिक अनुप्रयोग — बेन अल्मन](http://benalman.com/news/2012/09/partial-application-in-javascript/)
+- [फंक्शन्सचे आंशिक अनुप्रयोग — फंक्शनल रिअॅक्टिव्ह निन्जा](https://hackernoon.com/partial-application-of-functions-dbe7d9b80760)
+- [ECMAScript २०१५ मध्ये आंशिक अनुप्रयोग — रागन वाल्ड](http://raganwald.com/2015/04/01/partial-application.html)
+- [म्हणून तुम्हाला फंक्शनल प्रोग्रामर व्हायचे आहे. मी — चार्ल्स स्कॅल्फानी](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-1-1f15e387e536)
+- [म्हणून तुम्हाला फंक्शनल प्रोग्रामर व्हायचे आहे विषय II — चार्ल्स स्कॅल्फानी](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-2-7005682cec4a)
+- [म्हणून तुम्हाला फंक्शनल प्रोग्रामर व्हायचे आहे विषय III — चार्ल्स स्कॅल्फानी](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-3-1b0fd14eb1a7)
+- [म्हणून तुम्हाला फंक्शनल प्रोग्रामर व्हायचे आहे विषय. IV — चार्ल्स स्कॅल्फानी](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-4-18fbe3ea9e49)
+- [म्हणून तुम्हाला फंक्शनल प्रोग्रामर व्हायचे आहे विषय. व्ही — चार्ल्स स्काल्फानी](https://medium.com/@cscalfani/so-you-want-to-be-a-functional-programmer-part-5-c70adc9cf56a)
+- [फंक्शनल प्रोग्रामिंगच्या मूलभूत तत्त्वांचा परिचय — TK](https://medium.freecodecamp.org/an-introduction-to-the-basic-principles-of-functional-programming-a2c2a15c84)
+- [जावास्क्रिप्टमध्ये फंक्शनल प्रोग्रामिंगच्या संकल्पना — TK](https://medium.com/the-renaissance-developer/concepts-of-functional-programming-in-javascript-6bc84220d2aa)
+- [जावास्क्रिप्टमध्ये फंक्शनल प्रोग्रामिंग शैलीचा परिचय — JavaScript शिक्षक](https://medium.freecodecamp.org/an-introduction-to-functional-programming-style-in-javascript-71fcc050f064)
+- [अधिक कार्यात्मक जावास्क्रिप्ट लिहिण्यासाठी एक व्यावहारिक मार्गदर्शक — नदीशा कॅब्राल](https://medium.freecodecamp.org/a-practical-guide-to-writing-more-functional-javascript-db49409f71)
+- [जावास्क्रिप्टमधील कार्यात्मक पाईपचे एक साधे स्पष्टीकरण — बेन लेश](https://dev.to/benlesh/a-simple-explanation-of-functional-pipe-in-javascript-2hbj)
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- [कंपोज विरुद्ध पाईप: जावास्क्रिप्टमध्ये फंक्शनल प्रोग्रामिंग — चाइल्ड स्टुडिओ](https://www.youtube.com/watch?v=Wl2ejJOqHUU)
+- [जावास्क्रिप्ट फंक्शनल प्रोग्रामिंग: कंपोज — थिओडोर अँडरसन](https://www.youtube.com/watch?v=jigHxo9YR30)
+- [फंक्शन कंपोझिशन - फंक्शनल जावास्क्रिप्ट — NWCalvank](https://www.youtube.com/watch?v=mth5WpEc4Qs)
+- [जावास्क्रिप्ट फंक्शन कंपोझिशन स्पष्ट केले — थिओडोर अँडरसन](https://www.youtube.com/watch?v=Uam37AlzPYw)
+- [चला फंक्शन कंपोझिशनसह कोड करूया — फन फन फंक्शन](https://www.youtube.com/watch?v=VGB9HbL1GHk)
+- [आंशिक अनुप्रयोग विरुद्ध करींग — NWCalvank](https://www.youtube.com/watch?v=DzLkRsUN2vE)
+- [जावास्क्रिप्ट आंशिक अनुप्रयोग — थियोडोर अँडरसन](https://www.youtube.com/watch?v=jkebgHEcvac)
+- [जावास्क्रिप्टमध्ये कॉल, अप्लाय आणि बाइंड पद्धत](https://www.youtube.com/watch?v=75W8UPQ5l7k&t=261s)
+
+**[⬆ वर जा](#table-of-contents)**
+
+---
+
+## 33. क्लीन कोड
+
+### <img  align= center width=40px height=40px src="https://cdn-icons-png.flaticon.com/512/1945/1945940.png"> संबंधित लेख 
+
+- [क्लीन कोड स्पष्ट केले - नवशिक्यांसाठी क्लीन कोडिंगचा व्यावहारिक परिचय — फ्रीकोडकॅम्प](https://www.freecodecamp.org/news/clean-coding-for-beginners/)
+- [जावास्क्रिप्टसाठी अनुकूलित क्लीन कोड संकल्पना — रायन मॅकडर्मॉट](https://github.com/ryanmcdermott/clean-code-javascript)
+- [जावास्क्रिप्ट क्लीन कोडमधील फंक्शन पॅरामीटर्स — केविन पीटर्स](https://medium.com/@kevin_peters/function-parameters-in-javascript-clean-code-4caac109159b)
+- [तुमचा कोड स्वच्छ ठेवणे — सॅम्युअल जेम्स](https://codeburst.io/keeping-your-code-clean-d30bcffd1a10)
+- [आधुनिक जावास्क्रिप्ट सिंटॅक्स वापरण्यासाठी सर्वोत्तम पद्धती — एम. डेव्हिड ग्रीन](https://www.sitepoint.com/modern-javascript-best-practices/)
+- [क्रॉस नोड/वेब डेव्हलपमेंटसाठी सर्वोत्तम पद्धती - जिमी वॉर्टिंग](https://github.com/cross-js/cross-js)
+- [स्वच्छ कोड लिहिणे - डायलन पॉलस](https://dev.to/ganderzz/on-writing-clean-code-57cm)
+- [स्वच्छ कोड लिहिणे आणि प्रोग्रामिंगचा सराव - नित्येश अग्रवाल](https://dev.to/nityeshaga/writing-clean-code-and-the-practice-of-programming-actionable-advice-for-beginners-5f0k)
+- [स्वच्छ कोड, घाणेरडा कोड, मानवी कोड - डॅनियल इर्विन](https://dev.to/d_ir/clean-code-dirty-code-human-code-6nm)
+- [चांगले जावास्क्रिप्ट लिहिण्याचे व्यावहारिक मार्ग - रायलँड जी](https://dev.to/taillogs/practical-ways-to-write-better-javascript-26d4)
+- [स्वच्छ कोड तत्त्वे जाणून घेणे आवश्यक आहे - केस्क ऑन माध्यम](https://medium.com/swlh/the-must-know-clean-code-principles-1371a14a2e75)
+- [द क्लीन कोड बुक - रॉबर्ट सी मार्टिन](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882/)
+- [जावास्क्रिप्टमध्ये डिस्ट्रक्चरिंगचा वापर करून अधिक स्वच्छ, अधिक शक्तिशाली कोड लिहिणे - फ्रीकोडेकॅम्प](https://www.freecodecamp.org/news/how-to-use-destructuring-in-javascript-to-write-cleaner-more-powerful-code-9d1b38794050/)
+- [जावास्क्रिप्ट ऑब्जेक्ट डिस्ट्रक्चरिंग वापरून क्लीन कोड लिहा - असेल सिरीवर्डेना](https://betterprogramming.pub/write-clean-code-using-javascript-object-destructuring-3551302130e7)
+### <img align=center width="40" height="40" src="https://img.icons8.com/dusk/64/video.png" alt="video"/>  व्हिडिओ
+
+- 🎥 [जावास्क्रिप्ट प्रो टिप्स - हे कोड करा, ते नाही](https://www.youtube.com/watch?v=Mus_vwhTCq0)
+- 🎥 [क्लीन कोड प्लेलिस्ट - ब्यू शिकवते](https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh&index=1)
+- 🎥 [जावास्क्रिप्ट सर्वोत्तम पद्धती आणि कोडिंग कन्व्हेन्शन्स - क्लीन कोड लिहा](https://youtu.be/RMN_bkZ1KM0?si=Ssg3cNZ_DB7CIwKQ)
+- 🎥 [जावास्क्रिप्ट क्लीन कोड](https://youtu.be/vPXzVNmCPg4?si=QR1k4E6Zx5H4mfcs)
+- 🎥 [टिप्स कोडिंग कसे करायचे हे शिकण्याबद्दल](https://www.youtube.com/watch?v=0wHyoBPc6zs)
+
+**[⬆ वर जा](#table-of-contents)**
 
 ## <img align="center" width="35" height="35" src="https://moein.video/wp-content/uploads/2022/05/license-GIF-Certificate-Royalty-Free-Animated-Icon-350px-after-effects-project.gif"> <a id="license">License</a>
 
-This software is licensed under MIT License. See [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) for more information ©Leonardo Maldonado.
+हे सॉफ्टवेअर एमआयटी परवान्याअंतर्गत परवानाकृत आहे. पहा [License](https://github.com/leonardomso/33-js-concepts/blob/master/LICENSE) अधिक माहितीसाठी ©लिओनार्डो माल्डोनाडो.
 
-**[⬆ Back to Top](#table-of-contents)**
+**[⬆ वर जा](#table-of-contents)**
 
 <hr>
 
 <div align="center">
-  <strong>Happy Learning! ⭐</strong>
-  <p>If you find this repository helpful, please consider giving it a star!</p>
+  <strong>आनंदी शिक्षण! ⭐</strong>
+  <p>जर हा रिपॉझिटरी उपयुक्त वाटला तर कृपया स्टार द्या!</p>
 </div>
