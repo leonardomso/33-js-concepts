@@ -24,6 +24,30 @@
 
 This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
+## Examples (runnable)
+
+This repository now includes a small set of concise, runnable examples that illustrate a few of the most important concepts. You can find them in the `examples/` folder. Each file prints a short output that demonstrates the concept.
+
+- `examples/call-stack.js` — simple nested calls to show the call stack order.
+- `examples/primitives-vs-references.js` — shows how primitives are copied by value and objects by reference.
+- `examples/closures.js` — demonstrates how closures retain lexical scope.
+- `examples/map-filter-reduce.js` — quick usage of `map`, `filter` and `reduce`.
+- `examples/event-loop.js` — microtask vs macrotask ordering (Promises vs setTimeout).
+- `examples/promises-async-await.js` — basic Promise and `async/await` example.
+- `examples/this-call-bind.js` — `this` behavior and `call` / `bind` usage.
+
+Try one quickly from the project root:
+
+```
+node examples/event-loop.js
+```
+
+Or run the default examples script:
+
+```
+npm run examples
+```
+
 ## Community
 
 Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
