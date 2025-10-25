@@ -24,6 +24,10 @@
 
 This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
+### Extra topics in this fork
+
+- `topics/challenging-js-interview-questions.md` — challenging JavaScript interview questions with solutions and explanations.
+
 ## Community
 
 Feel free to submit a PR by adding a link to your own recaps or reviews. If you want to translate the repo into your native language, please feel free to do so.
