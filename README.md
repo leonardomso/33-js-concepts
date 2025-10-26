@@ -848,6 +848,35 @@ The Event Loop is a critical part of JavaScript's concurrency model, ensuring no
 - [CLOSURES en JavaScript: Qué son y cómo funcionan - Carlos Azaustre](https://youtu.be/xa8lhVwQBw4)
 - [Learn Closures In 7 Minutes - Web Dev Simplified](https://www.youtube.com/watch?v=3a0I8ICR1Vg)
 
+  Here is a  simple but efficient eample of javascript closures (Code):-
+
+  //Counter function here 
+
+  function createCounter(){
+    let count = 0;        //private variable, can't be accessed outside this function
+    return {
+      increment: function(){
+        count++;
+        console.log(`Count after increment: ${count}`);
+      },
+      decrement: function(){
+        count--;
+        console.log(`Count after decrement: ${count}`);
+      },
+      getValue: function(){
+        return count;
+      }
+    };
+  } 
+
+  // now using this
+  const counter = createCounter();  // holding the function in another variable
+  counter.increment();     // Count after increment: 1
+  counter.increment();     // Count after increment: 2
+  counter.decrement();     // Count after decrement: 1
+  console.log(`Final count: ${counter.getValue()}`);    // Final count: 1
+
+  Wrapping up:- The data (here count) remains persistent and protected, while still it can be maipulated through controlled functions
 
 **[⬆ Back to Top](#table-of-contents)**
 
