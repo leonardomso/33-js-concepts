@@ -333,6 +333,9 @@ Lexical Scope: Refers to how variable access is determined based on the physical
 - [JavaScript Block scope vs Function scope - nivek](https://www.youtube.com/watch?v=IaTztAtoNEY)
 - [Lexical scoping in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=qT5S7GgIioE)
 - [Modern Scope Handling in JavaScript (ES6 and Beyond) -Prashant Dewangan ](https://www.youtube.com/watch?v=zMseUdOR7z8)
+Additional Resource:- 📑💻
+- [Global and local scope in javascript | chai aur #javascript -Chai Aur Code ](https://youtu.be/cHHU0jXfjKY?si=jbMks9iRauJCYygC)
+- [Lexical scoping and closures in javascript | chai aur #javascript -Chai Aur Code ](https://youtu.be/VaH09NXQZ58?si=eTX90Y81GvccMB_g)
 
 **[⬆ Back to Top](#table-of-contents)**
 
