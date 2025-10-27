@@ -22,7 +22,7 @@
 
 ## Introduction 
 
-This repository was created to help developers master core JavaScript concepts. It is not a requirement, but guide for further study. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+This repository was created to help developers master core JavaScript concepts. It is not a requirement, but a guide for further study. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
 ## Community
 
