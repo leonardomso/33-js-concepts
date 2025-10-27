@@ -22,7 +22,7 @@
 
 ## Introduction 
 
-This repository was created with the intention of helping developers master their concepts in JavaScript. It is not a requirement, but a guide for future studies. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
+This repository was created to help developers master core JavaScript concepts. It is not a requirement, but guide for further study. It is based on an article written by Stephen Curtis and you can read it [here](https://medium.com/@stephenthecurt/33-fundamentals-every-javascript-developer-should-know-13dd720a90d1).
 
 ## Community
 
@@ -50,8 +50,8 @@ All the translations for this repo will be listed below:
 - [украї́нська мо́ва (Ukrainian)](https://github.com/AndrewSavetchuk/33-js-concepts-ukrainian-translation) — Andrew Savetchuk
 - [සිංහල (Sinhala)](https://github.com/ududsha/33-js-concepts) — Udaya Shamendra
 - [Italiano (Italian)](https://github.com/Donearm/33-js-concepts) — Gianluca Fiore
-- [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) - Jānis Īvāns
-- [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) - Amanuel Dagnachew
+- [Latviešu (Latvian)](https://github.com/ANormalStick/33-js-concepts) — Jānis Īvāns
+- [Afaan Oromoo (Oromo)](https://github.com/Amandagne/33-js-concepts) — Amanuel Dagnachew
 - [ภาษาไทย (Thai)](https://github.com/ninearif/33-js-concepts) — Arif Waram
 - [Català (Catalan)](https://github.com/marioestradaf/33-js-concepts) — Mario Estrada
 - [Svenska (Swedish)](https://github.com/FenixHongell/33-js-concepts/) — Fenix Hongell
@@ -80,7 +80,7 @@ All the translations for this repo will be listed below:
 1. [**Call Stack**](#1-call-stack)
 2. [**Primitive Types**](#2-primitive-types)
 3. [**Value Types and Reference Types**](#3-value-types-and-reference-types)
-4. [**Implicit, Explicit, Nominal, Structuring and Duck Typing**](#4-implicit-explicit-nominal-structuring-and-duck-typing)
+4. [**Implicit, Explicit, Nominal, Structural and Duck Typing**](#4-implicit-explicit-nominal-structural-and-duck-typing)
 5. [**== vs === vs typeof**](#5--vs--vs-typeof)
 6. [**Function Scope, Block Scope and Lexical Scope**](#6-function-scope-block-scope-and-lexical-scope)
 7. [**Expression vs Statement**](#7-expression-vs-statement)
