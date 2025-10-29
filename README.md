@@ -1292,4 +1292,4 @@ This software is licensed under MIT License. See [License](https://github.com/le
 </div>
 
 ## 🤝 Contributing
-Contributions are welcome! Feel free to open an issue or submit a pull request.
+Contributions are welcome! Feel free to open an issue or submit a pull request.Pull requests should be free of any known bugs and be accompanied by tests and appropriate documentation. 
