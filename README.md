@@ -1290,3 +1290,6 @@ This software is licensed under MIT License. See [License](https://github.com/le
   <strong>Happy Learning! ⭐</strong>
   <p>If you find this repository helpful, please consider giving it a star!</p>
 </div>
+
+## 🤝 Contributing
+Contributions are welcome! Feel free to open an issue or submit a pull request.
