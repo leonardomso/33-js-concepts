@@ -1,0 +1,56 @@
+---
+title: "Call Stack"
+description: "Understanding how JavaScript tracks function execution"
+---
+
+## Overview
+
+The call stack is a mechanism that the JavaScript interpreter uses to keep track of function execution within a program. In JavaScript, functions are executed in the order they are called. The call stack follows the **Last In, First Out (LIFO)** principle, meaning that the last function pushed onto the stack is the first one to be executed.
+
+<Info>
+According to the ECMAScript specification, the call stack is defined as part of the execution context. Whenever a function is called, a new execution context is created and placed at the top of the stack. Once the function completes, its execution context is removed from the stack, and control returns to the previous context.
+</Info>
+
+This helps manage synchronous code execution, as each function call must complete before the next one can begin.
+
+## Reference
+
+<Card title="Call Stack — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Call_stack">
+  Official MDN documentation on the Call Stack
+</Card>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Understanding Javascript Call Stack, Event Loops" icon="newspaper" href="https://medium.com/@gaurav.pandvia/understanding-javascript-function-executions-tasks-event-loop-call-stack-more-part-1-5683dea1f5ec">
+    By Gaurav Pandvia
+  </Card>
+  <Card title="Understanding the JavaScript Call Stack" icon="newspaper" href="https://medium.freecodecamp.org/understanding-the-javascript-call-stack-861e41ae61d4">
+    By Charles Freeborn
+  </Card>
+</CardGroup>
+
+- [Javascript: What Is The Execution Context? What Is The Call Stack? — Valentino Gagliardi](https://medium.com/@valentinog/javascript-what-is-the-execution-context-what-is-the-call-stack-bd23c78f10d1)
+- [What is the JS Event Loop and Call Stack? — Jess Telford](https://gist.github.com/jesstelford/9a35d20a2aa044df8bf241e00d7bc2d0)
+- [Understanding Execution Context and Execution Stack in Javascript — Sukhjinder Arora](https://blog.bitsrc.io/understanding-execution-context-and-execution-stack-in-javascript-1c9ea8642dd0)
+- [How JavaScript Works Under The Hood: An Overview of JavaScript Engine, Heap and, Call Stack — Bipin Rajbhar](https://dev.to/bipinrajbhar/how-javascript-works-under-the-hood-an-overview-of-javascript-engine-heap-and-call-stack-1j5o)
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="What the heck is the event loop anyway?" icon="video" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">
+    By Philip Roberts — JSConf EU
+  </Card>
+  <Card title="The JS Call Stack Explained In 9 Minutes" icon="video" href="https://www.youtube.com/watch?v=W8AeMrVtFLY">
+    By Colt Steele
+  </Card>
+</CardGroup>
+
+- [Javascript: the Call Stack explained — Coding Blocks India](https://www.youtube.com/watch?v=w6QGEiQceOM)
+- [What is the Call Stack? — Eric Traub](https://www.youtube.com/watch?v=w7QWQlkLY_s)
+- [The Call Stack — Kevin Drumm](https://www.youtube.com/watch?v=Q2sFmqvpBe0)
+- [Understanding JavaScript Execution — Codesmith](https://www.youtube.com/watch?v=Z6a1cLyq7Ac&list=PLWrQZnG8l0E4kd1T_nyuVoxQUaYEWFgcD)
+- [How JavaScript Code is executed? & Call Stack — Akshay Saini](https://www.youtube.com/watch?v=iLWTnMzWtj4&list=PLlasXeu85E9cQ32gLCvAvr9vNaUccPVNP)
+- [Call Stacks - CS50](https://www.youtube.com/watch?v=aCPkszeKRa4)
+- [Learn the JavaScript Call Stack - codecupdev](https://www.youtube.com/watch?v=HXqXPGS96rw)
+- [JavaScript Functions and the Call Stack - Chidre'sTechTutorials](https://www.youtube.com/watch?v=P6H-T4cUDR4)

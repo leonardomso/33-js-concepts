@@ -17,13 +17,23 @@ The project was recognized by GitHub as one of the **top open source projects of
 
 ```
 33-js-concepts/
-├── README.md           # Main content with all 33 concepts and resources
-├── CONTRIBUTING.md     # Guidelines for contributors
-├── CODE_OF_CONDUCT.md  # Community standards
-├── LICENSE             # MIT License
-├── package.json        # Project metadata
-├── opencode.json       # OpenCode AI assistant configuration
-└── github-image.png    # Project banner image
+├── docs/                    # Mintlify documentation site
+│   ├── docs.json           # Mintlify configuration
+│   ├── index.mdx           # Homepage
+│   ├── introduction.mdx    # Getting started guide
+│   ├── contributing.mdx    # Contribution guidelines
+│   ├── translations.mdx    # Community translations
+│   └── concepts/           # 33 concept pages
+│       ├── call-stack.mdx
+│       ├── primitive-types.mdx
+│       └── ... (all 33 concepts)
+├── README.md               # Main GitHub README
+├── CONTRIBUTING.md         # Guidelines for contributors
+├── CODE_OF_CONDUCT.md      # Community standards
+├── LICENSE                 # MIT License
+├── package.json            # Project metadata
+├── opencode.json           # OpenCode AI assistant configuration
+└── github-image.png        # Project banner image
 ```
 
 ## The 33 Concepts
@@ -162,10 +172,61 @@ This project has OpenCode configured with:
 1. **Context7** - Documentation search (`use context7` in prompts)
 2. **GitHub** - Repository management (`use github` in prompts)
 
+## Documentation Site (Mintlify)
+
+The project includes a Mintlify documentation site in the `/docs` directory.
+
+### Local Development
+
+```bash
+# Install Mintlify CLI
+npm i -g mint
+
+# Start dev server
+cd docs
+mint dev
+```
+
+The site will be available at `http://localhost:3000`.
+
+### Documentation Structure
+
+- **Getting Started**: Homepage and introduction
+- **Fundamentals**: Concepts 1-6 (Call Stack through Scope)
+- **Functions & Execution**: Concepts 7-10
+- **Under the Hood**: Concepts 11-13
+- **Object-Oriented JS**: Concepts 14-18
+- **Functional Programming**: Concepts 19-23
+- **Async JavaScript**: Concepts 24-26
+- **Advanced Topics**: Concepts 27-33
+
+### Adding/Editing Concept Pages
+
+Each concept page is in `docs/concepts/` and follows this template:
+
+```mdx
+---
+title: "Concept Name"
+description: "Brief description"
+---
+
+## Overview
+[Explanation of the concept]
+
+## Reference
+[MDN or official docs links]
+
+## Articles
+[Curated articles with CardGroup components]
+
+## Videos
+[Curated videos with CardGroup components]
+```
+
 ## Important Notes
 
 - This is primarily a documentation/resource repository, not a code library
-- The main content lives in `README.md`
+- The main content lives in `README.md` and `/docs` (Mintlify site)
 - Translations are maintained in separate forked repositories
 - Community contributions are welcome and encouraged
 - MIT Licensed

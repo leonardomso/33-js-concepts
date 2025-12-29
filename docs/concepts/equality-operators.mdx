@@ -1,0 +1,56 @@
+---
+title: "== vs === vs typeof"
+description: "Understanding equality operators and type checking in JavaScript"
+---
+
+## Overview
+
+According to the ECMAScript specification, JavaScript includes both strict (`===`) and loose (`==`) equality operators, which behave differently when comparing values.
+
+<AccordionGroup>
+  <Accordion title="== (Loose Equality)">
+    This operator performs type coercion before comparing two values. If the values are of different types, JavaScript will attempt to convert one or both values to a common type before comparison, which can lead to unexpected results.
+  </Accordion>
+  <Accordion title="=== (Strict Equality)">
+    This operator compares both the value and the type without any type coercion. If the two values are not of the same type, the comparison will return false.
+  </Accordion>
+  <Accordion title="typeof Operator">
+    The `typeof` operator is used to check the data type of a variable. While it's generally reliable, there are certain quirks, like how `typeof null` returns "object" instead of "null", due to a long-standing behavior in JavaScript's implementation.
+  </Accordion>
+</AccordionGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Double Equals vs. Triple Equals" icon="newspaper" href="https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a">
+    By Brandon Morelli
+  </Card>
+  <Card title="Should I use === or == equality comparison operator in JavaScript?" icon="newspaper" href="https://bytearcher.com/articles/equality-comparison-operator-javascript/">
+    By Panu Pitkamaki
+  </Card>
+</CardGroup>
+
+- [Why Use the Triple-Equals Operator in JavaScript? — Louis Lazaris](https://www.impressivewebs.com/why-use-triple-equals-javascipt/)
+- [What is the difference between == and === in JavaScript? — Craig Buckler](https://www.oreilly.com/learning/what-is-the-difference-between-and-in-javascript)
+- [Why javascript's typeof always return "object"? — Stack Overflow](https://stackoverflow.com/questions/3787901/why-javascripts-typeof-always-return-object)
+- [Checking Types in Javascript — Toby Ho](http://tobyho.com/2011/01/28/checking-types-in-javascript/)
+- [How to better check data types in JavaScript — Webbjocke](https://webbjocke.com/javascript-check-data-types/)
+- [Checking for the Absence of a Value in JavaScript — Tomer Aberbach](https://tomeraberba.ch/html/post/checking-for-the-absence-of-a-value-in-javascript.html)
+- [Difference Between == and === in Javascript — Scaler](https://www.scaler.com/topics/javascript/difference-between-double-equals-and-triple-equals-in-javascript/)
+- [Difference between == and === in JavaScript — GeeksforGeeks](https://www.geeksforgeeks.org/difference-between-double-equal-vs-triple-equal-javascript/)
+- [=== vs == Comparision in JavaScript — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-triple-equals-sign-vs-double-equals-sign-comparison-operators-explained-with-examples/)
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript - The typeof operator" icon="video" href="https://www.youtube.com/watch?v=ol_su88I3kw">
+    By Java Brains
+  </Card>
+  <Card title='JavaScript "==" VS "==="' icon="video" href="https://www.youtube.com/watch?v=C5ZVC4HHgIg">
+    By Web Dev Simplified
+  </Card>
+</CardGroup>
+
+- [Javascript typeof operator — DevDelight](https://www.youtube.com/watch?v=qPYhTPt_SbQ)
+- [=== vs == in javascript - Hitesh Choudhary](https://www.youtube.com/watch?v=a0S1iG3TgP0)
+- [The typeof operator in JS - CodeVault](https://www.youtube.com/watch?v=NSS5WRcv7yM)

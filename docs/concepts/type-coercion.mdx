@@ -1,0 +1,63 @@
+---
+title: "Type Coercion"
+description: "Implicit, Explicit, Nominal, Structuring and Duck Typing in JavaScript"
+---
+
+## Overview
+
+The ECMAScript specification defines JavaScript as a dynamically typed language, meaning that types are associated with values rather than variables, and type checking occurs at runtime. There are various ways JavaScript manages types:
+
+<AccordionGroup>
+  <Accordion title="Implicit Typing (Type Coercion)">
+    This occurs when JavaScript automatically converts one data type to another when required. For instance, JavaScript might convert a string to a number during an arithmetic operation. While this can simplify some code, it can also lead to unexpected results if not handled carefully.
+  </Accordion>
+  <Accordion title="Explicit Typing">
+    Unlike implicit typing, explicit typing involves manually converting a value from one type to another using functions like `Number()`, `String()`, or `Boolean()`.
+  </Accordion>
+  <Accordion title="Nominal Typing">
+    JavaScript doesn't natively support nominal typing, where types are explicitly declared and checked. However, TypeScript, a superset of JavaScript, brings this feature to help catch type errors during development.
+  </Accordion>
+  <Accordion title="Structural Typing">
+    In this type system, types are based on the structure or properties of the data. JavaScript is a structurally typed language where objects are compatible if they share the same structure (i.e., the same set of properties and methods).
+  </Accordion>
+  <Accordion title="Duck Typing">
+    This is a concept where an object's suitability is determined by the presence of certain properties and methods, rather than by the actual type of the object. JavaScript relies heavily on duck typing, where behavior is inferred from an object's properties rather than its declared type.
+  </Accordion>
+</AccordionGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="What you need to know about Javascript's Implicit Coercion" icon="newspaper" href="https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23">
+    By Promise Tochi
+  </Card>
+  <Card title="JavaScript Type Coercion Explained" icon="newspaper" href="https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839">
+    By Alexey Samoshkin
+  </Card>
+</CardGroup>
+
+- [Javascript Coercion Explained — Ben Garrison](https://hackernoon.com/javascript-coercion-explained-545c895213d3)
+- [What exactly is Type Coercion in Javascript? - Stack Overflow](https://stackoverflow.com/questions/19915688/what-exactly-is-type-coercion-in-javascript)
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="== ? === ??? ...#@^%" icon="video" href="https://www.youtube.com/watch?v=qGyqzN0bjhc&t">
+    By Shirmung Bielefeld
+  </Card>
+  <Card title="Coercion in Javascript" icon="video" href="https://www.youtube.com/watch?v=b04Q_vyqEG8">
+    By Hitesh Choudhary
+  </Card>
+</CardGroup>
+
+- [JavaScript Questions: What is Coercion? - Steven Hancock](https://www.youtube.com/watch?v=z4-8wMSPJyI)
+- [Typing: Static vs Dynamic, Weak vs. Strong - Codexpanse](https://www.youtube.com/watch?v=C5fr0LZLMAs)
+- [EL SISTEMA de TIPOS DE JAVASCRIPT - La Cocina del Código](https://www.youtube.com/watch?v=0ei4nb49GKo)
+- [Duck Typing in Javascript - Techmaker Studio](https://www.youtube.com/watch?v=oEpgyoMEkrM)
+- [Duck Typing in Javascript - Programming with Kartik](https://youtu.be/e4X1KAuk6Bs?si=krZKbsM2i3tmIl2G)
+
+## Books
+
+<Card title="You Don't Know JS, 1st Edition: Types & Grammar" icon="book" href="https://github.com/getify/You-Dont-Know-JS/tree/1st-ed">
+  By Kyle Simpson
+</Card>

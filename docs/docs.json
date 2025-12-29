@@ -1,0 +1,131 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "name": "33 JavaScript Concepts",
+  "description": "33 concepts every JavaScript developer should know",
+  "colors": {
+    "primary": "#F7DF1E",
+    "light": "#FAFAFA",
+    "dark": "#1A1A1A"
+  },
+  "favicon": "/favicon.svg",
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/leonardomso/33-js-concepts"
+      }
+    ]
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Learn",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "index",
+              "introduction"
+            ]
+          },
+          {
+            "group": "Fundamentals",
+            "icon": "cube",
+            "pages": [
+              "concepts/call-stack",
+              "concepts/primitive-types",
+              "concepts/value-reference-types",
+              "concepts/type-coercion",
+              "concepts/equality-operators",
+              "concepts/scope"
+            ]
+          },
+          {
+            "group": "Functions & Execution",
+            "icon": "code",
+            "pages": [
+              "concepts/expression-statement",
+              "concepts/iife-modules",
+              "concepts/event-loop",
+              "concepts/timers"
+            ]
+          },
+          {
+            "group": "Under the Hood",
+            "icon": "gear",
+            "pages": [
+              "concepts/javascript-engines",
+              "concepts/bitwise-operators",
+              "concepts/dom"
+            ]
+          },
+          {
+            "group": "Object-Oriented JS",
+            "icon": "sitemap",
+            "pages": [
+              "concepts/factories-classes",
+              "concepts/this-call-apply-bind",
+              "concepts/new-constructor",
+              "concepts/prototype",
+              "concepts/object-create-assign"
+            ]
+          },
+          {
+            "group": "Functional Programming",
+            "icon": "filter",
+            "pages": [
+              "concepts/map-reduce-filter",
+              "concepts/pure-functions",
+              "concepts/closures",
+              "concepts/higher-order-functions",
+              "concepts/recursion"
+            ]
+          },
+          {
+            "group": "Async JavaScript",
+            "icon": "clock",
+            "pages": [
+              "concepts/collections-generators",
+              "concepts/promises",
+              "concepts/async-await"
+            ]
+          },
+          {
+            "group": "Advanced Topics",
+            "icon": "graduation-cap",
+            "pages": [
+              "concepts/data-structures",
+              "concepts/big-o-notation",
+              "concepts/algorithms",
+              "concepts/inheritance-polymorphism",
+              "concepts/design-patterns",
+              "concepts/currying-composition",
+              "concepts/clean-code"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Community",
+        "groups": [
+          {
+            "group": "Get Involved",
+            "icon": "users",
+            "pages": [
+              "contributing",
+              "translations"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/leonardomso/33-js-concepts",
+      "x": "https://x.com/leonardomso"
+    }
+  }
+}
