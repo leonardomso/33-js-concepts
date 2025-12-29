@@ -39,7 +39,7 @@
               "concepts/value-reference-types",
               "concepts/type-coercion",
               "concepts/equality-operators",
-              "concepts/scope"
+              "concepts/scope-and-closures"
             ]
           },
           {
@@ -78,7 +78,6 @@
             "pages": [
               "concepts/map-reduce-filter",
               "concepts/pure-functions",
-              "concepts/closures",
               "concepts/higher-order-functions",
               "concepts/recursion"
             ]
