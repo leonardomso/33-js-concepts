@@ -104,6 +104,79 @@ describe('HTTP & Fetch', () => {
   })
 
   // ===========================================================================
+  // RESPONSE BODY METHODS (blob, arrayBuffer)
+  // ===========================================================================
+  describe('Response Body Methods', () => {
+    it('should parse body as Blob', async () => {
+      const textContent = 'Hello, World!'
+      const response = new Response(textContent)
+      const blob = await response.blob()
+
+      expect(blob).toBeInstanceOf(Blob)
+      expect(blob.size).toBe(textContent.length)
+    })
+
+    it('should parse body as ArrayBuffer', async () => {
+      const textContent = 'Hello'
+      const response = new Response(textContent)
+      const buffer = await response.arrayBuffer()
+
+      expect(buffer).toBeInstanceOf(ArrayBuffer)
+      expect(buffer.byteLength).toBe(textContent.length)
+    })
+
+    it('should parse binary data as Blob', async () => {
+      const binaryData = new Uint8Array([0x48, 0x65, 0x6c, 0x6c, 0x6f]) // "Hello"
+      const response = new Response(binaryData)
+      const blob = await response.blob()
+
+      expect(blob.size).toBe(5)
+    })
+
+    it('should parse binary data as ArrayBuffer', async () => {
+      const binaryData = new Uint8Array([1, 2, 3, 4, 5])
+      const response = new Response(binaryData)
+      const buffer = await response.arrayBuffer()
+
+      const view = new Uint8Array(buffer)
+      expect(view[0]).toBe(1)
+      expect(view[4]).toBe(5)
+    })
+  })
+
+  // ===========================================================================
+  // RESPONSE METADATA PROPERTIES
+  // ===========================================================================
+  describe('Response Metadata', () => {
+    it('should have url property', () => {
+      // Note: In real fetch, url reflects the final URL after redirects
+      // For Response constructor, we can't set URL directly
+      const response = new Response('OK', { status: 200 })
+      expect(response.url).toBe('')  // Empty for constructed responses
+    })
+
+    it('should have type property', () => {
+      const response = new Response('OK', { status: 200 })
+      // Constructed responses have type "default"
+      expect(response.type).toBe('default')
+    })
+
+    it('should have redirected property', () => {
+      const response = new Response('OK', { status: 200 })
+      // Constructed responses are not redirected
+      expect(response.redirected).toBe(false)
+    })
+
+    it('should have bodyUsed property', async () => {
+      const response = new Response('Hello')
+      
+      expect(response.bodyUsed).toBe(false)
+      await response.text()
+      expect(response.bodyUsed).toBe(true)
+    })
+  })
+
+  // ===========================================================================
   // STATUS CODE RANGES
   // ===========================================================================
   describe('HTTP Status Codes', () => {

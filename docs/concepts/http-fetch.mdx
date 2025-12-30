@@ -1,6 +1,6 @@
 ---
-title: "HTTP & Fetch"
-description: "Learn how to make network requests in JavaScript using the Fetch API, handle HTTP responses, parse JSON data, and avoid common error handling mistakes"
+title: "JavaScript Fetch API: Making HTTP Requests the Modern Way"
+description: "Master the JavaScript Fetch API for making HTTP requests. Learn GET, POST, response handling, JSON parsing, error patterns, and AbortController for request cancellation."
 ---
 
 How does JavaScript get data from a server? How do you load user profiles, submit forms, or fetch the latest posts from an API? The answer is the **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** — JavaScript's modern way to make network requests.
@@ -27,7 +27,7 @@ But to really understand Fetch, you need to understand what's happening undernea
 
 ## What is HTTP?
 
-**[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)** (Hypertext Transfer Protocol) is the protocol that powers the web. It's not a JavaScript thing — it's a set of rules that *all* web communication follows, regardless of programming language. When your browser loads a webpage, it uses HTTP. When your phone app talks to a server, it uses HTTP. When JavaScript fetches data, it uses HTTP.
+**[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)** (Hypertext Transfer Protocol) is the foundation of data communication on the web. It defines how messages are formatted and transmitted between clients (like web browsers) and servers. Every time you load a webpage, submit a form, or fetch data with JavaScript, HTTP is the protocol making that exchange possible.
 
 <Warning>
 **HTTP is not JavaScript.** HTTP is a language-agnostic protocol — Python, Ruby, Go, Java, and every other language uses it too. We cover HTTP basics in this guide because understanding the protocol is essential to using the Fetch API effectively. If you want to dive deeper into HTTP itself, check out the MDN resources below.
@@ -85,9 +85,7 @@ This request-response cycle is the core of how the web works. The **Fetch API** 
 
 ---
 
----
-
-## HTTP Fundamentals
+## How Does HTTP Work?
 
 Before diving into the Fetch API, let's understand the key concepts of HTTP itself.
 
@@ -139,6 +137,12 @@ fetch('/api/users', {
 fetch('/api/users/123', {
   method: 'PUT',
   body: JSON.stringify({ name: 'Alice Updated' })
+})
+
+// PATCH - Partially update a user
+fetch('/api/users/123', {
+  method: 'PATCH',
+  body: JSON.stringify({ name: 'New Name' })
 })
 
 // DELETE - Remove a user
@@ -220,13 +224,28 @@ Status codes are three-digit numbers that tell you how the request went:
 
 ---
 
-## The Fetch API
+## How to Use the Fetch API
 
-The **Fetch API** is JavaScript's modern way to make HTTP requests. It replaced the older `XMLHttpRequest` (XHR) with a cleaner, Promise-based interface.
+The **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** is JavaScript's modern way to make HTTP requests. It replaced the older `XMLHttpRequest` (XHR) with a cleaner, Promise-based interface.
 
-### Basic GET Request
+### How to Make a Fetch Request
 
-The simplest fetch call retrieves data from a URL. By default, `fetch()` uses the **GET** method, so you don't need to specify it. There are two ways to write this:
+<Steps>
+  <Step title="Call fetch() with a URL">
+    The `fetch()` function takes a URL and returns a Promise that resolves to a Response object. By default, it makes a GET request.
+  </Step>
+  <Step title="Check if the response was successful">
+    Always verify `response.ok` before processing — fetch doesn't throw errors for HTTP status codes like 404 or 500.
+  </Step>
+  <Step title="Parse the response body">
+    Use `response.json()` for JSON data or `response.text()` for plain text. These methods return another Promise.
+  </Step>
+  <Step title="Handle errors properly">
+    Wrap everything in try/catch to handle both network failures and HTTP error responses.
+  </Step>
+</Steps>
+
+Here's what this looks like in code. By default, `fetch()` uses the **GET** method, so you don't need to specify it. There are two ways to write this:
 
 <Tabs>
   <Tab title="Promise .then()">
@@ -565,7 +584,7 @@ try {
 
 ---
 
-## Using async/await with Fetch
+## How to Use async/await with Fetch
 
 The examples above use `.then()` chains, but modern JavaScript has a cleaner syntax: `async/await`. If you're not familiar with it, check out our [async/await concept](/concepts/async-await) first — it'll make your fetch code much easier to read.
 
@@ -810,6 +829,10 @@ searchInput.addEventListener('input', async (e) => {
   }
 })
 ```
+
+<Note>
+This example uses browser DOM APIs (`addEventListener`, `searchInput`). In Node.js or server-side contexts, you would trigger the search function differently, but the AbortController pattern remains the same.
+</Note>
 
 ---
 
