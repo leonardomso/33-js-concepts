@@ -1,5 +1,6 @@
 ---
-title: "The JavaScript Event Loop: How Async Code Actually Runs"
+title: "Event Loop: How Async Code Actually Runs in JavaScript"
+sidebarTitle: "Event Loop: How Async Code Actually Runs"
 description: "Learn how the JavaScript event loop handles async code. Understand the call stack, task queue, microtasks, and why Promises always run before setTimeout()."
 ---
 
@@ -36,7 +37,11 @@ Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event lo
 
 ---
 
-## Understanding the Event Loop: A Restaurant Analogy
+## What is the Event Loop?
+
+The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. It continuously monitors the call stack and callback queues, pushing queued tasks to the stack when it's empty—enabling non-blocking behavior despite JavaScript being single-threaded.
+
+### The Restaurant Analogy
 
 Imagine a busy restaurant kitchen with a **single chef** who can only cook one dish at a time. Despite this limitation, the restaurant serves hundreds of customers because the kitchen has a clever system:
 
