@@ -654,4 +654,106 @@ describe('Scope and Closures', () => {
       expect(results[2]()).toBe(2)
     })
   })
+
+  describe('Temporal Dead Zone (TDZ)', () => {
+    it('should throw ReferenceError when accessing let before declaration', () => {
+      expect(() => {
+        // Using eval to avoid syntax errors at parse time
+        eval(`
+          const before = x
+          let x = 10
+        `)
+      }).toThrow(ReferenceError)
+    })
+
+    it('should throw ReferenceError when accessing const before declaration', () => {
+      expect(() => {
+        eval(`
+          const before = y
+          const y = 10
+        `)
+      }).toThrow(ReferenceError)
+    })
+
+    it('should demonstrate TDZ exists from block start to declaration', () => {
+      let outsideValue = "outside"
+      
+      expect(() => {
+        eval(`
+          {
+            // TDZ starts here for 'name'
+            const beforeDeclaration = name  // ReferenceError
+            let name = "Alice"
+          }
+        `)
+      }).toThrow(ReferenceError)
+    })
+
+    it('should not throw for var due to hoisting', () => {
+      // var is hoisted with undefined value, so no TDZ
+      function example() {
+        const before = message // undefined, not an error
+        var message = "Hello"
+        const after = message  // "Hello"
+        return { before, after }
+      }
+
+      const result = example()
+      expect(result.before).toBe(undefined)
+      expect(result.after).toBe("Hello")
+    })
+
+    it('should have TDZ in function parameters', () => {
+      // Default parameters can reference earlier parameters but not later ones
+      expect(() => {
+        eval(`
+          function test(a = b, b = 2) {
+            return a + b
+          }
+          test()
+        `)
+      }).toThrow(ReferenceError)
+    })
+
+    it('should allow later parameters to reference earlier ones', () => {
+      function test(a = 1, b = a + 1) {
+        return a + b
+      }
+
+      expect(test()).toBe(3)     // a=1, b=2
+      expect(test(5)).toBe(11)   // a=5, b=6
+      expect(test(5, 10)).toBe(15) // a=5, b=10
+    })
+  })
+
+  describe('Hoisting Comparison: var vs let/const', () => {
+    it('should demonstrate var hoisting without TDZ', () => {
+      function example() {
+        // var is hoisted and initialized to undefined
+        expect(a).toBe(undefined)
+        var a = 1
+        expect(a).toBe(1)
+      }
+      
+      example()
+    })
+
+    it('should demonstrate function declarations are fully hoisted', () => {
+      // Function can be called before its declaration
+      expect(hoistedFn()).toBe("I was hoisted!")
+      
+      function hoistedFn() {
+        return "I was hoisted!"
+      }
+    })
+
+    it('should demonstrate function expressions are not hoisted', () => {
+      expect(() => {
+        eval(`
+          notHoisted()
+          var notHoisted = function() { return "Not hoisted" }
+        `)
+      }).toThrow(TypeError)
+    })
+  })
 })

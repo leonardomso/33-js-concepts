@@ -27,6 +27,15 @@ The project was recognized by GitHub as one of the **top open source projects of
 │       ├── call-stack.mdx
 │       ├── primitive-types.mdx
 │       └── ... (all 33 concepts)
+├── tests/                   # Vitest test suites
+│   └── fundamentals/       # Tests for fundamental concepts (1-6)
+│       ├── call-stack/
+│       ├── primitive-types/
+│       ├── value-reference-types/
+│       ├── type-coercion/
+│       ├── equality-operators/
+│       └── scope-and-closures/
+├── vitest.config.js        # Vitest configuration
 ├── README.md               # Main GitHub README
 ├── CONTRIBUTING.md         # Guidelines for contributors
 ├── CODE_OF_CONDUCT.md      # Community standards
@@ -36,69 +45,122 @@ The project was recognized by GitHub as one of the **top open source projects of
 └── github-image.png        # Project banner image
 ```
 
-## The 33 Concepts
+## The 32 Concepts (33rd coming soon)
 
+### Fundamentals (1-6)
 1. Call Stack
 2. Primitive Types
 3. Value Types and Reference Types
-4. Implicit, Explicit, Nominal, Structuring and Duck Typing
-5. == vs === vs typeof
-6. Function Scope, Block Scope and Lexical Scope
+4. Type Coercion (Implicit, Explicit, Nominal, Structuring and Duck Typing)
+5. Equality Operators (== vs === vs typeof)
+6. Scope & Closures
+
+### Functions & Execution (7-10)
 7. Expression vs Statement
 8. IIFE, Modules and Namespaces
-9. Message Queue and Event Loop
-10. setTimeout, setInterval and requestAnimationFrame
+9. Event Loop (Message Queue)
+10. Timers (setTimeout, setInterval, requestAnimationFrame)
+
+### Under the Hood (11-13)
 11. JavaScript Engines
 12. Bitwise Operators, Type Arrays and Array Buffers
 13. DOM and Layout Trees
+
+### Object-Oriented JS (14-18)
 14. Factories and Classes
 15. this, call, apply and bind
 16. new, Constructor, instanceof and Instances
 17. Prototype Inheritance and Prototype Chain
 18. Object.create and Object.assign
+
+### Functional Programming (19-22)
 19. map, reduce, filter
 20. Pure Functions, Side Effects, State Mutation and Event Propagation
-21. Closures
-22. High Order Functions
-23. Recursion
-24. Collections and Generators
-25. Promises
-26. async/await
-27. Data Structures
-28. Expensive Operation and Big O Notation
-29. Algorithms
-30. Inheritance, Polymorphism and Code Reuse
-31. Design Patterns
-32. Partial Applications, Currying, Compose and Pipe
-33. Clean Code
+21. Higher-Order Functions
+22. Recursion
+
+### Async JavaScript (23-25)
+23. Collections and Generators
+24. Promises
+25. async/await
+
+### Advanced Topics (26-32)
+26. Data Structures
+27. Big O Notation (Expensive Operations)
+28. Algorithms
+29. Inheritance, Polymorphism and Code Reuse
+30. Design Patterns
+31. Partial Applications, Currying, Compose and Pipe
+32. Clean Code
 
 ## Content Format
 
-Each concept in the README follows this structure:
+Each concept page in `/docs/concepts/` follows this structure:
 
-1. **Concept Title** - Numbered heading
-2. **Description** - Brief ECMAScript-based explanation
-3. **Reference** - MDN or official documentation links
-4. **Articles** - Curated blog posts and tutorials
-5. **Videos** - YouTube tutorials and conference talks
-6. **Books** - Recommended reading (when applicable)
+### 1. Frontmatter
+```mdx
+---
+title: "Concept Name"
+description: "Brief description of the concept"
+---
+```
+
+### 2. Real-World Analogy
+Start with an engaging analogy that makes the concept relatable. Include ASCII art diagrams when helpful.
+
+### 3. Info Box (What You'll Learn)
+```mdx
+<Info>
+**What you'll learn in this guide:**
+- Key point 1
+- Key point 2
+- Key point 3
+</Info>
+```
+
+### 4. Main Content Sections
+- Use clear headings (`##`, `###`) to organize topics
+- Include code examples with explanations
+- Use Mintlify components (`<AccordionGroup>`, `<Steps>`, `<Tabs>`, etc.)
+- Add diagrams and visualizations where helpful
+
+### 5. Related Concepts
+```mdx
+<CardGroup cols={2}>
+  <Card title="Related Concept" icon="icon-name" href="/concepts/concept-slug">
+    Brief description of how it relates
+  </Card>
+</CardGroup>
+```
+
+### 6. Reference
+```mdx
+<Card title="Topic — MDN" icon="book" href="https://developer.mozilla.org/...">
+  Official MDN documentation
+</Card>
+```
+
+### 7. Articles
+Curated blog posts and tutorials using `<CardGroup>` with `icon="newspaper"`.
+
+### 8. Courses (optional)
+Educational courses using `<Card>` with `icon="graduation-cap"`.
+
+### 9. Videos
+YouTube tutorials and conference talks using `<CardGroup>` with `icon="video"`.
 
 ## Contributing Guidelines
 
 ### Adding Resources
 - Resources should be high-quality and educational
-- Include author name in the link text
-- Follow the existing format for consistency
-
-### Creating Translations
-1. Fork the repository
-2. Translate content in your fork
-3. Add translation link to the Community section in README
-4. Submit a PR with title "Add [language] translation"
+- Follow the existing Card format for consistency
+- Include a brief description of what the resource covers
 
 ### Resource Format
-```markdown
-- [Article/Video Title — Author Name](URL)
+```mdx
+<Card title="Resource Title" icon="newspaper" href="https://...">
+  Brief description of what the reader will learn from this resource.
+</Card>
 ```
 
 ## Git Commit Conventions
@@ -172,6 +234,79 @@ This project has OpenCode configured with:
 1. **Context7** - Documentation search (`use context7` in prompts)
 2. **GitHub** - Repository management (`use github` in prompts)
 
+## Testing
+
+This project uses [Vitest](https://vitest.dev/) as the test runner to verify that code examples in the documentation work correctly.
+
+### Running Tests
+
+```bash
+# Run all tests once
+npm test
+
+# Run tests in watch mode (re-runs on file changes)
+npm run test:watch
+
+# Run tests with coverage report
+npm run test:coverage
+```
+
+### Test Structure
+
+Tests are organized by concept category in the `tests/` directory:
+
+```
+tests/
+└── fundamentals/           # Concepts 1-6
+    ├── call-stack/
+    │   └── call-stack.test.js
+    ├── primitive-types/
+    │   └── primitive-types.test.js
+    ├── value-reference-types/
+    │   └── value-reference-types.test.js
+    ├── type-coercion/
+    │   └── type-coercion.test.js
+    ├── equality-operators/
+    │   └── equality-operators.test.js
+    └── scope-and-closures/
+        └── scope-and-closures.test.js
+```
+
+### Writing Tests for Code Examples
+
+When adding new code examples to concept documentation, please include corresponding tests:
+
+1. **File naming**: Create `{concept-name}.test.js` in `tests/{category}/{concept-name}/`
+2. **Use explicit imports**: 
+   ```javascript
+   import { describe, it, expect } from 'vitest'
+   ```
+3. **Convert console.log examples to assertions**:
+   ```javascript
+   // Documentation example:
+   // console.log(typeof "hello") // "string"
+   
+   // Test:
+   it('should return string type', () => {
+     expect(typeof "hello").toBe("string")
+   })
+   ```
+4. **Test error cases**: Use `expect(() => { ... }).toThrow()` for operations that should throw
+5. **Skip browser-specific examples**: Tests run in Node.js, so skip DOM/window/document examples
+6. **Note strict mode behavior**: Vitest runs in strict mode, so operations that "silently fail" in non-strict mode will throw `TypeError`
+
+### Current Test Coverage
+
+| Category | Concept | Tests |
+|----------|---------|-------|
+| Fundamentals | Call Stack | 20 |
+| Fundamentals | Primitive Types | 73 |
+| Fundamentals | Value vs Reference Types | 54 |
+| Fundamentals | Type Coercion | 74 |
+| Fundamentals | Equality Operators | 87 |
+| Fundamentals | Scope and Closures | 46 |
+| **Total** | | **354** |
+
 ## Documentation Site (Mintlify)
 
 The project includes a Mintlify documentation site in the `/docs` directory.
@@ -179,10 +314,11 @@ The project includes a Mintlify documentation site in the `/docs` directory.
 ### Local Development
 
 ```bash
-# Install Mintlify CLI
-npm i -g mint
+# Using npm script
+npm run docs
 
-# Start dev server
+# Or install Mintlify CLI globally
+npm i -g mint
 cd docs
 mint dev
 ```
@@ -192,13 +328,13 @@ The site will be available at `http://localhost:3000`.
 ### Documentation Structure
 
 - **Getting Started**: Homepage and introduction
-- **Fundamentals**: Concepts 1-6 (Call Stack through Scope)
-- **Functions & Execution**: Concepts 7-10
-- **Under the Hood**: Concepts 11-13
-- **Object-Oriented JS**: Concepts 14-18
-- **Functional Programming**: Concepts 19-23
-- **Async JavaScript**: Concepts 24-26
-- **Advanced Topics**: Concepts 27-33
+- **Fundamentals**: Concepts 1-6 (Call Stack through Scope & Closures)
+- **Functions & Execution**: Concepts 7-10 (Expression/Statement through Timers)
+- **Under the Hood**: Concepts 11-13 (JS Engines through DOM)
+- **Object-Oriented JS**: Concepts 14-18 (Factories through Object.create/assign)
+- **Functional Programming**: Concepts 19-22 (map/reduce/filter through Recursion)
+- **Async JavaScript**: Concepts 23-25 (Collections/Generators through async/await)
+- **Advanced Topics**: Concepts 26-32 (Data Structures through Clean Code)
 
 ### Adding/Editing Concept Pages
 

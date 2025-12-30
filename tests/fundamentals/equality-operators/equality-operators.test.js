@@ -643,4 +643,136 @@ describe('Equality and Type Checking', () => {
       })
     })
   })
+
+  describe('Additional Missing Examples', () => {
+    describe('More Loose Equality Examples', () => {
+      it('should coerce 42 == "42" to true', () => {
+        expect(42 == "42").toBe(true)
+      })
+
+      it('should return false for undefined == ""', () => {
+        expect(undefined == "").toBe(false)
+      })
+    })
+
+    describe('More Strict Equality Examples', () => {
+      it('should return false for array === string', () => {
+        const arr = []
+        const str = ""
+        expect(arr === str).toBe(false)
+      })
+
+      it('should demonstrate -0 === 0 is true', () => {
+        expect(-0 === 0).toBe(true)
+        expect(0 === -0).toBe(true)
+      })
+    })
+
+    describe('Negative Zero Edge Cases', () => {
+      it('should demonstrate 1/+0 vs 1/-0', () => {
+        expect(1 / +0).toBe(Infinity)
+        expect(1 / -0).toBe(-Infinity)
+        expect((1 / +0) === (1 / -0)).toBe(false)
+      })
+
+      it('should demonstrate Math.sign with -0', () => {
+        expect(Object.is(Math.sign(-0), -0)).toBe(true)
+        expect(Math.sign(-0) === 0).toBe(true) // But === says it equals 0
+      })
+
+      it('should parse -0 from JSON', () => {
+        const negZero = JSON.parse("-0")
+        expect(Object.is(negZero, -0)).toBe(true)
+      })
+
+      it('should create -0 through multiplication', () => {
+        expect(Object.is(0 * -1, -0)).toBe(true)
+        expect(Object.is(-0 * 1, -0)).toBe(true)
+      })
+    })
+
+    describe('Map with NaN as Key', () => {
+      it('should use NaN as a Map key', () => {
+        const map = new Map()
+        
+        map.set(NaN, "value for NaN")
+        
+        // Map uses SameValueZero algorithm, which treats NaN === NaN
+        expect(map.get(NaN)).toBe("value for NaN")
+        expect(map.has(NaN)).toBe(true)
+      })
+
+      it('should only have one NaN key despite multiple sets', () => {
+        const map = new Map()
+        
+        map.set(NaN, "first")
+        map.set(NaN, "second")
+        
+        expect(map.size).toBe(1)
+        expect(map.get(NaN)).toBe("second")
+      })
+    })
+
+    describe('Number.isSafeInteger', () => {
+      it('should identify safe integers', () => {
+        expect(Number.isSafeInteger(3)).toBe(true)
+        expect(Number.isSafeInteger(-3)).toBe(true)
+        expect(Number.isSafeInteger(0)).toBe(true)
+        expect(Number.isSafeInteger(Number.MAX_SAFE_INTEGER)).toBe(true)
+        expect(Number.isSafeInteger(Number.MIN_SAFE_INTEGER)).toBe(true)
+      })
+
+      it('should return false for unsafe integers', () => {
+        expect(Number.isSafeInteger(Number.MAX_SAFE_INTEGER + 1)).toBe(false)
+        expect(Number.isSafeInteger(Number.MIN_SAFE_INTEGER - 1)).toBe(false)
+      })
+
+      it('should return false for non-integers', () => {
+        expect(Number.isSafeInteger(3.1)).toBe(false)
+        expect(Number.isSafeInteger(NaN)).toBe(false)
+        expect(Number.isSafeInteger(Infinity)).toBe(false)
+        expect(Number.isSafeInteger("3")).toBe(false)
+      })
+    })
+
+    describe('NaN Creation Examples', () => {
+      it('should create NaN from 0/0', () => {
+        expect(Number.isNaN(0 / 0)).toBe(true)
+      })
+
+      it('should create NaN from Math.sqrt(-1)', () => {
+        expect(Number.isNaN(Math.sqrt(-1))).toBe(true)
+      })
+
+      it('should create NaN from invalid math operations', () => {
+        expect(Number.isNaN(Infinity - Infinity)).toBe(true)
+        expect(Number.isNaN(Infinity / Infinity)).toBe(true)
+        expect(Number.isNaN(0 * Infinity)).toBe(true)
+      })
+    })
+
+    describe('Sorting Array of Number Strings', () => {
+      it('should sort incorrectly with default sort', () => {
+        const arr = ["10", "9", "2", "1", "100"]
+        const sorted = [...arr].sort()
+
+        // Lexicographic sort - NOT numeric order!
+        expect(sorted).toEqual(["1", "10", "100", "2", "9"])
+      })
+
+      it('should sort correctly with numeric comparison', () => {
+        const arr = ["10", "9", "2", "1", "100"]
+        const sorted = [...arr].sort((a, b) => Number(a) - Number(b))
+
+        expect(sorted).toEqual(["1", "2", "9", "10", "100"])
+      })
+
+      it('should sort correctly using + for conversion', () => {
+        const arr = ["10", "9", "2", "1", "100"]
+        const sorted = [...arr].sort((a, b) => +a - +b)
+
+        expect(sorted).toEqual(["1", "2", "9", "10", "100"])
+      })
+    })
+  })
 })

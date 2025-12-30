@@ -503,4 +503,133 @@ describe('Type Coercion', () => {
       expect(true + false + "hello").toBe("1hello")
     })
   })
+
+  describe('Modulo Operator with Strings', () => {
+    it('should coerce strings to numbers for modulo', () => {
+      expect("6" % 4).toBe(2)
+      expect("10" % "3").toBe(1)
+      expect(17 % "5").toBe(2)
+    })
+
+    it('should return NaN for non-numeric strings', () => {
+      expect(Number.isNaN("hello" % 2)).toBe(true)
+      expect(Number.isNaN(10 % "abc")).toBe(true)
+    })
+  })
+
+  describe('Comparison Operators with Coercion', () => {
+    it('should coerce strings to numbers in comparisons', () => {
+      expect("10" > 5).toBe(true)
+      expect("10" < 5).toBe(false)
+      expect("10" >= 10).toBe(true)
+      expect("10" <= 10).toBe(true)
+    })
+
+    it('should compare strings lexicographically when both are strings', () => {
+      // String comparison (lexicographic, not numeric)
+      expect("10" > "9").toBe(false) // "1" < "9" in char codes
+      expect("2" > "10").toBe(true)  // "2" > "1" in char codes
+    })
+
+    it('should coerce null and undefined in comparisons', () => {
+      expect(null >= 0).toBe(true)  // null coerces to 0
+      expect(null > 0).toBe(false)
+      expect(null == 0).toBe(false) // Special case!
+      
+      // undefined always returns false in comparisons
+      expect(undefined > 0).toBe(false)
+      expect(undefined < 0).toBe(false)
+      expect(undefined >= 0).toBe(false)
+    })
+  })
+
+  describe('Double Negation (!!)', () => {
+    it('should convert values to boolean with !!', () => {
+      // Truthy values
+      expect(!!"hello").toBe(true)
+      expect(!!1).toBe(true)
+      expect(!!{}).toBe(true)
+      expect(!![]).toBe(true)
+      expect(!!-1).toBe(true)
+
+      // Falsy values
+      expect(!!"").toBe(false)
+      expect(!!0).toBe(false)
+      expect(!!null).toBe(false)
+      expect(!!undefined).toBe(false)
+      expect(!!NaN).toBe(false)
+    })
+
+    it('should be equivalent to Boolean()', () => {
+      const values = ["hello", "", 0, 1, null, undefined, {}, []]
+      
+      values.forEach(value => {
+        expect(!!value).toBe(Boolean(value))
+      })
+    })
+  })
+
+  describe('Date Coercion', () => {
+    it('should coerce Date to number (timestamp) with + operator', () => {
+      const date = new Date("2025-01-01T00:00:00.000Z")
+      const timestamp = +date
+
+      expect(typeof timestamp).toBe("number")
+      expect(timestamp).toBe(date.getTime())
+    })
+
+    it('should coerce Date to string with String()', () => {
+      const date = new Date("2025-06-15T12:00:00.000Z")
+      const str = String(date)
+
+      expect(typeof str).toBe("string")
+      // Use a mid-year date to avoid timezone edge cases
+      expect(str).toContain("2025")
+    })
+
+    it('should prefer string coercion with + operator and string', () => {
+      const date = new Date("2025-06-15T12:00:00.000Z")
+      const result = "Date: " + date
+
+      expect(typeof result).toBe("string")
+      expect(result).toContain("Date:")
+      expect(result).toContain("2025")
+    })
+
+    it('should use valueOf for numeric context', () => {
+      const date = new Date("2025-01-01T00:00:00.000Z")
+      
+      // In numeric context, Date uses valueOf (returns timestamp)
+      expect(date - 0).toBe(date.getTime())
+      expect(date * 1).toBe(date.getTime())
+    })
+  })
+
+  describe('Implicit Boolean Contexts', () => {
+    it('should coerce to boolean in if statements', () => {
+      let result = ""
+
+      if ("hello") result += "truthy string "
+      if (0) result += "zero "
+      if ([]) result += "empty array "
+      if ({}) result += "empty object "
+
+      expect(result).toBe("truthy string empty array empty object ")
+    })
+
+    it('should coerce to boolean in ternary operator', () => {
+      expect("hello" ? "yes" : "no").toBe("yes")
+      expect("" ? "yes" : "no").toBe("no")
+      expect(0 ? "yes" : "no").toBe("no")
+      expect(1 ? "yes" : "no").toBe("yes")
+    })
+
+    it('should coerce to boolean in logical NOT', () => {
+      expect(!0).toBe(true)
+      expect(!"").toBe(true)
+      expect(!null).toBe(true)
+      expect(!"hello").toBe(false)
+      expect(!1).toBe(false)
+    })
+  })
 })

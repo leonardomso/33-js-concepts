@@ -178,6 +178,32 @@ describe('Call Stack', () => {
 
       expect(() => a()).toThrow(RangeError)
     })
+
+    it('should throw for accidental recursion in setters', () => {
+      class Person {
+        set name(value) {
+          this.name = value // Calls the setter again - infinite loop!
+        }
+      }
+
+      const p = new Person()
+      expect(() => { p.name = "Alice" }).toThrow(RangeError)
+    })
+
+    it('should work correctly with proper setter implementation using different property', () => {
+      class PersonFixed {
+        set name(value) {
+          this._name = value // Use _name instead to avoid recursion
+        }
+        get name() {
+          return this._name
+        }
+      }
+
+      const p = new PersonFixed()
+      p.name = "Alice"
+      expect(p.name).toBe("Alice")
+    })
   })
 
   describe('Recursion with Base Case', () => {

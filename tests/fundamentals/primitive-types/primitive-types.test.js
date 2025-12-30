@@ -449,4 +449,115 @@ describe('Primitive Types', () => {
       expect(Object.prototype.toString.call(new Date())).toBe("[object Date]")
     })
   })
+
+  describe('Intl.NumberFormat for Currency', () => {
+    it('should format currency correctly with Intl.NumberFormat', () => {
+      const formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+      })
+
+      expect(formatter.format(0.30)).toBe("$0.30")
+      expect(formatter.format(19.99)).toBe("$19.99")
+      expect(formatter.format(1000)).toBe("$1,000.00")
+    })
+
+    it('should handle different locales', () => {
+      const euroFormatter = new Intl.NumberFormat('de-DE', {
+        style: 'currency',
+        currency: 'EUR',
+      })
+
+      // German locale uses comma for decimal and period for thousands
+      expect(euroFormatter.format(1234.56)).toContain("1.234,56")
+    })
+  })
+
+  describe('Floating-Point Solutions', () => {
+    it('should use Number.EPSILON for floating-point comparison', () => {
+      const result = 0.1 + 0.2
+      const expected = 0.3
+
+      // Using epsilon comparison for floating-point
+      expect(Math.abs(result - expected) < Number.EPSILON).toBe(true)
+    })
+
+    it('should use toFixed for rounding display', () => {
+      expect((0.1 + 0.2).toFixed(2)).toBe("0.30")
+      expect((0.1 + 0.2).toFixed(1)).toBe("0.3")
+    })
+
+    it('should use integers (cents) for precise money calculations', () => {
+      // Instead of 0.1 + 0.2, use cents
+      const price1 = 10 // 10 cents
+      const price2 = 20 // 20 cents
+      const total = price1 + price2
+
+      expect(total).toBe(30) // Exactly 30 cents
+      expect(total / 100).toBe(0.3) // $0.30
+    })
+  })
+
+  describe('Array Holes', () => {
+    it('should return undefined for array holes', () => {
+      let arr = [1, , 3] // Sparse array with hole at index 1
+
+      expect(arr[0]).toBe(1)
+      expect(arr[1]).toBe(undefined)
+      expect(arr[2]).toBe(3)
+      expect(arr.length).toBe(3)
+    })
+
+    it('should skip holes in forEach but include in map', () => {
+      let arr = [1, , 3]
+      let forEachCount = 0
+      let mapResult
+
+      arr.forEach(() => forEachCount++)
+      mapResult = arr.map(x => x * 2)
+
+      expect(forEachCount).toBe(2) // Holes are skipped
+      expect(mapResult).toEqual([2, undefined, 6]) // Hole becomes undefined in map result
+    })
+  })
+
+  describe('String Trim for Empty/Whitespace Check', () => {
+    it('should use trim to check for empty or whitespace-only strings', () => {
+      expect("".trim() === "").toBe(true)
+      expect("   ".trim() === "").toBe(true)
+      expect("\t\n".trim() === "").toBe(true)
+      expect("hello".trim() === "").toBe(false)
+      expect("  hello  ".trim() === "").toBe(false)
+    })
+
+    it('should use trim with length check for validation', () => {
+      function isEmptyOrWhitespace(str) {
+        return str.trim().length === 0
+      }
+
+      expect(isEmptyOrWhitespace("")).toBe(true)
+      expect(isEmptyOrWhitespace("   ")).toBe(true)
+      expect(isEmptyOrWhitespace("hello")).toBe(false)
+    })
+  })
+
+  describe('null vs undefined Patterns', () => {
+    it('should demonstrate clearing with null vs undefined', () => {
+      let user = { name: "Alice" }
+      
+      // Clear intentionally with null
+      user = null
+      expect(user).toBe(null)
+    })
+
+    it('should show function returning null for no result', () => {
+      function findUser(id) {
+        const users = [{ id: 1, name: "Alice" }]
+        return users.find(u => u.id === id) || null
+      }
+
+      expect(findUser(1)).toEqual({ id: 1, name: "Alice" })
+      expect(findUser(999)).toBe(null)
+    })
+  })
 })

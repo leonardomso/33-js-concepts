@@ -554,4 +554,179 @@ describe('Value Types and Reference Types', () => {
       expect(sorted).toEqual([1, 2, 3])
     })
   })
+
+  describe('structuredClone with Special Types', () => {
+    it('should deep clone objects with Map', () => {
+      const original = {
+        name: "Alice",
+        data: new Map([["key1", "value1"], ["key2", "value2"]])
+      }
+
+      const clone = structuredClone(original)
+      
+      // Modify the clone's Map
+      clone.data.set("key1", "modified")
+      clone.data.set("key3", "new value")
+
+      // Original should be unchanged
+      expect(original.data.get("key1")).toBe("value1")
+      expect(original.data.has("key3")).toBe(false)
+      expect(clone.data.get("key1")).toBe("modified")
+    })
+
+    it('should deep clone objects with Set', () => {
+      const original = {
+        name: "Alice",
+        tags: new Set([1, 2, 3])
+      }
+
+      const clone = structuredClone(original)
+      
+      // Modify the clone's Set
+      clone.tags.add(4)
+      clone.tags.delete(1)
+
+      // Original should be unchanged
+      expect(original.tags.has(1)).toBe(true)
+      expect(original.tags.has(4)).toBe(false)
+      expect(clone.tags.has(1)).toBe(false)
+      expect(clone.tags.has(4)).toBe(true)
+    })
+
+    it('should deep clone objects with Date', () => {
+      const original = {
+        name: "Event",
+        date: new Date("2025-01-01")
+      }
+
+      const clone = structuredClone(original)
+      
+      expect(clone.date instanceof Date).toBe(true)
+      expect(clone.date.getTime()).toBe(original.date.getTime())
+      expect(clone.date).not.toBe(original.date) // Different reference
+    })
+  })
+
+  describe('Shared Default Object Reference Pitfall', () => {
+    it('should demonstrate shared default array problem', () => {
+      const defaultList = []
+      
+      function addItem(item, list = defaultList) {
+        list.push(item)
+        return list
+      }
+
+      const result1 = addItem("a")
+      const result2 = addItem("b")
+
+      // Both calls modified the same defaultList!
+      expect(result1).toEqual(["a", "b"])
+      expect(result2).toEqual(["a", "b"])
+      expect(result1).toBe(result2) // Same reference!
+    })
+
+    it('should fix shared default with new array creation', () => {
+      function addItem(item, list = []) {
+        list.push(item)
+        return list
+      }
+
+      const result1 = addItem("a")
+      const result2 = addItem("b")
+
+      // Each call gets its own array
+      expect(result1).toEqual(["a"])
+      expect(result2).toEqual(["b"])
+      expect(result1).not.toBe(result2)
+    })
+  })
+
+  describe('WeakMap vs Map Memory Behavior', () => {
+    it('should demonstrate Map holds strong references', () => {
+      const cache = new Map()
+      let user = { id: 1, name: "Alice" }
+      
+      cache.set(user.id, user)
+      
+      // Even if we clear user, the Map still holds the reference
+      const cachedUser = cache.get(1)
+      expect(cachedUser.name).toBe("Alice")
+    })
+
+    it('should demonstrate WeakMap allows garbage collection', () => {
+      const cache = new WeakMap()
+      let user = { id: 1, name: "Alice" }
+      
+      cache.set(user, { computed: "expensive data" })
+      
+      // WeakMap uses the object itself as key
+      expect(cache.get(user)).toEqual({ computed: "expensive data" })
+      
+      // WeakMap keys must be objects
+      expect(() => cache.set("string-key", "value")).toThrow(TypeError)
+    })
+
+    it('should show WeakMap cannot be iterated', () => {
+      const weakMap = new WeakMap()
+      const obj = { id: 1 }
+      weakMap.set(obj, "value")
+
+      // WeakMap has no size property
+      expect(weakMap.size).toBe(undefined)
+      
+      // WeakMap is not iterable
+      expect(typeof weakMap[Symbol.iterator]).toBe("undefined")
+    })
+  })
+
+  describe('Clone Function Parameters Pattern', () => {
+    it('should clone parameters before modification', () => {
+      function processData(data) {
+        // Clone to avoid modifying original
+        const copy = structuredClone(data)
+        copy.processed = true
+        copy.items.push("new item")
+        return copy
+      }
+
+      const original = { 
+        name: "data", 
+        items: ["item1", "item2"] 
+      }
+      
+      const result = processData(original)
+
+      // Original is unchanged
+      expect(original.processed).toBe(undefined)
+      expect(original.items).toEqual(["item1", "item2"])
+      
+      // Result has modifications
+      expect(result.processed).toBe(true)
+      expect(result.items).toEqual(["item1", "item2", "new item"])
+    })
+  })
+
+  describe('let with Object.freeze()', () => {
+    it('should allow reassignment of let variable holding frozen object', () => {
+      let obj = Object.freeze({ a: 1 })
+      
+      // Cannot modify the frozen object
+      expect(() => { obj.a = 2 }).toThrow(TypeError)
+      
+      // But CAN reassign the variable to a new object
+      obj = { a: 2 }
+      expect(obj.a).toBe(2)
+    })
+
+    it('should demonstrate const + freeze for true immutability', () => {
+      const obj = Object.freeze({ a: 1 })
+      
+      // Cannot modify the frozen object
+      expect(() => { obj.a = 2 }).toThrow(TypeError)
+      
+      // Cannot reassign const
+      // obj = { a: 2 } // Would throw TypeError
+      expect(obj.a).toBe(1)
+    })
+  })
 })
