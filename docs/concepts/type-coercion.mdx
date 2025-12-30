@@ -851,6 +851,34 @@ function process(count) {
 
 ---
 
+## Key Takeaways
+
+<Info>
+**Remember these essentials about Type Coercion:**
+
+1. **Three conversions only** — JavaScript converts to String, Number, or Boolean — nothing else
+
+2. **Implicit vs Explicit** — Know when JS converts automatically vs when you control it
+
+3. **The 8 falsy values** — `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN` — everything else is truthy
+
+4. **+ is special** — It prefers string concatenation if ANY operand is a string
+
+5. **- * / % are consistent** — They ALWAYS convert to numbers
+
+6. **== coerces, === doesn't** — Use `===` by default to avoid surprises
+
+7. **null == undefined** — This is true, but neither equals anything else with `==`
+
+8. **Objects convert via valueOf() and toString()** — Learn these methods to control conversion
+
+9. **When in doubt, be explicit** — Use `Number()`, `String()`, `Boolean()`
+
+10. **NaN is unique** — It's the only value not equal to itself; use `Number.isNaN()` to check
+</Info>
+
+---
+
 ## Test Your Knowledge
 
 <AccordionGroup>
@@ -918,34 +946,6 @@ function process(count) {
     2. `1 + "hello"` = `"1hello"` (number → string for concatenation)
   </Accordion>
 </AccordionGroup>
-
----
-
-## Key Takeaways
-
-<Info>
-**Remember these essentials about Type Coercion:**
-
-1. **Three conversions only** — JavaScript converts to String, Number, or Boolean — nothing else
-
-2. **Implicit vs Explicit** — Know when JS converts automatically vs when you control it
-
-3. **The 8 falsy values** — `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN` — everything else is truthy
-
-4. **+ is special** — It prefers string concatenation if ANY operand is a string
-
-5. **- * / % are consistent** — They ALWAYS convert to numbers
-
-6. **== coerces, === doesn't** — Use `===` by default to avoid surprises
-
-7. **null == undefined** — This is true, but neither equals anything else with `==`
-
-8. **Objects convert via valueOf() and toString()** — Learn these methods to control conversion
-
-9. **When in doubt, be explicit** — Use `Number()`, `String()`, `Boolean()`
-
-10. **NaN is unique** — It's the only value not equal to itself; use `Number.isNaN()` to check
-</Info>
 
 ---
 
