@@ -45,7 +45,7 @@ The project was recognized by GitHub as one of the **top open source projects of
 └── github-image.png        # Project banner image
 ```
 
-## The 31 Concepts (32nd and 33rd coming soon)
+## The 30 Concepts (31st, 32nd, and 33rd coming soon)
 
 ### Fundamentals (1-6)
 1. Primitive Types
@@ -55,42 +55,41 @@ The project was recognized by GitHub as one of the **top open source projects of
 5. Scope & Closures
 6. Call Stack
 
-### Web Platform (7)
-7. DOM and Layout Trees
-
-### Functions & Execution (8-11)
+### Functions & Execution (7-9)
+7. Event Loop (Message Queue)
 8. Expression vs Statement
 9. IIFE, Modules and Namespaces
-10. Event Loop (Message Queue)
-11. Timers (setTimeout, setInterval, requestAnimationFrame)
 
-### Object-Oriented JS (12-16)
-12. Factories and Classes
-13. this, call, apply and bind
-14. new, Constructor, instanceof and Instances
-15. Prototype Inheritance and Prototype Chain
-16. Object.create and Object.assign
+### Web Platform (10)
+10. DOM and Layout Trees
 
-### Functional Programming (17-20)
-17. map, reduce, filter
-18. Pure Functions, Side Effects, State Mutation and Event Propagation
-19. Higher-Order Functions
-20. Recursion
+### Object-Oriented JS (11-15)
+11. Factories and Classes
+12. this, call, apply and bind
+13. new, Constructor, instanceof and Instances
+14. Prototype Inheritance and Prototype Chain
+15. Object.create and Object.assign
 
-### Async JavaScript (21-23)
-21. Collections and Generators
-22. Promises
-23. async/await
+### Functional Programming (16-19)
+16. map, reduce, filter
+17. Pure Functions, Side Effects, State Mutation and Event Propagation
+18. Higher-Order Functions
+19. Recursion
 
-### Advanced Topics (24-31)
-24. JavaScript Engines
-25. Data Structures
-26. Big O Notation (Expensive Operations)
-27. Algorithms
-28. Inheritance, Polymorphism and Code Reuse
-29. Design Patterns
-30. Partial Applications, Currying, Compose and Pipe
-31. Clean Code
+### Async JavaScript (20-22)
+20. Collections and Generators
+21. Promises
+22. async/await
+
+### Advanced Topics (23-30)
+23. JavaScript Engines
+24. Data Structures
+25. Big O Notation (Expensive Operations)
+26. Algorithms
+27. Inheritance, Polymorphism and Code Reuse
+28. Design Patterns
+29. Partial Applications, Currying, Compose and Pipe
+30. Clean Code
 
 ## Content Format
 
@@ -328,12 +327,12 @@ The site will be available at `http://localhost:3000`.
 
 - **Getting Started**: Homepage and introduction
 - **Fundamentals**: Concepts 1-6 (Primitive Types through Call Stack)
-- **Web Platform**: Concept 7 (DOM and Layout Trees)
-- **Functions & Execution**: Concepts 8-11 (Expression/Statement through Timers)
-- **Object-Oriented JS**: Concepts 12-16 (Factories through Object.create/assign)
-- **Functional Programming**: Concepts 17-20 (map/reduce/filter through Recursion)
-- **Async JavaScript**: Concepts 21-23 (Collections/Generators through async/await)
-- **Advanced Topics**: Concepts 24-31 (JavaScript Engines through Clean Code)
+- **Functions & Execution**: Concepts 7-9 (Event Loop through IIFE/Modules)
+- **Web Platform**: Concept 10 (DOM and Layout Trees)
+- **Object-Oriented JS**: Concepts 11-15 (Factories through Object.create/assign)
+- **Functional Programming**: Concepts 16-19 (map/reduce/filter through Recursion)
+- **Async JavaScript**: Concepts 20-22 (Collections/Generators through async/await)
+- **Advanced Topics**: Concepts 23-30 (JavaScript Engines through Clean Code)
 
 ### Adding/Editing Concept Pages
 

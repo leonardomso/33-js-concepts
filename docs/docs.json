@@ -43,19 +43,19 @@
             ]
           },
           {
+            "group": "Functions & Execution",
+            "icon": "code",
+            "pages": [
+              "concepts/event-loop",
+              "concepts/expression-statement",
+              "concepts/iife-modules"
+            ]
+          },
+          {
             "group": "Web Platform",
             "icon": "browser",
             "pages": [
               "concepts/dom"
-            ]
-          },
-          {
-            "group": "Functions & Execution",
-            "icon": "code",
-            "pages": [
-              "concepts/expression-statement",
-              "concepts/iife-modules",
-              "concepts/event-loop"
             ]
           },
           {
