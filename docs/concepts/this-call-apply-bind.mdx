@@ -3,6 +3,23 @@ title: "this, call, apply and bind"
 description: "How JavaScript decides what 'this' refers to — and how you take control"
 ---
 
+Why does `this` sometimes point to the wrong object? Why does your method work perfectly when called directly, but break when passed as a callback? And how do **[`call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)**, **[`apply`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)**, and **[`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)** let you take control?
+
+```javascript
+const user = {
+  name: "Alice",
+  greet() {
+    return `Hi, I'm ${this.name}`;
+  }
+};
+
+user.greet();           // "Hi, I'm Alice" - works!
+const greet = user.greet;
+greet();                // "Hi, I'm undefined" - broken!
+```
+
+The **[`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)** keyword is one of JavaScript's most confusing features — but it follows specific rules. Once you understand them, you'll never be confused again.
+
 In our journey through JavaScript, we've already explored [Scope & Closures](/concepts/scope-and-closures) — how variables are accessed and how functions remember their environment. Now it's time to tackle one of JavaScript's most confusing (and powerful) features: the `this` keyword.
 
 You've probably seen `this` pop up everywhere — in object methods, class constructors, event handlers, and callbacks. Sometimes it works exactly as you'd expect. Other times? It points to something completely unexpected and your code breaks in mysterious ways.
@@ -97,7 +114,7 @@ function showThis() {
 const obj = { showThis };
 
 // Same function, different this values:
-showThis();        // undefined (strict mode) or globalThis
+showThis();        // undefined (strict mode) or [globalThis](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
 obj.showThis();    // obj (the object before the dot)
 showThis.call({}); // {} (explicitly specified)
 ```
@@ -449,7 +466,7 @@ setTimeout(function() {
 
 ### Rule 5: Arrow Functions (Lexical `this`)
 
-Arrow functions are **special**. They don't have their own `this` binding at all. Instead, they **inherit `this`** from their enclosing scope at the time they're defined.
+**[Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)** are **special**. They don't have their own `this` binding at all. Instead, they **inherit `this`** from their enclosing scope at the time they're defined.
 
 ```javascript
 const user = {
@@ -1228,6 +1245,34 @@ const arrowGen = *() => {};  // SyntaxError
 
 ---
 
+## Key Takeaways
+
+<Info>
+**Remember these essential points about `this`, `call`, `apply`, and `bind`:**
+
+1. **`this` is determined at call time** — Not when the function is defined, but when it's called. This is called dynamic binding.
+
+2. **5 binding rules in priority order** — new binding > explicit binding > implicit binding > default binding (arrow functions are special).
+
+3. **"Left of the dot" rule** — In method calls like `obj.method()`, `this` is the object immediately left of the dot.
+
+4. **Extracting methods loses `this`** — `const fn = obj.method; fn()` loses implicit binding. This is the #1 source of `this` bugs.
+
+5. **`call()` and `apply()` invoke immediately** — They set `this` and call the function right away. `call` takes comma-separated args, `apply` takes an array.
+
+6. **`bind()` returns a new function** — It permanently binds `this` for later use. The binding cannot be overridden, even with `call` or `apply`.
+
+7. **Arrow functions have no own `this`** — They inherit `this` from their enclosing scope (lexical binding). Perfect for callbacks.
+
+8. **Arrow functions can't be rebound** — `call`, `apply`, and `bind` have no effect on arrow functions' `this`.
+
+9. **Use arrow class fields for event handlers** — `handleClick = () => {}` ensures `this` is always the instance, even when extracted.
+
+10. **Strict mode changes default binding** — In strict mode, plain function calls have `this` as `undefined`, not the global object.
+</Info>
+
+---
+
 ## Test Your Knowledge
 
 Try to figure out what `this` refers to in each example before revealing the answer.
@@ -1309,6 +1354,42 @@ Try to figure out what `this` refers to in each example before revealing the ans
     **Answer:** `"Inner"`
     
     With implicit binding, `this` is the object immediately to the left of the dot at call time. That's `obj.inner`, not `obj`.
+  </Accordion>
+  
+  <Accordion title="Question 5: What does this log?">
+    ```javascript
+    const calculator = {
+      value: 10,
+      add(numbers) {
+        numbers.forEach(function(n) {
+          this.value += n;
+        });
+        return this.value;
+      }
+    };
+    
+    console.log(calculator.add([1, 2, 3]));
+    ```
+    
+    **Answer:** `10` (and likely a TypeError in strict mode)
+    
+    The callback function inside `forEach` has its own `this` (default binding), which is `undefined` in strict mode. The fix is to use an arrow function: `numbers.forEach((n) => { this.value += n; })`.
+  </Accordion>
+  
+  <Accordion title="Question 6: What does this log?">
+    ```javascript
+    function multiply(a, b) {
+      return a * b;
+    }
+    
+    const double = multiply.bind(null, 2);
+    console.log(double(5));
+    console.log(double.length);
+    ```
+    
+    **Answer:** `10` and `1`
+    
+    `bind` creates a partially applied function. `double(5)` returns `2 * 5 = 10`. The `length` property of a bound function reflects remaining parameters: `multiply` has 2 params, we pre-filled 1, so `double.length` is 1.
   </Accordion>
 </AccordionGroup>
 
