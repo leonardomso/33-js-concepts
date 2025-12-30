@@ -47,7 +47,6 @@
             "icon": "code",
             "pages": [
               "concepts/event-loop",
-              "concepts/expression-statement",
               "concepts/iife-modules"
             ]
           },

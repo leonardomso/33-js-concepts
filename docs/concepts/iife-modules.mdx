@@ -81,6 +81,77 @@ The name tells you exactly what it does:
 - **Invoked** — called/executed
 - **Function Expression** — a function written as an expression (not a declaration)
 
+### Expression vs Statement: Why It Matters for IIFEs
+
+To understand IIFEs, you need to understand the difference between **expressions** and **statements** in JavaScript.
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ EXPRESSION vs STATEMENT                                             │
+│                                                                     │
+│ EXPRESSION = produces a value                                       │
+│ ─────────────────────────────                                       │
+│   5 + 3              → 8                                            │
+│   "hello"            → "hello"                                      │
+│   myFunction()       → whatever the function returns                │
+│   x > 10             → true or false                                │
+│   function() {}      → a function value (when in expression position)│
+│                                                                     │
+│ STATEMENT = performs an action (no value produced)                  │
+│ ──────────────────────────────────────────────────                  │
+│   if (x > 10) { }    → controls flow, no value                      │
+│   for (let i...) { } → loops, no value                              │
+│   function foo() { } → declares a function, no value                │
+│   let x = 5;         → declares a variable, no value                │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+**The key insight:** A function can be written two ways:
+
+```javascript
+// FUNCTION DECLARATION (statement)
+// Starts with the word "function" at the beginning of a line
+function greet() {
+  return "Hello!";
+}
+
+// FUNCTION EXPRESSION (expression)
+// The function is assigned to a variable or wrapped in parentheses
+const greet = function() {
+  return "Hello!";
+};
+
+// Arrow functions are always expressions
+const greet = () => "Hello!";
+```
+
+**Why does this matter for IIFEs?**
+
+```javascript
+// ✗ This FAILS — JavaScript sees "function" and expects a declaration
+function() {
+  console.log("This causes a syntax error!");
+}();  // SyntaxError: Function statements require a function name
+
+// ✓ This WORKS — Parentheses make it an expression
+(function() {
+  console.log("This works!");
+})();
+
+// The parentheses tell JavaScript: "This is a value, not a declaration"
+```
+
+<Info>
+**Function Declaration vs Function Expression:**
+
+| Feature | Declaration | Expression |
+|---------|-------------|------------|
+| Syntax | `function name() {}` | `const name = function() {}` |
+| Hoisting | Yes (can call before definition) | No (must define first) |
+| Name | Required | Optional |
+| Use in IIFE | No | Yes (must use parentheses) |
+</Info>
+
 ### The Anatomy of an IIFE
 
 Let's break down the syntax piece by piece:
@@ -1131,14 +1202,14 @@ Try to answer each question before revealing the solution:
   <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
     Understanding how JavaScript manages variable access and function memory
   </Card>
-  <Card title="Expression vs Statement" icon="code" href="/concepts/expression-statement">
-    The difference between code that produces values and code that performs actions
-  </Card>
   <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
     Functions that work with other functions — common in modular code
   </Card>
   <Card title="Design Patterns" icon="compass" href="/concepts/design-patterns">
     Common patterns for organizing code, including the module pattern
+  </Card>
+  <Card title="Call Stack" icon="layer-group" href="/concepts/call-stack">
+    How JavaScript tracks function execution and manages memory
   </Card>
 </CardGroup>
 
@@ -1146,12 +1217,15 @@ Try to answer each question before revealing the solution:
 
 ## Reference
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card title="IIFE — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/IIFE">
     Official MDN documentation on Immediately Invoked Function Expressions
   </Card>
   <Card title="JavaScript Modules — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">
     Complete guide to ES6 modules
+  </Card>
+  <Card title="Expression Statement — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/Expression_statement">
+    MDN documentation on expression statements
   </Card>
   <Card title="Namespace — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Namespace">
     MDN documentation on namespaces
@@ -1179,6 +1253,12 @@ Try to answer each question before revealing the solution:
   <Card title="Understanding ES6 Modules" icon="newspaper" href="https://www.sitepoint.com/understanding-es6-modules/">
     Practical guide with examples of organizing real projects with modules.
   </Card>
+  <Card title="All you need to know about Expressions, Statements and Expression Statements" icon="newspaper" href="https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2">
+    Comprehensive guide to understanding the difference between expressions and statements.
+  </Card>
+  <Card title="Function Expressions vs Function Declarations" icon="newspaper" href="https://www.sitepoint.com/function-expressions-vs-declarations/">
+    Clear explanation of when to use function expressions vs declarations.
+  </Card>
 </CardGroup>
 
 ## Videos
@@ -1195,5 +1275,11 @@ Try to answer each question before revealing the solution:
   </Card>
   <Card title="ES6 Modules in the Real World" icon="video" href="https://www.youtube.com/watch?v=fIP4pjAqCtQ">
     Conference talk on practical module usage in production applications.
+  </Card>
+  <Card title="Expressions vs. Statements in JavaScript" icon="video" href="https://www.youtube.com/watch?v=WVyCrI1cHi8">
+    Clear explanation of the fundamental difference between expressions and statements.
+  </Card>
+  <Card title="JavaScript - Expression vs. Statement" icon="video" href="https://www.youtube.com/watch?v=3jDpNGJkupA">
+    Visual walkthrough of expressions and statements with examples.
   </Card>
 </CardGroup>
