@@ -1,6 +1,41 @@
 ---
-title: "Call Stack"
-description: "Understanding how JavaScript tracks function execution"
+title: "JavaScript Call Stack: How Function Execution Works"
+sidebarTitle: "Call Stack: How Function Execution Works"
+description: "Learn how the JavaScript call stack tracks function execution. Understand stack frames, LIFO ordering, execution contexts, stack overflow errors, and debugging with stack traces."
+---
+
+How does JavaScript keep track of which function is running? When a function calls another function, how does JavaScript know where to return when that function finishes?
+
+The answer is the **[call stack](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** — JavaScript's mechanism for tracking function execution.
+
+```javascript
+function greet(name) {
+  const message = createMessage(name)
+  console.log(message)
+}
+
+function createMessage(name) {
+  return "Hello, " + name + "!"
+}
+
+greet("Alice")  // "Hello, Alice!"
+```
+
+When `greet` calls `createMessage`, JavaScript remembers where it was in `greet` so it can return there after `createMessage` finishes. The call stack is what makes this possible.
+
+<Info>
+**What you'll learn in this guide:**
+- What the call stack is and why JavaScript needs it
+- How functions are added and removed from the stack
+- What happens step-by-step when your code runs
+- Why you sometimes see "Maximum call stack size exceeded" errors
+- How to debug call stack issues like a pro
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes basic familiarity with [JavaScript functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions). If you're new to functions, start there first!
+</Warning>
+
 ---
 
 ## The Stack of Plates: A Real-World Analogy
@@ -21,20 +56,21 @@ This is exactly how JavaScript keeps track of your functions! When you call a fu
 
 This simple concept — **adding to the top and removing from the top** — is the foundation of how JavaScript executes your code.
 
-<Info>
-**What you'll learn in this guide:**
-- What the call stack is and why JavaScript needs it
-- How functions are added and removed from the stack
-- What happens step-by-step when your code runs
-- Why you sometimes see "Maximum call stack size exceeded" errors
-- How to debug call stack issues like a pro
-</Info>
-
 ---
 
 ## What is the Call Stack?
 
-The **call stack** is a mechanism that JavaScript uses to keep track of where it is in your code. Think of it as JavaScript's "to-do list" for function calls — but one where it can only work on the item at the top.
+The **[call stack](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** is a mechanism that JavaScript uses to keep track of where it is in your code. Think of it as JavaScript's "to-do list" for function calls — but one where it can only work on the item at the top.
+
+```javascript
+function first() { second(); }
+function second() { third(); }
+function third() { console.log('Hello!'); }
+
+first();
+// Stack grows: [first] → [second, first] → [third, second, first]
+// Stack shrinks: [second, first] → [first] → []
+```
 
 ### The LIFO Principle
 
@@ -57,14 +93,14 @@ LIFO = Last In, First Out
 
 ### Why Does JavaScript Need a Call Stack?
 
-JavaScript is **single-threaded**, meaning it can only do **one thing at a time**. The call stack helps JavaScript:
+JavaScript is **[single-threaded](https://developer.mozilla.org/en-US/docs/Glossary/Thread)**, meaning it can only do **one thing at a time**. The call stack helps JavaScript:
 
 1. **Remember where it is** — Which function is currently running?
 2. **Know where to go back** — When a function finishes, where should execution continue?
 3. **Keep track of local variables** — Each function has its own variables that shouldn't interfere with others
 
 <Info>
-**ECMAScript Specification**: According to the official JavaScript specification, the call stack is implemented through "execution contexts." Each function call creates a new execution context that gets pushed onto the stack.
+**ECMAScript Specification**: According to the official JavaScript specification, the call stack is implemented through "[execution contexts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this#description)." Each function call creates a new execution context that gets pushed onto the stack.
 </Info>
 
 ---
@@ -183,7 +219,7 @@ console.log("Done!");
 
 ## Execution Context: What's Actually on the Stack?
 
-When we say a function is "on the stack," what does that actually mean? Each entry on the call stack is called an **execution context** (or **stack frame**). It contains everything JavaScript needs to execute that function.
+When we say a function is "on the stack," what does that actually mean? Each entry on the call stack is called an **[execution context](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this#description)** (or **stack frame**). It contains everything JavaScript needs to execute that function.
 
 <AccordionGroup>
   <Accordion title="Function Arguments">
@@ -343,12 +379,40 @@ printSquare(4);
 
 ---
 
-## Stack Overflow: When Things Go Wrong
+## The #1 Call Stack Mistake: Stack Overflow
 
-The call stack has a **limited size**. If you keep adding functions without removing them, eventually you'll run out of space. This is called a **stack overflow**.
+The call stack has a **limited size**. If you keep adding functions without removing them, eventually you'll run out of space. This is called a **stack overflow**, and JavaScript throws a **[RangeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError)** when it happens.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         STACK OVERFLOW                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  WRONG: No Base Case                    RIGHT: With Base Case            │
+│  ────────────────────                   ─────────────────────            │
+│                                                                          │
+│  function count() {                     function count(n) {              │
+│    count()  // Forever!                   if (n <= 0) return  // Stop!   │
+│  }                                        count(n - 1)                   │
+│                                         }                                │
+│                                                                          │
+│  Stack grows forever...                 Stack grows, then shrinks        │
+│  ┌─────────┐                            ┌─────────┐                      │
+│  │ count() │                            │ count(0)│ ← Returns            │
+│  ├─────────┤                            ├─────────┤                      │
+│  │ count() │                            │ count(1)│                      │
+│  ├─────────┤                            ├─────────┤                      │
+│  │ count() │                            │ count(2)│                      │
+│  ├─────────┤                            └─────────┘                      │
+│  │  ....   │                                                             │
+│  └─────────┘                                                             │
+│  💥 CRASH!                              ✓ Success!                       │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
 
 <Warning>
-**Stack overflow** happens when the call stack exceeds its maximum size. The most common cause is **infinite recursion** — a function that calls itself forever.
+**The Trap:** Recursive functions without a proper stopping condition will crash your program. The most common cause is **infinite recursion** — a function that calls itself forever without a base case.
 </Warning>
 
 ### The Classic Mistake: Missing Base Case
@@ -484,7 +548,7 @@ When something goes wrong, the call stack is your best friend for figuring out w
 
 ### Reading a Stack Trace
 
-When an error occurs, JavaScript gives you a **stack trace** — a snapshot of the call stack at the moment of the error.
+When an error occurs, JavaScript gives you a **[stack trace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack)** — a snapshot of the call stack at the moment of the error.
 
 ```javascript
 function a() { b(); }
@@ -555,7 +619,7 @@ You might be wondering: "If JavaScript can only do one thing at a time, how does
 Great question! The call stack is only **part** of the picture.
 
 <Note>
-When you use asynchronous functions like `setTimeout`, `fetch`, or event listeners, JavaScript doesn't put them on the call stack immediately. Instead, they go through a different system involving the **Event Loop** and **Callback Queue**.
+When you use asynchronous functions like [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout), [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), or event listeners, JavaScript doesn't put them on the call stack immediately. Instead, they go through a different system involving the **[Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop)** and **Callback Queue**.
 
 This is covered in detail in the [Event Loop](/concepts/event-loop) section.
 </Note>
@@ -608,11 +672,112 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
 6. **Always have a base case** — Recursive functions need a stopping condition
 
 7. **Stack traces are your friend** — They show you exactly how your program got to an error
+
+8. **Async callbacks wait** — `setTimeout`, `fetch`, and event callbacks don't run until the call stack is empty
+
+9. **Each frame is isolated** — Local variables in one function call don't affect variables in another call of the same function
+
+10. **Debugging tools show the stack** — Browser DevTools let you pause execution and inspect the current call stack
 </Info>
 
 ---
 
-## Test Your Knowledge
+## Common Misconceptions
+
+<AccordionGroup>
+  <Accordion title="The call stack and memory heap are the same thing">
+    **Wrong!** The call stack and heap are completely different structures:
+    
+    | Component | Purpose | Structure |
+    |-----------|---------|-----------|
+    | **Call Stack** | Tracks function execution | Ordered (LIFO), small, fast |
+    | **Heap** | Stores data (objects, arrays) | Unstructured, large |
+    
+    ```javascript
+    function example() {
+      // Primitives live in the stack frame
+      const x = 10;
+      const name = "Alice";
+      
+      // Objects live in the HEAP (reference stored in stack)
+      const user = { name: "Alice" };
+      const numbers = [1, 2, 3];
+    }
+    ```
+    
+    When the function returns, the stack frame is popped (primitives gone), but heap objects persist until garbage collected.
+  </Accordion>
+  
+  <Accordion title="Async callbacks execute immediately when the timer finishes">
+    **Wrong!** When a timer finishes, the callback does NOT run immediately. It goes to the **Task Queue** and must wait for:
+    
+    1. The call stack to be completely empty
+    2. All microtasks to be processed first
+    3. Its turn in the task queue
+    
+    ```javascript
+    console.log('Start');
+    
+    setTimeout(() => {
+      console.log('Timer');  // Does NOT run at 0ms!
+    }, 0);
+    
+    console.log('End');
+    
+    // Output: Start, End, Timer
+    // Even with 0ms delay, 'Timer' prints LAST
+    ```
+    
+    The callback must wait until the current script finishes and the stack is empty.
+  </Accordion>
+  
+  <Accordion title="JavaScript can run multiple functions at once">
+    **Wrong!** JavaScript is **single-threaded** — it has ONE call stack and can only execute ONE thing at a time.
+    
+    ```javascript
+    function a() { 
+      console.log('A start');
+      b();  // JS pauses 'a' and runs 'b' completely
+      console.log('A end');
+    }
+    
+    function b() { 
+      console.log('B');
+    }
+    
+    a();
+    // Output: A start, B, A end (sequential, not parallel)
+    ```
+    
+    **The source of confusion:** People mistake JavaScript's *asynchronous behavior* for *parallel execution*. Web APIs (timers, fetch, etc.) run in separate browser threads, but JavaScript code itself runs one operation at a time. The Event Loop coordinates callbacks, creating the *illusion* of concurrency.
+  </Accordion>
+  
+  <Accordion title="Promises are completely asynchronous">
+    **Wrong!** The Promise *constructor* runs **synchronously** — only the `.then()` callbacks are asynchronous:
+    
+    ```javascript
+    console.log('1');
+    
+    new Promise((resolve) => {
+      console.log('2');  // Runs SYNCHRONOUSLY!
+      resolve();
+    }).then(() => {
+      console.log('3');  // Async (microtask)
+    });
+    
+    console.log('4');
+    
+    // Output: 1, 2, 4, 3
+    // Note: '2' prints before '4'!
+    ```
+    
+    The executor function passed to `new Promise()` runs immediately on the call stack. Only the `.then()`, `.catch()`, and `.finally()` callbacks are queued as microtasks.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Classic Interview Questions
 
 <AccordionGroup>
   <Accordion title="Question 1: What does LIFO stand for and why is it important?">
@@ -665,6 +830,65 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
     greet(3);
     ```
   </Accordion>
+  
+  <Accordion title="Question 4: What information is stored in an execution context?">
+    **Answer:** An execution context (stack frame) contains:
+    
+    1. **Function arguments** — The values passed to the function
+    2. **Local variables** — Variables declared with `var`, `let`, or `const`
+    3. **The `this` value** — The context binding for the function
+    4. **Return address** — Where to continue executing after the function returns
+    5. **Scope chain** — Access to variables from outer (parent) functions
+    
+    This is why each function call can have its own independent set of variables without interfering with other calls.
+  </Accordion>
+  
+  <Accordion title="Question 5: What's the output of this code and why?">
+    ```javascript
+    console.log('First')
+    
+    setTimeout(() => {
+      console.log('Second')
+    }, 0)
+    
+    console.log('Third')
+    ```
+    
+    **Answer:** The output is:
+    ```
+    First
+    Third
+    Second
+    ```
+    
+    Even though `setTimeout` has a 0ms delay, "Second" prints last because:
+    
+    1. `setTimeout` doesn't put the callback directly on the call stack
+    2. Instead, the callback waits in the **task queue**
+    3. The event loop only moves it to the call stack when the stack is empty
+    4. "Third" runs first because it's already on the call stack
+    
+    This demonstrates that the call stack must be empty before async callbacks execute.
+  </Accordion>
+  
+  <Accordion title="Question 6: How do you read a stack trace?">
+    Given this error:
+    ```
+    Error: Something went wrong!
+        at c (script.js:4:9)
+        at b (script.js:2:14)
+        at a (script.js:1:14)
+        at script.js:7:1
+    ```
+    
+    **Answer:** Read stack traces from **top to bottom** (most recent to oldest):
+    
+    1. **Top line** (`at c`) — Where the error actually occurred (function `c`, line 4, column 9)
+    2. **Following lines** — The chain of function calls that led here
+    3. **Bottom line** — Where the chain started (the initial call)
+    
+    The trace tells you: the program started at line 7, called `a()`, which called `b()`, which called `c()`, where the error was thrown. This helps you trace back through your code to find the root cause.
+  </Accordion>
 </AccordionGroup>
 
 ---
@@ -690,9 +914,20 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
 
 ## Reference
 
-<Card title="Call Stack — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Call_stack">
-  Official MDN documentation on the Call Stack
-</Card>
+<CardGroup cols={2}>
+  <Card title="Call Stack — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Call_stack">
+    Official MDN documentation on the Call Stack
+  </Card>
+  <Card title="JavaScript Event Loop — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop">
+    How the event loop interacts with the call stack
+  </Card>
+  <Card title="RangeError — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError">
+    The error thrown when the call stack overflows
+  </Card>
+  <Card title="Error.stack — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack">
+    How to read and use stack traces for debugging
+  </Card>
+</CardGroup>
 
 ## Articles
 
