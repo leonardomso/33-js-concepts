@@ -17,6 +17,9 @@ The project was recognized by GitHub as one of the **top open source projects of
 
 ```
 33-js-concepts/
+├── .claude/                 # OpenCode/Claude configuration
+│   ├── CLAUDE.md           # Project context and guidelines
+│   └── skills/             # Custom skills for content creation
 ├── docs/                    # Mintlify documentation site
 │   ├── docs.json           # Mintlify configuration
 │   ├── index.mdx           # Homepage
