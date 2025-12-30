@@ -3,53 +3,1593 @@ title: "DOM and Layout Trees"
 description: "Understanding the Document Object Model and how browsers render pages"
 ---
 
-## Overview
+## The Family Tree: A Real-World Analogy
 
-The Document Object Model (DOM) is a programming interface for HTML and XML documents. It represents the page so that programs can change the document structure, style, and content. The DOM represents the document as a tree of nodes and objects, allowing programming languages to interact with the page.
+Imagine your family tree hanging on the wall. At the top, there's your great-grandmother. Below her are her children (your grandparents), then their children (your parents and aunts/uncles), and finally you and your cousins at the bottom.
+
+```
+                           THE DOM FAMILY TREE
+
+                              ┌──────────┐
+                              │ document │  ← The family historian
+                              │ (root)   │    (knows everyone!)
+                              └────┬─────┘
+                                   │
+                              ┌────┴─────┐
+                              │  <html>  │  ← Great-grandma
+                              └────┬─────┘    (the matriarch)
+                     ┌─────────────┴─────────────┐
+                     │                           │
+                ┌────┴────┐                 ┌────┴────┐
+                │ <head>  │                 │ <body>  │  ← The two branches
+                └────┬────┘                 └────┬────┘    of the family
+                     │                           │
+              ┌──────┴──────┐         ┌──────────┼──────────┐
+              │             │         │          │          │
+         ┌────┴────┐  ┌────┴────┐ ┌───┴───┐ ┌────┴────┐ ┌───┴───┐
+         │ <title> │  │ <meta>  │ │ <nav> │ │ <main>  │ │<footer>│
+         └────┬────┘  └─────────┘ └───┬───┘ └────┬────┘ └───────┘
+              │                       │          │
+         "My Page"               ┌────┴────┐  ┌──┴──┐
+          (text)                 │  <ul>   │  │<div>│  ← Cousins
+                                 └────┬────┘  └──┬──┘
+                                      │          │
+                                 ┌────┼────┐    ...
+                                 │    │    │
+                               <li> <li> <li>   ← Siblings
+```
+
+Here's how family relationships map to the DOM:
+
+| Family Term | DOM Relationship | Example |
+|-------------|------------------|---------|
+| **Parent** | `.parentNode` / `.parentElement` | `<body>` is parent of `<main>` |
+| **Child** | `.children` / `.childNodes` | `<li>` elements are children of `<ul>` |
+| **Sibling** | `.nextSibling` / `.previousSibling` | `<nav>`, `<main>`, `<footer>` are siblings |
+| **Ancestor** | Any parent above | `<html>` is ancestor of all elements |
+| **Descendant** | Any child below | All elements are descendants of `<html>` |
+
+Just like at a family reunion, you can:
+- **Ask someone about their parent:** "Who's your mom?" → `element.parentNode`
+- **Ask about their kids:** "Where are your children?" → `element.children`
+- **Find their siblings:** "Who's your brother?" → `element.nextElementSibling`
+- **Search the whole family:** "Where's cousin Bob?" → `document.querySelector('#bob')`
+
+<Note>
+**TL;DR:** The DOM is a tree structure representing your HTML document. Every element, text, and comment is a "node" in this tree. JavaScript lets you navigate this tree (like walking through a family reunion) and modify it (like updating the family photo album).
+</Note>
+
+<Info>
+**What you'll learn in this guide:**
+- What the DOM actually is (and what it's NOT)
+- How to select elements like a pro (getElementById vs querySelector)
+- How to traverse the tree (parent, children, siblings)
+- How to create, modify, and remove elements
+- The difference between properties and attributes
+- How the browser turns DOM → pixels (the Critical Rendering Path)
+- Performance best practices (avoid layout thrashing!)
+</Info>
+
+---
+
+## What is the DOM?
+
+The **Document Object Model (DOM)** is a programming interface for web documents. It represents your HTML as a **tree of objects** that JavaScript can read and manipulate.
+
+```javascript
+// The DOM lets you do things like this:
+document.querySelector('h1').textContent = 'Hello, DOM!';
+document.body.style.backgroundColor = 'lightblue';
+document.getElementById('btn').addEventListener('click', handleClick);
+```
+
+### The DOM is NOT Your HTML Source Code
+
+This is a crucial distinction! Your HTML file and the DOM are **different things**:
+
+<Tabs>
+  <Tab title="HTML Source">
+    ```html
+    <!-- What you wrote (invalid HTML - missing head/body) -->
+    <!DOCTYPE html>
+    <html>
+    Hello, World!
+    </html>
+    ```
+  </Tab>
+  <Tab title="Resulting DOM">
+    ```html
+    <!-- What the browser creates (fixed!) -->
+    <!DOCTYPE html>
+    <html>
+      <head></head>
+      <body>
+        Hello, World!
+      </body>
+    </html>
+    ```
+  </Tab>
+</Tabs>
+
+The browser **fixes your mistakes**! It adds missing `<head>` and `<body>` tags, closes unclosed tags, and corrects nesting errors. The DOM is the corrected version.
+
+### The DOM is NOT What You See in DevTools (Exactly)
+
+DevTools shows you something close to the DOM, but it also shows **CSS pseudo-elements** (`::before`, `::after`) which are NOT part of the DOM:
+
+```css
+/* This creates visual content, but NOT DOM nodes */
+.quote::before {
+  content: '"';
+}
+```
+
+Pseudo-elements exist in the **render tree** (for display), but not in the DOM (for JavaScript). You can't select them with `querySelector`!
+
+### The DOM is NOT the Render Tree
+
+The **Render Tree** is what actually gets painted to the screen. It excludes:
+
+```html
+<!-- These are in the DOM but NOT in the Render Tree -->
+<head>...</head>                    <!-- Never rendered -->
+<script>...</script>                <!-- Never rendered -->
+<div style="display: none">Hidden</div>  <!-- Excluded from render -->
+```
+
+```
+DOM                          Render Tree
+┌─────────────────────┐     ┌─────────────────────┐
+│ <html>              │     │ <html>              │
+│   <head>            │     │   <body>            │
+│     <title>         │     │     <h1>            │
+│   <body>            │     │       "Hello"       │
+│     <h1>Hello</h1>  │     │     <p>             │
+│     <p>World</p>    │     │       "World"       │
+│     <div hidden>    │     │                     │
+│       Secret!       │     │  (no hidden div!)   │
+│     </div>          │     │                     │
+└─────────────────────┘     └─────────────────────┘
+```
+
+### The `document` Object: Your Entry Point
+
+The `document` object is your gateway to the DOM. It's automatically available in any browser JavaScript:
+
+```javascript
+// document is the root of everything
+console.log(document);                    // The entire document
+console.log(document.documentElement);    // <html> element
+console.log(document.head);               // <head> element
+console.log(document.body);               // <body> element
+console.log(document.title);              // Page title (getter/setter!)
+
+// You can modify the document
+document.title = 'New Title';             // Changes browser tab title
+```
+
+---
+
+## DOM Tree Structure & Node Types
+
+Everything in the DOM is a **node**. But not all nodes are created equal!
+
+### The Node Type Hierarchy
+
+```
+                            Node (base class)
+                              │
+        ┌─────────────────────┼─────────────────────┐
+        │                     │                     │
+    Document             Element              CharacterData
+        │                     │                     │
+   HTMLDocument          ┌────┴────┐         ┌─────┴─────┐
+                         │         │         │           │
+                   HTMLElement  SVGElement  Text      Comment
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+  HTMLDivElement  HTMLSpanElement  HTMLInputElement
+                                        ...
+```
+
+### Node Types You'll Encounter
+
+| Node Type | `nodeType` | `nodeName` | Example |
+|-----------|------------|------------|---------|
+| Element | `1` | Tag name (uppercase) | `<div>`, `<p>`, `<span>` |
+| Text | `3` | `#text` | Text inside elements |
+| Comment | `8` | `#comment` | `<!-- comment -->` |
+| Document | `9` | `#document` | The `document` object |
+| DocumentFragment | `11` | `#document-fragment` | Virtual container |
+
+```javascript
+const div = document.createElement('div');
+console.log(div.nodeType);   // 1 (Element)
+console.log(div.nodeName);   // "DIV"
+
+const text = document.createTextNode('Hello');
+console.log(text.nodeType);  // 3 (Text)
+console.log(text.nodeName);  // "#text"
+
+console.log(document.nodeType);  // 9 (Document)
+console.log(document.nodeName);  // "#document"
+```
+
+### Node Type Constants
+
+Instead of remembering numbers, use the constants:
+
+```javascript
+Node.ELEMENT_NODE        // 1
+Node.TEXT_NODE           // 3
+Node.COMMENT_NODE        // 8
+Node.DOCUMENT_NODE       // 9
+Node.DOCUMENT_FRAGMENT_NODE  // 11
+
+// Check if something is an element
+if (node.nodeType === Node.ELEMENT_NODE) {
+  console.log('This is an element!');
+}
+```
+
+### Visualizing a Real DOM Tree
+
+Given this HTML:
+
+```html
+<div id="container">
+  <h1>Title</h1>
+  <!-- A comment -->
+  <p>Paragraph</p>
+</div>
+```
+
+The actual DOM tree looks like this (including text nodes from whitespace!):
+
+```
+div#container
+├── #text (newline + spaces)
+├── h1
+│   └── #text "Title"
+├── #text (newline + spaces)
+├── #comment " A comment "
+├── #text (newline + spaces)
+├── p
+│   └── #text "Paragraph"
+└── #text (newline)
+```
+
+<Warning>
+**The Whitespace Gotcha!** Line breaks and spaces between HTML tags create **text nodes**. This surprises many developers! We'll see how to handle this in the traversal section.
+</Warning>
+
+---
+
+## Selecting Elements
+
+Before you can manipulate an element, you need to find it. JavaScript provides several methods:
+
+### The getElementById() Classic
+
+The fastest way to select a single element by its unique ID:
+
+```javascript
+// HTML: <div id="hero">Welcome!</div>
+
+const hero = document.getElementById('hero');
+console.log(hero);  // <div id="hero">Welcome!</div>
+
+// Returns null if not found (not an error!)
+const ghost = document.getElementById('nonexistent');
+console.log(ghost);  // null
+```
+
+<Tip>
+IDs must be unique in a document. If you have duplicate IDs, `getElementById` returns the first one. But don't do this—it's invalid HTML!
+</Tip>
+
+### getElementsByClassName() and getElementsByTagName()
+
+Select multiple elements by class or tag name:
+
+```javascript
+// HTML: 
+// <p class="intro">First</p>
+// <p class="intro">Second</p>
+// <p>Third</p>
+
+const intros = document.getElementsByClassName('intro');
+console.log(intros.length);  // 2
+console.log(intros[0]);      // <p class="intro">First</p>
+
+const allParagraphs = document.getElementsByTagName('p');
+console.log(allParagraphs.length);  // 3
+```
+
+### The Modern Way: querySelector() and querySelectorAll()
+
+Use CSS selectors to find elements—much more powerful!
+
+```javascript
+// querySelector returns the FIRST match (or null)
+const firstButton = document.querySelector('button');
+const submitBtn = document.querySelector('#submit');
+const firstCard = document.querySelector('.card');
+const navLink = document.querySelector('nav a.active');
+const dataItem = document.querySelector('[data-id="123"]');
+
+// querySelectorAll returns ALL matches (NodeList)
+const allButtons = document.querySelectorAll('button');
+const allCards = document.querySelectorAll('.card');
+const evenRows = document.querySelectorAll('tr:nth-child(even)');
+```
+
+### Selector Examples
+
+```javascript
+// By ID
+document.querySelector('#main');
+
+// By class
+document.querySelector('.active');
+document.querySelectorAll('.btn.primary');
+
+// By tag
+document.querySelector('header');
+document.querySelectorAll('li');
+
+// By attribute
+document.querySelector('[type="submit"]');
+document.querySelector('[data-modal="login"]');
+
+// Descendant selectors
+document.querySelector('nav ul li a');
+document.querySelector('.sidebar .widget:first-child');
+
+// Pseudo-selectors (limited support)
+document.querySelectorAll('input:not([type="hidden"])');
+document.querySelector('p:first-of-type');
+```
+
+### Live vs Static Collections
+
+This is a crucial difference that trips up many developers:
+
+```javascript
+const liveList = document.getElementsByClassName('item');    // LIVE
+const staticList = document.querySelectorAll('.item');       // STATIC
+
+// Start with 3 items
+console.log(liveList.length);    // 3
+console.log(staticList.length);  // 3
+
+// Add a new item to the DOM
+const newItem = document.createElement('div');
+newItem.className = 'item';
+document.body.appendChild(newItem);
+
+// Check lengths again
+console.log(liveList.length);    // 4 (automatically updated!)
+console.log(staticList.length);  // 3 (still the old snapshot)
+```
+
+| Method | Returns | Live? |
+|--------|---------|-------|
+| `getElementById()` | Element or null | N/A |
+| `getElementsByClassName()` | HTMLCollection | **Yes** (live) |
+| `getElementsByTagName()` | HTMLCollection | **Yes** (live) |
+| `querySelector()` | Element or null | N/A |
+| `querySelectorAll()` | NodeList | **No** (static) |
+
+### Scoped Selection
+
+You can call selection methods on any element, not just `document`:
+
+```javascript
+const nav = document.querySelector('nav');
+
+// Find links ONLY inside nav
+const navLinks = nav.querySelectorAll('a');
+
+// Find the active link inside nav
+const activeLink = nav.querySelector('.active');
+```
+
+This is faster than searching the entire document and helps avoid selecting unintended elements.
+
+### Performance Comparison
+
+<AccordionGroup>
+  <Accordion title="Which selector method is fastest?">
+    In order of speed (fastest first):
+    
+    1. **`getElementById()`** - Direct hashtable lookup, O(1)
+    2. **`getElementsByClassName()`** - Optimized internal lookup
+    3. **`getElementsByTagName()`** - Optimized internal lookup
+    4. **`querySelector()`** - Must parse CSS selector
+    5. **`querySelectorAll()`** - Must parse and find all matches
+    
+    However, for most applications, **the difference is negligible**. Use `querySelector/querySelectorAll` for readability unless you're selecting thousands of elements in a loop.
+    
+    ```javascript
+    // Premature optimization - don't do this
+    const el1 = document.getElementById('myId');
+    
+    // This is fine and more readable
+    const el2 = document.querySelector('#myId');
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Traversing the DOM
+
+Once you have an element, you can navigate to related elements without querying the entire document.
+
+### Traversing Downwards (To Children)
+
+```javascript
+const ul = document.querySelector('ul');
+
+// Get ALL child nodes (including text nodes!)
+const allChildNodes = ul.childNodes;      // NodeList
+
+// Get only ELEMENT children (usually what you want)
+const elementChildren = ul.children;       // HTMLCollection
+
+// Get specific children
+const firstChild = ul.firstChild;          // First node (might be text!)
+const firstElement = ul.firstElementChild; // First ELEMENT child
+const lastChild = ul.lastChild;            // Last node
+const lastElement = ul.lastElementChild;   // Last ELEMENT child
+```
+
+<Warning>
+**The Text Node Trap!** Look at this HTML:
+
+```html
+<ul>
+  <li>One</li>
+  <li>Two</li>
+</ul>
+```
+
+What is `ul.firstChild`? It's NOT the first `<li>`! It's a **text node** containing the newline and spaces after `<ul>`. Use `firstElementChild` to get the actual `<li>` element.
+</Warning>
+
+### Traversing Upwards (To Parents)
+
+```javascript
+const li = document.querySelector('li');
+
+// Direct parent
+const parent = li.parentNode;        // Usually same as parentElement
+const parentEl = li.parentElement;   // Guaranteed to be an Element (or null)
+
+// Find ancestor matching selector (very useful!)
+const form = li.closest('form');     // Finds nearest ancestor <form>
+const card = li.closest('.card');    // Finds nearest ancestor with class "card"
+
+// closest() includes the element itself
+const self = li.closest('li');       // Returns li itself if it matches!
+```
+
+The `closest()` method is incredibly useful for event delegation:
+
+```javascript
+// Handle clicks on any button inside a card
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('.card');
+  if (card) {
+    console.log('Clicked inside card:', card);
+  }
+});
+```
+
+### Traversing Sideways (To Siblings)
+
+```javascript
+const secondLi = document.querySelectorAll('li')[1];
+
+// Previous/next nodes (might be text!)
+const prevNode = secondLi.previousSibling;
+const nextNode = secondLi.nextSibling;
+
+// Previous/next ELEMENTS (usually what you want)
+const prevElement = secondLi.previousElementSibling;
+const nextElement = secondLi.nextElementSibling;
+
+// Returns null at the boundaries
+const firstLi = document.querySelector('li');
+console.log(firstLi.previousElementSibling);  // null (no previous sibling)
+```
+
+### Node vs Element Properties Cheat Sheet
+
+| Get... | Node Property (includes text) | Element Property (elements only) |
+|--------|-------------------------------|----------------------------------|
+| Parent | `parentNode` | `parentElement` |
+| Children | `childNodes` | `children` |
+| First child | `firstChild` | `firstElementChild` |
+| Last child | `lastChild` | `lastElementChild` |
+| Previous sibling | `previousSibling` | `previousElementSibling` |
+| Next sibling | `nextSibling` | `nextElementSibling` |
+
+<Tip>
+**Rule of thumb:** Unless you specifically need text nodes, always use the Element variants (`children`, `firstElementChild`, `nextElementSibling`, etc.)
+</Tip>
+
+### Practical Example: Building a Breadcrumb Trail
+
+```javascript
+// Get all ancestors of an element
+function getAncestors(element) {
+  const ancestors = [];
+  let current = element.parentElement;
+  
+  while (current && current !== document.body) {
+    ancestors.push(current);
+    current = current.parentElement;
+  }
+  
+  return ancestors;
+}
+
+const deepElement = document.querySelector('.deeply-nested');
+console.log(getAncestors(deepElement));
+// [<div.parent>, <section>, <main>, ...]
+```
+
+---
+
+## Creating and Manipulating Elements
+
+The real power of the DOM is the ability to create, modify, and remove elements dynamically.
+
+### Creating Elements
+
+```javascript
+// Create a new element
+const div = document.createElement('div');
+const span = document.createElement('span');
+const img = document.createElement('img');
+
+// Create a text node
+const text = document.createTextNode('Hello, world!');
+
+// Create a comment node
+const comment = document.createComment('This is a comment');
+
+// Elements are created "detached" - not yet in the DOM!
+console.log(div.parentNode);  // null
+```
+
+### Adding Elements to the DOM
+
+There are many ways to add elements. Here's a comprehensive overview:
+
+<Tabs>
+  <Tab title="appendChild()">
+    Adds a node as the **last child** of a parent:
+    
+    ```javascript
+    const ul = document.querySelector('ul');
+    const li = document.createElement('li');
+    li.textContent = 'New item';
+    
+    ul.appendChild(li);
+    // <ul>
+    //   <li>Existing</li>
+    //   <li>New item</li>  ← Added at the end
+    // </ul>
+    ```
+  </Tab>
+  <Tab title="insertBefore()">
+    Inserts a node **before** a reference node:
+    
+    ```javascript
+    const ul = document.querySelector('ul');
+    const existingLi = ul.querySelector('li');
+    const newLi = document.createElement('li');
+    newLi.textContent = 'First!';
+    
+    ul.insertBefore(newLi, existingLi);
+    // <ul>
+    //   <li>First!</li>    ← Inserted before
+    //   <li>Existing</li>
+    // </ul>
+    ```
+  </Tab>
+  <Tab title="append() / prepend()">
+    Modern methods that accept multiple nodes AND strings:
+    
+    ```javascript
+    const div = document.querySelector('div');
+    
+    // append() - adds to the END
+    div.append('Text', document.createElement('span'), 'More text');
+    
+    // prepend() - adds to the START
+    div.prepend(document.createElement('strong'));
+    ```
+  </Tab>
+  <Tab title="before() / after()">
+    Insert as siblings (not children):
+    
+    ```javascript
+    const h1 = document.querySelector('h1');
+    
+    // Insert BEFORE h1 (as previous sibling)
+    h1.before(document.createElement('nav'));
+    
+    // Insert AFTER h1 (as next sibling)
+    h1.after(document.createElement('p'));
+    ```
+  </Tab>
+</Tabs>
+
+### insertAdjacentHTML() - The Swiss Army Knife
+
+For inserting HTML strings, `insertAdjacentHTML()` is powerful and fast:
+
+```javascript
+const div = document.querySelector('div');
+
+// Four positions to insert:
+div.insertAdjacentHTML('beforebegin', '<p>Before div</p>');
+div.insertAdjacentHTML('afterbegin', '<p>First child of div</p>');
+div.insertAdjacentHTML('beforeend', '<p>Last child of div</p>');
+div.insertAdjacentHTML('afterend', '<p>After div</p>');
+```
+
+Visual representation:
+
+```html
+<!-- beforebegin -->
+<div>
+  <!-- afterbegin -->
+  existing content
+  <!-- beforeend -->
+</div>
+<!-- afterend -->
+```
+
+### Removing Elements
+
+<Tabs>
+  <Tab title="remove()">
+    Modern and simple—element removes itself:
+    
+    ```javascript
+    const element = document.querySelector('.to-remove');
+    element.remove();  // Gone!
+    ```
+  </Tab>
+  <Tab title="removeChild()">
+    Classic method—remove via parent:
+    
+    ```javascript
+    const parent = document.querySelector('ul');
+    const child = parent.querySelector('li');
+    parent.removeChild(child);
+    
+    // Or remove from any element
+    element.parentNode.removeChild(element);
+    ```
+  </Tab>
+</Tabs>
+
+### Cloning Elements
+
+```javascript
+const original = document.querySelector('.card');
+
+// Shallow clone (element only, no children)
+const shallow = original.cloneNode(false);
+
+// Deep clone (element AND all descendants)
+const deep = original.cloneNode(true);
+
+// Clones are detached - must add to DOM
+document.body.appendChild(deep);
+```
+
+<Warning>
+**ID Collision!** If you clone an element with an ID, you'll have duplicate IDs in your document (invalid HTML). Remove or change the ID after cloning:
+
+```javascript
+const clone = original.cloneNode(true);
+clone.id = '';  // Remove ID
+// or
+clone.id = 'new-unique-id';
+```
+</Warning>
+
+### DocumentFragment - Batch Operations
+
+When adding many elements, using a `DocumentFragment` is more efficient:
+
+```javascript
+// Bad: Multiple reflows
+const ul = document.querySelector('ul');
+for (let i = 0; i < 1000; i++) {
+  const li = document.createElement('li');
+  li.textContent = `Item ${i}`;
+  ul.appendChild(li);  // Triggers reflow each time!
+}
+
+// Good: Single reflow
+const ul = document.querySelector('ul');
+const fragment = document.createDocumentFragment();
+
+for (let i = 0; i < 1000; i++) {
+  const li = document.createElement('li');
+  li.textContent = `Item ${i}`;
+  fragment.appendChild(li);  // No reflow (fragment is detached)
+}
+
+ul.appendChild(fragment);  // Single reflow!
+```
+
+A `DocumentFragment` is a lightweight container that:
+- Is not part of the DOM tree
+- Has no parent
+- When appended, only its **children** are inserted (the fragment itself disappears)
+
+---
+
+## Modifying Content
+
+Three properties let you read and write element content:
+
+### innerHTML - Parse and Insert HTML
+
+```javascript
+const div = document.querySelector('div');
+
+// Read HTML content
+console.log(div.innerHTML);  // "<p>Hello</p><span>World</span>"
+
+// Write HTML content (parses the string!)
+div.innerHTML = '<h1>New Title</h1><p>New paragraph</p>';
+
+// Clear all content
+div.innerHTML = '';
+```
+
+<Warning>
+**Security Alert: XSS Vulnerability!**
+
+Never use `innerHTML` with user-provided content:
+
+```javascript
+// DANGEROUS! User could inject: <img src=x onerror="stealCookies()">
+div.innerHTML = userInput;  // NO!
+
+// Safe alternatives:
+div.textContent = userInput;  // Escapes HTML
+// or sanitize the input first
+```
+</Warning>
+
+### textContent - Plain Text Only
+
+```javascript
+const div = document.querySelector('div');
+
+// Read text (ignores HTML tags)
+// <div><p>Hello</p><span>World</span></div>
+console.log(div.textContent);  // "HelloWorld"
+
+// Write text (HTML is escaped, not parsed)
+div.textContent = '<script>alert("XSS")</script>';
+// Displays literally: <script>alert("XSS")</script>
+// Safe from XSS!
+```
+
+### innerText - Rendered Text
+
+```javascript
+const div = document.querySelector('div');
+
+// innerText respects CSS visibility
+// <div>Hello <span style="display:none">Hidden</span> World</div>
+
+console.log(div.textContent);  // "Hello Hidden World"
+console.log(div.innerText);    // "Hello  World" (Hidden is excluded!)
+```
+
+### When to Use Each
+
+| Property | Use Case |
+|----------|----------|
+| `innerHTML` | Inserting trusted HTML (never user input!) |
+| `textContent` | Setting/getting plain text (safe, fast) |
+| `innerText` | Getting text as user sees it (slower, respects CSS) |
+
+```javascript
+// Performance: textContent is faster than innerText
+// because innerText must calculate styles
+
+// Setting text content (both work, textContent is faster)
+element.textContent = 'Hello';  // Preferred
+element.innerText = 'Hello';    // Works but slower
+```
+
+---
+
+## Working with Attributes
+
+HTML elements have attributes. JavaScript lets you read, write, and remove them.
+
+### Standard Attribute Methods
+
+```javascript
+const link = document.querySelector('a');
+
+// Get attribute value
+const href = link.getAttribute('href');
+const target = link.getAttribute('target');
+
+// Set attribute value
+link.setAttribute('href', 'https://example.com');
+link.setAttribute('target', '_blank');
+
+// Check if attribute exists
+if (link.hasAttribute('target')) {
+  console.log('Link opens in new tab');
+}
+
+// Remove attribute
+link.removeAttribute('target');
+```
+
+### Properties vs Attributes: The Difference
+
+This confuses many developers! **Attributes** are in the HTML. **Properties** are on the DOM object.
+
+```html
+<input type="text" value="initial">
+```
+
+```javascript
+const input = document.querySelector('input');
+
+// ATTRIBUTE: The original HTML value
+console.log(input.getAttribute('value'));  // "initial"
+
+// PROPERTY: The current state
+console.log(input.value);  // "initial"
+
+// User types "new text"...
+console.log(input.getAttribute('value'));  // Still "initial"!
+console.log(input.value);                  // "new text"
+
+// Reset to attribute value
+input.value = input.getAttribute('value');
+```
+
+Key differences:
+
+| Aspect | Attribute | Property |
+|--------|-----------|----------|
+| Source | HTML markup | DOM object |
+| Access | `get/setAttribute()` | Direct property access |
+| Updates | Manual only | Automatically with user interaction |
+| Type | Always string | Can be any type |
+
+```javascript
+// Attribute is always a string
+checkbox.getAttribute('checked');  // "" or null
+
+// Property is a boolean
+checkbox.checked;  // true or false
+
+// Attribute (string)
+input.getAttribute('maxlength');  // "10"
+
+// Property (number)
+input.maxLength;  // 10
+```
+
+### Data Attributes and the dataset API
+
+Custom data attributes start with `data-` and are accessible via the `dataset` property:
+
+```html
+<div id="user" 
+     data-user-id="123" 
+     data-role="admin"
+     data-is-active="true">
+  John Doe
+</div>
+```
+
+```javascript
+const user = document.querySelector('#user');
+
+// Read data attributes (camelCase!)
+console.log(user.dataset.userId);    // "123"
+console.log(user.dataset.role);      // "admin"
+console.log(user.dataset.isActive);  // "true" (string, not boolean!)
+
+// Write data attributes
+user.dataset.lastLogin = '2024-01-15';
+// Creates: data-last-login="2024-01-15"
+
+// Delete data attributes
+delete user.dataset.role;
+
+// Check if exists
+if ('userId' in user.dataset) {
+  console.log('Has user ID');
+}
+```
+
+<Tip>
+**Naming Convention:** HTML uses `kebab-case` (`data-user-id`), JavaScript uses `camelCase` (`dataset.userId`). The conversion is automatic!
+</Tip>
+
+### Common Attribute Shortcuts
+
+Many attributes have direct property shortcuts:
+
+```javascript
+// These pairs are equivalent:
+element.id                    // element.getAttribute('id')
+element.className             // element.getAttribute('class')
+element.href                  // element.getAttribute('href')
+element.src                   // element.getAttribute('src')
+element.title                 // element.getAttribute('title')
+
+// For class manipulation, use classList (covered next)
+```
+
+---
+
+## Styling Elements
+
+JavaScript can modify element styles in several ways.
+
+### The style Property (Inline Styles)
+
+```javascript
+const box = document.querySelector('.box');
+
+// Set individual styles (camelCase!)
+box.style.backgroundColor = 'blue';
+box.style.fontSize = '20px';
+box.style.marginTop = '10px';
+
+// Read styles (only reads INLINE styles!)
+console.log(box.style.backgroundColor);  // "blue"
+console.log(box.style.color);            // "" (not inline, from stylesheet)
+
+// Set multiple styles at once
+box.style.cssText = 'background: red; font-size: 16px; padding: 10px;';
+
+// Remove an inline style
+box.style.backgroundColor = '';  // Removes the style
+```
+
+<Warning>
+`element.style` only reads/writes **inline** styles! To get computed styles (from stylesheets), use `getComputedStyle()`.
+</Warning>
+
+### getComputedStyle() - Read Actual Styles
+
+```javascript
+const box = document.querySelector('.box');
+
+// Get all computed styles
+const styles = getComputedStyle(box);
+
+console.log(styles.backgroundColor);  // "rgb(0, 0, 255)"
+console.log(styles.fontSize);         // "16px"
+console.log(styles.display);          // "block"
+
+// Get pseudo-element styles
+const beforeStyles = getComputedStyle(box, '::before');
+console.log(beforeStyles.content);    // '"Hello"'
+```
+
+### classList - Manipulate CSS Classes
+
+The `classList` API is the modern way to add/remove/toggle classes:
+
+```javascript
+const button = document.querySelector('button');
+
+// Add classes
+button.classList.add('active');
+button.classList.add('btn', 'btn-primary');  // Multiple at once
+
+// Remove classes
+button.classList.remove('active');
+button.classList.remove('btn', 'btn-primary');  // Multiple at once
+
+// Toggle (add if missing, remove if present)
+button.classList.toggle('active');
+
+// Toggle with condition
+button.classList.toggle('active', isActive);  // Add if isActive is true
+
+// Check if class exists
+if (button.classList.contains('active')) {
+  console.log('Button is active');
+}
+
+// Replace a class
+button.classList.replace('btn-primary', 'btn-secondary');
+
+// Iterate over classes
+button.classList.forEach(cls => console.log(cls));
+
+// Get number of classes
+console.log(button.classList.length);  // 2
+```
+
+### className vs classList
+
+```javascript
+// className is a string (old way)
+element.className = 'btn btn-primary';     // Replaces ALL classes
+element.className += ' active';            // Appending is clunky
+
+// classList is a DOMTokenList (modern way)
+element.classList.add('active');           // Adds without affecting others
+element.classList.remove('btn-primary');   // Removes specifically
+```
+
+---
+
+## The Render Tree & Critical Rendering Path
+
+Understanding how browsers render pages helps you write performant code.
+
+### From HTML to Pixels
+
+When you load a webpage, the browser goes through these steps:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     THE CRITICAL RENDERING PATH                              │
+│                                                                              │
+│  1. PARSE HTML          2. PARSE CSS           3. BUILD RENDER TREE         │
+│  ┌──────────────┐      ┌──────────────┐       ┌──────────────────────┐      │
+│  │  HTML bytes  │      │  CSS bytes   │       │  DOM    +   CSSOM    │      │
+│  │      ↓       │      │      ↓       │       │    ↘     ↙           │      │
+│  │  Characters  │      │  Characters  │       │   RENDER TREE        │      │
+│  │      ↓       │      │      ↓       │       │  (visible elements   │      │
+│  │   Tokens     │      │   Tokens     │       │   + their styles)    │      │
+│  │      ↓       │      │      ↓       │       └──────────────────────┘      │
+│  │    Nodes     │      │    Rules     │                  │                  │
+│  │      ↓       │      │      ↓       │                  ▼                  │
+│  │    DOM       │      │   CSSOM      │       4. LAYOUT (Reflow)            │
+│  └──────────────┘      └──────────────┘       ┌──────────────────────┐      │
+│                                               │ Calculate exact      │      │
+│                                               │ position & size of   │      │
+│                                               │ every element        │      │
+│                                               └──────────┬───────────┘      │
+│                                                          │                  │
+│                                                          ▼                  │
+│                                               5. PAINT                      │
+│                                               ┌──────────────────────┐      │
+│                                               │ Fill in pixels:      │      │
+│                                               │ colors, borders,     │      │
+│                                               │ shadows, text        │      │
+│                                               └──────────┬───────────┘      │
+│                                                          │                  │
+│                                                          ▼                  │
+│                                               6. COMPOSITE                  │
+│                                               ┌──────────────────────┐      │
+│                                               │ Combine layers into  │      │
+│                                               │ final image (GPU)    │      │
+│                                               └──────────────────────┘      │
+│                                                          │                  │
+│                                                          ▼                  │
+│                                               ┌──────────────────────┐      │
+│                                               │      PIXELS!         │      │
+│                                               └──────────────────────┘      │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### What's NOT in the Render Tree
+
+The Render Tree only contains visible elements:
+
+```html
+<!-- NOT in Render Tree -->
+<head>...</head>                    <!-- head is never rendered -->
+<script>...</script>                <!-- script tags aren't visible -->
+<link rel="stylesheet">             <!-- link tags aren't visible -->
+<meta>                              <!-- meta tags aren't visible -->
+<div style="display: none">Hi</div> <!-- display:none excluded -->
+
+<!-- IN the Render Tree (even if not seen) -->
+<div style="visibility: hidden">Hi</div>  <!-- Takes up space -->
+<div style="opacity: 0">Hi</div>          <!-- Takes up space -->
+```
+
+### Layout (Reflow) - The Expensive Step
+
+Layout calculates the **geometry** of every element: position, size, margins, etc.
+
+**Reflow is triggered when:**
+- Adding/removing elements
+- Changing element dimensions (width, height, padding, margin)
+- Changing font size
+- Resizing the window
+- Reading certain properties (more on this below!)
+
+### Paint - Drawing Pixels
+
+After layout, the browser paints the pixels: text, colors, images, borders, shadows.
+
+**Repaint (without reflow) happens when:**
+- Changing colors
+- Changing background-image
+- Changing visibility
+- Changing box-shadow (sometimes)
+
+### Composite - Layering
+
+Modern browsers separate content into layers and use the GPU to composite them. This is why some animations are smooth:
+
+```css
+/* These properties can animate without reflow/repaint */
+transform: translateX(100px);  /* GPU accelerated! */
+opacity: 0.5;                   /* GPU accelerated! */
+
+/* These properties cause reflow */
+left: 100px;    /* Avoid for animations! */
+width: 200px;   /* Avoid for animations! */
+```
+
+---
+
+## Performance Best Practices
+
+DOM operations can be slow. Here's how to keep your pages fast.
+
+### Cache DOM References
+
+```javascript
+// Bad: Queries the DOM every iteration
+for (let i = 0; i < 1000; i++) {
+  document.querySelector('.result').textContent += i;
+}
+
+// Good: Query once, reuse
+const result = document.querySelector('.result');
+for (let i = 0; i < 1000; i++) {
+  result.textContent += i;
+}
+
+// Even better: Build string, set once
+const result = document.querySelector('.result');
+let text = '';
+for (let i = 0; i < 1000; i++) {
+  text += i;
+}
+result.textContent = text;
+```
+
+### Batch DOM Updates
+
+```javascript
+// Bad: 3 separate reflows
+element.style.width = '100px';
+element.style.height = '200px';
+element.style.margin = '10px';
+
+// Good: Single reflow with cssText
+element.style.cssText = 'width: 100px; height: 200px; margin: 10px;';
+
+// Good: Single reflow with class
+element.classList.add('my-styles');
+
+// Good: DocumentFragment for multiple elements
+const fragment = document.createDocumentFragment();
+items.forEach(item => {
+  const li = document.createElement('li');
+  li.textContent = item;
+  fragment.appendChild(li);
+});
+ul.appendChild(fragment);  // Single DOM update
+```
+
+### Avoid Layout Thrashing
+
+**Layout thrashing** occurs when you alternate between reading and writing DOM properties:
+
+```javascript
+// TERRIBLE: Forces layout on EVERY iteration
+boxes.forEach(box => {
+  const width = box.offsetWidth;      // Read (forces layout)
+  box.style.width = (width + 10) + 'px';  // Write (invalidates layout)
+});
+
+// GOOD: Batch reads, then batch writes
+const widths = boxes.map(box => box.offsetWidth);  // Read all
+boxes.forEach((box, i) => {
+  box.style.width = (widths[i] + 10) + 'px';       // Write all
+});
+```
+
+**Properties that trigger layout when read:**
+
+```javascript
+// Reading these forces the browser to calculate layout
+element.offsetWidth     element.offsetHeight
+element.offsetTop       element.offsetLeft
+element.clientWidth     element.clientHeight
+element.scrollWidth     element.scrollHeight
+element.scrollTop       element.scrollLeft
+element.getBoundingClientRect()
+getComputedStyle(element)
+```
+
+### Use requestAnimationFrame for Visual Changes
+
+```javascript
+// Bad: DOM changes at unpredictable times
+window.addEventListener('scroll', () => {
+  element.style.transform = `translateY(${window.scrollY}px)`;
+});
+
+// Good: Batch visual changes with next frame
+let ticking = false;
+window.addEventListener('scroll', () => {
+  if (!ticking) {
+    requestAnimationFrame(() => {
+      element.style.transform = `translateY(${window.scrollY}px)`;
+      ticking = false;
+    });
+    ticking = true;
+  }
+});
+```
+
+---
+
+## Common Patterns
+
+### Event Delegation
+
+Instead of adding listeners to many elements, add one to a parent:
+
+```javascript
+// Bad: Many listeners
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('click', handleClick);
+});
+
+// Good: One listener with delegation
+document.querySelector('.button-container').addEventListener('click', (e) => {
+  const btn = e.target.closest('.btn');
+  if (btn) {
+    handleClick(e);
+  }
+});
+```
+
+Benefits:
+- Works for dynamically added elements
+- Less memory usage
+- Easier cleanup
+
+### Checking if Element Exists
+
+```javascript
+// Using querySelector (returns null if not found)
+const element = document.querySelector('.maybe-exists');
+if (element) {
+  element.textContent = 'Found!';
+}
+
+// Optional chaining (modern)
+document.querySelector('.maybe-exists')?.classList.add('active');
+
+// With getElementById
+const el = document.getElementById('myId');
+if (el !== null) {
+  // Element exists
+}
+```
+
+### Waiting for DOM Ready
+
+```javascript
+// Modern: DOMContentLoaded (DOM ready, images may still be loading)
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM is ready!');
+  // Safe to query elements
+});
+
+// Full page load (including images, stylesheets)
+window.addEventListener('load', () => {
+  console.log('Everything loaded!');
+});
+
+// If script is at end of body, DOM is already ready
+// <script src="app.js"></script> <!-- Just before </body> -->
+
+// Modern: defer attribute (script loads in parallel, runs after DOM ready)
+// <script src="app.js" defer></script>
+```
+
+<Tip>
+**Best practice:** Put your `<script>` tags just before `</body>` or use the `defer` attribute. Then you don't need to wait for DOMContentLoaded.
+</Tip>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between childNodes and children?">
+    **Answer:**
+    
+    - `childNodes` returns ALL child nodes, including **text nodes** (whitespace!) and **comment nodes**
+    - `children` returns only **element nodes**
+    
+    ```javascript
+    // <ul>
+    //   <li>One</li>
+    //   <li>Two</li>
+    // </ul>
+    
+    ul.childNodes.length;  // 5 (text, li, text, li, text)
+    ul.children.length;    // 2 (li, li)
+    ```
+    
+    **Rule:** Use `children` unless you specifically need text/comment nodes.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why is innerHTML dangerous with user input?">
+    **Answer:** `innerHTML` parses strings as HTML, enabling **Cross-Site Scripting (XSS)** attacks:
+    
+    ```javascript
+    // User input: <img src=x onerror="stealCookies()">
+    div.innerHTML = userInput;  // Executes malicious code!
+    
+    // Safe: textContent escapes HTML
+    div.textContent = userInput;  // Displays as plain text
+    ```
+    
+    Always sanitize HTML or use `textContent` for user-provided content.
+  </Accordion>
+  
+  <Accordion title="Question 3: What's the difference between getAttribute('value') and .value on an input?">
+    **Answer:**
+    
+    - `getAttribute('value')` returns the **original HTML attribute** (initial value)
+    - `.value` property returns the **current value** (what user typed)
+    
+    ```javascript
+    // <input value="initial">
+    // User types "hello"
+    
+    input.getAttribute('value');  // "initial"
+    input.value;                  // "hello"
+    ```
+    
+    Attributes are the HTML source. Properties are the live DOM state.
+  </Accordion>
+  
+  <Accordion title="Question 4: What does closest() do and why is it useful?">
+    **Answer:** `closest()` finds the nearest **ancestor** (including the element itself) that matches a selector:
+    
+    ```javascript
+    // <div class="card">
+    //   <button class="btn">Click</button>
+    // </div>
+    
+    btn.closest('.card');  // Returns the parent div
+    btn.closest('button'); // Returns btn itself (it matches!)
+    btn.closest('.modal'); // null (no matching ancestor)
+    ```
+    
+    **Super useful for event delegation:**
+    
+    ```javascript
+    document.addEventListener('click', (e) => {
+      const card = e.target.closest('.card');
+      if (card) {
+        // Handle click inside any card
+      }
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: What causes layout thrashing and how do you avoid it?">
+    **Answer:** Layout thrashing happens when you **alternate reading and writing** layout-triggering properties:
+    
+    ```javascript
+    // BAD: Read-write-read-write pattern
+    boxes.forEach(box => {
+      const width = box.offsetWidth;     // READ → forces layout
+      box.style.width = width + 10 + 'px'; // WRITE → invalidates layout
+    });
+    // Each iteration forces a new layout calculation!
+    
+    // GOOD: Batch reads, then batch writes
+    const widths = boxes.map(b => b.offsetWidth);  // All reads
+    boxes.forEach((box, i) => {
+      box.style.width = widths[i] + 10 + 'px';     // All writes
+    });
+    // Only one layout calculation!
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: What's in the Render Tree vs the DOM?">
+    **Answer:** The DOM contains **all nodes** from the HTML (plus JS modifications). The Render Tree contains only **visible elements** with their computed styles.
+    
+    **In DOM but NOT in Render Tree:**
+    - `<head>` and its contents
+    - `<script>`, `<link>`, `<meta>` tags
+    - Elements with `display: none`
+    
+    **In Render Tree:**
+    - Visible elements
+    - Elements with `visibility: hidden` (still take space)
+    - Elements with `opacity: 0` (still take space)
+    
+    Pseudo-elements (`::before`, `::after`) are in the Render Tree but NOT in the DOM.
+  </Accordion>
+  
+  <Accordion title="Question 7: getElementsByClassName vs querySelectorAll - what's different?">
+    **Answer:**
+    
+    | Aspect | `getElementsByClassName` | `querySelectorAll` |
+    |--------|--------------------------|-------------------|
+    | Returns | HTMLCollection | NodeList |
+    | **Live** | **Yes** (updates automatically) | **No** (static snapshot) |
+    | Selector | Class name only | Any CSS selector |
+    | Speed | Slightly faster | Slightly slower |
+    
+    ```javascript
+    const live = document.getElementsByClassName('item');
+    const staticList = document.querySelectorAll('.item');
+    
+    // Add new element with class="item"
+    document.body.appendChild(newItem);
+    
+    live.length;       // Increased (live collection)
+    staticList.length; // Same (static snapshot)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 8: How do you safely add many elements to the DOM?">
+    **Answer:** Use a **DocumentFragment** to batch insertions:
+    
+    ```javascript
+    const fragment = document.createDocumentFragment();
+    
+    for (let i = 0; i < 1000; i++) {
+      const li = document.createElement('li');
+      li.textContent = `Item ${i}`;
+      fragment.appendChild(li);  // No reflow (fragment is detached)
+    }
+    
+    ul.appendChild(fragment);  // Single reflow!
+    ```
+    
+    A DocumentFragment is a virtual container. When appended, only its children are inserted—the fragment disappears.
+    
+    Alternative: Build HTML string and use `innerHTML` once (but sanitize if user input!).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**Remember these essential points:**
+
+1. **The DOM is a tree** — Elements are nodes with parent, child, and sibling relationships
+
+2. **DOM ≠ HTML source** — The browser fixes errors and JavaScript modifies it
+
+3. **Use querySelector** — More flexible than getElementById, accepts any CSS selector
+
+4. **Element vs Node properties** — Use `children`, `firstElementChild`, etc. to skip text nodes
+
+5. **closest() is your friend** — Perfect for event delegation and finding ancestor elements
+
+6. **innerHTML is dangerous** — Never use with user input; use textContent instead
+
+7. **Attributes vs Properties** — Attributes are HTML source, properties are live DOM state
+
+8. **classList over className** — Use add/remove/toggle for cleaner class manipulation
+
+9. **Batch DOM operations** — Use DocumentFragment or build strings to minimize reflows
+
+10. **Avoid layout thrashing** — Don't alternate reading and writing layout properties
+</Info>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    How JavaScript handles async operations and DOM events
+  </Card>
+  <Card title="JavaScript Engines" icon="gear" href="/concepts/javascript-engines">
+    How V8 and other engines parse and execute your DOM code
+  </Card>
+  <Card title="Scope and Closures" icon="layer-group" href="/concepts/scope-and-closures">
+    Understanding variable scope in event handlers and callbacks
+  </Card>
+  <Card title="Design Patterns" icon="puzzle-piece" href="/concepts/design-patterns">
+    Patterns like Observer for reactive DOM updates
+  </Card>
+</CardGroup>
+
+---
 
 ## Reference
 
 <Card title="Document Object Model (DOM) — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">
-  Official MDN documentation
+  The comprehensive MDN reference for all DOM interfaces, methods, and properties.
 </Card>
 
 ## Books
 
 <Card title="Eloquent JavaScript, 3rd Edition: Ch. 14 - The Document Object Model" icon="book" href="https://eloquentjavascript.net/14_dom.html">
-  By Marijn Haverbeke
+  Marijn Haverbeke's excellent free book chapter covering DOM fundamentals with clear explanations and exercises.
 </Card>
 
 ## Articles
 
 <CardGroup cols={2}>
   <Card title="How To Understand and Modify the DOM in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/introduction-to-the-dom">
-    By Tania Rascia
+    Tania Rascia's beginner-friendly guide covering DOM basics, selection, traversal, and manipulation.
   </Card>
   <Card title="What's the Document Object Model, and why you should know how to use it" icon="newspaper" href="https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d">
-    By Leonardo Maldonado
+    A practical introduction to the DOM with real-world examples.
+  </Card>
+  <Card title="What is the DOM?" icon="newspaper" href="https://css-tricks.com/dom/">
+    Chris Coyier's clear explanation of what the DOM is and common misconceptions.
+  </Card>
+  <Card title="Traversing the DOM with JavaScript" icon="newspaper" href="https://zellwk.com/blog/dom-traversals/">
+    Zell Liew's detailed guide to navigating parent, child, and sibling elements efficiently.
+  </Card>
+  <Card title="DOM Tree" icon="newspaper" href="https://javascript.info/dom-nodes">
+    JavaScript.info's comprehensive tutorial on DOM structure, node types, and tree navigation.
+  </Card>
+  <Card title="How to traverse the DOM in JavaScript" icon="newspaper" href="https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e">
+    Vojislav Grujic's in-depth guide to DOM traversal with practical examples.
+  </Card>
+  <Card title="Render Tree Construction" icon="newspaper" href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction">
+    Google's authoritative guide to how browsers construct the render tree from DOM and CSSOM.
+  </Card>
+  <Card title="What, exactly, is the DOM?" icon="newspaper" href="https://bitsofco.de/what-exactly-is-the-dom/">
+    Ire Aderinokun's excellent breakdown of what the DOM is and isn't, including how it differs from the render tree.
+  </Card>
+  <Card title="JavaScript DOM Tutorial" icon="newspaper" href="https://www.javascripttutorial.net/javascript-dom/">
+    A comprehensive multi-part tutorial covering selection, traversal, manipulation, and events.
   </Card>
 </CardGroup>
-
-- [JavaScript DOM Tutorial with Example — Guru99](https://www.guru99.com/how-to-use-dom-and-events-in-javascript.html)
-- [What is the DOM? — Chris Coyier](https://css-tricks.com/dom/)
-- [Traversing the DOM with JavaScript — Zell Liew](https://zellwk.com/blog/dom-traversals/)
-- [DOM Tree](https://javascript.info/dom-nodes)
-- [How to traverse the DOM in Javascript — Vojislav Grujić](https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e)
-- [Render Tree Construction — Ilya Grigorik](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction)
-- [What exactly is the DOM?](https://bitsofco.de/what-exactly-is-the-dom/)
-- [JavaScript DOM](https://www.javascripttutorial.net/javascript-dom/)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="JavaScript DOM" icon="video" href="https://www.youtube.com/watch?v=FIORjGvT0kk">
-    By The Net Ninja
+  <Card title="JavaScript DOM Tutorial" icon="video" href="https://www.youtube.com/watch?v=FIORjGvT0kk">
+    The Net Ninja's popular playlist covering DOM fundamentals step by step.
   </Card>
   <Card title="JavaScript DOM Crash Course" icon="video" href="https://www.youtube.com/watch?v=0ik6X4DJKCc">
-    By Traversy Media
+    Traversy Media's comprehensive crash course covering DOM manipulation in one video.
+  </Card>
+  <Card title="JavaScript DOM Manipulation Methods" icon="video" href="https://www.youtube.com/watch?v=y17RuWkWdn8">
+    Web Dev Simplified explains createElement, appendChild, and other manipulation methods.
+  </Card>
+  <Card title="JavaScript DOM Traversal Methods" icon="video" href="https://www.youtube.com/watch?v=v7rSSy8CaYE">
+    Web Dev Simplified covers parent, child, and sibling traversal methods.
   </Card>
 </CardGroup>
-
-- [JavaScript DOM Manipulation Methods — Web Dev Simplified](https://www.youtube.com/watch?v=y17RuWkWdn8)
-- [JavaScript DOM Traversal Methods — Web Dev Simplified](https://www.youtube.com/watch?v=v7rSSy8CaYE)
-- [Traversing the Dom with Javascript — Steve Griffith](https://www.youtube.com/watch?v=Pr4LLrmDLLo)
