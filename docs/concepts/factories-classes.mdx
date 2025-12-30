@@ -3,7 +3,21 @@ title: "Factories and Classes"
 description: "How to create objects in JavaScript — from factory functions to ES6 classes"
 ---
 
-## The Video Game Character Problem: A Real-World Analogy
+In JavaScript, objects are everywhere. User profiles, shopping carts, game characters, API responses — almost everything is an object. But when you need to create **many similar objects**, writing them one by one becomes a problem.
+
+**Factories** and **Classes** solve this problem. They are patterns for creating objects efficiently:
+
+- A **Factory Function** is a regular function that returns a new object each time you call it. It's simple, flexible, and doesn't require special syntax.
+
+- A **Class** is a blueprint for creating objects. It uses the `class` keyword (introduced in ES6) and the `new` operator to create instances. If you've used Java, C#, or Python, this will feel familiar.
+
+Both achieve the same goal — creating objects — but they work differently and have different strengths. This guide will teach you both approaches and help you decide which to use.
+
+---
+
+## The Video Game Character Problem
+
+To understand why we need factories and classes, let's look at a common problem.
 
 Imagine you're building a video game. You need to create enemies — lots of them. Goblins, dragons, zombies, and bosses. Each enemy has a name, health points, attack power, and abilities.
 
