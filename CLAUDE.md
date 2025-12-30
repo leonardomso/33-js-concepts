@@ -45,7 +45,7 @@ The project was recognized by GitHub as one of the **top open source projects of
 └── github-image.png        # Project banner image
 ```
 
-## The 30 Concepts (31st, 32nd, and 33rd coming soon)
+## The 31 Concepts (32nd and 33rd coming soon)
 
 ### Fundamentals (1-6)
 1. Primitive Types
@@ -55,13 +55,13 @@ The project was recognized by GitHub as one of the **top open source projects of
 5. Scope & Closures
 6. Call Stack
 
-### Functions & Execution (7-9)
+### Functions & Execution (7-8)
 7. Event Loop (Message Queue)
-8. Expression vs Statement
-9. IIFE, Modules and Namespaces
+8. IIFE, Modules and Namespaces
 
-### Web Platform (10)
-10. DOM and Layout Trees
+### Web Platform (9-10)
+9. DOM and Layout Trees
+10. HTTP & Fetch
 
 ### Object-Oriented JS (11-15)
 11. Factories and Classes
@@ -81,7 +81,7 @@ The project was recognized by GitHub as one of the **top open source projects of
 21. Promises
 22. async/await
 
-### Advanced Topics (23-30)
+### Advanced Topics (23-31)
 23. JavaScript Engines
 24. Data Structures
 25. Big O Notation (Expensive Operations)
@@ -255,19 +255,19 @@ Tests are organized by concept category in the `tests/` directory:
 
 ```
 tests/
-└── fundamentals/           # Concepts 1-6
-    ├── call-stack/
-    │   └── call-stack.test.js
-    ├── primitive-types/
-    │   └── primitive-types.test.js
-    ├── value-reference-types/
-    │   └── value-reference-types.test.js
-    ├── type-coercion/
-    │   └── type-coercion.test.js
-    ├── equality-operators/
-    │   └── equality-operators.test.js
-    └── scope-and-closures/
-        └── scope-and-closures.test.js
+├── fundamentals/              # Concepts 1-6
+│   ├── call-stack/
+│   ├── primitive-types/
+│   ├── value-reference-types/
+│   ├── type-coercion/
+│   ├── equality-operators/
+│   └── scope-and-closures/
+├── functions-execution/       # Concepts 7-8
+│   ├── event-loop/
+│   └── iife-modules/
+└── web-platform/              # Concepts 9-10
+    ├── dom/
+    └── http-fetch/
 ```
 
 ### Writing Tests for Code Examples
@@ -303,7 +303,11 @@ When adding new code examples to concept documentation, please include correspon
 | Fundamentals | Type Coercion | 74 |
 | Fundamentals | Equality Operators | 87 |
 | Fundamentals | Scope and Closures | 46 |
-| **Total** | | **354** |
+| Functions & Execution | Event Loop | 56 |
+| Functions & Execution | IIFE & Modules | 61 |
+| Web Platform | DOM | 85 |
+| Web Platform | HTTP & Fetch | 72 |
+| **Total** | | **628** |
 
 ## Documentation Site (Mintlify)
 
@@ -327,12 +331,12 @@ The site will be available at `http://localhost:3000`.
 
 - **Getting Started**: Homepage and introduction
 - **Fundamentals**: Concepts 1-6 (Primitive Types through Call Stack)
-- **Functions & Execution**: Concepts 7-9 (Event Loop through IIFE/Modules)
-- **Web Platform**: Concept 10 (DOM and Layout Trees)
+- **Functions & Execution**: Concepts 7-8 (Event Loop through IIFE/Modules)
+- **Web Platform**: Concepts 9-10 (DOM and HTTP & Fetch)
 - **Object-Oriented JS**: Concepts 11-15 (Factories through Object.create/assign)
 - **Functional Programming**: Concepts 16-19 (map/reduce/filter through Recursion)
 - **Async JavaScript**: Concepts 20-22 (Collections/Generators through async/await)
-- **Advanced Topics**: Concepts 23-30 (JavaScript Engines through Clean Code)
+- **Advanced Topics**: Concepts 23-31 (JavaScript Engines through Clean Code)
 
 ### Adding/Editing Concept Pages
 

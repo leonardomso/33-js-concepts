@@ -54,7 +54,8 @@
             "group": "Web Platform",
             "icon": "browser",
             "pages": [
-              "concepts/dom"
+              "concepts/dom",
+              "concepts/http-fetch"
             ]
           },
           {
