@@ -1,36 +1,20 @@
 ---
-title: "Value Types and Reference Types"
-description: "Understanding how JavaScript stores and passes data in memory"
+title: "Value vs Reference Types: How Memory Works in JavaScript"
+sidebarTitle: "Value vs Reference Types: How Memory Works"
+description: "Learn how value types and reference types work in JavaScript. Understand how primitives and objects are stored, why copying objects shares references, and how to avoid mutation bugs."
 ---
 
-## The Sticky Note vs The Map: A Real-World Analogy
+Have you ever wondered why changing one variable unexpectedly changes another? Why does this happen?
 
-Imagine you have two ways to share information with a friend:
+```javascript
+const original = { name: "Alice" };
+const copy = original;
+copy.name = "Bob";
 
-**Sticky Note (Value Types):** You write "42" on a sticky note and hand it to your friend. They now have their own note with "42" on it. If they change their note to "100", your note still says "42". You each have independent copies.
-
-**Map to Treasure (Reference Types):** Instead of giving your friend the treasure itself, you give them a map to where the treasure is buried. Now you BOTH have maps pointing to the SAME treasure. If they dig it up and add more gold, you'll see the extra gold too — because you're both looking at the same treasure!
-
-```
-VALUE TYPE (Sticky Note)              REFERENCE TYPE (Map to Treasure)
-
-┌─────────────┐                       ┌─────────────┐
-│   x = 42    │                       │  x = ────────────────┐
-└─────────────┘                       └─────────────┘        │
-                                                             ▼
-┌─────────────┐                       ┌─────────────┐    ┌──────────────────┐
-│   y = 42    │  (independent copy)   │  y = ────────────►│ { name: "Alice" } │
-└─────────────┘                       └─────────────┘    └──────────────────┘
-
-Change y?                             Change the object via y?
-x stays the same!                     x sees the change too!
+console.log(original.name);  // "Bob" — Wait, what?!
 ```
 
-This difference between "storing the value itself" vs "storing a map to the value" is one of the most important concepts in JavaScript — and the source of countless bugs for developers who don't understand it.
-
-<Note>
-**TL;DR:** Primitives (numbers, strings, booleans, etc.) store the actual value — copying creates an independent copy. Objects and arrays store a *reference* (pointer) to the data — copying creates another pointer to the SAME data.
-</Note>
+The answer lies in how JavaScript stores data in memory. **Primitives** (like numbers and strings) store actual values, while **objects** store *references* (pointers) to data. This difference is one of the most important concepts in JavaScript — and the source of countless bugs.
 
 <Info>
 **What you'll learn in this guide:**
@@ -41,6 +25,10 @@ This difference between "storing the value itself" vs "storing a map to the valu
 - How to properly clone objects (shallow vs deep copy)
 - Common bugs caused by reference sharing
 </Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [Primitive Types](/concepts/primitive-types). If you're not familiar with the 7 primitive types in JavaScript, read that guide first!
+</Warning>
 
 ---
 
@@ -60,7 +48,7 @@ JavaScript has two categories of data types that behave very differently:
 | `boolean` | `true` | The actual boolean |
 | `undefined` | `undefined` | The undefined value |
 | `null` | `null` | The null value |
-| `symbol` | `Symbol("id")` | The unique symbol |
+| [`symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) | `Symbol("id")` | The unique symbol |
 
 **Key characteristics:**
 - Stored directly in the variable
@@ -79,14 +67,51 @@ JavaScript has two categories of data types that behave very differently:
 | Function | `function() {}` | Reference to function |
 | Date | `new Date()` | Reference to date |
 | RegExp | `/pattern/` | Reference to regex |
-| Map | `new Map()` | Reference to map |
-| Set | `new Set()` | Reference to set |
+| [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) | `new Map()` | Reference to map |
+| [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) | `new Set()` | Reference to set |
 
 **Key characteristics:**
 - Variable stores a *reference* (pointer) to the actual data
 - Mutable — you CAN change their contents
 - Copied by reference — copies point to the SAME object
 - Compared by reference — same reference = equal (not same contents!)
+
+---
+
+## The Sticky Note vs The Map: A Real-World Analogy
+
+Imagine you have two ways to share information with a friend:
+
+**Sticky Note (Value Types):** You write "42" on a sticky note and hand it to your friend. They now have their own note with "42" on it. If they change their note to "100", your note still says "42". You each have independent copies.
+
+**Map to Treasure (Reference Types):** Instead of giving your friend the treasure itself, you give them a map to where the treasure is buried. Now you BOTH have maps pointing to the SAME treasure. If they dig it up and add more gold, you'll see the extra gold too — because you're both looking at the same treasure!
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    VALUE TYPES vs REFERENCE TYPES                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  VALUE TYPE (Sticky Note)              REFERENCE TYPE (Map to Treasure)  │
+│                                                                          │
+│  ┌─────────────┐                       ┌─────────────┐                   │
+│  │   x = 42    │                       │  x = ────────────────┐          │
+│  └─────────────┘                       └─────────────┘        │          │
+│                                                               ▼          │
+│  ┌─────────────┐                       ┌─────────────┐    ┌──────────┐   │
+│  │   y = 42    │  (independent copy)   │  y = ────────────►│ {...}   │   │
+│  └─────────────┘                       └─────────────┘    └──────────┘   │
+│                                                                          │
+│  Change y?                             Change the object via y?          │
+│  x stays the same!                     x sees the change too!            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+This difference between "storing the value itself" vs "storing a map to the value" is fundamental to understanding JavaScript.
+
+<Tip>
+**Quick Rule:** Primitives store the actual value — copying creates an independent copy. Objects and arrays store a *reference* (pointer) — copying creates another pointer to the SAME data.
+</Tip>
 
 ---
 
@@ -102,17 +127,23 @@ The **stack** is a fast, organized region of memory. It stores:
 - Function call information
 
 ```
-THE STACK
-┌────────────────────────────┐
-│  name     =  "Alice"       │  ← Actual string value
-├────────────────────────────┤
-│  age      =  25            │  ← Actual number value
-├────────────────────────────┤
-│  isActive =  true          │  ← Actual boolean value
-├────────────────────────────┤
-│  user     =  0x7F3A  ──────┼──── Points to heap
-└────────────────────────────┘
-      Fixed size, fast access
+┌─────────────────────────────────────────────────────────────────────────┐
+│                              THE STACK                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ┌────────────────────────────┐                                          │
+│  │  name     =  "Alice"       │  ← Actual string value                   │
+│  ├────────────────────────────┤                                          │
+│  │  age      =  25            │  ← Actual number value                   │
+│  ├────────────────────────────┤                                          │
+│  │  isActive =  true          │  ← Actual boolean value                  │
+│  ├────────────────────────────┤                                          │
+│  │  user     =  0x7F3A  ──────┼──── Points to heap                       │
+│  └────────────────────────────┘                                          │
+│                                                                          │
+│                        Fixed size, fast access                           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### The Heap: Home of Objects
@@ -124,25 +155,27 @@ The **heap** is a larger, less organized region for dynamic data:
 - Anything that can grow or change size
 
 ```
-THE HEAP
-┌─────────────────────────────────────────────────┐
-│                                                 │
-│    ┌─────────────────────────────────────┐      │
-│    │  0x7F3A:                            │      │
-│    │  {                                  │      │
-│    │    name: "Alice",                   │      │
-│    │    age: 25,                         │      │
-│    │    hobbies: ["reading", "gaming"]   │      │
-│    │  }                                  │      │
-│    └─────────────────────────────────────┘      │
-│                                                 │
-│    ┌─────────────────────────────────────┐      │
-│    │  0x8B2C:                            │      │
-│    │  [1, 2, 3, 4, 5]                    │      │
-│    └─────────────────────────────────────┘      │
-│                                                 │
-└─────────────────────────────────────────────────┘
-           Dynamic size, slower access
+┌─────────────────────────────────────────────────────────────────────────┐
+│                               THE HEAP                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ┌─────────────────────────────────────┐                               │
+│    │  0x7F3A:                            │                               │
+│    │  {                                  │                               │
+│    │    name: "Alice",                   │                               │
+│    │    age: 25,                         │                               │
+│    │    hobbies: ["reading", "gaming"]   │                               │
+│    │  }                                  │                               │
+│    └─────────────────────────────────────┘                               │
+│                                                                          │
+│    ┌─────────────────────────────────────┐                               │
+│    │  0x8B2C:                            │                               │
+│    │  [1, 2, 3, 4, 5]                    │                               │
+│    └─────────────────────────────────────┘                               │
+│                                                                          │
+│                       Dynamic size, slower access                        │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Putting It All Together
@@ -157,18 +190,24 @@ let scores = [95, 87, 92];    // Reference on stack, array on heap
 ```
 
 ```
-STACK                              HEAP
-┌─────────────────────┐           ┌────────────────────────────┐
-│ name   = "Alice"    │           │                            │
-├─────────────────────┤           │  ┌──────────────────────┐  │
-│ age    = 25         │           │  │ { name: "Alice" }    │  │
-├─────────────────────┤           │  └──────────────────────┘  │
-│ user   = 0x001 ─────┼───────────┼──────────▲                 │
-├─────────────────────┤           │                            │
-│ scores = 0x002 ─────┼───────────┼───┐  ┌──────────────────┐  │
-└─────────────────────┘           │   └─►│ [95, 87, 92]     │  │
-                                  │      └──────────────────┘  │
-                                  └────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         STACK AND HEAP TOGETHER                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  STACK                              HEAP                                 │
+│  ┌─────────────────────┐           ┌────────────────────────────┐        │
+│  │ name   = "Alice"    │           │                            │        │
+│  ├─────────────────────┤           │  ┌──────────────────────┐  │        │
+│  │ age    = 25         │           │  │ { name: "Alice" }    │  │        │
+│  ├─────────────────────┤           │  └──────────────────────┘  │        │
+│  │ user   = 0x001 ─────┼───────────┼──────────▲                 │        │
+│  ├─────────────────────┤           │                            │        │
+│  │ scores = 0x002 ─────┼───────────┼───┐  ┌──────────────────┐  │        │
+│  └─────────────────────┘           │   └─►│ [95, 87, 92]     │  │        │
+│                                    │      └──────────────────┘  │        │
+│                                    └────────────────────────────┘        │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -514,7 +553,7 @@ obj = { name: "Eve" }; // TypeError: Assignment to constant variable
 
 ---
 
-## True Immutability with Object.freeze()
+## True Immutability with [`Object.freeze()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
 
 We learned that `const` doesn't make objects immutable — it only prevents reassignment. But what if you NEED a truly immutable object?
 
@@ -695,7 +734,7 @@ original                     shallow
 
 A deep copy creates completely independent copies at every level.
 
-**Method 1: `structuredClone()` (Recommended)**
+**Method 1: [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) (Recommended)**
 
 ```javascript
 const original = { 
@@ -931,7 +970,7 @@ const deep = JSON.parse(JSON.stringify(original));
     
     **Solutions:**
     
-    - **WeakMap** — Keys are "weakly held" and can be garbage collected
+    - **[WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)** — Keys are "weakly held" and can be garbage collected
     - **Manual cleanup** — Delete entries when done
     
     ```javascript
@@ -992,6 +1031,34 @@ const deep = JSON.parse(JSON.stringify(original));
    }
    ```
 </Tip>
+
+---
+
+## Key Takeaways
+
+<Info>
+**Remember these essential points:**
+
+1. **Value types** (primitives) store values directly; **reference types** store pointers
+
+2. **Copying a primitive** creates an independent copy — changing one doesn't affect the other
+
+3. **Copying an object/array** copies the reference — both point to the SAME data
+
+4. **Comparison:** primitives compare by value, objects compare by reference
+
+5. **Functions:** JavaScript passes everything by value, but object values ARE references
+
+6. **Mutation ≠ Reassignment:** `const` only prevents reassignment, not mutation
+
+7. **Shallow copy** (spread, Object.assign) only copies one level — nested objects are shared
+
+8. **Deep copy** with `structuredClone()` creates completely independent copies
+
+9. **Know your array methods:** `push/pop/sort` mutate; `map/filter/slice` don't
+
+10. **True immutability** requires `Object.freeze()` — but it's shallow, so use deep freeze for nested objects
+</Info>
 
 ---
 
@@ -1134,34 +1201,6 @@ const deep = JSON.parse(JSON.stringify(original));
 
 ---
 
-## Key Takeaways
-
-<Info>
-**Remember these essential points:**
-
-1. **Value types** (primitives) store values directly; **reference types** store pointers
-
-2. **Copying a primitive** creates an independent copy — changing one doesn't affect the other
-
-3. **Copying an object/array** copies the reference — both point to the SAME data
-
-4. **Comparison:** primitives compare by value, objects compare by reference
-
-5. **Functions:** JavaScript passes everything by value, but object values ARE references
-
-6. **Mutation ≠ Reassignment:** `const` only prevents reassignment, not mutation
-
-7. **Shallow copy** (spread, Object.assign) only copies one level — nested objects are shared
-
-8. **Deep copy** with `structuredClone()` creates completely independent copies
-
-9. **Know your array methods:** `push/pop/sort` mutate; `map/filter/slice` don't
-
-10. **True immutability** requires `Object.freeze()` — but it's shallow, so use deep freeze for nested objects
-</Info>
-
----
-
 ## Related Concepts
 
 <CardGroup cols={2}>
@@ -1174,14 +1213,8 @@ const deep = JSON.parse(JSON.stringify(original));
   <Card title="Scope and Closures" icon="layer-group" href="/concepts/scope-and-closures">
     How closures capture references to variables
   </Card>
-  <Card title="== vs === vs typeof" icon="equals" href="/concepts/equality-operators">
-    Understanding equality operators and type checking
-  </Card>
-  <Card title="Object.freeze() — MDN" icon="snowflake" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">
-    Official documentation on freezing objects for immutability
-  </Card>
-  <Card title="WeakMap — MDN" icon="key" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">
-    Maps with weak references that allow garbage collection
+  <Card title="Equality Operators" icon="equals" href="/concepts/equality-operators">
+    Understanding == vs === and type checking
   </Card>
 </CardGroup>
 
@@ -1189,9 +1222,20 @@ const deep = JSON.parse(JSON.stringify(original));
 
 ## Reference
 
-<Card title="JavaScript data types and data structures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">
-  Official MDN documentation on JavaScript's type system, including primitives and objects.
-</Card>
+<CardGroup cols={2}>
+  <Card title="JavaScript Data Types — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">
+    Official documentation on JavaScript's type system, including primitives and objects.
+  </Card>
+  <Card title="Object.freeze() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">
+    Documentation on freezing objects for immutability.
+  </Card>
+  <Card title="structuredClone() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/structuredClone">
+    The modern way to create deep copies of objects.
+  </Card>
+  <Card title="WeakMap — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">
+    Maps with weak references that allow garbage collection.
+  </Card>
+</CardGroup>
 
 ## Articles
 
@@ -1199,21 +1243,16 @@ const deep = JSON.parse(JSON.stringify(original));
   <Card title="Explaining Value vs. Reference in Javascript" icon="newspaper" href="https://codeburst.io/explaining-value-vs-reference-in-javascript-647a975e12a0">
     Clear explanation by Arnav Aggarwal with visual diagrams showing how primitives and objects behave differently in memory.
   </Card>
-
   <Card title="JavaScript Primitive vs. Reference Values" icon="newspaper" href="https://www.javascripttutorial.net/javascript-primitive-vs-reference-values/">
-    Comprehensive tutorial with excellent stack/heap diagrams and practical examples. One of the best visual explanations available.
+    Comprehensive tutorial with excellent stack/heap diagrams and practical examples.
   </Card>
-
   <Card title="Back to roots: JavaScript Value vs Reference" icon="newspaper" href="https://medium.com/dailyjs/back-to-roots-javascript-value-vs-reference-8fb69d587a18">
-    Deep dive by Miro Koczka into how JavaScript handles values and references, with clear explanations of common pitfalls.
+    Deep dive by Miro Koczka into how JavaScript handles values and references.
+  </Card>
+  <Card title="You Don't Know JS: Types & Grammar" icon="book" href="https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/README.md">
+    Kyle Simpson's definitive guide to JavaScript's type system. Free to read online.
   </Card>
 </CardGroup>
-
-## Books
-
-<Card title="You Don't Know JS: Types & Grammar — Kyle Simpson" icon="book" href="https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/README.md">
-  The definitive guide to JavaScript's type system. Kyle Simpson explains value vs reference, coercion, and more. Free to read online.
-</Card>
 
 ## Videos
 
