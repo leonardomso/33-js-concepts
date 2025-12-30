@@ -43,22 +43,19 @@
             ]
           },
           {
+            "group": "Web Platform",
+            "icon": "browser",
+            "pages": [
+              "concepts/dom"
+            ]
+          },
+          {
             "group": "Functions & Execution",
             "icon": "code",
             "pages": [
               "concepts/expression-statement",
               "concepts/iife-modules",
-              "concepts/event-loop",
-              "concepts/timers"
-            ]
-          },
-          {
-            "group": "Under the Hood",
-            "icon": "gear",
-            "pages": [
-              "concepts/javascript-engines",
-              "concepts/bitwise-operators",
-              "concepts/dom"
+              "concepts/event-loop"
             ]
           },
           {
@@ -95,6 +92,7 @@
             "group": "Advanced Topics",
             "icon": "graduation-cap",
             "pages": [
+              "concepts/javascript-engines",
               "concepts/data-structures",
               "concepts/big-o-notation",
               "concepts/algorithms",
