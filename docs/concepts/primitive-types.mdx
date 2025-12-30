@@ -1,29 +1,27 @@
 ---
-title: "Primitive Types"
-description: "Understanding JavaScript's fundamental data types"
+title: "Primitive Types: Building Blocks of Data in JavaScript"
+sidebarTitle: "Primitive Types: Building Blocks of Data"
+description: "Learn JavaScript's 7 primitive types: string, number, bigint, boolean, undefined, null, and symbol. Understand immutability, typeof quirks, and autoboxing."
 ---
 
-## Atoms vs Molecules: A Real-World Analogy
+What's the difference between `"hello"` and `{ text: "hello" }`? Why can you call `"hello".toUpperCase()` if strings aren't objects? And why does `typeof null` return `"object"`?
 
-Think of data in JavaScript like chemistry class (but way more fun, and no lab goggles required). **Primitives** are like atoms — the fundamental, indivisible building blocks that cannot be broken down further. **Objects** are like molecules — complex structures made up of multiple atoms combined together.
+```javascript
+// JavaScript has exactly 7 primitive types
+const str = "hello";           // string
+const num = 42;                // number
+const big = 9007199254740993n; // bigint
+const bool = true;             // boolean
+const undef = undefined;       // undefined
+const nul = null;              // null
+const sym = Symbol("id");      // symbol
 
+console.log(typeof str);   // "string"
+console.log(typeof num);   // "number"
+console.log(typeof nul);   // "object" — Wait, what?!
 ```
-        PRIMITIVES (Atoms)                    OBJECTS (Molecules)
-        
-        ┌───┐  ┌─────┐  ┌──────┐             ┌────────────────────────────┐
-        │ 5 │  │"hi" │  │ true │             │ { name: "Alice", age: 25 } │
-        └───┘  └─────┘  └──────┘             └────────────────────────────┘
-        
-        Simple, indivisible                   Complex, contains multiple values
-        Stored directly                       Stored as reference
-        Compared by value                     Compared by reference
-```
 
-Just like atoms are the foundation of all matter, primitives are the foundation of all data in JavaScript. Every complex data structure you create — arrays, objects, functions — is ultimately built on top of these simple primitive values.
-
-<Note>
-**TL;DR:** JavaScript has 7 primitive types: string, number, bigint, boolean, undefined, null, and symbol. They're simple, unchangeable values. Everything else is an object.
-</Note>
+These seven **[primitive](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)** types are the foundation of all data in JavaScript. Unlike objects, primitives are **immutable** (unchangeable) and **compared by value**. Understanding them deeply is essential because every complex structure you'll ever build — arrays, objects, classes — ultimately relies on these simple building blocks.
 
 <Info>
 **What you'll learn in this guide:**
@@ -32,8 +30,13 @@ Just like atoms are the foundation of all matter, primitives are the foundation 
 - Why primitives are "immutable" and what that means
 - The magic of autoboxing — how `"hello".toUpperCase()` works
 - The difference between `null` and `undefined`
+- Common mistakes to avoid with primitives
 - Famous JavaScript gotchas every developer should know
 </Info>
+
+<Note>
+**New to JavaScript?** This guide is beginner-friendly! No prior knowledge required — we'll explain everything from the ground up.
+</Note>
 
 ---
 
@@ -93,6 +96,33 @@ All primitives share these fundamental traits:
 
 ---
 
+## The Atoms vs Molecules Analogy
+
+Think of data in JavaScript like chemistry class (but way more fun, and no lab goggles required). **Primitives** are like atoms — the fundamental, indivisible building blocks that cannot be broken down further. **Objects** are like molecules — complex structures made up of multiple atoms combined together.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     PRIMITIVES VS OBJECTS                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   PRIMITIVES (Atoms)                    OBJECTS (Molecules)              │
+│                                                                          │
+│   ┌───┐  ┌─────┐  ┌──────┐             ┌────────────────────────────┐   │
+│   │ 5 │  │"hi" │  │ true │             │ { name: "Alice", age: 25 } │   │
+│   └───┘  └─────┘  └──────┘             └────────────────────────────┘   │
+│                                                                          │
+│   • Simple, indivisible                 • Complex, contains values       │
+│   • Stored directly                     • Stored as reference            │
+│   • Compared by value                   • Compared by reference          │
+│   • Immutable                           • Mutable                        │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Just like atoms are the foundation of all matter, primitives are the foundation of all data in JavaScript. Every complex data structure you create — arrays, objects, functions — is ultimately built on top of these simple primitive values.
+
+---
+
 ## The 7 Primitive Types: Deep Dive
 
 Let's explore each primitive type in detail.
@@ -101,7 +131,7 @@ Let's explore each primitive type in detail.
 
 ### String
 
-A **string** represents text data — a sequence of characters.
+A **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** represents text data — a sequence of characters.
 
 ```javascript
 // Three ways to create strings
@@ -110,9 +140,9 @@ let double = "World";           // Double quotes
 let backtick = `Hello World`;   // Template literal (ES6)
 ```
 
-#### Template Literals
+#### Template Literals (Still Just Strings!)
 
-Template literals (backticks) offer special features:
+[Template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) (backticks) are **not a separate type** — they're just a more powerful syntax for creating strings. The result is still a regular string primitive:
 
 ```javascript
 let name = "Alice";
@@ -120,13 +150,15 @@ let age = 25;
 
 // String interpolation - embed expressions
 let greeting = `Hello, ${name}! You are ${age} years old.`;
-console.log(greeting);  // "Hello, Alice! You are 25 years old."
+console.log(greeting);        // "Hello, Alice! You are 25 years old."
+console.log(typeof greeting); // "string" — it's just a string!
 
 // Multi-line strings
 let multiLine = `
   This is line 1
   This is line 2
 `;
+console.log(typeof multiLine); // "string"
 ```
 
 #### Strings Are Immutable
@@ -151,7 +183,7 @@ String methods like `toUpperCase()`, `slice()`, `replace()` always return **new 
 
 ### Number
 
-JavaScript has only **one number type** for both integers and decimals. All numbers are stored as 64-bit floating-point (a standard way computers store decimals).
+JavaScript has only **one [number](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number) type** for both integers and decimals. All numbers are stored as 64-bit floating-point (a standard way computers store decimals).
 
 ```javascript
 let integer = 42;        // Integer
@@ -168,6 +200,8 @@ console.log(-1 / 0);      // -Infinity
 console.log("hello" * 2); // NaN (Not a Number)
 ```
 
+JavaScript has special number values: [`Infinity`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Infinity) for values too large to represent, and [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN) (Not a Number) for invalid mathematical operations.
+
 #### The Famous Floating-Point Problem
 
 ```javascript
@@ -178,7 +212,7 @@ console.log(0.1 + 0.2 === 0.3);   // false! Welcome to JavaScript!
 This isn't a JavaScript bug — it's how floating-point math works in all programming languages. The decimal `0.1` cannot be perfectly represented in binary.
 
 <Warning>
-**Working with money?** Never use floating-point for calculations! Store amounts in cents as integers, then use JavaScript's built-in `Intl.NumberFormat` for display.
+**Working with money?** Never use floating-point for calculations! Store amounts in cents as integers, then use JavaScript's built-in [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for display.
 
 ```javascript
 // Bad: floating-point errors in calculations
@@ -214,7 +248,11 @@ JavaScript can only safely represent integers up to a certain size:
 ```javascript
 console.log(Number.MAX_SAFE_INTEGER);  // 9007199254740991 (2^53 - 1)
 console.log(Number.MIN_SAFE_INTEGER);  // -9007199254740991
+```
 
+[`Number.MAX_SAFE_INTEGER`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/MAX_SAFE_INTEGER) is the largest integer that can be safely represented. Beyond this range, precision is lost:
+
+```javascript
 // Beyond this range, precision is lost
 console.log(9007199254740992 === 9007199254740993);  // true! (wrong!)
 ```
@@ -225,7 +263,7 @@ For larger integers, use `BigInt`.
 
 ### BigInt
 
-**BigInt** (ES2020) represents integers larger than `Number.MAX_SAFE_INTEGER`.
+**[BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)** (ES2020) represents integers larger than `Number.MAX_SAFE_INTEGER`.
 
 ```javascript
 // Add 'n' suffix to create a BigInt
@@ -256,7 +294,7 @@ console.log(Number(big) + regular);  // 15
 
 ### Boolean
 
-**Boolean** has exactly two values: `true` and `false`.
+**[Boolean](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)** has exactly two values: `true` and `false`.
 
 ```javascript
 let isLoggedIn = true;
@@ -304,7 +342,7 @@ Learn more about how JavaScript converts between types in the [Type Coercion](/c
 
 ### undefined
 
-**`undefined`** means "no value has been assigned." JavaScript uses it automatically in several situations:
+**[`undefined`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** means "no value has been assigned." JavaScript uses it automatically in several situations:
 
 ```javascript
 // 1. Declared but not assigned
@@ -336,7 +374,7 @@ Don't explicitly assign `undefined` to variables. Use `null` instead to indicate
 
 ### null
 
-**`null`** means "intentionally empty" — you're explicitly saying "this has no value."
+**[`null`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null)** means "intentionally empty" — you're explicitly saying "this has no value."
 
 ```javascript
 // Intentionally clearing a variable
@@ -368,7 +406,7 @@ console.log(value === null);  // true (use strict equality)
 
 ### Symbol
 
-**Symbol** (ES6) creates unique identifiers. Even symbols with the same description are different.
+**[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)** (ES6) creates unique identifiers. Even symbols with the same description are different.
 
 ```javascript
 let id1 = Symbol("id");
@@ -404,6 +442,8 @@ JavaScript has built-in symbols for customizing object behavior:
 // Symbol.toPrimitive - customize type conversion
 ```
 
+These are called [well-known symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol#well-known_symbols) and allow you to customize how objects behave with built-in operations.
+
 <Note>
 Symbols are an advanced feature. As a beginner, focus on understanding that they exist and create unique values. You'll encounter them when diving into advanced patterns and library code.
 </Note>
@@ -412,7 +452,7 @@ Symbols are an advanced feature. As a beginner, focus on understanding that they
 
 ## The typeof Operator
 
-The `typeof` operator returns a string indicating the type of a value.
+The [`typeof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof) operator returns a string indicating the type of a value.
 
 ```javascript
 console.log(typeof "hello");     // "string"
@@ -462,6 +502,8 @@ Object.prototype.toString.call(null);       // "[object Null]"
 Object.prototype.toString.call([]);         // "[object Array]"
 Object.prototype.toString.call(new Date()); // "[object Date]"
 ```
+
+[`Array.isArray()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray) is the reliable way to check for arrays, since `typeof []` returns `"object"`. For more complex type checking, [`Object.prototype.toString()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString) gives precise type information.
 
 ---
 
@@ -688,6 +730,49 @@ if (value != null) {
 
 ---
 
+## The #1 Primitive Mistake: Using Wrapper Constructors
+
+The most common mistake developers make with primitives is using `new String()`, `new Number()`, or `new Boolean()` instead of literal values.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     PRIMITIVES VS WRAPPER OBJECTS                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  WRONG WAY                              RIGHT WAY                        │
+│  ─────────                              ─────────                        │
+│  new String("hello")                    "hello"                          │
+│  new Number(42)                         42                               │
+│  new Boolean(true)                      true                             │
+│                                                                          │
+│  typeof new String("hi") → "object"     typeof "hi" → "string"          │
+│  new String("hi") === "hi" → false      "hi" === "hi" → true            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+```javascript
+// ❌ WRONG - Creates an object, not a primitive
+const str = new String("hello");
+console.log(typeof str);        // "object" (not "string"!)
+console.log(str === "hello");   // false (object vs primitive)
+
+// ✓ CORRECT - Use primitive literals
+const str2 = "hello";
+console.log(typeof str2);       // "string"
+console.log(str2 === "hello");  // true
+```
+
+<Warning>
+**The Trap:** Using `new String()`, `new Number()`, or `new Boolean()` creates wrapper **objects**, not primitives. This breaks equality checks (`===`), `typeof` comparisons, and can cause subtle bugs. Always use literal syntax: `"hello"`, `42`, `true`.
+</Warning>
+
+<Tip>
+**Rule of Thumb:** Never use `new` with `String`, `Number`, or `Boolean`. The only exception is when you intentionally need the wrapper object (which is rare). For type conversion, use them as functions without `new`: `String(123)` returns `"123"` (a primitive).
+</Tip>
+
+---
+
 ## JavaScript Quirks & Gotchas
 
 JavaScript has some famous "weird parts" that every developer should know. Most relate to primitives and type coercion.
@@ -732,7 +817,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     ```
     
     <Note>
-    `isNaN()` converts the value first, so `isNaN("hello")` is `true`. `Number.isNaN()` only returns `true` for actual `NaN`.
+    [`isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN) converts the value first, so `isNaN("hello")` is `true`. [`Number.isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN) only returns `true` for actual `NaN`.
     </Note>
   </Accordion>
   
@@ -757,7 +842,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     }).format(0.30);  // "$0.30"
     
     // 3. Compare with tolerance for equality checks
-    Math.abs((0.1 + 0.2) - 0.3) < Number.EPSILON;  // true
+    Math.abs((0.1 + 0.2) - 0.3) < Number.EPSILON;  // true (Number.EPSILON is the smallest difference)
     
     // 4. Use toFixed() for simple rounding
     (0.1 + 0.2).toFixed(2);  // "0.30"
@@ -813,6 +898,34 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
 <Tip>
 **Want to go deeper?** Kyle Simpson's book "You Don't Know JS: Types & Grammar" is the definitive guide to understanding these quirks. It's free to read online!
 </Tip>
+
+---
+
+## Key Takeaways
+
+<Info>
+**Remember these essential points about Primitive Types:**
+
+1. **7 primitives**: string, number, bigint, boolean, undefined, null, symbol
+
+2. **Primitives are immutable** — you can't change the value itself, only create new values
+
+3. **Compared by value** — `"hello" === "hello"` is true because the values match
+
+4. **typeof works for most types** — except `typeof null` returns `"object"` (historical bug)
+
+5. **Autoboxing** allows primitives to use methods — JavaScript wraps them temporarily
+
+6. **undefined vs null** — undefined is "not assigned," null is "intentionally empty"
+
+7. **Be aware of gotchas** — `NaN !== NaN`, `0.1 + 0.2 !== 0.3`, falsy values
+
+8. **Don't use `new String()` etc.** — creates objects, not primitives
+
+9. **Symbols create unique identifiers** — even `Symbol("id") !== Symbol("id")`
+
+10. **Use `Number.isNaN()` to check for NaN** — don't use equality comparison since `NaN !== NaN`
+</Info>
 
 ---
 
@@ -873,31 +986,26 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     
     So `"hello".toUpperCase()` becomes `(new String("hello")).toUpperCase()` behind the scenes. The original primitive `"hello"` is never changed.
   </Accordion>
+  
+  <Accordion title="Question 6: Why can't you use === to check if a value is NaN?">
+    **Answer:** Because `NaN` is the only value in JavaScript that is not equal to itself!
+    
+    ```javascript
+    console.log(NaN === NaN);  // false!
+    ```
+    
+    This is per the IEEE 754 floating-point specification. `NaN` represents an undefined or unrepresentable mathematical result, so it can't equal anything — including itself.
+    
+    **How to check for NaN:**
+    ```javascript
+    // ❌ WRONG - Never works!
+    if (value === NaN) { }
+    
+    // ✓ CORRECT - Use Number.isNaN()
+    if (Number.isNaN(value)) { }
+    ```
+  </Accordion>
 </AccordionGroup>
-
----
-
-## Key Takeaways
-
-<Info>
-**Remember these essential points about Primitive Types:**
-
-1. **7 primitives**: string, number, bigint, boolean, undefined, null, symbol
-
-2. **Primitives are immutable** — you can't change the value itself, only create new values
-
-3. **Compared by value** — `"hello" === "hello"` is true because the values match
-
-4. **typeof works for most types** — except `typeof null` returns `"object"` (historical bug)
-
-5. **Autoboxing** allows primitives to use methods — JavaScript wraps them temporarily
-
-6. **undefined vs null** — undefined is "not assigned," null is "intentionally empty"
-
-7. **Be aware of gotchas** — `NaN !== NaN`, `0.1 + 0.2 !== 0.3`, falsy values
-
-8. **Don't use `new String()` etc.** — creates objects, not primitives
-</Info>
 
 ---
 
@@ -922,9 +1030,20 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
 
 ## Reference
 
-<Card title="JavaScript data types and data structures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#Primitive_values">
-  Official MDN documentation on primitive values and JavaScript's type system
-</Card>
+<CardGroup cols={2}>
+  <Card title="Primitive — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Primitive">
+    Official MDN glossary definition of primitive values in JavaScript.
+  </Card>
+  <Card title="JavaScript data types and data structures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">
+    Comprehensive MDN guide to JavaScript's type system and data structures.
+  </Card>
+  <Card title="typeof operator — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof">
+    Complete reference for the typeof operator including its quirks and return values.
+  </Card>
+  <Card title="Symbol — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">
+    Deep dive into JavaScript Symbols, well-known symbols, and use cases.
+  </Card>
+</CardGroup>
 
 ## Articles
 
