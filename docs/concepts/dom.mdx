@@ -1,12 +1,19 @@
 ---
-title: "DOM in JavaScript: How Browsers Represent Web Pages"
+title: "DOM: How Browsers Represent Web Pages in JavaScript"
 sidebarTitle: "DOM: How Browsers Represent Web Pages"
 description: "Learn how the DOM works in JavaScript. Understand how browsers represent HTML as a tree, select and manipulate elements, traverse nodes, and optimize rendering performance."
 ---
 
 How does JavaScript change what you see on a webpage? How do you click a button and see new content appear, or type in a form and watch suggestions pop up? How does a "dark mode" toggle instantly transform an entire page?
 
-The answer lies in the **DOM** — the bridge between your HTML and JavaScript.
+```javascript
+// The DOM lets you do things like this:
+document.querySelector('h1').textContent = 'Hello, DOM!'
+document.body.style.backgroundColor = 'lightblue'
+document.getElementById('btn').addEventListener('click', handleClick)
+```
+
+The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is the bridge between your HTML and JavaScript — it lets you read, modify, and respond to changes in web page content. With the DOM, you can use methods like **[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** to find elements, **[`getElementById()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)** to grab specific nodes, and **[`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)** to respond to user interactions.
 
 <Info>
 **What you'll learn in this guide:**
@@ -28,15 +35,6 @@ The answer lies in the **DOM** — the bridge between your HTML and JavaScript.
 ## What is the DOM in JavaScript?
 
 The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface that represents HTML documents as a tree of objects. When a browser loads a webpage, it parses the HTML and creates the DOM — a live, structured representation that JavaScript can read and modify. Every element, attribute, and piece of text becomes a node in this tree. **In short: the DOM is how JavaScript "sees" and changes a webpage.**
-
-```javascript
-// The DOM lets you do things like this:
-document.querySelector('h1').textContent = 'Hello, DOM!'
-document.body.style.backgroundColor = 'lightblue'
-document.getElementById('btn').addEventListener('click', handleClick)
-```
-
-With the DOM, you can use methods like **[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** to find elements, **[`getElementById()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)** to grab specific nodes, and **[`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)** to respond to user interactions.
 
 ---
 

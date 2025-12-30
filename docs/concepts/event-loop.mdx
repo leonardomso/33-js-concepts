@@ -21,10 +21,6 @@ console.log('End');
 
 Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)** — JavaScript's mechanism for handling asynchronous operations while remaining single-threaded.
 
-<Warning>
-**Prerequisites:** This guide assumes familiarity with [the call stack](/concepts/call-stack) and [Promises](/concepts/promises). If those concepts are new to you, read them first!
-</Warning>
-
 <Info>
 **What you'll learn in this guide:**
 - Why JavaScript needs an event loop (and what "single-threaded" really means)
@@ -34,6 +30,10 @@ Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event lo
 - How to use setTimeout, setInterval, and requestAnimationFrame effectively
 - Common interview questions explained step-by-step
 </Info>
+
+<Warning>
+**Prerequisites:** This guide assumes familiarity with [the call stack](/concepts/call-stack) and [Promises](/concepts/promises). If those concepts are new to you, read them first!
+</Warning>
 
 ---
 
@@ -1474,6 +1474,34 @@ Watch how:
 
 ---
 
+## Key Takeaways
+
+<Info>
+**Remember these essential points:**
+
+1. **JavaScript is single-threaded** — only one thing runs at a time on the call stack
+
+2. **The Event Loop enables async** — it coordinates between the call stack and callback queues
+
+3. **Web APIs run in separate threads** — timers, network requests, and events are handled by the browser
+
+4. **Microtasks > Tasks** — Promise callbacks ALWAYS run before setTimeout callbacks
+
+5. **setTimeout delay is a minimum** — actual timing depends on call stack and queue state
+
+6. **setInterval can drift** — use nested setTimeout for precise timing
+
+7. **requestAnimationFrame for animations** — syncs with browser refresh rate, pauses in background
+
+8. **Never block the main thread** — long sync operations freeze the entire UI
+
+9. **Microtasks can starve tasks** — infinite microtask loops prevent rendering
+
+10. **The Event Loop isn't JavaScript** — it's part of the runtime environment (browser/Node.js)
+</Info>
+
+---
+
 ## Test Your Knowledge
 
 <AccordionGroup>
@@ -1565,34 +1593,6 @@ Watch how:
     Each has different timing and use cases. setTimeout is most common for yielding.
   </Accordion>
 </AccordionGroup>
-
----
-
-## Key Takeaways
-
-<Info>
-**Remember these essential points:**
-
-1. **JavaScript is single-threaded** — only one thing runs at a time on the call stack
-
-2. **The Event Loop enables async** — it coordinates between the call stack and callback queues
-
-3. **Web APIs run in separate threads** — timers, network requests, and events are handled by the browser
-
-4. **Microtasks > Tasks** — Promise callbacks ALWAYS run before setTimeout callbacks
-
-5. **setTimeout delay is a minimum** — actual timing depends on call stack and queue state
-
-6. **setInterval can drift** — use nested setTimeout for precise timing
-
-7. **requestAnimationFrame for animations** — syncs with browser refresh rate, pauses in background
-
-8. **Never block the main thread** — long sync operations freeze the entire UI
-
-9. **Microtasks can starve tasks** — infinite microtask loops prevent rendering
-
-10. **The Event Loop isn't JavaScript** — it's part of the runtime environment (browser/Node.js)
-</Info>
 
 ---
 
