@@ -53,7 +53,7 @@ console.log(enemy.attack())   // "Goblin attacks!"
 </Info>
 
 <Warning>
-**Prerequisites:** This guide assumes you understand [Prototype Inheritance](/concepts/prototype) and [this, call, apply, bind](/concepts/this-call-apply-bind). If those concepts are new to you, read those guides first!
+**Prerequisites:** This guide assumes you understand [Object Creation & Prototypes](/concepts/object-creation-prototypes) and [this, call, apply, bind](/concepts/this-call-apply-bind). If those concepts are new to you, read those guides first!
 </Warning>
 
 ---
@@ -494,58 +494,24 @@ console.log(alice instanceof Player);  // true
 
 When you call `new Player("Alice")`, JavaScript performs **4 steps**:
 
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ WHAT new Player("Alice") DOES:                                       │
-│                                                                      │
-│ Step 1: Create a new empty object                                    │
-│         const obj = {};                                              │
-│                                                                      │
-│ Step 2: Link the object to the constructor's prototype               │
-│         Object.setPrototypeOf(obj, Player.prototype);                │
-│                                                                      │
-│ Step 3: Run the constructor with 'this' bound to the new object      │
-│         Player.call(obj, "Alice");                                   │
-│         // Now obj.name = "Alice", obj.health = 100, etc.            │
-│                                                                      │
-│ Step 4: Return the object (unless constructor returns an object)     │
-│         return obj;                                                  │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
 <Steps>
   <Step title="Create a new empty object">
     JavaScript creates a fresh object: `const obj = {}`
   </Step>
   <Step title="Link the prototype">
-    Uses [`Object.setPrototypeOf()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/setPrototypeOf) to set `obj.[[Prototype]]` to `Constructor.prototype`, establishing the prototype chain
+    Sets `obj.[[Prototype]]` to `Constructor.prototype`, establishing the prototype chain
   </Step>
   <Step title="Execute the constructor">
-    Runs [`Constructor.apply(obj, args)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply) — the `this` keyword inside the constructor is bound to the new object
+    Runs the constructor with `this` bound to the new object
   </Step>
   <Step title="Return the object">
     Returns `obj` automatically (unless the constructor explicitly returns a different object)
   </Step>
 </Steps>
 
-Here's a function that simulates what `new` does:
-
-```javascript
-function myNew(Constructor, ...args) {
-  // Step 1 & 2: Create object with correct prototype
-  const obj = Object.create(Constructor.prototype);  // Object.create() creates a new object with the specified prototype
-  
-  // Step 3: Run constructor with 'this' = obj
-  const result = Constructor.apply(obj, args);
-  
-  // Step 4: Return result if it's an object, otherwise return obj
-  return (result !== null && typeof result === 'object') ? result : obj;
-}
-
-// These do the same thing:
-const player1 = new Player("Alice");
-const player2 = myNew(Player, "Bob");
-```
+<Tip>
+**Want to dive deeper?** For a detailed explanation of how `new` works under the hood, including how to simulate it yourself, see [Object Creation & Prototypes](/concepts/object-creation-prototypes).
+</Tip>
 
 ### Adding Methods to the [Prototype](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes)
 
@@ -1967,14 +1933,14 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
 ## Related Concepts
 
 <CardGroup cols={2}>
-  <Card title="Prototype Inheritance" icon="link" href="/concepts/prototype">
-    Deep dive into JavaScript's prototype chain and how inheritance really works
-  </Card>
-  <Card title="new, Constructor, instanceof" icon="plus" href="/concepts/new-constructor">
-    More details on the new keyword and checking object types
+  <Card title="Object Creation & Prototypes" icon="link" href="/concepts/object-creation-prototypes">
+    Deep dive into JavaScript's prototype chain, Object.create(), and how the new keyword works under the hood
   </Card>
   <Card title="this, call, apply, bind" icon="hand-pointer" href="/concepts/this-call-apply-bind">
     Understanding this binding in different contexts
+  </Card>
+  <Card title="Inheritance and Polymorphism" icon="sitemap" href="/concepts/inheritance-polymorphism">
+    Advanced inheritance patterns and polymorphism in JavaScript
   </Card>
   <Card title="Design Patterns" icon="compass" href="/concepts/design-patterns">
     Common patterns including Factory, Singleton, and more
