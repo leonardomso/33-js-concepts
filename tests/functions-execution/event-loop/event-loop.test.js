@@ -8,7 +8,7 @@ describe('Event Loop, Timers and Scheduling', () => {
   
   describe('Synchronous Execution', () => {
     it('should execute code one line at a time in order', () => {
-      // From lines 76-80: JavaScript executes these ONE AT A TIME, in order
+      // From lines 99-104: JavaScript executes these ONE AT A TIME, in order
       const order = []
       
       order.push('First')   // 1. This runs
@@ -19,7 +19,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should execute nested function calls correctly (multiply, square, printSquare)', () => {
-      // From lines 187-201: Call Stack example
+      // From lines 210-224: Call Stack example
       function multiply(a, b) {
         return a * b
       }
@@ -39,7 +39,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should store objects and arrays in the heap', () => {
-      // From lines 220-222: Heap example
+      // From lines 243-245: Heap example
       const user = { name: 'Alice' }  // Object stored in heap
       const numbers = [1, 2, 3]       // Array stored in heap
       
@@ -74,7 +74,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should pass arguments to the callback', async () => {
-      // From lines 540-543: Pass arguments to the callback
+      // From lines 562-566: Pass arguments to the callback
       let result = ''
       
       setTimeout((name, greeting) => {
@@ -87,7 +87,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should cancel timeout with clearTimeout', async () => {
-      // From lines 548-554: Canceling a timeout
+      // From lines 569-577: Canceling a timeout
       const callback = vi.fn()
       
       const timerId = setTimeout(callback, 5000)
@@ -101,7 +101,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should demonstrate the zero delay myth - setTimeout(fn, 0) does NOT run immediately', async () => {
-      // From lines 561-566: Zero delay myth
+      // From lines 580-589: Zero delay myth
       const order = []
       
       order.push('A')
@@ -118,7 +118,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should run synchronous code first, then setTimeout callback', async () => {
-      // From lines 290-300: Basic setTimeout
+      // From lines 313-323: Basic setTimeout example
       const order = []
       
       order.push('Start')
@@ -161,6 +161,200 @@ describe('Event Loop, Timers and Scheduling', () => {
       
       expect(order).toEqual(['first', 'second', 'third'])
     })
+    
+    it('should demonstrate the 4ms minimum delay after nested timeouts', async () => {
+      // From lines 601-615: After 5 nested timeouts, browsers enforce a minimum 4ms delay
+      // Note: Vitest fake timers don't enforce the 4ms minimum, so we test the pattern
+      const times = []
+      let start = Date.now()
+      
+      function run() {
+        times.push(Date.now() - start)
+        if (times.length < 10) {
+          setTimeout(run, 0)
+        }
+      }
+      
+      setTimeout(run, 0)
+      
+      // Run all nested timeouts
+      await vi.runAllTimersAsync()
+      
+      // Should have 10 timestamps recorded
+      expect(times.length).toBe(10)
+      
+      // In fake timers, all execute at 0ms intervals
+      // In real browsers, after 5 nested calls, minimum becomes 4ms
+      // Pattern: [1, 1, 1, 1, 4, 9, 14, 19, 24, 29] approximately
+    })
+  })
+  
+  // ============================================================
+  // DEBOUNCE PATTERN
+  // ============================================================
+  
+  describe('Debounce Pattern', () => {
+    beforeEach(() => {
+      vi.useFakeTimers()
+    })
+    
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+    
+    it('should cancel previous timeout when implementing debounce', async () => {
+      // From lines 1341-1349: Cancel previous timeout (debounce)
+      const searchResults = []
+      let timeoutId
+      
+      function handleInput(value) {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+          searchResults.push(`search: ${value}`)
+        }, 300)
+      }
+      
+      // Simulate rapid typing
+      handleInput('a')
+      await vi.advanceTimersByTimeAsync(100)
+      
+      handleInput('ab')
+      await vi.advanceTimersByTimeAsync(100)
+      
+      handleInput('abc')
+      await vi.advanceTimersByTimeAsync(100)
+      
+      // At this point, 300ms hasn't passed since last input
+      expect(searchResults).toEqual([])
+      
+      // Wait for debounce delay
+      await vi.advanceTimersByTimeAsync(300)
+      
+      // Only the last input should trigger a search
+      expect(searchResults).toEqual(['search: abc'])
+    })
+    
+    it('should execute immediately if enough time passes between inputs', async () => {
+      const searchResults = []
+      let timeoutId
+      
+      function handleInput(value) {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => {
+          searchResults.push(`search: ${value}`)
+        }, 300)
+      }
+      
+      handleInput('first')
+      await vi.advanceTimersByTimeAsync(300)
+      expect(searchResults).toEqual(['search: first'])
+      
+      handleInput('second')
+      await vi.advanceTimersByTimeAsync(300)
+      expect(searchResults).toEqual(['search: first', 'search: second'])
+    })
+  })
+  
+  // ============================================================
+  // SETINTERVAL WITH ASYNC PROBLEM
+  // ============================================================
+  
+  describe('setInterval with Async Problem', () => {
+    beforeEach(() => {
+      vi.useFakeTimers()
+    })
+    
+    afterEach(() => {
+      vi.useRealTimers()
+    })
+    
+    it('should demonstrate overlapping requests with setInterval and async', async () => {
+      // From lines 1521-1526: If fetch takes longer than interval, multiple requests overlap
+      const requestsStarted = []
+      const requestsCompleted = []
+      let requestCount = 0
+      
+      // Simulate a slow fetch that takes 1500ms
+      async function slowFetch() {
+        const id = ++requestCount
+        requestsStarted.push(`request ${id} started`)
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        requestsCompleted.push(`request ${id} completed`)
+      }
+      
+      // Start interval that fires every 1000ms
+      const intervalId = setInterval(async () => {
+        await slowFetch()
+      }, 1000)
+      
+      // After 1000ms: first request starts
+      await vi.advanceTimersByTimeAsync(1000)
+      await Promise.resolve()
+      expect(requestsStarted).toEqual(['request 1 started'])
+      expect(requestsCompleted).toEqual([])
+      
+      // After 2000ms: second request starts (first still pending!)
+      await vi.advanceTimersByTimeAsync(1000)
+      await Promise.resolve()
+      expect(requestsStarted).toEqual(['request 1 started', 'request 2 started'])
+      expect(requestsCompleted).toEqual([]) // First request still not done
+      
+      // After 2500ms: first request completes
+      await vi.advanceTimersByTimeAsync(500)
+      await Promise.resolve()
+      expect(requestsCompleted).toEqual(['request 1 completed'])
+      
+      // Clean up
+      clearInterval(intervalId)
+    })
+    
+    it('should demonstrate the fix using nested setTimeout for polling', async () => {
+      // From lines 1532-1539: Schedule next AFTER completion
+      const requestsStarted = []
+      const requestsCompleted = []
+      let requestCount = 0
+      let isPolling = true
+      
+      // Simulate a slow fetch that takes 1500ms
+      async function slowFetch() {
+        const id = ++requestCount
+        requestsStarted.push(`request ${id} started`)
+        await new Promise(resolve => setTimeout(resolve, 1500))
+        requestsCompleted.push(`request ${id} completed`)
+      }
+      
+      // Fixed polling pattern
+      async function poll() {
+        await slowFetch()
+        if (isPolling && requestCount < 3) {
+          setTimeout(poll, 1000) // Schedule next AFTER completion
+        }
+      }
+      
+      poll()
+      
+      // Request 1 starts immediately
+      await Promise.resolve()
+      expect(requestsStarted).toEqual(['request 1 started'])
+      
+      // After 1500ms: request 1 completes, then waits 1000ms before next
+      await vi.advanceTimersByTimeAsync(1500)
+      await Promise.resolve()
+      expect(requestsCompleted).toEqual(['request 1 completed'])
+      expect(requestsStarted.length).toBe(1) // No overlapping request!
+      
+      // After 2500ms (1500 + 1000): request 2 starts
+      await vi.advanceTimersByTimeAsync(1000)
+      await Promise.resolve()
+      expect(requestsStarted).toEqual(['request 1 started', 'request 2 started'])
+      
+      // After 4000ms (1500 + 1000 + 1500): request 2 completes
+      await vi.advanceTimersByTimeAsync(1500)
+      await Promise.resolve()
+      expect(requestsCompleted).toEqual(['request 1 completed', 'request 2 completed'])
+      
+      isPolling = false
+    })
   })
   
   // ============================================================
@@ -193,7 +387,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should run Promises BEFORE setTimeout (microtasks before macrotasks)', async () => {
-      // From lines 368-378: Promises vs setTimeout
+      // From lines 391-401: Promises vs setTimeout
       const order = []
       
       order.push('1')
@@ -218,7 +412,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should drain entire microtask queue before any macrotask', async () => {
-      // From lines 428-442: Nested Microtasks
+      // From lines 449-467: Nested Microtasks
       const order = []
       
       order.push('Start')
@@ -328,7 +522,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should run callback repeatedly at specified interval', async () => {
-      // From lines 626-637: Basic setInterval usage
+      // From lines 649-662: Basic setInterval usage
       let count = 0
       const results = []
       
@@ -400,7 +594,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should implement preciseInterval with nested setTimeout', async () => {
-      // From lines 672-680: Nested setTimeout guarantees delay BETWEEN executions
+      // From lines 695-706: Nested setTimeout guarantees delay BETWEEN executions
       const results = []
       let callCount = 0
       
@@ -453,7 +647,7 @@ describe('Event Loop, Timers and Scheduling', () => {
   
   describe('async/await', () => {
     it('should run code before await synchronously', async () => {
-      // From lines 932-957: async/await ordering
+      // From lines 955-964: async/await ordering
       const order = []
       
       async function foo() {
@@ -558,7 +752,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Question 1: Basic Output Order - should output 1, 4, 3, 2', async () => {
-      // From lines 879-895
+      // From lines 900-918
       const order = []
       
       order.push('1')
@@ -578,7 +772,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Question 2: Nested Promises and Timeouts - should output sync, promise 1, promise 2, timeout 1, timeout 2', async () => {
-      // From lines 900-927
+      // From lines 921-951
       const order = []
       
       setTimeout(() => order.push('timeout 1'), 0)
@@ -608,7 +802,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Question 3: async/await Ordering - should output script start, foo start, script end, foo end', async () => {
-      // From lines 932-957
+      // From lines 953-981
       const order = []
       
       async function foo() {
@@ -627,7 +821,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Question 4a: setTimeout in a loop with var - should output 3, 3, 3', async () => {
-      // From lines 962-974
+      // From lines 985-997
       const order = []
       
       for (var i = 0; i < 3; i++) {
@@ -641,7 +835,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Question 4b: setTimeout in a loop with let - should output 0, 1, 2', async () => {
-      // From lines 976-981
+      // From lines 999-1004
       const order = []
       
       for (let i = 0; i < 3; i++) {
@@ -655,7 +849,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Question 4c: setTimeout in a loop with closure fix - should output 0, 1, 2', async () => {
-      // From lines 984-991
+      // From lines 1007-1015
       const order = []
       
       for (var i = 0; i < 3; i++) {
@@ -671,7 +865,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Question 6: Microtask scheduling - microtask should run', async () => {
-      // From lines 1030-1053 (simplified - not infinite)
+      // From lines 1051-1077 (simplified - not infinite)
       const order = []
       let count = 0
       
@@ -696,7 +890,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Misconception 1: setTimeout(fn, 0) does NOT run immediately - should output sync, promise, timeout', async () => {
-      // From lines 1067-1072
+      // From lines 1084-1096
       const order = []
       
       setTimeout(() => order.push('timeout'), 0)
@@ -711,7 +905,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('Test Your Knowledge Q3: Complex ordering - should output E, B, C, A, D', async () => {
-      // From lines 1465-1481
+      // From lines 1487-1504
       const order = []
       
       setTimeout(() => order.push('A'), 0)
@@ -749,7 +943,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('this binding: regular function loses this context', async () => {
-      // From lines 1331-1340
+      // From lines 1354-1363
       const obj = {
         name: 'Alice',
         greet() {
@@ -770,7 +964,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('this binding: arrow function preserves this context', async () => {
-      // From lines 1342-1350
+      // From lines 1365-1373
       const obj = {
         name: 'Alice',
         greet() {
@@ -790,7 +984,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('this binding: bind() preserves this context', async () => {
-      // From lines 1352-1360
+      // From lines 1375-1383
       const obj = {
         name: 'Alice',
         greet() {
@@ -810,7 +1004,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('closure in loop: var creates shared reference', async () => {
-      // From lines 1365-1370
+      // From lines 1388-1393
       const results = []
       
       for (var i = 0; i < 3; i++) {
@@ -824,7 +1018,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('closure in loop: let creates new binding per iteration', async () => {
-      // From lines 1372-1376
+      // From lines 1395-1399
       const results = []
       
       for (let i = 0; i < 3; i++) {
@@ -838,7 +1032,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('closure in loop: setTimeout third argument passes value', async () => {
-      // From lines 1378-1382
+      // From lines 1401-1405
       const results = []
       
       for (var i = 0; i < 3; i++) {
@@ -852,7 +1046,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should implement chunking with setTimeout', async () => {
-      // From lines 1173-1192
+      // From lines 1196-1215
       const processed = []
       const items = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
       
@@ -886,7 +1080,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should implement async polling with nested setTimeout', async () => {
-      // From lines 1509-1516
+      // From lines 1532-1540
       const results = []
       let pollCount = 0
       
@@ -932,7 +1126,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should yield with setTimeout(resolve, 0)', async () => {
-      // From lines 1523-1525
+      // From lines 1547-1548
       const order = []
       
       order.push('before yield')
@@ -952,7 +1146,7 @@ describe('Event Loop, Timers and Scheduling', () => {
     })
     
     it('should yield with queueMicrotask', async () => {
-      // From lines 1527-1528
+      // From lines 1550-1551
       const order = []
       
       order.push('before yield')

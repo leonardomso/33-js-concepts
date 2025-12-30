@@ -1,9 +1,42 @@
 ---
-title: "Event Loop, Timers and Scheduling"
-description: "Understanding JavaScript's concurrency model, message queues, and how to schedule code execution"
+title: "The JavaScript Event Loop: How Async Code Actually Runs"
+description: "Learn how the JavaScript event loop handles async code. Understand the call stack, task queue, microtasks, and why Promises always run before setTimeout()."
 ---
 
-## The Restaurant Kitchen: A Real-World Analogy
+How does JavaScript handle multiple things at once when it can only do one thing at a time? Why does this code print in a surprising order?
+
+```javascript
+console.log('Start');
+setTimeout(() => console.log('Timeout'), 0);
+Promise.resolve().then(() => console.log('Promise'));
+console.log('End');
+
+// Output:
+// Start
+// End
+// Promise
+// Timeout
+```
+
+Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)** — JavaScript's mechanism for handling asynchronous operations while remaining single-threaded.
+
+<Warning>
+**Prerequisites:** This guide assumes familiarity with [the call stack](/concepts/call-stack) and [Promises](/concepts/promises). If those concepts are new to you, read them first!
+</Warning>
+
+<Info>
+**What you'll learn in this guide:**
+- Why JavaScript needs an event loop (and what "single-threaded" really means)
+- How setTimeout REALLY works (spoiler: the delay is NOT guaranteed!)
+- The difference between tasks and microtasks (and why it matters)
+- Why `Promise.then()` runs before `setTimeout(..., 0)`
+- How to use setTimeout, setInterval, and requestAnimationFrame effectively
+- Common interview questions explained step-by-step
+</Info>
+
+---
+
+## Understanding the Event Loop: A Restaurant Analogy
 
 Imagine a busy restaurant kitchen with a **single chef** who can only cook one dish at a time. Despite this limitation, the restaurant serves hundreds of customers because the kitchen has a clever system:
 
@@ -57,16 +90,6 @@ The chef (JavaScript) can only work on one dish (task) at a time. But kitchen ti
 **TL;DR:** JavaScript is single-threaded but achieves concurrency by delegating work to browser APIs, which run in the background. When they're done, callbacks go into queues. The Event Loop moves callbacks from queues to the call stack when it's empty.
 </Note>
 
-<Info>
-**What you'll learn in this guide:**
-- Why JavaScript needs an event loop (and what "single-threaded" really means)
-- How setTimeout REALLY works (spoiler: the delay is NOT guaranteed!)
-- The difference between tasks and microtasks (and why it matters)
-- Why `Promise.then()` runs before `setTimeout(..., 0)`
-- How to use setTimeout, setInterval, and requestAnimationFrame effectively
-- Common interview questions explained step-by-step
-</Info>
-
 ---
 
 ## The Problem: JavaScript is Single-Threaded
@@ -82,7 +105,7 @@ console.log('Third');   // 3. Then this
 
 ### Why Is This a Problem?
 
-Imagine if every operation blocked the entire program:
+Imagine if every operation blocked the entire program. Consider the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
 
 ```javascript
 // If fetch() was synchronous (blocking)...
@@ -99,7 +122,7 @@ A 30-second API call would freeze your entire webpage for 30 seconds. Users woul
 
 ### The Solution: Asynchronous JavaScript
 
-JavaScript solves this by **delegating** long-running tasks to the browser (or Node.js), which handles them in the background:
+JavaScript solves this by **delegating** long-running tasks to the browser (or Node.js), which handles them in the background. Functions like [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout) don't block:
 
 ```javascript
 console.log('Start');
@@ -182,7 +205,7 @@ To understand the Event Loop, you need to see the full picture:
 
 <AccordionGroup>
   <Accordion title="Call Stack">
-    The **Call Stack** is where JavaScript keeps track of what function is currently running. It's a LIFO (Last In, First Out) structure — like a stack of plates.
+    The **[Call Stack](/concepts/call-stack)** is where JavaScript keeps track of what function is currently running. It's a LIFO (Last In, First Out) structure — like a stack of plates.
     
     ```javascript
     function multiply(a, b) {
@@ -227,10 +250,10 @@ To understand the Event Loop, you need to see the full picture:
     These are **NOT** part of JavaScript itself! They're provided by the environment:
     
     **Browser APIs:**
-    - `setTimeout`, `setInterval`
-    - `fetch`, `XMLHttpRequest`
+    - [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout), [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)
+    - [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), `XMLHttpRequest`
     - DOM events (click, scroll, etc.)
-    - `requestAnimationFrame`
+    - [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
     - Geolocation, WebSockets, IndexedDB
     
     **Node.js APIs:**
@@ -256,9 +279,9 @@ To understand the Event Loop, you need to see the full picture:
   <Accordion title="Microtask Queue">
     The **Microtask Queue** holds high-priority callbacks from:
     - `Promise.then()`, `.catch()`, `.finally()`
-    - `queueMicrotask()`
-    - `MutationObserver`
-    - Code after `await` in async functions
+    - [`queueMicrotask()`](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask)
+    - [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+    - Code after `await` in [async functions](/concepts/async-await)
     
     **Microtasks ALWAYS run before the next task!** The entire microtask queue is drained before moving to the task queue.
   </Accordion>
@@ -456,7 +479,7 @@ Even though the second promise is created AFTER setTimeout was registered, it st
 | I/O callbacks | Network responses, file reads |
 | UI Events | click, scroll, keydown, mousemove |
 | `setImmediate(fn)` | Node.js only, runs after I/O |
-| `MessageChannel` | `postMessage` callbacks |
+| [`MessageChannel`](https://developer.mozilla.org/en-US/docs/Web/API/MessageChannel) | `postMessage` callbacks |
 
 <Note>
 **What about requestAnimationFrame?** rAF is NOT a task — it runs during the rendering phase, after microtasks but before the browser paints. It's covered in detail in the [Timers section](#requestanimationframe-smooth-animations).
@@ -1146,7 +1169,7 @@ button.addEventListener('click', () => {
 
 <Tabs>
   <Tab title="Web Workers">
-    Move heavy computation to a separate thread:
+    Move heavy computation to a separate thread using [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API):
     
     ```javascript
     // main.js
@@ -1194,7 +1217,7 @@ button.addEventListener('click', () => {
   </Tab>
   
   <Tab title="requestIdleCallback">
-    Run code during browser idle time:
+    Run code during browser idle time with [`requestIdleCallback`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback):
     
     ```javascript
     function doNonCriticalWork(deadline) {
@@ -1589,9 +1612,20 @@ Watch how:
 
 ## Reference
 
-<Card title="JavaScript Execution Model — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model">
-  Official MDN documentation on the JavaScript runtime, event loop, and execution contexts.
-</Card>
+<CardGroup cols={2}>
+  <Card title="JavaScript Execution Model — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model">
+    Official MDN documentation on the JavaScript runtime, event loop, and execution contexts.
+  </Card>
+  <Card title="setTimeout — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout">
+    Complete reference for setTimeout including syntax, parameters, and the minimum delay behavior.
+  </Card>
+  <Card title="setInterval — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/setInterval">
+    Documentation for repeated timed callbacks with usage patterns and gotchas.
+  </Card>
+  <Card title="requestAnimationFrame — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">
+    Browser-optimized animation timing API that syncs with display refresh rate.
+  </Card>
+</CardGroup>
 
 ## Articles
 
