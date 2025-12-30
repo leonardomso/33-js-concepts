@@ -1,6 +1,7 @@
 ---
-title: "JavaScript Fetch API: Making HTTP Requests the Modern Way"
-description: "Master the JavaScript Fetch API for making HTTP requests. Learn GET, POST, response handling, JSON parsing, error patterns, and AbortController for request cancellation."
+title: "Fetch API: Making HTTP Requests the Modern Way in JavaScript"
+sidebarTitle: "Fetch API: Making HTTP Requests the Modern Way"
+description: "Learn how to make HTTP requests with the JavaScript Fetch API. Understand GET, POST, response handling, JSON parsing, error patterns, and AbortController for cancellation."
 ---
 
 How does JavaScript get data from a server? How do you load user profiles, submit forms, or fetch the latest posts from an API? The answer is the **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** — JavaScript's modern way to make network requests.
@@ -14,10 +15,14 @@ console.log(user.name)  // "Alice"
 
 But to really understand Fetch, you need to understand what's happening underneath: **[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)**.
 
+<Warning>
+**Prerequisite:** This guide assumes you understand [Promises](/concepts/promises) and [async/await](/concepts/async-await). Fetch is Promise-based, so those concepts are essential. If you're not comfortable with Promises yet, read that guide first!
+</Warning>
+
 <Info>
 **What you'll learn in this guide:**
 - How HTTP requests and responses work
-- The four main HTTP methods (GET, POST, PUT, DELETE)
+- The five main HTTP methods (GET, POST, PUT, PATCH, DELETE)
 - How to use the Fetch API to make requests
 - Reading and parsing JSON responses
 - The critical difference between network errors and HTTP errors
@@ -29,9 +34,9 @@ But to really understand Fetch, you need to understand what's happening undernea
 
 **[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)** (Hypertext Transfer Protocol) is the foundation of data communication on the web. It defines how messages are formatted and transmitted between clients (like web browsers) and servers. Every time you load a webpage, submit a form, or fetch data with JavaScript, HTTP is the protocol making that exchange possible.
 
-<Warning>
+<Note>
 **HTTP is not JavaScript.** HTTP is a language-agnostic protocol — Python, Ruby, Go, Java, and every other language uses it too. We cover HTTP basics in this guide because understanding the protocol is essential to using the Fetch API effectively. If you want to dive deeper into HTTP itself, check out the MDN resources below.
-</Warning>
+</Note>
 
 <CardGroup cols={2}>
   <Card title="HTTP — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/HTTP">
@@ -77,11 +82,7 @@ Sometimes things go wrong:
 - **They're out of pasta** (404 Not Found) — The order was received, but they can't fulfill it
 - **Something's wrong in the kitchen** (500 Server Error) — They tried but something broke
 
-This request-response cycle is the core of how the web works. The **Fetch API** is JavaScript's modern way to participate in this cycle programmatically.
-
-<Warning>
-**Prerequisite:** This guide assumes you understand [Promises](/concepts/promises) and [async/await](/concepts/async-await). Fetch is Promise-based, so those concepts are essential. If you're not comfortable with Promises yet, read that guide first!
-</Warning>
+This request-response cycle is the core of how the web works. The **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** is JavaScript's modern way to participate in this cycle programmatically.
 
 ---
 
@@ -224,9 +225,57 @@ Status codes are three-digit numbers that tell you how the request went:
 
 ---
 
+## What is the Fetch API?
+
+The **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** is JavaScript's modern interface for making HTTP requests. It provides a cleaner, Promise-based alternative to the older **[XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)**, letting you send requests to servers and handle responses with simple, readable code. Every modern browser supports Fetch natively.
+
+```javascript
+// Fetch in its simplest form
+const response = await fetch('https://api.example.com/data')
+const data = await response.json()
+console.log(data)
+```
+
+### Before Fetch: The XMLHttpRequest Days
+
+Before Fetch existed, developers used XMLHttpRequest (XHR) — a verbose, callback-based API that powered "AJAX" requests. Libraries like **[jQuery](https://jquery.com/)** became popular partly because they simplified this painful process. jQuery was revolutionary for JavaScript — for many years it was the go-to library that made DOM manipulation, animations, and AJAX requests dramatically easier. It changed how developers wrote JavaScript and shaped the modern web.
+
+```javascript
+// The old way: XMLHttpRequest (verbose and callback-based)
+const xhr = new XMLHttpRequest()
+xhr.open('GET', 'https://api.example.com/data')
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    const data = JSON.parse(xhr.responseText)
+    console.log(data)
+  }
+}
+xhr.onerror = function() {
+  console.error('Request failed')
+}
+xhr.send()
+
+// The modern way: Fetch (clean and Promise-based)
+const response = await fetch('https://api.example.com/data')
+const data = await response.json()
+console.log(data)
+```
+
+Unlike XMLHttpRequest, Fetch:
+- Returns **[Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** instead of using callbacks
+- Uses **[Request](https://developer.mozilla.org/en-US/docs/Web/API/Request)** and **[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)** objects for cleaner APIs
+- Integrates naturally with **async/await** syntax
+- Supports streaming responses out of the box
+
+<Tip>
+**You no longer need jQuery for AJAX.** The Fetch API is built into every modern browser, making libraries unnecessary for basic HTTP requests.
+</Tip>
+
+---
+
 ## How to Use the Fetch API
 
-The **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** is JavaScript's modern way to make HTTP requests. It replaced the older `XMLHttpRequest` (XHR) with a cleaner, Promise-based interface.
+Now that you understand what Fetch is and how it compares to older approaches, let's dive into the details of using it effectively.
 
 ### How to Make a Fetch Request
 
