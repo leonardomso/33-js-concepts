@@ -3,72 +3,41 @@ title: "Factories and Classes"
 description: "How to create objects in JavaScript — from factory functions to ES6 classes"
 ---
 
-In JavaScript, objects are everywhere. User profiles, shopping carts, game characters, API responses — almost everything is an object. But when you need to create **many similar objects**, writing them one by one becomes a problem.
+How do you create hundreds of similar objects without copy-pasting? How do game developers spawn thousands of enemies? How does JavaScript let you build blueprints for objects?
 
-**Factories** and **Classes** solve this problem. They are patterns for creating objects efficiently:
+```javascript
+// Factory function — returns a new object each time
+function createPlayer(name) {
+  return {
+    name,
+    health: 100,
+    attack() {
+      return `${this.name} attacks!`
+    }
+  }
+}
 
-- A **Factory Function** is a regular function that returns a new object each time you call it. It's simple, flexible, and doesn't require special syntax.
+// Class — a blueprint for creating objects
+class Enemy {
+  constructor(name) {
+    this.name = name
+    this.health = 100
+  }
+  
+  attack() {
+    return `${this.name} attacks!`
+  }
+}
 
-- A **Class** is a blueprint for creating objects. It uses the `class` keyword (introduced in ES6) and the `new` operator to create instances. If you've used Java, C#, or Python, this will feel familiar.
+// Both create objects the same way
+const player = createPlayer("Alice")     // Factory
+const enemy = new Enemy("Goblin")        // Class
 
-Both achieve the same goal — creating objects — but they work differently and have different strengths. This guide will teach you both approaches and help you decide which to use.
-
----
-
-## The Video Game Character Problem
-
-To understand why we need factories and classes, let's look at a common problem.
-
-Imagine you're building a video game. You need to create enemies — lots of them. Goblins, dragons, zombies, and bosses. Each enemy has a name, health points, attack power, and abilities.
-
-You start creating enemies one by one:
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ THE COPY-PASTE NIGHTMARE                                             │
-│                                                                      │
-│   const goblin1 = { name: "Goblin", health: 100, attack: 10 };      │
-│   const goblin2 = { name: "Goblin", health: 100, attack: 10 };      │
-│   const goblin3 = { name: "Goblin", health: 100, attack: 10 };      │
-│   ... 997 more goblins ...                                          │
-│                                                                      │
-│   This is like hand-painting 1000 identical action figures!         │
-│                                                                      │
-│   Problems:                                                          │
-│   • Tedious and error-prone                                         │
-│   • What if you need to change goblin health to 150?                │
-│   • What if you need to add a new property to all goblins?          │
-│   • You'd have to edit 1000 objects!                                │
-└─────────────────────────────────────────────────────────────────────┘
+console.log(player.attack())  // "Alice attacks!"
+console.log(enemy.attack())   // "Goblin attacks!"
 ```
 
-The solution? Create a **blueprint** that can produce as many characters as you need:
-
-```
-┌─────────────────────────────────────────────────────────────────────┐
-│ THE BLUEPRINT SOLUTION                                               │
-│                                                                      │
-│   ┌──────────────────┐                                              │
-│   │  ENEMY BLUEPRINT │         Creates:                             │
-│   │  ──────────────  │         ┌─────┐ ┌─────┐ ┌─────┐             │
-│   │  • name          │  ───►   │ 👹  │ │ 👹  │ │ 👹  │  ...        │
-│   │  • health: 100   │         └─────┘ └─────┘ └─────┘             │
-│   │  • attack: 10    │         goblin1  goblin2  goblin3            │
-│   │  • takeDamage()  │                                              │
-│   │  • attack()      │         Each one is independent,             │
-│   └──────────────────┘         but made from the same blueprint     │
-│                                                                      │
-│   Change the blueprint once → All new enemies get the change        │
-└─────────────────────────────────────────────────────────────────────┘
-```
-
-JavaScript gives us several ways to create these blueprints:
-
-1. **Factory Functions** — Functions that return objects (flexible, simple)
-2. **Constructor Functions** — Functions used with `new` (traditional)
-3. **ES6 Classes** — Modern syntax for constructors (clean, familiar)
-
-Let's learn each approach and understand when to use them.
+**Factories** and **[Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)** are two patterns for creating objects efficiently. A factory function is a regular function that returns a new object. A class is a blueprint that uses the [`class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class) keyword and the [`new`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) operator. Both achieve the same goal — but they work differently and have different strengths.
 
 <Info>
 **What you'll learn in this guide:**
@@ -81,6 +50,10 @@ Let's learn each approach and understand when to use them.
 - Factory composition vs class inheritance
 - When to use factories vs classes
 </Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [Prototype Inheritance](/concepts/prototype) and [this, call, apply, bind](/concepts/this-call-apply-bind). If those concepts are new to you, read those guides first!
+</Warning>
 
 ---
 
@@ -288,7 +261,7 @@ const villager = createCharacter({ name: "Villager" });
 
 ### Factory with Private Variables (Closures)
 
-One of the most powerful features of factory functions is creating **truly private** variables using closures:
+One of the most powerful features of factory functions is creating **truly private** variables using [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures):
 
 ```javascript
 function createBankAccount(ownerName, initialBalance = 0) {
@@ -494,7 +467,7 @@ Here's a function that does what `new` does:
 ```javascript
 function myNew(Constructor, ...args) {
   // Step 1 & 2: Create object with correct prototype
-  const obj = Object.create(Constructor.prototype);
+  const obj = Object.create(Constructor.prototype);  // Object.create creates a new object with the specified prototype
   
   // Step 3: Run constructor with 'this' = obj
   const result = Constructor.apply(obj, args);
@@ -508,7 +481,7 @@ const player1 = new Player("Alice");
 const player2 = myNew(Player, "Bob");
 ```
 
-### Adding Methods to the Prototype
+### Adding Methods to the [Prototype](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Object_prototypes)
 
 There's a problem with our constructor: **each instance gets its own copy of methods**:
 
@@ -532,7 +505,7 @@ console.log(p1.attack === p2.attack);  // false
 // 1000 players = 1000 copies of attack function = wasted memory!
 ```
 
-The solution is to put methods on the **prototype**:
+The solution is to put methods on the **[prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)**:
 
 ```javascript
 function Player(name) {
@@ -588,7 +561,7 @@ console.log(p1.attack === p2.attack);  // true
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
-### The `instanceof` Operator
+### The [`instanceof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof) Operator
 
 `instanceof` checks if an object was created by a constructor:
 
@@ -778,7 +751,7 @@ console.log(hero.health);                    // 0 (setter prevented negative)
 console.log(Character.MAX_LEVEL);            // 99 (static property)
 ```
 
-### Static Methods and Properties
+### [Static](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/static) Methods and Properties
 
 **Static** members belong to the class itself, not to instances:
 
@@ -817,7 +790,7 @@ console.log(utils.square);           // undefined
 - Utility functions (`Array.isArray(value)`)
 - Singleton patterns (`Config.getInstance()`)
 
-### Getters and Setters
+### [Getters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) and [Setters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set)
 
 Getters and setters let you define computed properties and add validation:
 
@@ -869,7 +842,7 @@ console.log(temp.celsius);     // 37.78 (converted)
 // temp.kelvin = 0;            // Error: no setter (read-only)
 ```
 
-### Private Fields (#) — True Privacy
+### [Private Fields (#)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields) — True Privacy
 
 ES2022 introduced **private fields** with the `#` prefix. Unlike the `_underscore` convention, these are **truly private**:
 
@@ -986,9 +959,177 @@ console.log(w3.deposit === w4.deposit);  // false (each has own copy)
 
 ---
 
+## Common Mistakes with Factories and Classes
+
+When working with factories and classes, there are several common pitfalls that trip up developers. Let's look at the most frequent mistakes and how to avoid them.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE 3 MOST COMMON MISTAKES                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  1. FORGETTING `new` WITH CONSTRUCTORS                                   │
+│     Pollutes global scope or crashes in strict mode                      │
+│                                                                          │
+│  2. FORGETTING `super()` IN DERIVED CLASSES                              │
+│     Must call super() before using `this`                                │
+│                                                                          │
+│  3. CONFUSING `_private` WITH TRULY PRIVATE                              │
+│     Underscore is just a convention, not enforcement                     │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Mistake 1: Forgetting `new` with Constructor Functions
+
+```javascript
+// ❌ WRONG - Forgot 'new', 'this' becomes global object
+function Player(name) {
+  this.name = name;
+  this.health = 100;
+}
+
+const alice = Player("Alice");  // Missing 'new'!
+
+console.log(alice);              // undefined
+console.log(globalThis.name);    // "Alice" - leaked to global!
+console.log(globalThis.health);  // 100 - also leaked!
+
+// ✓ CORRECT - Always use 'new' with constructors
+const bob = new Player("Bob");
+console.log(bob.name);           // "Bob"
+console.log(bob.health);         // 100
+```
+
+<Tip>
+**Pro tip:** Use ES6 classes instead of constructor functions — they throw an error if you forget `new`:
+
+```javascript
+class Player {
+  constructor(name) { this.name = name; }
+}
+
+const alice = Player("Alice");  // TypeError: Class constructor Player cannot be invoked without 'new'
+```
+</Tip>
+
+### Mistake 2: Forgetting `super()` in Derived Classes
+
+```javascript
+// ❌ WRONG - Using 'this' before calling super()
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    this.breed = breed;   // ReferenceError: Must call super before accessing 'this'
+    super(name);
+  }
+}
+
+// ✓ CORRECT - Call super() first, then use 'this'
+class Cat extends Animal {
+  constructor(name, color) {
+    super(name);          // Initialize parent first
+    this.color = color;   // Now 'this' is available
+  }
+}
+
+const kitty = new Cat("Whiskers", "orange");
+console.log(kitty.name);   // "Whiskers"
+console.log(kitty.color);  // "orange"
+```
+
+### Mistake 3: Thinking `_underscore` Means Private
+
+```javascript
+// ❌ WRONG - Underscore is just a naming convention
+class BankAccount {
+  constructor(balance) {
+    this._balance = balance;  // Not actually private!
+  }
+  
+  getBalance() {
+    return this._balance;
+  }
+}
+
+const account = new BankAccount(1000);
+console.log(account._balance);    // 1000 - fully accessible!
+account._balance = 999999;        // Can be modified!
+console.log(account.getBalance()); // 999999 - no protection!
+
+// ✓ CORRECT - Use private fields (#) for true privacy
+class SecureBankAccount {
+  #balance;  // Truly private
+  
+  constructor(balance) {
+    this.#balance = balance;
+  }
+  
+  getBalance() {
+    return this.#balance;
+  }
+}
+
+const secure = new SecureBankAccount(1000);
+// console.log(secure.#balance);  // SyntaxError!
+console.log(secure.getBalance()); // 1000 - only accessible via methods
+```
+
+### Mistake 4: Using `this` Incorrectly in Factory Functions
+
+```javascript
+// ❌ WRONG - 'this' in factory return object can cause issues
+function createCounter() {
+  return {
+    count: 0,
+    increment() {
+      this.count++;  // 'this' depends on how the method is called
+    }
+  };
+}
+
+const counter = createCounter();
+counter.increment();  // Works
+console.log(counter.count);  // 1
+
+const increment = counter.increment;
+increment();  // 'this' is undefined or global!
+console.log(counter.count);  // Still 1 - didn't work!
+
+// ✓ CORRECT - Use closure to avoid 'this' issues
+function createSafeCounter() {
+  let count = 0;  // Closure variable
+  
+  return {
+    increment() {
+      count++;    // No 'this' needed
+    },
+    getCount() {
+      return count;
+    }
+  };
+}
+
+const safeCounter = createSafeCounter();
+const safeIncrement = safeCounter.increment;
+safeIncrement();  // Works even when extracted!
+console.log(safeCounter.getCount());  // 1
+```
+
+<Warning>
+**The `this` Trap:** When you extract a method from an object and call it standalone, `this` is no longer bound to the original object. Factory functions that use closures instead of `this` avoid this problem entirely.
+</Warning>
+
+---
+
 ## Part 5: Inheritance — Extending Behavior
 
-### Class Inheritance with `extends`
+### Class Inheritance with [`extends`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends)
 
 Use `extends` to create a class that inherits from another:
 
@@ -1073,7 +1214,7 @@ console.log(gandalf instanceof Mage);     // true
 console.log(gandalf instanceof Warrior);  // false
 ```
 
-### The `super` Keyword
+### The [`super`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super) Keyword
 
 `super` does two things:
 
@@ -1591,6 +1732,8 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
   </Card>
 </CardGroup>
 
+---
+
 ## Articles
 
 <CardGroup cols={2}>
@@ -1613,6 +1756,8 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
     Deep dive into the super keyword
   </Card>
 </CardGroup>
+
+---
 
 ## Videos
 
