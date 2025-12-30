@@ -1,6 +1,59 @@
 ---
-title: "Equality and Type Checking"
-description: "How JavaScript compares values — and why it sometimes gets confused"
+title: "Equality Operators: == vs === Type Checking in JavaScript"
+sidebarTitle: "Equality Operators: == vs === Type Checking"
+description: "Learn JavaScript equality operators == vs ===, typeof quirks, and Object.is(). Understand type coercion, why NaN !== NaN, and why typeof null returns 'object'."
+---
+
+Why does `1 == "1"` return `true` but `1 === "1"` return `false`? Why does `typeof null` return `"object"`? And why is `NaN` the only value in JavaScript that isn't equal to itself?
+
+```javascript
+// Same values, different results
+console.log(1 == "1");   // true  — loose equality converts types
+console.log(1 === "1");  // false — strict equality checks type first
+
+// The famous quirks
+console.log(typeof null);  // "object" — a 28-year-old bug!
+console.log(NaN === NaN);  // false — NaN never equals anything
+```
+
+Understanding JavaScript's **[equality operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)** is crucial because comparison bugs are among the most common in JavaScript code. This guide will teach you exactly how `==`, **[`===`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)**, and **[`Object.is()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)** work — and when to use each one.
+
+<Info>
+**What you'll learn in this guide:**
+- The difference between `==` (loose) and `===` (strict) equality
+- How JavaScript converts values during loose equality comparisons
+- The **[`typeof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)** operator and its famous quirks (including the `null` bug)
+- When to use `Object.is()` for edge cases like `NaN` and `-0`
+- Common comparison mistakes and how to avoid them
+- A simple rule: when to use which operator
+</Info>
+
+---
+
+## The Three Equality Operators: Overview
+
+JavaScript provides three ways to compare values for equality. Here's the quick summary:
+
+| Operator | Name | Type Coercion | Best For |
+|----------|------|---------------|----------|
+| `==` | Loose (Abstract) Equality | Yes | Checking `null`/`undefined` only |
+| `===` | Strict Equality | No | **Default choice for everything** |
+| `Object.is()` | Same-Value Equality | No | Edge cases (`NaN`, `±0`) |
+
+```javascript
+// The same comparison, three different results
+const num = 1;
+const str = "1";
+
+console.log(num == str);           // true  (coerces string to number)
+console.log(num === str);          // false (different types)
+console.log(Object.is(num, str));  // false (different types)
+```
+
+<Note>
+**The simple rule:** Always use `===` for comparisons. The only exception: use `== null` to check if a value is empty (null or undefined). You'll rarely need `Object.is()` — it's for special cases we'll cover later.
+</Note>
+
 ---
 
 ## The Teacher Grading Papers: A Real-World Analogy
@@ -34,48 +87,15 @@ JavaScript gives you both types of teachers:
 - **`typeof`** — Asks "What kind of answer is this?" Is it a number? A string? Something else?
 - **`Object.is()`** — The most precise teacher. Even stricter than `===` — can spot tiny differences that others miss.
 
-Understanding these comparison tools is important because comparison bugs are very common in JavaScript. This guide will help you write code that works as expected and debug problems faster.
-
-<Info>
-**What you'll learn in this guide:**
-- The difference between `==` and `===` (and when to use each)
-- How JavaScript converts values when comparing them
-- The `typeof` operator and its quirks
-- When to use `Object.is()` for special cases
-- Common mistakes and how to avoid them
-</Info>
-
----
-
-## The Three Equality Operators: Overview
-
-JavaScript provides three ways to compare values for equality. Here's the quick summary:
-
-| Operator | Name | Type Coercion | Best For |
-|----------|------|---------------|----------|
-| `==` | Loose (Abstract) Equality | Yes | Checking `null`/`undefined` only |
-| `===` | Strict Equality | No | **Default choice for everything** |
-| `Object.is()` | Same-Value Equality | No | Edge cases (`NaN`, `±0`) |
-
-```javascript
-// The same comparison, three different results
-const num = 1;
-const str = "1";
-
-console.log(num == str);           // true  (coerces string to number)
-console.log(num === str);          // false (different types)
-console.log(Object.is(num, str));  // false (different types)
-```
-
-<Note>
-**The simple rule:** Always use `===` for comparisons. The only exception: use `== null` to check if a value is empty (null or undefined). You'll rarely need `Object.is()` — it's for special cases we'll cover later.
-</Note>
+<Tip>
+**TL;DR:** Use `===` for almost everything. Use `== null` to check for both `null` and `undefined`. Use `Object.is()` only for `NaN` or `-0` edge cases.
+</Tip>
 
 ---
 
 ## Loose Equality (`==`): The Relaxed Comparison
 
-The `==` operator tries to be helpful. Before comparing two values, it converts them to the same type. This automatic conversion is called **type coercion**.
+The **[`==` operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)** tries to be helpful. Before comparing two values, it converts them to the same type. This automatic conversion is called **[type coercion](/concepts/type-coercion)**.
 
 For example, if you compare the number `5` with the string `"5"`, JavaScript thinks: "These look similar. Let me convert them and check." So `5 == "5"` returns `true`.
 
@@ -103,7 +123,7 @@ Here's the complete algorithm from the ECMAScript specification. When comparing 
   </Step>
   
   <Step title="null and undefined">
-    If `x` is `null` and `y` is `undefined` (or vice versa), return `true`.
+    If `x` is **[`null`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null)** and `y` is **[`undefined`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined)** (or vice versa), return `true`.
     
     ```javascript
     null == undefined    // true (special case!)
@@ -122,7 +142,7 @@ Here's the complete algorithm from the ECMAScript specification. When comparing 
   </Step>
   
   <Step title="BigInt and String">
-    If one is a BigInt and the other is a String, convert the String to a BigInt.
+    If one is a **[BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)** and the other is a String, convert the String to a BigInt.
     
     ```javascript
     10n == "10"   // "10" → 10n, then 10n == 10n → true
@@ -140,7 +160,7 @@ Here's the complete algorithm from the ECMAScript specification. When comparing 
   </Step>
   
   <Step title="Object to Primitive">
-    If one is an Object and the other is a String, Number, BigInt, or Symbol, convert the Object to a primitive using `ToPrimitive`.
+    If one is an Object and the other is a String, Number, BigInt, or **[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)**, convert the Object to a primitive using **[`ToPrimitive`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive)**.
     
     ```javascript
     [1] == 1       // [1] → "1" → 1, then 1 == 1 → true
@@ -161,9 +181,9 @@ Here's the complete algorithm from the ECMAScript specification. When comparing 
     If none of the above rules apply, return `false`.
     
     ```javascript
-    null == 0         // false (null only equals undefined)
-    undefined == 0    // false
-    Symbol() == Symbol()  // false (symbols are unique)
+    null == 0             // false (null only equals undefined)
+    undefined == 0        // false
+    Symbol() == Symbol()  // false (Symbols are always unique)
     ```
   </Step>
 </Steps>
@@ -227,7 +247,7 @@ Here are some comparison results that surprise most developers. Understanding *w
     // But string-to-string is direct comparison
     "" == "0"             // false (both strings, different values)
     
-    // NaN conversions
+    // NaN conversions (NaN is "Not a Number")
     NaN == "NaN"          // false (NaN ≠ anything, including itself)
     0 == "hello"          // false ("hello" → NaN, 0 ≠ NaN)
     ```
@@ -403,7 +423,7 @@ When you write `x === y`, JavaScript asks:
 1. Are `x` and `y` the same type? No → return `false`
 2. Same type? → Compare their values
 
-That's it. No conversions, no surprises (well, *almost* — there's one special case with `NaN`).
+That's it. No conversions, no surprises (well, *almost* — there's one special case with **[`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN)**).
 
 ### The Strict Equality Comparison Algorithm
 
@@ -560,7 +580,7 @@ Even `===` has two edge cases that might surprise you:
     
     // How to check for NaN:
     Number.isNaN(NaN)     // true (recommended)
-    isNaN(NaN)            // true (but has quirks)
+    isNaN(NaN)            // true (but has quirks — see below)
     Object.is(NaN, NaN)   // true (ES6)
     
     // The isNaN() quirk:
@@ -569,7 +589,7 @@ Even `===` has two edge cases that might surprise you:
     ```
     
     <Warning>
-    Always use `Number.isNaN()` instead of `isNaN()`. The global `isNaN()` function converts its argument to a Number first, which means `isNaN("hello")` returns `true`. That's rarely what you want.
+    Always use **[`Number.isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN)** instead of the global `isNaN()`. The global `isNaN()` function converts its argument to a Number first, which means `isNaN("hello")` returns `true`. That's rarely what you want.
     </Warning>
   </Tab>
   
@@ -644,7 +664,7 @@ obj1 === obj2 → false (different objects, even with same content)
 
 <Tip>
 To compare objects by their content (deep equality), you need to:
-- Use `JSON.stringify()` for simple objects (has limitations)
+- Use **[`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify)** for simple objects (has limitations)
 - Write a recursive comparison function
 - Use a library like Lodash's `_.isEqual()`
 </Tip>
@@ -724,7 +744,7 @@ For most everyday code, you won't need `Object.is()`. Use `===` as your default,
 
 ## The `typeof` Operator
 
-The `typeof` operator tells you what type a value is. It returns a string like `"number"`, `"string"`, or `"boolean"`. It's very useful, but it has some famous quirks that surprise many developers.
+The **[`typeof` operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof)** tells you what type a value is. It returns a string like `"number"`, `"string"`, or `"boolean"`. It's very useful, but it has some famous quirks that surprise many developers.
 
 ### How It Works
 
@@ -796,6 +816,8 @@ typeof(operand)  // Both forms are valid
     // Or using Object.prototype.toString
     Object.prototype.toString.call([])  // "[object Array]"
     ```
+    
+    Use **[`Array.isArray()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)** — it's the most reliable method.
   </Accordion>
   
   <Accordion title="Functions Return 'function'">
@@ -885,9 +907,13 @@ Since `typeof` has limitations, here are more reliable approaches:
     // Safe integers
     Number.isSafeInteger(value)    // true for safe integers
     ```
+    
+    These methods from **[`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)** are more reliable than `typeof` for numeric checks.
   </Tab>
   
   <Tab title="instanceof">
+    The **[`instanceof` operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof)** checks if an object is an instance of a constructor:
+    
     ```javascript
     // Check if an object is an instance of a constructor
     [] instanceof Array            // true
@@ -906,7 +932,7 @@ Since `typeof` has limitations, here are more reliable approaches:
   </Tab>
   
   <Tab title="Object.prototype.toString">
-    The most reliable method for getting precise type information:
+    The **[`Object.prototype.toString`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString)** method is the most reliable for getting precise type information:
     
     ```javascript
     const getType = (value) => 
@@ -1215,10 +1241,115 @@ These common mistakes trip up many JavaScript developers. Learning about them no
 
 ---
 
+## Common Misconceptions
+
+<AccordionGroup>
+  <Accordion title="Misconception 1: '== is always bad and should never be used'">
+    **Not quite!** While `===` should be your default, there's one legitimate use case for `==`:
+    
+    ```javascript
+    // The one acceptable use of ==
+    if (value == null) {
+      // Catches both null AND undefined
+    }
+    
+    // Equivalent to:
+    if (value === null || value === undefined) {
+      // Same result, but more verbose
+    }
+    ```
+    
+    This is cleaner than checking for both values separately and is explicitly allowed by most style guides (including ESLint's `eqeqeq` rule with the `"null": "ignore"` option).
+  </Accordion>
+  
+  <Accordion title="Misconception 2: '=== checks if types are the same'">
+    **Partially wrong!** `===` doesn't *just* check types — it checks if two values are the **same type AND same value**.
+    
+    ```javascript
+    // Same type, different values → false
+    5 === 10          // false (both numbers, different values)
+    "hello" === "hi"  // false (both strings, different values)
+    
+    // Different types → immediately false
+    5 === "5"         // false (no value comparison even attempted)
+    ```
+    
+    The key point: `===` returns `false` immediately if types differ, then compares values if types match.
+  </Accordion>
+  
+  <Accordion title="Misconception 3: 'typeof is reliable for checking all types'">
+    **Wrong!** `typeof` has several well-known quirks:
+    
+    ```javascript
+    typeof null         // "object" — famous bug from 1995!
+    typeof []           // "object" — arrays are objects
+    typeof NaN          // "number" — Not-a-Number is a number type
+    typeof function(){} // "function" — but functions ARE objects!
+    ```
+    
+    **Better alternatives:**
+    - Use `Array.isArray()` for arrays
+    - Use `value === null` for null
+    - Use `Number.isNaN()` for NaN
+    - Use `Object.prototype.toString.call()` for precise type detection
+  </Accordion>
+  
+  <Accordion title="Misconception 4: 'Objects with the same content are equal'">
+    **Wrong!** Objects (including arrays and functions) are compared by **reference**, not by content:
+    
+    ```javascript
+    { a: 1 } === { a: 1 }  // false — different objects in memory!
+    [] === []              // false — different arrays!
+    (() => {}) === (() => {})  // false — different functions!
+    
+    const obj = { a: 1 };
+    obj === obj            // true — same reference
+    ```
+    
+    To compare object contents, use `JSON.stringify()` for simple cases or a deep equality function like Lodash's `_.isEqual()`.
+  </Accordion>
+  
+  <Accordion title="Misconception 5: 'NaN means the value is not a number'">
+    **Misleading!** `NaN` is actually a *numeric value* that represents an undefined or unrepresentable mathematical result:
+    
+    ```javascript
+    typeof NaN  // "number" — NaN IS a number type!
+    
+    // NaN appears from invalid math operations
+    0 / 0           // NaN
+    Math.sqrt(-1)   // NaN
+    parseInt("xyz") // NaN
+    Infinity - Infinity  // NaN
+    ```
+    
+    Think of `NaN` as "the result of a calculation that doesn't produce a meaningful number" rather than literally "not a number."
+  </Accordion>
+  
+  <Accordion title="Misconception 6: 'Truthy values are == true'">
+    **Wrong!** Truthy/falsy and `==` equality are completely different concepts:
+    
+    ```javascript
+    // These are truthy but NOT == true
+    "hello" == true   // false! ("hello" → NaN, true → 1)
+    2 == true         // false! (2 !== 1)
+    [] == true        // false! ([] → "" → 0, true → 1)
+    
+    // But they ARE truthy
+    if ("hello") { }  // executes
+    if (2) { }        // executes
+    if ([]) { }       // executes
+    ```
+    
+    **Rule:** Don't use `== true` or `== false`. Either use `===` or just rely on truthiness directly: `if (value)`.
+  </Accordion>
+</AccordionGroup>
+
+---
+
 ## Key Takeaways
 
 <Info>
-**Key Points to Remember:**
+**Remember these essential points about Equality Operators:**
 
 1. **Use `===` by default** — It's predictable and doesn't convert types
 
@@ -1240,6 +1371,26 @@ These common mistakes trip up many JavaScript developers. Learning about them no
 
 10. **Configure ESLint** — Use the `eqeqeq` rule to enforce `===` in your projects
 </Info>
+
+---
+
+## Interactive Visualization Tool
+
+The best way to internalize JavaScript's equality rules is to see all the comparisons at once.
+
+<Card title="JavaScript Equality Table" icon="table" href="https://dorey.github.io/JavaScript-Equality-Table/">
+  Interactive comparison table by dorey showing the results of `==` and `===` for all type combinations. Hover over cells to see explanations. An essential reference for understanding JavaScript equality!
+</Card>
+
+**Try these in the table:**
+- Compare `[]` with `false`, `0`, `""`, and `![]` to see why `[] == ![]` is `true`
+- See why `null == undefined` is `true` but neither equals `0` or `false`
+- Observe how `NaN` never equals anything (including itself)
+- Notice how objects only equal themselves (same reference)
+
+<Tip>
+**Bookmark this table!** It's invaluable for debugging comparison issues and preparing for technical interviews.
+</Tip>
 
 ---
 
@@ -1395,6 +1546,8 @@ Try to answer each question before revealing the solution:
   </Card>
 </CardGroup>
 
+---
+
 ## Articles
 
 <CardGroup cols={2}>
@@ -1418,6 +1571,8 @@ Try to answer each question before revealing the solution:
   </Card>
 </CardGroup>
 
+---
+
 ## Videos
 
 <CardGroup cols={2}>
@@ -1434,6 +1589,8 @@ Try to answer each question before revealing the solution:
     Conference talk diving deep into JavaScript's equality quirks and type coercion weirdness.
   </Card>
 </CardGroup>
+
+---
 
 ## Books
 
