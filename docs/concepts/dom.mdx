@@ -3,14 +3,18 @@ title: "DOM and Layout Trees"
 description: "Understanding the Document Object Model and how browsers render pages"
 ---
 
-The **Document Object Model (DOM)** is a programming interface for web documents. It represents your HTML as a **tree of objects** that JavaScript can read and manipulate.
+How does JavaScript change what you see on a webpage? How do you click a button and see new content appear, or type in a form and watch suggestions pop up? How does a "dark mode" toggle instantly transform an entire page?
+
+The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface for web documents. It represents your HTML as a **tree of objects** that JavaScript can read and manipulate.
 
 ```javascript
 // The DOM lets you do things like this:
-document.querySelector('h1').textContent = 'Hello, DOM!';
-document.body.style.backgroundColor = 'lightblue';
-document.getElementById('btn').addEventListener('click', handleClick);
+document.querySelector('h1').textContent = 'Hello, DOM!'
+document.body.style.backgroundColor = 'lightblue'
+document.getElementById('btn').addEventListener('click', handleClick)
 ```
+
+With the DOM, you can use methods like **[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** to find elements, **[`getElementById()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)** to grab specific nodes, and **[`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)** to respond to user interactions.
 
 <Info>
 **What you'll learn in this guide:**
@@ -149,7 +153,7 @@ DOM                          Render Tree
 
 ### The `document` Object: Your Entry Point
 
-The `document` object is your gateway to the DOM. It's automatically available in any browser JavaScript:
+The **[`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)** object is your gateway to the DOM. It's automatically available in any browser JavaScript:
 
 ```javascript
 // document is the root of everything
@@ -167,7 +171,7 @@ document.title = 'New Title';             // Changes browser tab title
 
 ## DOM Tree Structure & Node Types
 
-Everything in the DOM is a **node**. But not all nodes are created equal!
+Everything in the DOM is a **[Node](https://developer.mozilla.org/en-US/docs/Web/API/Node)**. But not all nodes are created equal!
 
 ### The Node Type Hierarchy
 
@@ -192,24 +196,26 @@ Everything in the DOM is a **node**. But not all nodes are created equal!
 
 | Node Type | `nodeType` | `nodeName` | Example |
 |-----------|------------|------------|---------|
-| Element | `1` | Tag name (uppercase) | `<div>`, `<p>`, `<span>` |
-| Text | `3` | `#text` | Text inside elements |
-| Comment | `8` | `#comment` | `<!-- comment -->` |
-| Document | `9` | `#document` | The `document` object |
-| DocumentFragment | `11` | `#document-fragment` | Virtual container |
+| [Element](https://developer.mozilla.org/en-US/docs/Web/API/Element) | `1` | Tag name (uppercase) | `<div>`, `<p>`, `<span>` |
+| [Text](https://developer.mozilla.org/en-US/docs/Web/API/Text) | `3` | `#text` | Text inside elements |
+| [Comment](https://developer.mozilla.org/en-US/docs/Web/API/Comment) | `8` | `#comment` | `<!-- comment -->` |
+| [Document](https://developer.mozilla.org/en-US/docs/Web/API/Document) | `9` | `#document` | The `document` object |
+| [DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment) | `11` | `#document-fragment` | Virtual container |
 
 ```javascript
-const div = document.createElement('div');
-console.log(div.nodeType);   // 1 (Element)
-console.log(div.nodeName);   // "DIV"
+const div = document.createElement('div')
+console.log(div.nodeType)   // 1 (Element)
+console.log(div.nodeName)   // "DIV"
 
-const text = document.createTextNode('Hello');
-console.log(text.nodeType);  // 3 (Text)
-console.log(text.nodeName);  // "#text"
+const text = document.createTextNode('Hello')
+console.log(text.nodeType)  // 3 (Text)
+console.log(text.nodeName)  // "#text"
 
-console.log(document.nodeType);  // 9 (Document)
-console.log(document.nodeName);  // "#document"
+console.log(document.nodeType)  // 9 (Document)
+console.log(document.nodeName)  // "#document"
 ```
+
+The **[`createElement()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement)** and **[`createTextNode()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode)** methods create new nodes that you can add to the DOM.
 
 ### Node Type Constants
 
@@ -263,21 +269,23 @@ div#container
 
 ## Selecting Elements
 
-Before you can manipulate an element, you need to find it. JavaScript provides several methods:
+Before you can manipulate an element, you need to find it. JavaScript provides several methods through the **[`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)** object:
 
 ### The getElementById() Classic
 
-The fastest way to select a single element by its unique ID:
+The **[`getElementById()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)** method is the fastest way to select a single element by its unique ID:
 
 ```javascript
 // HTML: <div id="hero">Welcome!</div>
 
-const hero = document.getElementById('hero');
-console.log(hero);  // <div id="hero">Welcome!</div>
+const hero = document.getElementById('hero')
+console.log(hero)        // <div id="hero">Welcome!</div>
+console.log(hero.id)     // "hero"
+console.log(hero.textContent)  // "Welcome!"
 
 // Returns null if not found (not an error!)
-const ghost = document.getElementById('nonexistent');
-console.log(ghost);  // null
+const ghost = document.getElementById('nonexistent')
+console.log(ghost)  // null
 ```
 
 <Tip>
@@ -286,7 +294,7 @@ IDs must be unique in a document. If you have duplicate IDs, `getElementById` re
 
 ### getElementsByClassName() and getElementsByTagName()
 
-Select multiple elements by class or tag name:
+**[`getElementsByClassName()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName)** and **[`getElementsByTagName()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByTagName)** select multiple elements by class or tag name:
 
 ```javascript
 // HTML: 
@@ -294,79 +302,80 @@ Select multiple elements by class or tag name:
 // <p class="intro">Second</p>
 // <p>Third</p>
 
-const intros = document.getElementsByClassName('intro');
-console.log(intros.length);  // 2
-console.log(intros[0]);      // <p class="intro">First</p>
+const intros = document.getElementsByClassName('intro')
+console.log(intros.length)      // 2
+console.log(intros[0])          // <p class="intro">First</p>
+console.log(intros[0].textContent)  // "First"
 
-const allParagraphs = document.getElementsByTagName('p');
-console.log(allParagraphs.length);  // 3
+const allParagraphs = document.getElementsByTagName('p')
+console.log(allParagraphs.length)  // 3
 ```
 
 ### The Modern Way: querySelector() and querySelectorAll()
 
-Use CSS selectors to find elements—much more powerful!
+**[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** and **[`querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)** use CSS selectors to find elements—much more powerful!
 
 ```javascript
 // querySelector returns the FIRST match (or null)
-const firstButton = document.querySelector('button');
-const submitBtn = document.querySelector('#submit');
-const firstCard = document.querySelector('.card');
-const navLink = document.querySelector('nav a.active');
-const dataItem = document.querySelector('[data-id="123"]');
+const firstButton = document.querySelector('button')      // First <button> element
+const submitBtn = document.querySelector('#submit')       // Element with id="submit"
+const firstCard = document.querySelector('.card')         // First element with class="card"
+const navLink = document.querySelector('nav a.active')    // <a class="active"> inside <nav>
+const dataItem = document.querySelector('[data-id="123"]')  // Element with data-id="123"
 
 // querySelectorAll returns ALL matches (NodeList)
-const allButtons = document.querySelectorAll('button');
-const allCards = document.querySelectorAll('.card');
-const evenRows = document.querySelectorAll('tr:nth-child(even)');
+const allButtons = document.querySelectorAll('button')    // All <button> elements
+const allCards = document.querySelectorAll('.card')       // All elements with class="card"
+const evenRows = document.querySelectorAll('tr:nth-child(even)')  // Every even table row
 ```
 
 ### Selector Examples
 
 ```javascript
 // By ID
-document.querySelector('#main');
+document.querySelector('#main')
 
 // By class
-document.querySelector('.active');
-document.querySelectorAll('.btn.primary');
+document.querySelector('.active')
+document.querySelectorAll('.btn.primary')
 
 // By tag
-document.querySelector('header');
-document.querySelectorAll('li');
+document.querySelector('header')
+document.querySelectorAll('li')
 
 // By attribute
-document.querySelector('[type="submit"]');
-document.querySelector('[data-modal="login"]');
+document.querySelector('[type="submit"]')
+document.querySelector('[data-modal="login"]')
 
 // Descendant selectors
-document.querySelector('nav ul li a');
-document.querySelector('.sidebar .widget:first-child');
+document.querySelector('nav ul li a')
+document.querySelector('.sidebar .widget:first-child')
 
 // Pseudo-selectors (limited support)
-document.querySelectorAll('input:not([type="hidden"])');
-document.querySelector('p:first-of-type');
+document.querySelectorAll('input:not([type="hidden"])')
+document.querySelector('p:first-of-type')
 ```
 
 ### Live vs Static Collections
 
-This is a crucial difference that trips up many developers:
+This is a crucial difference that trips up many developers. **[`getElementsByClassName()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName)** returns a live **[HTMLCollection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection)**, while **[`querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)** returns a static **[NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)**:
 
 ```javascript
-const liveList = document.getElementsByClassName('item');    // LIVE
-const staticList = document.querySelectorAll('.item');       // STATIC
+const liveList = document.getElementsByClassName('item')    // LIVE HTMLCollection
+const staticList = document.querySelectorAll('.item')       // STATIC NodeList
 
 // Start with 3 items
-console.log(liveList.length);    // 3
-console.log(staticList.length);  // 3
+console.log(liveList.length)    // 3
+console.log(staticList.length)  // 3
 
 // Add a new item to the DOM
-const newItem = document.createElement('div');
-newItem.className = 'item';
-document.body.appendChild(newItem);
+const newItem = document.createElement('div')
+newItem.className = 'item'
+document.body.appendChild(newItem)
 
 // Check lengths again
-console.log(liveList.length);    // 4 (automatically updated!)
-console.log(staticList.length);  // 3 (still the old snapshot)
+console.log(liveList.length)    // 4 (automatically updated!)
+console.log(staticList.length)  // 3 (still the old snapshot)
 ```
 
 | Method | Returns | Live? |
@@ -382,13 +391,13 @@ console.log(staticList.length);  // 3 (still the old snapshot)
 You can call selection methods on any element, not just `document`:
 
 ```javascript
-const nav = document.querySelector('nav');
+const nav = document.querySelector('nav')
 
 // Find links ONLY inside nav
-const navLinks = nav.querySelectorAll('a');
+const navLinks = nav.querySelectorAll('a')
 
 // Find the active link inside nav
-const activeLink = nav.querySelector('.active');
+const activeLink = nav.querySelector('.active')
 ```
 
 This is faster than searching the entire document and helps avoid selecting unintended elements.
@@ -409,10 +418,10 @@ This is faster than searching the entire document and helps avoid selecting unin
     
     ```javascript
     // Premature optimization - don't do this
-    const el1 = document.getElementById('myId');
+    const el1 = document.getElementById('myId')
     
     // This is fine and more readable
-    const el2 = document.querySelector('#myId');
+    const el2 = document.querySelector('#myId')
     ```
   </Accordion>
 </AccordionGroup>
@@ -426,19 +435,19 @@ Once you have an element, you can navigate to related elements without querying 
 ### Traversing Downwards (To Children)
 
 ```javascript
-const ul = document.querySelector('ul');
+const ul = document.querySelector('ul')
 
 // Get ALL child nodes (including text nodes!)
-const allChildNodes = ul.childNodes;      // NodeList
+const allChildNodes = ul.childNodes      // NodeList
 
 // Get only ELEMENT children (usually what you want)
-const elementChildren = ul.children;       // HTMLCollection
+const elementChildren = ul.children       // HTMLCollection
 
 // Get specific children
-const firstChild = ul.firstChild;          // First node (might be text!)
-const firstElement = ul.firstElementChild; // First ELEMENT child
-const lastChild = ul.lastChild;            // Last node
-const lastElement = ul.lastElementChild;   // Last ELEMENT child
+const firstChild = ul.firstChild          // First node (might be text!)
+const firstElement = ul.firstElementChild // First ELEMENT child
+const lastChild = ul.lastChild            // Last node
+const lastElement = ul.lastElementChild   // Last ELEMENT child
 ```
 
 <Warning>
@@ -457,48 +466,48 @@ What is `ul.firstChild`? It's NOT the first `<li>`! It's a **text node** contain
 ### Traversing Upwards (To Parents)
 
 ```javascript
-const li = document.querySelector('li');
+const li = document.querySelector('li')
 
 // Direct parent
-const parent = li.parentNode;        // Usually same as parentElement
-const parentEl = li.parentElement;   // Guaranteed to be an Element (or null)
+const parent = li.parentNode        // Usually same as parentElement
+const parentEl = li.parentElement   // Guaranteed to be an Element (or null)
 
 // Find ancestor matching selector (very useful!)
-const form = li.closest('form');     // Finds nearest ancestor <form>
-const card = li.closest('.card');    // Finds nearest ancestor with class "card"
+const form = li.closest('form')     // Finds nearest ancestor <form>
+const card = li.closest('.card')    // Finds nearest ancestor with class "card"
 
 // closest() includes the element itself
-const self = li.closest('li');       // Returns li itself if it matches!
+const self = li.closest('li')       // Returns li itself if it matches!
 ```
 
-The `closest()` method is incredibly useful for event delegation:
+The **[`closest()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)** method is incredibly useful for event delegation (see [Event Loop](/concepts/event-loop) for how events are processed):
 
 ```javascript
 // Handle clicks on any button inside a card
 document.addEventListener('click', (e) => {
-  const card = e.target.closest('.card');
+  const card = e.target.closest('.card')
   if (card) {
-    console.log('Clicked inside card:', card);
+    console.log('Clicked inside card:', card)
   }
-});
+})
 ```
 
 ### Traversing Sideways (To Siblings)
 
 ```javascript
-const secondLi = document.querySelectorAll('li')[1];
+const secondLi = document.querySelectorAll('li')[1]
 
 // Previous/next nodes (might be text!)
-const prevNode = secondLi.previousSibling;
-const nextNode = secondLi.nextSibling;
+const prevNode = secondLi.previousSibling
+const nextNode = secondLi.nextSibling
 
 // Previous/next ELEMENTS (usually what you want)
-const prevElement = secondLi.previousElementSibling;
-const nextElement = secondLi.nextElementSibling;
+const prevElement = secondLi.previousElementSibling
+const nextElement = secondLi.nextElementSibling
 
 // Returns null at the boundaries
-const firstLi = document.querySelector('li');
-console.log(firstLi.previousElementSibling);  // null (no previous sibling)
+const firstLi = document.querySelector('li')
+console.log(firstLi.previousElementSibling)  // null (no previous sibling)
 ```
 
 ### Node vs Element Properties Cheat Sheet
@@ -521,19 +530,19 @@ console.log(firstLi.previousElementSibling);  // null (no previous sibling)
 ```javascript
 // Get all ancestors of an element
 function getAncestors(element) {
-  const ancestors = [];
-  let current = element.parentElement;
+  const ancestors = []
+  let current = element.parentElement
   
   while (current && current !== document.body) {
-    ancestors.push(current);
-    current = current.parentElement;
+    ancestors.push(current)
+    current = current.parentElement
   }
   
-  return ancestors;
+  return ancestors
 }
 
-const deepElement = document.querySelector('.deeply-nested');
-console.log(getAncestors(deepElement));
+const deepElement = document.querySelector('.deeply-nested')
+console.log(getAncestors(deepElement))
 // [<div.parent>, <section>, <main>, ...]
 ```
 
@@ -545,36 +554,38 @@ The real power of the DOM is the ability to create, modify, and remove elements 
 
 ### Creating Elements
 
+Use **[`createElement()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/createElement)** to create new elements and **[`createTextNode()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/createTextNode)** to create text nodes:
+
 ```javascript
 // Create a new element
-const div = document.createElement('div');
-const span = document.createElement('span');
-const img = document.createElement('img');
+const div = document.createElement('div')
+const span = document.createElement('span')
+const img = document.createElement('img')
 
 // Create a text node
-const text = document.createTextNode('Hello, world!');
+const text = document.createTextNode('Hello, world!')
 
 // Create a comment node
-const comment = document.createComment('This is a comment');
+const comment = document.createComment('This is a comment')
 
 // Elements are created "detached" - not yet in the DOM!
-console.log(div.parentNode);  // null
+console.log(div.parentNode)  // null
 ```
 
 ### Adding Elements to the DOM
 
-There are many ways to add elements. Here's a comprehensive overview:
+There are many ways to add elements. Here's a comprehensive overview using methods like **[`appendChild()`](https://developer.mozilla.org/en-US/docs/Web/API/Node/appendChild)**, **[`insertBefore()`](https://developer.mozilla.org/en-US/docs/Web/API/Node/insertBefore)**, **[`append()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/append)**, and **[`prepend()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/prepend)**:
 
 <Tabs>
   <Tab title="appendChild()">
     Adds a node as the **last child** of a parent:
     
     ```javascript
-    const ul = document.querySelector('ul');
-    const li = document.createElement('li');
-    li.textContent = 'New item';
+    const ul = document.querySelector('ul')
+    const li = document.createElement('li')
+    li.textContent = 'New item'
     
-    ul.appendChild(li);
+    ul.appendChild(li)
     // <ul>
     //   <li>Existing</li>
     //   <li>New item</li>  ← Added at the end
@@ -585,12 +596,12 @@ There are many ways to add elements. Here's a comprehensive overview:
     Inserts a node **before** a reference node:
     
     ```javascript
-    const ul = document.querySelector('ul');
-    const existingLi = ul.querySelector('li');
-    const newLi = document.createElement('li');
-    newLi.textContent = 'First!';
+    const ul = document.querySelector('ul')
+    const existingLi = ul.querySelector('li')
+    const newLi = document.createElement('li')
+    newLi.textContent = 'First!'
     
-    ul.insertBefore(newLi, existingLi);
+    ul.insertBefore(newLi, existingLi)
     // <ul>
     //   <li>First!</li>    ← Inserted before
     //   <li>Existing</li>
@@ -601,42 +612,42 @@ There are many ways to add elements. Here's a comprehensive overview:
     Modern methods that accept multiple nodes AND strings:
     
     ```javascript
-    const div = document.querySelector('div');
+    const div = document.querySelector('div')
     
     // append() - adds to the END
-    div.append('Text', document.createElement('span'), 'More text');
+    div.append('Text', document.createElement('span'), 'More text')
     
     // prepend() - adds to the START
-    div.prepend(document.createElement('strong'));
+    div.prepend(document.createElement('strong'))
     ```
   </Tab>
   <Tab title="before() / after()">
     Insert as siblings (not children):
     
     ```javascript
-    const h1 = document.querySelector('h1');
+    const h1 = document.querySelector('h1')
     
     // Insert BEFORE h1 (as previous sibling)
-    h1.before(document.createElement('nav'));
+    h1.before(document.createElement('nav'))
     
     // Insert AFTER h1 (as next sibling)
-    h1.after(document.createElement('p'));
+    h1.after(document.createElement('p'))
     ```
   </Tab>
 </Tabs>
 
 ### insertAdjacentHTML() - The Swiss Army Knife
 
-For inserting HTML strings, `insertAdjacentHTML()` is powerful and fast:
+For inserting HTML strings, **[`insertAdjacentHTML()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML)** is powerful and fast:
 
 ```javascript
-const div = document.querySelector('div');
+const div = document.querySelector('div')
 
 // Four positions to insert:
-div.insertAdjacentHTML('beforebegin', '<p>Before div</p>');
-div.insertAdjacentHTML('afterbegin', '<p>First child of div</p>');
-div.insertAdjacentHTML('beforeend', '<p>Last child of div</p>');
-div.insertAdjacentHTML('afterend', '<p>After div</p>');
+div.insertAdjacentHTML('beforebegin', '<p>Before div</p>')
+div.insertAdjacentHTML('afterbegin', '<p>First child of div</p>')
+div.insertAdjacentHTML('beforeend', '<p>Last child of div</p>')
+div.insertAdjacentHTML('afterend', '<p>After div</p>')
 ```
 
 Visual representation:
@@ -658,74 +669,76 @@ Visual representation:
     Modern and simple—element removes itself:
     
     ```javascript
-    const element = document.querySelector('.to-remove');
-    element.remove();  // Gone!
+    const element = document.querySelector('.to-remove')
+    element.remove()  // Gone!
     ```
   </Tab>
   <Tab title="removeChild()">
     Classic method—remove via parent:
     
     ```javascript
-    const parent = document.querySelector('ul');
-    const child = parent.querySelector('li');
-    parent.removeChild(child);
+    const parent = document.querySelector('ul')
+    const child = parent.querySelector('li')
+    parent.removeChild(child)
     
     // Or remove from any element
-    element.parentNode.removeChild(element);
+    element.parentNode.removeChild(element)
     ```
   </Tab>
 </Tabs>
 
 ### Cloning Elements
 
+Use **[`cloneNode()`](https://developer.mozilla.org/en-US/docs/Web/API/Node/cloneNode)** to duplicate elements:
+
 ```javascript
-const original = document.querySelector('.card');
+const original = document.querySelector('.card')
 
 // Shallow clone (element only, no children)
-const shallow = original.cloneNode(false);
+const shallow = original.cloneNode(false)
 
 // Deep clone (element AND all descendants)
-const deep = original.cloneNode(true);
+const deep = original.cloneNode(true)
 
 // Clones are detached - must add to DOM
-document.body.appendChild(deep);
+document.body.appendChild(deep)
 ```
 
 <Warning>
 **ID Collision!** If you clone an element with an ID, you'll have duplicate IDs in your document (invalid HTML). Remove or change the ID after cloning:
 
 ```javascript
-const clone = original.cloneNode(true);
-clone.id = '';  // Remove ID
+const clone = original.cloneNode(true)
+clone.id = ''  // Remove ID
 // or
-clone.id = 'new-unique-id';
+clone.id = 'new-unique-id'
 ```
 </Warning>
 
 ### DocumentFragment - Batch Operations
 
-When adding many elements, using a `DocumentFragment` is more efficient:
+When adding many elements, using a **[`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment)** is more efficient:
 
 ```javascript
 // Bad: Multiple reflows
-const ul = document.querySelector('ul');
+const ul = document.querySelector('ul')
 for (let i = 0; i < 1000; i++) {
-  const li = document.createElement('li');
-  li.textContent = `Item ${i}`;
-  ul.appendChild(li);  // Triggers reflow each time!
+  const li = document.createElement('li')
+  li.textContent = `Item ${i}`
+  ul.appendChild(li)  // Triggers reflow each time!
 }
 
 // Good: Single reflow
-const ul = document.querySelector('ul');
-const fragment = document.createDocumentFragment();
+const ul = document.querySelector('ul')
+const fragment = document.createDocumentFragment()
 
 for (let i = 0; i < 1000; i++) {
-  const li = document.createElement('li');
-  li.textContent = `Item ${i}`;
-  fragment.appendChild(li);  // No reflow (fragment is detached)
+  const li = document.createElement('li')
+  li.textContent = `Item ${i}`
+  fragment.appendChild(li)  // No reflow (fragment is detached)
 }
 
-ul.appendChild(fragment);  // Single reflow!
+ul.appendChild(fragment)  // Single reflow!
 ```
 
 A `DocumentFragment` is a lightweight container that:
@@ -737,21 +750,21 @@ A `DocumentFragment` is a lightweight container that:
 
 ## Modifying Content
 
-Three properties let you read and write element content:
+Three properties let you read and write element content: **[`innerHTML`](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML)**, **[`textContent`](https://developer.mozilla.org/en-US/docs/Web/API/Node/textContent)**, and **[`innerText`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/innerText)**.
 
 ### innerHTML - Parse and Insert HTML
 
 ```javascript
-const div = document.querySelector('div');
+const div = document.querySelector('div')
 
 // Read HTML content
-console.log(div.innerHTML);  // "<p>Hello</p><span>World</span>"
+console.log(div.innerHTML)  // "<p>Hello</p><span>World</span>"
 
 // Write HTML content (parses the string!)
-div.innerHTML = '<h1>New Title</h1><p>New paragraph</p>';
+div.innerHTML = '<h1>New Title</h1><p>New paragraph</p>'
 
 // Clear all content
-div.innerHTML = '';
+div.innerHTML = ''
 ```
 
 <Warning>
@@ -761,10 +774,10 @@ Never use `innerHTML` with user-provided content:
 
 ```javascript
 // DANGEROUS! User could inject: <img src=x onerror="stealCookies()">
-div.innerHTML = userInput;  // NO!
+div.innerHTML = userInput  // NO!
 
 // Safe alternatives:
-div.textContent = userInput;  // Escapes HTML
+div.textContent = userInput  // Escapes HTML
 // or sanitize the input first
 ```
 </Warning>
@@ -772,14 +785,14 @@ div.textContent = userInput;  // Escapes HTML
 ### textContent - Plain Text Only
 
 ```javascript
-const div = document.querySelector('div');
+const div = document.querySelector('div')
 
 // Read text (ignores HTML tags)
 // <div><p>Hello</p><span>World</span></div>
-console.log(div.textContent);  // "HelloWorld"
+console.log(div.textContent)  // "HelloWorld"
 
 // Write text (HTML is escaped, not parsed)
-div.textContent = '<script>alert("XSS")</script>';
+div.textContent = '<script>alert("XSS")</script>'
 // Displays literally: <script>alert("XSS")</script>
 // Safe from XSS!
 ```
@@ -787,13 +800,13 @@ div.textContent = '<script>alert("XSS")</script>';
 ### innerText - Rendered Text
 
 ```javascript
-const div = document.querySelector('div');
+const div = document.querySelector('div')
 
 // innerText respects CSS visibility
 // <div>Hello <span style="display:none">Hidden</span> World</div>
 
-console.log(div.textContent);  // "Hello Hidden World"
-console.log(div.innerText);    // "Hello  World" (Hidden is excluded!)
+console.log(div.textContent)  // "Hello Hidden World"
+console.log(div.innerText)    // "Hello  World" (Hidden is excluded!)
 ```
 
 ### When to Use Each
@@ -809,36 +822,36 @@ console.log(div.innerText);    // "Hello  World" (Hidden is excluded!)
 // because innerText must calculate styles
 
 // Setting text content (both work, textContent is faster)
-element.textContent = 'Hello';  // Preferred
-element.innerText = 'Hello';    // Works but slower
+element.textContent = 'Hello'  // Preferred
+element.innerText = 'Hello'    // Works but slower
 ```
 
 ---
 
 ## Working with Attributes
 
-HTML elements have attributes. JavaScript lets you read, write, and remove them.
+HTML elements have attributes. JavaScript lets you read, write, and remove them using **[`getAttribute()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAttribute)**, **[`setAttribute()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/setAttribute)**, **[`hasAttribute()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/hasAttribute)**, and **[`removeAttribute()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/removeAttribute)**.
 
 ### Standard Attribute Methods
 
 ```javascript
-const link = document.querySelector('a');
+const link = document.querySelector('a')
 
 // Get attribute value
-const href = link.getAttribute('href');
-const target = link.getAttribute('target');
+const href = link.getAttribute('href')
+const target = link.getAttribute('target')
 
 // Set attribute value
-link.setAttribute('href', 'https://example.com');
-link.setAttribute('target', '_blank');
+link.setAttribute('href', 'https://example.com')
+link.setAttribute('target', '_blank')
 
 // Check if attribute exists
 if (link.hasAttribute('target')) {
-  console.log('Link opens in new tab');
+  console.log('Link opens in new tab')
 }
 
 // Remove attribute
-link.removeAttribute('target');
+link.removeAttribute('target')
 ```
 
 ### Properties vs Attributes: The Difference
@@ -850,20 +863,20 @@ This confuses many developers! **Attributes** are in the HTML. **Properties** ar
 ```
 
 ```javascript
-const input = document.querySelector('input');
+const input = document.querySelector('input')
 
 // ATTRIBUTE: The original HTML value
-console.log(input.getAttribute('value'));  // "initial"
+console.log(input.getAttribute('value'))  // "initial"
 
 // PROPERTY: The current state
-console.log(input.value);  // "initial"
+console.log(input.value)  // "initial"
 
 // User types "new text"...
-console.log(input.getAttribute('value'));  // Still "initial"!
-console.log(input.value);                  // "new text"
+console.log(input.getAttribute('value'))  // Still "initial"!
+console.log(input.value)                  // "new text"
 
 // Reset to attribute value
-input.value = input.getAttribute('value');
+input.value = input.getAttribute('value')
 ```
 
 Key differences:
@@ -877,21 +890,21 @@ Key differences:
 
 ```javascript
 // Attribute is always a string
-checkbox.getAttribute('checked');  // "" or null
+checkbox.getAttribute('checked')  // "" or null
 
 // Property is a boolean
-checkbox.checked;  // true or false
+checkbox.checked  // true or false
 
 // Attribute (string)
-input.getAttribute('maxlength');  // "10"
+input.getAttribute('maxlength')  // "10"
 
 // Property (number)
-input.maxLength;  // 10
+input.maxLength  // 10
 ```
 
 ### Data Attributes and the dataset API
 
-Custom data attributes start with `data-` and are accessible via the `dataset` property:
+Custom data attributes start with `data-` and are accessible via the **[`dataset`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/dataset)** property:
 
 ```html
 <div id="user" 
@@ -903,23 +916,23 @@ Custom data attributes start with `data-` and are accessible via the `dataset` p
 ```
 
 ```javascript
-const user = document.querySelector('#user');
+const user = document.querySelector('#user')
 
 // Read data attributes (camelCase!)
-console.log(user.dataset.userId);    // "123"
-console.log(user.dataset.role);      // "admin"
-console.log(user.dataset.isActive);  // "true" (string, not boolean!)
+console.log(user.dataset.userId)    // "123"
+console.log(user.dataset.role)      // "admin"
+console.log(user.dataset.isActive)  // "true" (string, not boolean!)
 
 // Write data attributes
-user.dataset.lastLogin = '2024-01-15';
+user.dataset.lastLogin = '2024-01-15'
 // Creates: data-last-login="2024-01-15"
 
 // Delete data attributes
-delete user.dataset.role;
+delete user.dataset.role
 
 // Check if exists
 if ('userId' in user.dataset) {
-  console.log('Has user ID');
+  console.log('Has user ID')
 }
 ```
 
@@ -946,27 +959,27 @@ element.title                 // element.getAttribute('title')
 
 ## Styling Elements
 
-JavaScript can modify element styles in several ways.
+JavaScript can modify element styles in several ways using the **[`style`](https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/style)** property and **[`classList`](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)** API.
 
 ### The style Property (Inline Styles)
 
 ```javascript
-const box = document.querySelector('.box');
+const box = document.querySelector('.box')
 
 // Set individual styles (camelCase!)
-box.style.backgroundColor = 'blue';
-box.style.fontSize = '20px';
-box.style.marginTop = '10px';
+box.style.backgroundColor = 'blue'
+box.style.fontSize = '20px'
+box.style.marginTop = '10px'
 
 // Read styles (only reads INLINE styles!)
-console.log(box.style.backgroundColor);  // "blue"
-console.log(box.style.color);            // "" (not inline, from stylesheet)
+console.log(box.style.backgroundColor)  // "blue"
+console.log(box.style.color)            // "" (not inline, from stylesheet)
 
 // Set multiple styles at once
-box.style.cssText = 'background: red; font-size: 16px; padding: 10px;';
+box.style.cssText = 'background: red; font-size: 16px; padding: 10px;'
 
 // Remove an inline style
-box.style.backgroundColor = '';  // Removes the style
+box.style.backgroundColor = ''  // Removes the style
 ```
 
 <Warning>
@@ -975,74 +988,76 @@ box.style.backgroundColor = '';  // Removes the style
 
 ### getComputedStyle() - Read Actual Styles
 
+Use **[`getComputedStyle()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/getComputedStyle)** to read the final computed styles:
+
 ```javascript
-const box = document.querySelector('.box');
+const box = document.querySelector('.box')
 
 // Get all computed styles
-const styles = getComputedStyle(box);
+const styles = getComputedStyle(box)
 
-console.log(styles.backgroundColor);  // "rgb(0, 0, 255)"
-console.log(styles.fontSize);         // "16px"
-console.log(styles.display);          // "block"
+console.log(styles.backgroundColor)  // "rgb(0, 0, 255)"
+console.log(styles.fontSize)         // "16px"
+console.log(styles.display)          // "block"
 
 // Get pseudo-element styles
-const beforeStyles = getComputedStyle(box, '::before');
-console.log(beforeStyles.content);    // '"Hello"'
+const beforeStyles = getComputedStyle(box, '::before')
+console.log(beforeStyles.content)    // '"Hello"'
 ```
 
 ### classList - Manipulate CSS Classes
 
-The `classList` API is the modern way to add/remove/toggle classes:
+The **[`classList`](https://developer.mozilla.org/en-US/docs/Web/API/Element/classList)** API is the modern way to add/remove/toggle classes:
 
 ```javascript
-const button = document.querySelector('button');
+const button = document.querySelector('button')
 
 // Add classes
-button.classList.add('active');
-button.classList.add('btn', 'btn-primary');  // Multiple at once
+button.classList.add('active')
+button.classList.add('btn', 'btn-primary')  // Multiple at once
 
 // Remove classes
-button.classList.remove('active');
-button.classList.remove('btn', 'btn-primary');  // Multiple at once
+button.classList.remove('active')
+button.classList.remove('btn', 'btn-primary')  // Multiple at once
 
 // Toggle (add if missing, remove if present)
-button.classList.toggle('active');
+button.classList.toggle('active')
 
 // Toggle with condition
-button.classList.toggle('active', isActive);  // Add if isActive is true
+button.classList.toggle('active', isActive)  // Add if isActive is true
 
 // Check if class exists
 if (button.classList.contains('active')) {
-  console.log('Button is active');
+  console.log('Button is active')
 }
 
 // Replace a class
-button.classList.replace('btn-primary', 'btn-secondary');
+button.classList.replace('btn-primary', 'btn-secondary')
 
 // Iterate over classes
-button.classList.forEach(cls => console.log(cls));
+button.classList.forEach(cls => console.log(cls))
 
 // Get number of classes
-console.log(button.classList.length);  // 2
+console.log(button.classList.length)  // 2
 ```
 
 ### className vs classList
 
 ```javascript
 // className is a string (old way)
-element.className = 'btn btn-primary';     // Replaces ALL classes
-element.className += ' active';            // Appending is clunky
+element.className = 'btn btn-primary'     // Replaces ALL classes
+element.className += ' active'            // Appending is clunky
 
 // classList is a DOMTokenList (modern way)
-element.classList.add('active');           // Adds without affecting others
-element.classList.remove('btn-primary');   // Removes specifically
+element.classList.add('active')           // Adds without affecting others
+element.classList.remove('btn-primary')   // Removes specifically
 ```
 
 ---
 
 ## The Render Tree & Critical Rendering Path
 
-Understanding how browsers render pages helps you write performant code.
+Understanding how browsers render pages helps you write performant code. This is where [JavaScript Engines](/concepts/javascript-engines) and the browser's rendering engine work together.
 
 ### From HTML to Pixels
 
@@ -1229,24 +1244,128 @@ getComputedStyle(element)
 
 ### Use requestAnimationFrame for Visual Changes
 
+Use **[`requestAnimationFrame()`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)** to batch visual changes with the browser's render cycle:
+
 ```javascript
 // Bad: DOM changes at unpredictable times
 window.addEventListener('scroll', () => {
-  element.style.transform = `translateY(${window.scrollY}px)`;
-});
+  element.style.transform = `translateY(${window.scrollY}px)`
+})
 
 // Good: Batch visual changes with next frame
-let ticking = false;
+let ticking = false
 window.addEventListener('scroll', () => {
   if (!ticking) {
     requestAnimationFrame(() => {
-      element.style.transform = `translateY(${window.scrollY}px)`;
-      ticking = false;
-    });
-    ticking = true;
+      element.style.transform = `translateY(${window.scrollY}px)`
+      ticking = false
+    })
+    ticking = true
   }
-});
+})
 ```
+
+---
+
+## The #1 DOM Mistake: Using innerHTML with User Input
+
+The most dangerous DOM mistake is using **[`innerHTML`](https://developer.mozilla.org/en-US/docs/Web/API/Element/innerHTML)** with untrusted content. This opens your application to **Cross-Site Scripting (XSS)** attacks.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    innerHTML: THE SECURITY TRAP                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ❌ DANGEROUS                              ✓ SAFE                        │
+│  ─────────────                             ──────                        │
+│                                                                          │
+│  User Input:                               User Input:                   │
+│  "<img src=x onerror=alert('XSS')>"       "<img src=x onerror=...>"     │
+│         │                                        │                       │
+│         ▼                                        ▼                       │
+│  element.innerHTML = userInput             element.textContent = input   │
+│         │                                        │                       │
+│         ▼                                        ▼                       │
+│  ┌─────────────────┐                      ┌─────────────────┐            │
+│  │ BROWSER PARSES  │                      │ DISPLAYED AS    │            │
+│  │ AS REAL HTML!   │                      │ PLAIN TEXT      │            │
+│  │                 │                      │                 │            │
+│  │ 🚨 Script runs! │                      │ "<img src=..."  │            │
+│  │ Cookies stolen! │                      │ (harmless)      │            │
+│  └─────────────────┘                      └─────────────────┘            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+```javascript
+// ❌ DANGEROUS - Never do this with user input!
+const username = getUserInput()  // User enters: <img src=x onerror="stealCookies()">
+div.innerHTML = `Welcome, ${username}!`
+// The malicious script EXECUTES!
+
+// ✓ SAFE - textContent escapes HTML
+const username = getUserInput()
+div.textContent = `Welcome, ${username}!`
+// Displays: Welcome, <img src=x onerror="stealCookies()">!
+// The HTML is shown as text, not executed
+
+// ✓ SAFE - Create elements programmatically
+const username = getUserInput()
+const welcomeText = document.createTextNode(`Welcome, ${username}!`)
+div.appendChild(welcomeText)
+```
+
+<Warning>
+**The Trap:** `innerHTML` looks convenient, but it parses strings as real HTML. If that string contains user input, attackers can inject `<script>` tags, malicious event handlers, or other dangerous code. **Always use `textContent` for user-provided content.**
+</Warning>
+
+### Other Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="Forgetting that querySelector returns null">
+    ```javascript
+    // ❌ WRONG - Crashes if element doesn't exist
+    document.querySelector('.maybe-missing').classList.add('active')
+    // TypeError: Cannot read property 'classList' of null
+    
+    // ✓ CORRECT - Check first or use optional chaining
+    const element = document.querySelector('.maybe-missing')
+    if (element) {
+      element.classList.add('active')
+    }
+    
+    // Or use optional chaining (modern)
+    document.querySelector('.maybe-missing')?.classList.add('active')
+    ```
+  </Accordion>
+  
+  <Accordion title="Using childNodes instead of children">
+    ```javascript
+    // ❌ CONFUSING - Includes whitespace text nodes!
+    const ul = document.querySelector('ul')
+    console.log(ul.childNodes.length)  // 7 (includes text nodes!)
+    
+    // ✓ CLEAR - Only element children
+    console.log(ul.children.length)  // 3 (just the <li> elements)
+    ```
+  </Accordion>
+  
+  <Accordion title="Layout thrashing in loops">
+    ```javascript
+    // ❌ SLOW - Forces layout on every iteration
+    boxes.forEach(box => {
+      const width = box.offsetWidth      // READ - forces layout
+      box.style.width = width + 10 + 'px' // WRITE - invalidates layout
+    })
+    
+    // ✓ FAST - Batch reads, then batch writes
+    const widths = boxes.map(box => box.offsetWidth)  // All reads
+    boxes.forEach((box, i) => {
+      box.style.width = widths[i] + 10 + 'px'          // All writes
+    })
+    ```
+  </Accordion>
+</AccordionGroup>
 
 ---
 
@@ -1254,27 +1373,27 @@ window.addEventListener('scroll', () => {
 
 ### Event Delegation
 
-Instead of adding listeners to many elements, add one to a parent:
+Instead of adding listeners to many elements, add one to a parent. This pattern relies on event bubbling (see [Event Loop](/concepts/event-loop) for how the browser processes events):
 
 ```javascript
 // Bad: Many listeners
 document.querySelectorAll('.btn').forEach(btn => {
-  btn.addEventListener('click', handleClick);
-});
+  btn.addEventListener('click', handleClick)
+})
 
 // Good: One listener with delegation
 document.querySelector('.button-container').addEventListener('click', (e) => {
-  const btn = e.target.closest('.btn');
+  const btn = e.target.closest('.btn')
   if (btn) {
-    handleClick(e);
+    handleClick(e)
   }
-});
+})
 ```
 
 Benefits:
 - Works for dynamically added elements
 - Less memory usage
-- Easier cleanup
+- Easier cleanup (uses [closures](/concepts/scope-and-closures) to maintain handler references)
 
 ### Checking if Element Exists
 
@@ -1297,17 +1416,19 @@ if (el !== null) {
 
 ### Waiting for DOM Ready
 
+Listen for the **[`DOMContentLoaded`](https://developer.mozilla.org/en-US/docs/Web/API/Document/DOMContentLoaded_event)** event to know when the DOM is ready:
+
 ```javascript
 // Modern: DOMContentLoaded (DOM ready, images may still be loading)
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('DOM is ready!');
+  console.log('DOM is ready!')
   // Safe to query elements
-});
+})
 
 // Full page load (including images, stylesheets)
 window.addEventListener('load', () => {
-  console.log('Everything loaded!');
-});
+  console.log('Everything loaded!')
+})
 
 // If script is at end of body, DOM is already ready
 // <script src="app.js"></script> <!-- Just before </body> -->
@@ -1530,9 +1651,26 @@ window.addEventListener('load', () => {
 
 ## Reference
 
-<Card title="Document Object Model (DOM) — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">
-  The comprehensive MDN reference for all DOM interfaces, methods, and properties.
-</Card>
+<CardGroup cols={2}>
+  <Card title="Document Object Model (DOM) — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">
+    The comprehensive MDN reference for all DOM interfaces, methods, and properties.
+  </Card>
+  <Card title="Document Interface — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Document">
+    The Document interface representing the web page loaded in the browser.
+  </Card>
+  <Card title="Element Interface — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Element">
+    The base class for all element objects in a Document.
+  </Card>
+  <Card title="Node Interface — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Node">
+    The abstract base class for DOM nodes including elements, text, and comments.
+  </Card>
+  <Card title="NodeList Interface — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/NodeList">
+    Collections of nodes returned by querySelectorAll and other methods.
+  </Card>
+  <Card title="HTMLCollection Interface — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection">
+    Live collections of elements returned by getElementsByClassName and similar.
+  </Card>
+</CardGroup>
 
 ## Books
 
