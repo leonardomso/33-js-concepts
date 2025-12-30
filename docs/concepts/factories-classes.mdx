@@ -1,41 +1,1618 @@
 ---
 title: "Factories and Classes"
-description: "Object creation patterns in JavaScript"
+description: "How to create objects in JavaScript — from factory functions to ES6 classes"
 ---
 
-## Overview
+## The Video Game Character Problem: A Real-World Analogy
 
-JavaScript provides multiple ways to create objects. ES6 introduced the `class` syntax, which provides a cleaner way to create objects and implement inheritance. Factory functions offer an alternative approach that can be more flexible in certain scenarios.
+Imagine you're building a video game. You need to create enemies — lots of them. Goblins, dragons, zombies, and bosses. Each enemy has a name, health points, attack power, and abilities.
+
+You start creating enemies one by one:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ THE COPY-PASTE NIGHTMARE                                             │
+│                                                                      │
+│   const goblin1 = { name: "Goblin", health: 100, attack: 10 };      │
+│   const goblin2 = { name: "Goblin", health: 100, attack: 10 };      │
+│   const goblin3 = { name: "Goblin", health: 100, attack: 10 };      │
+│   ... 997 more goblins ...                                          │
+│                                                                      │
+│   This is like hand-painting 1000 identical action figures!         │
+│                                                                      │
+│   Problems:                                                          │
+│   • Tedious and error-prone                                         │
+│   • What if you need to change goblin health to 150?                │
+│   • What if you need to add a new property to all goblins?          │
+│   • You'd have to edit 1000 objects!                                │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+The solution? Create a **blueprint** that can produce as many characters as you need:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ THE BLUEPRINT SOLUTION                                               │
+│                                                                      │
+│   ┌──────────────────┐                                              │
+│   │  ENEMY BLUEPRINT │         Creates:                             │
+│   │  ──────────────  │         ┌─────┐ ┌─────┐ ┌─────┐             │
+│   │  • name          │  ───►   │ 👹  │ │ 👹  │ │ 👹  │  ...        │
+│   │  • health: 100   │         └─────┘ └─────┘ └─────┘             │
+│   │  • attack: 10    │         goblin1  goblin2  goblin3            │
+│   │  • takeDamage()  │                                              │
+│   │  • attack()      │         Each one is independent,             │
+│   └──────────────────┘         but made from the same blueprint     │
+│                                                                      │
+│   Change the blueprint once → All new enemies get the change        │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+JavaScript gives us several ways to create these blueprints:
+
+1. **Factory Functions** — Functions that return objects (flexible, simple)
+2. **Constructor Functions** — Functions used with `new` (traditional)
+3. **ES6 Classes** — Modern syntax for constructors (clean, familiar)
+
+Let's learn each approach and understand when to use them.
+
+<Info>
+**What you'll learn in this guide:**
+- How to create objects using factory functions
+- How constructor functions and the `new` keyword work
+- ES6 class syntax and what "syntactic sugar" means
+- Private fields (#) and how they differ from closures
+- Static methods, getters, and setters
+- Inheritance with `extends` and `super`
+- Factory composition vs class inheritance
+- When to use factories vs classes
+</Info>
+
+---
+
+## Part 1: The Problem — Creating Multiple Objects
+
+### The Manual Approach (Don't Do This)
+
+Let's say you're building an RPG game. You need player characters:
+
+```javascript
+// Creating players manually — tedious and error-prone
+const player1 = {
+  name: "Alice",
+  health: 100,
+  level: 1,
+  attack() {
+    return `${this.name} attacks for ${10 + this.level * 2} damage!`;
+  },
+  takeDamage(amount) {
+    this.health -= amount;
+    if (this.health <= 0) {
+      return `${this.name} has been defeated!`;
+    }
+    return `${this.name} has ${this.health} health remaining.`;
+  }
+};
+
+const player2 = {
+  name: "Bob",
+  health: 100,
+  level: 1,
+  attack() {
+    return `${this.name} attacks for ${10 + this.level * 2} damage!`;
+  },
+  takeDamage(amount) {
+    this.health -= amount;
+    if (this.health <= 0) {
+      return `${this.name} has been defeated!`;
+    }
+    return `${this.name} has ${this.health} health remaining.`;
+  }
+};
+
+// ... 50 more players with the same code copied ...
+```
+
+### What's Wrong With This?
+
+| Problem | Why It's Bad |
+|---------|--------------|
+| **Repetition** | Same code copied over and over |
+| **Error-prone** | Easy to make typos or forget properties |
+| **Hard to maintain** | Change one thing? Change it everywhere |
+| **No consistency** | Nothing enforces that all players have the same structure |
+| **Memory waste** | Each object has its own copy of the methods |
+
+### What We Need
+
+We need a way to:
+- Define the structure **once**
+- Create as many objects as we need
+- Ensure all objects have the same properties and methods
+- Make changes in **one place** that affect all objects
+
+Let's explore three solutions: **Factory Functions**, **Constructor Functions**, and **ES6 Classes**.
+
+---
+
+## Part 2: Factory Functions — The Flexible Approach
+
+### What is a Factory Function?
+
+A **factory function** is a function that creates and returns objects. It's like a factory assembly line — you put in the specifications, and it produces the product.
+
+```javascript
+// A simple factory function
+function createPlayer(name) {
+  return {
+    name: name,
+    health: 100,
+    level: 1,
+    attack() {
+      return `${this.name} attacks for ${10 + this.level * 2} damage!`;
+    },
+    takeDamage(amount) {
+      this.health -= amount;
+      if (this.health <= 0) {
+        return `${this.name} has been defeated!`;
+      }
+      return `${this.name} has ${this.health} health remaining.`;
+    }
+  };
+}
+
+// Creating players is now easy!
+const alice = createPlayer("Alice");
+const bob = createPlayer("Bob");
+const charlie = createPlayer("Charlie");
+
+console.log(alice.attack());      // "Alice attacks for 12 damage!"
+console.log(bob.takeDamage(30));  // "Bob has 70 health remaining."
+```
+
+### Factory with Multiple Parameters
+
+```javascript
+function createEnemy(name, health, attackPower) {
+  return {
+    name,           // Shorthand: same as name: name
+    health,
+    attackPower,
+    isAlive: true,
+    
+    attack(target) {
+      return `${this.name} attacks ${target.name} for ${this.attackPower} damage!`;
+    },
+    
+    takeDamage(amount) {
+      this.health -= amount;
+      if (this.health <= 0) {
+        this.health = 0;
+        this.isAlive = false;
+        return `${this.name} has been defeated!`;
+      }
+      return `${this.name} has ${this.health} health remaining.`;
+    }
+  };
+}
+
+// Create different types of enemies
+const goblin = createEnemy("Goblin", 50, 10);
+const dragon = createEnemy("Dragon", 500, 50);
+const boss = createEnemy("Dark Lord", 1000, 100);
+
+console.log(goblin.attack(dragon));  // "Goblin attacks Dragon for 10 damage!"
+console.log(dragon.takeDamage(100)); // "Dragon has 400 health remaining."
+```
+
+### Factory with Configuration Object
+
+For many options, use a configuration object:
+
+```javascript
+function createCharacter(config) {
+  // Default values
+  const defaults = {
+    name: "Unknown",
+    health: 100,
+    maxHealth: 100,
+    level: 1,
+    experience: 0,
+    attackPower: 10,
+    defense: 5
+  };
+  
+  // Merge defaults with provided config
+  const settings = { ...defaults, ...config };
+  
+  return {
+    ...settings,
+    
+    attack(target) {
+      const damage = Math.max(0, this.attackPower - target.defense);
+      return `${this.name} deals ${damage} damage to ${target.name}!`;
+    },
+    
+    heal(amount) {
+      this.health = Math.min(this.maxHealth, this.health + amount);
+      return `${this.name} healed to ${this.health} health.`;
+    },
+    
+    gainExperience(amount) {
+      this.experience += amount;
+      if (this.experience >= this.level * 100) {
+        this.level++;
+        this.experience = 0;
+        this.attackPower += 5;
+        return `${this.name} leveled up to ${this.level}!`;
+      }
+      return `${this.name} gained ${amount} XP.`;
+    }
+  };
+}
+
+// Create characters with different configurations
+const warrior = createCharacter({
+  name: "Warrior",
+  health: 150,
+  maxHealth: 150,
+  attackPower: 20,
+  defense: 10
+});
+
+const mage = createCharacter({
+  name: "Mage",
+  health: 80,
+  maxHealth: 80,
+  attackPower: 30,
+  defense: 3
+});
+
+// Only override what you need
+const villager = createCharacter({ name: "Villager" });
+```
+
+### Factory with Private Variables (Closures)
+
+One of the most powerful features of factory functions is creating **truly private** variables using closures:
+
+```javascript
+function createBankAccount(ownerName, initialBalance = 0) {
+  // Private variables — NOT accessible from outside
+  let balance = initialBalance;
+  const transactionHistory = [];
+  
+  // Private function
+  function recordTransaction(type, amount) {
+    transactionHistory.push({
+      type,
+      amount,
+      balance,
+      date: new Date().toISOString()
+    });
+  }
+  
+  // Initialize
+  recordTransaction("opening", initialBalance);
+  
+  // Return public interface
+  return {
+    owner: ownerName,
+    
+    deposit(amount) {
+      if (amount <= 0) {
+        throw new Error("Deposit amount must be positive");
+      }
+      balance += amount;
+      recordTransaction("deposit", amount);
+      return `Deposited $${amount}. New balance: $${balance}`;
+    },
+    
+    withdraw(amount) {
+      if (amount <= 0) {
+        throw new Error("Withdrawal amount must be positive");
+      }
+      if (amount > balance) {
+        throw new Error("Insufficient funds");
+      }
+      balance -= amount;
+      recordTransaction("withdrawal", amount);
+      return `Withdrew $${amount}. New balance: $${balance}`;
+    },
+    
+    getBalance() {
+      return balance;
+    },
+    
+    getStatement() {
+      return transactionHistory.map(t => 
+        `${t.date}: ${t.type} $${t.amount} (Balance: $${t.balance})`
+      ).join('\n');
+    }
+  };
+}
+
+const account = createBankAccount("Alice", 1000);
+
+console.log(account.deposit(500));   // "Deposited $500. New balance: $1500"
+console.log(account.withdraw(200));  // "Withdrew $200. New balance: $1300"
+console.log(account.getBalance());   // 1300
+
+// Trying to access private variables — FAILS!
+console.log(account.balance);              // undefined
+console.log(account.transactionHistory);   // undefined
+
+// Can't cheat!
+account.balance = 1000000;                 // Does nothing useful
+console.log(account.getBalance());         // Still 1300
+```
+
+<Tip>
+**Why is this private?** The variables `balance` and `transactionHistory` exist only inside the factory function. The returned object's methods can access them through **closure**, but nothing outside can. This is true encapsulation!
+</Tip>
+
+### Factory Creating Different Types
+
+Factories can return different object types based on input:
+
+```javascript
+function createWeapon(type) {
+  const weapons = {
+    sword: {
+      name: "Iron Sword",
+      damage: 25,
+      speed: "medium",
+      attack() {
+        return `Slash with ${this.name} for ${this.damage} damage!`;
+      }
+    },
+    bow: {
+      name: "Longbow",
+      damage: 20,
+      speed: "fast",
+      range: 100,
+      attack() {
+        return `Fire an arrow for ${this.damage} damage from ${this.range}m away!`;
+      }
+    },
+    staff: {
+      name: "Magic Staff",
+      damage: 35,
+      speed: "slow",
+      manaCost: 10,
+      attack() {
+        return `Cast a spell for ${this.damage} damage! (Costs ${this.manaCost} mana)`;
+      }
+    }
+  };
+  
+  if (!weapons[type]) {
+    throw new Error(`Unknown weapon type: ${type}`);
+  }
+  
+  return { ...weapons[type] };  // Return a copy
+}
+
+const sword = createWeapon("sword");
+const bow = createWeapon("bow");
+const staff = createWeapon("staff");
+
+console.log(sword.attack());  // "Slash with Iron Sword for 25 damage!"
+console.log(bow.attack());    // "Fire an arrow for 20 damage from 100m away!"
+console.log(staff.attack());  // "Cast a spell for 35 damage! (Costs 10 mana)"
+```
+
+### When to Use Factory Functions
+
+<AccordionGroup>
+  <Accordion title="You need truly private data">
+    Factory functions with closures provide **real** privacy. Variables inside the factory can't be accessed or modified from outside — not even through hacks or reflection.
+  </Accordion>
+  
+  <Accordion title="You don't need instanceof checks">
+    Factory-created objects are plain objects. They don't have a special prototype chain, so `instanceof` won't work. If you need to check object types, use classes instead.
+  </Accordion>
+  
+  <Accordion title="You want flexibility over structure">
+    Factories can return different types of objects, partially constructed objects, or even primitives. Classes always return instances of that class.
+  </Accordion>
+  
+  <Accordion title="You prefer functional programming">
+    Factory functions fit well with functional programming patterns. They're just functions that return data.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Part 3: Constructor Functions — The Traditional Way
+
+### What is a Constructor Function?
+
+A **constructor function** is a regular function designed to be used with the `new` keyword. It's the traditional way to create objects in JavaScript (before ES6 classes).
+
+```javascript
+// Convention: Constructor names start with a capital letter
+function Player(name) {
+  // 'this' refers to the new object being created
+  this.name = name;
+  this.health = 100;
+  this.level = 1;
+  
+  this.attack = function() {
+    return `${this.name} attacks for ${10 + this.level * 2} damage!`;
+  };
+}
+
+// Create instances with 'new'
+const alice = new Player("Alice");
+const bob = new Player("Bob");
+
+console.log(alice.name);      // "Alice"
+console.log(bob.attack());    // "Bob attacks for 12 damage!"
+console.log(alice instanceof Player);  // true
+```
+
+### The `new` Keyword — What It Actually Does
+
+When you call `new Player("Alice")`, JavaScript performs **4 steps**:
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ WHAT new Player("Alice") DOES:                                       │
+│                                                                      │
+│ Step 1: Create a new empty object                                    │
+│         const obj = {};                                              │
+│                                                                      │
+│ Step 2: Link the object to the constructor's prototype               │
+│         Object.setPrototypeOf(obj, Player.prototype);                │
+│                                                                      │
+│ Step 3: Run the constructor with 'this' bound to the new object      │
+│         Player.call(obj, "Alice");                                   │
+│         // Now obj.name = "Alice", obj.health = 100, etc.            │
+│                                                                      │
+│ Step 4: Return the object (unless constructor returns an object)     │
+│         return obj;                                                  │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+Here's a function that does what `new` does:
+
+```javascript
+function myNew(Constructor, ...args) {
+  // Step 1 & 2: Create object with correct prototype
+  const obj = Object.create(Constructor.prototype);
+  
+  // Step 3: Run constructor with 'this' = obj
+  const result = Constructor.apply(obj, args);
+  
+  // Step 4: Return result if it's an object, otherwise return obj
+  return (result !== null && typeof result === 'object') ? result : obj;
+}
+
+// These do the same thing:
+const player1 = new Player("Alice");
+const player2 = myNew(Player, "Bob");
+```
+
+### Adding Methods to the Prototype
+
+There's a problem with our constructor: **each instance gets its own copy of methods**:
+
+```javascript
+function Player(name) {
+  this.name = name;
+  this.health = 100;
+  
+  // BAD: Every player gets their own copy of this function
+  this.attack = function() {
+    return `${this.name} attacks!`;
+  };
+}
+
+const p1 = new Player("Alice");
+const p2 = new Player("Bob");
+
+// These are different functions!
+console.log(p1.attack === p2.attack);  // false
+
+// 1000 players = 1000 copies of attack function = wasted memory!
+```
+
+The solution is to put methods on the **prototype**:
+
+```javascript
+function Player(name) {
+  this.name = name;
+  this.health = 100;
+  // Don't put methods here!
+}
+
+// Add methods to the prototype — shared by all instances
+Player.prototype.attack = function() {
+  return `${this.name} attacks!`;
+};
+
+Player.prototype.takeDamage = function(amount) {
+  this.health -= amount;
+  return `${this.name} has ${this.health} health.`;
+};
+
+const p1 = new Player("Alice");
+const p2 = new Player("Bob");
+
+// Now they share the same function!
+console.log(p1.attack === p2.attack);  // true
+
+// 1000 players = 1 copy of attack function = efficient!
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ PROTOTYPE CHAIN                                                      │
+│                                                                      │
+│   Player.prototype                                                   │
+│   ┌─────────────────────────┐                                       │
+│   │ attack: function()      │                                       │
+│   │ takeDamage: function()  │◄──── Shared by all instances          │
+│   └─────────────────────────┘                                       │
+│              ▲                                                       │
+│              │ [[Prototype]]                                         │
+│              │                                                       │
+│   ┌──────────┴──────────┐                                           │
+│   │                     │                                           │
+│   ▼                     ▼                                           │
+│ ┌─────────┐         ┌─────────┐                                     │
+│ │ p1      │         │ p2      │                                     │
+│ │─────────│         │─────────│                                     │
+│ │name:    │         │name:    │                                     │
+│ │"Alice"  │         │"Bob"    │                                     │
+│ │health:  │         │health:  │                                     │
+│ │100      │         │100      │                                     │
+│ └─────────┘         └─────────┘                                     │
+│                                                                      │
+│ Each instance has its own data, but shares methods via prototype    │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### The `instanceof` Operator
+
+`instanceof` checks if an object was created by a constructor:
+
+```javascript
+function Player(name) {
+  this.name = name;
+}
+
+function Enemy(name) {
+  this.name = name;
+}
+
+const alice = new Player("Alice");
+const goblin = new Enemy("Goblin");
+
+console.log(alice instanceof Player);  // true
+console.log(alice instanceof Enemy);   // false
+console.log(goblin instanceof Enemy);  // true
+console.log(goblin instanceof Player); // false
+
+// Both are instances of Object
+console.log(alice instanceof Object);  // true
+console.log(goblin instanceof Object); // true
+```
+
+### The Problem: Forgetting `new`
+
+```javascript
+function Player(name) {
+  this.name = name;
+  this.health = 100;
+}
+
+// Oops! Forgot 'new'
+const alice = Player("Alice");
+
+console.log(alice);        // undefined (function returned nothing)
+console.log(name);         // "Alice" — LEAKED to global scope!
+console.log(health);       // 100 — ALSO leaked!
+
+// In strict mode, this would throw an error instead
+// 'use strict';
+// Player("Alice");  // TypeError: Cannot set property 'name' of undefined
+```
+
+<Warning>
+Always use `new` with constructor functions! Without it, `this` refers to the global object (or `undefined` in strict mode), causing bugs that are hard to track down.
+</Warning>
+
+---
+
+## Part 4: ES6 Classes — The Modern Syntax
+
+### What Are Classes?
+
+ES6 **classes** are a cleaner syntax for creating constructor functions. They do the same thing as constructors + prototypes, but with nicer syntax.
+
+```javascript
+class Player {
+  constructor(name) {
+    this.name = name;
+    this.health = 100;
+    this.level = 1;
+  }
+  
+  attack() {
+    return `${this.name} attacks for ${10 + this.level * 2} damage!`;
+  }
+  
+  takeDamage(amount) {
+    this.health -= amount;
+    if (this.health <= 0) {
+      return `${this.name} has been defeated!`;
+    }
+    return `${this.name} has ${this.health} health remaining.`;
+  }
+}
+
+const alice = new Player("Alice");
+console.log(alice.attack());       // "Alice attacks for 12 damage!"
+console.log(alice instanceof Player);  // true
+```
+
+### Classes Are "Syntactic Sugar"
+
+Classes don't add new functionality — they're just a nicer way to write constructor functions. Under the hood, they work exactly the same:
+
+<Tabs>
+  <Tab title="ES6 Class">
+    ```javascript
+    class Enemy {
+      constructor(name, health) {
+        this.name = name;
+        this.health = health;
+      }
+      
+      attack() {
+        return `${this.name} attacks!`;
+      }
+      
+      static createBoss(name) {
+        return new Enemy(name, 1000);
+      }
+    }
+    ```
+  </Tab>
+  
+  <Tab title="Equivalent ES5">
+    ```javascript
+    function Enemy(name, health) {
+      this.name = name;
+      this.health = health;
+    }
+    
+    Enemy.prototype.attack = function() {
+      return `${this.name} attacks!`;
+    };
+    
+    Enemy.createBoss = function(name) {
+      return new Enemy(name, 1000);
+    };
+    ```
+  </Tab>
+</Tabs>
+
+Both create objects with the same structure:
+
+```javascript
+// Both versions produce:
+const goblin = new Enemy("Goblin", 100);
+
+console.log(typeof Enemy);                    // "function" (classes ARE functions!)
+console.log(goblin.constructor === Enemy);    // true
+console.log(goblin.__proto__ === Enemy.prototype);  // true
+```
+
+### Class Syntax Breakdown
+
+```javascript
+class Character {
+  // Class field (public property with default value)
+  level = 1;
+  experience = 0;
+  
+  // Constructor — called when you use 'new'
+  constructor(name, health = 100) {
+    this.name = name;
+    this.health = health;
+  }
+  
+  // Instance method — available on all instances
+  attack() {
+    return `${this.name} attacks!`;
+  }
+  
+  // Another instance method
+  heal(amount) {
+    this.health += amount;
+    return `${this.name} healed to ${this.health} HP.`;
+  }
+  
+  // Getter — accessed like a property
+  get isAlive() {
+    return this.health > 0;
+  }
+  
+  // Setter — assigned like a property
+  set healthPoints(value) {
+    this.health = Math.max(0, value);  // Can't go below 0
+  }
+  
+  // Static method — called on the class, not instances
+  static createHero(name) {
+    return new Character(name, 150);
+  }
+  
+  // Static property
+  static MAX_LEVEL = 99;
+}
+
+// Usage
+const hero = Character.createHero("Alice");  // Static method
+console.log(hero.attack());                  // Instance method
+console.log(hero.isAlive);                   // Getter (no parentheses!)
+hero.healthPoints = -50;                     // Setter
+console.log(hero.health);                    // 0 (setter prevented negative)
+console.log(Character.MAX_LEVEL);            // 99 (static property)
+```
+
+### Static Methods and Properties
+
+**Static** members belong to the class itself, not to instances:
+
+```javascript
+class MathUtils {
+  // Static properties
+  static PI = 3.14159;
+  static E = 2.71828;
+  
+  // Static methods
+  static square(x) {
+    return x * x;
+  }
+  
+  static cube(x) {
+    return x * x * x;
+  }
+  
+  static randomBetween(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+}
+
+// Access via class name
+console.log(MathUtils.PI);           // 3.14159
+console.log(MathUtils.square(5));    // 25
+
+// NOT via instances!
+const utils = new MathUtils();
+console.log(utils.PI);               // undefined
+console.log(utils.square);           // undefined
+```
+
+**Common uses for static methods:**
+- Factory methods (`User.fromJSON(data)`)
+- Utility functions (`Array.isArray(value)`)
+- Singleton patterns (`Config.getInstance()`)
+
+### Getters and Setters
+
+Getters and setters let you define computed properties and add validation:
+
+```javascript
+class Temperature {
+  constructor(celsius) {
+    this._celsius = celsius;  // Convention: underscore = "private"
+  }
+  
+  // Getter: accessed like a property
+  get celsius() {
+    return this._celsius;
+  }
+  
+  // Setter: assigned like a property
+  set celsius(value) {
+    if (value < -273.15) {
+      throw new Error("Temperature below absolute zero!");
+    }
+    this._celsius = value;
+  }
+  
+  // Computed getter: fahrenheit from celsius
+  get fahrenheit() {
+    return this._celsius * 9/5 + 32;
+  }
+  
+  // Computed setter: set celsius from fahrenheit
+  set fahrenheit(value) {
+    this.celsius = (value - 32) * 5/9;  // Uses celsius setter for validation
+  }
+  
+  // Read-only getter (no setter)
+  get kelvin() {
+    return this._celsius + 273.15;
+  }
+}
+
+const temp = new Temperature(25);
+
+console.log(temp.celsius);     // 25
+console.log(temp.fahrenheit);  // 77
+console.log(temp.kelvin);      // 298.15
+
+temp.fahrenheit = 100;         // Set via fahrenheit
+console.log(temp.celsius);     // 37.78 (converted)
+
+// temp.celsius = -300;        // Error: Temperature below absolute zero!
+// temp.kelvin = 0;            // Error: no setter (read-only)
+```
+
+### Private Fields (#) — True Privacy
+
+ES2022 introduced **private fields** with the `#` prefix. Unlike the `_underscore` convention, these are **truly private**:
+
+```javascript
+class BankAccount {
+  // Private fields — declared with #
+  #balance = 0;
+  #pin;
+  #transactionHistory = [];
+  
+  constructor(ownerName, initialBalance, pin) {
+    this.ownerName = ownerName;  // Public
+    this.#balance = initialBalance;
+    this.#pin = pin;
+  }
+  
+  // Private method
+  #recordTransaction(type, amount) {
+    this.#transactionHistory.push({
+      type,
+      amount,
+      balance: this.#balance,
+      date: new Date()
+    });
+  }
+  
+  // Private method for PIN verification
+  #verifyPin(pin) {
+    return this.#pin === pin;
+  }
+  
+  // Public methods
+  deposit(amount) {
+    if (amount <= 0) throw new Error("Invalid amount");
+    this.#balance += amount;
+    this.#recordTransaction("deposit", amount);
+    return this.#balance;
+  }
+  
+  withdraw(amount, pin) {
+    if (!this.#verifyPin(pin)) {
+      throw new Error("Invalid PIN");
+    }
+    if (amount > this.#balance) {
+      throw new Error("Insufficient funds");
+    }
+    this.#balance -= amount;
+    this.#recordTransaction("withdrawal", amount);
+    return this.#balance;
+  }
+  
+  getBalance(pin) {
+    if (!this.#verifyPin(pin)) {
+      throw new Error("Invalid PIN");
+    }
+    return this.#balance;
+  }
+}
+
+const account = new BankAccount("Alice", 1000, "1234");
+
+account.deposit(500);
+console.log(account.withdraw(200, "1234"));  // 1300
+console.log(account.getBalance("1234"));     // 1300
+
+// Trying to access private fields — ALL FAIL
+// account.#balance;           // SyntaxError!
+// account.#pin;               // SyntaxError!
+// account.#verifyPin("1234"); // SyntaxError!
+
+console.log(account.balance);  // undefined (different property)
+```
+
+### Private Fields (#) vs Closure-Based Privacy
+
+Both provide true privacy, but they work differently:
+
+| Feature | Private Fields (#) | Closures (Factory) |
+|---------|-------------------|-------------------|
+| Syntax | `this.#field` | `let variable` inside function |
+| Access error | SyntaxError | Returns `undefined` |
+| Memory | Efficient (prototype methods) | Each instance has own methods |
+| `instanceof` | Works | Doesn't work |
+| Inheritance | Private per class | Not inherited |
+| Debugger visibility | Visible but inaccessible | Visible in closure scope |
+
+```javascript
+// Private Fields (#)
+class Wallet {
+  #balance = 0;
+  
+  deposit(amount) { this.#balance += amount; }
+  getBalance() { return this.#balance; }
+}
+
+const w1 = new Wallet();
+const w2 = new Wallet();
+console.log(w1.deposit === w2.deposit);  // true (shared via prototype)
+
+// Closure-based (Factory)
+function createWallet() {
+  let balance = 0;
+  
+  return {
+    deposit(amount) { balance += amount; },
+    getBalance() { return balance; }
+  };
+}
+
+const w3 = createWallet();
+const w4 = createWallet();
+console.log(w3.deposit === w4.deposit);  // false (each has own copy)
+```
+
+---
+
+## Part 5: Inheritance — Extending Behavior
+
+### Class Inheritance with `extends`
+
+Use `extends` to create a class that inherits from another:
+
+```javascript
+// Base class (parent)
+class Character {
+  constructor(name, health) {
+    this.name = name;
+    this.health = health;
+  }
+  
+  attack() {
+    return `${this.name} attacks!`;
+  }
+  
+  takeDamage(amount) {
+    this.health -= amount;
+    return `${this.name} has ${this.health} HP left.`;
+  }
+  
+  isAlive() {
+    return this.health > 0;
+  }
+}
+
+// Derived class (child)
+class Warrior extends Character {
+  constructor(name) {
+    super(name, 150);  // Call parent constructor
+    this.armor = 20;   // Add new property
+  }
+  
+  // Override parent method
+  takeDamage(amount) {
+    const reduced = Math.max(0, amount - this.armor);
+    return super.takeDamage(reduced);  // Call parent method
+  }
+  
+  // New method only for Warriors
+  shieldBash() {
+    return `${this.name} bashes with shield for ${this.armor} damage!`;
+  }
+}
+
+// Another derived class
+class Mage extends Character {
+  constructor(name) {
+    super(name, 80);   // Mages have less health
+    this.mana = 100;
+  }
+  
+  // Override with different behavior
+  attack() {
+    if (this.mana >= 10) {
+      this.mana -= 10;
+      return `${this.name} casts fireball for 50 damage! (Mana: ${this.mana})`;
+    }
+    return `${this.name} is out of mana! Basic attack for 5 damage.`;
+  }
+  
+  meditate() {
+    this.mana = Math.min(100, this.mana + 30);
+    return `${this.name} meditates. Mana: ${this.mana}`;
+  }
+}
+
+// Usage
+const conan = new Warrior("Conan");
+const gandalf = new Mage("Gandalf");
+
+console.log(conan.attack());         // "Conan attacks!"
+console.log(conan.takeDamage(30));   // "Conan has 140 HP left." (reduced by armor)
+console.log(conan.shieldBash());     // "Conan bashes with shield for 20 damage!"
+
+console.log(gandalf.attack());       // "Gandalf casts fireball for 50 damage! (Mana: 90)"
+console.log(gandalf.meditate());     // "Gandalf meditates. Mana: 100"
+
+// instanceof works through the chain
+console.log(conan instanceof Warrior);    // true
+console.log(conan instanceof Character);  // true
+console.log(gandalf instanceof Mage);     // true
+console.log(gandalf instanceof Warrior);  // false
+```
+
+### The `super` Keyword
+
+`super` does two things:
+
+1. **In constructor:** Calls the parent's constructor (`super(...)`)
+2. **In methods:** Accesses parent's methods (`super.method()`)
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    return `${this.name} makes a sound.`;
+  }
+}
+
+class Dog extends Animal {
+  constructor(name, breed) {
+    // MUST call super() before using 'this' in derived class
+    super(name);  // Calls Animal's constructor
+    this.breed = breed;
+  }
+  
+  speak() {
+    // Call parent method and add to it
+    const parentSays = super.speak();
+    return `${parentSays} Specifically: Woof!`;
+  }
+}
+
+const rex = new Dog("Rex", "German Shepherd");
+console.log(rex.speak());
+// "Rex makes a sound. Specifically: Woof!"
+```
+
+<Warning>
+**In a derived class constructor, you MUST call `super()` before using `this`.** JavaScript needs to initialize the parent part of the object first.
+
+```javascript
+class Child extends Parent {
+  constructor(name) {
+    // this.name = name;  // ERROR! Can't use 'this' yet
+    super();              // Must call super first
+    this.name = name;     // Now 'this' is available
+  }
+}
+```
+</Warning>
+
+### The Problem with Deep Inheritance
+
+Inheritance can become problematic with deep hierarchies:
+
+```javascript
+// The "Gorilla-Banana Problem"
+class Animal { }
+class Mammal extends Animal { }
+class Primate extends Mammal { }
+class Ape extends Primate { }
+class Gorilla extends Ape { }
+
+// You wanted a banana, but you got the whole jungle!
+// - Deep chains are hard to understand
+// - Changes to parent classes can break children
+// - Tight coupling between classes
+```
+
+### Factory Composition — A Flexible Alternative
+
+Instead of inheritance ("is-a"), use composition ("has-a"):
+
+```javascript
+// Define behaviors as small, focused functions
+const canWalk = (state) => ({
+  walk() {
+    state.position += state.speed;
+    return `${state.name} walks to position ${state.position}`;
+  }
+});
+
+const canSwim = (state) => ({
+  swim() {
+    state.position += state.speed * 1.5;
+    return `${state.name} swims to position ${state.position}`;
+  }
+});
+
+const canFly = (state) => ({
+  fly() {
+    state.position += state.speed * 3;
+    return `${state.name} flies to position ${state.position}`;
+  }
+});
+
+const canSpeak = (state) => ({
+  speak(message) {
+    return `${state.name} says: "${message}"`;
+  }
+});
+
+// Compose characters by mixing behaviors
+function createDuck(name) {
+  const state = { name, position: 0, speed: 2 };
+  
+  return {
+    name: state.name,
+    ...canWalk(state),
+    ...canSwim(state),
+    ...canFly(state),
+    ...canSpeak(state),
+    getPosition: () => state.position
+  };
+}
+
+function createPenguin(name) {
+  const state = { name, position: 0, speed: 1 };
+  
+  return {
+    name: state.name,
+    ...canWalk(state),
+    ...canSwim(state),
+    // No canFly! Penguins can't fly
+    ...canSpeak(state),
+    getPosition: () => state.position
+  };
+}
+
+function createFish(name) {
+  const state = { name, position: 0, speed: 4 };
+  
+  return {
+    name: state.name,
+    ...canSwim(state),
+    // Fish can only swim
+    getPosition: () => state.position
+  };
+}
+
+// Usage
+const donald = createDuck("Donald");
+donald.walk();    // "Donald walks to position 2"
+donald.swim();    // "Donald swims to position 5"
+donald.fly();     // "Donald flies to position 11"
+donald.speak("Quack!");  // 'Donald says: "Quack!"'
+
+const tux = createPenguin("Tux");
+tux.walk();       // Works
+tux.swim();       // Works
+// tux.fly();     // TypeError: tux.fly is not a function
+
+const nemo = createFish("Nemo");
+nemo.swim();      // Works
+// nemo.walk();   // TypeError: nemo.walk is not a function
+// nemo.fly();    // TypeError: nemo.fly is not a function
+```
+
+### Inheritance vs Composition
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ INHERITANCE (is-a)                                                   │
+│                                                                      │
+│     Animal                    Problem: What about flying fish?       │
+│       │                       What about penguins that can't fly?    │
+│       ├── Bird (can fly)      What about bats (mammals that fly)?    │
+│       │    └── Penguin ???                                          │
+│       ├── Fish (can swim)     You end up with awkward hierarchies   │
+│       │    └── FlyingFish ??? or lots of override methods.          │
+│       └── Mammal                                                     │
+│            └── Bat ???                                               │
+└─────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────┐
+│ COMPOSITION (has-a)                                                  │
+│                                                                      │
+│   Behaviors:          Characters:                                    │
+│   ┌─────────┐         ┌───────────────────────────────────────┐     │
+│   │ canWalk │─────────│ Duck = canWalk + canSwim + canFly     │     │
+│   └─────────┘         │ Penguin = canWalk + canSwim           │     │
+│   ┌─────────┐         │ Fish = canSwim                        │     │
+│   │ canSwim │─────────│ FlyingFish = canSwim + canFly         │     │
+│   └─────────┘         │ Bat = canWalk + canFly                │     │
+│   ┌─────────┐         └───────────────────────────────────────┘     │
+│   │ canFly  │                                                        │
+│   └─────────┘         Mix and match any combination!                 │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+| Aspect | Inheritance | Composition |
+|--------|-------------|-------------|
+| Relationship | "is-a" (Dog is an Animal) | "has-a" (Duck has flying ability) |
+| Flexibility | Rigid hierarchy | Mix and match behaviors |
+| Reuse | Through parent chain | Through behavior functions |
+| Coupling | Tight (child depends on parent) | Loose (behaviors are independent) |
+| Testing | Harder (need parent context) | Easier (test behaviors in isolation) |
+| Best for | Clear hierarchies, `instanceof` needed | Flexible combinations, multiple behaviors |
+
+---
+
+## Part 6: Factory vs Class — When to Use Each
+
+### Side-by-Side Comparison
+
+| Feature | Factory Function | ES6 Class |
+|---------|-----------------|-----------|
+| **Syntax** | Regular function | `class` keyword |
+| **`new` keyword** | Not needed | Required |
+| **`instanceof`** | Doesn't work | Works |
+| **True privacy** | Closures | Private fields (#) |
+| **Memory efficiency** | Each instance has own methods | Methods shared via prototype |
+| **`this` binding** | Not an issue (no `this` in returned object) | Must be careful with `this` |
+| **Inheritance** | Composition (flexible) | `extends` (hierarchical) |
+| **Familiarity** | Functional style | OOP style (familiar to Java/C# devs) |
+
+### When to Use Factory Functions
+
+<CardGroup cols={2}>
+  <Card title="Need true privacy" icon="lock">
+    Closure-based privacy can't be circumvented
+  </Card>
+  <Card title="No instanceof needed" icon="ban">
+    You don't need to check object types
+  </Card>
+  <Card title="Composition over inheritance" icon="puzzle-piece">
+    Mix and match behaviors flexibly
+  </Card>
+  <Card title="Functional programming style" icon="code">
+    Fits well with functional patterns
+  </Card>
+</CardGroup>
+
+### When to Use Classes
+
+<CardGroup cols={2}>
+  <Card title="Need instanceof" icon="check">
+    Type checking at runtime
+  </Card>
+  <Card title="Clear hierarchies" icon="sitemap">
+    When "is-a" relationships make sense
+  </Card>
+  <Card title="Team familiarity" icon="users">
+    Team knows OOP from other languages
+  </Card>
+  <Card title="Framework requirements" icon="cubes">
+    React components, Angular services, etc.
+  </Card>
+</CardGroup>
+
+### Decision Guide
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│ WHICH SHOULD I USE?                                                  │
+│                                                                      │
+│ Do you need instanceof checks?                                       │
+│   YES ──► Use Class                                                  │
+│   NO  ──▼                                                            │
+│                                                                      │
+│ Do you need a clear inheritance hierarchy?                           │
+│   YES ──► Use Class with extends                                     │
+│   NO  ──▼                                                            │
+│                                                                      │
+│ Do you need to mix multiple behaviors?                               │
+│   YES ──► Use Factory with composition                               │
+│   NO  ──▼                                                            │
+│                                                                      │
+│ Do you need truly private data?                                      │
+│   YES ──► Either works (Factory closures OR Class with #)            │
+│   NO  ──▼                                                            │
+│                                                                      │
+│ Is your team familiar with OOP?                                      │
+│   YES ──► Use Class (more familiar syntax)                           │
+│   NO  ──► Use Factory (simpler mental model)                         │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### Real-World Examples
+
+**React Components (Classes → Functions)**
+```javascript
+// Old: Class components
+class Button extends React.Component {
+  render() {
+    return <button>{this.props.label}</button>;
+  }
+}
+
+// Modern: Function components (like factories)
+function Button({ label }) {
+  return <button>{label}</button>;
+}
+```
+
+**Game Entities (Classes for hierarchy)**
+```javascript
+class Entity { }
+class Character extends Entity { }
+class Player extends Character { }
+class NPC extends Character { }
+```
+
+**Utility Objects (Factories for flexibility)**
+```javascript
+const logger = createLogger({ level: 'debug', prefix: '[App]' });
+const cache = createCache({ maxSize: 100, ttl: 3600 });
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**Key Points to Remember:**
+
+1. **Factory functions** are regular functions that return objects — simple and flexible
+
+2. **Constructor functions** are used with `new` to create instances — the traditional approach
+
+3. **ES6 classes** are syntactic sugar over constructors — cleaner syntax, same behavior
+
+4. **The `new` keyword** creates an object, links its prototype, runs the constructor, and returns the result
+
+5. **Prototype methods** are shared by all instances — saves memory
+
+6. **Private fields (#)** provide true privacy in classes — can't be accessed from outside
+
+7. **Closures** provide true privacy in factories — variables trapped in function scope
+
+8. **Static methods** belong to the class itself, not instances — use for utilities and factory methods
+
+9. **Inheritance (`extends`)** creates "is-a" relationships — use for clear hierarchies
+
+10. **Composition** creates "has-a" relationships — more flexible than inheritance
+
+11. **Use classes** when you need `instanceof`, clear hierarchies, or team familiarity
+
+12. **Use factories** when you need composition, true privacy, or functional style
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What are the 4 steps the new keyword performs?">
+    **Answer:**
+    
+    When you call `new Constructor(args)`:
+    
+    1. **Create** a new empty object (`{}`)
+    2. **Link** the object's prototype to `Constructor.prototype`
+    3. **Execute** the constructor with `this` bound to the new object
+    4. **Return** the object (unless constructor returns a different object)
+    
+    ```javascript
+    function myNew(Constructor, ...args) {
+      const obj = Object.create(Constructor.prototype);  // Steps 1-2
+      const result = Constructor.apply(obj, args);       // Step 3
+      return (typeof result === 'object' && result !== null) ? result : obj;  // Step 4
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: What's the difference between instance methods and prototype methods?">
+    **Answer:**
+    
+    **Instance methods** are defined in the constructor — each instance gets its own copy:
+    ```javascript
+    function Player(name) {
+      this.attack = function() { };  // Each player has own attack function
+    }
+    ```
+    
+    **Prototype methods** are shared by all instances — more memory efficient:
+    ```javascript
+    Player.prototype.attack = function() { };  // All players share one function
+    ```
+    
+    In ES6 classes, methods defined in the class body are automatically prototype methods:
+    ```javascript
+    class Player {
+      attack() { }  // This goes on Player.prototype
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: How do private fields (#) differ from closure-based privacy?">
+    **Answer:**
+    
+    | Aspect | Private Fields (#) | Closures |
+    |--------|-------------------|----------|
+    | Syntax | `this.#field` | `let variable` in factory |
+    | Error on access | SyntaxError | Returns `undefined` |
+    | Memory | Efficient (shared methods) | Each instance has own methods |
+    | `instanceof` | Works | Doesn't work |
+    
+    ```javascript
+    // Private Fields
+    class Wallet {
+      #balance = 0;
+      getBalance() { return this.#balance; }
+    }
+    // w.#balance throws SyntaxError
+    
+    // Closures
+    function createWallet() {
+      let balance = 0;
+      return { getBalance() { return balance; } };
+    }
+    // w.balance returns undefined
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: What does super() do and when must you call it?">
+    **Answer:**
+    
+    `super()` calls the parent class's constructor. You **must** call it in a derived class constructor **before** using `this`.
+    
+    ```javascript
+    class Animal {
+      constructor(name) {
+        this.name = name;
+      }
+    }
+    
+    class Dog extends Animal {
+      constructor(name, breed) {
+        // this.breed = breed;  // ERROR! Can't use 'this' yet
+        super(name);            // Call parent constructor first
+        this.breed = breed;     // Now 'this' is available
+      }
+    }
+    ```
+    
+    `super.method()` calls a parent's method from within an overriding method.
+  </Accordion>
+  
+  <Accordion title="Question 5: When would you use composition over inheritance?">
+    **Answer:**
+    
+    Use **composition** when:
+    - You need to mix behaviors from multiple sources (a flying fish, a swimming bird)
+    - The "is-a" relationship doesn't make sense
+    - You want loose coupling between components
+    - You need flexibility to change behaviors at runtime
+    
+    Use **inheritance** when:
+    - There's a clear "is-a" hierarchy (Dog is an Animal)
+    - You need `instanceof` checks
+    - You want to share implementation, not just interface
+    
+    **Rule of thumb:** "Favor composition over inheritance" — composition is more flexible.
+  </Accordion>
+  
+  <Accordion title="Question 6: Why are ES6 classes called 'syntactic sugar'?">
+    **Answer:**
+    
+    Classes are called "syntactic sugar" because they don't add new functionality — they just provide a cleaner syntax for constructor functions and prototypes.
+    
+    ```javascript
+    // This class...
+    class Player {
+      constructor(name) { this.name = name; }
+      attack() { return `${this.name} attacks!`; }
+    }
+    
+    // ...is equivalent to:
+    function Player(name) { this.name = name; }
+    Player.prototype.attack = function() { return `${this.name} attacks!`; };
+    
+    // Both create the same result:
+    typeof Player === 'function'  // true for both
+    ```
+    
+    The class syntax makes the code easier to read and write, but under the hood, JavaScript is still using prototypes.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Prototype Inheritance" icon="link" href="/concepts/prototype">
+    Deep dive into JavaScript's prototype chain and how inheritance really works
+  </Card>
+  <Card title="new, Constructor, instanceof" icon="plus" href="/concepts/new-constructor">
+    More details on the new keyword and checking object types
+  </Card>
+  <Card title="this, call, apply, bind" icon="hand-pointer" href="/concepts/this-call-apply-bind">
+    Understanding this binding in different contexts
+  </Card>
+  <Card title="Design Patterns" icon="compass" href="/concepts/design-patterns">
+    Common patterns including Factory, Singleton, and more
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Classes — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">
+    Official MDN documentation on ES6 classes
+  </Card>
+  <Card title="Private class features — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields">
+    Documentation on private fields and methods
+  </Card>
+  <Card title="new operator — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new">
+    How the new keyword works
+  </Card>
+  <Card title="Object.create() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create">
+    Creating objects with specific prototypes
+  </Card>
+</CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
   <Card title="How To Use Classes in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript">
-    By Tania Rascia
+    Comprehensive tutorial by Tania Rascia
   </Card>
-  <Card title="Javascript Classes — Under The Hood" icon="newspaper" href="https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677">
-    By Majid
+  <Card title="JavaScript Classes — Under The Hood" icon="newspaper" href="https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677">
+    Deep dive into how classes work internally
+  </Card>
+  <Card title="Factory Functions in JavaScript" icon="newspaper" href="https://atendesigngroup.com/blog/factory-functions-javascript">
+    Guide to factory function patterns
+  </Card>
+  <Card title="Class vs Factory function" icon="newspaper" href="https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15">
+    Comparison of both approaches by Cristi Salcescu
+  </Card>
+  <Card title="Composition vs Inheritance" icon="newspaper" href="https://ui.dev/javascript-inheritance-vs-composition/">
+    When to use each approach
+  </Card>
+  <Card title="Understanding super in JavaScript" icon="newspaper" href="https://jordankasper.com/understanding-super-in-javascript">
+    Deep dive into the super keyword
   </Card>
 </CardGroup>
-
-- [Better JavaScript with ES6, Pt. II: A Deep Dive into Classes ― Peleke Sengstacke](https://scotch.io/tutorials/better-javascript-with-es6-pt-ii-a-deep-dive-into-classes)
-- [Understand the Factory Design Pattern in Plain JavaScript — Aditya Agarwal](https://medium.com/front-end-hacking/understand-the-factory-design-pattern-in-plain-javascript-20b348c832bd)
-- [Factory Functions in JavaScript — Josh Miller](https://atendesigngroup.com/blog/factory-functions-javascript)
-- [The Factory Pattern in JS ES6 — SnstsDev](https://medium.com/@SntsDev/the-factory-pattern-in-js-es6-78f0afad17e9)
-- [Class vs Factory function: exploring the way forward — Cristi Salcescu](https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15)
-- [How ES6 classes really work and how to build your own — Robert Grosse](https://medium.com/@robertgrosse/how-es6-classes-really-work-and-how-to-build-your-own-fd6085eb326a)
-- [Understanding `super` in JavaScript](https://jordankasper.com/understanding-super-in-javascript)
-- [An Easy Guide To Understanding Classes In JavaScript](https://dev.to/lawrence_eagles/an-easy-guide-to-understanding-classes-in-javascript-3bcm)
 
 ## Videos
 
 <CardGroup cols={2}>
   <Card title="JavaScript Factory Functions" icon="video" href="https://www.youtube.com/watch?v=jpegXpQpb3o">
-    By Programming with Mosh
+    Clear explanation by Programming with Mosh
   </Card>
   <Card title="Factory Functions in JavaScript" icon="video" href="https://www.youtube.com/watch?v=ImwrezYhw4w">
-    By Fun Fun Function
+    Fun Fun Function's take on factories
+  </Card>
+  <Card title="Composition over Inheritance" icon="video" href="https://www.youtube.com/watch?v=wfMtDGfHWpA">
+    Why composition is often better by Fun Fun Function
+  </Card>
+  <Card title="JavaScript Classes Tutorial" icon="video" href="https://www.youtube.com/watch?v=2ZphE5HcQPQ">
+    Comprehensive class tutorial
   </Card>
 </CardGroup>
-
-- [Javascript Tutorial Function Factories — Crypto Chan](https://www.youtube.com/watch?v=R7-IwpH80UE)
