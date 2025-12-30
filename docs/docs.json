@@ -34,12 +34,12 @@
             "group": "Fundamentals",
             "icon": "cube",
             "pages": [
-              "concepts/call-stack",
               "concepts/primitive-types",
               "concepts/value-reference-types",
               "concepts/type-coercion",
               "concepts/equality-operators",
-              "concepts/scope-and-closures"
+              "concepts/scope-and-closures",
+              "concepts/call-stack"
             ]
           },
           {

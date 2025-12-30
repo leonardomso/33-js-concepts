@@ -48,12 +48,12 @@ The project was recognized by GitHub as one of the **top open source projects of
 ## The 32 Concepts (33rd coming soon)
 
 ### Fundamentals (1-6)
-1. Call Stack
-2. Primitive Types
-3. Value Types and Reference Types
-4. Type Coercion (Implicit, Explicit, Nominal, Structuring and Duck Typing)
-5. Equality Operators (== vs === vs typeof)
-6. Scope & Closures
+1. Primitive Types
+2. Value Types and Reference Types
+3. Type Coercion (Implicit, Explicit, Nominal, Structuring and Duck Typing)
+4. Equality Operators (== vs === vs typeof)
+5. Scope & Closures
+6. Call Stack
 
 ### Functions & Execution (7-10)
 7. Expression vs Statement
