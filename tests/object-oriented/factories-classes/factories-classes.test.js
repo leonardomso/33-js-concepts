@@ -833,6 +833,48 @@ describe('Factories and Classes', () => {
         expect(penguin.fly).toBe(undefined) // Penguins can't fly
       })
 
+      it('should support canSpeak behavior composition', () => {
+        const canSpeak = (state) => ({
+          speak(message) {
+            return `${state.name} says: "${message}"`
+          }
+        })
+
+        const canWalk = (state) => ({
+          walk() {
+            state.position += state.speed
+            return `${state.name} walks to position ${state.position}`
+          }
+        })
+
+        function createDuck(name) {
+          const state = { name, position: 0, speed: 2 }
+          return {
+            name: state.name,
+            ...canWalk(state),
+            ...canSpeak(state),
+            getPosition: () => state.position
+          }
+        }
+
+        function createFish(name) {
+          const state = { name, position: 0, speed: 4 }
+          return {
+            name: state.name,
+            // Fish can't speak!
+            getPosition: () => state.position
+          }
+        }
+
+        const duck = createDuck('Donald')
+        const fish = createFish('Nemo')
+
+        expect(duck.speak('Quack!')).toBe('Donald says: "Quack!"')
+        expect(duck.walk()).toBe('Donald walks to position 2')
+
+        expect(fish.speak).toBe(undefined) // Fish can't speak
+      })
+
       it('should allow flexible behavior combinations', () => {
         const withHealth = (state) => ({
           takeDamage(amount) {

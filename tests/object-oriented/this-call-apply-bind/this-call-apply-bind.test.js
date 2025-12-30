@@ -2,6 +2,123 @@ import { describe, it, expect } from 'vitest'
 
 describe('this, call, apply and bind', () => {
   
+  describe('Documentation Examples', () => {
+    describe('Introduction: The Pronoun I Analogy', () => {
+      it('should demonstrate this referring to different objects', () => {
+        const alice = {
+          name: "Alice",
+          introduce() {
+            return "I am " + this.name
+          }
+        }
+
+        const bob = {
+          name: "Bob",
+          introduce() {
+            return "I am " + this.name
+          }
+        }
+
+        expect(alice.introduce()).toBe("I am Alice")
+        expect(bob.introduce()).toBe("I am Bob")
+      })
+
+      it('should allow borrowing methods with call (ventriloquist analogy)', () => {
+        const alice = { name: "Alice" }
+        const bob = {
+          name: "Bob",
+          introduce() {
+            return "I am " + this.name
+          }
+        }
+
+        // Alice borrows Bob's voice
+        expect(bob.introduce.call(alice)).toBe("I am Alice")
+      })
+    })
+
+    describe('Dynamic Binding: Call-Time Determination', () => {
+      it('should have different this values depending on how function is called', () => {
+        function showThis() {
+          return this
+        }
+
+        const obj = { showThis }
+
+        // Plain call - default binding (undefined in strict mode)
+        expect(showThis()).toBeUndefined()
+        
+        // Method call - implicit binding
+        expect(obj.showThis()).toBe(obj)
+        
+        // Explicit binding
+        const customObj = { name: 'custom' }
+        expect(showThis.call(customObj)).toBe(customObj)
+      })
+
+      it('should allow one function to work with many objects', () => {
+        function greet() {
+          return `Hello, I'm ${this.name}!`
+        }
+
+        const alice = { name: "Alice", greet }
+        const bob = { name: "Bob", greet }
+        const charlie = { name: "Charlie", greet }
+
+        expect(alice.greet()).toBe("Hello, I'm Alice!")
+        expect(bob.greet()).toBe("Hello, I'm Bob!")
+        expect(charlie.greet()).toBe("Hello, I'm Charlie!")
+      })
+    })
+
+    describe('Rectangle Class Example (ES6 Classes)', () => {
+      it('should bind this to instance in class methods', () => {
+        class Rectangle {
+          constructor(width, height) {
+            this.width = width
+            this.height = height
+          }
+          
+          getArea() {
+            return this.width * this.height
+          }
+        }
+
+        const rect = new Rectangle(10, 5)
+        expect(rect.getArea()).toBe(50)
+      })
+    })
+
+    describe('Explicit Binding: introduce() Example', () => {
+      it('should set this explicitly with call', () => {
+        function introduce() {
+          return `I'm ${this.name}, a ${this.role}`
+        }
+
+        const alice = { name: "Alice", role: "developer" }
+        const bob = { name: "Bob", role: "designer" }
+
+        expect(introduce.call(alice)).toBe("I'm Alice, a developer")
+        expect(introduce.call(bob)).toBe("I'm Bob, a designer")
+      })
+    })
+
+    describe('Partial Application: greet with sayHello/sayGoodbye', () => {
+      it('should create specialized greeting functions', () => {
+        function greet(greeting, name) {
+          return `${greeting}, ${name}!`
+        }
+
+        const sayHello = greet.bind(null, "Hello")
+        const sayGoodbye = greet.bind(null, "Goodbye")
+
+        expect(sayHello("Alice")).toBe("Hello, Alice!")
+        expect(sayHello("Bob")).toBe("Hello, Bob!")
+        expect(sayGoodbye("Alice")).toBe("Goodbye, Alice!")
+      })
+    })
+  })
+
   describe('The 5 Binding Rules', () => {
     
     describe('Rule 1: new Binding', () => {
@@ -398,6 +515,51 @@ describe('this, call, apply and bind', () => {
         expect(arrow.call(obj2)).toBe(obj1)
       })
     })
+
+    describe('Arrow Function Limitations', () => {
+      it('should throw when using arrow function with new', () => {
+        const ArrowClass = () => {}
+        
+        expect(() => {
+          new ArrowClass()
+        }).toThrow(TypeError)
+      })
+
+      it('should not have arguments object in arrow functions', () => {
+        // Arrow functions don't have their own arguments
+        // They would reference arguments from enclosing scope
+        const arrowWithRest = (...args) => {
+          return args
+        }
+
+        expect(arrowWithRest(1, 2, 3)).toEqual([1, 2, 3])
+      })
+
+      it('should demonstrate regular vs arrow in nested context', () => {
+        const obj = {
+          name: "Object",
+          
+          regularMethod: function() {
+            // Nested regular function - loses 'this'
+            function inner() {
+              return this
+            }
+            return inner()
+          },
+
+          arrowMethod: function() {
+            // Nested arrow function - keeps 'this'
+            const innerArrow = () => {
+              return this.name
+            }
+            return innerArrow()
+          }
+        }
+
+        expect(obj.regularMethod()).toBeUndefined()
+        expect(obj.arrowMethod()).toBe("Object")
+      })
+    })
   })
   
   describe('call() Method', () => {
@@ -550,6 +712,23 @@ describe('this, call, apply and bind', () => {
       
       Array.prototype.push.apply(arr1, arr2)
       expect(arr1).toEqual([1, 2, 3, 4, 5, 6])
+    })
+
+    it('should be replaceable by spread operator for Math operations', () => {
+      const numbers = [5, 2, 9, 1, 7]
+
+      // Old way with apply
+      const maxApply = Math.max.apply(null, numbers)
+      const minApply = Math.min.apply(null, numbers)
+
+      // Modern way with spread
+      const maxSpread = Math.max(...numbers)
+      const minSpread = Math.min(...numbers)
+
+      expect(maxApply).toBe(maxSpread)
+      expect(minApply).toBe(minSpread)
+      expect(maxSpread).toBe(9)
+      expect(minSpread).toBe(1)
     })
   })
   
