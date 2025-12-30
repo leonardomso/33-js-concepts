@@ -1,6 +1,38 @@
 ---
-title: "IIFE, Modules and Namespaces"
-description: "How to organize your JavaScript code and keep it clean"
+title: "IIFE, Modules & Namespaces in JavaScript Explained"
+description: "Master JavaScript code organization with IIFEs, namespaces, and ES6 modules. Learn private scope, exports, dynamic imports, and avoid common mistakes."
+---
+
+How do you prevent your JavaScript variables from conflicting with code from other files or libraries? How do modern applications organize thousands of lines of code across multiple files?
+
+```javascript
+// Modern JavaScript: Each file is its own module
+// utils.js
+export function formatDate(date) {
+  return date.toLocaleDateString()
+}
+
+// main.js
+import { formatDate } from './utils.js'
+console.log(formatDate(new Date()))  // "12/30/2025"
+```
+
+This is **[ES6 modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)** — JavaScript's built-in way to organize code into separate files, each with its own private scope. But before modules existed, developers invented clever patterns like **IIFEs** and **namespaces** to solve the same problems.
+
+<Info>
+**What you'll learn in this guide:**
+- What IIFEs are and why they were invented
+- How to create private variables and avoid global pollution
+- What namespaces are and how to use them
+- Modern ES6 modules: import, export, and organizing large projects
+- The evolution from IIFEs to modules and why it matters
+- Common mistakes with modules and how to avoid them
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [scope and closures](/concepts/scope-and-closures). IIFEs and the module pattern rely on closures to create private variables. If closures feel unfamiliar, read that guide first!
+</Warning>
+
 ---
 
 ## The Messy Desk Problem: A Real-World Analogy
@@ -46,22 +78,13 @@ This is the story of how JavaScript developers learned to organize their code:
 
 Let's learn each approach and understand when to use them.
 
-<Info>
-**What you'll learn in this guide:**
-- What IIFEs are and why they were invented
-- How to create private variables and avoid global pollution
-- What namespaces are and how to use them
-- Modern ES6 modules: import, export, and organizing large projects
-- The evolution from IIFEs to modules and why it matters
-</Info>
-
 ---
 
 ## Part 1: IIFE — The Self-Running Function
 
 ### What is an IIFE?
 
-**IIFE** stands for **Immediately Invoked Function Expression**. It's a function that runs as soon as it's defined.
+**[IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)** stands for **Immediately Invoked Function Expression**. It's a function that runs as soon as it's defined.
 
 ```javascript
 // A normal function — you define it, then call it later
@@ -79,7 +102,7 @@ greet();  // You have to call it
 The name tells you exactly what it does:
 - **Immediately** — runs right now
 - **Invoked** — called/executed
-- **Function Expression** — a function written as an expression (not a declaration)
+- **[Function Expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)** — a function written as an expression (not a declaration)
 
 ### Expression vs Statement: Why It Matters for IIFEs
 
@@ -121,7 +144,7 @@ const greet = function() {
   return "Hello!";
 };
 
-// Arrow functions are always expressions
+// Arrow functions (https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) are always expressions
 const greet = () => "Hello!";
 ```
 
@@ -147,7 +170,7 @@ function() {
 | Feature | Declaration | Expression |
 |---------|-------------|------------|
 | Syntax | `function name() {}` | `const name = function() {}` |
-| Hoisting | Yes (can call before definition) | No (must define first) |
+| [Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting) | Yes (can call before definition) | No (must define first) |
 | Name | Required | Optional |
 | Use in IIFE | No | Yes (must use parentheses) |
 </Info>
@@ -209,11 +232,11 @@ There are several ways to write an IIFE. They all do the same thing:
 
 ### Why Were IIFEs Invented?
 
-Before ES6 modules, JavaScript had a big problem: **everything was global**.
+Before ES6 modules, JavaScript had a big problem: **everything was global**. Variables declared with [`var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var) outside of functions became global, leading to conflicts:
 
 ```javascript
 // file1.js
-var userName = "Alice";
+var userName = "Alice";  // var creates global variables
 var count = 0;
 
 // file2.js (loaded after file1.js)
@@ -250,7 +273,7 @@ One of the most powerful uses of IIFEs is creating **private variables** that ca
 ```javascript
 const counter = (function() {
   // Private variable — can't be accessed directly
-  let count = 0;
+  let count = 0;  // let is block-scoped, perfect for private state
   
   // Private function — also hidden
   function log(message) {
@@ -283,7 +306,7 @@ console.log(counter.count);  // undefined (it's private!)
 counter.log("test");         // TypeError: counter.log is not a function
 ```
 
-This pattern is called the **Module Pattern** — it was the standard way to create "modules" before ES6.
+This pattern is called the **Module Pattern** — it uses [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to keep variables private. It was the standard way to create "modules" before ES6.
 
 ### IIFE with Parameters
 
@@ -330,7 +353,7 @@ With ES6 modules, IIFEs are less common. But they're still useful for:
     ```javascript
     // Top-level await isn't always available
     // IIFE lets you use async/await anywhere
-    (async () => {
+    (async () => {  // async functions return Promises
       const response = await fetch('/api/data');
       const data = await response.json();
       console.log(data);
@@ -524,6 +547,8 @@ MyApp.Logger.log("Counter incremented");
 ### What are Modules?
 
 **Modules** are JavaScript's built-in way to organize code into separate files, each with its own scope. Unlike IIFEs and namespaces (which are patterns), modules are a **language feature**.
+
+The [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) statement makes functions, objects, or values available to other modules. The [`import`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import) statement brings them in.
 
 ```javascript
 // math.js — A module file
@@ -885,7 +910,7 @@ init();
 
 ## Dynamic Imports
 
-Sometimes you don't want to load a module until it's needed. **Dynamic imports** load modules on demand:
+Sometimes you don't want to load a module until it's needed. **[Dynamic imports](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import)** load modules on demand:
 
 ```javascript
 // Static import — always loaded
@@ -1074,6 +1099,130 @@ import { capitalize } from './stringUtils.js';
 
 ---
 
+## Common Mistakes to Avoid
+
+### Mistake 1: Confusing Named and Default Exports
+
+One of the most common sources of confusion is mixing up how to import named vs default exports:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    NAMED vs DEFAULT EXPORT CONFUSION                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  EXPORTING                             IMPORTING                         │
+│  ─────────                             ─────────                         │
+│                                                                          │
+│  Named Export:                         Must use { braces }:              │
+│  export function greet() {}            import { greet } from './mod.js'  │
+│  export const PI = 3.14                import { PI } from './mod.js'     │
+│                                                                          │
+│  Default Export:                       NO braces:                        │
+│  export default function() {}          import greet from './mod.js'      │
+│  export default class User {}          import User from './mod.js'       │
+│                                                                          │
+│  ⚠️  Common Error:                                                       │
+│  import greet from './mod.js'     ← Looking for default, but file has   │
+│                                      named export! Results in undefined  │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+```javascript
+// utils.js — has a NAMED export
+export function formatDate(date) {
+  return date.toLocaleDateString()
+}
+
+// ❌ WRONG — Importing without braces looks for a default export
+import formatDate from './utils.js'
+console.log(formatDate)  // undefined! No default export exists
+
+// ✓ CORRECT — Use braces for named exports
+import { formatDate } from './utils.js'
+console.log(formatDate)  // [Function: formatDate]
+```
+
+<Warning>
+**The Trap:** If you see `undefined` when importing, check whether you're using braces correctly. Named exports require `{ }`, default exports don't. This is the #1 cause of "why is my import undefined?" bugs.
+</Warning>
+
+### Mistake 2: Circular Dependencies
+
+Circular dependencies occur when two modules import from each other. This creates a "chicken and egg" problem that causes subtle, hard-to-debug issues:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        CIRCULAR DEPENDENCY                               │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│      user.js                              userUtils.js                   │
+│    ┌──────────┐                         ┌──────────────┐                 │
+│    │          │ ──── imports from ────► │              │                 │
+│    │  User    │                         │ formatUser() │                 │
+│    │  class   │ ◄─── imports from ───── │ createUser() │                 │
+│    │          │                         │              │                 │
+│    └──────────┘                         └──────────────┘                 │
+│                                                                          │
+│    🔄 PROBLEM: When user.js loads, it needs userUtils.js                │
+│                But userUtils.js needs User from user.js                  │
+│                Which isn't fully loaded yet! → undefined                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+```javascript
+// ❌ PROBLEM: Circular dependency
+
+// user.js
+import { formatUserName } from './userUtils.js'
+
+export class User {
+  constructor(name) {
+    this.name = name
+  }
+}
+
+// userUtils.js
+import { User } from './user.js'  // Circular! user.js imports userUtils.js
+
+export function formatUserName(user) {
+  return user.name.toUpperCase()
+}
+
+export function createDefaultUser() {
+  return new User('Guest')  // 💥 User might be undefined here!
+}
+```
+
+```javascript
+// ✓ SOLUTION: Break the cycle with restructuring
+
+// user.js — no imports from userUtils
+export class User {
+  constructor(name) {
+    this.name = name
+  }
+}
+
+// userUtils.js — imports from user.js (one direction only)
+import { User } from './user.js'
+
+export function formatUserName(user) {
+  return user.name.toUpperCase()
+}
+
+export function createDefaultUser() {
+  return new User('Guest')  // Works! User is fully loaded
+}
+```
+
+<Tip>
+**Rule of Thumb:** Draw your import arrows — they should flow in one direction like a tree, not in circles. If module A imports from B, module B should NOT import from A. If you need shared code, create a third module that both can import from.
+</Tip>
+
+---
+
 ## Key Takeaways
 
 <Info>
@@ -1175,6 +1324,22 @@ Try to answer each question before revealing the solution:
     - Loaded at runtime, returns a Promise
     - Syntax: `const module = await import('./module.js')`
     
+    ```javascript
+    // Static import — always at the top, always loaded
+    import { heavyFunction } from './heavy-module.js'
+    
+    // Dynamic import — loaded only when needed
+    async function loadOnDemand() {
+      const module = await import('./heavy-module.js')
+      module.heavyFunction()
+    }
+    
+    // Or with .then() syntax
+    import('./heavy-module.js').then(module => {
+      module.heavyFunction()
+    })
+    ```
+    
     Use dynamic imports for code splitting and loading modules on demand.
   </Accordion>
   
@@ -1222,13 +1387,13 @@ Try to answer each question before revealing the solution:
   <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
     Understanding how JavaScript manages variable access and function memory
   </Card>
-  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+  <Card title="Higher-Order Functions" icon="function" href="/concepts/higher-order-functions">
     Functions that work with other functions — common in modular code
   </Card>
   <Card title="Design Patterns" icon="compass" href="/concepts/design-patterns">
     Common patterns for organizing code, including the module pattern
   </Card>
-  <Card title="Call Stack" icon="layer-group" href="/concepts/call-stack">
+  <Card title="Call Stack" icon="bars-staggered" href="/concepts/call-stack">
     How JavaScript tracks function execution and manages memory
   </Card>
 </CardGroup>
