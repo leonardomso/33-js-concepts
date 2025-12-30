@@ -1,9 +1,51 @@
 ---
-title: "Scope & Closures"
-description: "Understanding variable visibility and how functions remember their environment"
+title: "Scope and Closures: How Variables Really Work in JavaScript"
+sidebarTitle: "Scope and Closures: How Variables Really Work"
+description: "Master JavaScript scope and closures. Learn the three types of scope, var vs let vs const, lexical scoping, the scope chain, and closure patterns for data privacy."
 ---
 
-## Sneaking Through an Office Building
+Why can some variables be accessed from anywhere in your code, while others seem to disappear? How do functions "remember" variables from their parent functions, even after those functions have finished running?
+
+```javascript
+function createCounter() {
+  let count = 0  // This variable is "enclosed"
+  
+  return function() {
+    count++
+    return count
+  }
+}
+
+const counter = createCounter()
+console.log(counter())  // 1
+console.log(counter())  // 2 — it remembers!
+```
+
+The answers lie in understanding **scope** and **closures** — two fundamental concepts that govern how variables work in JavaScript. Scope determines *where* variables are visible, while closures allow functions to *remember* their original environment.
+
+<Info>
+**What you'll learn in this guide:**
+- The 3 types of scope: global, function, and block
+- How [`var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var), [`let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let), and [`const`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) behave differently
+- What lexical scope means and how the scope chain works
+- What closures are and why every JavaScript developer must understand them
+- Practical patterns: data privacy, factories, and memoization
+- The classic closure gotchas and how to avoid them
+</Info>
+
+<Warning>
+**Prerequisite:** This guide builds on your understanding of the [call stack](/concepts/call-stack). Knowing how JavaScript tracks function execution will help you understand how scope and closures work under the hood.
+</Warning>
+
+---
+
+## What is Scope in JavaScript?
+
+**[Scope](https://developer.mozilla.org/en-US/docs/Glossary/Scope)** is the current context of execution in which values and expressions are "visible" or can be referenced. It's the set of rules that determines where and how variables can be accessed in your code. If a variable is not in the current scope, it cannot be used. Scopes can be nested, and inner scopes have access to outer scopes, but not vice versa.
+
+---
+
+## The Office Building Analogy
 
 Imagine it's after hours and you're wandering through your office building (legally — you work there, promise). You notice something interesting about what you can and can't see:
 
@@ -40,26 +82,6 @@ This is exactly how **scope** works in JavaScript! Code in inner scopes can "loo
 
 And here's where it gets really interesting: imagine someone who worked in that private office quits and leaves the building. But they took a mental snapshot of everything in there — the passwords on sticky notes, the secret project plans, the snack drawer location. Even though they've left, they still *remember* everything. That's essentially what a **closure** is: a function that "remembers" the scope where it was created, even after that scope is gone.
 
-<Note>
-**TL;DR:** Scope determines where variables are accessible in your code. Closures are functions that remember and can access variables from their birth scope, even after that scope has finished executing.
-</Note>
-
-<Info>
-**What you'll learn in this guide:**
-- The 3 types of scope: global, function, and block
-- How `var`, `let`, and `const` behave differently
-- What lexical scope means and how the scope chain works
-- What closures are and why every JavaScript developer must understand them
-- Practical patterns: data privacy, factories, and memoization
-- The classic closure gotchas and how to avoid them
-</Info>
-
----
-
-## Scope: Who Can See What?
-
-**Scope** is the set of rules that determines where and how variables can be accessed in your code. Think of it as the "visibility" or "reach" of a variable.
-
 ### Why Does Scope Exist?
 
 Scope exists for three critical reasons:
@@ -82,7 +104,7 @@ Scope exists for three critical reasons:
   </Accordion>
   
   <Accordion title="2. Memory Management">
-    When a scope ends, variables declared in that scope can be garbage collected (cleaned up from memory). This keeps your program efficient.
+    When a scope ends, variables declared in that scope can be [garbage collected](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management#garbage_collection) (cleaned up from memory). This keeps your program efficient.
     
     ```javascript
     function processData() {
@@ -135,7 +157,7 @@ if (true) {
 
 #### The Global Object
 
-In browsers, global variables become properties of the `window` object. In Node.js, they attach to `global`. The modern, universal way to access the global object is `globalThis`.
+In browsers, global variables become properties of the [`window`](https://developer.mozilla.org/en-US/docs/Web/API/Window) object. In Node.js, they attach to `global`. The modern, universal way to access the global object is [`globalThis`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis).
 
 ```javascript
 var oldSchool = "I'm on window";      // window.oldSchool (var only)
@@ -168,7 +190,7 @@ const MyApp = {
 
 ### 2. Function Scope
 
-Variables declared with `var` inside a function are **function-scoped** — they're only accessible within that function.
+Variables declared with [`var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var) inside a function are **function-scoped** — they're only accessible within that function.
 
 ```javascript
 function calculateTotal() {
@@ -222,7 +244,7 @@ Your code:                    How JS sees it:
 
 ### 3. Block Scope
 
-Variables declared with `let` and `const` are **block-scoped**. A block is any code within curly braces `{}`: if statements, for loops, while loops, or just standalone blocks.
+Variables declared with [`let`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let) and [`const`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const) are **block-scoped**. A block is any code within curly braces `{}`: if statements, for loops, while loops, or just standalone blocks.
 
 ```javascript
 if (true) {
@@ -238,7 +260,7 @@ console.log(functionVar);    // ✓ "I escape the block!"
 
 #### The Temporal Dead Zone (TDZ)
 
-Unlike `var`, variables declared with `let` and `const` are not initialized until their declaration is evaluated. Accessing them before declaration causes a `ReferenceError`. This period is called the **Temporal Dead Zone**.
+Unlike `var`, variables declared with `let` and `const` are not initialized until their declaration is evaluated. Accessing them before declaration causes a [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError). This period is called the **Temporal Dead Zone**.
 
 ```javascript
 function demo() {
@@ -303,11 +325,11 @@ Here's a comprehensive comparison of the three variable declaration keywords:
     console.log(name);    // "Bob"
     
     // let and const prevent redeclaration
-    let age = 25;
-    // let age = 30;      // SyntaxError: 'age' has already been declared
+    let age = 25
+    // let age = 30      // SyntaxError: 'age' has already been declared
     
-    const PI = 3.14;
-    // const PI = 3.14159; // SyntaxError
+    const PI = 3.14
+    // const PI = 3.14159 // SyntaxError
     ```
   </Tab>
   <Tab title="Reassignment">
@@ -320,14 +342,14 @@ Here's a comprehensive comparison of the three variable declaration keywords:
     score = 200;         // ✓ Fine
     
     // const prevents reassignment
-    const API_KEY = "abc123";
-    // API_KEY = "xyz789";  // TypeError: Assignment to constant variable
+    const API_KEY = "abc123"
+    // API_KEY = "xyz789"  // TypeError: Assignment to constant variable
     
     // BUT: const objects/arrays CAN be mutated!
-    const user = { name: "Alice" };
-    user.name = "Bob";   // ✓ This works!
-    user.age = 25;       // ✓ This works too!
-    // user = {};        // ✗ This fails (reassignment)
+    const user = { name: "Alice" }
+    user.name = "Bob"   // ✓ This works!
+    user.age = 25       // ✓ This works too!
+    // user = {}        // ✗ This fails (reassignment)
     ```
   </Tab>
   <Tab title="Hoisting Behavior">
@@ -357,8 +379,8 @@ This is one of the most common JavaScript gotchas, and it perfectly illustrates 
 // The Problem: var is function-scoped
 for (var i = 0; i < 3; i++) {
   setTimeout(() => {
-    console.log(i);
-  }, 100);
+    console.log(i)
+  }, 100)
 }
 // Output: 3, 3, 3  (not 0, 1, 2!)
 
@@ -366,12 +388,14 @@ for (var i = 0; i < 3; i++) {
 // By the time the setTimeout callbacks run, the loop has finished and i === 3.
 ```
 
+The [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout) callbacks all close over the same `i` variable, which equals `3` by the time they execute. (To understand why the callbacks don't run immediately, see our [Event Loop](/concepts/event-loop) guide.)
+
 ```javascript
 // The Solution: let is block-scoped
 for (let i = 0; i < 3; i++) {
   setTimeout(() => {
-    console.log(i);
-  }, 100);
+    console.log(i)
+  }, 100)
 }
 // Output: 0, 1, 2  (correct!)
 
@@ -497,15 +521,11 @@ Shadowing can be confusing. While sometimes intentional, accidental shadowing is
 
 ---
 
-## Closures: Functions with Memories
+## What is a Closure in JavaScript?
 
-Now we arrive at one of JavaScript's most powerful features. A **closure** is created when a function "remembers" the variables from its lexical scope, even when that function is executed outside that scope.
+A **[closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)** is a function bundled together with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to variables from an outer (enclosing) scope, even after that outer function has finished executing and returned. Every function in JavaScript creates a closure at creation time.
 
 Remember our office building analogy? A closure is like someone who worked in the private office, left the building, but still remembers exactly where everything was — and can still use that knowledge!
-
-<Info>
-**The simplest definition:** A closure is a function that has access to variables from its outer (enclosing) scope, even after the outer function has returned.
-</Info>
 
 ### Every Function Creates a Closure
 
@@ -616,7 +636,7 @@ console.log(counter.count);       // undefined
 ```
 
 <Tip>
-This pattern is the foundation of the **Module Pattern**, widely used before ES6 modules became available. It's still useful for creating private state.
+This pattern is the foundation of the **Module Pattern**, widely used before ES6 modules became available. Learn more in our [IIFE, Modules and Namespaces](/concepts/iife-modules) guide.
 </Tip>
 
 ### 2. Function Factories
@@ -640,6 +660,8 @@ console.log(tenX(5));     // 50
 
 // Each function "remembers" its own multiplier
 ```
+
+This pattern works great with the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) for creating reusable API clients:
 
 ```javascript
 // Real-world example: API request factories
@@ -667,7 +689,7 @@ myApi.get('/users/1');
 
 ### 3. Preserving State in Callbacks & Event Handlers
 
-Closures are essential for maintaining state in asynchronous code:
+Closures are essential for maintaining state in asynchronous code. When you use [`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) to attach event handlers, those handlers can close over variables from their outer scope:
 
 ```javascript
 function setupClickCounter(buttonId) {
@@ -724,9 +746,13 @@ console.log(memoizedFactorial(5));  // Returning cached result → 120
 
 ---
 
-## The Trap Everyone Falls Into
+## Common Mistakes and Pitfalls
 
-We mentioned this earlier, but it's so important it deserves its own section. This is the #1 closure interview question — and almost everyone gets it wrong the first time:
+Understanding scope and closures means understanding where things go wrong. These are the mistakes that trip up even experienced developers.
+
+### The #1 Closure Interview Question
+
+This is the classic closure trap — almost everyone gets it wrong the first time:
 
 ### The Problem
 
@@ -816,11 +842,9 @@ What actually happens:
   </Tab>
 </Tabs>
 
----
+### Memory Leaks from Closures
 
-## With Great Power Comes Great Responsibility
-
-Closures are powerful, but they come with responsibility. Since closures keep references to their outer scope variables, those variables can't be garbage collected.
+Closures are powerful, but they come with responsibility. Since closures keep references to their outer scope variables, those variables can't be [garbage collected](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management#garbage_collection).
 
 ### Potential Memory Leaks
 
@@ -840,7 +864,7 @@ const leakyFunction = createHeavyClosure();
 
 ### Breaking Closure References
 
-When you're done with a closure, explicitly break the reference:
+When you're done with a closure, explicitly break the reference. Use [`removeEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/removeEventListener) to clean up event handlers:
 
 ```javascript
 function setupHandler(element) {
@@ -1076,9 +1100,21 @@ cleanup();  // Removes listener, allows memory to be freed
 
 <CardGroup cols={2}>
   <Card title="Closures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">
-    Official MDN documentation on closures
+    Official MDN documentation on closures and lexical scoping
   </Card>
-  <Card title="Closure — JavaScript.Info" icon="book" href="https://javascript.info/closure">
+  <Card title="Scope — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Scope">
+    MDN glossary entry explaining scope in JavaScript
+  </Card>
+  <Card title="var — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var">
+    Reference for the var keyword, function scope, and hoisting
+  </Card>
+  <Card title="let — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let">
+    Reference for the let keyword and block scope
+  </Card>
+  <Card title="const — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/const">
+    Reference for the const keyword and immutable bindings
+  </Card>
+  <Card title="Closures — JavaScript.Info" icon="book" href="https://javascript.info/closure">
     In-depth tutorial on closures and lexical environment
   </Card>
 </CardGroup>
@@ -1111,6 +1147,12 @@ cleanup();  // Removes listener, allows memory to be freed
     Brian Barbour's practical guide showing how closures enable powerful caching patterns.
   </Card>
 </CardGroup>
+
+## Tools
+
+<Card title="JavaScript Tutor — Visualize Code Execution" icon="play" href="https://pythontutor.com/javascript.html">
+  Step through JavaScript code and see how closures capture variables in real-time. Visualize the scope chain, execution contexts, and how functions "remember" their environment. Perfect for understanding closures visually.
+</Card>
 
 ## Courses
 
