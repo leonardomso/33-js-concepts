@@ -582,6 +582,18 @@ export function add(a, b) { return a + b; }
 // Then use .js extension normally
 ```
 
+<Note>
+**What about `require()` and `module.exports`?** You might see this older syntax in Node.js code:
+
+```javascript
+// CommonJS (older Node.js style)
+const fs = require('fs');
+module.exports = { myFunction };
+```
+
+This is called **CommonJS** — Node.js's original module system. While still widely used, ES modules (`import`/`export`) are the modern standard and work in both browsers and Node.js. New projects should use ES modules.
+</Note>
+
 ---
 
 ## Exporting: Sharing Your Code
@@ -708,14 +720,20 @@ console.log(Utils.square(4));
 Import the default export with any name you choose:
 
 ```javascript
-// The name doesn't have to match
+// The name doesn't have to match the export name
 import greet from './greeting.js';
-import sayHello from './greeting.js';  // Same thing, different name
-import xyz from './greeting.js';        // Still works!
+
+// In a DIFFERENT file, you could use a different name:
+// import sayHello from './greeting.js';  // Same function, different name
+// import xyz from './greeting.js';        // Still the same function!
 
 // Combine default and named imports
 import greet, { defaultName } from './greeting.js';
 ```
+
+<Tip>
+**Why any name?** Default exports don't have a required name, so you choose what to call it when importing. This is useful but can make code harder to search. Named exports are often preferred for this reason.
+</Tip>
 
 ### Side-Effect Imports
 
@@ -894,10 +912,12 @@ async function loadPage(pageName) {
   }
 }
 
-// Common use: Conditional loading
-if (userWantsCharts) {
-  const { renderChart } = await import('./chart-library.js');
-  renderChart(data);
+// Common use: Conditional loading (inside an async function)
+async function showCharts() {
+  if (userWantsCharts) {
+    const { renderChart } = await import('./chart-library.js');
+    renderChart(data);
+  }
 }
 ```
 
