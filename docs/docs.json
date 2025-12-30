@@ -55,7 +55,8 @@
           "icon": "browser",
           "pages": [
             "concepts/dom",
-            "concepts/http-fetch"
+            "concepts/http-fetch",
+            "concepts/web-workers"
           ]
         },
         {
@@ -64,7 +65,8 @@
           "pages": [
             "concepts/factories-classes",
             "concepts/this-call-apply-bind",
-            "concepts/object-creation-prototypes"
+            "concepts/object-creation-prototypes",
+            "concepts/inheritance-polymorphism"
           ]
         },
         {
@@ -93,11 +95,12 @@
           "icon": "graduation-cap",
           "pages": [
             "concepts/javascript-engines",
-            "concepts/collections",
+            "concepts/error-handling",
+            "concepts/regular-expressions",
+            "concepts/modern-js-syntax",
+            "concepts/es-modules",
             "concepts/data-structures",
-            "concepts/big-o-notation",
-            "concepts/algorithms",
-            "concepts/inheritance-polymorphism",
+            "concepts/algorithms-big-o",
             "concepts/design-patterns",
             "concepts/clean-code"
           ]

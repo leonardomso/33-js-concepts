@@ -1,0 +1,69 @@
+---
+title: "Web Workers: Parallel JavaScript Execution"
+sidebarTitle: "Web Workers: Parallel JavaScript"
+description: "Learn Web Workers in JavaScript — run scripts in background threads for parallel execution. Master dedicated workers, shared workers, and off-main-thread processing for better performance."
+---
+
+## Overview
+
+**Web Workers** allow JavaScript to run scripts in background threads, separate from the main execution thread. This enables parallel processing without blocking the UI, making them essential for CPU-intensive tasks like data processing, image manipulation, and complex calculations.
+
+<Info>
+**What you'll learn in this guide:**
+- Why JavaScript needs Web Workers (single-threaded limitations)
+- Creating and communicating with workers (`postMessage`, `onmessage`)
+- Dedicated Workers vs Shared Workers vs Service Workers
+- Transferable objects for efficient data transfer
+- Worker limitations (no DOM access, different global scope)
+- Use cases: heavy computations, data parsing, image processing
+- Worker pools and performance patterns
+- Comlink and other worker libraries
+</Info>
+
+<Warning>
+**Prerequisites:** This guide builds on your understanding of [the Event Loop](/concepts/event-loop) and [async JavaScript](/concepts/async-await). Web Workers provide true parallelism, unlike async code which is still single-threaded.
+</Warning>
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Web Workers API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">
+    MDN documentation for Web Workers API
+  </Card>
+  <Card title="Using Web Workers — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">
+    MDN guide to using Web Workers
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="The Basics of Web Workers" icon="newspaper" href="https://www.html5rocks.com/en/tutorials/workers/basics/">
+    By HTML5 Rocks — comprehensive introduction
+  </Card>
+  <Card title="Using Web Workers for Safe, Concurrent JavaScript" icon="newspaper" href="https://www.smashingmagazine.com/2021/06/web-workers-2021/">
+    By Smashing Magazine
+  </Card>
+</CardGroup>
+
+- [JavaScript Web Workers: A Beginner's Guide — SitePoint](https://www.sitepoint.com/javascript-web-workers/)
+- [Web Workers — JavaScript.info](https://javascript.info/web-workers)
+- [Comlink: Web Workers Made Easy — Google Chrome Labs](https://github.com/GoogleChromeLabs/comlink)
+- [Parallel Programming in JavaScript Using Web Workers — LogRocket](https://blog.logrocket.com/parallel-programming-in-javascript-using-web-workers/)
+- [A Simple Introduction to Web Workers — David Walsh](https://davidwalsh.name/web-workers)
+- [Threading the Web with Module Workers — web.dev](https://web.dev/module-workers/)
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Web Workers Explained" icon="video" href="https://www.youtube.com/watch?v=Gcp7triXFjg">
+    By Web Dev Simplified
+  </Card>
+  <Card title="JavaScript Web Workers" icon="video" href="https://www.youtube.com/watch?v=EiPytIxrZtU">
+    By Fireship
+  </Card>
+</CardGroup>
+
+- [Web Workers Crash Course — Traversy Media](https://www.youtube.com/watch?v=tPwkKF8WAXs)
+- [Multi-Threading in JavaScript with Web Workers — Hussein Nasser](https://www.youtube.com/watch?v=kUXRxEwOL3A)
+- [Service Workers vs Web Workers — Google Chrome Developers](https://www.youtube.com/watch?v=JYXXGNFJjwc)
