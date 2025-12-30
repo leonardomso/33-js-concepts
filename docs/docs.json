@@ -68,6 +68,16 @@
           ]
         },
         {
+          "group": "Async JavaScript",
+          "icon": "clock",
+          "pages": [
+            "concepts/callbacks",
+            "concepts/promises",
+            "concepts/async-await",
+            "concepts/generators-iterators"
+          ]
+        },
+        {
           "group": "Functional Programming",
           "icon": "filter",
           "pages": [
@@ -79,19 +89,11 @@
           ]
         },
         {
-          "group": "Async JavaScript",
-          "icon": "clock",
-          "pages": [
-            "concepts/collections-generators",
-            "concepts/promises",
-            "concepts/async-await"
-          ]
-        },
-        {
           "group": "Advanced Topics",
           "icon": "graduation-cap",
           "pages": [
             "concepts/javascript-engines",
+            "concepts/collections",
             "concepts/data-structures",
             "concepts/big-o-notation",
             "concepts/algorithms",
