@@ -2,6 +2,84 @@ import { describe, it, expect } from 'vitest'
 
 describe('Factories and Classes', () => {
   // ===========================================
+  // Opening Example: Factory vs Class
+  // ===========================================
+
+  describe('Opening Example: Factory vs Class', () => {
+    it('should create objects with factory function', () => {
+      function createPlayer(name) {
+        return {
+          name,
+          health: 100,
+          attack() {
+            return `${this.name} attacks!`
+          }
+        }
+      }
+
+      const player = createPlayer('Alice')
+
+      expect(player.name).toBe('Alice')
+      expect(player.health).toBe(100)
+      expect(player.attack()).toBe('Alice attacks!')
+    })
+
+    it('should create objects with class', () => {
+      class Enemy {
+        constructor(name) {
+          this.name = name
+          this.health = 100
+        }
+
+        attack() {
+          return `${this.name} attacks!`
+        }
+      }
+
+      const enemy = new Enemy('Goblin')
+
+      expect(enemy.name).toBe('Goblin')
+      expect(enemy.health).toBe(100)
+      expect(enemy.attack()).toBe('Goblin attacks!')
+    })
+
+    it('should show both patterns produce similar results', () => {
+      function createPlayer(name) {
+        return {
+          name,
+          health: 100,
+          attack() {
+            return `${this.name} attacks!`
+          }
+        }
+      }
+
+      class Enemy {
+        constructor(name) {
+          this.name = name
+          this.health = 100
+        }
+
+        attack() {
+          return `${this.name} attacks!`
+        }
+      }
+
+      const player = createPlayer('Alice')
+      const enemy = new Enemy('Goblin')
+
+      // Both have same structure
+      expect(player.name).toBe('Alice')
+      expect(enemy.name).toBe('Goblin')
+      expect(player.health).toBe(enemy.health)
+
+      // Both attack methods work
+      expect(player.attack()).toBe('Alice attacks!')
+      expect(enemy.attack()).toBe('Goblin attacks!')
+    })
+  })
+
+  // ===========================================
   // Part 1: The Problem — Manual Object Creation
   // ===========================================
 
@@ -1028,6 +1106,151 @@ describe('Factories and Classes', () => {
         // Both are truly private
         expect(classWallet.balance).toBe(undefined)
         expect(factoryWallet.balance).toBe(undefined)
+      })
+    })
+  })
+
+  // ===========================================
+  // Common Mistakes
+  // ===========================================
+
+  describe('Common Mistakes', () => {
+    describe('Mistake 1: Forgetting new with Constructor Functions', () => {
+      it('should throw or behave unexpectedly when new is forgotten (strict mode)', () => {
+        function Player(name) {
+          this.name = name
+          this.health = 100
+        }
+
+        // In strict mode (which modern JS uses), forgetting 'new' throws an error
+        // because 'this' is undefined, not the global object
+        expect(() => Player('Alice')).toThrow()
+      })
+
+      it('should work correctly with new keyword', () => {
+        function Player(name) {
+          this.name = name
+          this.health = 100
+        }
+
+        const bob = new Player('Bob')
+
+        expect(bob.name).toBe('Bob')
+        expect(bob.health).toBe(100)
+        expect(bob instanceof Player).toBe(true)
+      })
+
+      it('should throw error when calling class without new', () => {
+        class Player {
+          constructor(name) {
+            this.name = name
+          }
+        }
+
+        // Classes protect against this mistake
+        expect(() => Player('Alice')).toThrow()
+      })
+    })
+
+    describe('Mistake 3: Underscore Convention vs True Privacy', () => {
+      it('should show underscore properties ARE accessible (not truly private)', () => {
+        class BankAccount {
+          constructor(balance) {
+            this._balance = balance // Convention only, NOT private!
+          }
+
+          getBalance() {
+            return this._balance
+          }
+        }
+
+        const account = new BankAccount(1000)
+
+        // Underscore properties are fully accessible!
+        expect(account._balance).toBe(1000)
+
+        // Can be modified directly
+        account._balance = 999999
+        expect(account.getBalance()).toBe(999999)
+      })
+
+      it('should show private fields (#) are truly private', () => {
+        class SecureBankAccount {
+          #balance // Truly private
+
+          constructor(balance) {
+            this.#balance = balance
+          }
+
+          getBalance() {
+            return this.#balance
+          }
+        }
+
+        const secure = new SecureBankAccount(1000)
+
+        // Private field is not accessible
+        expect(secure.balance).toBe(undefined)
+
+        // Can only access via methods
+        expect(secure.getBalance()).toBe(1000)
+      })
+    })
+
+    describe('Mistake 4: Using this Incorrectly in Factory Functions', () => {
+      it('should show this can break when method is extracted', () => {
+        function createCounter() {
+          return {
+            count: 0,
+            increment() {
+              this.count++ // 'this' depends on how method is called
+            }
+          }
+        }
+
+        const counter = createCounter()
+        counter.increment() // Works - this is counter
+        expect(counter.count).toBe(1)
+
+        // Extract the method
+        const increment = counter.increment
+
+        // Call without context - 'this' is undefined in strict mode
+        // This won't modify counter.count
+        try {
+          increment()
+        } catch (e) {
+          // In strict mode, this throws because this is undefined
+        }
+
+        // counter.count is still 1 because the extracted call didn't work
+        expect(counter.count).toBe(1)
+      })
+
+      it('should show closures avoid this problem', () => {
+        function createSafeCounter() {
+          let count = 0 // Closure variable - no 'this' needed
+
+          return {
+            increment() {
+              count++ // Uses closure, not this
+            },
+            getCount() {
+              return count
+            }
+          }
+        }
+
+        const counter = createSafeCounter()
+        counter.increment()
+        expect(counter.getCount()).toBe(1)
+
+        // Extract the method
+        const increment = counter.increment
+
+        // Works even when extracted!
+        increment()
+        expect(counter.getCount()).toBe(2)
       })
     })
   })
