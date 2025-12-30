@@ -897,5 +897,330 @@ describe('DOM and Layout Trees', () => {
         expect(clickedCard.classList.contains('card')).toBe(true)
       })
     })
+
+    describe('Security Patterns - XSS Prevention', () => {
+      it('should demonstrate innerHTML vulnerability with script-like content', () => {
+        document.body.innerHTML = '<div id="output"></div>'
+        const output = document.getElementById('output')
+
+        // innerHTML can render HTML - potential XSS vector
+        const maliciousInput = '<img src="x" onerror="alert(1)">'
+        output.innerHTML = maliciousInput
+
+        // The img tag is actually created
+        const img = output.querySelector('img')
+        expect(img).not.toBeNull()
+        expect(img.getAttribute('onerror')).toBe('alert(1)')
+      })
+
+      it('should use textContent to safely render user input', () => {
+        document.body.innerHTML = '<div id="output"></div>'
+        const output = document.getElementById('output')
+
+        // textContent escapes HTML - safe from XSS
+        const maliciousInput = '<img src="x" onerror="alert(1)">'
+        output.textContent = maliciousInput
+
+        // No img tag created - text is escaped
+        const img = output.querySelector('img')
+        expect(img).toBeNull()
+        expect(output.textContent).toBe('<img src="x" onerror="alert(1)">')
+      })
+
+      it('should show difference between innerHTML and textContent with HTML entities', () => {
+        document.body.innerHTML = '<div id="html-output"></div><div id="text-output"></div>'
+
+        const htmlOutput = document.getElementById('html-output')
+        const textOutput = document.getElementById('text-output')
+
+        const userInput = '<script>steal(cookies)</script>'
+
+        htmlOutput.innerHTML = userInput
+        textOutput.textContent = userInput
+
+        // innerHTML parses the HTML (script won't execute in modern browsers but DOM is modified)
+        expect(htmlOutput.children.length).toBeGreaterThanOrEqual(0)
+
+        // textContent treats it as plain text
+        expect(textOutput.textContent).toBe('<script>steal(cookies)</script>')
+        expect(textOutput.children.length).toBe(0)
+      })
+    })
+
+    describe('Attribute Shortcuts', () => {
+      it('should access id directly on element', () => {
+        document.body.innerHTML = '<div id="myElement"></div>'
+        const element = document.getElementById('myElement')
+
+        expect(element.id).toBe('myElement')
+
+        element.id = 'newId'
+        expect(element.id).toBe('newId')
+        expect(document.getElementById('newId')).toBe(element)
+      })
+
+      it('should access className directly on element', () => {
+        document.body.innerHTML = '<div class="box large"></div>'
+        const element = document.querySelector('.box')
+
+        expect(element.className).toBe('box large')
+
+        element.className = 'container small'
+        expect(element.className).toBe('container small')
+      })
+
+      it('should access href directly on anchor elements', () => {
+        document.body.innerHTML = '<a href="https://example.com">Link</a>'
+        const link = document.querySelector('a')
+
+        expect(link.href).toBe('https://example.com/')
+
+        link.href = 'https://test.com'
+        expect(link.href).toBe('https://test.com/')
+      })
+
+      it('should access src directly on image elements', () => {
+        document.body.innerHTML = '<img src="photo.jpg" alt="Photo">'
+        const img = document.querySelector('img')
+
+        expect(img.src).toContain('photo.jpg')
+
+        img.src = 'newphoto.png'
+        expect(img.src).toContain('newphoto.png')
+      })
+
+      it('should access title directly on elements', () => {
+        document.body.innerHTML = '<button title="Click me">Button</button>'
+        const button = document.querySelector('button')
+
+        expect(button.title).toBe('Click me')
+
+        button.title = 'New tooltip'
+        expect(button.title).toBe('New tooltip')
+      })
+    })
+
+    describe('className vs classList Comparison', () => {
+      it('should replace all classes when using className', () => {
+        document.body.innerHTML = '<div class="one two three"></div>'
+        const element = document.querySelector('div')
+
+        // className replaces everything
+        element.className = 'four'
+
+        expect(element.className).toBe('four')
+        expect(element.classList.contains('one')).toBe(false)
+        expect(element.classList.contains('four')).toBe(true)
+      })
+
+      it('should add single class without affecting others using classList', () => {
+        document.body.innerHTML = '<div class="one two three"></div>'
+        const element = document.querySelector('div')
+
+        // classList.add preserves existing classes
+        element.classList.add('four')
+
+        expect(element.classList.contains('one')).toBe(true)
+        expect(element.classList.contains('two')).toBe(true)
+        expect(element.classList.contains('three')).toBe(true)
+        expect(element.classList.contains('four')).toBe(true)
+      })
+
+      it('should toggle class on and off with classList', () => {
+        document.body.innerHTML = '<div class="active"></div>'
+        const element = document.querySelector('div')
+
+        expect(element.classList.contains('active')).toBe(true)
+
+        element.classList.toggle('active')
+        expect(element.classList.contains('active')).toBe(false)
+
+        element.classList.toggle('active')
+        expect(element.classList.contains('active')).toBe(true)
+      })
+    })
+
+    describe('Performance Patterns', () => {
+      it('should cache DOM references instead of repeated queries', () => {
+        document.body.innerHTML = '<div id="target">Content</div>'
+
+        // Bad: querying multiple times (we just demonstrate the pattern)
+        const query1 = document.getElementById('target')
+        const query2 = document.getElementById('target')
+        const query3 = document.getElementById('target')
+
+        // Good: cache the reference
+        const cached = document.getElementById('target')
+        const ref1 = cached
+        const ref2 = cached
+        const ref3 = cached
+
+        // All references point to same element
+        expect(ref1).toBe(ref2)
+        expect(ref2).toBe(ref3)
+        expect(cached).toBe(query1)
+      })
+
+      it('should batch DOM updates using documentFragment', () => {
+        document.body.innerHTML = '<ul id="list"></ul>'
+        const list = document.getElementById('list')
+
+        // Use fragment to batch insertions
+        const fragment = document.createDocumentFragment()
+
+        for (let i = 0; i < 5; i++) {
+          const li = document.createElement('li')
+          li.textContent = `Item ${i}`
+          fragment.appendChild(li)
+        }
+
+        // Single DOM update
+        list.appendChild(fragment)
+
+        expect(list.children.length).toBe(5)
+        expect(list.children[0].textContent).toBe('Item 0')
+        expect(list.children[4].textContent).toBe('Item 4')
+      })
+
+      it('should avoid layout thrashing by batching reads and writes', () => {
+        document.body.innerHTML = `
+          <div class="box" style="width: 100px; height: 100px;"></div>
+          <div class="box" style="width: 100px; height: 100px;"></div>
+        `
+        const boxes = document.querySelectorAll('.box')
+
+        // Good pattern: read all first, then write all
+        const heights = []
+
+        // Batch reads - get heights from style (JSDOM doesn't compute offsetHeight)
+        boxes.forEach(box => {
+          heights.push(parseInt(box.style.height, 10))
+        })
+
+        // Batch writes
+        boxes.forEach((box, i) => {
+          box.style.height = `${heights[i] + 10}px`
+        })
+
+        expect(boxes[0].style.height).toBe('110px')
+        expect(boxes[1].style.height).toBe('110px')
+      })
+
+      it('should use textContent for better performance than innerHTML for text', () => {
+        document.body.innerHTML = '<div id="target"></div>'
+        const target = document.getElementById('target')
+
+        // textContent is faster for plain text (no HTML parsing)
+        target.textContent = 'Plain text content'
+
+        expect(target.textContent).toBe('Plain text content')
+        expect(target.innerHTML).toBe('Plain text content')
+        expect(target.children.length).toBe(0)
+      })
+    })
+
+    describe('Properties vs Attributes Extended', () => {
+      it('should handle maxLength property on input', () => {
+        document.body.innerHTML = '<input type="text" maxlength="10">'
+        const input = document.querySelector('input')
+
+        // Property returns number
+        expect(input.maxLength).toBe(10)
+        expect(typeof input.maxLength).toBe('number')
+
+        // Attribute returns string
+        expect(input.getAttribute('maxlength')).toBe('10')
+        expect(typeof input.getAttribute('maxlength')).toBe('string')
+      })
+
+      it('should handle checked property on different input types', () => {
+        document.body.innerHTML = `
+          <input type="checkbox" id="cb" checked>
+          <input type="radio" id="rb" name="group" checked>
+        `
+
+        const checkbox = document.getElementById('cb')
+        const radio = document.getElementById('rb')
+
+        // Both have boolean checked property
+        expect(checkbox.checked).toBe(true)
+        expect(radio.checked).toBe(true)
+
+        // Toggle checkbox
+        checkbox.checked = false
+        expect(checkbox.checked).toBe(false)
+
+        // Attribute still shows original
+        expect(checkbox.hasAttribute('checked')).toBe(true)
+      })
+    })
+
+    describe('Clone ID Collision Prevention', () => {
+      it('should demonstrate ID collision issue with cloneNode', () => {
+        document.body.innerHTML = '<div id="original">Content</div>'
+        const original = document.getElementById('original')
+
+        // Clone keeps the same ID - causes collision!
+        const clone = original.cloneNode(true)
+        document.body.appendChild(clone)
+
+        // Now we have two elements with same ID
+        const allWithId = document.querySelectorAll('#original')
+        expect(allWithId.length).toBe(2)
+
+        // getElementById returns only first one
+        expect(document.getElementById('original')).toBe(original)
+      })
+
+      it('should fix ID collision by changing cloned element ID', () => {
+        document.body.innerHTML = '<div id="original">Content</div>'
+        const original = document.getElementById('original')
+
+        const clone = original.cloneNode(true)
+
+        // Fix: change ID before appending
+        clone.id = 'clone-1'
+        document.body.appendChild(clone)
+
+        // No collision - both accessible
+        expect(document.getElementById('original')).toBe(original)
+        expect(document.getElementById('clone-1')).toBe(clone)
+        expect(document.getElementById('clone-1').textContent).toBe('Content')
+      })
+    })
+
+    describe('Complex Selectors', () => {
+      it('should select elements using :not() pseudo-selector', () => {
+        document.body.innerHTML = `
+          <button class="btn">Normal</button>
+          <button class="btn disabled">Disabled</button>
+          <button class="btn">Another</button>
+        `
+
+        // Select buttons that are NOT disabled
+        const activeButtons = document.querySelectorAll('.btn:not(.disabled)')
+
+        expect(activeButtons.length).toBe(2)
+        expect(activeButtons[0].textContent).toBe('Normal')
+        expect(activeButtons[1].textContent).toBe('Another')
+      })
+
+      it('should select elements using :first-of-type pseudo-selector', () => {
+        document.body.innerHTML = `
+          <div class="container">
+            <span>First span</span>
+            <p>First paragraph</p>
+            <span>Second span</span>
+            <p>Second paragraph</p>
+          </div>
+        `
+
+        const firstSpan = document.querySelector('.container span:first-of-type')
+        const firstP = document.querySelector('.container p:first-of-type')
+
+        expect(firstSpan.textContent).toBe('First span')
+        expect(firstP.textContent).toBe('First paragraph')
+      })
+    })
   })
 })

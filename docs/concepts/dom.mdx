@@ -1,11 +1,28 @@
 ---
-title: "DOM and Layout Trees"
-description: "Understanding the Document Object Model and how browsers render pages"
+title: "DOM in JavaScript: How Browsers Represent Web Pages"
+description: "Learn how the DOM works in JavaScript. Understand how browsers represent HTML as a tree, select and manipulate elements, traverse nodes, and optimize rendering performance."
 ---
 
 How does JavaScript change what you see on a webpage? How do you click a button and see new content appear, or type in a form and watch suggestions pop up? How does a "dark mode" toggle instantly transform an entire page?
 
-The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface for web documents. It represents your HTML as a **tree of objects** that JavaScript can read and manipulate.
+The answer lies in the **DOM** — the bridge between your HTML and JavaScript.
+
+<Info>
+**What you'll learn in this guide:**
+- What the DOM is in JavaScript and how it differs from HTML
+- How to select DOM elements (getElementById vs querySelector)
+- How to traverse the DOM tree (parent, children, siblings)
+- How to manipulate DOM elements (create, modify, remove)
+- The difference between properties and attributes
+- How the browser turns DOM → pixels (the Critical Rendering Path)
+- Performance best practices (avoid layout thrashing!)
+</Info>
+
+---
+
+## What is the DOM in JavaScript?
+
+The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface that represents HTML documents as a tree of objects. When a browser loads a webpage, it parses the HTML and creates the DOM — a live, structured representation that JavaScript can read and modify. Every element, attribute, and piece of text becomes a node in this tree.
 
 ```javascript
 // The DOM lets you do things like this:
@@ -15,17 +32,6 @@ document.getElementById('btn').addEventListener('click', handleClick)
 ```
 
 With the DOM, you can use methods like **[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** to find elements, **[`getElementById()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)** to grab specific nodes, and **[`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)** to respond to user interactions.
-
-<Info>
-**What you'll learn in this guide:**
-- What the DOM actually is (and what it's NOT)
-- How to select elements like a pro (getElementById vs querySelector)
-- How to traverse the tree (parent, children, siblings)
-- How to create, modify, and remove elements
-- The difference between properties and attributes
-- How the browser turns DOM → pixels (the Critical Rendering Path)
-- Performance best practices (avoid layout thrashing!)
-</Info>
 
 ---
 
@@ -153,18 +159,18 @@ DOM                          Render Tree
 
 ### The `document` Object: Your Entry Point
 
-The **[`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)** object is your gateway to the DOM. It's automatically available in any browser JavaScript:
+The **[`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)** object is your gateway to the DOM. It's automatically available in any browser JavaScript. Key properties include **[`document.documentElement`](https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement)** (the root `<html>` element), **[`document.head`](https://developer.mozilla.org/en-US/docs/Web/API/Document/head)**, **[`document.body`](https://developer.mozilla.org/en-US/docs/Web/API/Document/body)**, and **[`document.title`](https://developer.mozilla.org/en-US/docs/Web/API/Document/title)**:
 
 ```javascript
 // document is the root of everything
-console.log(document);                    // The entire document
-console.log(document.documentElement);    // <html> element
-console.log(document.head);               // <head> element
-console.log(document.body);               // <body> element
-console.log(document.title);              // Page title (getter/setter!)
+console.log(document)                    // The entire document
+console.log(document.documentElement)    // <html> element
+console.log(document.head)               // <head> element
+console.log(document.body)               // <body> element
+console.log(document.title)              // Page title (getter/setter!)
 
 // You can modify the document
-document.title = 'New Title';             // Changes browser tab title
+document.title = 'New Title'             // Changes browser tab title
 ```
 
 ---
@@ -230,7 +236,7 @@ Node.DOCUMENT_FRAGMENT_NODE  // 11
 
 // Check if something is an element
 if (node.nodeType === Node.ELEMENT_NODE) {
-  console.log('This is an element!');
+  console.log('This is an element!')
 }
 ```
 
@@ -267,7 +273,7 @@ div#container
 
 ---
 
-## Selecting Elements
+## How to Select DOM Elements
 
 Before you can manipulate an element, you need to find it. JavaScript provides several methods through the **[`document`](https://developer.mozilla.org/en-US/docs/Web/API/Document)** object:
 
@@ -428,7 +434,7 @@ This is faster than searching the entire document and helps avoid selecting unin
 
 ---
 
-## Traversing the DOM
+## How to Traverse the DOM
 
 Once you have an element, you can navigate to related elements without querying the entire document.
 
@@ -1169,46 +1175,46 @@ DOM operations can be slow. Here's how to keep your pages fast.
 ```javascript
 // Bad: Queries the DOM every iteration
 for (let i = 0; i < 1000; i++) {
-  document.querySelector('.result').textContent += i;
+  document.querySelector('.result').textContent += i
 }
 
 // Good: Query once, reuse
-const result = document.querySelector('.result');
+const result = document.querySelector('.result')
 for (let i = 0; i < 1000; i++) {
-  result.textContent += i;
+  result.textContent += i
 }
 
 // Even better: Build string, set once
-const result = document.querySelector('.result');
-let text = '';
+const result = document.querySelector('.result')
+let text = ''
 for (let i = 0; i < 1000; i++) {
-  text += i;
+  text += i
 }
-result.textContent = text;
+result.textContent = text
 ```
 
 ### Batch DOM Updates
 
 ```javascript
 // Bad: 3 separate reflows
-element.style.width = '100px';
-element.style.height = '200px';
-element.style.margin = '10px';
+element.style.width = '100px'
+element.style.height = '200px'
+element.style.margin = '10px'
 
 // Good: Single reflow with cssText
-element.style.cssText = 'width: 100px; height: 200px; margin: 10px;';
+element.style.cssText = 'width: 100px; height: 200px; margin: 10px;'
 
 // Good: Single reflow with class
-element.classList.add('my-styles');
+element.classList.add('my-styles')
 
 // Good: DocumentFragment for multiple elements
-const fragment = document.createDocumentFragment();
+const fragment = document.createDocumentFragment()
 items.forEach(item => {
-  const li = document.createElement('li');
-  li.textContent = item;
-  fragment.appendChild(li);
-});
-ul.appendChild(fragment);  // Single DOM update
+  const li = document.createElement('li')
+  li.textContent = item
+  fragment.appendChild(li)
+})
+ul.appendChild(fragment)  // Single DOM update
 ```
 
 ### Avoid Layout Thrashing
@@ -1218,15 +1224,15 @@ ul.appendChild(fragment);  // Single DOM update
 ```javascript
 // TERRIBLE: Forces layout on EVERY iteration
 boxes.forEach(box => {
-  const width = box.offsetWidth;      // Read (forces layout)
-  box.style.width = (width + 10) + 'px';  // Write (invalidates layout)
-});
+  const width = box.offsetWidth      // Read (forces layout)
+  box.style.width = (width + 10) + 'px'  // Write (invalidates layout)
+})
 
 // GOOD: Batch reads, then batch writes
-const widths = boxes.map(box => box.offsetWidth);  // Read all
+const widths = boxes.map(box => box.offsetWidth)  // Read all
 boxes.forEach((box, i) => {
-  box.style.width = (widths[i] + 10) + 'px';       // Write all
-});
+  box.style.width = (widths[i] + 10) + 'px'       // Write all
+})
 ```
 
 **Properties that trigger layout when read:**
@@ -1399,16 +1405,16 @@ Benefits:
 
 ```javascript
 // Using querySelector (returns null if not found)
-const element = document.querySelector('.maybe-exists');
+const element = document.querySelector('.maybe-exists')
 if (element) {
-  element.textContent = 'Found!';
+  element.textContent = 'Found!'
 }
 
 // Optional chaining (modern)
-document.querySelector('.maybe-exists')?.classList.add('active');
+document.querySelector('.maybe-exists')?.classList.add('active')
 
 // With getElementById
-const el = document.getElementById('myId');
+const el = document.getElementById('myId')
 if (el !== null) {
   // Element exists
 }
@@ -1443,6 +1449,34 @@ window.addEventListener('load', () => {
 
 ---
 
+## Key Takeaways
+
+<Info>
+**Remember these essential points:**
+
+1. **The DOM is a tree** — Elements are nodes with parent, child, and sibling relationships
+
+2. **DOM ≠ HTML source** — The browser fixes errors and JavaScript modifies it
+
+3. **Use querySelector** — More flexible than getElementById, accepts any CSS selector
+
+4. **Element vs Node properties** — Use `children`, `firstElementChild`, etc. to skip text nodes
+
+5. **closest() is your friend** — Perfect for event delegation and finding ancestor elements
+
+6. **innerHTML is dangerous** — Never use with user input; use textContent instead
+
+7. **Attributes vs Properties** — Attributes are HTML source, properties are live DOM state
+
+8. **classList over className** — Use add/remove/toggle for cleaner class manipulation
+
+9. **Batch DOM operations** — Use DocumentFragment or build strings to minimize reflows
+
+10. **Avoid layout thrashing** — Don't alternate reading and writing layout properties
+</Info>
+
+---
+
 ## Test Your Knowledge
 
 <AccordionGroup>
@@ -1458,8 +1492,8 @@ window.addEventListener('load', () => {
     //   <li>Two</li>
     // </ul>
     
-    ul.childNodes.length;  // 5 (text, li, text, li, text)
-    ul.children.length;    // 2 (li, li)
+    ul.childNodes.length  // 5 (text, li, text, li, text)
+    ul.children.length    // 2 (li, li)
     ```
     
     **Rule:** Use `children` unless you specifically need text/comment nodes.
@@ -1470,10 +1504,10 @@ window.addEventListener('load', () => {
     
     ```javascript
     // User input: <img src=x onerror="stealCookies()">
-    div.innerHTML = userInput;  // Executes malicious code!
+    div.innerHTML = userInput  // Executes malicious code!
     
     // Safe: textContent escapes HTML
-    div.textContent = userInput;  // Displays as plain text
+    div.textContent = userInput  // Displays as plain text
     ```
     
     Always sanitize HTML or use `textContent` for user-provided content.
@@ -1489,8 +1523,8 @@ window.addEventListener('load', () => {
     // <input value="initial">
     // User types "hello"
     
-    input.getAttribute('value');  // "initial"
-    input.value;                  // "hello"
+    input.getAttribute('value')  // "initial"
+    input.value                  // "hello"
     ```
     
     Attributes are the HTML source. Properties are the live DOM state.
@@ -1504,20 +1538,20 @@ window.addEventListener('load', () => {
     //   <button class="btn">Click</button>
     // </div>
     
-    btn.closest('.card');  // Returns the parent div
-    btn.closest('button'); // Returns btn itself (it matches!)
-    btn.closest('.modal'); // null (no matching ancestor)
+    btn.closest('.card')  // Returns the parent div
+    btn.closest('button') // Returns btn itself (it matches!)
+    btn.closest('.modal') // null (no matching ancestor)
     ```
     
     **Super useful for event delegation:**
     
     ```javascript
     document.addEventListener('click', (e) => {
-      const card = e.target.closest('.card');
+      const card = e.target.closest('.card')
       if (card) {
         // Handle click inside any card
       }
-    });
+    })
     ```
   </Accordion>
   
@@ -1527,16 +1561,16 @@ window.addEventListener('load', () => {
     ```javascript
     // BAD: Read-write-read-write pattern
     boxes.forEach(box => {
-      const width = box.offsetWidth;     // READ → forces layout
-      box.style.width = width + 10 + 'px'; // WRITE → invalidates layout
-    });
+      const width = box.offsetWidth     // READ → forces layout
+      box.style.width = width + 10 + 'px' // WRITE → invalidates layout
+    })
     // Each iteration forces a new layout calculation!
     
     // GOOD: Batch reads, then batch writes
-    const widths = boxes.map(b => b.offsetWidth);  // All reads
+    const widths = boxes.map(b => b.offsetWidth)  // All reads
     boxes.forEach((box, i) => {
-      box.style.width = widths[i] + 10 + 'px';     // All writes
-    });
+      box.style.width = widths[i] + 10 + 'px'     // All writes
+    })
     // Only one layout calculation!
     ```
   </Accordion>
@@ -1568,14 +1602,14 @@ window.addEventListener('load', () => {
     | Speed | Slightly faster | Slightly slower |
     
     ```javascript
-    const live = document.getElementsByClassName('item');
-    const staticList = document.querySelectorAll('.item');
+    const live = document.getElementsByClassName('item')
+    const staticList = document.querySelectorAll('.item')
     
     // Add new element with class="item"
-    document.body.appendChild(newItem);
+    document.body.appendChild(newItem)
     
-    live.length;       // Increased (live collection)
-    staticList.length; // Same (static snapshot)
+    live.length       // Increased (live collection)
+    staticList.length // Same (static snapshot)
     ```
   </Accordion>
   
@@ -1583,15 +1617,15 @@ window.addEventListener('load', () => {
     **Answer:** Use a **DocumentFragment** to batch insertions:
     
     ```javascript
-    const fragment = document.createDocumentFragment();
+    const fragment = document.createDocumentFragment()
     
     for (let i = 0; i < 1000; i++) {
-      const li = document.createElement('li');
-      li.textContent = `Item ${i}`;
-      fragment.appendChild(li);  // No reflow (fragment is detached)
+      const li = document.createElement('li')
+      li.textContent = `Item ${i}`
+      fragment.appendChild(li)  // No reflow (fragment is detached)
     }
     
-    ul.appendChild(fragment);  // Single reflow!
+    ul.appendChild(fragment)  // Single reflow!
     ```
     
     A DocumentFragment is a virtual container. When appended, only its children are inserted—the fragment disappears.
@@ -1599,34 +1633,6 @@ window.addEventListener('load', () => {
     Alternative: Build HTML string and use `innerHTML` once (but sanitize if user input!).
   </Accordion>
 </AccordionGroup>
-
----
-
-## Key Takeaways
-
-<Info>
-**Remember these essential points:**
-
-1. **The DOM is a tree** — Elements are nodes with parent, child, and sibling relationships
-
-2. **DOM ≠ HTML source** — The browser fixes errors and JavaScript modifies it
-
-3. **Use querySelector** — More flexible than getElementById, accepts any CSS selector
-
-4. **Element vs Node properties** — Use `children`, `firstElementChild`, etc. to skip text nodes
-
-5. **closest() is your friend** — Perfect for event delegation and finding ancestor elements
-
-6. **innerHTML is dangerous** — Never use with user input; use textContent instead
-
-7. **Attributes vs Properties** — Attributes are HTML source, properties are live DOM state
-
-8. **classList over className** — Use add/remove/toggle for cleaner class manipulation
-
-9. **Batch DOM operations** — Use DocumentFragment or build strings to minimize reflows
-
-10. **Avoid layout thrashing** — Don't alternate reading and writing layout properties
-</Info>
 
 ---
 
@@ -1710,15 +1716,12 @@ window.addEventListener('load', () => {
   </Card>
 </CardGroup>
 
-## Courses
-
-<Card title="JavaScript DOM Manipulation – Full Course for Beginners" icon="graduation-cap" href="https://www.youtube.com/watch?v=5fb2aPlgoys">
-  A comprehensive freeCodeCamp course covering DOM selection, traversal, manipulation, and events from the ground up.
-</Card>
-
 ## Videos
 
 <CardGroup cols={2}>
+  <Card title="JavaScript DOM Manipulation – Full Course for Beginners" icon="graduation-cap" href="https://www.youtube.com/watch?v=5fb2aPlgoys">
+    A comprehensive freeCodeCamp course covering DOM selection, traversal, manipulation, and events from the ground up.
+  </Card>
   <Card title="JavaScript DOM Tutorial" icon="video" href="https://www.youtube.com/watch?v=FIORjGvT0kk">
     The Net Ninja's popular playlist covering DOM fundamentals step by step.
   </Card>
