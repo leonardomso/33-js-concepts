@@ -17,9 +17,11 @@ The project was recognized by GitHub as one of the **top open source projects of
 
 ```
 33-js-concepts/
-├── .claude/                 # OpenCode/Claude configuration
-│   ├── CLAUDE.md           # Project context and guidelines
-│   └── skills/             # Custom skills for content creation
+├── .claude/                 # Claude configuration
+│   └── CLAUDE.md           # Project context and guidelines
+├── .opencode/               # OpenCode configuration
+│   └── skill/              # Custom skills for content creation
+│       └── write-concept/  # Skill for writing concept documentation
 ├── docs/                    # Mintlify documentation site
 │   ├── docs.json           # Mintlify configuration
 │   ├── index.mdx           # Homepage
@@ -371,6 +373,32 @@ description: "Brief description"
 - Translations are maintained in separate forked repositories
 - Community contributions are welcome and encouraged
 - MIT Licensed
+
+## Custom Skills
+
+### write-concept Skill
+
+Use the `/write-concept` skill when writing or improving concept documentation pages. This skill provides comprehensive guidelines for:
+
+- **Page Structure**: Exact template for concept pages (frontmatter, opening hook, code examples, sections)
+- **SEO Optimization**: Critical guidelines for ranking in search results
+- **Writing Style**: Voice, tone, and how to make content accessible to beginners
+- **Code Examples**: Best practices for clear, educational code
+- **Quality Checklists**: Verification steps before publishing
+
+**When to invoke:**
+- Creating a new concept page in `/docs/concepts/`
+- Rewriting or significantly improving an existing concept page
+- Reviewing an existing concept page for quality
+
+**SEO is Critical:** Each concept page should rank for searches like:
+- "what is [concept] in JavaScript"
+- "how does [concept] work in JavaScript"
+- "[concept] JavaScript explained"
+
+The skill includes detailed guidance on title optimization (50-60 chars), meta descriptions (150-160 chars), keyword placement, and featured snippet optimization.
+
+**Location:** `.opencode/skill/write-concept/SKILL.md`
 
 ## Maintainer
 

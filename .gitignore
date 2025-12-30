@@ -63,5 +63,5 @@ typings/
 # webstore IDE created directory
 .idea
 
-# Claude/OpenCode skills (local only)
-.claude/skills/
+# OpenCode configuration (local only)
+.opencode/
