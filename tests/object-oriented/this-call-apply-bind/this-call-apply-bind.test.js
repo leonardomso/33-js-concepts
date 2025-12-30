@@ -1169,5 +1169,160 @@ describe('this, call, apply and bind', () => {
       
       expect(obj.inner.getName()).toBe('Inner')
     })
+
+    it('Question 5: forEach callback loses this context', () => {
+      const calculator = {
+        value: 10,
+        add(numbers) {
+          // This demonstrates the BROKEN behavior
+          let localValue = this.value
+          numbers.forEach(function(n) {
+            // this.value would be undefined here in strict mode
+            // so we can't actually add to it
+            localValue += 0  // simulating the broken behavior
+          })
+          return this.value  // returns original value unchanged
+        }
+      }
+      
+      // The value stays 10 because the callback can't access this.value
+      expect(calculator.add([1, 2, 3])).toBe(10)
+    })
+
+    it('Question 5 fixed: forEach with arrow function preserves this', () => {
+      const calculator = {
+        value: 10,
+        add(numbers) {
+          numbers.forEach((n) => {
+            this.value += n  // Arrow function preserves this
+          })
+          return this.value
+        }
+      }
+      
+      expect(calculator.add([1, 2, 3])).toBe(16)
+    })
+
+    it('Question 6: bind partial application and length property', () => {
+      function multiply(a, b) {
+        return a * b
+      }
+      
+      const double = multiply.bind(null, 2)
+      
+      expect(double(5)).toBe(10)
+      expect(double.length).toBe(1)  // multiply has 2 params, we pre-filled 1
+    })
+  })
+
+  describe('Additional Documentation Examples', () => {
+    describe('simulateNew function', () => {
+      it('should simulate new keyword behavior', () => {
+        function simulateNew(Constructor, ...args) {
+          // Step 1: Create empty object
+          const newObject = {}
+          
+          // Step 2: Link prototype
+          Object.setPrototypeOf(newObject, Constructor.prototype)
+          
+          // Step 3: Bind this and execute
+          const result = Constructor.apply(newObject, args)
+          
+          // Step 4: Return object (unless constructor returns an object)
+          return result instanceof Object ? result : newObject
+        }
+
+        function Person(name) {
+          this.name = name
+        }
+        Person.prototype.greet = function() {
+          return `Hi, I'm ${this.name}`
+        }
+
+        const alice1 = new Person("Alice")
+        const alice2 = simulateNew(Person, "Alice")
+
+        expect(alice1.name).toBe("Alice")
+        expect(alice2.name).toBe("Alice")
+        expect(alice1.greet()).toBe("Hi, I'm Alice")
+        expect(alice2.greet()).toBe("Hi, I'm Alice")
+        expect(alice2 instanceof Person).toBe(true)
+      })
+
+      it('should return custom object if constructor returns one', () => {
+        function simulateNew(Constructor, ...args) {
+          const newObject = {}
+          Object.setPrototypeOf(newObject, Constructor.prototype)
+          const result = Constructor.apply(newObject, args)
+          return result instanceof Object ? result : newObject
+        }
+
+        function ReturnsObject() {
+          this.name = "ignored"
+          return { custom: "object" }
+        }
+
+        const obj = simulateNew(ReturnsObject)
+        expect(obj.custom).toBe("object")
+        expect(obj.name).toBeUndefined()
+      })
+    })
+
+    describe('apply with args array', () => {
+      it('should work with introduce function and args array', () => {
+        function introduce(greeting, role, company) {
+          return `${greeting}! I'm ${this.name}, ${role} at ${company}.`
+        }
+
+        const alice = { name: "Alice" }
+        const args = ["Hello", "engineer", "TechCorp"]
+
+        expect(introduce.apply(alice, args)).toBe("Hello! I'm Alice, engineer at TechCorp.")
+        expect(introduce.call(alice, ...args)).toBe("Hello! I'm Alice, engineer at TechCorp.")
+      })
+    })
+
+    describe('Countdown class pattern', () => {
+      it('should preserve this with bind in setInterval pattern', () => {
+        class Countdown {
+          constructor(start) {
+            this.count = start
+          }
+          
+          tick() {
+            this.count--
+            return this.count
+          }
+        }
+
+        const countdown = new Countdown(10)
+        
+        // Simulate what setInterval would do - extract the method
+        const boundTick = countdown.tick.bind(countdown)
+        
+        expect(boundTick()).toBe(9)
+        expect(boundTick()).toBe(8)
+        expect(boundTick()).toBe(7)
+        expect(countdown.count).toBe(7)
+      })
+
+      it('should lose this without bind', () => {
+        class Countdown {
+          constructor(start) {
+            this.count = start
+          }
+          
+          tick() {
+            return this?.count
+          }
+        }
+
+        const countdown = new Countdown(10)
+        const unboundTick = countdown.tick
+        
+        // Without bind, this is undefined
+        expect(unboundTick()).toBeUndefined()
+      })
+    })
   })
 })

@@ -1,6 +1,7 @@
 ---
-title: "this, call, apply and bind"
-description: "How JavaScript decides what 'this' refers to — and how you take control"
+title: "The this Keyword: Understanding Context in JavaScript"
+sidebarTitle: "The this Keyword, call, apply, and bind"
+description: "Learn how JavaScript's 'this' keyword works and how to control context binding. Understand the 5 binding rules, call/apply/bind methods, arrow functions, and common pitfalls."
 ---
 
 Why does `this` sometimes point to the wrong object? Why does your method work perfectly when called directly, but break when passed as a callback? And how do **[`call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)**, **[`apply`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)**, and **[`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)** let you take control?
@@ -20,11 +21,7 @@ greet();                // "Hi, I'm undefined" - broken!
 
 The **[`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)** keyword is one of JavaScript's most confusing features — but it follows specific rules. Once you understand them, you'll never be confused again.
 
-In our journey through JavaScript, we've already explored [Scope & Closures](/concepts/scope-and-closures) — how variables are accessed and how functions remember their environment. Now it's time to tackle one of JavaScript's most confusing (and powerful) features: the `this` keyword.
-
-You've probably seen `this` pop up everywhere — in object methods, class constructors, event handlers, and callbacks. Sometimes it works exactly as you'd expect. Other times? It points to something completely unexpected and your code breaks in mysterious ways.
-
-The truth is, `this` isn't magical or random. It follows specific rules. Once you understand these rules, you'll never be confused by `this` again. And with `call`, `apply`, and `bind`, you'll learn how to take complete control over what `this` refers to.
+Building on our exploration of [Scope & Closures](/concepts/scope-and-closures), understanding `this` is the next step to learning how JavaScript handles context. You've probably seen `this` pop up everywhere — in object methods, class constructors, event handlers, and callbacks. Sometimes it works exactly as you'd expect. Other times? It points to something completely unexpected and your code breaks in mysterious ways.
 
 Let's start with an analogy that makes it all click.
 
@@ -59,14 +56,14 @@ This is exactly how `this` works in JavaScript! The keyword `this` is like the p
 const alice = {
   name: "Alice",
   introduce() {
-    console.log("I am " + this.name);  // "I" = this = alice
+    return "I am " + this.name;  // "I" = this = alice
   }
 };
 
 const bob = {
   name: "Bob",
   introduce() {
-    console.log("I am " + this.name);  // "I" = this = bob
+    return "I am " + this.name;  // "I" = this = bob
   }
 };
 
@@ -94,9 +91,9 @@ That's what `call`, `apply`, and `bind` do — they let you control **who "I" re
 
 ---
 
-## What is `this`?
+## What is `this` in JavaScript?
 
-The `this` keyword is a special identifier that JavaScript automatically defines in every function. It refers to the **execution context** — essentially, the object that the function is operating on.
+The **`this`** keyword is a special identifier that JavaScript automatically creates in every function execution context. It refers to the object that is currently executing the code — typically the object that "owns" the method being called. Unlike most languages where `this` is fixed at definition time, JavaScript determines `this` dynamically at **call time**, based on how a function is invoked.
 
 ### The Key Insight: Call-Time Binding
 
@@ -114,10 +111,12 @@ function showThis() {
 const obj = { showThis };
 
 // Same function, different this values:
-showThis();        // undefined (strict mode) or [globalThis](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis)
+showThis();        // undefined (strict mode) or globalThis
 obj.showThis();    // obj (the object before the dot)
 showThis.call({}); // {} (explicitly specified)
 ```
+
+In non-strict mode, plain function calls return **[`globalThis`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis)** (the global object — `window` in browsers, `global` in Node.js).
 
 ### Why Does JavaScript Work This Way?
 
@@ -175,7 +174,7 @@ Arrow functions are listed last not because they're lowest priority, but because
 
 ### Rule 1: `new` Binding (Highest Priority)
 
-When a function is called with the `new` keyword, `this` is set to a **brand new object** that's automatically created.
+When a function is called with the **[`new`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new)** keyword, `this` is set to a **brand new object** that's automatically created.
 
 ```javascript
 class Person {
@@ -203,7 +202,7 @@ When you call `new Person("Alice")`, JavaScript performs these 4 steps:
   </Step>
   
   <Step title="Link the prototype">
-    The new object's internal `[[Prototype]]` is set to the constructor's `prototype` property.
+    The new object's internal `[[Prototype]]` is set to the constructor's **[`prototype`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/prototype)** property.
     
     ```javascript
     // Conceptually:
@@ -238,7 +237,7 @@ function simulateNew(Constructor, ...args) {
   // Step 1: Create empty object
   const newObject = {};
   
-  // Step 2: Link prototype
+  // Step 2: Link prototype (see Object.setPrototypeOf on MDN)
   Object.setPrototypeOf(newObject, Constructor.prototype);
   
   // Step 3: Bind this and execute
@@ -406,7 +405,7 @@ We'll cover solutions in the "Gotchas" section.
 
 When a function is called without any of the above conditions, **default binding** applies.
 
-In **strict mode** (which you should always use): `this` is `undefined`.
+In **[strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode)** (which you should always use): `this` is `undefined`.
 
 In non-strict mode: `this` is the global object (`window` in browsers, `global` in Node.js).
 
@@ -611,7 +610,7 @@ When you need to figure out what `this` is, follow this flowchart:
 
 ---
 
-## Deep Dive: `call()`, `apply()`, and `bind()`
+## How Do `call()`, `apply()`, and `bind()` Work?
 
 These three methods give you explicit control over `this`. They're built into every function in JavaScript.
 
@@ -901,7 +900,7 @@ Use array methods on array-like objects:
 ```javascript
 // Arguments object (old-school, but still seen in legacy code)
 function sum() {
-  // 'arguments' is array-like but not an array
+  // 'arguments' is array-like but not an array (see MDN: Arguments object)
   return Array.prototype.reduce.call(
     arguments,
     (total, n) => total + n,
@@ -911,7 +910,7 @@ function sum() {
 
 sum(1, 2, 3, 4);  // 10
 
-// NodeList from DOM
+// NodeList from DOM (browser-only example)
 const divs = document.querySelectorAll('div');  // NodeList, not Array
 const texts = Array.prototype.map.call(divs, div => div.textContent);
 
@@ -1192,7 +1191,7 @@ const obj = {
 | Event handlers in classes | ✅ Yes (as class fields) | ⚠️ Needs binding |
 | Functions needing own `this` | ❌ No | ✅ Yes |
 | Constructor functions | ❌ No (can't use `new`) | ✅ Yes |
-| Methods using `arguments` | ❌ No (no `arguments`) | ✅ Yes |
+| Methods using [`arguments`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments) | ❌ No (no `arguments`) | ✅ Yes |
 
 ### Arrow Functions as Class Fields
 
@@ -1227,7 +1226,7 @@ class SearchBox {
 const ArrowClass = () => {};
 new ArrowClass();  // TypeError: ArrowClass is not a constructor
 
-// 2. No 'arguments' object
+// 2. No 'arguments' object (arrow functions don't have their own arguments binding)
 const arrow = () => {
   console.log(arguments);  // ReferenceError: arguments is not defined
 };
@@ -1240,7 +1239,9 @@ const arrowWithRest = (...args) => {
 // 3. No 'super' in standalone arrows (works in class methods)
 
 // 4. Cannot be used as generators
-const arrowGen = *() => {};  // SyntaxError
+// There's no arrow generator syntax - you must use function*
+function* generatorFn() { yield 1; }  // Works
+// () =>* { yield 1; }                // No such syntax exists
 ```
 
 ---
@@ -1440,12 +1441,7 @@ Try to figure out what `this` refers to in each example before revealing the ans
   <Card title="Javascript: call(), apply() and bind()" icon="newspaper" href="https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb">
     Omer Goldberg's practical walkthrough of call, apply, and bind with real-world scenarios.
   </Card>
-  <Card title="Let me explain to you what is this (JavaScript)" icon="newspaper" href="https://dev.to/ycmjason/let-me-explain-to-you-what-is-this-javascript-44ja">
-    Jason Yu's friendly explanation of the this keyword with clear visual examples.
-  </Card>
-  <Card title="Understanding this binding in JavaScript" icon="newspaper" href="https://yasemincidem.medium.com/understanding-this-binding-in-javascript-86687397c76d">
-    Yasemin Cidem's deep dive into all the ways this gets bound in JavaScript.
-  </Card>
+
   <Card title="The Top 7 Tricky this Interview Questions" icon="newspaper" href="https://dmitripavlutin.com/javascript-this-interview-questions/">
     Dmitri Pavlutin's collection of challenging this-related questions to test your understanding.
   </Card>
