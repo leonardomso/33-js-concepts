@@ -1,5 +1,5 @@
 ---
-title: "JavaScript Call Stack: How Function Execution Works"
+title: "Call Stack: How Function Execution Works in JavaScript"
 sidebarTitle: "Call Stack: How Function Execution Works"
 description: "Learn how the JavaScript call stack tracks function execution. Understand stack frames, LIFO ordering, execution contexts, stack overflow errors, and debugging with stack traces."
 ---
@@ -654,34 +654,6 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
 
 ---
 
-## Key Takeaways
-
-<Info>
-**Remember these essential points about the Call Stack:**
-
-1. **JavaScript is single-threaded** — It has ONE call stack and can only do one thing at a time
-
-2. **LIFO principle** — Last In, First Out. The most recent function call finishes first
-
-3. **Execution contexts** — Each function call creates a "frame" containing arguments, local variables, and return address
-
-4. **Synchronous execution** — Functions must complete before their callers can continue
-
-5. **Stack overflow** — Happens when the stack gets too deep, usually from infinite recursion
-
-6. **Always have a base case** — Recursive functions need a stopping condition
-
-7. **Stack traces are your friend** — They show you exactly how your program got to an error
-
-8. **Async callbacks wait** — `setTimeout`, `fetch`, and event callbacks don't run until the call stack is empty
-
-9. **Each frame is isolated** — Local variables in one function call don't affect variables in another call of the same function
-
-10. **Debugging tools show the stack** — Browser DevTools let you pause execution and inspect the current call stack
-</Info>
-
----
-
 ## Common Misconceptions
 
 <AccordionGroup>
@@ -777,7 +749,35 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
 
 ---
 
-## Classic Interview Questions
+## Key Takeaways
+
+<Info>
+**Remember these essential points about the Call Stack:**
+
+1. **JavaScript is single-threaded** — It has ONE call stack and can only do one thing at a time
+
+2. **LIFO principle** — Last In, First Out. The most recent function call finishes first
+
+3. **Execution contexts** — Each function call creates a "frame" containing arguments, local variables, and return address
+
+4. **Synchronous execution** — Functions must complete before their callers can continue
+
+5. **Stack overflow** — Happens when the stack gets too deep, usually from infinite recursion
+
+6. **Always have a base case** — Recursive functions need a stopping condition
+
+7. **Stack traces are your friend** — They show you exactly how your program got to an error
+
+8. **Async callbacks wait** — `setTimeout`, `fetch`, and event callbacks don't run until the call stack is empty
+
+9. **Each frame is isolated** — Local variables in one function call don't affect variables in another call of the same function
+
+10. **Debugging tools show the stack** — Browser DevTools let you pause execution and inspect the current call stack
+</Info>
+
+---
+
+## Test Your Knowledge
 
 <AccordionGroup>
   <Accordion title="Question 1: What does LIFO stand for and why is it important?">
