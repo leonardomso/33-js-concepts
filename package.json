@@ -16,8 +16,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "docs": "npx mintlify dev --dir docs",
-    "docs:build": "npx mintlify build --dir docs"
+    "docs": "cd docs && npx mintlify dev",
+    "docs:build": "cd docs && npx mintlify build"
   },
   "repository": {
     "type": "git",
