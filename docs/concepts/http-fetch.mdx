@@ -224,7 +224,7 @@ The **Fetch API** is JavaScript's modern way to make HTTP requests. It replaced 
 
 ### Basic GET Request
 
-The simplest fetch call retrieves data from a URL:
+The simplest fetch call retrieves data from a URL. By default, `fetch()` uses the **GET** method, so you don't need to specify it:
 
 ```javascript
 // Basic fetch - returns a Promise
@@ -256,9 +256,9 @@ responsePromise.then(response => {
 })
 ```
 
-### The Response Object
+### Understanding the Response Object
 
-When `fetch()` resolves, you get a `Response` object with useful properties:
+When `fetch()` resolves, you get a **[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)** object. This object contains everything about the server's reply — status codes, headers, and methods to read the body:
 
 ```javascript
 const response = await fetch('https://api.example.com/users/1')
@@ -288,7 +288,7 @@ response.arrayBuffer() // Parse body as ArrayBuffer
 
 ### Reading JSON Data
 
-Most APIs return JSON. Use `.json()` to parse it:
+Most modern APIs return data in **[JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)** format. The Response object has a built-in `.json()` method that parses the body and returns a JavaScript object:
 
 ```javascript
 async function getUser(id) {
@@ -302,9 +302,11 @@ async function getUser(id) {
 }
 ```
 
-### Making POST Requests
+### Sending Data with POST
 
-To send data to a server, use the POST method with a request body:
+So far we've only *retrieved* data. But what about *sending* data — like creating a user account or submitting a form?
+
+That's where **[POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST)** comes in. It's the HTTP method that tells the server "I'm sending you data to create something new." To make a POST request, you need to specify the method, set a `Content-Type` header, and include your data in the body:
 
 ```javascript
 async function createUser(userData) {
@@ -330,7 +332,7 @@ console.log(user.id)  // New user's ID from server
 
 ### Setting Headers
 
-Headers provide additional information about the request:
+**[HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)** are metadata you send with your request — things like authentication tokens, content types, and caching instructions. You pass them as an object in the `headers` option:
 
 ```javascript
 const response = await fetch('https://api.example.com/data', {
@@ -393,9 +395,13 @@ const response = await fetch(`/api/search?${params}`)
 
 ---
 
-## Error Handling: The Critical Distinction
+## The #1 Fetch Mistake
 
-This is the **most important section** of this guide. Many developers get this wrong, leading to bugs that are hard to track down.
+Here's a mistake almost every developer makes when learning fetch:
+
+> "I wrapped my fetch in try/catch, so I'm handling all errors... right?"
+
+**Wrong.** The problem? `fetch()` only throws an error when the *network* fails — not when the server returns a 404 or 500. A "Page Not Found" response is still a successful network request from fetch's perspective!
 
 ### Two Types of "Errors"
 
@@ -425,7 +431,9 @@ When working with `fetch()`, there are two completely different types of failure
 **The Trap:** `fetch()` only rejects its Promise for network errors. An HTTP 404 or 500 response is still a "successful" fetch — the network request completed! You must check `response.ok` to detect HTTP errors.
 </Warning>
 
-### The Wrong Way
+### The Mistake: Only Catching Network Errors
+
+This code looks fine, but it has a subtle bug — HTTP errors like 404 or 500 slip right through the catch block:
 
 ```javascript
 // ❌ WRONG - This misses HTTP errors!
@@ -440,7 +448,9 @@ try {
 }
 ```
 
-### The Right Way
+### The Fix: Always Check response.ok
+
+The solution is simple: check `response.ok` before assuming success. This property is `true` for status codes 200-299 and `false` for everything else:
 
 ```javascript
 // ✓ CORRECT - Check response.ok
@@ -465,9 +475,9 @@ async function fetchUser(id) {
 }
 ```
 
-### A Reusable Fetch Wrapper
+### Building a Reusable Fetch Helper
 
-Here's a pattern you can use in real projects:
+Here's a pattern you can use in real projects — a wrapper function that handles the `response.ok` check for you:
 
 ```javascript
 async function fetchJSON(url, options = {}) {
@@ -512,9 +522,9 @@ try {
 
 ---
 
-## Modern Patterns with async/await
+## Using async/await with Fetch
 
-While `fetch()` works with `.then()` chains, modern JavaScript uses `async/await` for cleaner code.
+The examples above use `.then()` chains, but modern JavaScript has a cleaner syntax: `async/await`. If you're not familiar with it, check out our [async/await concept](/concepts/async-await) first — it'll make your fetch code much easier to read.
 
 ### Basic async/await Pattern
 
@@ -612,7 +622,7 @@ if (result.loading) {
 
 ---
 
-## Cancelling Requests with AbortController
+## How to Cancel Requests
 
 The **[AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)** API lets you cancel in-flight fetch requests. This is essential for:
 
