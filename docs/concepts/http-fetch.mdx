@@ -1,6 +1,6 @@
 ---
 title: "HTTP & Fetch"
-description: "Making network requests in JavaScript"
+description: "Learn how to make network requests in JavaScript using the Fetch API, handle HTTP responses, parse JSON data, and avoid common error handling mistakes"
 ---
 
 How does JavaScript get data from a server? How do you load user profiles, submit forms, or fetch the latest posts from an API? The answer is the **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** — JavaScript's modern way to make network requests.
@@ -82,6 +82,8 @@ This request-response cycle is the core of how the web works. The **Fetch API** 
 <Warning>
 **Prerequisite:** This guide assumes you understand [Promises](/concepts/promises) and [async/await](/concepts/async-await). Fetch is Promise-based, so those concepts are essential. If you're not comfortable with Promises yet, read that guide first!
 </Warning>
+
+---
 
 ---
 
@@ -224,37 +226,78 @@ The **Fetch API** is JavaScript's modern way to make HTTP requests. It replaced 
 
 ### Basic GET Request
 
-The simplest fetch call retrieves data from a URL. By default, `fetch()` uses the **GET** method, so you don't need to specify it:
+The simplest fetch call retrieves data from a URL. By default, `fetch()` uses the **GET** method, so you don't need to specify it. There are two ways to write this:
 
-```javascript
-// Basic fetch - returns a Promise
-fetch('https://api.example.com/users')
-  .then(response => response.json())
-  .then(data => console.log(data))
-  .catch(error => console.error('Error:', error))
-```
+<Tabs>
+  <Tab title="Promise .then()">
+    ```javascript
+    // Basic fetch - returns a Promise
+    fetch('https://api.example.com/users')
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error))
+    ```
+    
+    Let's break this down step by step:
+    
+    ```javascript
+    // Step 1: fetch() returns a Promise that resolves to a Response object
+    const responsePromise = fetch('https://api.example.com/users')
 
-Let's break this down step by step:
+    // Step 2: When the response arrives, we get a Response object
+    responsePromise.then(response => {
+      console.log(response.status)      // 200
+      console.log(response.ok)          // true
+      console.log(response.headers)     // Headers object
+      
+      // Step 3: The body is a stream, we need to parse it
+      // .json() returns ANOTHER Promise
+      return response.json()
+    })
+    .then(data => {
+      // Step 4: Now we have the actual data
+      console.log(data)  // { users: [...] }
+    })
+    ```
+  </Tab>
+  <Tab title="async/await">
+    ```javascript
+    // Using async/await - cleaner syntax
+    async function getUsers() {
+      try {
+        const response = await fetch('https://api.example.com/users')
+        const data = await response.json()
+        console.log(data)
+      } catch (error) {
+        console.error('Error:', error)
+      }
+    }
+    ```
+    
+    Let's break this down step by step:
+    
+    ```javascript
+    async function getUsers() {
+      // Step 1: await pauses until the Response arrives
+      const response = await fetch('https://api.example.com/users')
+      
+      console.log(response.status)      // 200
+      console.log(response.ok)          // true
+      console.log(response.headers)     // Headers object
+      
+      // Step 2: await again to read and parse the body
+      const data = await response.json()
+      
+      // Step 3: Now we have the actual data
+      console.log(data)  // { users: [...] }
+    }
+    ```
+  </Tab>
+</Tabs>
 
-```javascript
-// Step 1: fetch() returns a Promise that resolves to a Response object
-const responsePromise = fetch('https://api.example.com/users')
-
-// Step 2: When the response arrives, we get a Response object
-responsePromise.then(response => {
-  console.log(response.status)      // 200
-  console.log(response.ok)          // true
-  console.log(response.headers)     // Headers object
-  
-  // Step 3: The body is a stream, we need to parse it
-  // .json() returns ANOTHER Promise
-  return response.json()
-})
-.then(data => {
-  // Step 4: Now we have the actual data
-  console.log(data)  // { users: [...] }
-})
-```
+<Tip>
+**Which should you use?** `async/await` is generally preferred for its cleaner, more readable syntax. Use `.then()` chains when you need to integrate with older codebases or when you specifically want to avoid async functions.
+</Tip>
 
 ### Understanding the Response Object
 

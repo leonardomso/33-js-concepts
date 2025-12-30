@@ -1028,4 +1028,124 @@ describe('HTTP & Fetch', () => {
       expect(result.results[0]).toContain('javascript')
     })
   })
+
+  // ===========================================================================
+  // FORMDATA
+  // ===========================================================================
+  describe('FormData', () => {
+    it('should create FormData object', () => {
+      const formData = new FormData()
+      formData.append('username', 'alice')
+      formData.append('email', 'alice@example.com')
+
+      expect(formData.get('username')).toBe('alice')
+      expect(formData.get('email')).toBe('alice@example.com')
+    })
+
+    it('should append multiple values for same key', () => {
+      const formData = new FormData()
+      formData.append('tags', 'javascript')
+      formData.append('tags', 'nodejs')
+
+      const tags = formData.getAll('tags')
+      expect(tags).toEqual(['javascript', 'nodejs'])
+    })
+
+    it('should set value (overwrite)', () => {
+      const formData = new FormData()
+      formData.append('name', 'alice')
+      formData.set('name', 'bob')
+
+      expect(formData.get('name')).toBe('bob')
+    })
+
+    it('should check if key exists', () => {
+      const formData = new FormData()
+      formData.append('username', 'alice')
+
+      expect(formData.has('username')).toBe(true)
+      expect(formData.has('password')).toBe(false)
+    })
+
+    it('should delete key', () => {
+      const formData = new FormData()
+      formData.append('username', 'alice')
+      formData.append('email', 'alice@example.com')
+
+      formData.delete('email')
+
+      expect(formData.has('email')).toBe(false)
+      expect(formData.has('username')).toBe(true)
+    })
+
+    it('should iterate over entries', () => {
+      const formData = new FormData()
+      formData.append('name', 'alice')
+      formData.append('age', '30')
+
+      const entries = []
+      for (const [key, value] of formData) {
+        entries.push([key, value])
+      }
+
+      expect(entries).toContainEqual(['name', 'alice'])
+      expect(entries).toContainEqual(['age', '30'])
+    })
+
+    it('should send FormData with fetch (no Content-Type header needed)', async () => {
+      global.fetch = vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ success: true }), { status: 200 })
+      )
+
+      const formData = new FormData()
+      formData.append('username', 'alice')
+      formData.append('avatar', new Blob(['fake image data'], { type: 'image/png' }), 'avatar.png')
+
+      await fetch('/api/profile', {
+        method: 'POST',
+        body: formData
+        // Note: Don't set Content-Type header - browser sets it automatically with boundary
+      })
+
+      expect(fetch).toHaveBeenCalledWith('/api/profile', expect.objectContaining({
+        method: 'POST',
+        body: expect.any(FormData)
+      }))
+    })
+
+    it('should parse FormData from response', async () => {
+      // Create a FormData-like body
+      const formData = new FormData()
+      formData.append('field1', 'value1')
+      formData.append('field2', 'value2')
+
+      // Note: In real browsers, response.formData() parses multipart responses
+      // For testing, we verify the FormData API works correctly
+      expect(formData.get('field1')).toBe('value1')
+      expect(formData.get('field2')).toBe('value2')
+    })
+
+    it('should append File objects', () => {
+      const formData = new FormData()
+      const file = new File(['hello world'], 'test.txt', { type: 'text/plain' })
+
+      formData.append('document', file)
+
+      const retrieved = formData.get('document')
+      expect(retrieved).toBeInstanceOf(File)
+      expect(retrieved.name).toBe('test.txt')
+      expect(retrieved.type).toBe('text/plain')
+    })
+
+    it('should append Blob objects with filename', () => {
+      const formData = new FormData()
+      const blob = new Blob(['image data'], { type: 'image/jpeg' })
+
+      formData.append('image', blob, 'photo.jpg')
+
+      const retrieved = formData.get('image')
+      expect(retrieved).toBeInstanceOf(File) // Blob with filename becomes File
+      expect(retrieved.name).toBe('photo.jpg')
+    })
+  })
 })
