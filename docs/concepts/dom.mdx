@@ -1405,11 +1405,141 @@ div.appendChild(welcomeText)
 
 ---
 
+## Event Propagation: Bubbling and Capturing
+
+When an event occurs on a DOM element, it doesn't just trigger on that element — it travels through the DOM tree in a process called **event propagation**. Understanding this is crucial for event handling.
+
+### The Three Phases
+
+Every DOM event goes through three phases:
+
+```
+1. CAPTURING PHASE    ↓  (from window → target's parent)
+2. TARGET PHASE       ●  (at the target element)
+3. BUBBLING PHASE     ↑  (from target's parent → window)
+```
+
+```javascript
+// Most events bubble UP by default
+document.querySelector('.child').addEventListener('click', (e) => {
+  console.log('Child clicked')
+})
+
+document.querySelector('.parent').addEventListener('click', (e) => {
+  console.log('Parent also receives the click!')  // This fires too!
+})
+```
+
+### Capturing vs Bubbling
+
+By default, event listeners fire during the **bubbling phase** (bottom-up). You can listen during the **capturing phase** (top-down) with the third parameter:
+
+```javascript
+// Bubbling (default) — fires on the way UP
+element.addEventListener('click', handler)
+element.addEventListener('click', handler, false)
+
+// Capturing — fires on the way DOWN
+element.addEventListener('click', handler, true)
+element.addEventListener('click', handler, { capture: true })
+```
+
+```javascript
+// Practical example: see the order
+document.querySelector('.parent').addEventListener('click', () => {
+  console.log('1. Parent - capturing')
+}, true)
+
+document.querySelector('.child').addEventListener('click', () => {
+  console.log('2. Child - target')
+})
+
+document.querySelector('.parent').addEventListener('click', () => {
+  console.log('3. Parent - bubbling')
+})
+
+// Click on child outputs: 1, 2, 3
+```
+
+### Stopping Propagation
+
+You can stop an event from traveling further:
+
+```javascript
+element.addEventListener('click', (e) => {
+  e.stopPropagation()        // Stop bubbling/capturing
+  // Parent handlers won't fire
+})
+
+element.addEventListener('click', (e) => {
+  e.stopImmediatePropagation()  // Stop ALL handlers, even on same element
+})
+```
+
+<Warning>
+**Use `stopPropagation()` sparingly!** It breaks event delegation and can make debugging difficult. Usually there's a better solution.
+</Warning>
+
+### Preventing Default Behavior
+
+Don't confuse propagation with default behavior:
+
+```javascript
+// Prevent the browser's default action (e.g., following a link)
+link.addEventListener('click', (e) => {
+  e.preventDefault()   // Don't navigate
+  // Event still bubbles unless you also call stopPropagation()
+})
+
+// Common use cases:
+// - Prevent form submission: form.addEventListener('submit', e => e.preventDefault())
+// - Prevent link navigation: link.addEventListener('click', e => e.preventDefault())
+// - Prevent context menu: element.addEventListener('contextmenu', e => e.preventDefault())
+```
+
+### The `event.target` vs `event.currentTarget`
+
+This distinction matters for event delegation:
+
+```javascript
+document.querySelector('.parent').addEventListener('click', (e) => {
+  console.log(e.target)        // The element that was actually clicked
+  console.log(e.currentTarget) // The element with the listener (.parent)
+  console.log(this)            // Same as currentTarget (in regular functions)
+})
+```
+
+```javascript
+// If you click on a <span> inside .parent:
+// e.target = <span>           (what you clicked)
+// e.currentTarget = .parent   (what has the listener)
+```
+
+### Events That Don't Bubble
+
+Most events bubble, but some don't:
+
+| Event | Bubbles? | Notes |
+|-------|----------|-------|
+| `click`, `mousedown`, `keydown` | Yes | Most user events bubble |
+| `focus`, `blur` | No | Use `focusin`/`focusout` for bubbling versions |
+| `mouseenter`, `mouseleave` | No | Use `mouseover`/`mouseout` for bubbling versions |
+| `load`, `unload`, `scroll` | No | Window/document events |
+
+```javascript
+// focus doesn't bubble, but focusin does
+form.addEventListener('focusin', (e) => {
+  console.log('Something in the form was focused:', e.target)
+})
+```
+
+---
+
 ## Common DOM Patterns
 
 ### Event Delegation
 
-Instead of adding listeners to many elements, add one to a parent. This pattern relies on event bubbling (see [Event Loop](/concepts/event-loop) for how the browser processes events):
+Instead of adding listeners to many elements, add one to a parent. This pattern relies on **event bubbling** — when you click a child element, the event bubbles up to the parent where your listener catches it:
 
 ```javascript
 // Bad: Many listeners
@@ -1987,6 +2117,12 @@ input.value                  // "hello"
   <Card title="JavaScript DOM Tutorial" icon="newspaper" href="https://www.javascripttutorial.net/javascript-dom/">
     A comprehensive multi-part tutorial covering selection, traversal, manipulation, and events.
   </Card>
+  <Card title="Event Propagation — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events">
+    MDN's guide to event handling including bubbling, capturing, and delegation patterns.
+  </Card>
+  <Card title="Bubbling and Capturing" icon="newspaper" href="https://javascript.info/bubbling-and-capturing">
+    JavaScript.info's detailed explanation of how events travel through the DOM tree.
+  </Card>
 </CardGroup>
 
 ## Videos
@@ -2006,5 +2142,8 @@ input.value                  // "hello"
   </Card>
   <Card title="JavaScript DOM Traversal Methods" icon="video" href="https://www.youtube.com/watch?v=v7rSSy8CaYE">
     Web Dev Simplified covers parent, child, and sibling traversal methods.
+  </Card>
+  <Card title="Event Propagation - JavaScript Event Bubbling and Propagation" icon="video" href="https://www.youtube.com/watch?v=JYc7gr9Ehl0">
+    Steve Griffith explains event bubbling, capturing, and how to control event flow.
   </Card>
 </CardGroup>

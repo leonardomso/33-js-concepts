@@ -50,59 +50,57 @@
               "concepts/iife-modules"
             ]
           },
-          {
-            "group": "Web Platform",
-            "icon": "browser",
-            "pages": [
-              "concepts/dom",
-              "concepts/http-fetch"
-            ]
-          },
-          {
-            "group": "Object-Oriented JS",
-            "icon": "sitemap",
-            "pages": [
-              "concepts/factories-classes",
-              "concepts/this-call-apply-bind",
-              "concepts/new-constructor",
-              "concepts/prototype",
-              "concepts/object-create-assign"
-            ]
-          },
-          {
-            "group": "Functional Programming",
-            "icon": "filter",
-            "pages": [
-              "concepts/map-reduce-filter",
-              "concepts/pure-functions",
-              "concepts/higher-order-functions",
-              "concepts/recursion"
-            ]
-          },
-          {
-            "group": "Async JavaScript",
-            "icon": "clock",
-            "pages": [
-              "concepts/collections-generators",
-              "concepts/promises",
-              "concepts/async-await"
-            ]
-          },
-          {
-            "group": "Advanced Topics",
-            "icon": "graduation-cap",
-            "pages": [
-              "concepts/javascript-engines",
-              "concepts/data-structures",
-              "concepts/big-o-notation",
-              "concepts/algorithms",
-              "concepts/inheritance-polymorphism",
-              "concepts/design-patterns",
-              "concepts/currying-composition",
-              "concepts/clean-code"
-            ]
-          }
-        ]
+{
+          "group": "Web Platform",
+          "icon": "browser",
+          "pages": [
+            "concepts/dom",
+            "concepts/http-fetch"
+          ]
+        },
+        {
+          "group": "Object-Oriented JS",
+          "icon": "sitemap",
+          "pages": [
+            "concepts/factories-classes",
+            "concepts/this-call-apply-bind",
+            "concepts/object-creation-prototypes"
+          ]
+        },
+        {
+          "group": "Functional Programming",
+          "icon": "filter",
+          "pages": [
+            "concepts/higher-order-functions",
+            "concepts/pure-functions",
+            "concepts/map-reduce-filter",
+            "concepts/recursion",
+            "concepts/currying-composition"
+          ]
+        },
+        {
+          "group": "Async JavaScript",
+          "icon": "clock",
+          "pages": [
+            "concepts/collections-generators",
+            "concepts/promises",
+            "concepts/async-await"
+          ]
+        },
+        {
+          "group": "Advanced Topics",
+          "icon": "graduation-cap",
+          "pages": [
+            "concepts/javascript-engines",
+            "concepts/data-structures",
+            "concepts/big-o-notation",
+            "concepts/algorithms",
+            "concepts/inheritance-polymorphism",
+            "concepts/design-patterns",
+            "concepts/clean-code"
+          ]
+        }
+      ]
       },
       {
         "tab": "Community",
