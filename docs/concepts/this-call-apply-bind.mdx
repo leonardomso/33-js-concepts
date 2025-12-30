@@ -1,6 +1,6 @@
 ---
-title: "The this Keyword: Understanding Context in JavaScript"
-sidebarTitle: "The this Keyword, call, apply, and bind"
+title: "this, call, apply, and bind: How Context Works in JavaScript"
+sidebarTitle: "this, call, apply, and bind: How Context Works"
 description: "Learn how JavaScript's 'this' keyword works and how to control context binding. Understand the 5 binding rules, call/apply/bind methods, arrow functions, and common pitfalls."
 ---
 
@@ -21,9 +21,18 @@ greet();                // "Hi, I'm undefined" - broken!
 
 The **[`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)** keyword is one of JavaScript's most confusing features — but it follows specific rules. Once you understand them, you'll never be confused again.
 
-Building on our exploration of [Scope & Closures](/concepts/scope-and-closures), understanding `this` is the next step to learning how JavaScript handles context. You've probably seen `this` pop up everywhere — in object methods, class constructors, event handlers, and callbacks. Sometimes it works exactly as you'd expect. Other times? It points to something completely unexpected and your code breaks in mysterious ways.
+<Info>
+**What you'll learn in this guide:**
+- What `this` actually is and why it's determined at call time
+- The 5 binding rules that determine `this` (in priority order)
+- How `call()`, `apply()`, and `bind()` work and when to use each
+- Arrow functions and why they handle `this` differently
+- Common pitfalls and how to avoid them
+</Info>
 
-Let's start with an analogy that makes it all click.
+<Warning>
+**Prerequisite:** This guide builds on [Scope & Closures](/concepts/scope-and-closures). Understanding scope will help you see why `this` behaves differently than regular variables.
+</Warning>
 
 ---
 
@@ -79,15 +88,6 @@ bob.introduce.call(alice);  // "I am Alice" (Bob's function, Alice's this)
 ```
 
 That's what `call`, `apply`, and `bind` do — they let you control **who "I" refers to**, regardless of which function is speaking.
-
-<Info>
-**What you'll learn in this guide:**
-- What `this` actually is and why it's determined at call time
-- The 5 binding rules that determine `this` (in priority order)
-- How `call()`, `apply()`, and `bind()` work and when to use each
-- Arrow functions and why they handle `this` differently
-- Common pitfalls and how to avoid them
-</Info>
 
 ---
 
