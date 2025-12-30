@@ -1222,5 +1222,163 @@ describe('DOM and Layout Trees', () => {
         expect(firstP.textContent).toBe('First paragraph')
       })
     })
+
+    describe('Common Misconceptions', () => {
+      describe('Misconception 1: DOM vs HTML source', () => {
+        it('should show browser always has head and body in DOM', () => {
+          // Browser fixes missing structure
+          expect(document.head).toBeDefined()
+          expect(document.body).toBeDefined()
+          expect(document.documentElement).toBeDefined()
+        })
+
+        it('should show DOM reflects JavaScript changes', () => {
+          document.body.innerHTML = '<div id="test">Original</div>'
+          const div = document.getElementById('test')
+          div.textContent = 'Modified'
+
+          // DOM reflects change
+          expect(div.textContent).toBe('Modified')
+          // Original HTML source would still say "Original"
+        })
+      })
+
+      describe('Misconception 2: querySelector performance', () => {
+        it('should show both methods return the same element', () => {
+          document.body.innerHTML = '<div id="myId">Test</div>'
+
+          const byId = document.getElementById('myId')
+          const byQuery = document.querySelector('#myId')
+
+          expect(byId).toBe(byQuery)
+        })
+      })
+
+      describe('Misconception 3: display none vs remove', () => {
+        it('should show display:none keeps element in DOM', () => {
+          document.body.innerHTML = '<div id="hidden">Content</div>'
+          const el = document.getElementById('hidden')
+          el.style.display = 'none'
+
+          // Still in DOM!
+          expect(document.getElementById('hidden')).toBe(el)
+          expect(el.parentNode).toBe(document.body)
+        })
+
+        it('should show visibility:hidden keeps element in DOM', () => {
+          document.body.innerHTML = '<div id="invisible">Content</div>'
+          const el = document.getElementById('invisible')
+          el.style.visibility = 'hidden'
+
+          expect(document.getElementById('invisible')).toBe(el)
+        })
+
+        it('should show remove() actually removes from DOM', () => {
+          document.body.innerHTML = '<div id="toRemove">Content</div>'
+          const el = document.getElementById('toRemove')
+          el.remove()
+
+          expect(document.getElementById('toRemove')).toBeNull()
+        })
+      })
+
+      describe('Misconception 4: Live collections gotcha', () => {
+        it('should show live collection changes when DOM changes', () => {
+          document.body.innerHTML = `
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+          `
+
+          const liveCollection = document.getElementsByClassName('item')
+          expect(liveCollection.length).toBe(3)
+
+          // Remove first item - collection shrinks
+          liveCollection[0].remove()
+          expect(liveCollection.length).toBe(2)
+        })
+
+        it('should show static NodeList is safe for iteration', () => {
+          document.body.innerHTML = `
+            <div class="item">1</div>
+            <div class="item">2</div>
+            <div class="item">3</div>
+          `
+
+          const staticList = document.querySelectorAll('.item')
+          expect(staticList.length).toBe(3)
+
+          // Remove all items safely
+          staticList.forEach(item => item.remove())
+
+          // Original NodeList still has references (but elements are removed from DOM)
+          expect(staticList.length).toBe(3)  // Static snapshot
+          expect(document.querySelectorAll('.item').length).toBe(0)  // DOM is empty
+        })
+      })
+    })
+
+    describe('Interview Questions', () => {
+      describe('Q1: querySelector vs getElementById', () => {
+        it('should demonstrate querySelector flexibility with complex selectors', () => {
+          document.body.innerHTML = `
+            <div class="card">
+              <span data-id="123">Content</span>
+            </div>
+          `
+
+          // querySelector can do what getElementById cannot
+          const byAttribute = document.querySelector('[data-id="123"]')
+          const firstCard = document.querySelector('.card:first-child')
+
+          expect(byAttribute.textContent).toBe('Content')
+          expect(firstCard.className).toBe('card')
+        })
+
+        it('should show both return null for non-existent elements', () => {
+          document.body.innerHTML = ''
+
+          expect(document.getElementById('nonexistent')).toBeNull()
+          expect(document.querySelector('#nonexistent')).toBeNull()
+        })
+      })
+
+      describe('Q2: Event delegation', () => {
+        it('should demonstrate event delegation with closest()', () => {
+          document.body.innerHTML = `
+            <div class="container">
+              <div class="item" data-id="1">Item 1</div>
+              <div class="item" data-id="2">Item 2</div>
+            </div>
+          `
+
+          let clickedId = null
+
+          // Simulated event delegation logic
+          const item = document.querySelector('[data-id="2"]')
+          const closestItem = item.closest('.item')
+
+          if (closestItem) {
+            clickedId = closestItem.dataset.id
+          }
+
+          expect(clickedId).toBe('2')
+        })
+
+        it('should show delegation works for dynamically added elements', () => {
+          document.body.innerHTML = '<ul class="list"></ul>'
+          const list = document.querySelector('.list')
+
+          // Add item after "attaching" listener (simulated)
+          const newItem = document.createElement('li')
+          newItem.className = 'item'
+          newItem.textContent = 'New Item'
+          list.appendChild(newItem)
+
+          // closest() finds it
+          expect(newItem.closest('.list')).toBe(list)
+        })
+      })
+    })
   })
 })
