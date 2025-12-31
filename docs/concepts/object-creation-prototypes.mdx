@@ -18,7 +18,7 @@ console.log(player.hasOwnProperty("name"))  // true
 console.log(Object.getPrototypeOf(player))  // { constructor: Object, toString: f, ... }
 ```
 
-The answer is the **[prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)** — JavaScript's inheritance mechanism. Every object has a hidden link to another object called its **prototype**. When you access a property, JavaScript looks for it on the object first, then follows this chain of prototypes until it finds the property or reaches the end (`null`).
+The answer is the **[prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)**. It's JavaScript's inheritance mechanism. Every object has a hidden link to another object called its **prototype**. When you access a property, JavaScript looks for it on the object first, then follows this chain of prototypes until it finds the property or reaches the end (`null`).
 
 <Info>
 **What you'll learn in this guide:**
@@ -40,7 +40,7 @@ The answer is the **[prototype chain](https://developer.mozilla.org/en-US/docs/W
 
 ## What is the Prototype Chain?
 
-The **prototype chain** is JavaScript's way of implementing inheritance. Every object has an internal link (called `[[Prototype]]`) to another object — its prototype. When you try to access a property on an object, JavaScript:
+The **prototype chain** is JavaScript's way of implementing inheritance. Every object has an internal link (called `[[Prototype]]`) to another object, its prototype. When you try to access a property on an object, JavaScript:
 
 1. First looks for the property on the object itself
 2. If not found, looks on the object's prototype
@@ -112,7 +112,7 @@ console.log(apprentice.castSpell())  // "Harry casts a spell!"
 ```
 
 <Tip>
-**The Chain Always Ends:** Every prototype chain eventually reaches `Object.prototype`, then `null`. This is why all objects have access to methods like `toString()` and `hasOwnProperty()` — they inherit them from `Object.prototype`.
+**The Chain Always Ends:** Every prototype chain eventually reaches `Object.prototype`, then `null`. This is why all objects have access to methods like `toString()` and `hasOwnProperty()`. They inherit them from `Object.prototype`.
 </Tip>
 
 ---
@@ -304,7 +304,7 @@ JavaScript gives you several ways to create objects, each with different use cas
 
 ### 1. Object Literals
 
-The simplest way — great for one-off objects:
+The simplest way. Great for one-off objects:
 
 ```javascript
 // Object literal — prototype is automatically Object.prototype
@@ -353,7 +353,7 @@ console.log(Object.getPrototypeOf(cat) === animalProto)  // true
 
 #### Creating Objects with No Prototype
 
-Pass `null` to create an object with **no prototype** — useful for dictionaries:
+Pass `null` to create an object with **no prototype**. This is useful for dictionaries:
 
 ```javascript
 // Regular object inherits from Object.prototype
@@ -861,7 +861,7 @@ function Player(name) {
 ## Key Takeaways
 
 <Info>
-**Essential Points About Prototypes and Object Creation:**
+**Key things to remember about prototypes and object creation:**
 
 1. **Every object has a prototype** — a hidden link (`[[Prototype]]`) to another object, forming a chain that ends at `null`
 
@@ -1040,7 +1040,7 @@ function Player(name) {
     Explore advanced inheritance patterns and polymorphism in JavaScript
   </Card>
   <Card title="Value vs Reference Types" icon="copy" href="/concepts/value-reference-types">
-    Understand the difference between primitives and objects — essential for prototypes
+    Understand the difference between primitives and objects, key background for prototypes
   </Card>
 </CardGroup>
 
@@ -1073,16 +1073,16 @@ function Player(name) {
 
 <CardGroup cols={2}>
   <Card title="A Beginner's Guide to JavaScript's Prototype" icon="newspaper" href="https://www.freecodecamp.org/news/a-beginners-guide-to-javascripts-prototype/">
-    A beginner-friendly introduction to prototypes with clear examples
+    Uses a "meal recipe" analogy that makes prototype inheritance click for visual learners. The step-by-step diagrams showing object relationships are particularly helpful.
   </Card>
   <Card title="Understanding Prototypes in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/understanding-prototypes-and-inheritance-in-javascript">
-    DigitalOcean's comprehensive tutorial on prototypes and inheritance
+    Walks through building a full inheritance hierarchy from scratch with runnable examples. Great for developers who learn by building rather than reading theory.
   </Card>
   <Card title="JavaScript Object Creation Patterns" icon="newspaper" href="https://www.patterns.dev/vanilla/object-creation-patterns">
-    Different patterns for creating objects in JavaScript
+    Compares factory functions, constructor patterns, and Object.create() side by side. Helps you choose the right pattern for your specific use case.
   </Card>
   <Card title="The Prototype Chain Explained" icon="newspaper" href="https://javascript.info/prototype-inheritance">
-    JavaScript.info's detailed explanation of prototype inheritance
+    Includes interactive code examples you can edit and run in the browser. The "tasks" section at the end tests your understanding with practical challenges.
   </Card>
 </CardGroup>
 
@@ -1090,12 +1090,12 @@ function Player(name) {
 
 <CardGroup cols={2}>
   <Card title="JavaScript Prototypes Explained" icon="video" href="https://www.youtube.com/watch?v=riDVvXZ_Kb4">
-    Fun Funktion's visual explanation of how prototypes work
+    MPJ's signature whiteboard diagrams make the prototype chain visible and intuitive. His "delegation, not copying" explanation is how prototypes finally click for many developers.
   </Card>
   <Card title="Object.create and Prototypes" icon="video" href="https://www.youtube.com/watch?v=MACDGu96wrA">
-    Kyle Simpson explains Object.create and prototype linkage
+    Kyle Simpson (author of "You Don't Know JS") challenges common misconceptions about prototypes. His "behavior delegation" framing offers a clearer mental model than classical inheritance.
   </Card>
   <Card title="The new Keyword Explained" icon="video" href="https://www.youtube.com/watch?v=Y3zzCY62NYc">
-    What happens under the hood when you use new
+    Steps through each of the 4 things `new` does with live code demonstrations. Shows exactly what happens to `this` and prototype links during object construction.
   </Card>
 </CardGroup>
