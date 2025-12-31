@@ -19,7 +19,7 @@ console.log('End');
 // Timeout
 ```
 
-Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)** — JavaScript's mechanism for handling asynchronous operations while remaining single-threaded.
+Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)**. It's JavaScript's mechanism for handling asynchronous operations while remaining single-threaded.
 
 <Info>
 **What you'll learn in this guide:**
@@ -39,7 +39,7 @@ Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event lo
 
 ## What is the Event Loop?
 
-The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. It continuously monitors the call stack and callback queues, pushing queued tasks to the stack when it's empty—enabling non-blocking behavior despite JavaScript being single-threaded.
+The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. It continuously monitors the call stack and callback queues, pushing queued tasks to the stack when it's empty. This enables non-blocking behavior despite JavaScript being single-threaded.
 
 ### The Restaurant Analogy
 
@@ -89,7 +89,7 @@ Here's how it maps to JavaScript:
 
 The chef (JavaScript) can only work on one dish (task) at a time. But kitchen timers (Web APIs) run independently! When a timer goes off, the dish goes to the "Order Up!" window (Task Queue). The kitchen manager (Event Loop) constantly checks: "Is the chef free? Here's the next order!"
 
-**VIP orders (Promises)** always get priority — they jump ahead of regular orders in the queue.
+**VIP orders (Promises)** always get priority. They jump ahead of regular orders in the queue.
 
 <Note>
 **TL;DR:** JavaScript is single-threaded but achieves concurrency by delegating work to browser APIs, which run in the background. When they're done, callbacks go into queues. The Event Loop moves callbacks from queues to the call stack when it's empty.
@@ -210,7 +210,7 @@ To understand the Event Loop, you need to see the full picture:
 
 <AccordionGroup>
   <Accordion title="Call Stack">
-    The **[Call Stack](/concepts/call-stack)** is where JavaScript keeps track of what function is currently running. It's a LIFO (Last In, First Out) structure — like a stack of plates.
+    The **[Call Stack](/concepts/call-stack)** is where JavaScript keeps track of what function is currently running. It's a LIFO (Last In, First Out) structure, like a stack of plates.
     
     ```javascript
     function multiply(a, b) {
@@ -487,7 +487,7 @@ Even though the second promise is created AFTER setTimeout was registered, it st
 | [`MessageChannel`](https://developer.mozilla.org/en-US/docs/Web/API/MessageChannel) | `postMessage` callbacks |
 
 <Note>
-**What about requestAnimationFrame?** rAF is NOT a task — it runs during the rendering phase, after microtasks but before the browser paints. It's covered in detail in the [Timers section](#requestanimationframe-smooth-animations).
+**What about requestAnimationFrame?** rAF is NOT a task. It runs during the rendering phase, after microtasks but before the browser paints. It's covered in detail in the [Timers section](#requestanimationframe-smooth-animations).
 </Note>
 
 ### What Creates Microtasks?
@@ -1477,7 +1477,7 @@ Watch how:
 ## Key Takeaways
 
 <Info>
-**Remember these essential points:**
+**The key things to remember:**
 
 1. **JavaScript is single-threaded** — only one thing runs at a time on the call stack
 
