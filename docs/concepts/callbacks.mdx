@@ -1,10 +1,10 @@
 ---
 title: "Callbacks: The Foundation of Async JavaScript"
 sidebarTitle: "Callbacks: The Foundation of Async"
-description: "Learn JavaScript callbacks — functions passed to other functions to be called later. Master sync vs async callbacks, error-first patterns, callback hell, and why Promises were invented."
+description: "Learn JavaScript callbacks, functions passed to other functions to be called later. Understand sync vs async callbacks, error-first patterns, callback hell, and why Promises were invented."
 ---
 
-Why doesn't JavaScript wait? When you set a timer, make a network request, or listen for a click — how does your code keep running instead of freezing until that operation completes?
+Why doesn't JavaScript wait? When you set a timer, make a network request, or listen for a click, how does your code keep running instead of freezing until that operation completes?
 
 ```javascript
 console.log('Before timer')
@@ -21,7 +21,7 @@ console.log('After timer')
 // Timer fired! (1 second later)
 ```
 
-The answer is **callbacks** — functions you pass to other functions, saying "call me back when you're done." Callbacks power everything async in JavaScript. Every event handler, every timer, every network request — they all rely on them.
+The answer is **callbacks**: functions you pass to other functions, saying "call me back when you're done." Callbacks power everything async in JavaScript. Every event handler, every timer, every network request. They all rely on them.
 
 <Info>
 **What you'll learn in this guide:**
@@ -36,7 +36,7 @@ The answer is **callbacks** — functions you pass to other functions, saying "c
 </Info>
 
 <Warning>
-**Prerequisites:** This guide assumes familiarity with [the Event Loop](/concepts/event-loop) — it's the mechanism that makes async callbacks work! You should also understand [higher-order functions](/concepts/higher-order-functions), since callbacks are higher-order functions in action.
+**Prerequisites:** This guide assumes familiarity with [the Event Loop](/concepts/event-loop). It's the mechanism that makes async callbacks work! You should also understand [higher-order functions](/concepts/higher-order-functions), since callbacks are higher-order functions in action.
 </Warning>
 
 ---
@@ -60,10 +60,10 @@ function processUserInput(callback) {
 processUserInput(greet)  // "Hello, Alice!"
 ```
 
-The term "callback" comes from the idea of being **called back** — like getting a buzzer at a restaurant: "We'll buzz you when your table is ready."
+The term "callback" comes from the idea of being **called back**. Think of it like getting a buzzer at a restaurant: "We'll buzz you when your table is ready."
 
 <Tip>
-**Here's the thing:** A callback is just a regular function. Nothing magical about it. What makes it a "callback" is *how it's used* — passed to another function to be executed later.
+**Here's the thing:** A callback is just a regular function. Nothing magical about it. What makes it a "callback" is *how it's used*: passed to another function to be executed later.
 </Tip>
 
 ### Callbacks Can Be Anonymous
@@ -134,7 +134,7 @@ Callbacks work like the buzzer you get at a busy restaurant:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-The key insight: **you don't wait at the counter**. You give them a way to reach you (the callback), and you go do other things. That's how JavaScript stays fast — it never sits around waiting.
+The key insight: **you don't wait at the counter**. You give them a way to reach you (the callback), and you go do other things. That's how JavaScript stays fast. It never sits around waiting.
 
 ```javascript
 // You place your order (start async operation)
@@ -312,7 +312,7 @@ Why? The `try/catch` runs immediately. By the time the async callback executes, 
 
 ## How Callbacks Work with the Event Loop
 
-To really get async callbacks, you need to see how they work with the [event loop](/concepts/event-loop).
+To understand async callbacks, you need to see how they work with the [event loop](/concepts/event-loop).
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -753,7 +753,7 @@ getUser(userId, function(error, user) {
 6. **Testing** — Nearly impossible to unit test individual steps
 
 <Note>
-Want to dive deeper into callback hell? Check out [callbackhell.com](http://callbackhell.com/) — a dedicated guide to understanding and escaping the pyramid of doom.
+Want to dive deeper into callback hell? Check out [callbackhell.com](http://callbackhell.com/), a dedicated guide to understanding and escaping the pyramid of doom.
 </Note>
 
 ---
@@ -966,7 +966,7 @@ async function initDashboard(userId, password) {
 ```
 
 <Tip>
-**Promises and async/await are built on callbacks.** They don't replace callbacks — they provide a cleaner abstraction over them. Under the hood, Promise `.then()` handlers are still callbacks!
+**Promises and async/await are built on callbacks.** They don't replace callbacks. They provide a cleaner abstraction over them. Under the hood, Promise `.then()` handlers are still callbacks!
 </Tip>
 
 ---
@@ -975,7 +975,7 @@ async function initDashboard(userId, password) {
 
 ### Mistake 1: Calling a Callback Multiple Times
 
-A callback should typically be called exactly once — either with an error or with a result:
+A callback should typically be called exactly once, either with an error or with a result:
 
 ```javascript
 // ❌ WRONG - callback called multiple times!
@@ -988,7 +988,7 @@ function fetchData(url, callback) {
       callback(error)           // Called on error
     })
     .finally(() => {
-      callback(null, 'done')    // Called ALWAYS — even after success or error!
+      callback(null, 'done')    // Called ALWAYS, even after success or error!
     })
 }
 
@@ -1002,7 +1002,7 @@ function fetchData(url, callback) {
 
 ### Mistake 2: Synchronous and Asynchronous Mixing (Zalgo)
 
-A function should be consistently sync or async, never both. This inconsistency is nicknamed "releasing Zalgo" — a reference to an internet meme about unleashing chaos. And chaos is exactly what you get when code behaves unpredictably:
+A function should be consistently sync or async, never both. This inconsistency is nicknamed "releasing Zalgo," a reference to an internet meme about unleashing chaos. And chaos is exactly what you get when code behaves unpredictably:
 
 ```javascript
 // ❌ WRONG - sometimes sync, sometimes async (Zalgo!)
@@ -1093,7 +1093,7 @@ user.greetLater()  // "Hello, Alice!"
 
 ### Mistake 4: Not Handling Errors
 
-Always handle errors in async callbacks — unhandled errors can crash your application:
+Always handle errors in async callbacks. Unhandled errors can crash your application:
 
 ```javascript
 // ❌ WRONG - error ignored
@@ -1128,11 +1128,11 @@ Understanding *why* JavaScript uses callbacks helps everything click into place.
 
 ### The Birth of JavaScript (1995)
 
-JavaScript was created by Brendan Eich at Netscape in just 10 days. Its primary purpose was to make web pages interactive — responding to user clicks, form submissions, and other events.
+JavaScript was created by Brendan Eich at Netscape in just 10 days. Its primary purpose was to make web pages interactive, responding to user clicks, form submissions, and other events.
 
 ### The Single-Threaded Design
 
-JavaScript was designed to be **single-threaded** — one thing at a time. Why?
+JavaScript was designed to be **single-threaded**: one thing at a time. Why?
 
 1. **Simplicity** — No race conditions, deadlocks, or complex synchronization
 2. **DOM Safety** — Multiple threads modifying the DOM would cause chaos
@@ -1172,7 +1172,7 @@ element.onclick = function() {
 | 2015 | ES6 Promises — official solution to callback hell |
 | 2017 | ES8 async/await — syntactic sugar for Promises |
 
-### Callbacks Are Still Fundamental
+### Callbacks Are Still The Foundation
 
 Even with Promises and async/await, callbacks are everywhere:
 
@@ -1181,14 +1181,14 @@ Even with Promises and async/await, callbacks are everywhere:
 - **Promises** use callbacks internally (`.then(callback)`)
 - **async/await** is syntactic sugar over Promise callbacks
 
-Callbacks aren't obsolete — they're the foundation that everything else builds upon.
+Callbacks aren't obsolete. They're the foundation that everything else builds upon.
 
 ---
 
 ## Key Takeaways
 
 <Info>
-**Remember these essential points about callbacks:**
+**The key things to remember:**
 
 1. **A callback is a function passed to another function** to be executed later — nothing magical
 
@@ -1318,7 +1318,7 @@ Callbacks aren't obsolete — they're the foundation that everything else builds
   <Accordion title="Question 5: Why can't you use try/catch with async callbacks?">
     **Answer:**
     
-    The `try/catch` block executes **synchronously**. By the time an async callback runs, the try/catch is long gone — it's on a different "turn" of the event loop.
+    The `try/catch` block executes **synchronously**. By the time an async callback runs, the try/catch is long gone. It's on a different "turn" of the event loop.
     
     ```javascript
     try {
@@ -1412,16 +1412,16 @@ Callbacks aren't obsolete — they're the foundation that everything else builds
 
 <CardGroup cols={2}>
   <Card title="JavaScript Callbacks Explained" icon="newspaper" href="https://www.freecodecamp.org/news/javascript-callback-functions-what-are-callbacks-in-js-and-how-to-use-them/">
-    freeCodeCamp's beginner-friendly guide to understanding callback functions with practical examples.
+    Starts with the "I'll call you back" phone analogy that makes callbacks click. Builds up from simple examples to async patterns step by step.
   </Card>
   <Card title="Callback Functions in JavaScript" icon="newspaper" href="https://javascript.info/callbacks">
-    JavaScript.info's in-depth guide with interactive examples and explanations.
+    Uses a script-loading example to show why callbacks exist and how they solve real problems. The "pyramid of doom" section shows exactly how callback hell develops.
   </Card>
   <Card title="Callback Hell" icon="newspaper" href="http://callbackhell.com/">
-    The definitive guide to understanding and avoiding callback hell, with practical solutions.
+    A single-page site dedicated entirely to callback hell. Shows the problem visually, then walks through three concrete solutions with before/after code.
   </Card>
   <Card title="Understand Callback Functions in JavaScript" icon="newspaper" href="https://codeburst.io/javascript-what-the-heck-is-a-callback-aba4da2deced">
-    Brandon Morelli's clear explanation of what callbacks are and how they work.
+    Breaks down callbacks into two simple rules you can remember. Short read that cuts through the jargon and gets to the point fast.
   </Card>
 </CardGroup>
 
@@ -1429,18 +1429,18 @@ Callbacks aren't obsolete — they're the foundation that everything else builds
 
 <CardGroup cols={2}>
   <Card title="Callbacks in JavaScript Explained!" icon="video" href="https://www.youtube.com/watch?v=cNjIUSDnb9k">
-    Mosh Hamedani's clear explanation of callbacks with visual examples.
+    Mosh uses a movie database example that shows callbacks in a realistic context. Great production quality with on-screen code highlighting.
   </Card>
   <Card title="JavaScript Callbacks" icon="video" href="https://www.youtube.com/watch?v=QRq2zMHlBz4">
-    Web Dev Simplified's beginner-friendly callback tutorial.
+    Kyle explains callbacks in under 8 minutes with zero fluff. Perfect if you want a quick refresher without sitting through a long tutorial.
   </Card>
   <Card title="Callback Functions" icon="video" href="https://www.youtube.com/watch?v=Nau-iEEgEoM">
-    Fun Fun Function's entertaining deep-dive into callbacks.
+    MPJ's signature style makes this feel like a conversation, not a lecture. Explains the "why" behind callbacks, not just the "how."
   </Card>
   <Card title="Asynchronous JavaScript Tutorial" icon="video" href="https://www.youtube.com/watch?v=PoRJizFvM7s">
-    Traversy Media's comprehensive guide covering callbacks, Promises, and async/await.
+    Covers the full async story: callbacks, then Promises, then async/await. Watch this one if you want to see how each pattern improves on the last.
   </Card>
   <Card title="JavaScript Callback Functions" icon="video" href="https://www.youtube.com/watch?v=pTbSfCT42_M">
-    techsith's practical tutorial on callback functions with examples.
+    Walks through callbacks with a setTimeout example, then shows how to create your own callback-accepting functions. Good for hands-on learners.
   </Card>
 </CardGroup>
