@@ -16,7 +16,7 @@ console.log(typeof null);  // "object" — a 28-year-old bug!
 console.log(NaN === NaN);  // false — NaN never equals anything
 ```
 
-Understanding JavaScript's **[equality operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)** is crucial because comparison bugs are among the most common in JavaScript code. This guide will teach you exactly how `==`, **[`===`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)**, and **[`Object.is()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)** work — and when to use each one.
+Understanding JavaScript's **[equality operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)** is crucial because comparison bugs are among the most common in JavaScript code. This guide will teach you exactly how `==`, **[`===`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)**, and **[`Object.is()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)** work, and when to use each one.
 
 <Info>
 **What you'll learn in this guide:**
@@ -29,7 +29,7 @@ Understanding JavaScript's **[equality operators](https://developer.mozilla.org/
 </Info>
 
 <Warning>
-**Prerequisites:** This guide assumes you understand [Primitive Types](/concepts/primitive-types) and [Type Coercion](/concepts/type-coercion). Equality operators rely heavily on how JavaScript converts types — if those concepts are new to you, read those guides first!
+**Prerequisites:** This guide assumes you understand [Primitive Types](/concepts/primitive-types) and [Type Coercion](/concepts/type-coercion). Equality operators rely heavily on how JavaScript converts types. If those concepts are new to you, read those guides first!
 </Warning>
 
 ---
@@ -55,7 +55,7 @@ console.log(Object.is(num, str));  // false (different types)
 ```
 
 <Note>
-**The simple rule:** Always use `===` for comparisons. The only exception: use `== null` to check if a value is empty (null or undefined). You'll rarely need `Object.is()` — it's for special cases we'll cover later.
+**The simple rule:** Always use `===` for comparisons. The only exception: use `== null` to check if a value is empty (null or undefined). You'll rarely need `Object.is()`. It's for special cases we'll cover later.
 </Note>
 
 ---
@@ -373,7 +373,7 @@ true             // 0 equals 0!
 ```
 
 <Warning>
-This example shows why `==` can produce unexpected results. An empty array appears to equal its own negation! This isn't a bug — it's how JavaScript's conversion rules work. This is why most developers prefer `===`.
+This example shows why `==` can produce unexpected results. An empty array appears to equal its own negation! This isn't a bug. It's how JavaScript's conversion rules work. This is why most developers prefer `===`.
 </Warning>
 
 ### When `==` Might Be Useful
@@ -427,7 +427,7 @@ When you write `x === y`, JavaScript asks:
 1. Are `x` and `y` the same type? No → return `false`
 2. Same type? → Compare their values
 
-That's it. No conversions, no surprises (well, *almost* — there's one special case with **[`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN)**).
+That's it. No conversions, no surprises (well, *almost*. There's one special case with **[`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN)**).
 
 ### The Strict Equality Comparison Algorithm
 
@@ -575,7 +575,7 @@ Even `===` has two edge cases that might surprise you:
     // NaN is the only value that is not equal to itself
     NaN === NaN           // false!
     
-    // NaN doesn't equal anything — not even itself!
+    // NaN doesn't equal anything, not even itself!
     // This is part of how numbers work in all programming languages
     
     // This is by design (IEEE 754 specification)
@@ -821,7 +821,7 @@ typeof(operand)  // Both forms are valid
     Object.prototype.toString.call([])  // "[object Array]"
     ```
     
-    Use **[`Array.isArray()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)** — it's the most reliable method.
+    Use **[`Array.isArray()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray)**. It's the most reliable method.
   </Accordion>
   
   <Accordion title="Functions Return 'function'">
@@ -1114,7 +1114,7 @@ These common mistakes trip up many JavaScript developers. Learning about them no
     if (" " == false) { }     // false (but " " is truthy)
     ```
     
-    **Why it's confusing:** The `==` operator doesn't check truthiness — it performs type coercion according to specific rules.
+    **Why it's confusing:** The `==` operator doesn't check truthiness. It performs type coercion according to specific rules.
     
     **The fix:**
     ```javascript
@@ -1267,7 +1267,7 @@ These common mistakes trip up many JavaScript developers. Learning about them no
   </Accordion>
   
   <Accordion title="Misconception 2: '=== checks if types are the same'">
-    **Partially wrong!** `===` doesn't *just* check types — it checks if two values are the **same type AND same value**.
+    **Partially wrong!** `===` doesn't *just* check types. It checks if two values are the **same type AND same value**.
     
     ```javascript
     // Same type, different values → false
@@ -1353,7 +1353,7 @@ These common mistakes trip up many JavaScript developers. Learning about them no
 ## Key Takeaways
 
 <Info>
-**Remember these essential points about Equality Operators:**
+**The key things to remember about Equality Operators:**
 
 1. **Use `===` by default** — It's predictable and doesn't convert types
 
@@ -1512,7 +1512,7 @@ Try to answer each question before revealing the solution:
     Array.isArray(null)         // false
     ```
     
-    **Why not `typeof`?** Because `typeof [] === "object"` — arrays are objects in JavaScript.
+    **Why not `typeof`?** Because `typeof [] === "object"`. Arrays are objects in JavaScript.
     
     **Why not `instanceof Array`?** It works in most cases, but can fail across different JavaScript realms (like iframes) where each realm has its own `Array` constructor.
   </Accordion>
@@ -1556,19 +1556,19 @@ Try to answer each question before revealing the solution:
 
 <CardGroup cols={2}>
   <Card title="JavaScript Double Equals vs. Triple Equals — Brandon Morelli" icon="newspaper" href="https://codeburst.io/javascript-double-equals-vs-triple-equals-61d4ce5a121a">
-    Beginner-friendly explanation of the differences between == and === with clear examples and use cases.
+    Uses side-by-side code comparisons to show exactly when == and === produce different results. Great starting point if you're new to JavaScript equality.
   </Card>
   <Card title="What is the difference between == and === in JavaScript? — Craig Buckler" icon="newspaper" href="https://www.oreilly.com/learning/what-is-the-difference-between-and-in-javascript">
-    Authoritative O'Reilly article explaining equality operators with practical guidance on when to use each.
+    O'Reilly's take on the equality debate with a clear recommendation on which operator to default to. Includes the edge cases that trip up even experienced developers.
   </Card>
   <Card title="=== vs == Comparison in JavaScript — FreeCodeCamp" icon="newspaper" href="https://www.freecodecamp.org/news/javascript-triple-equals-sign-vs-double-equals-sign-comparison-operators-explained-with-examples/">
-    Comprehensive guide with numerous examples showing how both operators behave in different scenarios.
+    Walks through the type coercion algorithm step-by-step with dozens of examples. The boolean comparison section explains why `true == "true"` returns false.
   </Card>
   <Card title="Checking Types in Javascript — Toby Ho" icon="newspaper" href="http://tobyho.com/2011/01/28/checking-types-in-javascript/">
-    In-depth exploration of typeof, instanceof, and alternative type-checking strategies.
+    Covers the limitations of typeof and when to use instanceof, Object.prototype.toString, or duck typing instead. Includes a reusable type-checking utility function.
   </Card>
   <Card title="How to better check data types in JavaScript — Webbjocke" icon="newspaper" href="https://webbjocke.com/javascript-check-data-types/">
-    Modern approaches to type checking with practical utility functions you can use in your projects.
+    Provides copy-paste utility functions for checking arrays, objects, nulls, and primitives. Explains why each approach works and when to use which method.
   </Card>
   <Card title="JavaScript Equality Table — dorey" icon="newspaper" href="https://dorey.github.io/JavaScript-Equality-Table/">
     Visual comparison table showing the results of == and === for all type combinations. Essential reference!
@@ -1581,13 +1581,13 @@ Try to answer each question before revealing the solution:
 
 <CardGroup cols={2}>
   <Card title='JavaScript "==" VS "===" — Web Dev Simplified' icon="video" href="https://www.youtube.com/watch?v=C5ZVC4HHgIg">
-    Clear, visual explanation of equality operators with practical examples. Perfect for visual learners.
+    8-minute breakdown with on-screen code examples showing type coercion in action. Kyle's explanation of the null/undefined special case is particularly helpful.
   </Card>
   <Card title="JavaScript - The typeof operator — Java Brains" icon="video" href="https://www.youtube.com/watch?v=ol_su88I3kw">
-    Comprehensive coverage of the typeof operator, its quirks, and when to use alternatives.
+    Demonstrates the typeof null bug and explains why it exists. Shows how to build a reliable type-checking function that handles all edge cases.
   </Card>
   <Card title="=== vs == in JavaScript — Hitesh Choudhary" icon="video" href="https://www.youtube.com/watch?v=a0S1iG3TgP0">
-    Popular explanation of equality operators with real-world coding examples.
+    Live coding session showing surprising equality results and debugging them in the console. Great for seeing how these operators behave in real development.
   </Card>
   <Card title="== ? === ??? ...#@^% — Shirmung Bielefeld" icon="video" href="https://www.youtube.com/watch?v=qGyqzN0bjhc&t">
     Conference talk diving deep into JavaScript's equality quirks and type coercion weirdness.
