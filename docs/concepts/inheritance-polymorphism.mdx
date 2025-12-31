@@ -4,47 +4,1292 @@ sidebarTitle: "Inheritance & Polymorphism: OOP Principles"
 description: "Learn inheritance and polymorphism in JavaScript — extending classes, prototype chains, method overriding, and code reuse patterns. Master object-oriented programming principles."
 ---
 
-## Overview
+How do game developers create hundreds of character types without copy-pasting the same code over and over? How can a Warrior, Mage, and Archer all "attack" differently but be treated the same way in battle?
 
-**Inheritance** allows objects to inherit properties and methods from other objects. **Polymorphism** allows objects of different types to be treated as objects of a common type. These OOP principles, combined with effective code reuse strategies, help create maintainable and scalable JavaScript applications.
+```javascript
+// One base class, infinite possibilities
+class Character {
+  constructor(name) {
+    this.name = name
+    this.health = 100
+  }
+  
+  attack() {
+    return `${this.name} attacks!`
+  }
+}
+
+class Warrior extends Character {
+  attack() {
+    return `${this.name} swings a mighty sword!`
+  }
+}
+
+class Mage extends Character {
+  attack() {
+    return `${this.name} casts a fireball!`
+  }
+}
+
+const hero = new Warrior("Aragorn")
+const wizard = new Mage("Gandalf")
+
+console.log(hero.attack())    // "Aragorn swings a mighty sword!"
+console.log(wizard.attack())  // "Gandalf casts a fireball!"
+```
+
+The answer lies in two powerful OOP principles: **[inheritance](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Classes_in_JavaScript#inheritance)** lets classes share code by extending other classes, and **polymorphism** lets different objects respond to the same method call in their own unique way.
+
+<Info>
+**What you'll learn in this guide:**
+- How inheritance lets child classes reuse parent class code
+- Using the `extends` keyword to create class hierarchies
+- The `super` keyword for calling parent constructors and methods
+- Method overriding for specialized behavior
+- Polymorphism: treating different object types through a common interface
+- When to use composition instead of inheritance (the Gorilla-Banana problem)
+- Mixins for sharing behavior across unrelated classes
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [Factories & Classes](/concepts/factories-classes) and [Object Creation & Prototypes](/concepts/object-creation-prototypes). If you're not comfortable with creating classes in JavaScript, read those guides first!
+</Warning>
+
+---
+
+## What is Inheritance?
+
+**Inheritance** is a mechanism where a class (called a **child** or **subclass**) can inherit properties and methods from another class (called a **parent** or **superclass**). Instead of rewriting common functionality, the child class automatically gets everything the parent has — and can add or customize as needed.
+
+Think of it as the "IS-A" relationship:
+- A **Warrior IS-A Character** — so it inherits all Character traits
+- A **Mage IS-A Character** — same base, different specialization
+- An **Archer IS-A Character** — you get the pattern
+
+```javascript
+// The parent class — all characters share these basics
+class Character {
+  constructor(name, health = 100) {
+    this.name = name
+    this.health = health
+  }
+  
+  introduce() {
+    return `I am ${this.name} with ${this.health} HP`
+  }
+  
+  attack() {
+    return `${this.name} attacks!`
+  }
+  
+  takeDamage(amount) {
+    this.health -= amount
+    return `${this.name} takes ${amount} damage! (${this.health} HP left)`
+  }
+}
+
+// The child class — gets everything from Character automatically
+class Warrior extends Character {
+  constructor(name) {
+    super(name, 150)  // Warriors have more health!
+    this.rage = 0
+  }
+  
+  // New method only Warriors have
+  battleCry() {
+    this.rage += 10
+    return `${this.name} roars with fury! Rage: ${this.rage}`
+  }
+}
+
+const conan = new Warrior("Conan")
+console.log(conan.introduce())   // "I am Conan with 150 HP" (inherited!)
+console.log(conan.battleCry())   // "Conan roars with fury! Rage: 10" (new!)
+console.log(conan.attack())      // "Conan attacks!" (inherited!)
+```
+
+<Tip>
+**The DRY Principle:** Inheritance helps you "Don't Repeat Yourself". Write common code once in the parent class, and all children automatically benefit — including bug fixes and improvements!
+</Tip>
+
+---
+
+## The Game Character Analogy
+
+Imagine you're building an RPG game. Every character — whether player or enemy — shares basic traits: a name, health points, the ability to attack and take damage. But each character *type* has unique abilities.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        GAME CHARACTER HIERARCHY                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│                          ┌───────────────┐                               │
+│                          │   Character   │  ← Parent (base class)        │
+│                          │   ─────────   │                               │
+│                          │  name         │                               │
+│                          │  health       │                               │
+│                          │  attack()     │                               │
+│                          │  takeDamage() │                               │
+│                          └───────┬───────┘                               │
+│                                  │                                       │
+│             ┌────────────────────┼────────────────────┐                  │
+│             │                    │                    │                  │
+│             ▼                    ▼                    ▼                  │
+│      ┌─────────────┐      ┌─────────────┐      ┌─────────────┐          │
+│      │   Warrior   │      │    Mage     │      │   Archer    │          │
+│      │   ───────   │      │   ──────    │      │   ──────    │          │
+│      │  rage       │      │  mana       │      │  arrows     │          │
+│      │  battleCry()│      │  castSpell()│      │  aim()      │          │
+│      │  attack() ⚔ │      │  attack() ✨│      │  attack() 🏹│          │
+│      └─────────────┘      └─────────────┘      └─────────────┘          │
+│                                                                          │
+│      Each child INHERITS from Character but OVERRIDES attack()          │
+│      to provide specialized behavior — that's POLYMORPHISM!              │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Without inheritance, you'd copy-paste `name`, `health`, `takeDamage()` into every character class. With inheritance, you write it once and *extend* it:
+
+```javascript
+class Warrior extends Character { /* ... */ }
+class Mage extends Character { /* ... */ }
+class Archer extends Character { /* ... */ }
+```
+
+Each child class automatically has everything `Character` has, plus their own unique additions.
+
+---
+
+## Class Inheritance with `extends`
+
+The **[`extends`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends)** keyword creates a class that is a child of another class. The syntax is straightforward:
+
+```javascript
+class ChildClass extends ParentClass {
+  // Child-specific code here
+}
+```
+
+<Steps>
+  <Step title="Define the Parent Class">
+    Create the base class with shared properties and methods:
+    
+    ```javascript
+    class Character {
+      constructor(name) {
+        this.name = name
+        this.health = 100
+      }
+      
+      attack() {
+        return `${this.name} attacks!`
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Create a Child Class with extends">
+    Use `extends` to inherit from the parent:
+    
+    ```javascript
+    class Mage extends Character {
+      constructor(name) {
+        super(name)        // Call parent constructor FIRST
+        this.mana = 100    // Then add child-specific properties
+      }
+      
+      castSpell(spell) {
+        this.mana -= 10
+        return `${this.name} casts ${spell}!`
+      }
+    }
+    ```
+  </Step>
+  
+  <Step title="Use the Child Class">
+    Instances have both parent AND child capabilities:
+    
+    ```javascript
+    const gandalf = new Mage("Gandalf")
+    
+    // Inherited from Character
+    console.log(gandalf.name)       // "Gandalf"
+    console.log(gandalf.health)     // 100
+    console.log(gandalf.attack())   // "Gandalf attacks!"
+    
+    // Unique to Mage
+    console.log(gandalf.mana)           // 100
+    console.log(gandalf.castSpell("Fireball"))  // "Gandalf casts Fireball!"
+    ```
+  </Step>
+</Steps>
+
+### What the Child Automatically Gets
+
+When you use `extends`, the child class inherits:
+
+| Inherited | Example |
+|-----------|---------|
+| Instance properties | `this.name`, `this.health` |
+| Instance methods | `attack()`, `takeDamage()` |
+| Static methods | `Character.createRandom()` (if defined) |
+| Getters/Setters | `get isAlive()`, `set health(val)` |
+
+```javascript
+class Character {
+  constructor(name) {
+    this.name = name
+    this.health = 100
+  }
+  
+  get isAlive() {
+    return this.health > 0
+  }
+  
+  static createRandom() {
+    const names = ["Hero", "Villain", "Sidekick"]
+    return new this(names[Math.floor(Math.random() * names.length)])
+  }
+}
+
+class Warrior extends Character {
+  constructor(name) {
+    super(name)
+    this.rage = 0
+  }
+}
+
+// Child inherits the static method!
+const randomWarrior = Warrior.createRandom()
+console.log(randomWarrior.name)     // Random name
+console.log(randomWarrior.isAlive)  // true (inherited getter)
+console.log(randomWarrior.rage)     // 0 (Warrior-specific)
+```
+
+---
+
+## The `super` Keyword
+
+The **[`super`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super)** keyword is your lifeline when working with inheritance. It has two main uses:
+
+### 1. `super()` — Calling the Parent Constructor
+
+When a child class has a constructor, it **must** call `super()` before using `this`. This runs the parent's constructor to set up inherited properties.
+
+```javascript
+class Character {
+  constructor(name, health) {
+    this.name = name
+    this.health = health
+  }
+}
+
+class Warrior extends Character {
+  constructor(name) {
+    // MUST call super() first!
+    super(name, 150)     // Pass arguments to parent constructor
+    
+    // Now we can use 'this'
+    this.rage = 0
+    this.weapon = "Sword"
+  }
+}
+
+const warrior = new Warrior("Conan")
+console.log(warrior.name)    // "Conan" (set by parent)
+console.log(warrior.health)  // 150 (passed to parent)
+console.log(warrior.rage)    // 0 (set by child)
+```
+
+<Warning>
+**Critical Rule:** You MUST call `super()` before accessing `this` in a child constructor. If you don't, JavaScript throws a `ReferenceError`:
+
+```javascript
+class Warrior extends Character {
+  constructor(name) {
+    this.rage = 0  // ❌ ReferenceError: Must call super constructor first!
+    super(name)
+  }
+}
+```
+</Warning>
+
+### 2. `super.method()` — Calling Parent Methods
+
+Use `super.methodName()` to call the parent's version of an overridden method. This is perfect when you want to *extend* behavior rather than *replace* it:
+
+```javascript
+class Character {
+  constructor(name, health = 100) {
+    this.name = name
+    this.health = health
+  }
+  
+  attack() {
+    return `${this.name} attacks`
+  }
+  
+  describe() {
+    return `${this.name} (${this.health} HP)`
+  }
+}
+
+class Warrior extends Character {
+  constructor(name) {
+    super(name, 150)  // Pass name and custom health to parent
+    this.weapon = "Sword"
+  }
+  
+  attack() {
+    // Call parent's attack, then add to it
+    const baseAttack = super.attack()
+    return `${baseAttack} with a ${this.weapon}!`
+  }
+  
+  describe() {
+    // Extend parent's description
+    return `${super.describe()} - Warrior Class`
+  }
+}
+
+const hero = new Warrior("Aragorn")
+console.log(hero.attack())    // "Aragorn attacks with a Sword!"
+console.log(hero.describe())  // "Aragorn (150 HP) - Warrior Class"
+```
+
+<Tip>
+**Pattern: Extend, Don't Replace.** When overriding methods, consider calling `super.method()` first to preserve parent behavior, then add child-specific logic. This keeps your code DRY and ensures parent functionality isn't accidentally lost.
+</Tip>
+
+---
+
+## Method Overriding
+
+**Method overriding** occurs when a child class defines a method with the same name as one in its parent class. The child's version "shadows" the parent's version — when you call that method on a child instance, the child's implementation runs.
+
+```javascript
+class Character {
+  attack() {
+    return `${this.name} attacks!`
+  }
+}
+
+class Warrior extends Character {
+  attack() {
+    return `${this.name} swings a mighty sword for 25 damage!`
+  }
+}
+
+class Mage extends Character {
+  attack() {
+    return `${this.name} hurls a fireball for 30 damage!`
+  }
+}
+
+class Archer extends Character {
+  attack() {
+    return `${this.name} fires an arrow for 20 damage!`
+  }
+}
+
+// Each class has the SAME method name, but DIFFERENT behavior
+const warrior = new Warrior("Conan")
+const mage = new Mage("Gandalf")
+const archer = new Archer("Legolas")
+
+console.log(warrior.attack())  // "Conan swings a mighty sword for 25 damage!"
+console.log(mage.attack())     // "Gandalf hurls a fireball for 30 damage!"
+console.log(archer.attack())   // "Legolas fires an arrow for 20 damage!"
+```
+
+### Why Override Methods?
+
+| Reason | Example |
+|--------|---------|
+| **Specialization** | Each character type attacks differently |
+| **Extension** | Add logging before calling `super.method()` |
+| **Customization** | Change default values or behavior |
+| **Performance** | Optimize for specific use case |
+
+### Extending vs Replacing
+
+You have two choices when overriding:
+
+<Tabs>
+  <Tab title="Replace Completely">
+    ```javascript
+    class Warrior extends Character {
+      // Completely new implementation
+      attack() {
+        this.rage += 5
+        const damage = 20 + this.rage
+        return `${this.name} rages and deals ${damage} damage!`
+      }
+    }
+    ```
+  </Tab>
+  <Tab title="Extend Parent">
+    ```javascript
+    class Warrior extends Character {
+      // Build on parent's behavior
+      attack() {
+        const base = super.attack()  // "Conan attacks!"
+        this.rage += 5
+        return `${base} Rage builds to ${this.rage}!`
+      }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## What is Polymorphism?
+
+**Polymorphism** (from Greek: "many forms") means that objects of different types can be treated through a common interface. In JavaScript, this primarily manifests as **subtype polymorphism**: child class instances can be used wherever a parent class instance is expected.
+
+The magic happens when you call the same method on different objects, and each responds in its own way:
+
+```javascript
+class Character {
+  constructor(name) {
+    this.name = name
+    this.health = 100
+  }
+  
+  attack() {
+    return `${this.name} attacks!`
+  }
+}
+
+class Warrior extends Character {
+  attack() {
+    return `${this.name} swings a sword!`
+  }
+}
+
+class Mage extends Character {
+  attack() {
+    return `${this.name} casts a spell!`
+  }
+}
+
+class Archer extends Character {
+  attack() {
+    return `${this.name} shoots an arrow!`
+  }
+}
+
+// THE POLYMORPHISM POWER MOVE
+// This function works with ANY Character type!
+function executeBattle(characters) {
+  console.log("⚔️ Battle begins!")
+  
+  characters.forEach(char => {
+    // Each character attacks in their OWN way
+    console.log(char.attack())
+  })
+}
+
+// Mix of different types — polymorphism in action!
+const party = [
+  new Warrior("Conan"),
+  new Mage("Gandalf"),
+  new Archer("Legolas"),
+  new Character("Villager")  // Even the base class works!
+]
+
+executeBattle(party)
+// ⚔️ Battle begins!
+// "Conan swings a sword!"
+// "Gandalf casts a spell!"
+// "Legolas shoots an arrow!"
+// "Villager attacks!"
+```
+
+### Why Polymorphism is Powerful
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    POLYMORPHISM: WRITE ONCE, USE MANY                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   WITHOUT Polymorphism              WITH Polymorphism                    │
+│   ─────────────────────             ─────────────────                    │
+│                                                                          │
+│   function battle(char) {           function battle(char) {              │
+│     if (char instanceof Warrior) {    char.attack()  // That's it!       │
+│       char.swingSword()             }                                    │
+│     } else if (char instanceof      // Works with Warrior, Mage,         │
+│       Mage) {                       // Archer, and ANY future type!      │
+│       char.castSpell()                                                   │
+│     } else if (char instanceof                                           │
+│       Archer) {                                                          │
+│       char.shootArrow()                                                  │
+│     }                                                                    │
+│     // Need to add code for                                              │
+│     // every new character type!                                         │
+│   }                                                                      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+| Benefit | Explanation |
+|---------|-------------|
+| **Open for Extension** | Add new character types without changing battle logic |
+| **Loose Coupling** | `executeBattle` doesn't need to know about specific types |
+| **Cleaner Code** | No endless `if/else` or `switch` statements |
+| **Easier Testing** | Test with mock objects that share the interface |
+
+### The `instanceof` Operator
+
+Use **[`instanceof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/instanceof)** to check if an object is an instance of a class (or its parents):
+
+```javascript
+const warrior = new Warrior("Conan")
+
+console.log(warrior instanceof Warrior)    // true (direct)
+console.log(warrior instanceof Character)  // true (parent)
+console.log(warrior instanceof Object)     // true (all objects)
+console.log(warrior instanceof Mage)       // false (different branch)
+```
+
+---
+
+## Under the Hood: Prototypes
+
+Here's a secret: ES6 `class` and `extends` are **syntactic sugar** over JavaScript's prototype-based inheritance. When you write `class Warrior extends Character`, JavaScript is really setting up a prototype chain behind the scenes.
+
+```javascript
+// What you write (ES6 class syntax)
+class Character {
+  constructor(name) {
+    this.name = name
+  }
+  attack() {
+    return `${this.name} attacks!`
+  }
+}
+
+// Note: In this example, Warrior does NOT override attack()
+// This lets us see how the prototype chain lookup works
+class Warrior extends Character {
+  constructor(name) {
+    super(name)
+    this.rage = 0
+  }
+  
+  // Warrior-specific method (not on Character)
+  battleCry() {
+    return `${this.name} roars!`
+  }
+}
+
+// What JavaScript actually creates (simplified)
+// Warrior.prototype.__proto__ === Character.prototype
+```
+
+When you call `warrior.attack()`, JavaScript walks up the prototype chain:
+1. Looks for `attack` on the `warrior` instance itself — not found
+2. Looks on `Warrior.prototype` — not found (Warrior didn't override it)
+3. Follows the chain to `Character.prototype` — **found!** Executes it
+
+This is why inheritance "just works" — methods defined on parent classes are automatically available to child instances through the prototype chain.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          PROTOTYPE CHAIN                                 │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   warrior (instance)                                                     │
+│   ┌─────────────────┐                                                   │
+│   │ name: "Conan"   │                                                   │
+│   │ rage: 0         │                                                   │
+│   │ [[Prototype]] ──┼──┐                                                │
+│   └─────────────────┘  │                                                │
+│                        ▼                                                │
+│   Warrior.prototype    ┌─────────────────┐                              │
+│                        │ constructor     │                              │
+│                        │ [[Prototype]] ──┼──┐                           │
+│                        └─────────────────┘  │                           │
+│                                             ▼                           │
+│   Character.prototype  ┌─────────────────┐                              │
+│                        │ attack()        │ ← Found here!                │
+│                        │ constructor     │                              │
+│                        │ [[Prototype]] ──┼──► Object.prototype          │
+│                        └─────────────────┘                              │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Tip>
+**Rule of Thumb:** Use ES6 `class` syntax for cleaner, more readable code. Understand prototypes for debugging and advanced patterns. For a deep dive, see our [Object Creation & Prototypes](/concepts/object-creation-prototypes) guide.
+</Tip>
+
+---
+
+## Composition vs Inheritance
+
+Inheritance is powerful, but it's not always the right tool. There's a famous saying in programming:
+
+> "You wanted a banana but got a gorilla holding the banana and the entire jungle."
+
+This is the **Gorilla-Banana Problem** — when you inherit from a class, you inherit *everything*, even the stuff you don't need.
+
+### When Inheritance Goes Wrong
+
+```javascript
+// Inheritance nightmare — deep, rigid hierarchy
+class Animal { }
+class Mammal extends Animal { }
+class WingedMammal extends Mammal { }
+class Bat extends WingedMammal { }
+
+// Oh no! Now we need a FlyingFish...
+// Fish aren't mammals! Do we create another branch?
+// What about a Penguin (bird that can't fly)?
+
+// The hierarchy becomes fragile and hard to change
+```
+
+### The "IS-A" vs "HAS-A" Test
+
+| Question | If Yes... | Example |
+|----------|-----------|---------|
+| Is a Warrior **a type of** Character? | Use inheritance | `class Warrior extends Character` |
+| Does a Character **have** inventory? | Use composition | `this.inventory = new Inventory()` |
+
+### Composition: Building with "HAS-A"
+
+Instead of inheriting behavior, you **compose** objects from smaller, reusable pieces:
+
+<Tabs>
+  <Tab title="Inheritance Approach">
+    ```javascript
+    // Rigid hierarchy — what if we need a flying warrior?
+    class Character { }
+    class FlyingCharacter extends Character {
+      fly() { return `${this.name} flies!` }
+    }
+    class MagicCharacter extends Character {
+      castSpell() { return `${this.name} casts!` }
+    }
+    // Can't have a character that BOTH flies AND casts!
+    ```
+  </Tab>
+  <Tab title="Composition Approach">
+    ```javascript
+    // Flexible behaviors — mix and match!
+    const canFly = (state) => ({
+      fly() { return `${state.name} soars through the sky!` }
+    })
+    
+    const canCast = (state) => ({
+      castSpell(spell) { 
+        return `${state.name} casts ${spell}!` 
+      }
+    })
+    
+    const canFight = (state) => ({
+      attack() { return `${state.name} attacks!` }
+    })
+    
+    // Create a flying mage — compose the behaviors you need!
+    function createFlyingMage(name) {
+      const state = { name, health: 100, mana: 50 }
+      return {
+        ...state,
+        ...canFly(state),
+        ...canCast(state),
+        ...canFight(state)
+      }
+    }
+    
+    const merlin = createFlyingMage("Merlin")
+    console.log(merlin.fly())           // "Merlin soars through the sky!"
+    console.log(merlin.castSpell("Ice")) // "Merlin casts Ice!"
+    console.log(merlin.attack())         // "Merlin attacks!"
+    ```
+  </Tab>
+</Tabs>
+
+### When to Use Each
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     INHERITANCE vs COMPOSITION                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   Use INHERITANCE when:              Use COMPOSITION when:               │
+│   ─────────────────────              ────────────────────                │
+│                                                                          │
+│   • Clear "IS-A" relationship        • "HAS-A" relationship              │
+│     (Warrior IS-A Character)           (Character HAS inventory)         │
+│                                                                          │
+│   • Child uses MOST of parent's      • Only need SOME behaviors          │
+│     functionality                                                        │
+│                                                                          │
+│   • Hierarchy is shallow             • Behaviors need to be mixed        │
+│     (2-3 levels max)                   freely                            │
+│                                                                          │
+│   • Relationships are stable         • Requirements change frequently    │
+│     and unlikely to change                                               │
+│                                                                          │
+│   • You control the parent class     • Inheriting from 3rd party code    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Warning>
+**The Rule of Thumb:** "Favor composition over inheritance." Start with composition. Only use inheritance when you have a clear, stable "IS-A" relationship and the child truly needs most of the parent's behavior.
+</Warning>
+
+---
+
+## Mixins: Sharing Behavior Without Inheritance
+
+**Mixins** provide a way to add functionality to classes without using inheritance. They're like a toolkit of behaviors you can "mix in" to any class.
+
+### Basic Mixin Pattern
+
+```javascript
+// Define behaviors as objects
+const Swimmer = {
+  swim() {
+    return `${this.name} swims through the water!`
+  }
+}
+
+const Flyer = {
+  fly() {
+    return `${this.name} soars through the sky!`
+  }
+}
+
+const Walker = {
+  walk() {
+    return `${this.name} walks on land!`
+  }
+}
+
+// A base class
+class Animal {
+  constructor(name) {
+    this.name = name
+  }
+}
+
+// Mix behaviors into classes as needed
+class Duck extends Animal { }
+Object.assign(Duck.prototype, Swimmer, Flyer, Walker)
+
+class Fish extends Animal { }
+Object.assign(Fish.prototype, Swimmer)
+
+class Eagle extends Animal { }
+Object.assign(Eagle.prototype, Flyer, Walker)
+
+// Use them!
+const donald = new Duck("Donald")
+console.log(donald.swim())  // "Donald swims through the water!"
+console.log(donald.fly())   // "Donald soars through the sky!"
+console.log(donald.walk())  // "Donald walks on land!"
+
+const nemo = new Fish("Nemo")
+console.log(nemo.swim())    // "Nemo swims through the water!"
+// nemo.fly()               // ❌ Error: fly is not a function
+```
+
+### Functional Mixin Pattern
+
+A cleaner approach uses functions that take a class and return an enhanced class:
+
+```javascript
+// Mixins as functions that enhance classes
+const withLogging = (Base) => class extends Base {
+  log(message) {
+    console.log(`[${this.name}]: ${message}`)
+  }
+}
+
+const withTimestamp = (Base) => class extends Base {
+  getTimestamp() {
+    return new Date().toISOString()
+  }
+}
+
+// Apply mixins by wrapping the class
+class Character {
+  constructor(name) {
+    this.name = name
+  }
+}
+
+// Stack multiple mixins!
+class LoggedCharacter extends withTimestamp(withLogging(Character)) {
+  doAction() {
+    this.log(`Action performed at ${this.getTimestamp()}`)
+  }
+}
+
+const hero = new LoggedCharacter("Aragorn")
+hero.doAction()  // "[Aragorn]: Action performed at 2024-01-15T..."
+```
+
+### When to Use Mixins
+
+| Use Case | Example |
+|----------|---------|
+| Cross-cutting concerns | Logging, serialization, event handling |
+| Multiple behaviors needed | A class that needs swimming AND flying |
+| Third-party class extension | Adding methods to classes you don't control |
+| Avoiding deep hierarchies | Instead of `FlyingSwimmingWalkingAnimal` |
+
+<Warning>
+**Mixin Gotchas:**
+- **Name collisions**: If two mixins define the same method, one overwrites the other
+- **"this" confusion**: Mixins must work with whatever `this` they're mixed into
+- **Hidden dependencies**: Mixins might expect certain properties to exist
+- **Debugging difficulty**: Hard to trace where methods come from
+</Warning>
+
+---
+
+## Common Mistakes
+
+### 1. Forgetting to Call `super()` in Constructor
+
+```javascript
+// ❌ WRONG — ReferenceError!
+class Warrior extends Character {
+  constructor(name) {
+    this.rage = 0  // Error: must call super first!
+    super(name)
+  }
+}
+
+// ✓ CORRECT — super() first, always
+class Warrior extends Character {
+  constructor(name) {
+    super(name)    // FIRST!
+    this.rage = 0  // Now this is safe
+  }
+}
+```
+
+### 2. Using `this` Before `super()`
+
+```javascript
+// ❌ WRONG — Can't use 'this' until super() is called
+class Mage extends Character {
+  constructor(name, mana) {
+    this.mana = mana  // ReferenceError!
+    super(name)
+  }
+}
+
+// ✓ CORRECT
+class Mage extends Character {
+  constructor(name, mana) {
+    super(name)
+    this.mana = mana  // Works now!
+  }
+}
+```
+
+### 3. Deep Inheritance Hierarchies
+
+```javascript
+// ❌ BAD — Too deep, too fragile
+class Entity { }
+class LivingEntity extends Entity { }
+class Animal extends LivingEntity { }
+class Mammal extends Animal { }
+class Canine extends Mammal { }
+class Dog extends Canine { }
+class Labrador extends Dog { }  // 7 levels deep! 😱
+
+// ✓ BETTER — Keep it shallow, use composition
+class Dog {
+  constructor(breed) {
+    this.breed = breed
+    this.behaviors = {
+      ...canWalk,
+      ...canBark,
+      ...canFetch
+    }
+  }
+}
+```
+
+### 4. Inheriting Just for Code Reuse
+
+```javascript
+// ❌ WRONG — Stack is NOT an Array (violates IS-A)
+class Stack extends Array {
+  peek() { return this[this.length - 1] }
+}
+
+const stack = new Stack()
+stack.push(1, 2, 3)
+stack.shift()  // 😱 Stacks shouldn't allow this!
+
+// ✓ CORRECT — Stack HAS-A array (composition)
+class Stack {
+  #items = []
+  
+  push(item) { this.#items.push(item) }
+  pop() { return this.#items.pop() }
+  peek() { return this.#items[this.#items.length - 1] }
+}
+```
+
+### Inheritance Decision Flowchart
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    SHOULD I USE INHERITANCE?                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    Is it an "IS-A" relationship?                                         │
+│    (A Warrior IS-A Character?)                                           │
+│            │                                                             │
+│       YES  │  NO                                                         │
+│            │   └──────► Use COMPOSITION ("HAS-A")                        │
+│            ▼                                                             │
+│    Will child use MOST of parent's methods?                              │
+│            │                                                             │
+│       YES  │  NO                                                         │
+│            │   └──────► Use COMPOSITION or MIXINS                        │
+│            ▼                                                             │
+│    Is hierarchy shallow (≤3 levels)?                                     │
+│            │                                                             │
+│       YES  │  NO                                                         │
+│            │   └──────► REFACTOR! Flatten with composition               │
+│            ▼                                                             │
+│       Use INHERITANCE ✓                                                  │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Classic Interview Questions
+
+<AccordionGroup>
+  <Accordion title="What's the difference between inheritance and composition?">
+    **Inheritance** establishes an "IS-A" relationship where a child class inherits all properties and methods from a parent class. It creates a tight coupling between classes.
+    
+    **Composition** establishes a "HAS-A" relationship where a class contains instances of other classes to reuse their functionality. It provides more flexibility and loose coupling.
+    
+    ```javascript
+    // Inheritance: Warrior IS-A Character
+    class Warrior extends Character { }
+    
+    // Composition: Character HAS-A weapon
+    class Character {
+      constructor() {
+        this.weapon = new Sword()  // HAS-A
+      }
+    }
+    ```
+    
+    **Rule of thumb:** Favor composition for flexibility, use inheritance for true type hierarchies.
+  </Accordion>
+  
+  <Accordion title="Explain polymorphism with an example">
+    **Polymorphism** means "many forms" — the ability for different objects to respond to the same method call in different ways.
+    
+    ```javascript
+    class Shape {
+      area() { return 0 }
+    }
+    
+    class Rectangle extends Shape {
+      constructor(w, h) { super(); this.w = w; this.h = h }
+      area() { return this.w * this.h }
+    }
+    
+    class Circle extends Shape {
+      constructor(r) { super(); this.r = r }
+      area() { return Math.PI * this.r ** 2 }
+    }
+    
+    // Polymorphism in action — same method, different results
+    const shapes = [new Rectangle(4, 5), new Circle(3)]
+    shapes.forEach(s => console.log(s.area()))
+    // 20
+    // 28.274...
+    ```
+    
+    The `area()` method works differently based on the actual object type, but we can treat all shapes uniformly.
+  </Accordion>
+  
+  <Accordion title="What does the 'super' keyword do in JavaScript?">
+    `super` has two main uses:
+    
+    1. **`super()`** — Calls the parent class constructor (required in child constructors before using `this`)
+    2. **`super.method()`** — Calls a method from the parent class
+    
+    ```javascript
+    class Parent {
+      constructor(name) { this.name = name }
+      greet() { return `Hello, I'm ${this.name}` }
+    }
+    
+    class Child extends Parent {
+      constructor(name, age) {
+        super(name)  // Call parent constructor
+        this.age = age
+      }
+      
+      greet() {
+        return `${super.greet()} and I'm ${this.age}`  // Call parent method
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Why might deep inheritance hierarchies be problematic?">
+    Deep hierarchies (more than 3 levels) create several problems:
+    
+    1. **Fragile Base Class Problem**: Changes to a parent class can break many descendants
+    2. **Tight Coupling**: Child classes become dependent on implementation details
+    3. **Inflexibility**: Hard to reuse code outside the hierarchy
+    4. **Complexity**: Difficult to understand and debug method resolution
+    5. **The Gorilla-Banana Problem**: You inherit everything, even what you don't need
+    
+    **Solution:** Keep hierarchies shallow (2-3 levels max) and prefer composition for sharing behavior.
+  </Accordion>
+  
+  <Accordion title="How does JavaScript inheritance differ from classical OOP languages?">
+    JavaScript uses **prototype-based inheritance** rather than class-based:
+    
+    | Classical OOP (Java, C++) | JavaScript |
+    |---------------------------|------------|
+    | Classes are blueprints | "Classes" are functions with prototypes |
+    | Objects are instances of classes | Objects inherit from other objects |
+    | Static class hierarchy | Dynamic prototype chain |
+    | Multiple inheritance via interfaces | Single prototype chain (use mixins for multiple) |
+    
+    ES6 `class` syntax is syntactic sugar — under the hood, it's still prototypes:
+    
+    ```javascript
+    class Dog extends Animal { }
+    
+    // Is equivalent to setting up:
+    // Dog.prototype.__proto__ === Animal.prototype
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**Remember these essential points about Inheritance & Polymorphism:**
+
+1. **Inheritance lets child classes reuse parent code** — use `extends` to create class hierarchies
+
+2. **Always call `super()` first in child constructors** — before using `this`
+
+3. **`super.method()` calls the parent's version** — useful for extending rather than replacing behavior
+
+4. **Method overriding = same name, different behavior** — the child's method shadows the parent's
+
+5. **Polymorphism = "many forms"** — treat different object types through a common interface
+
+6. **ES6 classes are syntactic sugar over prototypes** — understand prototypes for debugging
+
+7. **"IS-A" → inheritance, "HAS-A" → composition** — use the right tool for the relationship
+
+8. **The Gorilla-Banana problem is real** — deep hierarchies inherit too much baggage
+
+9. **Favor composition over inheritance** — it's more flexible and maintainable
+
+10. **Keep inheritance hierarchies shallow** — 2-3 levels maximum
+
+11. **Mixins share behavior without inheritance chains** — useful for cross-cutting concerns
+
+12. **`instanceof` checks the entire prototype chain** — `warrior instanceof Character` is `true`
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="1. What happens if you forget to call super() in a child constructor?">
+    **Answer:** JavaScript throws a `ReferenceError` with the message "Must call super constructor in derived class before accessing 'this' or returning from derived constructor".
+    
+    ```javascript
+    class Child extends Parent {
+      constructor() {
+        this.name = "test"  // ❌ ReferenceError!
+      }
+    }
+    ```
+    
+    The `super()` call is mandatory because it initializes the parent part of the object, which must happen before the child can add its own properties.
+  </Accordion>
+  
+  <Accordion title="2. How does method overriding enable polymorphism?">
+    **Answer:** Method overriding allows different classes to provide their own implementation of the same method name. This enables polymorphism because code can call that method on any object without knowing its specific type — each object responds appropriately.
+    
+    ```javascript
+    function makeSound(animal) {
+      console.log(animal.speak())  // Works with ANY animal type
+    }
+    
+    class Dog { speak() { return "Woof!" } }
+    class Cat { speak() { return "Meow!" } }
+    
+    makeSound(new Dog())  // "Woof!"
+    makeSound(new Cat())  // "Meow!"
+    ```
+  </Accordion>
+  
+  <Accordion title="3. When should you prefer composition over inheritance?">
+    **Answer:** Prefer composition when:
+    
+    - The relationship is "HAS-A" rather than "IS-A"
+    - You only need some of the parent's functionality
+    - Behaviors need to be mixed freely (e.g., flying + swimming)
+    - Requirements change frequently
+    - You're working with third-party code you don't control
+    - The inheritance hierarchy would exceed 3 levels
+    
+    ```javascript
+    // Use composition: Character HAS abilities
+    class Character {
+      constructor() {
+        this.abilities = [canAttack, canDefend, canHeal]
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="4. What's a mixin and when would you use one?">
+    **Answer:** A mixin is a way to add functionality to classes without using inheritance. It's an object (or function) containing methods that can be "mixed into" multiple classes.
+    
+    Use mixins for:
+    - Cross-cutting concerns (logging, serialization)
+    - When a class needs behaviors from multiple sources
+    - Avoiding the diamond problem of multiple inheritance
+    
+    ```javascript
+    const Serializable = {
+      toJSON() { return JSON.stringify(this) }
+    }
+    
+    class User { constructor(name) { this.name = name } }
+    Object.assign(User.prototype, Serializable)
+    
+    new User("Alice").toJSON()  // '{"name":"Alice"}'
+    ```
+  </Accordion>
+  
+  <Accordion title="5. How can you call a parent's method from an overriding method?">
+    **Answer:** Use `super.methodName()` to call the parent's version of an overridden method:
+    
+    ```javascript
+    class Parent {
+      greet() { return "Hello" }
+    }
+    
+    class Child extends Parent {
+      greet() {
+        const parentGreeting = super.greet()  // "Hello"
+        return `${parentGreeting} from Child!`
+      }
+    }
+    
+    new Child().greet()  // "Hello from Child!"
+    ```
+    
+    This is useful when you want to extend behavior rather than completely replace it.
+  </Accordion>
+  
+  <Accordion title="6. What's the 'IS-A' test for inheritance?">
+    **Answer:** The "IS-A" test determines if inheritance is appropriate by asking: "Is the child truly a specialized type of the parent?"
+    
+    - **Passes:** "A Warrior IS-A Character" ✓
+    - **Passes:** "A Dog IS-A Animal" ✓
+    - **Fails:** "A Stack IS-A Array" ✗ (Stack has different behavior)
+    - **Fails:** "A Car IS-A Engine" ✗ (Car HAS-A Engine)
+    
+    If it fails the IS-A test, use composition instead. This prevents the Liskov Substitution Principle violations where child instances can't properly substitute for parent instances.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Factories & Classes" icon="hammer" href="/concepts/factories-classes">
+    Learn the fundamentals of creating objects with factory functions and ES6 classes
+  </Card>
+  <Card title="Object Creation & Prototypes" icon="sitemap" href="/concepts/object-creation-prototypes">
+    Understand the prototype chain that powers JavaScript inheritance
+  </Card>
+  <Card title="this, call, apply, bind" icon="bullseye" href="/concepts/this-call-apply-bind">
+    Master context binding — essential for understanding method inheritance
+  </Card>
+  <Card title="Design Patterns" icon="compass-drafting" href="/concepts/design-patterns">
+    Learn patterns like Strategy and Decorator that use polymorphism
+  </Card>
+</CardGroup>
+
+---
 
 ## Reference
 
 <CardGroup cols={2}>
-  <Card title="Inheritance in JavaScript — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Inheritance">
-    MDN documentation
+  <Card title="Classes — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">
+    Complete guide to ES6 classes in JavaScript
   </Card>
-  <Card title="Class inheritance, super — JavaScript.Info" icon="book" href="https://javascript.info/class-inheritance">
-    JavaScript.Info
+  <Card title="extends — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/extends">
+    Official documentation for the extends keyword
+  </Card>
+  <Card title="super — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/super">
+    How to use super for parent class access
+  </Card>
+  <Card title="Inheritance and the prototype chain — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain">
+    Deep dive into how inheritance really works in JavaScript
   </Card>
 </CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="Inheritance in JavaScript" icon="newspaper" href="https://hackernoon.com/inheritance-in-javascript-21d2b82ffa6f">
-    By Rupesh Mishra
+  <Card title="Class Inheritance — JavaScript.info" icon="newspaper" href="https://javascript.info/class-inheritance">
+    A comprehensive guide to class inheritance with extends and super
   </Card>
-  <Card title="Simple Inheritance with JavaScript" icon="newspaper" href="https://www.sitepoint.com/simple-inheritance-javascript/">
-    By David Catuhe
+  <Card title="Understanding Classes in JavaScript — DigitalOcean" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript">
+    Deep exploration of ES6 class syntax and OOP principles
+  </Card>
+
+  <Card title="The Gorilla-Banana Problem" icon="newspaper" href="https://www.johndcook.com/blog/2011/07/19/you-wanted-banana/">
+    The origin of the famous inheritance criticism
   </Card>
 </CardGroup>
-
-- [JavaScript — Inheritance, delegation patterns and Object linking — NC Patro](https://codeburst.io/javascript-inheritance-25fe61ab9f85)
-- [Object Oriented JavaScript: Polymorphism with examples — Knoldus Blogs](https://blog.knoldus.com/object-oriented-javascript-polymorphism-with-examples/)
-- [Program Like Proteus — A beginner's guide to polymorphism in Javascript — Sam Galson](https://medium.com/yld-blog/program-like-proteus-a-beginners-guide-to-polymorphism-in-javascript-867bea7c8be2)
-- [Object-oriented JavaScript: A Deep Dive into ES6 Classes — Jeff Mott](https://www.sitepoint.com/object-oriented-javascript-deep-dive-es6-classes/)
-- [Unlocking the Power of Polymorphism in JavaScript: A Deep Dive](https://prototypr.io/post/unlocking-the-power-of-polymorphism-in-javascript-a-deep-dive)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="Inheritance in JavaScript" icon="video" href="https://www.youtube.com/watch?v=yXlFR81tDBM">
-    By kudvenkat
-  </Card>
   <Card title="JavaScript ES6 Classes and Inheritance" icon="video" href="https://www.youtube.com/watch?v=RBLIm5LMrmc">
-    By Traversy Media
+    Traversy Media's tutorial on ES6 class inheritance
+  </Card>
+  <Card title="Inheritance in JavaScript" icon="video" href="https://www.youtube.com/watch?v=yXlFR81tDBM">
+    Detailed walkthrough of inheritance concepts by kudvenkat
+  </Card>
+  <Card title="Composition over Inheritance" icon="video" href="https://www.youtube.com/watch?v=wfMtDGfHWpA">
+    Fun Fun Function explains why composition is often better
+  </Card>
+  <Card title="Polymorphism in JavaScript" icon="video" href="https://www.youtube.com/watch?v=zdovG9cuEBA">
+    Clear explanation of polymorphism with practical examples
   </Card>
 </CardGroup>
-
-- [Polymorphism in JavaScript — kudvenkat](https://www.youtube.com/watch?v=zdovG9cuEBA)
