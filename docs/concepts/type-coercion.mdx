@@ -13,7 +13,7 @@ console.log("5" - 3);    // 2 (numeric subtraction)
 console.log([] == ![]);  // true (wait, what?!)
 ```
 
-This surprising behavior is **[type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)** — JavaScript automatically converting values from one type to another. Understanding these rules helps you avoid bugs and write more predictable code.
+This surprising behavior is **[type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)**. JavaScript automatically converts values from one type to another. Understanding these rules helps you avoid bugs and write more predictable code.
 
 <Info>
 **What you'll learn in this guide:**
@@ -33,11 +33,11 @@ This surprising behavior is **[type coercion](https://developer.mozilla.org/en-U
 
 ## What Is Type Coercion?
 
-**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work — sometimes helpfully, sometimes surprisingly. Understanding these conversion rules is essential for writing predictable, bug-free code.
+**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work, sometimes helpfully, sometimes surprisingly. Understanding these conversion rules helps you write predictable, bug-free code.
 
 ### The Shapeshifter Analogy
 
-Imagine JavaScript as an overly helpful translator. When you give it values of different types, it tries to "help" by converting them — sometimes correctly, sometimes... creatively.
+Imagine JavaScript as an overly helpful translator. When you give it values of different types, it tries to "help" by converting them, sometimes correctly, sometimes... creatively.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -57,7 +57,7 @@ Imagine JavaScript as an overly helpful translator. When you give it values of d
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-This "helpful" behavior is called **type coercion** — JavaScript automatically converting values from one type to another. Sometimes it's useful, sometimes it creates bugs that will haunt your dreams.
+This "helpful" behavior is called **type coercion**. JavaScript automatically converts values from one type to another. Sometimes it's useful, sometimes it creates bugs that will haunt your dreams.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -99,7 +99,7 @@ There are two ways coercion happens:
     
     These functions — [`Number()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), [`String()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [`Boolean()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean), [`parseInt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt), and [`parseFloat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat) — give you full control.
     
-    This is the **safe** way — you know exactly what's happening.
+    This is the **safe** way. You know exactly what's happening.
   </Tab>
   <Tab title="Implicit Coercion">
     **JavaScript** automatically converts types when operators or functions expect a different type.
@@ -120,7 +120,7 @@ There are two ways coercion happens:
 
 ### Why Does JavaScript Do This?
 
-JavaScript is a **dynamically typed** language — variables don't have fixed types. This flexibility means JavaScript needs to figure out what to do when types don't match.
+JavaScript is a **dynamically typed** language. Variables don't have fixed types. This flexibility means JavaScript needs to figure out what to do when types don't match.
 
 ```javascript
 // In JavaScript, variables can hold any type
@@ -175,7 +175,7 @@ That's it. No matter how complex the coercion seems, the end result is always a 
 
 ## String Conversion
 
-String conversion is the most straightforward — almost anything can become a string.
+String conversion is the most straightforward. Almost anything can become a string.
 
 ### When Does It Happen?
 
@@ -210,7 +210,7 @@ The [`toString()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Refer
 
 ### The + Operator's Split Personality
 
-The `+` operator is special — it does **both** addition and concatenation:
+The `+` operator is special: it does **both** addition and concatenation:
 
 ```javascript
 // With two numbers: addition
@@ -295,7 +295,7 @@ undefined + 5      // NaN
 
 ### Math Operators Always Convert to Numbers
 
-Unlike `+`, the other math operators (`-`, `*`, `/`, `%`) **only** do math — they always convert to numbers:
+Unlike `+`, the other math operators (`-`, `*`, `/`, `%`) **only** do math. They always convert to numbers:
 
 ```javascript
 "6" - "2"    // 4 (both become numbers)
@@ -326,7 +326,7 @@ The unary `+` (plus sign before a value) is a quick way to convert to a number:
 
 ## Boolean Conversion
 
-Boolean conversion is actually the simplest — every value is either **truthy** or **falsy**.
+Boolean conversion is actually the simplest. Every value is either **truthy** or **falsy**.
 
 ### When Does It Happen?
 
@@ -399,7 +399,7 @@ if (arr.length === 0) { }  // checks if array is empty
 
 ### Logical Operators Don't Return Booleans!
 
-A common misconception: `&&` and `||` don't necessarily return `true` or `false` — they return one of the **original values**:
+A common misconception: `&&` and `||` don't necessarily return `true` or `false`. They return one of the **original values**:
 
 ```javascript
 // || returns the FIRST truthy value (or the last value)
@@ -854,7 +854,7 @@ function process(count) {
 ## Key Takeaways
 
 <Info>
-**Remember these essentials about Type Coercion:**
+**The key things to remember about Type Coercion:**
 
 1. **Three conversions only** — JavaScript converts to String, Number, or Boolean — nothing else
 
@@ -1009,9 +1009,9 @@ function process(count) {
     Entertaining JSConf talk by Shirmung Bielefeld exploring the chaos of JavaScript equality operators with live examples and audience participation.
   </Card>
   <Card title="Coercion in Javascript — Hitesh Choudhary" icon="video" href="https://www.youtube.com/watch?v=b04Q_vyqEG8">
-    Clear explanation of type coercion basics from popular JavaScript educator Hitesh Choudhary. Great for visual learners.
+    Hitesh walks through coercion step-by-step in the browser console, showing exactly what JavaScript does at each conversion. Good pace for beginners.
   </Card>
   <Card title="What is Coercion? — Steven Hancock" icon="video" href="https://www.youtube.com/watch?v=z4-8wMSPJyI">
-    Beginner-friendly introduction to coercion concepts with practical examples and clear explanations.
+    Steven breaks down the three conversion types (string, number, boolean) with simple examples. Short video that covers the fundamentals quickly.
   </Card>
 </CardGroup>
