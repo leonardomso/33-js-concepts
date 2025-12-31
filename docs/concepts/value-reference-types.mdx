@@ -14,7 +14,7 @@ copy.name = "Bob";
 console.log(original.name);  // "Bob" — Wait, what?!
 ```
 
-The answer lies in how JavaScript stores data in memory. **Primitives** (like numbers and strings) store actual values, while **objects** store *references* (pointers) to data. This difference is one of the most important concepts in JavaScript — and the source of countless bugs.
+The answer lies in how JavaScript stores data in memory. **Primitives** (like numbers and strings) store actual values, while **objects** store *references* (pointers) to data. This difference causes countless bugs in JavaScript code.
 
 <Info>
 **What you'll learn in this guide:**
@@ -84,7 +84,7 @@ Imagine you have two ways to share information with a friend:
 
 **Sticky Note (Value Types):** You write "42" on a sticky note and hand it to your friend. They now have their own note with "42" on it. If they change their note to "100", your note still says "42". You each have independent copies.
 
-**Map to Treasure (Reference Types):** Instead of giving your friend the treasure itself, you give them a map to where the treasure is buried. Now you BOTH have maps pointing to the SAME treasure. If they dig it up and add more gold, you'll see the extra gold too — because you're both looking at the same treasure!
+**Map to Treasure (Reference Types):** Instead of giving your friend the treasure itself, you give them a map to where the treasure is buried. Now you BOTH have maps pointing to the SAME treasure. If they dig it up and add more gold, you'll see the extra gold too, because you're both looking at the same treasure!
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -110,7 +110,7 @@ Imagine you have two ways to share information with a friend:
 This difference between "storing the value itself" vs "storing a map to the value" is fundamental to understanding JavaScript.
 
 <Tip>
-**Quick Rule:** Primitives store the actual value — copying creates an independent copy. Objects and arrays store a *reference* (pointer) — copying creates another pointer to the SAME data.
+**Quick Rule:** Primitives store the actual value. Copying creates an independent copy. Objects and arrays store a *reference* (pointer). Copying creates another pointer to the SAME data.
 </Tip>
 
 ---
@@ -214,7 +214,7 @@ let scores = [95, 87, 92];    // Reference on stack, array on heap
 
 ## Copying Behavior: The Critical Difference
 
-This is where things get interesting — and where bugs love to hide.
+This is where things get interesting, and where bugs love to hide.
 
 ### Copying Primitives: Independent Copies
 
@@ -247,7 +247,7 @@ STEP 1: let a = 10         STEP 2: let b = a         STEP 3: b = 20
 
 ### Copying Objects: Shared References
 
-When you copy an object, you copy the *reference* — both variables now point to the SAME object:
+When you copy an object, you copy the *reference*. Both variables now point to the SAME object:
 
 ```javascript
 let obj1 = { name: "Alice" };
@@ -388,7 +388,7 @@ _.isEqual(obj1, obj2)
 
 Here's a topic that confuses even experienced developers:
 
-**JavaScript is ALWAYS "pass by value"** — but when passing objects, the *value being passed is a reference*.
+**JavaScript is ALWAYS "pass by value"**, but when passing objects, the *value being passed is a reference*.
 
 ### Passing Primitives
 
@@ -425,7 +425,7 @@ BEFORE double(x):     INSIDE double(x):      AFTER double(x):
 
 ### Passing Objects: Mutation WORKS
 
-When you pass an object, the function receives a copy of the reference — both point to the same object:
+When you pass an object, the function receives a copy of the reference. Both point to the same object:
 
 ```javascript
 function rename(person) {
@@ -555,7 +555,7 @@ obj = { name: "Eve" }; // TypeError: Assignment to constant variable
 
 ## True Immutability with [`Object.freeze()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
 
-We learned that `const` doesn't make objects immutable — it only prevents reassignment. But what if you NEED a truly immutable object?
+We learned that `const` doesn't make objects immutable. It only prevents reassignment. But what if you NEED a truly immutable object?
 
 ### Object.freeze(): Shallow Immutability
 
@@ -954,7 +954,7 @@ const deep = JSON.parse(JSON.stringify(original));
   </Accordion>
   
   <Accordion title="7. Memory Leaks from Forgotten References (Advanced)">
-    When you store objects in Maps or arrays, those references prevent garbage collection — even if you don't need the object anymore.
+    When you store objects in Maps or arrays, those references prevent garbage collection, even if you don't need the object anymore.
     
     ```javascript
     // Potential memory leak: cache holds references forever
@@ -1037,7 +1037,7 @@ const deep = JSON.parse(JSON.stringify(original));
 ## Key Takeaways
 
 <Info>
-**Remember these essential points:**
+**The key things to remember:**
 
 1. **Value types** (primitives) store values directly; **reference types** store pointers
 
@@ -1244,10 +1244,10 @@ const deep = JSON.parse(JSON.stringify(original));
     Clear explanation by Arnav Aggarwal with visual diagrams showing how primitives and objects behave differently in memory.
   </Card>
   <Card title="JavaScript Primitive vs. Reference Values" icon="newspaper" href="https://www.javascripttutorial.net/javascript-primitive-vs-reference-values/">
-    Comprehensive tutorial with excellent stack/heap diagrams and practical examples.
+    JavaScript Tutorial's guide includes animated diagrams showing stack vs heap memory allocation. Covers copying behavior and function parameter passing with runnable code examples.
   </Card>
   <Card title="Back to roots: JavaScript Value vs Reference" icon="newspaper" href="https://medium.com/dailyjs/back-to-roots-javascript-value-vs-reference-8fb69d587a18">
-    Deep dive by Miro Koczka into how JavaScript handles values and references.
+    Miro Koczka explains why `const` doesn't make objects immutable and how to avoid accidental mutations. Includes common bug patterns and fixes.
   </Card>
   <Card title="You Don't Know JS: Types & Grammar" icon="book" href="https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/README.md">
     Kyle Simpson's definitive guide to JavaScript's type system. Free to read online.
@@ -1258,10 +1258,10 @@ const deep = JSON.parse(JSON.stringify(original));
 
 <CardGroup cols={2}>
   <Card title="JavaScript Value vs Reference Types — Programming with Mosh" icon="video" href="https://www.youtube.com/watch?v=fD0t_DKREbE">
-    Clear, beginner-friendly explanation from one of the most popular JavaScript educators. Great visual demonstrations of how memory works.
+    Mosh uses whiteboard diagrams to show exactly how primitives live on the stack while objects live on the heap. 10-minute video that makes memory concepts click.
   </Card>
   <Card title="Reference vs Primitive Values — Academind" icon="video" href="https://www.youtube.com/watch?v=9ooYYRLdg_g">
-    Thorough walkthrough of how primitives and reference types differ, with live coding examples showing the implications for real code.
+    Academind's Max demonstrates mutation bugs in real-time, then shows how to fix them with spread operators and structuredClone. Good for seeing the problems before learning solutions.
   </Card>
   <Card title="Javascript Pass by Value vs Pass by Reference — techsith" icon="video" href="https://www.youtube.com/watch?v=E-dAnFdq8k8">
     Focused explanation of how function parameters work with primitives vs objects. Great for understanding the "pass by value of the reference" concept.
