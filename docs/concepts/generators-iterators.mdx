@@ -1,7 +1,7 @@
 ---
 title: "Generators & Iterators: Pausable Functions in JavaScript"
 sidebarTitle: "Generators & Iterators: Pausable Functions"
-description: "Learn JavaScript generators and iterators — functions that can pause and resume execution. Master the yield keyword, iteration protocols, lazy evaluation, and async generators."
+description: "Learn JavaScript generators and iterators. Understand yield, the iteration protocol, lazy evaluation, infinite sequences, and async generators with for await...of."
 ---
 
 What if a function could pause mid-execution, return a value, and then resume right where it left off? What if you could create a sequence of values that are computed only when you ask for them — not all at once?
@@ -21,7 +21,7 @@ console.log(counter.next().value)  // 2
 console.log(counter.next().value)  // 3
 ```
 
-This is the power of **[generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)** — functions that can pause with `yield` and pick up where they left off. Combined with **[iterators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)** (objects that define how to step through a sequence), they open up patterns like lazy evaluation, infinite sequences, and clean data pipelines.
+This is the power of **[generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)**. These are functions that can pause with `yield` and pick up where they left off. Combined with **[iterators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)** (objects that define how to step through a sequence), they open up patterns like lazy evaluation, infinite sequences, and clean data pipelines.
 
 <Info>
 **What you'll learn in this guide:**
@@ -42,7 +42,7 @@ This is the power of **[generators](https://developer.mozilla.org/en-US/docs/Web
 
 ## What is an Iterator?
 
-Before getting into generators, we need to cover **iterators** — the foundation that makes generators work.
+Before getting into generators, we need to cover **iterators**, the foundation that makes generators work.
 
 An **[iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)** is an object that defines a sequence and provides a way to access values one at a time. It must have a `.next()` method that returns an object with two properties:
 
@@ -80,7 +80,7 @@ Why not just use an array? Two reasons:
 1. **Lazy evaluation** — Values are computed only when you ask for them, not upfront
 2. **Memory efficiency** — You don't need to hold the entire sequence in memory
 
-Say you need to process a million records. With an array, you'd load all million into memory. With an iterator, you process one at a time — memory stays flat.
+Say you need to process a million records. With an array, you'd load all million into memory. With an iterator, you process one at a time. Memory stays flat.
 
 ### Built-in Iterables
 
@@ -156,7 +156,7 @@ Here's how this maps to generator concepts:
 | Machine remembers position | Generator remembers its state |
 | Machine is empty | `done: true` |
 
-A generator works the same way — one value at a time, pausing between each.
+A generator works the same way: one value at a time, pausing between each.
 
 ---
 
@@ -178,7 +178,7 @@ function* myGenerator() {
 }
 ```
 
-When you call a generator function, the code inside doesn't run yet — you just get back a **generator object** (which is an iterator):
+When you call a generator function, the code inside doesn't run yet. You just get back a **generator object** (which is an iterator):
 
 ```javascript
 const gen = myGenerator()  // Nothing logs yet!
@@ -404,7 +404,7 @@ console.log(chat.next('Blue').value)
 
 ## The Iteration Protocol (`Symbol.iterator`)
 
-Now for the fun part — making your own objects work with `for...of`. An object is **iterable** if it has a `[Symbol.iterator]` method that returns an iterator.
+Now for the fun part: making your own objects work with `for...of`. An object is **iterable** if it has a `[Symbol.iterator]` method that returns an iterator.
 
 ### Making a Custom Object Iterable
 
@@ -497,6 +497,23 @@ for (const n of new Range(1, 3)) {
 
 When you write a `for...of` loop, JavaScript does this behind the scenes:
 
+<Steps>
+  <Step title="Get the iterator">
+    JavaScript calls `iterable[Symbol.iterator]()` to get an iterator object.
+  </Step>
+  <Step title="Call .next()">
+    The loop calls `iterator.next()` to get the first `{ value, done }` result.
+  </Step>
+  <Step title="Check if done">
+    If `done` is `false`, the `value` goes into your loop variable.
+  </Step>
+  <Step title="Repeat until done">
+    Steps 2-3 repeat until `done` is `true`, then the loop exits.
+  </Step>
+</Steps>
+
+Here's what that looks like in code:
+
 ```javascript
 // This:
 for (const item of iterable) {
@@ -522,7 +539,7 @@ while (!result.done) {
 
 ## Lazy Evaluation & Infinite Sequences
 
-The killer feature of generators is **lazy evaluation** — values are computed only when you ask for them, not ahead of time.
+The killer feature of generators is **lazy evaluation**. Values are computed only when you ask for them, not ahead of time.
 
 ### Memory Efficiency
 
@@ -556,7 +573,7 @@ console.log([...rangeGenerator(1, 5)])  // [1, 2, 3, 4, 5]
 
 ### Infinite Sequences
 
-Because generators are lazy, you can create **infinite sequences** — something impossible with arrays:
+Because generators are lazy, you can create **infinite sequences**, something impossible with arrays:
 
 ```javascript
 // Infinite sequence of natural numbers
@@ -578,7 +595,7 @@ console.log(numbers.next().value)  // 3
 
 ### Fibonacci Sequence
 
-A classic example — the infinite Fibonacci sequence:
+A classic example: the infinite Fibonacci sequence:
 
 ```javascript
 function* fibonacci() {
@@ -628,7 +645,7 @@ console.log(firstFive)  // [1, 2, 3, 4, 5]
 ```
 
 <Warning>
-**Be careful with infinite generators!** Never use `[...infiniteGenerator()]` or `for...of` on an infinite generator without a break condition — your program will hang trying to iterate forever.
+**Be careful with infinite generators!** Never use `[...infiniteGenerator()]` or `for...of` on an infinite generator without a break condition. Your program will hang trying to iterate forever.
 
 ```javascript
 // ❌ DANGER — This will hang/crash!
@@ -791,7 +808,7 @@ function changeLight() {
 
 ### Pattern 5: Tree Traversal
 
-Generators are excellent for traversing tree structures:
+Generators work great for traversing trees:
 
 ```javascript
 function* traverseTree(node) {
@@ -831,7 +848,7 @@ console.log([...traverseTree(tree)])
 
 ## Async Generators & `for await...of`
 
-What about yielding values from async operations — API calls, file reads, that kind of thing? That's what **async generators** are for.
+What about yielding values from async operations like API calls, file reads, that kind of thing? That's what **async generators** are for.
 
 ### The Problem with Regular Generators
 
@@ -1267,7 +1284,7 @@ async function processLogFile(url) {
     console.log(gen.next(5).value)     // "Sum: 15" (b = 5)
     ```
     
-    Note: The first `.next()` starts the generator — any value passed to it is ignored because there's no `yield` waiting to receive it yet.
+    Note: The first `.next()` starts the generator. Any value passed to it is ignored because there's no `yield` waiting to receive it yet.
   </Accordion>
   
   <Accordion title="Question 5: When would you use an async generator?">
@@ -1304,7 +1321,7 @@ async function processLogFile(url) {
   <Accordion title="Question 6: Why can't you use [...infiniteGenerator()]?">
     **Answer:**
     
-    Spread syntax (`...`) tries to collect ALL values into an array. With an infinite generator, this means infinite iteration — your program will hang trying to collect infinite values.
+    Spread syntax (`...`) tries to collect ALL values into an array. With an infinite generator, this means infinite iteration. Your program will hang trying to collect infinite values.
     
     ```javascript
     function* forever() {
