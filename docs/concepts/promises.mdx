@@ -23,7 +23,7 @@ getUser(userId)
   .then(comments => console.log(comments))
 ```
 
-A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** is an object representing the eventual completion or failure of an asynchronous operation. It's basically a placeholder for a value that will show up later — like an order ticket at a restaurant that you'll trade for food when it's ready.
+A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** is an object representing the eventual completion or failure of an asynchronous operation. It's a placeholder for a value that will show up later. Think of it like an order ticket at a restaurant that you'll trade for food when it's ready.
 
 <Info>
 **What you'll learn in this guide:**
@@ -44,7 +44,7 @@ A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
 
 ## What is a Promise?
 
-A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** is a JavaScript object that represents the eventual result of an asynchronous operation. When you create a Promise, you're basically saying: "I don't have the value right now, but I *promise* to give you a value (or an error) later."
+A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** is a JavaScript object that represents the eventual result of an asynchronous operation. When you create a Promise, you're saying: "I don't have the value right now, but I *promise* to give you a value (or an error) later."
 
 ```javascript
 // A Promise that resolves after 1 second
@@ -60,7 +60,7 @@ promise.then(value => {
 })
 ```
 
-Unlike callbacks that you pass *into* functions, Promises are objects you get *back* from functions. This small change unlocks some really useful patterns like chaining, composition, and unified error handling.
+Unlike callbacks that you pass *into* functions, Promises are objects you get *back* from functions. This small change unlocks useful patterns like chaining, composition, and unified error handling.
 
 <CardGroup cols={2}>
   <Card title="Promise — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise">
@@ -142,7 +142,7 @@ Here's the important part: **once your order is fulfilled or rejected, it doesn'
 
 ## Why Promises? The Callback Problem
 
-Before we go further, let's quickly look at why Promises were invented. If you've read the [Callbacks guide](/concepts/callbacks), you know about "callback hell" — the deeply nested, hard-to-read code that happens when you chain multiple async operations:
+Before we go further, let's quickly look at why Promises were invented. If you've read the [Callbacks guide](/concepts/callbacks), you know about "callback hell": the deeply nested, hard-to-read code that happens when you chain multiple async operations:
 
 ```javascript
 // Callback Hell - The Pyramid of Doom
@@ -234,7 +234,7 @@ Every Promise is in one of three **states**:
 | **Fulfilled** | The operation completed successfully. The Promise has a value. | No |
 | **Rejected** | The operation failed. The Promise has a reason (error). | No |
 
-A Promise that is either fulfilled or rejected is called **settled**. Once settled, a Promise's state is locked in — it never changes again.
+A Promise that is either fulfilled or rejected is called **settled**. Once settled, a Promise's state is locked in and never changes.
 
 ```javascript
 const promise = new Promise((resolve, reject) => {
@@ -259,9 +259,9 @@ There's a subtle but useful distinction between a Promise's **state** and its **
 - **State** = pending, fulfilled, or rejected
 - **Fate** = resolved or unresolved
 
-Think of it like this: when you place your restaurant order, your fate is "sealed" the moment the waiter writes it down — even though you haven't received your food yet (still pending). You can't change your order anymore.
+Think of it like this: when you place your restaurant order, your fate is "sealed" the moment the waiter writes it down, even though you haven't received your food yet (still pending). You can't change your order anymore.
 
-A Promise is **resolved** when its fate is sealed — either because it's already settled, or because it's "locked in" to follow another Promise:
+A Promise is **resolved** when its fate is sealed, either because it's already settled, or because it's "locked in" to follow another Promise:
 
 ```javascript
 const innerPromise = new Promise(resolve => {
@@ -280,7 +280,7 @@ outerPromise.then(value => {
 })
 ```
 
-When you resolve a Promise with another Promise, the outer Promise "adopts" the state of the inner one. This is called **Promise unwrapping** — the outer Promise automatically follows whatever happens to the inner Promise.
+When you resolve a Promise with another Promise, the outer Promise "adopts" the state of the inner one. This is called **Promise unwrapping**. The outer Promise automatically follows whatever happens to the inner Promise.
 
 ---
 
@@ -363,7 +363,7 @@ delayedValue('Hello!', 1000).then(message => {
 
 ### Wrapping Callback-Based APIs
 
-Here's a real-world example — turning a callback-based image loader into a Promise:
+Here's a real-world example: turning a callback-based image loader into a Promise:
 
 ```javascript
 // Original callback-based function
@@ -483,7 +483,7 @@ fetchUserData(userId)
 
 ### .finally() — Cleanup Code
 
-The **[`.finally()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally)** method runs code no matter if the Promise was fulfilled or rejected — great for cleanup:
+The **[`.finally()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally)** method runs code no matter if the Promise was fulfilled or rejected. It's great for cleanup:
 
 ```javascript
 let isLoading = true
@@ -542,7 +542,7 @@ promise3.then(value => console.log(value))  // 3
 
 ## Promise Chaining
 
-Promise chaining is where Promises really shine. Since each `.then()` returns a new Promise, you can chain them together:
+Promise chaining is where Promises shine. Since each `.then()` returns a new Promise, you can chain them together:
 
 ```javascript
 Promise.resolve(1)
@@ -689,7 +689,7 @@ Promise.resolve('hello')
 
 ## Error Handling
 
-Error handling is where Promises really shine. Errors automatically flow down the chain until something catches them.
+Error handling is where Promises shine. Errors automatically flow down the chain until something catches them.
 
 ### Error Propagation
 
@@ -846,7 +846,7 @@ The `Promise` class has several static methods for creating and combining Promis
 
 ### Promise.resolve() and Promise.reject()
 
-The simplest static methods — they create already-settled Promises:
+The simplest static methods. They create already-settled Promises:
 
 ```javascript
 // Create a fulfilled Promise
@@ -893,7 +893,7 @@ Promise.all([promise1, promise2, promise3])
   })
 ```
 
-**Real example — loading a dashboard:**
+**Real example: loading a dashboard**
 
 ```javascript
 async function loadDashboard(userId) {
@@ -952,7 +952,7 @@ Promise.allSettled([
   })
 ```
 
-**Real example — sending notifications to multiple users:**
+**Real example: sending notifications to multiple users**
 
 ```javascript
 async function sendNotificationsToAll(userIds, message) {
@@ -991,7 +991,7 @@ Promise.race([slow, fast])
   .then(winner => console.log(winner))  // "fast"
 ```
 
-**Real example — adding a timeout:**
+**Real example: adding a timeout**
 
 ```javascript
 function fetchWithTimeout(url, timeout = 5000) {
@@ -1053,7 +1053,7 @@ Promise.any([
   })
 ```
 
-**Real example — trying multiple CDN mirrors:**
+**Real example: trying multiple CDN mirrors**
 
 ```javascript
 async function fetchFromFastestMirror(mirrors) {
@@ -1127,7 +1127,7 @@ const promise = new Promise((res, rej) => {
 
 ### Sequential Execution
 
-When you need to run things one at a time (not in parallel). Use this when each step depends on the previous result—like database transactions, or when processing order matters (uploading files in a specific sequence).
+When you need to run things one at a time (not in parallel). Use this when each step depends on the previous result, like database transactions or when processing order matters (uploading files in a specific sequence).
 
 ```javascript
 // Process items one at a time
@@ -1156,7 +1156,7 @@ function processSequentiallyWithReduce(items) {
 
 ### Parallel Execution
 
-When operations don't depend on each other. Great for independent fetches like loading a dashboard where you need user data, notifications, and settings all at once—much faster than doing them one by one.
+When operations don't depend on each other. Great for independent fetches like loading a dashboard where you need user data, notifications, and settings all at once. Much faster than doing them one by one.
 
 ```javascript
 // Process all items in parallel
@@ -1269,7 +1269,7 @@ Node.js has this built-in: `const { promisify } = require('util')`
 
 ### Mistake 1: Forgetting to Return
 
-The #1 Promise mistake — forgetting to return from `.then()`:
+The #1 Promise mistake is forgetting to return from `.then()`:
 
 ```javascript
 // ❌ WRONG - Promise not returned, chain breaks
@@ -1407,7 +1407,7 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
 ## Key Takeaways
 
 <Info>
-**Remember these essential points about Promises:**
+**The key things to remember:**
 
 1. **A Promise is a placeholder** — It represents a value that will show up later (or an error if something goes wrong).
 
@@ -1467,7 +1467,7 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
     
     | `Promise.all()` | `Promise.allSettled()` |
     |-----------------|------------------------|
-    | Rejects immediately if ANY Promise rejects | Never rejects — waits for ALL to settle |
+    | Rejects immediately if ANY Promise rejects | Never rejects, waits for ALL to settle |
     | Returns array of values on success | Returns array of `{status, value/reason}` objects |
     | Use when all must succeed | Use when you want results regardless of failures |
     
@@ -1501,7 +1501,7 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
     outer.then(value => console.log(value))  // "inner value" (after 1 second)
     ```
     
-    This happens automatically — you can't have a Promise that fulfills with another Promise as its value.
+    This happens automatically. You can't have a Promise that fulfills with another Promise as its value.
   </Accordion>
   
   <Accordion title="Question 5: What's wrong with this code?">
@@ -1607,22 +1607,22 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
 
 <CardGroup cols={2}>
   <Card title="JavaScript Promises: An Introduction" icon="newspaper" href="https://web.dev/promises/">
-    Google's comprehensive guide to Promises with interactive examples and best practices.
+    Google's web.dev tutorial with inline runnable code examples you can edit. Covers the full Promise API from basics to advanced patterns like promisification.
   </Card>
   <Card title="JavaScript Visualized: Promises & Async/Await" icon="newspaper" href="https://dev.to/lydiahallie/javascript-visualized-promises-async-await-5gke">
     Lydia Hallie's visual explanation with animated GIFs showing exactly how Promises work.
   </Card>
   <Card title="Promise Basics — JavaScript.info" icon="newspaper" href="https://javascript.info/promise-basics">
-    Clear tutorial covering Promise fundamentals with practical examples.
+    The go-to reference for Promise fundamentals with the "loadScript" example that makes async patterns click. Includes exercises at the end to test your understanding.
   </Card>
   <Card title="Promise Chaining — JavaScript.info" icon="newspaper" href="https://javascript.info/promise-chaining">
-    In-depth guide to Promise chaining with diagrams and gotchas.
+    Excellent diagrams showing how values flow through Promise chains. The "returning promises" section clarifies the trickiest part of chaining.
   </Card>
   <Card title="We Have a Problem with Promises" icon="newspaper" href="https://pouchdb.com/2015/05/18/we-have-a-problem-with-promises.html">
     Nolan Lawson's classic article on common Promise mistakes developers make.
   </Card>
   <Card title="The Complete JavaScript Promise Guide" icon="newspaper" href="https://blog.webdevsimplified.com/2021-09/javascript-promises">
-    Web Dev Simplified's comprehensive tutorial with clear explanations.
+    Kyle Cook's written companion to his popular YouTube videos. Great if you prefer reading to watching, with the same clear teaching style.
   </Card>
 </CardGroup>
 
@@ -1630,7 +1630,7 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
 
 <CardGroup cols={2}>
   <Card title="JavaScript Promises In 10 Minutes" icon="video" href="https://www.youtube.com/watch?v=DHvZLI7Db8E">
-    Web Dev Simplified's quick and practical introduction to Promises.
+    Perfect if you're short on time. Kyle covers creating, consuming, and chaining Promises with real code examples in just 10 minutes.
   </Card>
   <Card title="Promises — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=2d7s3spWAzo">
     MPJ's entertaining and thorough explanation of Promises with great analogies.
@@ -1639,6 +1639,6 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
     Fireship's ultra-concise overview of Promise fundamentals.
   </Card>
   <Card title="Promises | Namaste JavaScript" icon="video" href="https://youtu.be/ap-6PPAuK1Y">
-    Akshay Saini's deep dive into how Promises work under the hood.
+    Akshay walks through Promise internals with browser DevTools, showing exactly what happens at each step. Great for understanding the "why" behind Promises.
   </Card>
 </CardGroup>
