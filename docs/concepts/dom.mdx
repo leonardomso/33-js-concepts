@@ -13,7 +13,7 @@ document.body.style.backgroundColor = 'lightblue'
 document.getElementById('btn').addEventListener('click', handleClick)
 ```
 
-The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is the bridge between your HTML and JavaScript — it lets you read, modify, and respond to changes in web page content. With the DOM, you can use methods like **[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** to find elements, **[`getElementById()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)** to grab specific nodes, and **[`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)** to respond to user interactions.
+The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is the bridge between your HTML and JavaScript. It lets you read, modify, and respond to changes in web page content. With the DOM, you can use methods like **[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** to find elements, **[`getElementById()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById)** to grab specific nodes, and **[`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener)** to respond to user interactions.
 
 <Info>
 **What you'll learn in this guide:**
@@ -34,7 +34,7 @@ The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web
 
 ## What is the DOM in JavaScript?
 
-The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface that represents HTML documents as a tree of objects. When a browser loads a webpage, it parses the HTML and creates the DOM — a live, structured representation that JavaScript can read and modify. Every element, attribute, and piece of text becomes a node in this tree. **In short: the DOM is how JavaScript "sees" and changes a webpage.**
+The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface that represents HTML documents as a tree of objects. When a browser loads a webpage, it parses the HTML and creates the DOM, a live, structured representation that JavaScript can read and modify. Every element, attribute, and piece of text becomes a node in this tree. **In short: the DOM is how JavaScript "sees" and changes a webpage.**
 
 ---
 
@@ -84,7 +84,7 @@ Just like navigating a family reunion, the DOM lets you:
 | Search the whole family | "Where's cousin Bob?" | `document.querySelector('#bob')` |
 
 <Note>
-**Key insight:** Every element, text, and comment in your HTML becomes a "node" in this tree. JavaScript lets you navigate this tree and modify it — changing content, adding elements, or removing them entirely.
+**Key insight:** Every element, text, and comment in your HTML becomes a "node" in this tree. JavaScript lets you navigate this tree and modify it: changing content, adding elements, or removing them entirely.
 </Note>
 
 ---
@@ -93,7 +93,7 @@ Just like navigating a family reunion, the DOM lets you:
 
 ### The DOM is NOT Your HTML Source Code
 
-This is a crucial distinction! Your HTML file and the DOM are **different things**:
+Here's the key thing: your HTML file and the DOM are **different things**:
 
 <Tabs>
   <Tab title="HTML Source">
@@ -298,7 +298,7 @@ console.log(ghost)  // null
 ```
 
 <Tip>
-IDs must be unique in a document. If you have duplicate IDs, `getElementById` returns the first one. But don't do this—it's invalid HTML!
+IDs must be unique in a document. If you have duplicate IDs, `getElementById` returns the first one. But don't do this. It's invalid HTML!
 </Tip>
 
 ### getElementsByClassName() and getElementsByTagName()
@@ -322,7 +322,7 @@ console.log(allParagraphs.length)  // 3
 
 ### The Modern Way: querySelector() and querySelectorAll()
 
-**[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** and **[`querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)** use CSS selectors to find elements—much more powerful!
+**[`querySelector()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelector)** and **[`querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)** use CSS selectors to find elements. Much more powerful!
 
 ```javascript
 // querySelector returns the FIRST match (or null)
@@ -367,7 +367,7 @@ document.querySelector('p:first-of-type')
 
 ### Live vs Static Collections
 
-This is a crucial difference that trips up many developers. **[`getElementsByClassName()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName)** returns a live **[HTMLCollection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection)**, while **[`querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)** returns a static **[NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)**:
+This difference trips up many developers. **[`getElementsByClassName()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementsByClassName)** returns a live **[HTMLCollection](https://developer.mozilla.org/en-US/docs/Web/API/HTMLCollection)**, while **[`querySelectorAll()`](https://developer.mozilla.org/en-US/docs/Web/API/Document/querySelectorAll)** returns a static **[NodeList](https://developer.mozilla.org/en-US/docs/Web/API/NodeList)**:
 
 ```javascript
 const liveList = document.getElementsByClassName('item')    // LIVE HTMLCollection
@@ -489,7 +489,7 @@ const card = li.closest('.card')    // Finds nearest ancestor with class "card"
 const self = li.closest('li')       // Returns li itself if it matches!
 ```
 
-The **[`closest()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)** method is incredibly useful for event delegation (see [Event Loop](/concepts/event-loop) for how events are processed):
+The **[`closest()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest)** method is useful for event delegation (see [Event Loop](/concepts/event-loop) for how events are processed):
 
 ```javascript
 // Handle clicks on any button inside a card
@@ -675,7 +675,7 @@ Visual representation:
 
 <Tabs>
   <Tab title="remove()">
-    Modern and simple—element removes itself:
+    Modern and simple. Element removes itself:
     
     ```javascript
     const element = document.querySelector('.to-remove')
@@ -683,7 +683,7 @@ Visual representation:
     ```
   </Tab>
   <Tab title="removeChild()">
-    Classic method—remove via parent:
+    Classic method. Remove via parent:
     
     ```javascript
     const parent = document.querySelector('ul')
@@ -1407,7 +1407,7 @@ div.appendChild(welcomeText)
 
 ## Event Propagation: Bubbling and Capturing
 
-When an event occurs on a DOM element, it doesn't just trigger on that element — it travels through the DOM tree in a process called **event propagation**. Understanding this is crucial for event handling.
+When an event occurs on a DOM element, it doesn't just trigger on that element. It travels through the DOM tree in a process called **event propagation**. Understanding this helps with event handling.
 
 ### The Three Phases
 
@@ -1539,7 +1539,7 @@ form.addEventListener('focusin', (e) => {
 
 ### Event Delegation
 
-Instead of adding listeners to many elements, add one to a parent. This pattern relies on **event bubbling** — when you click a child element, the event bubbles up to the parent where your listener catches it:
+Instead of adding listeners to many elements, add one to a parent. This pattern relies on **event bubbling**. When you click a child element, the event bubbles up to the parent where your listener catches it:
 
 ```javascript
 // Bad: Many listeners
@@ -1788,9 +1788,9 @@ el.textContent   // "Hidden Visible"
 el.innerText     // " Visible" (hidden text excluded)
 ```
 
-**Security warning:** Never use `innerHTML` with user input — it can execute malicious scripts (XSS attacks). Use `textContent` instead.
+**Security warning:** Never use `innerHTML` with user input. It can execute malicious scripts (XSS attacks). Use `textContent` instead.
 
-**Best answer:** Mention the XSS security risk with innerHTML — this shows you understand real-world implications.
+**Best answer:** Mention the XSS security risk with innerHTML. This shows you understand real-world implications.
 </Accordion>
 
 ### Question 5: How do you efficiently add 1000 elements to the DOM?
@@ -1850,7 +1850,7 @@ input.value                  // "hello"
 | Type | Always string | Can be any type |
 | Updates | Manual only | Automatically with interaction |
 
-**Best answer:** Use the `<input value="">` example — it's the clearest demonstration of the difference.
+**Best answer:** Use the `<input value="">` example. It's the clearest demonstration of the difference.
 </Accordion>
 
 ---
@@ -1858,7 +1858,7 @@ input.value                  // "hello"
 ## Key Takeaways
 
 <Info>
-**Remember these essential points:**
+**The key things to remember:**
 
 1. **The DOM is a tree** — Elements are nodes with parent, child, and sibling relationships
 
@@ -2034,7 +2034,7 @@ input.value                  // "hello"
     ul.appendChild(fragment)  // Single reflow!
     ```
     
-    A DocumentFragment is a virtual container. When appended, only its children are inserted—the fragment disappears.
+    A DocumentFragment is a virtual container. When appended, only its children are inserted. The fragment disappears.
     
     Alternative: Build HTML string and use `innerHTML` once (but sanitize if user input!).
   </Accordion>
@@ -2088,40 +2088,40 @@ input.value                  // "hello"
 
 <CardGroup cols={2}>
   <Card title="Eloquent JavaScript: The Document Object Model" icon="book" href="https://eloquentjavascript.net/14_dom.html">
-    Marijn Haverbeke's excellent free book chapter covering DOM fundamentals with clear explanations and exercises.
+    A free book chapter with runnable code examples you can edit right in the browser. Includes exercises at the end to test your understanding.
   </Card>
   <Card title="How To Understand and Modify the DOM in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/introduction-to-the-dom">
-    Tania Rascia's beginner-friendly guide covering DOM basics, selection, traversal, and manipulation.
+    Tania Rascia walks through each concept with side-by-side HTML and JavaScript examples. Great for visual learners who want to see code and results together.
   </Card>
   <Card title="What's the Document Object Model, and why you should know how to use it" icon="newspaper" href="https://medium.freecodecamp.org/whats-the-document-object-model-and-why-you-should-know-how-to-use-it-1a2d0bc5429d">
-    A practical introduction to the DOM with real-world examples.
+    Builds a simple project while explaining DOM concepts. Good if you learn better by building something rather than reading theory.
   </Card>
   <Card title="What is the DOM?" icon="newspaper" href="https://css-tricks.com/dom/">
-    Chris Coyier's clear explanation of what the DOM is and common misconceptions.
+    Short read that clears up the "DOM vs HTML source" confusion with visual examples. Explains why DevTools shows something different from View Source.
   </Card>
   <Card title="Traversing the DOM with JavaScript" icon="newspaper" href="https://zellwk.com/blog/dom-traversals/">
-    Zell Liew's detailed guide to navigating parent, child, and sibling elements efficiently.
+    Zell explains the difference between Node and Element traversal methods with clear diagrams. Includes the "whitespace text node" gotcha that trips up beginners.
   </Card>
   <Card title="DOM Tree" icon="newspaper" href="https://javascript.info/dom-nodes">
-    JavaScript.info's comprehensive tutorial on DOM structure, node types, and tree navigation.
+    Interactive examples you can edit and run in the browser. Part of a larger DOM tutorial series if you want to keep going deeper.
   </Card>
   <Card title="How to traverse the DOM in JavaScript" icon="newspaper" href="https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e">
-    Vojislav Grujic's in-depth guide to DOM traversal with practical examples.
+    Covers every traversal method with console output screenshots. Useful reference when you forget which property to use for siblings vs children.
   </Card>
   <Card title="Render Tree Construction" icon="newspaper" href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction">
-    Google's authoritative guide to how browsers construct the render tree from DOM and CSSOM.
+    Google's official explanation of the Critical Rendering Path. Essential reading if you want to understand why some DOM operations are slow.
   </Card>
   <Card title="What, exactly, is the DOM?" icon="newspaper" href="https://bitsofco.de/what-exactly-is-the-dom/">
-    Ire Aderinokun's excellent breakdown of what the DOM is and isn't, including how it differs from the render tree.
+    Compares DOM vs HTML source vs Render Tree side by side with diagrams. Clears up the confusion about what DevTools actually shows you.
   </Card>
   <Card title="JavaScript DOM Tutorial" icon="newspaper" href="https://www.javascripttutorial.net/javascript-dom/">
-    A comprehensive multi-part tutorial covering selection, traversal, manipulation, and events.
+    A multi-part tutorial organized by topic, so you can jump to exactly what you need. Each page is self-contained with try-it-yourself examples.
   </Card>
   <Card title="Event Propagation — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Building_blocks/Events">
     MDN's guide to event handling including bubbling, capturing, and delegation patterns.
   </Card>
   <Card title="Bubbling and Capturing" icon="newspaper" href="https://javascript.info/bubbling-and-capturing">
-    JavaScript.info's detailed explanation of how events travel through the DOM tree.
+    Animated diagrams showing events traveling up and down the DOM tree. Makes the three-phase model (capture, target, bubble) easy to visualize.
   </Card>
 </CardGroup>
 
@@ -2129,13 +2129,13 @@ input.value                  // "hello"
 
 <CardGroup cols={2}>
   <Card title="JavaScript DOM Manipulation – Full Course for Beginners" icon="graduation-cap" href="https://www.youtube.com/watch?v=5fb2aPlgoys">
-    A comprehensive freeCodeCamp course covering DOM selection, traversal, manipulation, and events from the ground up.
+    A 2-hour freeCodeCamp course that builds multiple projects while teaching DOM concepts. Good if you want structured learning from zero to comfortable.
   </Card>
   <Card title="JavaScript DOM Tutorial" icon="video" href="https://www.youtube.com/watch?v=FIORjGvT0kk">
-    The Net Ninja's popular playlist covering DOM fundamentals step by step.
+    A playlist of short, focused videos (5-10 min each). Pick the topic you need instead of watching everything in order.
   </Card>
   <Card title="JavaScript DOM Crash Course" icon="video" href="https://www.youtube.com/watch?v=0ik6X4DJKCc">
-    Traversy Media's comprehensive crash course covering DOM manipulation in one video.
+    Brad Traversy's 4-part series (this is part 1). Builds a task list project by the end, so you see DOM skills applied to something real.
   </Card>
   <Card title="JavaScript DOM Manipulation Methods" icon="video" href="https://www.youtube.com/watch?v=y17RuWkWdn8">
     Web Dev Simplified explains createElement, appendChild, and other manipulation methods.
