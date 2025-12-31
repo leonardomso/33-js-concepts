@@ -21,7 +21,7 @@ console.log(typeof num);   // "number"
 console.log(typeof nul);   // "object" — Wait, what?!
 ```
 
-These seven **[primitive](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)** types are the foundation of all data in JavaScript. Unlike objects, primitives are **immutable** (unchangeable) and **compared by value**. Understanding them deeply is essential because every complex structure you'll ever build — arrays, objects, classes — ultimately relies on these simple building blocks.
+These seven **[primitive](https://developer.mozilla.org/en-US/docs/Glossary/Primitive)** types are the foundation of all data in JavaScript. Unlike objects, primitives are **immutable** (unchangeable) and **compared by value**. Every complex structure you build (arrays, objects, classes) ultimately relies on these simple building blocks.
 
 <Info>
 **What you'll learn in this guide:**
@@ -35,7 +35,7 @@ These seven **[primitive](https://developer.mozilla.org/en-US/docs/Glossary/Prim
 </Info>
 
 <Note>
-**New to JavaScript?** This guide is beginner-friendly! No prior knowledge required — we'll explain everything from the ground up.
+**New to JavaScript?** This guide is beginner-friendly! No prior knowledge required. We'll explain everything from the ground up.
 </Note>
 
 ---
@@ -98,7 +98,7 @@ All primitives share these fundamental traits:
 
 ## The Atoms vs Molecules Analogy
 
-Think of data in JavaScript like chemistry class (but way more fun, and no lab goggles required). **Primitives** are like atoms — the fundamental, indivisible building blocks that cannot be broken down further. **Objects** are like molecules — complex structures made up of multiple atoms combined together.
+Think of data in JavaScript like chemistry class (but way more fun, and no lab goggles required). **Primitives** are like atoms: the fundamental, indivisible building blocks that cannot be broken down further. **Objects** are like molecules: complex structures made up of multiple atoms combined together.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -131,7 +131,7 @@ Let's explore each primitive type in detail.
 
 ### String
 
-A **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** represents text data — a sequence of characters.
+A **[string](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)** represents text data: a sequence of characters.
 
 ```javascript
 // Three ways to create strings
@@ -142,7 +142,7 @@ let backtick = `Hello World`;   // Template literal (ES6)
 
 #### Template Literals (Still Just Strings!)
 
-[Template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) (backticks) are **not a separate type** — they're just a more powerful syntax for creating strings. The result is still a regular string primitive:
+[Template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) (backticks) are **not a separate type**. They're just a more powerful syntax for creating strings. The result is still a regular string primitive:
 
 ```javascript
 let name = "Alice";
@@ -176,7 +176,7 @@ console.log(str);    // "Hello"
 ```
 
 <Tip>
-String methods like `toUpperCase()`, `slice()`, `replace()` always return **new strings** — they never modify the original.
+String methods like `toUpperCase()`, `slice()`, `replace()` always return **new strings**. They never modify the original.
 </Tip>
 
 ---
@@ -209,7 +209,7 @@ console.log(0.1 + 0.2);           // 0.30000000000000004
 console.log(0.1 + 0.2 === 0.3);   // false! Welcome to JavaScript!
 ```
 
-This isn't a JavaScript bug — it's how floating-point math works in all programming languages. The decimal `0.1` cannot be perfectly represented in binary.
+This isn't a JavaScript bug. It's how floating-point math works in all programming languages. The decimal `0.1` cannot be perfectly represented in binary.
 
 <Warning>
 **Working with money?** Never use floating-point for calculations! Store amounts in cents as integers, then use JavaScript's built-in [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for display.
@@ -238,7 +238,7 @@ console.log(euroFormatter.format(1234.56));  // "1.234,56 €"
 </Warning>
 
 <Tip>
-`Intl.NumberFormat` is built into JavaScript — no external libraries needed! It handles currency symbols, decimal separators, and locale-specific formatting automatically.
+`Intl.NumberFormat` is built into JavaScript. No external libraries needed! It handles currency symbols, decimal separators, and locale-specific formatting automatically.
 </Tip>
 
 #### Safe Integer Range
@@ -374,7 +374,7 @@ Don't explicitly assign `undefined` to variables. Use `null` instead to indicate
 
 ### null
 
-**[`null`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null)** means "intentionally empty" — you're explicitly saying "this has no value."
+**[`null`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/null)** means "intentionally empty". You're explicitly saying "this has no value."
 
 ```javascript
 // Intentionally clearing a variable
@@ -509,7 +509,7 @@ Object.prototype.toString.call(new Date()); // "[object Date]"
 
 ## Immutability Explained
 
-**Immutable** means "cannot be changed." Primitive values are immutable — you cannot alter the value itself.
+**Immutable** means "cannot be changed." Primitive values are immutable. You cannot alter the value itself.
 
 ### Seeing Immutability in Action
 
@@ -804,7 +804,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     
     NaN is so confused about its identity that it doesn't even equal itself!
     
-    **Why?** By the IEEE 754 specification, NaN represents "Not a Number" — an undefined or unrepresentable result. Since it's not a specific number, it can't equal anything, including itself.
+    **Why?** By the IEEE 754 specification, NaN represents "Not a Number", an undefined or unrepresentable result. Since it's not a specific number, it can't equal anything, including itself.
     
     **How to check for NaN:**
     ```javascript
@@ -904,7 +904,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
 ## Key Takeaways
 
 <Info>
-**Remember these essential points about Primitive Types:**
+**The key things to remember about Primitive Types:**
 
 1. **7 primitives**: string, number, bigint, boolean, undefined, null, symbol
 
@@ -994,7 +994,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     console.log(NaN === NaN);  // false!
     ```
     
-    This is per the IEEE 754 floating-point specification. `NaN` represents an undefined or unrepresentable mathematical result, so it can't equal anything — including itself.
+    This is per the IEEE 754 floating-point specification. `NaN` represents an undefined or unrepresentable mathematical result, so it can't equal anything, including itself.
     
     **How to check for NaN:**
     ```javascript
@@ -1055,10 +1055,10 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     Expert deep-dive by Dr. Axel Rauschmayer into IEEE 754 floating-point representation, explaining why 0.1 + 0.2 !== 0.3 and how JavaScript stores numbers internally.
   </Card>
   <Card title="(Not) Everything in JavaScript is an Object" icon="newspaper" href="https://dev.to/d4nyll/not-everything-in-javascript-is-an-object">
-    Debunks the common myth that "everything in JS is an object." Excellent explanation of primitives, autoboxing, and wrapper objects with clear examples and a helpful summary.
+    Debunks the common myth that "everything in JS is an object." Shows how autoboxing creates the illusion that primitives have methods, with diagrams explaining what happens behind the scenes.
   </Card>
   <Card title="Methods of Primitives" icon="newspaper" href="https://javascript.info/primitives-methods">
-    Official-quality explanation from javascript.info on how autoboxing works and why primitives can use methods. Clear, up-to-date, and includes practice exercises.
+    The javascript.info guide walks through each wrapper type (String, Number, Boolean) and includes interactive tasks to test your understanding. One of the best resources for learning autoboxing.
   </Card>
   <Card title="The Differences Between Object.freeze() vs Const" icon="newspaper" href="https://medium.com/@bolajiayodeji/the-differences-between-object-freeze-vs-const-in-javascript-4eacea534d7c">
     Clears up the common confusion between const (prevents reassignment) and immutability (prevents mutation). Short and beginner-friendly.
@@ -1078,7 +1078,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     Free preview of one of the most acclaimed JavaScript courses ever made. Covers types, coercion, and the "weird parts" that confuse developers. Perfect starting point before buying the full course.
   </Card>
   <Card title="JavaScript: Understanding the Weird Parts (Full Course) — Anthony Alicea" icon="graduation-cap" href="https://www.udemy.com/course/understand-javascript/">
-    The complete 12-hour course that has helped mass developers truly understand JavaScript. Deep coverage of types, operators, objects, and the engine internals. Worth every penny.
+    The complete 12-hour course covering types, operators, objects, and engine internals. Anthony's explanations of scope, closures, and prototypes are particularly helpful for intermediate developers.
   </Card>
   <Card title="Introduction to Primitives — Piccalilli" icon="graduation-cap" href="https://piccalil.li/javascript-for-everyone/lessons/9">
     Part of the "JavaScript for Everyone" course by Mat Marquis. This module covers all 7 primitive types with dedicated lessons for Numbers, Strings, Booleans, null/undefined, BigInt, and Symbol. Beautifully written with a fun narrative style.
@@ -1089,7 +1089,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
 
 <CardGroup cols={2}>
   <Card title="JavaScript Reference vs Primitive Types — Academind" icon="video" href="https://www.youtube.com/watch?v=9ooYYRLdg_g">
-    Clear comparison of how primitives and reference types behave differently when assigned and passed to functions. Great visual explanations.
+    Academind's Max shows what happens in memory when you copy primitives vs objects. The side-by-side code examples make the difference immediately obvious.
   </Card>
   <Card title="Value Types and Reference Types — Programming with Mosh" icon="video" href="https://www.youtube.com/watch?v=e-_mDyqm2oU">
     Mosh Hamedani's clear teaching style makes this complex topic easy to understand. Includes practical examples showing memory behavior.
