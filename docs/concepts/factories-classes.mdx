@@ -38,7 +38,7 @@ console.log(player.attack())  // "Alice attacks!"
 console.log(enemy.attack())   // "Goblin attacks!"
 ```
 
-**Factories** and **[Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)** are two patterns for creating objects efficiently. A factory function is a regular function that returns a new object. A class is a blueprint that uses the [`class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class) keyword and the [`new`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) operator. Both achieve the same goal — but they work differently and have different strengths.
+**Factories** and **[Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)** are two patterns for creating objects efficiently. A factory function is a regular function that returns a new object. A class is a blueprint that uses the [`class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class) keyword and the [`new`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) operator. Both achieve the same goal, but they work differently and have different strengths.
 
 <Info>
 **What you'll learn in this guide:**
@@ -167,17 +167,17 @@ JavaScript gives us the same options:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-Both factories and classes solve the same problem — they just do it differently. Let's explore each approach.
+Both factories and classes solve the same problem. They just do it differently. Let's explore each approach.
 
 ---
 
 ## What is a Factory Function in JavaScript?
 
-A **factory function** is a regular JavaScript function that creates and returns a new object each time it's called. Unlike constructors or classes, factory functions don't require the `new` keyword. They can use `this` in returned methods (like simple objects do), or use [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to avoid `this` entirely — giving you flexibility that classes don't offer.
+A **factory function** is a regular JavaScript function that creates and returns a new object each time it's called. Unlike constructors or classes, factory functions don't require the `new` keyword. They can use `this` in returned methods (like simple objects do), or use [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to avoid `this` entirely, giving you flexibility that classes don't offer.
 
 ### Basic Factory Function
 
-Think of it like an assembly line — you put in the specifications, and it produces the product:
+Think of it like an assembly line. You put in the specifications, and it produces the product:
 
 ```javascript
 // A simple factory function
@@ -312,7 +312,7 @@ const villager = createCharacter({ name: "Villager" });
 
 ### Factory with Private Variables (Closures)
 
-One of the most powerful features of factory functions is creating **truly private** variables using [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures):
+A powerful feature of factory functions is creating **truly private** variables using [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures):
 
 ```javascript
 function createBankAccount(ownerName, initialBalance = 0) {
@@ -444,7 +444,7 @@ console.log(staff.attack());  // "Cast a spell for 35 damage! (Costs 10 mana)"
 
 <AccordionGroup>
   <Accordion title="You need truly private data">
-    Factory functions with closures provide **real** privacy. Variables inside the factory can't be accessed or modified from outside — not even through hacks or reflection.
+    Factory functions with closures provide **real** privacy. Variables inside the factory can't be accessed or modified from outside, not even through hacks or reflection.
   </Accordion>
   
   <Accordion title="You don't need instanceof checks">
@@ -647,7 +647,7 @@ Always use `new` with constructor functions! Without it, `this` refers to the gl
 
 ## What Are ES6 Classes in JavaScript?
 
-An **[ES6 class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)** is JavaScript's modern syntax for creating constructor functions and prototypes. Introduced in ECMAScript 2015, classes provide a cleaner, more familiar syntax for object-oriented programming while working exactly the same as constructor functions under the hood — they're often called "syntactic sugar." Classes use the `class` keyword and require the `new` operator to create instances.
+An **[ES6 class](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)** is JavaScript's modern syntax for creating constructor functions and prototypes. Introduced in ECMAScript 2015, classes provide a cleaner, more familiar syntax for object-oriented programming while working exactly the same as constructor functions under the hood. They're often called "syntactic sugar." Classes use the `class` keyword and require the `new` operator to create instances.
 
 ### Basic Class Syntax
 
@@ -679,7 +679,7 @@ console.log(alice instanceof Player);  // true
 
 ### Classes Are "Syntactic Sugar"
 
-Classes don't add new functionality — they're just a nicer way to write constructor functions. Under the hood, they work exactly the same:
+Classes don't add new functionality. They're just a nicer way to write constructor functions. Under the hood, they work exactly the same:
 
 <Tabs>
   <Tab title="ES6 Class">
@@ -1242,7 +1242,7 @@ console.log(safeCounter.getCount());  // 1
     // account.balance → undefined
     ```
     
-    **Not truly private:** The `_underscore` convention is just a naming hint — those properties are fully accessible.
+    **Not truly private:** The `_underscore` convention is just a naming hint. Those properties are fully accessible.
     
     **Best answer:** Distinguish between the `_underscore` convention (not private) and the two truly private approaches.
   </Accordion>
@@ -1347,7 +1347,7 @@ console.log(safeCounter.getCount());  // 1
   </Accordion>
   
   <Accordion title="Misconception: 'You should always use classes because they're the modern way'">
-    **Reality:** Classes were added in ES6 (2015), but that doesn't mean they're always better. The JavaScript community has actually moved **toward** functions in many cases:
+    **Reality:** Classes were added in ES6 (2015), but that doesn't mean they're always better. The JavaScript community has moved **toward** functions in many cases:
     
     - **React:** Moved from class components to function components with hooks
     - **Functional programming:** Favors factory functions and composition
@@ -1762,7 +1762,7 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
 ## Key Takeaways
 
 <Info>
-**Key Points to Remember:**
+**The key things to remember:**
 
 1. **Factory functions** are regular functions that return objects — simple and flexible
 
@@ -1972,22 +1972,22 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
 
 <CardGroup cols={2}>
   <Card title="How To Use Classes in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript">
-    Tania Rascia's comprehensive tutorial covering class syntax, constructors, inheritance, and static methods with clear examples.
+    Tania builds a Character class step by step, adding features one at a time. Great if you want to follow along and type the code yourself.
   </Card>
   <Card title="JavaScript Classes — Under The Hood" icon="newspaper" href="https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677">
-    Deep dive into how classes are just syntactic sugar over prototypes and constructor functions.
+    Shows the ES5 equivalent of every ES6 class feature side by side. Read this to understand what JavaScript is really doing when you write a class.
   </Card>
   <Card title="Factory Functions in JavaScript" icon="newspaper" href="https://atendesigngroup.com/blog/factory-functions-javascript">
-    Practical guide to factory function patterns including closures for privacy and composition.
+    Focuses on the closure-based privacy pattern with a bank account example. Short and focused if you just want to learn factories.
   </Card>
   <Card title="Class vs Factory function" icon="newspaper" href="https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15">
     Cristi Salcescu's comparison of both approaches with pros, cons, and when to use each.
   </Card>
   <Card title="Composition vs Inheritance" icon="newspaper" href="https://ui.dev/javascript-inheritance-vs-composition/">
-    UI.dev's guide explaining why "favor composition over inheritance" is important in JavaScript.
+    Uses a game character example to show how composition avoids the problems of deep inheritance. Includes the mixin pattern for adding behaviors.
   </Card>
   <Card title="Understanding super in JavaScript" icon="newspaper" href="https://jordankasper.com/understanding-super-in-javascript">
-    Jordan Kasper's deep dive into the super keyword, constructor calls, and method overriding.
+    Explains when and why you need super() with clear error examples. Covers the "must call super before this" rule that trips up beginners.
   </Card>
 </CardGroup>
 
@@ -1997,15 +1997,15 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
 
 <CardGroup cols={2}>
   <Card title="JavaScript Factory Functions" icon="video" href="https://www.youtube.com/watch?v=jpegXpQpb3o">
-    Programming with Mosh explains factory functions, when to use them, and how they compare to constructors.
+    Mosh builds a circle factory from scratch in under 10 minutes. Good starting point if you've never seen factories before.
   </Card>
   <Card title="Factory Functions in JavaScript" icon="video" href="https://www.youtube.com/watch?v=ImwrezYhw4w">
-    Fun Fun Function's entertaining take on factories with practical examples and real-world use cases.
+    MPJ's signature conversational style makes factories feel approachable. Includes the "why not just use classes?" discussion.
   </Card>
   <Card title="Composition over Inheritance" icon="video" href="https://www.youtube.com/watch?v=wfMtDGfHWpA">
     Fun Fun Function explains why composition is often better than inheritance with the "Gorilla-Banana" problem.
   </Card>
   <Card title="JavaScript Classes Tutorial" icon="video" href="https://www.youtube.com/watch?v=2ZphE5HcQPQ">
-    Comprehensive class tutorial covering syntax, inheritance, static methods, and private fields.
+    Traversy covers classes from basic syntax to private fields in one video. Watch at 1.5x speed for a quick refresher.
   </Card>
 </CardGroup>
