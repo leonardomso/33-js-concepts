@@ -1,69 +1,1621 @@
 ---
-title: "Web Workers: Parallel JavaScript Execution"
-sidebarTitle: "Web Workers: Parallel JavaScript"
-description: "Learn Web Workers in JavaScript — run scripts in background threads for parallel execution. Master dedicated workers, shared workers, and off-main-thread processing for better performance."
+title: "Web Workers: True Parallelism in JavaScript"
+sidebarTitle: "Web Workers: True Parallelism"
+description: "Learn Web Workers in JavaScript for running code in background threads. Understand postMessage, Dedicated and Shared Workers, and transferable objects."
 ---
 
-## Overview
+Ever clicked a button and watched your entire page freeze? Tried to scroll while a script was running and nothing happened?
 
-**Web Workers** allow JavaScript to run scripts in background threads, separate from the main execution thread. This enables parallel processing without blocking the UI, making them essential for CPU-intensive tasks like data processing, image manipulation, and complex calculations.
+```javascript
+// This will freeze your entire page for ~5 seconds
+function heavyCalculation() {
+  const start = Date.now()
+  while (Date.now() - start < 5000) {
+    // Simulating heavy work
+  }
+  return 'Done!'
+}
+
+document.getElementById('btn').addEventListener('click', () => {
+  console.log('Starting...')
+  const result = heavyCalculation()  // Page freezes here
+  console.log(result)
+})
+
+// During those 5 seconds:
+// - Can't click anything
+// - Can't scroll
+// - Animations stop
+// - The page looks broken
+```
+
+That's JavaScript's single thread at work. But there's a way out: **[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)**. They let you run JavaScript in background threads, keeping your UI smooth while crunching numbers, parsing data, or processing images.
 
 <Info>
 **What you'll learn in this guide:**
-- Why JavaScript needs Web Workers (single-threaded limitations)
-- Creating and communicating with workers (`postMessage`, `onmessage`)
-- Dedicated Workers vs Shared Workers vs Service Workers
-- Transferable objects for efficient data transfer
-- Worker limitations (no DOM access, different global scope)
-- Use cases: heavy computations, data parsing, image processing
-- Worker pools and performance patterns
-- Comlink and other worker libraries
+- Why JavaScript's single thread causes UI freezes (and why async doesn't help)
+- How Web Workers provide true parallelism (not just concurrency)
+- Creating workers and communicating with `postMessage`
+- The difference between Dedicated, Shared, and Service Workers
+- Transferable objects for moving large data without copying
+- OffscreenCanvas for graphics processing in workers
+- Real-world patterns: worker pools, inline workers, heavy computations
 </Info>
 
 <Warning>
-**Prerequisites:** This guide builds on your understanding of [the Event Loop](/concepts/event-loop) and [async JavaScript](/concepts/async-await). Web Workers provide true parallelism, unlike async code which is still single-threaded.
+**Prerequisites:** This guide builds on [the Event Loop](/concepts/event-loop) and [async/await](/concepts/async-await). Understanding those concepts will help you see why Web Workers solve problems that async code can't.
 </Warning>
+
+---
+
+## The Problem: Why Async Isn't Enough
+
+You might think: "I already know async JavaScript. Doesn't that solve the freezing problem?"
+
+Not quite. Here's the thing everyone gets wrong about async: **async JavaScript is still single-threaded**. It's concurrent, not parallel.
+
+```javascript
+// Async code is NOT running at the same time
+async function fetchData() {
+  console.log('1: Starting fetch')
+  const response = await fetch('/api/data')  // Waits, but doesn't block
+  console.log('3: Got response')
+  return response.json()
+}
+
+console.log('0: Before fetch')
+fetchData()
+console.log('2: After fetch call')
+
+// Output:
+// 0: Before fetch
+// 1: Starting fetch
+// 2: After fetch call
+// 3: Got response (later)
+```
+
+The `await` lets other code run while waiting for the network. But here's the catch: **the actual JavaScript execution is still one thing at a time**.
+
+### The CPU-Bound Problem
+
+Async works great for I/O operations (network requests, file reads) because you're waiting for something external. But what about CPU-bound tasks?
+
+```javascript
+// This async function STILL freezes the page
+async function processLargeArray(data) {
+  const results = []
+  
+  // This loop is synchronous JavaScript
+  // The "async" keyword doesn't help here!
+  for (let i = 0; i < data.length; i++) {
+    results.push(expensiveCalculation(data[i]))
+  }
+  
+  return results
+}
+
+// The page freezes during the loop
+// async/await only helps with WAITING, not COMPUTING
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    ASYNC VS PARALLEL: THE DIFFERENCE                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ASYNC (Concurrency)                 PARALLEL (Web Workers)              │
+│  ────────────────────                ─────────────────────               │
+│                                                                          │
+│  Main Thread                         Main Thread    Worker Thread        │
+│  ┌─────────────────┐                 ┌──────────┐   ┌──────────┐         │
+│  │ Task A          │                 │ Task A   │   │ Task B   │         │
+│  │ (work)          │                 │ (work)   │   │ (work)   │         │
+│  ├─────────────────┤                 │          │   │          │         │
+│  │ Wait for I/O... │  ← yields       │          │   │          │         │
+│  ├─────────────────┤                 │          │   │          │         │
+│  │ Task B          │                 │          │   │          │         │
+│  │ (work)          │                 │          │   │          │         │
+│  ├─────────────────┤                 └──────────┘   └──────────┘         │
+│  │ Task A resumed  │                                                     │
+│  └─────────────────┘                 Both run at the SAME TIME           │
+│                                      on different CPU cores              │
+│  One thread, tasks take turns                                            │
+│                                                                          │
+│  GOOD FOR: Network requests,         GOOD FOR: Heavy calculations,       │
+│  file reads, timers                  image processing, data parsing      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Tip>
+**The Rule:** Use async/await when you're **waiting** for something. Use Web Workers when you're **computing** something heavy.
+</Tip>
+
+---
+
+## The Restaurant Analogy: Multiple Chefs
+
+If you've read our [Event Loop guide](/concepts/event-loop), you know JavaScript is like a restaurant with a **single chef**. The chef can only cook one dish at a time, but clever scheduling (the event loop) keeps things moving.
+
+Web Workers are like **hiring more chefs**.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE MULTI-CHEF KITCHEN (WEB WORKERS)                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  MAIN KITCHEN (Main Thread)           PREP KITCHEN (Worker Thread)       │
+│  ┌─────────────────────────┐          ┌─────────────────────────┐        │
+│  │                         │          │                         │        │
+│  │   HEAD CHEF             │          │   PREP CHEF             │        │
+│  │   ┌─────────┐           │          │   ┌─────────┐           │        │
+│  │   │  ^_^    │           │          │   │  ^_^    │           │        │
+│  │   └─────────┘           │          │   └─────────┘           │        │
+│  │                         │          │                         │        │
+│  │   • Takes customer      │          │   • Chops vegetables    │        │
+│  │     orders (events)     │          │   • Preps ingredients   │        │
+│  │   • Plates dishes (UI)  │          │   • Heavy work          │        │
+│  │   • Talks to customers  │          │   • No customer contact │        │
+│  │     (DOM access)        │          │     (no DOM!)           │        │
+│  │                         │          │                         │        │
+│  └───────────┬─────────────┘          └───────────┬─────────────┘        │
+│              │                                    │                      │
+│              │      ┌──────────────────┐          │                      │
+│              │      │   SERVICE WINDOW │          │                      │
+│              └─────►│   (postMessage)  │◄─────────┘                      │
+│                     │                  │                                 │
+│                     │  "Need 50 onions │                                 │
+│                     │   chopped!"      │                                 │
+│                     │                  │                                 │
+│                     │  "Here they are!"│                                 │
+│                     └──────────────────┘                                 │
+│                                                                          │
+│  KEY RULES:                                                              │
+│  • Chefs can't share cutting boards (no shared memory by default)        │
+│  • They communicate through the service window (postMessage)             │
+│  • Prep chef can't talk to customers (workers can't touch the DOM)       │
+│  • Prep chef has their own tools (workers have their own global scope)   │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+| Kitchen | JavaScript |
+|---------|------------|
+| **Head Chef** | Main thread (handles UI, events, DOM) |
+| **Prep Chef** | Web Worker (handles heavy computation) |
+| **Service Window** | `postMessage()` / `onmessage` (communication) |
+| **Cutting Board** | Memory (each chef has their own) |
+| **Customers** | Users interacting with the page |
+| **Kitchen Rules** | Worker limitations (no DOM access) |
+
+The prep chef works independently in their own kitchen. They can't talk to customers (no DOM access), but they can do heavy prep work without slowing down the head chef. When they're done, they pass the result through the service window.
+
+---
+
+## What is a Web Worker?
+
+A **[Web Worker](https://developer.mozilla.org/en-US/docs/Web/API/Worker)** is a JavaScript script that runs in a background thread, separate from the main thread. It has its own global scope, its own event loop, and executes truly in parallel with your main code. Workers communicate with the main thread through message passing using `postMessage()` and `onmessage`. This lets you run expensive computations without freezing the UI.
+
+Here's a basic example:
+
+```javascript
+// main.js - runs on the main thread
+const worker = new Worker('worker.js')
+
+// Send data to the worker
+worker.postMessage({ numbers: [1, 2, 3, 4, 5] })
+
+// Receive results from the worker
+worker.onmessage = (event) => {
+  console.log('Result from worker:', event.data)
+}
+```
+
+```javascript
+// worker.js - runs in a separate thread
+self.onmessage = (event) => {
+  const { numbers } = event.data
+  
+  // Do heavy computation (won't freeze the UI!)
+  const sum = numbers.reduce((a, b) => a + b, 0)
+  
+  // Send result back to main thread
+  self.postMessage({ sum })
+}
+```
+
+<Note>
+Inside a worker, `self` refers to the worker's global scope (a [`DedicatedWorkerGlobalScope`](https://developer.mozilla.org/en-US/docs/Web/API/DedicatedWorkerGlobalScope)). You can also use `this` at the top level, but `self` is clearer.
+</Note>
+
+### The Communication Model
+
+Workers and the main thread communicate through **messages**. They can't directly access each other's variables. This is intentional: it prevents the race conditions and bugs that plague traditional multi-threaded programming.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        WORKER COMMUNICATION                              │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  MAIN THREAD                              WORKER THREAD                  │
+│  ┌───────────────────────┐                ┌───────────────────────┐      │
+│  │                       │   postMessage  │                       │      │
+│  │  const worker =       │ ─────────────► │  self.onmessage =     │      │
+│  │    new Worker(...)    │                │    (event) => {...}   │      │
+│  │                       │                │                       │      │
+│  │  worker.postMessage() │                │  // Do heavy work     │      │
+│  │                       │                │                       │      │
+│  │  worker.onmessage =   │ ◄───────────── │  self.postMessage()   │      │
+│  │    (event) => {...}   │   postMessage  │                       │      │
+│  │                       │                │                       │      │
+│  └───────────────────────┘                └───────────────────────┘      │
+│                                                                          │
+│  DATA IS COPIED (by default), not shared                                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## How Do You Create a Web Worker?
+
+There are two ways to create workers: the **classic way** (original syntax) and the **module way** (modern, recommended).
+
+### Classic Workers
+
+The original way to create workers uses `importScripts()` for loading dependencies:
+
+```javascript
+// main.js
+const worker = new Worker('worker.js')
+
+worker.postMessage('Hello from main!')
+
+worker.onmessage = (event) => {
+  console.log('Worker said:', event.data)
+}
+
+worker.onerror = (error) => {
+  console.error('Worker error:', error.message)
+}
+```
+
+```javascript
+// worker.js (classic style)
+importScripts('https://example.com/some-library.js')  // Load dependencies
+
+self.onmessage = (event) => {
+  console.log('Main said:', event.data)
+  
+  // Do some work...
+  
+  self.postMessage('Hello from worker!')
+}
+```
+
+### Module Workers (Recommended)
+
+Modern browsers support module workers with `import`/`export`. This is cleaner and matches how you write other JavaScript:
+
+```javascript
+// main.js
+const worker = new Worker('worker.js', { type: 'module' })
+
+worker.postMessage({ task: 'process', data: [1, 2, 3] })
+
+worker.onmessage = (event) => {
+  console.log('Result:', event.data)
+}
+```
+
+```javascript
+// worker.js (module style)
+import { processData } from './utils.js'  // Standard ES modules!
+
+self.onmessage = (event) => {
+  const { task, data } = event.data
+  
+  if (task === 'process') {
+    const result = processData(data)
+    self.postMessage(result)
+  }
+}
+```
+
+<Tip>
+**Use module workers** whenever possible. They support `import`/`export`, have strict mode by default, and work better with modern tooling. Check [browser support](https://caniuse.com/mdn-api_worker_worker_options_type_parameter) before using in production.
+</Tip>
+
+### Comparison: Classic vs Module Workers
+
+| Feature | Classic Worker | Module Worker |
+|---------|---------------|---------------|
+| **Syntax** | `new Worker('file.js')` | `new Worker('file.js', { type: 'module' })` |
+| **Dependencies** | `importScripts()` | `import` / `export` |
+| **Strict mode** | Optional | Always on |
+| **Top-level await** | No | Yes |
+| **Browser support** | All browsers | Modern browsers |
+| **Tooling** | Limited | Works with bundlers |
+
+---
+
+## How Does postMessage Work?
+
+Communication between workers and the main thread happens through [`postMessage()`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage). Understanding how data is transferred is important for performance.
+
+### The Structured Clone Algorithm
+
+When you send data via `postMessage`, it's **copied** using the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). This is deeper than `JSON.stringify`: it handles more types and preserves object references within the data.
+
+```javascript
+// main.js
+const data = {
+  name: 'Alice',
+  scores: [95, 87, 92],
+  metadata: {
+    date: new Date(),
+    pattern: /test/gi
+  }
+}
+
+worker.postMessage(data)
+// The worker receives a COPY of this object
+// Modifying it in the worker won't affect the original
+```
+
+### What Can Be Cloned?
+
+| Can Clone | Cannot Clone |
+|-----------|--------------|
+| Primitives (string, number, boolean, null, undefined) | Functions |
+| Plain objects and arrays | DOM nodes |
+| Date objects | Error objects (partially) |
+| RegExp objects | Symbols |
+| Blob, File, FileList | WeakMap, WeakSet |
+| ArrayBuffer, TypedArrays | Objects with prototype chains |
+| Map, Set | Getters/setters |
+| ImageBitmap, ImageData | Proxies |
+
+```javascript
+// ✓ These work
+worker.postMessage({
+  text: 'hello',
+  numbers: [1, 2, 3],
+  date: new Date(),
+  regex: /pattern/g,
+  binary: new Uint8Array([1, 2, 3]),
+  map: new Map([['a', 1], ['b', 2]])
+})
+
+// ❌ These will throw errors
+worker.postMessage({
+  fn: () => console.log('hi'),     // Functions can't be cloned
+  element: document.body,           // DOM nodes can't be cloned
+  sym: Symbol('test')               // Symbols can't be cloned
+})
+```
+
+<Warning>
+**Performance trap:** Structured cloning can be slow for large objects. If you're passing megabytes of data, consider using Transferable objects instead (covered below).
+</Warning>
+
+### Handling Errors
+
+Always set up error handlers for workers:
+
+```javascript
+// main.js
+const worker = new Worker('worker.js', { type: 'module' })
+
+// Handle messages
+worker.onmessage = (event) => {
+  console.log('Result:', event.data)
+}
+
+// Handle errors thrown in the worker
+worker.onerror = (event) => {
+  console.error('Worker error:', event.message)
+  console.error('File:', event.filename)
+  console.error('Line:', event.lineno)
+}
+
+// Handle message errors (e.g., data can't be cloned)
+worker.onmessageerror = (event) => {
+  console.error('Message error:', event)
+}
+```
+
+### Using addEventListener (Alternative Syntax)
+
+You can also use `addEventListener` instead of `onmessage`:
+
+```javascript
+// main.js
+const worker = new Worker('worker.js', { type: 'module' })
+
+worker.addEventListener('message', (event) => {
+  console.log('Result:', event.data)
+})
+
+worker.addEventListener('error', (event) => {
+  console.error('Error:', event.message)
+})
+```
+
+```javascript
+// worker.js
+self.addEventListener('message', (event) => {
+  const result = processData(event.data)
+  self.postMessage(result)
+})
+```
+
+---
+
+## Transferable Objects: Zero-Copy Data Transfer
+
+Copying large amounts of data between threads is slow. For big ArrayBuffers, images, or binary data, use **transferable objects** to move data instead of copying it.
+
+### The Problem with Copying
+
+```javascript
+// main.js
+// Creating a 100MB buffer
+const hugeBuffer = new ArrayBuffer(100 * 1024 * 1024)
+const array = new Uint8Array(hugeBuffer)
+
+// Fill it with data
+for (let i = 0; i < array.length; i++) {
+  array[i] = i % 256
+}
+
+console.time('copy')
+worker.postMessage(hugeBuffer)  // This COPIES 100MB - slow!
+console.timeEnd('copy')  // Could take hundreds of milliseconds
+```
+
+### The Solution: Transfer Ownership
+
+Instead of copying, you can **transfer** the buffer to the worker. The transfer is nearly instant, but the original becomes unusable:
+
+```javascript
+// main.js
+const hugeBuffer = new ArrayBuffer(100 * 1024 * 1024)
+const array = new Uint8Array(hugeBuffer)
+
+// Fill with data...
+
+console.time('transfer')
+// Second argument is an array of objects to transfer
+worker.postMessage(hugeBuffer, [hugeBuffer])
+console.timeEnd('transfer')  // Nearly instant!
+
+// WARNING: hugeBuffer is now "neutered" (empty)
+console.log(hugeBuffer.byteLength)  // 0
+console.log(array.length)  // 0
+```
+
+```javascript
+// worker.js
+self.onmessage = (event) => {
+  const buffer = event.data
+  console.log(buffer.byteLength)  // 104857600 (100MB)
+  
+  // Process the data...
+  const array = new Uint8Array(buffer)
+  
+  // Transfer it back when done
+  self.postMessage(buffer, [buffer])
+}
+```
+
+### What Can Be Transferred?
+
+| Transferable Object | Use Case |
+|--------------------|-----------| 
+| [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) | Raw binary data |
+| [`MessagePort`](https://developer.mozilla.org/en-US/docs/Web/API/MessagePort) | Communication channels |
+| [`ImageBitmap`](https://developer.mozilla.org/en-US/docs/Web/API/ImageBitmap) | Image data for canvas |
+| [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas) | Canvas for off-main-thread rendering |
+| [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) | Streaming data |
+| [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) | Streaming data |
+| [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream) | Streaming transforms |
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    COPY VS TRANSFER                                      │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  COPY (Default)                        TRANSFER                          │
+│  ─────────────                         ────────                          │
+│                                                                          │
+│  Main Thread    Worker Thread          Main Thread    Worker Thread      │
+│  ┌─────────┐    ┌─────────┐            ┌─────────┐    ┌─────────┐        │
+│  │ [data]  │    │         │            │ [data]  │    │         │        │
+│  │  100MB  │    │         │            │  100MB  │    │         │        │
+│  └────┬────┘    └─────────┘            └────┬────┘    └─────────┘        │
+│       │                                     │                            │
+│       │ copy                                │ move                       │
+│       ▼                                     ▼                            │
+│  ┌─────────┐    ┌─────────┐            ┌─────────┐    ┌─────────┐        │
+│  │ [data]  │    │ [data]  │            │ [empty] │    │ [data]  │        │
+│  │  100MB  │    │  100MB  │            │   0MB   │    │  100MB  │        │
+│  └─────────┘    └─────────┘            └─────────┘    └─────────┘        │
+│                                                                          │
+│  • Slow (copies bytes)                 • Fast (moves pointer)            │
+│  • Both have the data                  • Only one has the data           │
+│  • Memory doubled                      • Memory unchanged                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Tip>
+**Rule of thumb:** Transfer when the data is large (> 1MB) and you don't need to keep it in the sending context. Copy when the data is small or you need it in both places.
+</Tip>
+
+---
+
+## Types of Workers
+
+There are three types of workers in the browser, each with different purposes.
+
+### Dedicated Workers
+
+**[Dedicated Workers](https://developer.mozilla.org/en-US/docs/Web/API/Worker)** are the most common type. They're owned by a single script and can only communicate with that script.
+
+```javascript
+// Only this script can talk to this worker
+const worker = new Worker('worker.js', { type: 'module' })
+```
+
+Use dedicated workers for:
+- Heavy calculations
+- Data processing
+- Image manipulation
+- Any task you want off the main thread
+
+### Shared Workers
+
+**[Shared Workers](https://developer.mozilla.org/en-US/docs/Web/API/SharedWorker)** can be accessed by multiple scripts, even across different browser tabs or iframes (as long as they're from the same origin).
+
+```javascript
+// main.js (Tab 1)
+const worker = new SharedWorker('shared-worker.js')
+
+worker.port.onmessage = (event) => {
+  console.log('Received:', event.data)
+}
+
+worker.port.postMessage('Hello from Tab 1')
+```
+
+```javascript
+// main.js (Tab 2) - connects to the SAME worker
+const worker = new SharedWorker('shared-worker.js')
+
+worker.port.onmessage = (event) => {
+  console.log('Received:', event.data)
+}
+
+worker.port.postMessage('Hello from Tab 2')
+```
+
+```javascript
+// shared-worker.js
+const connections = []
+
+self.onconnect = (event) => {
+  const port = event.ports[0]
+  connections.push(port)
+  
+  port.onmessage = (e) => {
+    // Broadcast to all connected tabs
+    connections.forEach(p => {
+      p.postMessage(`Someone said: ${e.data}`)
+    })
+  }
+  
+  port.start()
+}
+```
+
+Use shared workers for:
+- Shared state across tabs
+- Single WebSocket connection for multiple tabs
+- Shared cache or data layer
+- Reducing resource usage for identical workers
+
+<Warning>
+Shared Workers have limited browser support. Check [caniuse.com](https://caniuse.com/sharedworkers) before using. They're not supported in Safari at all.
+</Warning>
+
+### Service Workers (Brief Overview)
+
+**[Service Workers](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API)** are a special type of worker designed for a different purpose: they act as a proxy between your web app and the network. They enable offline functionality, push notifications, and background sync.
+
+```javascript
+// Registering a service worker (in main.js)
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js')
+    .then(registration => {
+      console.log('SW registered:', registration)
+    })
+    .catch(error => {
+      console.log('SW registration failed:', error)
+    })
+}
+```
+
+```javascript
+// sw.js - intercepts network requests
+self.addEventListener('fetch', (event) => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => response || fetch(event.request))
+  )
+})
+```
+
+| Feature | Dedicated Worker | Shared Worker | Service Worker |
+|---------|-----------------|---------------|----------------|
+| **Purpose** | Background computation | Shared computation | Network proxy, offline |
+| **Lifetime** | While page is open | While any tab uses it | Independent of pages |
+| **Communication** | `postMessage` | `port.postMessage` | `postMessage` + events |
+| **DOM access** | No | No | No |
+| **Network intercept** | No | No | Yes |
+| **Scope** | Single script | Same-origin scripts | Controlled pages |
+
+<Note>
+Service Workers are a deep topic with their own complexities around lifecycle, caching strategies, and updates. They deserve their own dedicated guide. For now, just know they exist and are different from Web Workers.
+</Note>
+
+---
+
+## OffscreenCanvas: Graphics in Workers
+
+Normally, canvas operations happen on the main thread. With [`OffscreenCanvas`](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas), you can move rendering to a worker, keeping the main thread free for user interactions.
+
+### Basic OffscreenCanvas Usage
+
+```javascript
+// main.js
+const canvas = document.getElementById('myCanvas')
+
+// Transfer control to an OffscreenCanvas
+const offscreen = canvas.transferControlToOffscreen()
+
+const worker = new Worker('canvas-worker.js', { type: 'module' })
+
+// Transfer the canvas to the worker
+worker.postMessage({ canvas: offscreen }, [offscreen])
+```
+
+```javascript
+// canvas-worker.js
+let ctx
+
+self.onmessage = (event) => {
+  if (event.data.canvas) {
+    const canvas = event.data.canvas
+    ctx = canvas.getContext('2d')
+    
+    // Start animation loop in the worker
+    animate()
+  }
+}
+
+function animate() {
+  // Clear canvas
+  ctx.fillStyle = '#000'
+  ctx.fillRect(0, 0, 800, 600)
+  
+  // Draw something
+  ctx.fillStyle = '#0f0'
+  ctx.fillRect(
+    Math.random() * 700,
+    Math.random() * 500,
+    100,
+    100
+  )
+  
+  // Request next frame (in worker context)
+  requestAnimationFrame(animate)
+}
+```
+
+### Real-World Use: Image Processing
+
+One common use for OffscreenCanvas is image processing:
+
+```javascript
+// main.js
+const worker = new Worker('image-worker.js', { type: 'module' })
+
+async function processImage(file) {
+  const bitmap = await createImageBitmap(file)
+  
+  worker.postMessage({ 
+    bitmap, 
+    filter: 'grayscale' 
+  }, [bitmap])  // Transfer the bitmap
+}
+
+worker.onmessage = (event) => {
+  const processedBitmap = event.data.bitmap
+  
+  // Draw the result on a visible canvas
+  const canvas = document.getElementById('result')
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(processedBitmap, 0, 0)
+}
+```
+
+```javascript
+// image-worker.js
+self.onmessage = async (event) => {
+  const { bitmap, filter } = event.data
+  
+  // Create an OffscreenCanvas matching the image size
+  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height)
+  const ctx = canvas.getContext('2d')
+  
+  // Draw the image
+  ctx.drawImage(bitmap, 0, 0)
+  
+  // Get pixel data
+  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+  const data = imageData.data
+  
+  // Apply grayscale filter
+  if (filter === 'grayscale') {
+    for (let i = 0; i < data.length; i += 4) {
+      const avg = (data[i] + data[i + 1] + data[i + 2]) / 3
+      data[i] = avg       // R
+      data[i + 1] = avg   // G
+      data[i + 2] = avg   // B
+      // Alpha unchanged
+    }
+  }
+  
+  // Put processed data back
+  ctx.putImageData(imageData, 0, 0)
+  
+  // Convert to bitmap and send back
+  const resultBitmap = await createImageBitmap(canvas)
+  self.postMessage({ bitmap: resultBitmap }, [resultBitmap])
+}
+```
+
+<Tip>
+OffscreenCanvas is great for games, data visualizations, and image/video processing. Anything that involves heavy canvas work can benefit from being moved to a worker.
+</Tip>
+
+---
+
+## What Can't Web Workers Do?
+
+Workers run in a restricted environment. Understanding what they **can't** do is just as important as knowing what they can.
+
+### No DOM Access
+
+Workers cannot access the DOM. They can't read or modify HTML elements:
+
+```javascript
+// worker.js
+// ❌ All of these will fail
+document.getElementById('app')         // document is undefined
+window.location                        // window is undefined
+document.createElement('div')          // Can't create elements
+element.addEventListener('click', fn)  // Can't add event listeners
+```
+
+If you need to update the DOM based on worker results, send the data back to the main thread:
+
+```javascript
+// worker.js
+const result = heavyCalculation()
+self.postMessage({ result })  // Send data to main thread
+```
+
+```javascript
+// main.js
+worker.onmessage = (event) => {
+  // Update DOM on the main thread
+  document.getElementById('result').textContent = event.data.result
+}
+```
+
+### Different Global Scope
+
+Workers have their own global object: [`DedicatedWorkerGlobalScope`](https://developer.mozilla.org/en-US/docs/Web/API/DedicatedWorkerGlobalScope). Many familiar globals are missing or different:
+
+```javascript
+// worker.js
+console.log(self)           // DedicatedWorkerGlobalScope
+console.log(window)         // undefined
+console.log(document)       // undefined
+console.log(localStorage)   // undefined
+console.log(sessionStorage) // undefined
+console.log(alert)          // undefined
+```
+
+### What Workers CAN Access
+
+Workers aren't completely isolated. They have access to:
+
+| Available | Example |
+|-----------|---------|
+| [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/fetch) | `fetch('/api/data')` |
+| [`XMLHttpRequest`](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest) | Network requests |
+| [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout) / [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval) | Timers |
+| [`IndexedDB`](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API) | Database storage |
+| [`WebSocket`](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) | Real-time connections |
+| [`crypto`](https://developer.mozilla.org/en-US/docs/Web/API/Crypto) | Cryptographic operations |
+| [`navigator`](https://developer.mozilla.org/en-US/docs/Web/API/Navigator) (partial) | `navigator.userAgent`, etc. |
+| [`location`](https://developer.mozilla.org/en-US/docs/Web/API/WorkerLocation) (read-only) | URL information |
+| [`console`](https://developer.mozilla.org/en-US/docs/Web/API/console) | Logging (appears in DevTools) |
+| `importScripts()` | Load scripts (classic workers) |
+| `import` / `export` | ES modules (module workers) |
+
+```javascript
+// worker.js - These all work!
+console.log('Worker started')
+
+setTimeout(() => {
+  console.log('Timer fired in worker')
+}, 1000)
+
+fetch('/api/data')
+  .then(r => r.json())
+  .then(data => {
+    self.postMessage(data)
+  })
+```
+
+---
+
+## Common Mistakes
+
+### Mistake #1: Trying to Access the DOM
+
+The most common mistake. It fails silently or throws cryptic errors:
+
+```javascript
+// worker.js
+// ❌ WRONG - This won't work
+self.onmessage = (event) => {
+  const result = calculate(event.data)
+  document.getElementById('output').textContent = result  // ERROR!
+}
+
+// ✓ CORRECT - Send data back to main thread
+self.onmessage = (event) => {
+  const result = calculate(event.data)
+  self.postMessage(result)  // Main thread updates the DOM
+}
+```
+
+### Mistake #2: Not Terminating Workers
+
+Workers consume resources. If you don't terminate them, they keep running:
+
+```javascript
+// main.js
+// ❌ WRONG - Creates a new worker for each click, never cleans up
+button.addEventListener('click', () => {
+  const worker = new Worker('worker.js')
+  worker.postMessage(data)
+  worker.onmessage = (e) => showResult(e.data)
+  // Worker keeps running even after we're done!
+})
+
+// ✓ CORRECT - Terminate when done
+button.addEventListener('click', () => {
+  const worker = new Worker('worker.js')
+  worker.postMessage(data)
+  worker.onmessage = (e) => {
+    showResult(e.data)
+    worker.terminate()  // Clean up!
+  }
+})
+
+// ✓ BETTER - Reuse the same worker
+const worker = new Worker('worker.js')
+worker.onmessage = (e) => showResult(e.data)
+
+button.addEventListener('click', () => {
+  worker.postMessage(data)  // Reuse existing worker
+})
+```
+
+### Mistake #3: Overusing Workers for Small Tasks
+
+Workers have overhead. Creating them, posting messages, and cloning data all take time:
+
+```javascript
+// ❌ WRONG - Worker overhead exceeds computation time
+const worker = new Worker('worker.js')
+worker.postMessage([1, 2, 3])  // Adding 3 numbers doesn't need a worker
+
+// ✓ CORRECT - Just do it on the main thread
+const sum = [1, 2, 3].reduce((a, b) => a + b, 0)
+```
+
+<Tip>
+**Rule of thumb:** Only use workers for tasks that take more than 50-100ms. For quick operations, the overhead isn't worth it.
+</Tip>
+
+### Mistake #4: Sending Functions to Workers
+
+Functions can't be cloned:
+
+```javascript
+// ❌ WRONG - Functions can't be sent
+worker.postMessage({
+  data: [1, 2, 3],
+  callback: (result) => console.log(result)  // ERROR!
+})
+
+// ✓ CORRECT - Send data, handle callback in onmessage
+worker.postMessage({ data: [1, 2, 3] })
+worker.onmessage = (e) => console.log(e.data)  // "Callback" on main thread
+```
+
+### Mistake #5: Forgetting Error Handling
+
+Workers fail silently if you don't handle errors:
+
+```javascript
+// ❌ WRONG - Errors disappear
+const worker = new Worker('worker.js')
+worker.postMessage(data)
+worker.onmessage = (e) => console.log(e.data)
+
+// ✓ CORRECT - Always handle errors
+const worker = new Worker('worker.js')
+worker.postMessage(data)
+worker.onmessage = (e) => console.log(e.data)
+worker.onerror = (e) => {
+  console.error('Worker error:', e.message)
+  console.error('In file:', e.filename, 'line:', e.lineno)
+}
+```
+
+---
+
+## Real-World Patterns
+
+### Pattern 1: Heavy Computation
+
+Moving CPU-intensive work off the main thread:
+
+```javascript
+// main.js
+const worker = new Worker('prime-worker.js', { type: 'module' })
+
+document.getElementById('findPrimes').addEventListener('click', () => {
+  const max = parseInt(document.getElementById('max').value)
+  
+  document.getElementById('status').textContent = 'Calculating...'
+  document.getElementById('findPrimes').disabled = true
+  
+  worker.postMessage({ findPrimesUpTo: max })
+})
+
+worker.onmessage = (event) => {
+  const { primes, timeTaken } = event.data
+  
+  document.getElementById('status').textContent = 
+    `Found ${primes.length} primes in ${timeTaken}ms`
+  document.getElementById('findPrimes').disabled = false
+}
+```
+
+```javascript
+// prime-worker.js
+function isPrime(n) {
+  if (n < 2) return false
+  for (let i = 2; i <= Math.sqrt(n); i++) {
+    if (n % i === 0) return false
+  }
+  return true
+}
+
+function findPrimes(max) {
+  const primes = []
+  for (let i = 2; i <= max; i++) {
+    if (isPrime(i)) primes.push(i)
+  }
+  return primes
+}
+
+self.onmessage = (event) => {
+  const { findPrimesUpTo } = event.data
+  
+  const start = performance.now()
+  const primes = findPrimes(findPrimesUpTo)
+  const timeTaken = performance.now() - start
+  
+  self.postMessage({ primes, timeTaken })
+}
+```
+
+### Pattern 2: Data Parsing
+
+Parsing large JSON or CSV files:
+
+```javascript
+// main.js
+const worker = new Worker('parser-worker.js', { type: 'module' })
+
+async function parseFile(file) {
+  const text = await file.text()
+  worker.postMessage({ csv: text })
+}
+
+worker.onmessage = (event) => {
+  const { rows, headers, errors } = event.data
+  console.log(`Parsed ${rows.length} rows`)
+  displayData(rows)
+}
+
+document.getElementById('fileInput').addEventListener('change', (e) => {
+  parseFile(e.target.files[0])
+})
+```
+
+```javascript
+// parser-worker.js
+function parseCSV(text) {
+  const lines = text.split('\n')
+  const headers = lines[0].split(',').map(h => h.trim())
+  const rows = []
+  const errors = []
+  
+  for (let i = 1; i < lines.length; i++) {
+    const line = lines[i].trim()
+    if (!line) continue
+    
+    try {
+      const values = line.split(',')
+      const row = {}
+      headers.forEach((header, index) => {
+        row[header] = values[index]?.trim()
+      })
+      rows.push(row)
+    } catch (e) {
+      errors.push({ line: i, error: e.message })
+    }
+  }
+  
+  return { headers, rows, errors }
+}
+
+self.onmessage = (event) => {
+  const { csv } = event.data
+  const result = parseCSV(csv)
+  self.postMessage(result)
+}
+```
+
+### Pattern 3: Real-Time Data Processing
+
+Processing streaming data (like from WebSocket or sensors):
+
+```javascript
+// main.js
+const processingWorker = new Worker('stream-worker.js', { type: 'module' })
+const ws = new WebSocket('wss://data-feed.example.com')
+
+ws.onmessage = (event) => {
+  // Don't process on main thread - send to worker
+  processingWorker.postMessage(JSON.parse(event.data))
+}
+
+processingWorker.onmessage = (event) => {
+  // Only update UI with processed results
+  updateChart(event.data)
+}
+```
+
+```javascript
+// stream-worker.js
+let buffer = []
+const BATCH_SIZE = 100
+
+function processBuffer() {
+  if (buffer.length < BATCH_SIZE) return
+  
+  // Calculate statistics
+  const values = buffer.map(d => d.value)
+  const avg = values.reduce((a, b) => a + b, 0) / values.length
+  const max = Math.max(...values)
+  const min = Math.min(...values)
+  
+  self.postMessage({ avg, max, min, count: buffer.length })
+  buffer = []
+}
+
+self.onmessage = (event) => {
+  buffer.push(event.data)
+  processBuffer()
+}
+
+// Process remaining data periodically
+setInterval(processBuffer, 1000)
+```
+
+---
+
+## Worker Pools: Reusing Workers
+
+Creating workers has overhead. For repeated tasks, use a **worker pool** to reuse workers instead of creating new ones:
+
+```javascript
+// WorkerPool.js
+export class WorkerPool {
+  constructor(workerScript, poolSize = navigator.hardwareConcurrency || 4) {
+    this.workers = []
+    this.queue = []
+    this.poolSize = poolSize
+    this.workerScript = workerScript
+    
+    // Create workers
+    for (let i = 0; i < poolSize; i++) {
+      this.workers.push({
+        worker: new Worker(workerScript, { type: 'module' }),
+        busy: false
+      })
+    }
+  }
+  
+  runTask(data) {
+    return new Promise((resolve, reject) => {
+      const task = { data, resolve, reject }
+      
+      // Find available worker
+      const available = this.workers.find(w => !w.busy)
+      
+      if (available) {
+        this.#runOnWorker(available, task)
+      } else {
+        // Queue the task
+        this.queue.push(task)
+      }
+    })
+  }
+  
+  #runOnWorker(workerInfo, task) {
+    workerInfo.busy = true
+    
+    const handleMessage = (event) => {
+      workerInfo.worker.removeEventListener('message', handleMessage)
+      workerInfo.busy = false
+      
+      task.resolve(event.data)
+      
+      // Process queued tasks
+      if (this.queue.length > 0) {
+        const nextTask = this.queue.shift()
+        this.#runOnWorker(workerInfo, nextTask)
+      }
+    }
+    
+    const handleError = (error) => {
+      workerInfo.worker.removeEventListener('error', handleError)
+      workerInfo.busy = false
+      task.reject(error)
+    }
+    
+    workerInfo.worker.addEventListener('message', handleMessage)
+    workerInfo.worker.addEventListener('error', handleError)
+    workerInfo.worker.postMessage(task.data)
+  }
+  
+  terminate() {
+    this.workers.forEach(w => w.worker.terminate())
+    this.workers = []
+    this.queue = []
+  }
+}
+```
+
+```javascript
+// main.js - Using the pool
+import { WorkerPool } from './WorkerPool.js'
+
+const pool = new WorkerPool('compute-worker.js', 4)
+
+// Process many items in parallel
+async function processItems(items) {
+  const results = await Promise.all(
+    items.map(item => pool.runTask(item))
+  )
+  return results
+}
+
+// Example: process 100 items using 4 workers
+const items = Array.from({ length: 100 }, (_, i) => ({ id: i, data: Math.random() }))
+const results = await processItems(items)
+console.log(results)
+
+// Clean up when done
+pool.terminate()
+```
+
+```javascript
+// compute-worker.js
+self.onmessage = (event) => {
+  const { id, data } = event.data
+  
+  // Simulate heavy computation
+  let result = data
+  for (let i = 0; i < 1000000; i++) {
+    result = Math.sin(result) * Math.cos(result)
+  }
+  
+  self.postMessage({ id, result })
+}
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           WORKER POOL                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  MAIN THREAD                                                             │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  WorkerPool                                                      │    │
+│  │  ┌─────────────────────────────────────────────────────────┐     │    │
+│  │  │                        TASK QUEUE                        │     │    │
+│  │  │  [Task 5] [Task 6] [Task 7] [Task 8] ...                 │     │    │
+│  │  └─────────────────────────────────────────────────────────┘     │    │
+│  └──────────────┬───────────────┬───────────────┬───────────────┬───┘    │
+│                 │               │               │               │        │
+│                 ▼               ▼               ▼               ▼        │
+│  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────┐                 │
+│  │ Worker 1 │  │ Worker 2 │  │ Worker 3 │  │ Worker 4 │                 │
+│  │ [Task 1] │  │ [Task 2] │  │ [Task 3] │  │ [Task 4] │                 │
+│  │  (busy)  │  │  (busy)  │  │  (busy)  │  │  (busy)  │                 │
+│  └──────────┘  └──────────┘  └──────────┘  └──────────┘                 │
+│                                                                          │
+│  • Reuses existing workers (no creation overhead)                        │
+│  • Tasks queue when all workers are busy                                 │
+│  • Automatically assigns tasks as workers become free                    │
+│  • Pool size often matches CPU core count                                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Tip>
+`navigator.hardwareConcurrency` returns the number of logical CPU cores. Using this as your pool size lets you maximize parallelism without oversubscribing.
+</Tip>
+
+---
+
+## Inline Workers: The Blob URL Trick
+
+Sometimes you want a worker without a separate file. You can create workers from strings using [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) URLs:
+
+```javascript
+// Create a worker from a string (no separate file needed!)
+function createWorkerFromString(code) {
+  const blob = new Blob([code], { type: 'application/javascript' })
+  const url = URL.createObjectURL(blob)
+  const worker = new Worker(url)
+  
+  // Clean up the URL when done
+  worker.addEventListener('message', () => {}, { once: true })
+  URL.revokeObjectURL(url)  // Revoke after worker starts
+  
+  return worker
+}
+
+// Usage
+const workerCode = `
+  self.onmessage = (event) => {
+    const numbers = event.data
+    const sum = numbers.reduce((a, b) => a + b, 0)
+    self.postMessage(sum)
+  }
+`
+
+const worker = createWorkerFromString(workerCode)
+worker.postMessage([1, 2, 3, 4, 5])
+worker.onmessage = (e) => console.log('Sum:', e.data)  // Sum: 15
+```
+
+### A Cleaner Pattern: Function-Based Workers
+
+You can even define the worker logic as a function:
+
+```javascript
+function createWorkerFromFunction(fn) {
+  // Convert function to string and wrap in self.onmessage
+  const code = `
+    const workerFn = ${fn.toString()}
+    self.onmessage = (event) => {
+      const result = workerFn(event.data)
+      self.postMessage(result)
+    }
+  `
+  
+  const blob = new Blob([code], { type: 'application/javascript' })
+  const url = URL.createObjectURL(blob)
+  return new Worker(url)
+}
+
+// Usage - define worker logic as a normal function!
+const worker = createWorkerFromFunction((data) => {
+  // This runs in the worker
+  return data.map(n => n * 2)
+})
+
+worker.postMessage([1, 2, 3])
+worker.onmessage = (e) => console.log(e.data)  // [2, 4, 6]
+```
+
+<Warning>
+**Limitations of inline workers:**
+- The function can't use closures (no access to outer scope)
+- Can't import modules (the code is a string)
+- Harder to debug (no source maps)
+- Best used for simple, self-contained tasks
+</Warning>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Web Workers provide true parallelism** — Unlike async/await (which is concurrent but single-threaded), workers run on separate CPU threads simultaneously.
+
+2. **Use workers for CPU-bound tasks** — Async is for waiting (network, timers). Workers are for computing (heavy calculations, data processing).
+
+3. **Workers communicate via `postMessage`** — Data is copied by default using the structured clone algorithm. Workers can't directly access main thread variables.
+
+4. **Workers can't touch the DOM** — No `document`, no `window`, no `localStorage`. If you need to update the UI, send data back to the main thread.
+
+5. **Transfer large data instead of copying** — For big ArrayBuffers, use `postMessage(data, [data])` to transfer ownership. The transfer is nearly instant.
+
+6. **Module workers are the modern approach** — Use `new Worker('file.js', { type: 'module' })` to enable `import`/`export` syntax and modern features.
+
+7. **Three types of workers exist** — Dedicated (one owner), Shared (multiple tabs), and Service Workers (network proxy). Use Dedicated for most cases.
+
+8. **Always terminate workers when done** — Call `worker.terminate()` or they'll keep running and consuming resources.
+
+9. **Don't overuse workers for small tasks** — Worker creation and message passing have overhead. Only use them for tasks taking 50ms+.
+
+10. **Worker pools improve performance** — Reuse workers instead of creating new ones for repeated tasks. Match pool size to CPU cores.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between async/await and Web Workers?">
+    **Answer:**
+    
+    Async/await provides **concurrency** on a single thread. When you `await`, JavaScript pauses that function and runs other code, but everything still runs on one thread, taking turns.
+    
+    Web Workers provide **parallelism** on multiple threads. A worker runs on a completely separate thread, executing simultaneously with the main thread.
+    
+    ```javascript
+    // Async: Takes turns on one thread
+    async function fetchData() {
+      await fetch('/api')  // Pauses here, other code can run
+    }
+    
+    // Workers: Actually runs at the same time
+    const worker = new Worker('heavy-task.js')
+    worker.postMessage(data)  // Worker computes in parallel
+    // Main thread continues immediately
+    ```
+    
+    Use async for I/O-bound tasks (network, files). Use workers for CPU-bound tasks (calculations, processing).
+  </Accordion>
+  
+  <Accordion title="Question 2: Why can't workers access the DOM?">
+    **Answer:**
+    
+    The DOM is not thread-safe. If multiple threads could modify the DOM simultaneously, you'd get race conditions and corrupted state. Browsers would need complex locking mechanisms.
+    
+    Instead, browsers made a design choice: only the main thread can touch the DOM. Workers do computation and send results back:
+    
+    ```javascript
+    // worker.js
+    // ❌ Can't do this
+    document.getElementById('result').textContent = 'Done'
+    
+    // ✓ Send data back instead
+    self.postMessage({ result: 'Done' })
+    
+    // main.js
+    worker.onmessage = (e) => {
+      document.getElementById('result').textContent = e.data.result
+    }
+    ```
+    
+    This constraint keeps things simple and bug-free.
+  </Accordion>
+  
+  <Accordion title="Question 3: When should you use transferable objects?">
+    **Answer:**
+    
+    Use transferable objects when:
+    1. You're sending large data (> 1MB)
+    2. You don't need to keep the data in the sending context
+    
+    ```javascript
+    // Large buffer (100MB)
+    const buffer = new ArrayBuffer(100 * 1024 * 1024)
+    
+    // ❌ SLOW: Copies 100MB
+    worker.postMessage(buffer)
+    
+    // ✓ FAST: Transfers ownership instantly
+    worker.postMessage(buffer, [buffer])
+    // buffer is now empty (byteLength = 0)
+    ```
+    
+    Transferable objects include: ArrayBuffer, MessagePort, ImageBitmap, OffscreenCanvas, and various streams.
+  </Accordion>
+  
+  <Accordion title="Question 4: What's the difference between Dedicated and Shared Workers?">
+    **Answer:**
+    
+    **Dedicated Workers** belong to a single script. Only that script can communicate with them.
+    
+    ```javascript
+    const worker = new Worker('worker.js')  // Only this script uses it
+    ```
+    
+    **Shared Workers** can be accessed by multiple scripts, even across different tabs of the same origin.
+    
+    ```javascript
+    // Tab 1 and Tab 2 both connect to the same worker
+    const worker = new SharedWorker('shared.js')
+    worker.port.postMessage('hello')
+    ```
+    
+    Use Shared Workers for:
+    - Shared state across tabs
+    - Single WebSocket connection for multiple tabs
+    - Reducing memory by sharing one worker instance
+    
+    Note: Shared Workers have limited browser support (not in Safari).
+  </Accordion>
+  
+  <Accordion title="Question 5: How do you create a worker without a separate file?">
+    **Answer:**
+    
+    Use a Blob URL to create a worker from a string:
+    
+    ```javascript
+    const code = `
+      self.onmessage = (event) => {
+        const result = event.data * 2
+        self.postMessage(result)
+      }
+    `
+    
+    const blob = new Blob([code], { type: 'application/javascript' })
+    const url = URL.createObjectURL(blob)
+    const worker = new Worker(url)
+    
+    worker.postMessage(5)
+    worker.onmessage = (e) => console.log(e.data)  // 10
+    
+    // Clean up
+    URL.revokeObjectURL(url)
+    ```
+    
+    This is useful for simple tasks or demos, but has limitations: no imports, no closures, harder to debug.
+  </Accordion>
+  
+  <Accordion title="Question 6: What happens if you forget to terminate a worker?">
+    **Answer:**
+    
+    The worker keeps running and consuming resources (memory, CPU time). If you create workers in a loop or on repeated events without terminating them, you'll leak resources:
+    
+    ```javascript
+    // ❌ Memory leak: creates new worker every click
+    button.onclick = () => {
+      const worker = new Worker('task.js')
+      worker.postMessage(data)
+      worker.onmessage = (e) => showResult(e.data)
+      // Worker never terminated!
+    }
+    
+    // ✓ Fixed: terminate after use
+    button.onclick = () => {
+      const worker = new Worker('task.js')
+      worker.postMessage(data)
+      worker.onmessage = (e) => {
+        showResult(e.data)
+        worker.terminate()  // Clean up
+      }
+    }
+    
+    // ✓ Better: reuse one worker
+    const worker = new Worker('task.js')
+    worker.onmessage = (e) => showResult(e.data)
+    
+    button.onclick = () => {
+      worker.postMessage(data)  // Reuse
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    How JavaScript handles async on a single thread. Workers bypass this limitation.
+  </Card>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    The foundation of async JavaScript. Workers use postMessage, not Promises, for communication.
+  </Card>
+  <Card title="async/await" icon="hourglass" href="/concepts/async-await">
+    Modern async syntax. Great for I/O, but workers handle CPU-bound tasks better.
+  </Card>
+  <Card title="Callbacks" icon="phone" href="/concepts/callbacks">
+    The original async pattern. Workers use message callbacks for communication.
+  </Card>
+</CardGroup>
+
+---
 
 ## Reference
 
 <CardGroup cols={2}>
   <Card title="Web Workers API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API">
-    MDN documentation for Web Workers API
+    Official MDN reference for the Web Workers API.
   </Card>
   <Card title="Using Web Workers — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Using_web_workers">
-    MDN guide to using Web Workers
+    Comprehensive guide to creating and using Web Workers.
+  </Card>
+  <Card title="Worker — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Worker">
+    API reference for the Worker constructor and methods.
+  </Card>
+  <Card title="Structured Clone Algorithm — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm">
+    How data is copied when using postMessage.
   </Card>
 </CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="The Basics of Web Workers" icon="newspaper" href="https://www.html5rocks.com/en/tutorials/workers/basics/">
-    By HTML5 Rocks — comprehensive introduction
+  <Card title="How Fast Are Web Workers? — Mozilla Hacks" icon="newspaper" href="https://hacks.mozilla.org/2015/07/how-fast-are-web-workers/">
+    Performance analysis from Mozilla engineers. Answers "is the overhead worth it?" with real benchmarks.
   </Card>
-  <Card title="Using Web Workers for Safe, Concurrent JavaScript" icon="newspaper" href="https://www.smashingmagazine.com/2021/06/web-workers-2021/">
-    By Smashing Magazine
+  <Card title="Threading the Web with Module Workers — web.dev" icon="newspaper" href="https://web.dev/articles/module-workers">
+    Deep dive into module workers with `type: 'module'`. Essential reading for modern worker patterns.
+  </Card>
+  <Card title="Using Web Workers for Safe Concurrent JavaScript — Smashing Magazine" icon="newspaper" href="https://www.smashingmagazine.com/2021/06/web-workers-2021/">
+    Real-world examples including image processing and physics simulations. Great for seeing workers in action.
+  </Card>
+  <Card title="Comlink — Google Chrome Labs" icon="newspaper" href="https://github.com/GoogleChromeLabs/comlink">
+    Library that makes workers feel like async functions. Eliminates postMessage boilerplate entirely.
   </Card>
 </CardGroup>
-
-- [JavaScript Web Workers: A Beginner's Guide — SitePoint](https://www.sitepoint.com/javascript-web-workers/)
-- [Web Workers — JavaScript.info](https://javascript.info/web-workers)
-- [Comlink: Web Workers Made Easy — Google Chrome Labs](https://github.com/GoogleChromeLabs/comlink)
-- [Parallel Programming in JavaScript Using Web Workers — LogRocket](https://blog.logrocket.com/parallel-programming-in-javascript-using-web-workers/)
-- [A Simple Introduction to Web Workers — David Walsh](https://davidwalsh.name/web-workers)
-- [Threading the Web with Module Workers — web.dev](https://web.dev/module-workers/)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="Web Workers Explained" icon="video" href="https://www.youtube.com/watch?v=Gcp7triXFjg">
-    By Web Dev Simplified
+  <Card title="Web Workers Explained — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=Gcp7triXFjg">
+    Beginner-friendly 12-minute introduction. Perfect starting point if you've never used workers.
   </Card>
-  <Card title="JavaScript Web Workers" icon="video" href="https://www.youtube.com/watch?v=EiPytIxrZtU">
-    By Fireship
+  <Card title="JavaScript Web Workers — Fireship" icon="video" href="https://www.youtube.com/watch?v=EiPytIxrZtU">
+    Fast-paced 100-second overview. Great for quick refresher or deciding if you need workers.
+  </Card>
+  <Card title="Web Workers Crash Course — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=tPwkKF8WAXs">
+    Practical 30-minute deep dive with a real example. Shows the full workflow from problem to solution.
   </Card>
 </CardGroup>
-
-- [Web Workers Crash Course — Traversy Media](https://www.youtube.com/watch?v=tPwkKF8WAXs)
-- [Multi-Threading in JavaScript with Web Workers — Hussein Nasser](https://www.youtube.com/watch?v=kUXRxEwOL3A)
-- [Service Workers vs Web Workers — Google Chrome Developers](https://www.youtube.com/watch?v=JYXXGNFJjwc)
