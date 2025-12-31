@@ -19,7 +19,7 @@ const greet = user.greet;
 greet();                // "Hi, I'm undefined" - broken!
 ```
 
-The **[`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)** keyword is one of JavaScript's most confusing features — but it follows specific rules. Once you understand them, you'll never be confused again.
+The **[`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)** keyword is one of JavaScript's most confusing features, but it follows specific rules. Once you understand them, you'll never be confused again.
 
 <Info>
 **What you'll learn in this guide:**
@@ -59,7 +59,7 @@ Think about the word "I" in everyday conversation. It's a simple word, but its m
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-This is exactly how `this` works in JavaScript! The keyword `this` is like the pronoun "I" — it refers to different objects depending on **who is "speaking"** (which object is calling the function).
+This is exactly how `this` works in JavaScript! The keyword `this` is like the pronoun "I". It refers to different objects depending on **who is "speaking"** (which object is calling the function).
 
 ```javascript
 const alice = {
@@ -87,13 +87,13 @@ But here's where JavaScript gets interesting. What if Alice could make Bob say h
 bob.introduce.call(alice);  // "I am Alice" (Bob's function, Alice's this)
 ```
 
-That's what `call`, `apply`, and `bind` do — they let you control **who "I" refers to**, regardless of which function is speaking.
+That's what `call`, `apply`, and `bind` do. They let you control **who "I" refers to**, regardless of which function is speaking.
 
 ---
 
 ## What is `this` in JavaScript?
 
-The **`this`** keyword is a special identifier that JavaScript automatically creates in every function execution context. It refers to the object that is currently executing the code — typically the object that "owns" the method being called. Unlike most languages where `this` is fixed at definition time, JavaScript determines `this` dynamically at **call time**, based on how a function is invoked.
+The **`this`** keyword is a special identifier that JavaScript automatically creates in every function execution context. It refers to the object that is currently executing the code, typically the object that "owns" the method being called. Unlike most languages where `this` is fixed at definition time, JavaScript determines `this` dynamically at **call time**, based on how a function is invoked.
 
 ### The Key Insight: Call-Time Binding
 
@@ -116,7 +116,7 @@ obj.showThis();    // obj (the object before the dot)
 showThis.call({}); // {} (explicitly specified)
 ```
 
-In non-strict mode, plain function calls return **[`globalThis`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis)** (the global object — `window` in browsers, `global` in Node.js).
+In non-strict mode, plain function calls return **[`globalThis`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/globalThis)** (the global object: `window` in browsers, `global` in Node.js).
 
 ### Why Does JavaScript Work This Way?
 
@@ -167,7 +167,7 @@ BINDING RULES (Highest to Lowest Priority)
 ```
 
 <Note>
-Arrow functions are listed last not because they're lowest priority, but because they work differently — they don't have their own `this` at all. We'll cover them in detail.
+Arrow functions are listed last not because they're lowest priority, but because they work differently. They don't have their own `this` at all. We'll cover them in detail.
 </Note>
 
 ---
@@ -356,7 +356,7 @@ company.department.getName();  // "Engineering" (this = department)
 
 #### The Implicit Binding Gotcha: Lost Context
 
-This is one of the most common sources of bugs. When you **extract a method** from an object, it loses its implicit binding:
+This trips up many developers. When you **extract a method** from an object, it loses its implicit binding:
 
 ```javascript
 const user = {
@@ -374,7 +374,7 @@ const greetFn = user.greet;
 greetFn();     // "Hello, I'm undefined" (strict mode: this = undefined)
 ```
 
-Why? Because `greetFn()` is a plain function call — there's no dot, so implicit binding doesn't apply. We fall through to default binding.
+Why? Because `greetFn()` is a plain function call. There's no dot, so implicit binding doesn't apply. We fall through to default binding.
 
 ```
 IMPLICIT BINDING LOST
@@ -429,7 +429,7 @@ showThis();  // window (in browser) or global (in Node.js)
 ```
 
 <Warning>
-**Always use strict mode!** Non-strict mode's default binding to `globalThis` is dangerous — it can accidentally create or modify global variables, leading to hard-to-find bugs.
+**Always use strict mode!** Non-strict mode's default binding to `globalThis` is dangerous. It can accidentally create or modify global variables, leading to hard-to-find bugs.
 
 ES6 modules and classes are automatically in strict mode.
 </Warning>
@@ -486,7 +486,7 @@ user.regularGreet();  // "Hi, I'm Alice" (this = user)
 user.arrowGreet();    // "Hi, I'm undefined" (this = enclosing scope, not user!)
 ```
 
-Wait, why is `arrowGreet` showing `undefined`? Because the arrow function was defined in the object literal, and the enclosing scope at that point is the module/global scope — not the `user` object.
+Wait, why is `arrowGreet` showing `undefined`? Because the arrow function was defined in the object literal, and the enclosing scope at that point is the module/global scope, not the `user` object.
 
 #### Where Arrow Functions Shine
 
@@ -791,7 +791,7 @@ greetAlice();  // "Hello, I'm Alice" (still works!)
 
 #### Key Characteristic: Permanent Binding
 
-Once bound, the `this` value cannot be changed — not even with `call()` or `apply()`:
+Once bound, the `this` value cannot be changed, not even with `call()` or `apply()`:
 
 ```javascript
 function showThis() {
@@ -811,7 +811,7 @@ boundToAlice.bind(bob)();  // "Alice" (bind ignored!)
 
 #### Use Case: Event Handlers
 
-This is one of the most common uses of `bind()`:
+This is a common use of `bind()`:
 
 ```javascript
 class Toggle {
@@ -873,7 +873,7 @@ triple(5);  // 15 (3 * 5)
 double(7);  // 14 (2 * 7)
 ```
 
-This technique is called **partial application** — you're partially applying arguments to create a more specific function.
+This technique is called **partial application**. You're partially applying arguments to create a more specific function.
 
 ```javascript
 function greet(greeting, name) {
@@ -1249,7 +1249,7 @@ function* generatorFn() { yield 1; }  // Works
 ## Key Takeaways
 
 <Info>
-**Remember these essential points about `this`, `call`, `apply`, and `bind`:**
+**The key things to remember about `this`, `call`, `apply`, and `bind`:**
 
 1. **`this` is determined at call time** — Not when the function is defined, but when it's called. This is called dynamic binding.
 
@@ -1436,17 +1436,17 @@ Try to figure out what `this` refers to in each example before revealing the ans
 
 <CardGroup cols={2}>
   <Card title="Grokking call(), apply() and bind() methods in JavaScript" icon="newspaper" href="https://levelup.gitconnected.com/grokking-call-apply-and-bind-methods-in-javascript-392351a4be8b">
-    Aniket Kudale's comprehensive guide to understanding these three methods with clear examples.
+    Uses a "borrowing a car" analogy that makes method borrowing click instantly. The side-by-side comparisons of call vs apply syntax are especially helpful.
   </Card>
   <Card title="Javascript: call(), apply() and bind()" icon="newspaper" href="https://medium.com/@omergoldberg/javascript-call-apply-and-bind-e5c27301f7bb">
-    Omer Goldberg's practical walkthrough of call, apply, and bind with real-world scenarios.
+    Builds understanding progressively from basic examples to implementing your own bind. Great for developers who want to know what's happening under the hood.
   </Card>
 
   <Card title="The Top 7 Tricky this Interview Questions" icon="newspaper" href="https://dmitripavlutin.com/javascript-this-interview-questions/">
     Dmitri Pavlutin's collection of challenging this-related questions to test your understanding.
   </Card>
   <Card title="How to understand the keyword this and context in JavaScript" icon="newspaper" href="https://www.freecodecamp.org/news/how-to-understand-the-keyword-this-and-context-in-javascript-cd624c6b74b8/">
-    Lukas Gisder-Dube's freeCodeCamp article explaining this and execution context.
+    Covers the relationship between execution context and `this` binding that many tutorials skip. The "3 scenarios" framework makes debugging `this` issues straightforward.
   </Card>
 </CardGroup>
 
@@ -1454,13 +1454,13 @@ Try to figure out what `this` refers to in each example before revealing the ans
 
 <CardGroup cols={2}>
   <Card title="JavaScript call, apply and bind" icon="video" href="https://www.youtube.com/watch?v=c0mLRpw-9rI">
-    techsith's clear tutorial on the three function methods with practical examples.
+    Explains each method by solving real problems like borrowing array methods. The visual code walkthroughs make the execution order crystal clear.
   </Card>
   <Card title="JS Function Methods call(), apply(), and bind()" icon="video" href="https://www.youtube.com/watch?v=uBdH0iB1VDM">
-    Steve Griffith's in-depth explanation of how these methods work under the hood.
+    Shows exactly when `this` gets assigned during function execution. The step-through debugging demonstrations reveal what's actually happening in memory.
   </Card>
   <Card title="bind and this - Object Creation in JavaScript" icon="video" href="https://www.youtube.com/watch?v=GhbhD1HR5vk">
-    Fun Fun Function's entertaining take on bind and this in object-oriented JavaScript.
+    MPJ's signature storytelling style makes `this` binding feel intuitive. Part of a larger series that builds up to understanding JavaScript's object system.
   </Card>
   <Card title="Javascript Interview Questions (Call, Bind and Apply)" icon="video" href="https://www.youtube.com/watch?v=VkmUOktYDAU">
     Roadside Coder's interview-focused video covering common questions about these methods.
