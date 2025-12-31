@@ -6,7 +6,7 @@ description: "Learn how the JavaScript call stack tracks function execution. Und
 
 How does JavaScript keep track of which function is running? When a function calls another function, how does JavaScript know where to return when that function finishes?
 
-The answer is the **[call stack](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** — JavaScript's mechanism for tracking function execution.
+The answer is the **[call stack](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)**. It's JavaScript's mechanism for tracking function execution.
 
 ```javascript
 function greet(name) {
@@ -40,7 +40,7 @@ When `greet` calls `createMessage`, JavaScript remembers where it was in `greet`
 
 ## The Stack of Plates: A Real-World Analogy
 
-Imagine you're working in a restaurant kitchen, washing dishes. As clean plates come out, you stack them one on top of another. When a server needs a plate, they always take the one from the **top** of the stack — not from the middle or bottom.
+Imagine you're working in a restaurant kitchen, washing dishes. As clean plates come out, you stack them one on top of another. When a server needs a plate, they always take the one from the **top** of the stack, not from the middle or bottom.
 
 ```
         ┌───────────┐
@@ -54,13 +54,13 @@ Imagine you're working in a restaurant kitchen, washing dishes. As clean plates 
 
 This is exactly how JavaScript keeps track of your functions! When you call a function, JavaScript puts it on top of a "stack." When that function finishes, JavaScript removes it from the top and goes back to whatever was underneath.
 
-This simple concept — **adding to the top and removing from the top** — is the foundation of how JavaScript executes your code.
+This simple concept, **adding to the top and removing from the top**, is the foundation of how JavaScript executes your code.
 
 ---
 
 ## What is the Call Stack?
 
-The **[call stack](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** is a mechanism that JavaScript uses to keep track of where it is in your code. Think of it as JavaScript's "to-do list" for function calls — but one where it can only work on the item at the top.
+The **[call stack](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** is a mechanism that JavaScript uses to keep track of where it is in your code. Think of it as JavaScript's "to-do list" for function calls, but one where it can only work on the item at the top.
 
 ```javascript
 function first() { second(); }
@@ -74,7 +74,7 @@ first();
 
 ### The LIFO Principle
 
-The call stack follows a principle called **LIFO** — **Last In, First Out**.
+The call stack follows a principle called **LIFO**: **Last In, First Out**.
 
 - **Last In**: The most recent function call goes on top
 - **First Out**: The function on top must finish before we can get to the ones below
@@ -412,7 +412,7 @@ The call stack has a **limited size**. If you keep adding functions without remo
 ```
 
 <Warning>
-**The Trap:** Recursive functions without a proper stopping condition will crash your program. The most common cause is **infinite recursion** — a function that calls itself forever without a base case.
+**The Trap:** Recursive functions without a proper stopping condition will crash your program. The most common cause is **infinite recursion**, a function that calls itself forever without a base case.
 </Warning>
 
 ### The Classic Mistake: Missing Base Case
@@ -537,7 +537,7 @@ Stack: [ empty ]
 1. Always define a clear **base case** for recursive functions
 2. Make sure each recursive call moves **toward** the base case
 3. Consider using **iteration** (loops) instead of recursion for simple cases
-4. Be careful with property setters — use different internal property names
+4. Be careful with property setters, use different internal property names
 </Tip>
 
 ---
@@ -548,7 +548,7 @@ When something goes wrong, the call stack is your best friend for figuring out w
 
 ### Reading a Stack Trace
 
-When an error occurs, JavaScript gives you a **[stack trace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack)** — a snapshot of the call stack at the moment of the error.
+When an error occurs, JavaScript gives you a **[stack trace](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error/stack)**, a snapshot of the call stack at the moment of the error.
 
 ```javascript
 function a() { b(); }
@@ -641,7 +641,7 @@ console.log('Third');
 // Second  ← Even with 0ms delay, this runs last!
 ```
 
-The `setTimeout` callback doesn't go directly on the call stack — it waits in a queue until the stack is empty. This is why "Third" prints before "Second" even though the timeout is 0 milliseconds.
+The `setTimeout` callback doesn't go directly on the call stack. It waits in a queue until the stack is empty. This is why "Third" prints before "Second" even though the timeout is 0 milliseconds.
 
 <CardGroup cols={2}>
   <Card title="Event Loop" icon="rotate" href="/concepts/event-loop">
@@ -704,7 +704,7 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
   </Accordion>
   
   <Accordion title="JavaScript can run multiple functions at once">
-    **Wrong!** JavaScript is **single-threaded** — it has ONE call stack and can only execute ONE thing at a time.
+    **Wrong!** JavaScript is **single-threaded**. It has ONE call stack and can only execute ONE thing at a time.
     
     ```javascript
     function a() { 
@@ -725,7 +725,7 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
   </Accordion>
   
   <Accordion title="Promises are completely asynchronous">
-    **Wrong!** The Promise *constructor* runs **synchronously** — only the `.then()` callbacks are asynchronous:
+    **Wrong!** The Promise *constructor* runs **synchronously**. Only the `.then()` callbacks are asynchronous:
     
     ```javascript
     console.log('1');
@@ -752,7 +752,7 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
 ## Key Takeaways
 
 <Info>
-**Remember these essential points about the Call Stack:**
+**The key things to remember about the Call Stack:**
 
 1. **JavaScript is single-threaded** — It has ONE call stack and can only do one thing at a time
 
@@ -971,24 +971,24 @@ The `setTimeout` callback doesn't go directly on the call stack — it waits in 
     Part of the popular "Namaste JavaScript" series. Akshay Saini explains execution with great visuals and examples.
   </Card>
   <Card title="Understanding JavaScript Execution" icon="video" href="https://www.youtube.com/watch?v=Z6a1cLyq7Ac">
-    Codesmith's in-depth walkthrough of JavaScript execution. Part of a larger playlist on JS fundamentals.
+    Shows how JavaScript creates execution contexts and manages memory during function calls. Part of Codesmith's excellent "JavaScript: The Hard Parts" series.
   </Card>
   <Card title="Javascript: the Call Stack explained" icon="video" href="https://www.youtube.com/watch?v=w6QGEiQceOM">
-    Coding Blocks India provides a clear, methodical explanation with step-by-step code walkthroughs.
+    Traces through nested function calls line by line, showing exactly when frames are pushed and popped. Good for visual learners who want to see each step.
   </Card>
   <Card title="What is the Call Stack?" icon="video" href="https://www.youtube.com/watch?v=w7QWQlkLY_s">
-    Eric Traub gives a concise explanation of call stack fundamentals in an easy-to-follow format.
+    Uses a simple factorial example to demonstrate recursion on the call stack. Under 10 minutes, perfect for a quick refresher.
   </Card>
   <Card title="The Call Stack" icon="video" href="https://www.youtube.com/watch?v=Q2sFmqvpBe0">
-    Kevin Drumm explains the call stack concept with clear diagrams and simple examples.
+    Draws out the stack visually as code executes, making the LIFO concept easy to grasp. Includes a stack overflow example that shows what happens when things go wrong.
   </Card>
   <Card title="Call Stacks - CS50" icon="video" href="https://www.youtube.com/watch?v=aCPkszeKRa4">
     Harvard's CS50 explains call stacks from a computer science perspective — great for understanding the theory.
   </Card>
   <Card title="Learn the JavaScript Call Stack" icon="video" href="https://www.youtube.com/watch?v=HXqXPGS96rw">
-    codecupdev walks through the call stack with beginner-friendly explanations and live coding.
+    Live codes examples while explaining each concept, so you see exactly how to trace execution yourself. Great for following along in your own editor.
   </Card>
   <Card title="JavaScript Functions and the Call Stack" icon="video" href="https://www.youtube.com/watch?v=P6H-T4cUDR4">
-    Chidre's Tech Tutorials covers how functions interact with the call stack in detail.
+    Focuses on the relationship between function invocation and stack frames. Explains why understanding the call stack helps you debug errors faster.
   </Card>
 </CardGroup>
