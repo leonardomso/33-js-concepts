@@ -4,53 +4,1398 @@ sidebarTitle: "Generators & Iterators: Pausable Functions"
 description: "Learn JavaScript generators and iterators — functions that can pause and resume execution. Master the yield keyword, iteration protocols, lazy evaluation, and async generators."
 ---
 
-## Overview
+What if a function could pause mid-execution, return a value, and then resume right where it left off? What if you could create a sequence of values that are computed only when you ask for them — not all at once?
 
-**Generators** are special functions that can be paused and resumed, yielding multiple values over time. Combined with **iterators** (objects that define a sequence), they enable powerful patterns like lazy evaluation, infinite sequences, and custom iteration — and form the foundation for async/await under the hood.
+```javascript
+// This function can PAUSE and RESUME
+function* countToThree() {
+  yield 1  // Pause here, return 1
+  yield 2  // Resume, pause here, return 2
+  yield 3  // Resume, pause here, return 3
+}
+
+const counter = countToThree()
+
+console.log(counter.next().value)  // 1
+console.log(counter.next().value)  // 2
+console.log(counter.next().value)  // 3
+```
+
+This is the power of **[generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)** — functions that can pause with `yield` and pick up where they left off. Combined with **[iterators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)** (objects that define how to step through a sequence), they open up patterns like lazy evaluation, infinite sequences, and clean data pipelines.
 
 <Info>
 **What you'll learn in this guide:**
-- Generator functions and the `yield` keyword
-- The iteration protocol (`Symbol.iterator`)
-- Creating custom iterables
-- Lazy evaluation and infinite sequences
-- Async generators and `for await...of`
-- Real-world use cases (Redux-Saga, data streaming)
+- What iterators are and how the iteration protocol works
+- Generator functions with `function*` and `yield` (they're lazier than you think)
+- The difference between `yield` and `return` (it trips people up!)
+- How to make any object iterable with `Symbol.iterator`
+- Lazy evaluation — why generators are so memory-efficient
+- Practical patterns: pagination, ID generation, state machines
+- Async generators and `for await...of` for streaming data
 </Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you're comfortable with [closures](/concepts/scope-and-closures) and [higher-order functions](/concepts/higher-order-functions). If those concepts are new to you, read those guides first!
+</Warning>
+
+---
+
+## What is an Iterator?
+
+Before getting into generators, we need to cover **iterators** — the foundation that makes generators work.
+
+An **[iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)** is an object that defines a sequence and provides a way to access values one at a time. It must have a `.next()` method that returns an object with two properties:
+
+- `value` — the next value in the sequence
+- `done` — `true` if the sequence is finished, `false` otherwise
+
+```javascript
+// Creating an iterator manually
+function createCounterIterator(max) {
+  let count = 0
+  
+  return {
+    next() {
+      if (count < max) {
+        return { value: count++, done: false }
+      } else {
+        return { value: undefined, done: true }
+      }
+    }
+  }
+}
+
+const counter = createCounterIterator(3)
+
+console.log(counter.next())  // { value: 0, done: false }
+console.log(counter.next())  // { value: 1, done: false }
+console.log(counter.next())  // { value: 2, done: false }
+console.log(counter.next())  // { value: undefined, done: true }
+```
+
+### Why Iterators?
+
+Why not just use an array? Two reasons:
+
+1. **Lazy evaluation** — Values are computed only when you ask for them, not upfront
+2. **Memory efficiency** — You don't need to hold the entire sequence in memory
+
+Say you need to process a million records. With an array, you'd load all million into memory. With an iterator, you process one at a time — memory stays flat.
+
+### Built-in Iterables
+
+Many JavaScript built-ins are already **iterable** (they have iterators built in):
+
+| Type | Example | What it iterates over |
+|------|---------|----------------------|
+| **Array** | `[1, 2, 3]` | Each element |
+| **String** | `"hello"` | Each character |
+| **Map** | `new Map([['a', 1]])` | Each `[key, value]` pair |
+| **Set** | `new Set([1, 2, 3])` | Each unique value |
+| **arguments** | `arguments` object | Each argument passed to a function |
+| **NodeList** | `document.querySelectorAll('div')` | Each DOM node |
+
+You can access their iterator using `Symbol.iterator`:
+
+```javascript
+const arr = [10, 20, 30]
+const iterator = arr[Symbol.iterator]()
+
+console.log(iterator.next())  // { value: 10, done: false }
+console.log(iterator.next())  // { value: 20, done: false }
+console.log(iterator.next())  // { value: 30, done: false }
+console.log(iterator.next())  // { value: undefined, done: true }
+```
+
+<Note>
+**`for...of` uses iterators under the hood.** When you write `for (const item of array)`, JavaScript is actually calling the iterator's `.next()` method repeatedly until `done` is `true`.
+</Note>
+
+---
+
+## The Vending Machine Analogy
+
+Generators click when you have the right mental picture. Think of them like a **vending machine**:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    GENERATOR AS A VENDING MACHINE                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│     YOU                                    VENDING MACHINE               │
+│   (caller)                                   (generator)                 │
+│                                                                          │
+│  ┌─────────┐                              ┌─────────────────┐            │
+│  │         │                              │  ┌───────────┐  │            │
+│  │  "I'll  │ ──── Press button ─────────► │  │  Snack A  │  │            │
+│  │  have   │      (call .next())          │  ├───────────┤  │            │
+│  │   one"  │                              │  │  Snack B  │  │            │
+│  │         │ ◄─── Dispense one item ───── │  ├───────────┤  │            │
+│  │         │      (yield value)           │  │  Snack C  │  │            │
+│  │         │                              │  └───────────┘  │            │
+│  │         │      * Machine PAUSES *      │                 │            │
+│  │         │      * Waits for next *      │   [  PAUSED  ]  │            │
+│  │         │      * button press   *      │                 │            │
+│  └─────────┘                              └─────────────────┘            │
+│                                                                          │
+│  KEY INSIGHT: The machine remembers where it stopped!                    │
+│  When you press the button again, it gives you the NEXT item,            │
+│  not the first one again.                                                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Here's how this maps to generator concepts:
+
+| Vending Machine | Generator |
+|-----------------|-----------|
+| Press the button | Call `.next()` |
+| Machine dispenses one item | `yield` returns a value |
+| Machine pauses, waits | Generator pauses at `yield` |
+| Press button again | Call `.next()` again |
+| Machine remembers position | Generator remembers its state |
+| Machine is empty | `done: true` |
+
+A generator works the same way — one value at a time, pausing between each.
+
+---
+
+## What is a Generator?
+
+A **[generator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)** is a function that can stop mid-execution, hand you a value, and pick up where it left off later. You create one using `function*` (note the asterisk) and pause it with the `yield` keyword.
+
+```javascript
+// The asterisk (*) makes this a generator function
+function* myGenerator() {
+  console.log('Starting...')
+  yield 'First value'
+  
+  console.log('Resuming...')
+  yield 'Second value'
+  
+  console.log('Finishing...')
+  return 'Done!'
+}
+```
+
+When you call a generator function, the code inside doesn't run yet — you just get back a **generator object** (which is an iterator):
+
+```javascript
+const gen = myGenerator()  // Nothing logs yet!
+
+console.log(gen)  // Object [Generator] {}
+```
+
+The code only runs when you call `.next()`:
+
+```javascript
+const gen = myGenerator()
+
+// First .next() — runs until first yield
+console.log(gen.next())
+// Logs: "Starting..."
+// Returns: { value: 'First value', done: false }
+
+// Second .next() — resumes and runs until second yield
+console.log(gen.next())
+// Logs: "Resuming..."
+// Returns: { value: 'Second value', done: false }
+
+// Third .next() — resumes and runs to the end
+console.log(gen.next())
+// Logs: "Finishing..."
+// Returns: { value: 'Done!', done: true }
+
+// Fourth .next() — generator is exhausted
+console.log(gen.next())
+// Returns: { value: undefined, done: true }
+```
+
+### Generators are Iterators
+
+Because generator objects follow the iterator protocol, you can use them with `for...of`:
+
+```javascript
+function* colors() {
+  yield 'red'
+  yield 'green'
+  yield 'blue'
+}
+
+for (const color of colors()) {
+  console.log(color)
+}
+// Output:
+// red
+// green
+// blue
+```
+
+You can also spread them into arrays:
+
+```javascript
+function* numbers() {
+  yield 1
+  yield 2
+  yield 3
+}
+
+const arr = [...numbers()]
+console.log(arr)  // [1, 2, 3]
+```
+
+<CardGroup cols={2}>
+  <Card title="Generator — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator">
+    Official MDN documentation for Generator objects
+  </Card>
+  <Card title="function* — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*">
+    Documentation for the generator function syntax
+  </Card>
+</CardGroup>
+
+---
+
+## The `yield` Keyword Deep Dive
+
+`yield` is what makes generators tick. It pauses the function and sends a value back to the caller. When you call `.next()` again, execution picks up right after the `yield`.
+
+### Basic `yield`
+
+```javascript
+function* countdown() {
+  yield 3
+  yield 2
+  yield 1
+  yield 'Liftoff!'
+}
+
+const rocket = countdown()
+
+console.log(rocket.next().value)  // 3
+console.log(rocket.next().value)  // 2
+console.log(rocket.next().value)  // 1
+console.log(rocket.next().value)  // "Liftoff!"
+```
+
+### `yield` vs `return`
+
+Both `yield` and `return` can return values, but they behave very differently:
+
+| `yield` | `return` |
+|---------|----------|
+| Pauses the generator | Ends the generator |
+| `done: false` | `done: true` |
+| Can have multiple | Only one matters |
+| Value accessible in `for...of` | Value NOT accessible in `for...of` |
+
+```javascript
+function* example() {
+  yield 'A'  // Pauses, done: false
+  yield 'B'  // Pauses, done: false
+  return 'C' // Ends, done: true
+}
+
+// With for...of — return value is ignored!
+for (const val of example()) {
+  console.log(val)
+}
+// Output: A, B (no C!)
+
+// With .next() — you can see the return value
+const gen = example()
+console.log(gen.next())  // { value: 'A', done: false }
+console.log(gen.next())  // { value: 'B', done: false }
+console.log(gen.next())  // { value: 'C', done: true }
+```
+
+<Warning>
+**Common gotcha:** The value from `return` is not included when iterating with `for...of`, spread syntax, or `Array.from()`. Use `yield` for all values you want to iterate over.
+</Warning>
+
+### `yield*` — Delegating to Other Iterables
+
+When you want to pass through all values from another iterable, use `yield*`:
+
+```javascript
+function* inner() {
+  yield 'a'
+  yield 'b'
+}
+
+function* outer() {
+  yield 1
+  yield* inner()  // Delegates to inner generator
+  yield 2
+}
+
+console.log([...outer()])  // [1, 'a', 'b', 2]
+```
+
+`yield*` shines when flattening nested structures:
+
+```javascript
+function* flatten(arr) {
+  for (const item of arr) {
+    if (Array.isArray(item)) {
+      yield* flatten(item)  // Recursively delegate
+    } else {
+      yield item
+    }
+  }
+}
+
+const nested = [1, [2, 3, [4, 5]], 6]
+console.log([...flatten(nested)])  // [1, 2, 3, 4, 5, 6]
+```
+
+### Passing Values INTO Generators
+
+You can also send values *into* a generator by passing them to `.next(value)`. The value becomes the result of the `yield` expression inside the generator:
+
+```javascript
+function* conversation() {
+  const name = yield 'What is your name?'
+  const color = yield `Hello, ${name}! What's your favorite color?`
+  yield `${color} is a great color, ${name}!`
+}
+
+const chat = conversation()
+
+// First .next() — no value needed, just starts the generator
+console.log(chat.next().value)
+// "What is your name?"
+
+// Second .next() — pass in the answer
+console.log(chat.next('Alice').value)
+// "Hello, Alice! What's your favorite color?"
+
+// Third .next() — pass in another answer
+console.log(chat.next('Blue').value)
+// "Blue is a great color, Alice!"
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    DATA FLOW WITH yield                                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   CALLER                                     GENERATOR                   │
+│                                                                          │
+│   .next()        ─────────────────────►     starts execution             │
+│                  ◄─────────────────────     yield 'question'             │
+│                                                                          │
+│   .next('Alice') ─────────────────────►     const name = 'Alice'         │
+│                  ◄─────────────────────     yield 'Hello Alice'          │
+│                                                                          │
+│   .next('Blue')  ─────────────────────►     const color = 'Blue'         │
+│                  ◄─────────────────────     yield 'Blue is great'        │
+│                                                                          │
+│   The value passed to .next() becomes the RESULT of the yield           │
+│   expression inside the generator.                                       │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Note>
+**Why no value in the first `.next()`?** The first call starts the generator and runs until the first `yield`. There's no `yield` waiting to receive a value yet, so anything you pass gets ignored.
+</Note>
+
+---
+
+## The Iteration Protocol (`Symbol.iterator`)
+
+Now for the fun part — making your own objects work with `for...of`. An object is **iterable** if it has a `[Symbol.iterator]` method that returns an iterator.
+
+### Making a Custom Object Iterable
+
+```javascript
+const myCollection = {
+  items: ['apple', 'banana', 'cherry'],
+  
+  // This makes the object iterable
+  [Symbol.iterator]() {
+    let index = 0
+    const items = this.items
+    
+    return {
+      next() {
+        if (index < items.length) {
+          return { value: items[index++], done: false }
+        } else {
+          return { value: undefined, done: true }
+        }
+      }
+    }
+  }
+}
+
+// Now we can use for...of!
+for (const item of myCollection) {
+  console.log(item)
+}
+// Output: apple, banana, cherry
+
+// And spread syntax!
+console.log([...myCollection])  // ['apple', 'banana', 'cherry']
+```
+
+### Using Generators to Simplify Iterators
+
+All that manual iterator code? Generators cut it down to almost nothing:
+
+```javascript
+const myCollection = {
+  items: ['apple', 'banana', 'cherry'],
+  
+  // Generator as the Symbol.iterator method
+  *[Symbol.iterator]() {
+    for (const item of this.items) {
+      yield item
+    }
+  }
+}
+
+for (const item of myCollection) {
+  console.log(item)
+}
+// Output: apple, banana, cherry
+```
+
+### Example: Creating an Iterable Range
+
+Here's a `Range` class you can loop over with `for...of`:
+
+```javascript
+class Range {
+  constructor(start, end, step = 1) {
+    this.start = start
+    this.end = end
+    this.step = step
+  }
+  
+  // Generator makes this easy!
+  *[Symbol.iterator]() {
+    for (let i = this.start; i <= this.end; i += this.step) {
+      yield i
+    }
+  }
+}
+
+const oneToFive = new Range(1, 5)
+console.log([...oneToFive])  // [1, 2, 3, 4, 5]
+
+const evens = new Range(0, 10, 2)
+console.log([...evens])  // [0, 2, 4, 6, 8, 10]
+
+// Works with for...of
+for (const n of new Range(1, 3)) {
+  console.log(n)  // 1, 2, 3
+}
+```
+
+### What `for...of` Really Does
+
+When you write a `for...of` loop, JavaScript does this behind the scenes:
+
+```javascript
+// This:
+for (const item of iterable) {
+  console.log(item)
+}
+
+// Is equivalent to this:
+const iterator = iterable[Symbol.iterator]()
+let result = iterator.next()
+
+while (!result.done) {
+  const item = result.value
+  console.log(item)
+  result = iterator.next()
+}
+```
+
+<Tip>
+**When to make something iterable:** If your object represents a collection or sequence of values, making it iterable allows it to work with `for...of`, spread syntax, `Array.from()`, destructuring, and more.
+</Tip>
+
+---
+
+## Lazy Evaluation & Infinite Sequences
+
+The killer feature of generators is **lazy evaluation** — values are computed only when you ask for them, not ahead of time.
+
+### Memory Efficiency
+
+Compare these two approaches for creating a range of numbers:
+
+```javascript
+// Eager evaluation — creates entire array in memory
+function rangeArray(start, end) {
+  const result = []
+  for (let i = start; i <= end; i++) {
+    result.push(i)
+  }
+  return result
+}
+
+// Lazy evaluation — computes values on demand
+function* rangeGenerator(start, end) {
+  for (let i = start; i <= end; i++) {
+    yield i
+  }
+}
+
+// For small ranges, both work fine
+console.log(rangeArray(1, 5))      // [1, 2, 3, 4, 5]
+console.log([...rangeGenerator(1, 5)])  // [1, 2, 3, 4, 5]
+
+// For large ranges, generators shine
+// rangeArray(1, 1000000)     — Creates array of 1 million numbers!
+// rangeGenerator(1, 1000000) — Creates nothing until you iterate
+```
+
+### Infinite Sequences
+
+Because generators are lazy, you can create **infinite sequences** — something impossible with arrays:
+
+```javascript
+// Infinite sequence of natural numbers
+function* naturalNumbers() {
+  let n = 1
+  while (true) {  // Infinite loop!
+    yield n++
+  }
+}
+
+// This would crash with an array, but generators are lazy
+const numbers = naturalNumbers()
+
+console.log(numbers.next().value)  // 1
+console.log(numbers.next().value)  // 2
+console.log(numbers.next().value)  // 3
+// We can keep going forever...
+```
+
+### Fibonacci Sequence
+
+A classic example — the infinite Fibonacci sequence:
+
+```javascript
+function* fibonacci() {
+  let prev = 0
+  let curr = 1
+  
+  while (true) {
+    yield curr
+    const next = prev + curr
+    prev = curr
+    curr = next
+  }
+}
+
+const fib = fibonacci()
+
+console.log(fib.next().value)  // 1
+console.log(fib.next().value)  // 1
+console.log(fib.next().value)  // 2
+console.log(fib.next().value)  // 3
+console.log(fib.next().value)  // 5
+console.log(fib.next().value)  // 8
+```
+
+### Taking N Items from an Infinite Generator
+
+You'll often want to take a limited number of items from an infinite generator:
+
+```javascript
+// Helper function to take N items from any iterable
+function* take(n, iterable) {
+  let count = 0
+  for (const item of iterable) {
+    if (count >= n) return
+    yield item
+    count++
+  }
+}
+
+// Get first 10 Fibonacci numbers
+const firstTenFib = [...take(10, fibonacci())]
+console.log(firstTenFib)  // [1, 1, 2, 3, 5, 8, 13, 21, 34, 55]
+
+// Get first 5 natural numbers
+const firstFive = [...take(5, naturalNumbers())]
+console.log(firstFive)  // [1, 2, 3, 4, 5]
+```
+
+<Warning>
+**Be careful with infinite generators!** Never use `[...infiniteGenerator()]` or `for...of` on an infinite generator without a break condition — your program will hang trying to iterate forever.
+
+```javascript
+// ❌ DANGER — This will hang/crash!
+const all = [...naturalNumbers()]  // Trying to collect infinite items
+
+// ✓ SAFE — Use take() or break early
+const some = [...take(100, naturalNumbers())]
+```
+</Warning>
+
+---
+
+## Common Patterns
+
+Here are some patterns that make generators worth knowing.
+
+### Pattern 1: Unique ID Generator
+
+Generate unique IDs without tracking global state:
+
+```javascript
+function* createIdGenerator(prefix = 'id') {
+  let id = 1
+  while (true) {
+    yield `${prefix}_${id++}`
+  }
+}
+
+const userIds = createIdGenerator('user')
+const orderIds = createIdGenerator('order')
+
+console.log(userIds.next().value)   // "user_1"
+console.log(userIds.next().value)   // "user_2"
+console.log(orderIds.next().value)  // "order_1"
+console.log(userIds.next().value)   // "user_3"
+console.log(orderIds.next().value)  // "order_2"
+```
+
+### Pattern 2: Pagination / Chunking Data
+
+Process large datasets in manageable chunks:
+
+```javascript
+function* chunk(array, size) {
+  for (let i = 0; i < array.length; i += size) {
+    yield array.slice(i, i + size)
+  }
+}
+
+const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+for (const batch of chunk(data, 3)) {
+  console.log('Processing batch:', batch)
+}
+// Output:
+// Processing batch: [1, 2, 3]
+// Processing batch: [4, 5, 6]
+// Processing batch: [7, 8, 9]
+// Processing batch: [10]
+```
+
+This is great for batch processing, API rate limiting, or breaking up heavy computations:
+
+```javascript
+function* processInBatches(items, batchSize) {
+  for (const batch of chunk(items, batchSize)) {
+    // Process each batch
+    const results = batch.map(item => heavyComputation(item))
+    yield results
+  }
+}
+
+// Process 1000 items in batches of 100
+const allItems = new Array(1000).fill(null).map((_, i) => i)
+
+for (const batchResults of processInBatches(allItems, 100)) {
+  console.log(`Processed ${batchResults.length} items`)
+  // Could add delay here to avoid blocking the main thread
+}
+```
+
+### Pattern 3: Filtering and Transforming Data
+
+Create composable data pipelines:
+
+```javascript
+function* filter(iterable, predicate) {
+  for (const item of iterable) {
+    if (predicate(item)) {
+      yield item
+    }
+  }
+}
+
+function* map(iterable, transform) {
+  for (const item of iterable) {
+    yield transform(item)
+  }
+}
+
+// Compose them together
+function* range(start, end) {
+  for (let i = start; i <= end; i++) {
+    yield i
+  }
+}
+
+// Pipeline: numbers 1-10 → filter evens → double them
+const result = map(
+  filter(range(1, 10), n => n % 2 === 0),
+  n => n * 2
+)
+
+console.log([...result])  // [4, 8, 12, 16, 20]
+```
+
+### Pattern 4: Simple State Machine
+
+Generators naturally model state machines because they remember their position:
+
+```javascript
+function* trafficLight() {
+  while (true) {
+    yield 'green'
+    yield 'yellow'
+    yield 'red'
+  }
+}
+
+const light = trafficLight()
+
+console.log(light.next().value)  // "green"
+console.log(light.next().value)  // "yellow"
+console.log(light.next().value)  // "red"
+console.log(light.next().value)  // "green" (cycles back)
+console.log(light.next().value)  // "yellow"
+```
+
+A more complex example with different wait times:
+
+```javascript
+function* trafficLightWithDurations() {
+  while (true) {
+    yield { color: 'green', duration: 30000 }   // 30 seconds
+    yield { color: 'yellow', duration: 5000 }   // 5 seconds
+    yield { color: 'red', duration: 25000 }     // 25 seconds
+  }
+}
+
+const light = trafficLightWithDurations()
+
+function changeLight() {
+  const { color, duration } = light.next().value
+  console.log(`Light is now ${color} for ${duration / 1000} seconds`)
+  setTimeout(changeLight, duration)
+}
+
+// changeLight()  // Uncomment to run
+```
+
+### Pattern 5: Tree Traversal
+
+Generators are excellent for traversing tree structures:
+
+```javascript
+function* traverseTree(node) {
+  yield node.value
+  
+  if (node.children) {
+    for (const child of node.children) {
+      yield* traverseTree(child)  // Recursive delegation
+    }
+  }
+}
+
+const tree = {
+  value: 'root',
+  children: [
+    {
+      value: 'child1',
+      children: [
+        { value: 'grandchild1' },
+        { value: 'grandchild2' }
+      ]
+    },
+    {
+      value: 'child2',
+      children: [
+        { value: 'grandchild3' }
+      ]
+    }
+  ]
+}
+
+console.log([...traverseTree(tree)])
+// ['root', 'child1', 'grandchild1', 'grandchild2', 'child2', 'grandchild3']
+```
+
+---
+
+## Async Generators & `for await...of`
+
+What about yielding values from async operations — API calls, file reads, that kind of thing? That's what **async generators** are for.
+
+### The Problem with Regular Generators
+
+Regular generators are synchronous. If you try to yield a Promise, you get the Promise object itself, not its resolved value:
+
+```javascript
+function* fetchUsers() {
+  yield fetch('/api/user/1').then(r => r.json())
+  yield fetch('/api/user/2').then(r => r.json())
+}
+
+const gen = fetchUsers()
+console.log(gen.next().value)  // Promise { <pending> } — not the user!
+```
+
+### Async Generator Syntax
+
+An **[async generator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function*)** combines `async` functions with generators. You can `await` inside them, and you iterate with `for await...of`:
+
+```javascript
+async function* fetchUsersAsync() {
+  const user1 = await fetch('/api/user/1').then(r => r.json())
+  yield user1
+  
+  const user2 = await fetch('/api/user/2').then(r => r.json())
+  yield user2
+}
+
+// Use for await...of to consume
+async function displayUsers() {
+  for await (const user of fetchUsersAsync()) {
+    console.log(user.name)
+  }
+}
+```
+
+### Practical Example: Paginated API
+
+Fetch all pages of data from a paginated API:
+
+```javascript
+async function* fetchAllPages(baseUrl) {
+  let page = 1
+  let hasMore = true
+  
+  while (hasMore) {
+    const response = await fetch(`${baseUrl}?page=${page}`)
+    const data = await response.json()
+    
+    yield data.items  // Yield this page's items
+    
+    hasMore = data.hasNextPage
+    page++
+  }
+}
+
+// Process all pages
+async function processAllUsers() {
+  for await (const pageOfUsers of fetchAllPages('/api/users')) {
+    console.log(`Processing ${pageOfUsers.length} users...`)
+    
+    for (const user of pageOfUsers) {
+      // Process each user
+      await saveToDatabase(user)
+    }
+  }
+}
+```
+
+### Async Generator vs Promise.all
+
+When do you reach for an async generator over `Promise.all`?
+
+```javascript
+// Promise.all — All requests in parallel, wait for ALL to complete
+async function fetchAllAtOnce(userIds) {
+  const users = await Promise.all(
+    userIds.map(id => fetch(`/api/user/${id}`).then(r => r.json()))
+  )
+  return users  // Returns all users at once
+}
+
+// Async generator — Process as each completes
+async function* fetchOneByOne(userIds) {
+  for (const id of userIds) {
+    const user = await fetch(`/api/user/${id}`).then(r => r.json())
+    yield user  // Yield each user as it's fetched
+  }
+}
+```
+
+| Approach | Best for |
+|----------|----------|
+| `Promise.all` | When you need all results before proceeding |
+| Async generator | When you want to process results as they arrive |
+| Async generator | When fetching everything at once would be too memory-intensive |
+| Async generator | When you might want to stop early |
+
+### Reading Lines from a Stream
+
+Here's a real pattern for processing a stream line by line:
+
+```javascript
+async function* readLines(reader) {
+  const decoder = new TextDecoder()
+  let buffer = ''
+  
+  while (true) {
+    const { done, value } = await reader.read()
+    
+    if (done) {
+      if (buffer) yield buffer  // Yield any remaining content
+      return
+    }
+    
+    buffer += decoder.decode(value, { stream: true })
+    const lines = buffer.split('\n')
+    buffer = lines.pop()  // Keep incomplete line in buffer
+    
+    for (const line of lines) {
+      yield line
+    }
+  }
+}
+
+// Usage with fetch
+async function processLogFile(url) {
+  const response = await fetch(url)
+  const reader = response.body.getReader()
+  
+  for await (const line of readLines(reader)) {
+    console.log('Log entry:', line)
+  }
+}
+```
+
+<CardGroup cols={2}>
+  <Card title="async function* — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function*">
+    Documentation for async generator functions
+  </Card>
+  <Card title="for await...of — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for-await...of">
+    Documentation for async iteration
+  </Card>
+</CardGroup>
+
+---
+
+## Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="Mistake 1: Forgetting the asterisk in function*">
+    ```javascript
+    // ❌ WRONG — This is a regular function, not a generator
+    function myGenerator() {
+      yield 1  // SyntaxError: Unexpected number
+    }
+    
+    // ✓ CORRECT — Note the asterisk
+    function* myGenerator() {
+      yield 1
+    }
+    ```
+    
+    The asterisk can go next to `function` or next to the name — both work:
+    
+    ```javascript
+    function* foo() {}  // ✓
+    function *foo() {}  // ✓
+    function * foo() {} // ✓
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 2: Expecting generator to run immediately">
+    ```javascript
+    // ❌ WRONG — Nothing happens when you call a generator function
+    function* greet() {
+      console.log('Hello!')
+      yield 'Hi'
+    }
+    
+    greet()  // Nothing logged! Returns generator object
+    
+    // ✓ CORRECT — You must call .next() or iterate
+    const gen = greet()
+    gen.next()  // NOW it logs "Hello!"
+    
+    // Or use for...of
+    for (const val of greet()) {
+      console.log(val)
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 3: Using return instead of yield for iteration values">
+    ```javascript
+    // ❌ WRONG — return value won't appear in for...of
+    function* letters() {
+      yield 'a'
+      yield 'b'
+      return 'c'  // This won't be iterated!
+    }
+    
+    console.log([...letters()])  // ['a', 'b'] — no 'c'!
+    
+    // ✓ CORRECT — Use yield for all iteration values
+    function* letters() {
+      yield 'a'
+      yield 'b'
+      yield 'c'
+    }
+    
+    console.log([...letters()])  // ['a', 'b', 'c']
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 4: Reusing an exhausted generator">
+    ```javascript
+    // ❌ WRONG — Generators can only be iterated once
+    function* nums() {
+      yield 1
+      yield 2
+    }
+    
+    const gen = nums()
+    console.log([...gen])  // [1, 2]
+    console.log([...gen])  // [] — generator is exhausted!
+    
+    // ✓ CORRECT — Create a new generator each time
+    console.log([...nums()])  // [1, 2]
+    console.log([...nums()])  // [1, 2]
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 5: Infinite loop without break condition">
+    ```javascript
+    // ❌ DANGER — This will hang your program
+    function* forever() {
+      let i = 0
+      while (true) {
+        yield i++
+      }
+    }
+    
+    const all = [...forever()]  // Infinite loop trying to collect all values!
+    
+    // ✓ SAFE — Use take() or break early
+    function* take(n, gen) {
+      let count = 0
+      for (const val of gen) {
+        if (count++ >= n) return
+        yield val
+      }
+    }
+    
+    const firstHundred = [...take(100, forever())]  // Safe!
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 6: Using generators when arrays would be simpler">
+    ```javascript
+    // ❌ OVERKILL — If you're just returning a fixed list, use an array
+    function* getDaysOfWeek() {
+      yield 'Monday'
+      yield 'Tuesday'
+      yield 'Wednesday'
+      yield 'Thursday'
+      yield 'Friday'
+      yield 'Saturday'
+      yield 'Sunday'
+    }
+    
+    // ✓ SIMPLER — Just use an array
+    const daysOfWeek = [
+      'Monday', 'Tuesday', 'Wednesday', 'Thursday',
+      'Friday', 'Saturday', 'Sunday'
+    ]
+    ```
+    
+    **Use generators when:**
+    - Values are computed on-demand (lazy)
+    - Sequence is infinite or very large
+    - You need to pause/resume execution
+    - Values come from async operations
+    
+    **Use arrays when:**
+    - You have a fixed, known set of values
+    - Values are already computed
+    - You need random access (`array[5]`)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The short version:**
+
+1. **Iterators** are objects with a `.next()` method that returns `{ value, done }`
+
+2. **Generators** are functions that pause at `yield` and resume at `.next()`
+
+3. **Don't forget the asterisk** — it's `function*`, not `function`
+
+4. **`yield` pauses, `return` ends** — and `return` values don't show up in `for...of`
+
+5. **`yield*` passes through** all values from another iterable
+
+6. **Generators are lazy** — nothing runs until you ask for it
+
+7. **Infinite sequences work** because generators compute on-demand
+
+8. **`Symbol.iterator`** is how you make objects work with `for...of`
+
+9. **Async generators** (`async function*`) let you `await` inside and iterate with `for await...of`
+
+10. **Generators are single-use** — once done, you need a fresh one
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between yield and return in a generator?">
+    **Answer:**
+    
+    - `yield` **pauses** the generator and returns `{ value, done: false }`. The generator can resume from where it paused.
+    - `return` **ends** the generator and returns `{ value, done: true }`. The generator cannot resume.
+    
+    Important: Values from `return` are NOT included when using `for...of`, spread syntax, or `Array.from()`.
+    
+    ```javascript
+    function* example() {
+      yield 'A'   // Included in iteration
+      yield 'B'   // Included in iteration
+      return 'C'  // NOT included in for...of!
+    }
+    
+    console.log([...example()])  // ['A', 'B']
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: How do you make a custom object iterable?">
+    **Answer:**
+    
+    Add a `[Symbol.iterator]` method that returns an iterator (an object with a `.next()` method):
+    
+    ```javascript
+    const myObject = {
+      data: [1, 2, 3],
+      
+      // Method 1: Return an iterator object
+      [Symbol.iterator]() {
+        let index = 0
+        const data = this.data
+        return {
+          next() {
+            if (index < data.length) {
+              return { value: data[index++], done: false }
+            }
+            return { done: true }
+          }
+        }
+      }
+    }
+    
+    // Method 2: Use a generator (simpler!)
+    const myObject2 = {
+      data: [1, 2, 3],
+      
+      *[Symbol.iterator]() {
+        yield* this.data
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What will this code output?">
+    ```javascript
+    function* gen() {
+      console.log('A')
+      yield 1
+      console.log('B')
+      yield 2
+      console.log('C')
+    }
+    
+    const g = gen()
+    console.log('Start')
+    console.log(g.next().value)
+    console.log('Middle')
+    console.log(g.next().value)
+    ```
+    
+    **Answer:**
+    
+    ```
+    Start
+    A
+    1
+    Middle
+    B
+    2
+    ```
+    
+    **Explanation:**
+    1. `gen()` creates the generator but doesn't run any code
+    2. `'Start'` logs
+    3. First `g.next()` runs until first `yield` — logs `'A'`, returns `{ value: 1, done: false }`
+    4. We log the value `1`
+    5. `'Middle'` logs
+    6. Second `g.next()` resumes and runs until second `yield` — logs `'B'`, returns `{ value: 2, done: false }`
+    7. We log the value `2`
+    8. `'C'` never logs because we didn't call `g.next()` a third time
+  </Accordion>
+  
+  <Accordion title="Question 4: How can you pass values INTO a generator?">
+    **Answer:**
+    
+    Pass values as arguments to `.next(value)`. The value becomes the result of the `yield` expression:
+    
+    ```javascript
+    function* adder() {
+      const a = yield 'Enter first number'
+      const b = yield 'Enter second number'
+      yield `Sum: ${a + b}`
+    }
+    
+    const gen = adder()
+    console.log(gen.next().value)      // "Enter first number"
+    console.log(gen.next(10).value)    // "Enter second number" (a = 10)
+    console.log(gen.next(5).value)     // "Sum: 15" (b = 5)
+    ```
+    
+    Note: The first `.next()` starts the generator — any value passed to it is ignored because there's no `yield` waiting to receive it yet.
+  </Accordion>
+  
+  <Accordion title="Question 5: When would you use an async generator?">
+    **Answer:**
+    
+    Use async generators when you need to yield values from asynchronous operations:
+    
+    - **Paginated APIs** — Fetch and yield page by page
+    - **Streaming data** — Process chunks as they arrive
+    - **Database cursors** — Iterate through large result sets
+    - **File processing** — Read and yield lines from large files
+    
+    ```javascript
+    async function* fetchPages(url) {
+      let page = 1
+      while (true) {
+        const response = await fetch(`${url}?page=${page}`)
+        const data = await response.json()
+        
+        if (data.items.length === 0) return
+        
+        yield data.items
+        page++
+      }
+    }
+    
+    // Consume with for await...of
+    for await (const items of fetchPages('/api/products')) {
+      processItems(items)
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: Why can't you use [...infiniteGenerator()]?">
+    **Answer:**
+    
+    Spread syntax (`...`) tries to collect ALL values into an array. With an infinite generator, this means infinite iteration — your program will hang trying to collect infinite values.
+    
+    ```javascript
+    function* forever() {
+      let i = 0
+      while (true) yield i++
+    }
+    
+    // ❌ DANGER — Hangs forever!
+    const all = [...forever()]
+    
+    // ✓ SAFE — Limit how many you take
+    function* take(n, gen) {
+      let i = 0
+      for (const val of gen) {
+        if (i++ >= n) return
+        yield val
+      }
+    }
+    
+    const first100 = [...take(100, forever())]
+    ```
+    
+    Always use a limiting function like `take()`, or manually call `.next()` a specific number of times.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    Generators pair nicely with map, filter, and reduce patterns
+  </Card>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    Async generators are built on Promises
+  </Card>
+  <Card title="async/await" icon="clock" href="/concepts/async-await">
+    The other half of async generators — you'll use both together
+  </Card>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    How async generators fit into JavaScript's execution model
+  </Card>
+</CardGroup>
+
+---
 
 ## Reference
 
-<Card title="Generator — MDN web docs" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator">
-  MDN documentation for Generator objects
-</Card>
+<CardGroup cols={2}>
+  <Card title="Generator — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator">
+    The Generator object and its methods — `.next()`, `.return()`, `.throw()`
+  </Card>
+  <Card title="Iteration Protocols — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols">
+    The spec for iterators and iterables. Good for understanding what's really going on.
+  </Card>
+  <Card title="function* — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*">
+    Generator function syntax and behavior
+  </Card>
+  <Card title="yield — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/yield">
+    Everything about the yield operator
+  </Card>
+</CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="What are JavaScript Generators and how to use them" icon="newspaper" href="https://codeburst.io/what-are-javascript-generators-and-how-to-use-them-c6f2713fd12e">
-    By Vladislav Stepanov
+  <Card title="The Basics of ES6 Generators" icon="newspaper" href="https://davidwalsh.name/es6-generators">
+    Kyle Simpson (You Don't Know JS) breaks down how generators work under the hood.
   </Card>
-  <Card title="Understanding Generators in ES6 JavaScript with Examples" icon="newspaper" href="https://codeburst.io/understanding-generators-in-es6-javascript-with-examples-6728834016d5">
-    By Arfat Salman
+  <Card title="Generators — JavaScript.info" icon="newspaper" href="https://javascript.info/generators">
+    Interactive tutorial with runnable examples. Great for hands-on learning.
+  </Card>
+  <Card title="Async Iterators and Generators — JavaScript.info" icon="newspaper" href="https://javascript.info/async-iterators-generators">
+    Picks up where the sync guide leaves off — async generators and `for await...of`.
+  </Card>
+  <Card title="Iterators and Generators — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators">
+    The official MDN walkthrough. Solid reference for both concepts.
   </Card>
 </CardGroup>
-
-- [The Basics of ES6 Generators — Kyle Simpson](https://davidwalsh.name/es6-generators)
-- [An Introduction to JavaScript Generators — Alice Kallaugher](https://dev.to/kallaugher/an-introduction-to-javascript-generators-1224)
-- [Iterators and Generators — MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Iterators_and_Generators)
-- [A Simple Guide to ES6 Iterators in JavaScript with Examples — Brandon Morelli](https://codeburst.io/a-simple-guide-to-es6-iterators-in-javascript-with-examples-189d052c3d8e)
-- [Generators — JavaScript.info](https://javascript.info/generators)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="JavaScript ES6 / ES2015 - Generators" icon="video" href="https://www.youtube.com/watch?v=dcP039DYzmE">
-    By Traversy Media
+  <Card title="Generators in JavaScript — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=ategZqxHkz4">
+    Mattias Petter Johansson makes generators fun. Seriously.
   </Card>
-  <Card title="JavaScript Generators" icon="video" href="https://www.youtube.com/watch?v=QO07THdLWQo">
-    By LearnCode.academy
+  <Card title="JavaScript Iterators and Generators — Fireship" icon="video" href="https://www.youtube.com/watch?v=IJ6EgdiI_wU">
+    The fast version. 100 seconds and you'll get the gist.
+  </Card>
+  <Card title="JavaScript ES6 Generators — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=dcP039DYzmE">
+    Brad Traversy's walkthrough. Great if you like to code along.
   </Card>
 </CardGroup>
-
-- [Generators in JavaScript — Fun Fun Function](https://www.youtube.com/watch?v=ategZqxHkz4)
-- [JavaScript Iterators and Generators — Fireship](https://www.youtube.com/watch?v=IJ6EgdiI_wU)
