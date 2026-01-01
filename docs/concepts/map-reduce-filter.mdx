@@ -1,67 +1,1259 @@
 ---
-title: "map, reduce & filter: Transforming Arrays in JavaScript"
-sidebarTitle: "map, reduce & filter: Transforming Arrays"
-description: "Learn JavaScript's map, reduce, and filter array methods. Master functional array transformations, method chaining, and data processing without mutating original arrays."
+title: "map, reduce, filter: Transform Arrays in JavaScript"
+sidebarTitle: "map, reduce, filter"
+description: "Learn map, reduce, and filter in JavaScript. Transform, filter, and combine arrays without mutation. Includes method chaining and common pitfalls."
 ---
 
-## Overview
+How do you transform every item in an array? How do you filter out the ones you don't need? How do you combine them all into a single result? These are the three most common operations you'll perform on arrays, and JavaScript gives you three powerful methods to handle them.
 
-`map`, `reduce`, and `filter` are powerful array methods in JavaScript that enable functional programming patterns. They allow you to transform, aggregate, and filter data in arrays without mutating the original array.
+```javascript
+// The power of map, filter, and reduce in action
+const products = [
+  { name: 'Laptop', price: 1000, inStock: true },
+  { name: 'Phone', price: 500, inStock: false },
+  { name: 'Tablet', price: 300, inStock: true },
+  { name: 'Watch', price: 200, inStock: true }
+]
+
+const totalInStock = products
+  .filter(product => product.inStock)      // Keep only in-stock items
+  .map(product => product.price)           // Extract just the prices
+  .reduce((sum, price) => sum + price, 0)  // Sum them up
+
+console.log(totalInStock)  // 1500
+```
+
+That's **[map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)**, **[filter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)**, and **[reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)** working together. Three methods that transform how you work with arrays.
+
+<Info>
+**What you'll learn in this guide:**
+- What map(), filter(), and reduce() do and when to use each
+- The factory assembly line mental model for array transformations
+- How to chain methods together for powerful data pipelines
+- The critical mistake with reduce() that crashes your code
+- Real-world patterns for extracting, filtering, and aggregating data
+- Other useful array methods like find(), some(), and every()
+- How to implement map and filter using reduce (advanced)
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [higher-order functions](/concepts/higher-order-functions). map, filter, and reduce are all higher-order functions that take callbacks. If that concept is new to you, read that guide first!
+</Warning>
+
+---
+
+## The Factory Assembly Line
+
+Think of these three methods as stations on a factory assembly line. Raw materials (your input array) flow through different stations, each performing a specific job:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE FACTORY ASSEMBLY LINE                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Raw Materials        PAINTING         QUALITY          PACKAGING        │
+│  (Input Array)        STATION          CONTROL          STATION          │
+│                       map()            filter()         reduce()         │
+│                                                                          │
+│  ┌───┬───┬───┬───┐   ┌───┬───┬───┬───┐   ┌───┬───┐       ┌─────────┐    │
+│  │ 1 │ 2 │ 3 │ 4 │ → │ 2 │ 4 │ 6 │ 8 │ → │ 6 │ 8 │   →   │   14    │    │
+│  └───┴───┴───┴───┘   └───┴───┴───┴───┘   └───┴───┘       └─────────┘    │
+│                                                                          │
+│                       Transform         Keep items       Combine into    │
+│                       each item         where n > 4      single value    │
+│                       (n × 2)                            (sum)           │
+│                                                                          │
+│  ────────────────────────────────────────────────────────────────────    │
+│                                                                          │
+│  INPUT COUNT          SAME COUNT        FEWER OR         SINGLE          │
+│  = 4 items            = 4 items         SAME = 2         OUTPUT          │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Painting Station (map):** Every item gets transformed. You put in 4 items, you get 4 items out. Each one is changed in the same way.
+
+**Quality Control (filter):** Items are inspected and only those that pass the test continue. You might get fewer items out than you put in.
+
+**Packaging Station (reduce):** Everything gets combined into a single package. Many items go in, one result comes out.
+
+The beauty of this assembly line? You can connect the stations in any order. The output of one becomes the input of the next.
+
+---
+
+## What Are These Methods?
+
+These three methods are the workhorses of functional programming in JavaScript. They let you transform, filter, and aggregate data without writing explicit loops and without mutating your original data.
+
+| Method | What It Does | Returns | Original Array |
+|--------|-------------|---------|----------------|
+| `map()` | Transforms every element | New array (same length) | Unchanged |
+| `filter()` | Keeps elements that pass a test | New array (0 to same length) | Unchanged |
+| `reduce()` | Combines all elements into one value | Any type (number, object, array, etc.) | Unchanged |
+
+<Tip>
+**The Immutability Principle:** None of these methods change the original array. They always return something new. This makes your code predictable and easier to debug.
+</Tip>
+
+---
+
+## map() — Transform Every Element
+
+The **[map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)** method creates a new array by calling a function on every element of the original array. Think of it as a transformation machine: every item goes in, every item comes out changed.
+
+### What is map() in JavaScript?
+
+The `map()` method is an array method that creates a new array by applying a callback function to each element of the original array. It returns an array of the same length with each element transformed according to the callback. The original array is never modified, making map a pure, non-mutating operation ideal for functional programming.
+
+```javascript
+const numbers = [1, 2, 3, 4]
+const doubled = numbers.map(num => num * 2)
+
+console.log(doubled)   // [2, 4, 6, 8]
+console.log(numbers)   // [1, 2, 3, 4] — original unchanged!
+```
+
+### Syntax and Parameters
+
+```javascript
+array.map(callback(element, index, array), thisArg)
+```
+
+| Parameter | Description |
+|-----------|-------------|
+| `element` | The current element being processed |
+| `index` | The index of the current element (optional) |
+| `array` | The array map() was called on (optional) |
+| `thisArg` | Value to use as `this` in callback (optional, rarely used) |
+
+### Basic Transformations
+
+```javascript
+// Double every number
+const numbers = [1, 2, 3, 4, 5]
+const doubled = numbers.map(n => n * 2)
+console.log(doubled)  // [2, 4, 6, 8, 10]
+
+// Convert to uppercase
+const words = ['hello', 'world']
+const shouting = words.map(word => word.toUpperCase())
+console.log(shouting)  // ['HELLO', 'WORLD']
+
+// Square each number
+const squares = numbers.map(n => n * n)
+console.log(squares)  // [1, 4, 9, 16, 25]
+```
+
+### Extracting Properties from Objects
+
+One of the most common uses of map is pulling out specific properties from an array of objects:
+
+```javascript
+const users = [
+  { id: 1, name: 'Alice', email: 'alice@example.com' },
+  { id: 2, name: 'Bob', email: 'bob@example.com' },
+  { id: 3, name: 'Charlie', email: 'charlie@example.com' }
+]
+
+// Get just the names
+const names = users.map(user => user.name)
+console.log(names)  // ['Alice', 'Bob', 'Charlie']
+
+// Get just the emails
+const emails = users.map(user => user.email)
+console.log(emails)  // ['alice@example.com', 'bob@example.com', 'charlie@example.com']
+
+// Get IDs as strings
+const ids = users.map(user => `user-${user.id}`)
+console.log(ids)  // ['user-1', 'user-2', 'user-3']
+```
+
+### Transforming Object Shapes
+
+You can also reshape objects completely:
+
+```javascript
+const users = [
+  { firstName: 'Alice', lastName: 'Smith', age: 25 },
+  { firstName: 'Bob', lastName: 'Jones', age: 30 }
+]
+
+const displayUsers = users.map(user => ({
+  fullName: `${user.firstName} ${user.lastName}`,
+  isAdult: user.age >= 18
+}))
+
+console.log(displayUsers)
+// [
+//   { fullName: 'Alice Smith', isAdult: true },
+//   { fullName: 'Bob Jones', isAdult: true }
+// ]
+```
+
+### Using the Index Parameter
+
+Sometimes you need to know the position of each element:
+
+```javascript
+const letters = ['a', 'b', 'c', 'd']
+
+// Add index to each item
+const indexed = letters.map((letter, index) => `${index}: ${letter}`)
+console.log(indexed)  // ['0: a', '1: b', '2: c', '3: d']
+
+// Create objects with IDs
+const items = ['apple', 'banana', 'cherry']
+const products = items.map((name, index) => ({
+  id: index + 1,
+  name
+}))
+console.log(products)
+// [{ id: 1, name: 'apple' }, { id: 2, name: 'banana' }, { id: 3, name: 'cherry' }]
+```
+
+### The parseInt Pitfall
+
+This is a classic JavaScript gotcha. Can you spot the problem?
+
+```javascript
+const strings = ['1', '2', '3']
+const numbers = strings.map(parseInt)
+
+console.log(numbers)  // [1, NaN, NaN] — Wait, what?!
+```
+
+**Why does this happen?** Because `parseInt` takes two arguments: the string to parse and the radix (base). When you pass `parseInt` directly to map, it receives three arguments: `(element, index, array)`. So the index becomes the radix!
+
+```javascript
+// What's actually happening:
+parseInt('1', 0)  // 1 (radix 0 defaults to 10)
+parseInt('2', 1)  // NaN (radix 1 is invalid)
+parseInt('3', 2)  // NaN (3 is not a valid digit in binary)
+```
+
+**The fix:** Wrap parseInt in an arrow function or use `Number`:
+
+```javascript
+// Option 1: Wrap in arrow function
+const numbers1 = strings.map(str => parseInt(str, 10))
+console.log(numbers1)  // [1, 2, 3]
+
+// Option 2: Use Number (simpler)
+const numbers2 = strings.map(Number)
+console.log(numbers2)  // [1, 2, 3]
+```
+
+### map() vs forEach()
+
+Both iterate over arrays, but they're for different purposes:
+
+| Aspect | map() | forEach() |
+|--------|-------|-----------|
+| **Returns** | New array | undefined |
+| **Purpose** | Transform data | Side effects (logging, etc.) |
+| **Chainable** | Yes | No |
+| **Use when** | You need the results | You just want to do something |
+
+```javascript
+const numbers = [1, 2, 3]
+
+// map: When you need a new array
+const doubled = numbers.map(n => n * 2)
+console.log(doubled)  // [2, 4, 6]
+
+// forEach: When you just want to do something with each item
+numbers.forEach(n => console.log(n))  // Logs 1, 2, 3
+
+// ❌ WRONG: Using map for side effects (wasteful)
+numbers.map(n => console.log(n))  // Creates unused array [undefined, undefined, undefined]
+
+// ✓ CORRECT: Use forEach for side effects
+numbers.forEach(n => console.log(n))
+```
+
+<Warning>
+**Don't use map() when you don't need the returned array.** If you're just logging or making API calls, use `forEach()`. Using map for side effects creates an unused array and signals the wrong intent to other developers.
+</Warning>
+
+---
+
+## filter() — Keep Matching Elements
+
+The **[filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)** method creates a new array with only the elements that pass a test. Your callback function returns `true` to keep an element or `false` to exclude it.
+
+### What is filter() in JavaScript?
+
+The `filter()` method is an array method that creates a new array containing only the elements that pass a test implemented by a callback function. Elements where the callback returns `true` (or a truthy value) are included; elements where it returns `false` are excluded. Like map, filter never modifies the original array.
+
+```javascript
+const numbers = [1, 2, 3, 4, 5, 6]
+const evens = numbers.filter(num => num % 2 === 0)
+
+console.log(evens)    // [2, 4, 6]
+console.log(numbers)  // [1, 2, 3, 4, 5, 6] — original unchanged!
+```
+
+### Syntax and Parameters
+
+```javascript
+array.filter(callback(element, index, array), thisArg)
+```
+
+The callback receives the same parameters as `map()`: `element`, `index`, `array`, plus an optional `thisArg`.
+
+### Basic Filtering
+
+```javascript
+const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+// Keep only even numbers
+const evens = numbers.filter(n => n % 2 === 0)
+console.log(evens)  // [2, 4, 6, 8, 10]
+
+// Keep only odds
+const odds = numbers.filter(n => n % 2 !== 0)
+console.log(odds)  // [1, 3, 5, 7, 9]
+
+// Keep numbers greater than 5
+const big = numbers.filter(n => n > 5)
+console.log(big)  // [6, 7, 8, 9, 10]
+
+// Keep numbers between 3 and 7
+const middle = numbers.filter(n => n >= 3 && n <= 7)
+console.log(middle)  // [3, 4, 5, 6, 7]
+```
+
+### Filtering Objects by Property
+
+```javascript
+const users = [
+  { name: 'Alice', age: 25, active: true },
+  { name: 'Bob', age: 17, active: true },
+  { name: 'Charlie', age: 30, active: false },
+  { name: 'Diana', age: 22, active: true }
+]
+
+// Keep only active users
+const activeUsers = users.filter(user => user.active)
+console.log(activeUsers)
+// [{ name: 'Alice', ... }, { name: 'Bob', ... }, { name: 'Diana', ... }]
+
+// Keep only adults (18+)
+const adults = users.filter(user => user.age >= 18)
+console.log(adults)
+// [{ name: 'Alice', ... }, { name: 'Charlie', ... }, { name: 'Diana', ... }]
+
+// Keep only active adults
+const activeAdults = users.filter(user => user.active && user.age >= 18)
+console.log(activeAdults)
+// [{ name: 'Alice', ... }, { name: 'Diana', ... }]
+```
+
+### Truthy/Falsy Evaluation
+
+The filter callback's return value is evaluated for [truthiness](https://developer.mozilla.org/en-US/docs/Glossary/Truthy). This means you can use filter to remove falsy values:
+
+```javascript
+const mixed = [0, 1, '', 'hello', null, undefined, false, true, NaN, 42]
+
+// Remove all falsy values
+const truthy = mixed.filter(Boolean)
+console.log(truthy)  // [1, 'hello', true, 42]
+
+// This works because Boolean(value) returns true for truthy values
+// Boolean(0) → false
+// Boolean(1) → true
+// Boolean('') → false
+// Boolean('hello') → true
+// etc.
+```
+
+<Note>
+**Falsy values in JavaScript:** `false`, `0`, `-0`, `0n` (BigInt), `""` (empty string), `null`, `undefined`, `NaN`. Everything else is truthy.
+</Note>
+
+### Search and Query Filtering
+
+```javascript
+const products = [
+  { name: 'MacBook Pro', category: 'laptops', price: 2000 },
+  { name: 'iPhone', category: 'phones', price: 1000 },
+  { name: 'iPad', category: 'tablets', price: 800 },
+  { name: 'Dell XPS', category: 'laptops', price: 1500 }
+]
+
+// Search by name (case-insensitive)
+const searchTerm = 'mac'
+const results = products.filter(p => 
+  p.name.toLowerCase().includes(searchTerm.toLowerCase())
+)
+console.log(results)  // [{ name: 'MacBook Pro', ... }]
+
+// Filter by category
+const laptops = products.filter(p => p.category === 'laptops')
+console.log(laptops)  // [{ name: 'MacBook Pro', ... }, { name: 'Dell XPS', ... }]
+
+// Filter by price range
+const affordable = products.filter(p => p.price <= 1000)
+console.log(affordable)  // [{ name: 'iPhone', ... }, { name: 'iPad', ... }]
+```
+
+### filter() vs find() vs some() vs every()
+
+These methods are related but return different things:
+
+| Method | Returns | Stops Early? | Use Case |
+|--------|---------|--------------|----------|
+| `filter()` | Array of all matches | No | Get all matching items |
+| `find()` | First match (or undefined) | Yes | Get one item by condition |
+| `some()` | true/false | Yes | Check if any match |
+| `every()` | true/false | Yes | Check if all match |
+
+```javascript
+const numbers = [1, 2, 3, 4, 5]
+
+// filter: Get ALL even numbers
+numbers.filter(n => n % 2 === 0)    // [2, 4]
+
+// find: Get the FIRST even number
+numbers.find(n => n % 2 === 0)      // 2
+
+// some: Is there ANY even number?
+numbers.some(n => n % 2 === 0)      // true
+
+// every: Are ALL numbers even?
+numbers.every(n => n % 2 === 0)     // false
+```
+
+```javascript
+const users = [
+  { id: 1, name: 'Alice', admin: true },
+  { id: 2, name: 'Bob', admin: false },
+  { id: 3, name: 'Charlie', admin: false }
+]
+
+// ❌ INEFFICIENT: Using filter when you only need one
+const result = users.filter(u => u.id === 2)[0]  // Checks all elements
+
+// ✓ EFFICIENT: Use find for single item lookup
+const user = users.find(u => u.id === 2)  // Stops at first match
+
+// ❌ WASTEFUL: Using filter just to check existence
+const hasAdmin = users.filter(u => u.admin).length > 0
+
+// ✓ BETTER: Use some for existence check
+const hasAdmin2 = users.some(u => u.admin)  // true, stops at first admin
+```
+
+---
+
+## reduce() — Combine Into One Value
+
+The **[reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)** method executes a "reducer" function on each element, resulting in a single output value. It's the most powerful (and most confusing) of the three.
+
+### What is reduce() in JavaScript?
+
+The `reduce()` method is an array method that executes a reducer callback function on each element, accumulating the results into a single value. This value can be any type: a number, string, object, or even another array. The callback receives an accumulator (the running total) and the current element, returning the new accumulator value. Always provide an initial value to avoid crashes on empty arrays.
+
+```javascript
+const numbers = [1, 2, 3, 4, 5]
+const sum = numbers.reduce((accumulator, current) => accumulator + current, 0)
+
+console.log(sum)  // 15
+```
+
+Think of reduce like a snowball rolling down a hill. It starts small (the initial value) and grows as it picks up each element.
+
+### The Anatomy of reduce()
+
+```javascript
+array.reduce(callback(accumulator, currentValue, index, array), initialValue)
+```
+
+| Parameter | Description |
+|-----------|-------------|
+| `accumulator` | The accumulated value from previous iterations |
+| `currentValue` | The current element being processed |
+| `index` | The index of the current element (optional) |
+| `array` | The array reduce() was called on (optional) |
+| `initialValue` | The starting value for the accumulator (ALWAYS provide this!) |
+
+### Step-by-Step Visualization
+
+Let's trace through how reduce works:
+
+```javascript
+const numbers = [1, 2, 3, 4]
+const sum = numbers.reduce((acc, curr) => acc + curr, 0)
+```
+
+| Iteration | accumulator | currentValue | acc + curr | New accumulator |
+|-----------|-------------|--------------|------------|-----------------|
+| 1st | 0 (initial) | 1 | 0 + 1 | 1 |
+| 2nd | 1 | 2 | 1 + 2 | 3 |
+| 3rd | 3 | 3 | 3 + 3 | 6 |
+| 4th | 6 | 4 | 6 + 4 | **10** |
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         reduce() STEP BY STEP                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Initial value: 0                                                        │
+│                                                                          │
+│  [1, 2, 3, 4].reduce((acc, curr) => acc + curr, 0)                       │
+│                                                                          │
+│  Step 1:  acc=0, curr=1  →  0 + 1 = 1   (accumulator becomes 1)          │
+│  Step 2:  acc=1, curr=2  →  1 + 2 = 3   (accumulator becomes 3)          │
+│  Step 3:  acc=3, curr=3  →  3 + 3 = 6   (accumulator becomes 6)          │
+│  Step 4:  acc=6, curr=4  →  6 + 4 = 10  (final result!)                  │
+│                                                                          │
+│  Result: 10                                                              │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Common Use Cases
+
+#### Sum and Average
+
+```javascript
+const numbers = [10, 20, 30, 40, 50]
+
+// Sum
+const sum = numbers.reduce((acc, n) => acc + n, 0)
+console.log(sum)  // 150
+
+// Average
+const average = numbers.reduce((acc, n) => acc + n, 0) / numbers.length
+console.log(average)  // 30
+```
+
+#### Finding Max/Min
+
+```javascript
+const numbers = [5, 2, 9, 1, 7]
+
+const max = numbers.reduce((acc, n) => n > acc ? n : acc, numbers[0])
+console.log(max)  // 9
+
+const min = numbers.reduce((acc, n) => n < acc ? n : acc, numbers[0])
+console.log(min)  // 1
+
+// Or use Math.max/min with spread (simpler for this case)
+console.log(Math.max(...numbers))  // 9
+console.log(Math.min(...numbers))  // 1
+```
+
+#### Counting Occurrences
+
+```javascript
+const fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple']
+
+const count = fruits.reduce((acc, fruit) => {
+  acc[fruit] = (acc[fruit] || 0) + 1
+  return acc
+}, {})
+
+console.log(count)  // { apple: 3, banana: 2, orange: 1 }
+```
+
+#### Grouping by Property
+
+```javascript
+const people = [
+  { name: 'Alice', department: 'Engineering' },
+  { name: 'Bob', department: 'Marketing' },
+  { name: 'Charlie', department: 'Engineering' },
+  { name: 'Diana', department: 'Marketing' }
+]
+
+const byDepartment = people.reduce((acc, person) => {
+  const dept = person.department
+  if (!acc[dept]) {
+    acc[dept] = []
+  }
+  acc[dept].push(person)
+  return acc
+}, {})
+
+console.log(byDepartment)
+// {
+//   Engineering: [{ name: 'Alice', ... }, { name: 'Charlie', ... }],
+//   Marketing: [{ name: 'Bob', ... }, { name: 'Diana', ... }]
+// }
+```
+
+#### Building Objects from Arrays
+
+```javascript
+const pairs = [['name', 'Alice'], ['age', 25], ['city', 'NYC']]
+
+const obj = pairs.reduce((acc, [key, value]) => {
+  acc[key] = value
+  return acc
+}, {})
+
+console.log(obj)  // { name: 'Alice', age: 25, city: 'NYC' }
+```
+
+#### Flattening Nested Arrays
+
+```javascript
+const nested = [[1, 2], [3, 4], [5, 6]]
+
+const flat = nested.reduce((acc, arr) => acc.concat(arr), [])
+console.log(flat)  // [1, 2, 3, 4, 5, 6]
+
+// Note: For simple flattening, use .flat() instead
+console.log(nested.flat())  // [1, 2, 3, 4, 5, 6]
+```
+
+### Implementing map() and filter() with reduce()
+
+This shows just how powerful reduce is. You can implement both map and filter using reduce:
+
+```javascript
+// map() implemented with reduce
+function myMap(array, callback) {
+  return array.reduce((acc, element, index) => {
+    acc.push(callback(element, index, array))
+    return acc
+  }, [])
+}
+
+const doubled = myMap([1, 2, 3], n => n * 2)
+console.log(doubled)  // [2, 4, 6]
+
+
+// filter() implemented with reduce
+function myFilter(array, callback) {
+  return array.reduce((acc, element, index) => {
+    if (callback(element, index, array)) {
+      acc.push(element)
+    }
+    return acc
+  }, [])
+}
+
+const evens = myFilter([1, 2, 3, 4, 5], n => n % 2 === 0)
+console.log(evens)  // [2, 4]
+```
+
+<Tip>
+**When to use reduce:** Use reduce when you need to transform an array into a different type (array to object, array to number, etc.) or when you need complex accumulation logic. For simple transformations, map and filter are usually clearer.
+</Tip>
+
+---
+
+## Method Chaining — The Real Power
+
+The real magic happens when you chain these methods together. Each method returns a new array (or value), which you can immediately call another method on.
+
+```javascript
+const transactions = [
+  { type: 'sale', amount: 100 },
+  { type: 'refund', amount: 30 },
+  { type: 'sale', amount: 200 },
+  { type: 'sale', amount: 150 },
+  { type: 'refund', amount: 50 }
+]
+
+const totalSales = transactions
+  .filter(t => t.type === 'sale')           // Keep only sales
+  .map(t => t.amount)                        // Extract amounts
+  .reduce((sum, amount) => sum + amount, 0)  // Sum them up
+
+console.log(totalSales)  // 450
+```
+
+### Reading Chained Methods
+
+When you see a chain, read it like a data pipeline. Data flows from top to bottom, transformed at each step:
+
+```javascript
+const result = data
+  .filter(...)   // Step 1: Remove unwanted items
+  .map(...)      // Step 2: Transform remaining items
+  .filter(...)   // Step 3: Filter again if needed
+  .reduce(...)   // Step 4: Combine into final result
+```
+
+### Real-World Examples
+
+#### E-commerce: Calculate discounted total
+
+```javascript
+const cart = [
+  { name: 'Laptop', price: 1000, quantity: 1, discountPercent: 10 },
+  { name: 'Mouse', price: 50, quantity: 2, discountPercent: 0 },
+  { name: 'Keyboard', price: 100, quantity: 1, discountPercent: 20 }
+]
+
+const total = cart
+  .map(item => {
+    const subtotal = item.price * item.quantity
+    const discount = subtotal * (item.discountPercent / 100)
+    return subtotal - discount
+  })
+  .reduce((sum, price) => sum + price, 0)
+
+console.log(total)  // 900 + 100 + 80 = 1080
+```
+
+#### User dashboard: Get active premium users' emails
+
+```javascript
+const users = [
+  { email: 'alice@example.com', active: true, plan: 'premium' },
+  { email: 'bob@example.com', active: false, plan: 'premium' },
+  { email: 'charlie@example.com', active: true, plan: 'free' },
+  { email: 'diana@example.com', active: true, plan: 'premium' }
+]
+
+const premiumEmails = users
+  .filter(u => u.active)
+  .filter(u => u.plan === 'premium')
+  .map(u => u.email)
+
+console.log(premiumEmails)  // ['alice@example.com', 'diana@example.com']
+```
+
+#### Analytics: Top 3 performers
+
+```javascript
+const salespeople = [
+  { name: 'Alice', sales: 50000 },
+  { name: 'Bob', sales: 75000 },
+  { name: 'Charlie', sales: 45000 },
+  { name: 'Diana', sales: 90000 },
+  { name: 'Eve', sales: 60000 }
+]
+
+const top3 = salespeople
+  .filter(p => p.sales >= 50000)    // Minimum threshold
+  .sort((a, b) => b.sales - a.sales) // Sort descending
+  .slice(0, 3)                       // Take top 3
+  .map(p => p.name)                  // Get just names
+
+console.log(top3)  // ['Diana', 'Bob', 'Eve']
+```
+
+### Performance Considerations
+
+Each method in a chain iterates over the array. For small arrays, this doesn't matter. For large arrays, consider combining operations:
+
+```javascript
+const hugeArray = Array.from({ length: 100000 }, (_, i) => i)
+
+// ❌ SLOW: Three separate iterations
+const result1 = hugeArray
+  .filter(n => n % 2 === 0)  // Iteration 1
+  .map(n => n * 2)           // Iteration 2
+  .filter(n => n > 1000)     // Iteration 3
+
+// ✓ FASTER: Single iteration with reduce
+const result2 = hugeArray.reduce((acc, n) => {
+  if (n % 2 === 0) {
+    const doubled = n * 2
+    if (doubled > 1000) {
+      acc.push(doubled)
+    }
+  }
+  return acc
+}, [])
+```
+
+<Tip>
+**Performance Rule of Thumb:** For arrays under 10,000 items, prioritize readability. For larger arrays or performance-critical code, consider combining operations into a single reduce.
+</Tip>
+
+---
+
+## The #1 Mistake: Forgetting reduce()'s Initial Value
+
+This is the most common mistake developers make with reduce, and it can crash your application:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE INITIAL VALUE PROBLEM                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  ❌ WITHOUT INITIAL VALUE          ✓ WITH INITIAL VALUE                  │
+│  ─────────────────────────         ────────────────────                  │
+│                                                                          │
+│  [1, 2, 3].reduce((a,b) => a+b)    [1, 2, 3].reduce((a,b) => a+b, 0)     │
+│  → Works: 6                        → Works: 6                            │
+│                                                                          │
+│  [].reduce((a,b) => a+b)           [].reduce((a,b) => a+b, 0)            │
+│  → TypeError! CRASH                → Works: 0                            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Empty Array Without Initial Value = CRASH
+
+```javascript
+// ❌ DANGEROUS: No initial value
+const numbers = []
+const sum = numbers.reduce((acc, n) => acc + n)
+// TypeError: Reduce of empty array with no initial value
+
+// ✓ SAFE: Always provide initial value
+const safeSum = numbers.reduce((acc, n) => acc + n, 0)
+console.log(safeSum)  // 0
+```
+
+### Type Mismatch Without Initial Value
+
+```javascript
+const products = [
+  { name: 'Laptop', price: 1000 },
+  { name: 'Phone', price: 500 }
+]
+
+// ❌ WRONG: First accumulator will be the first object, not a number!
+const total = products.reduce((acc, p) => acc + p.price)
+console.log(total)  // "[object Object]500" — Oops!
+
+// ✓ CORRECT: Initial value sets the accumulator type
+const total2 = products.reduce((acc, p) => acc + p.price, 0)
+console.log(total2)  // 1500
+```
+
+<Warning>
+**The Rule:** Always provide an initial value to reduce(). It prevents crashes on empty arrays and makes your code's intent clear.
+</Warning>
+
+---
+
+## Common Mistakes
+
+### map() Mistakes
+
+#### Forgetting to Return
+
+```javascript
+const numbers = [1, 2, 3]
+
+// ❌ WRONG: No return statement
+const doubled = numbers.map(n => {
+  n * 2  // Missing return!
+})
+console.log(doubled)  // [undefined, undefined, undefined]
+
+// ✓ CORRECT: Explicit return
+const doubled2 = numbers.map(n => {
+  return n * 2
+})
+console.log(doubled2)  // [2, 4, 6]
+
+// ✓ CORRECT: Implicit return (no curly braces)
+const doubled3 = numbers.map(n => n * 2)
+console.log(doubled3)  // [2, 4, 6]
+```
+
+#### Mutating Original Objects
+
+```javascript
+const users = [
+  { name: 'Alice', score: 85 },
+  { name: 'Bob', score: 92 }
+]
+
+// ❌ WRONG: Mutates the original objects
+const curved = users.map(user => {
+  user.score += 5  // Mutates original!
+  return user
+})
+
+console.log(users[0].score)  // 90 — Original was changed!
+
+// ✓ CORRECT: Create new objects
+const users2 = [
+  { name: 'Alice', score: 85 },
+  { name: 'Bob', score: 92 }
+]
+
+const curved2 = users2.map(user => ({
+  ...user,
+  score: user.score + 5
+}))
+
+console.log(users2[0].score)  // 85 — Original unchanged
+console.log(curved2[0].score) // 90
+```
+
+### filter() Mistakes
+
+#### Using filter When find is Better
+
+```javascript
+const users = [
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' },
+  { id: 3, name: 'Charlie' }
+]
+
+// ❌ INEFFICIENT: Checks entire array, returns array, needs [0]
+const user = users.filter(u => u.id === 2)[0]
+
+// ✓ EFFICIENT: Stops at first match, returns the item directly
+const user2 = users.find(u => u.id === 2)
+```
+
+### reduce() Mistakes
+
+#### Not Returning the Accumulator
+
+```javascript
+const numbers = [1, 2, 3, 4]
+
+// ❌ WRONG: Forgetting to return accumulator
+const sum = numbers.reduce((acc, n) => {
+  acc + n  // Missing return!
+}, 0)
+console.log(sum)  // undefined
+
+// ✓ CORRECT: Always return the accumulator
+const sum2 = numbers.reduce((acc, n) => {
+  return acc + n
+}, 0)
+console.log(sum2)  // 10
+```
+
+#### Making reduce Too Complex
+
+```javascript
+const users = [
+  { name: 'Alice', active: true },
+  { name: 'Bob', active: false },
+  { name: 'Charlie', active: true }
+]
+
+// ❌ HARD TO READ: Everything crammed into reduce
+const result = users.reduce((acc, user) => {
+  if (user.active) {
+    acc.push(user.name.toUpperCase())
+  }
+  return acc
+}, [])
+
+// ✓ CLEARER: Use filter + map
+const result2 = users
+  .filter(u => u.active)
+  .map(u => u.name.toUpperCase())
+
+console.log(result2)  // ['ALICE', 'CHARLIE']
+```
+
+---
+
+## Other Useful Array Methods
+
+JavaScript has many more array methods beyond map, filter, and reduce. Here's a quick reference:
+
+| Method | Returns | Description |
+|--------|---------|-------------|
+| `find(fn)` | Element or undefined | First element that passes test |
+| `findIndex(fn)` | Number | Index of first match (-1 if none) |
+| `some(fn)` | Boolean | True if any element passes test |
+| `every(fn)` | Boolean | True if all elements pass test |
+| `includes(value)` | Boolean | True if value is in array |
+| `indexOf(value)` | Number | Index of value (-1 if not found) |
+| `flat(depth)` | Array | Flattens nested arrays |
+| `flatMap(fn)` | Array | map() then flat(1) |
+| `forEach(fn)` | undefined | Executes function for side effects |
+| `sort(fn)` | Array | Sorts in place (mutates!) |
+| `reverse()` | Array | Reverses in place (mutates!) |
+| `slice(start, end)` | Array | Returns portion (no mutation) |
+| `splice(start, count)` | Array | Removes/adds elements (mutates!) |
+
+### Quick Examples
+
+```javascript
+const numbers = [1, 2, 3, 4, 5]
+
+// find: Get first even number
+numbers.find(n => n % 2 === 0)  // 2
+
+// findIndex: Get index of first even
+numbers.findIndex(n => n % 2 === 0)  // 1
+
+// some: Is there any number > 4?
+numbers.some(n => n > 4)  // true
+
+// every: Are all numbers positive?
+numbers.every(n => n > 0)  // true
+
+// includes: Is 3 in the array?
+numbers.includes(3)  // true
+
+// flat: Flatten nested arrays
+[[1, 2], [3, 4]].flat()  // [1, 2, 3, 4]
+
+// flatMap: Map and flatten
+[1, 2].flatMap(n => [n, n * 2])  // [1, 2, 2, 4]
+```
+
+### Which Method Should I Use?
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    CHOOSING THE RIGHT METHOD                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  WHAT DO YOU NEED?                    USE THIS                           │
+│  ─────────────────                    ────────                           │
+│                                                                          │
+│  Transform every element          →   map()                              │
+│  Keep some elements               →   filter()                           │
+│  Combine into single value        →   reduce()                           │
+│  Find first matching element      →   find()                             │
+│  Check if any element matches     →   some()                             │
+│  Check if all elements match      →   every()                            │
+│  Check if value exists            →   includes()                         │
+│  Get index of element             →   findIndex() or indexOf()           │
+│  Just do something with each      →   forEach()                          │
+│  Flatten nested arrays            →   flat() or flatMap()                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **map() transforms every element** — Input array length equals output array length. Use it to change each item in the same way.
+
+2. **filter() keeps matching elements** — Returns 0 to all elements. Use it to remove items that don't pass a test.
+
+3. **reduce() combines into one value** — Can return any type: number, string, object, array. The "Swiss Army knife" of array methods.
+
+4. **None of these mutate the original array** — They always return something new. This makes your code predictable.
+
+5. **Always provide reduce()'s initial value** — Empty arrays without an initial value crash. Don't risk it.
+
+6. **Chain methods for powerful pipelines** — filter → map → reduce is a common pattern for data processing.
+
+7. **map() must return something** — Forgetting the return statement gives you an array of undefined.
+
+8. **Don't use map() for side effects** — Use forEach() if you just want to do something with each element.
+
+9. **Use find() for single item lookup** — It's more efficient than filter()[0] because it stops at the first match.
+
+10. **Async callbacks need Promise.all** — map/filter/reduce don't wait for async callbacks. Wrap in Promise.all().
+</Info>
+
+---
+
+## Test Your Knowledge
 
 <AccordionGroup>
-  <Accordion title="map()">
-    Creates a new array by calling a function on every element of the original array and storing the results.
+  <Accordion title="Question 1: What does map() return if the callback doesn't return anything?">
+    **Answer:**
+    
+    An array of `undefined` values. In JavaScript, functions without an explicit return statement return `undefined`.
+    
+    ```javascript
+    const numbers = [1, 2, 3]
+    
+    // Missing return
+    const result = numbers.map(n => {
+      n * 2  // No return!
+    })
+    
+    console.log(result)  // [undefined, undefined, undefined]
+    ```
+    
+    Always remember to return a value from your map callback, or use implicit return (arrow function without curly braces).
   </Accordion>
-  <Accordion title="filter()">
-    Creates a new array with all elements that pass a test implemented by the provided function.
+  
+  <Accordion title="Question 2: What's the difference between filter() and find()?">
+    **Answer:**
+    
+    - **filter()** returns an **array** of all matching elements (could be empty)
+    - **find()** returns the **first matching element** (or undefined if none)
+    
+    ```javascript
+    const numbers = [1, 2, 3, 4, 5, 6]
+    
+    numbers.filter(n => n % 2 === 0)  // [2, 4, 6] — All matches
+    numbers.find(n => n % 2 === 0)    // 2 — First match only
+    ```
+    
+    Use `find()` when you only need one result. It's more efficient because it stops searching after the first match.
   </Accordion>
-  <Accordion title="reduce()">
-    Executes a reducer function on each element of the array, resulting in a single output value.
+  
+  <Accordion title="Question 3: Why does reduce() crash on empty arrays without an initial value?">
+    **Answer:**
+    
+    Without an initial value, reduce uses the first element as the starting accumulator. If the array is empty, there's no first element, so JavaScript throws a TypeError.
+    
+    ```javascript
+    // No initial value + empty array = crash
+    [].reduce((acc, n) => acc + n)
+    // TypeError: Reduce of empty array with no initial value
+    
+    // With initial value, empty array returns the initial value
+    [].reduce((acc, n) => acc + n, 0)  // 0
+    ```
+    
+    Always provide an initial value to prevent crashes and make your intent clear.
+  </Accordion>
+  
+  <Accordion title="Question 4: What's wrong with this code?">
+    ```javascript
+    const doubled = numbers.map(n => { n * 2 })
+    ```
+    
+    **Answer:**
+    
+    The curly braces `{}` create a function body, which requires an explicit `return` statement. Without it, the function returns `undefined`.
+    
+    ```javascript
+    // ❌ Wrong (returns undefined)
+    const doubled = numbers.map(n => { n * 2 })
+    
+    // ✓ Correct (explicit return)
+    const doubled = numbers.map(n => { return n * 2 })
+    
+    // ✓ Correct (implicit return, no braces)
+    const doubled = numbers.map(n => n * 2)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: How would you get the total price of in-stock items?">
+    ```javascript
+    const products = [
+      { name: 'Laptop', price: 1000, inStock: true },
+      { name: 'Phone', price: 500, inStock: false },
+      { name: 'Tablet', price: 300, inStock: true }
+    ]
+    ```
+    
+    **Answer:**
+    
+    Chain filter → map → reduce:
+    
+    ```javascript
+    const total = products
+      .filter(p => p.inStock)           // Keep only in-stock
+      .map(p => p.price)                // Extract prices
+      .reduce((sum, p) => sum + p, 0)   // Sum them
+    
+    console.log(total)  // 1300
+    
+    // Or combine map and reduce:
+    const total2 = products
+      .filter(p => p.inStock)
+      .reduce((sum, p) => sum + p.price, 0)
+    
+    console.log(total2)  // 1300
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: What's the output of this code?">
+    ```javascript
+    const result = [1, 2, 3, 4, 5]
+      .filter(n => n % 2 === 0)
+      .map(n => n * 3)
+      .reduce((sum, n) => sum + n, 0)
+    
+    console.log(result)
+    ```
+    
+    **Answer:**
+    
+    **18**
+    
+    Let's trace through:
+    1. `filter(n => n % 2 === 0)` keeps even numbers: `[2, 4]`
+    2. `map(n => n * 3)` triples each: `[6, 12]`
+    3. `reduce((sum, n) => sum + n, 0)` sums them: `0 + 6 + 12 = 18`
   </Accordion>
 </AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    map, filter, and reduce are all higher-order functions that take callbacks
+  </Card>
+  <Card title="Pure Functions" icon="flask" href="/concepts/pure-functions">
+    Why these methods don't mutate and how immutability makes code predictable
+  </Card>
+  <Card title="Callbacks" icon="phone" href="/concepts/callbacks">
+    The callback pattern that powers these array methods
+  </Card>
+  <Card title="Recursion" icon="rotate" href="/concepts/recursion">
+    An alternative approach to processing arrays with function calls
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Array.prototype.map() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map">
+    Complete documentation for the map method
+  </Card>
+  <Card title="Array.prototype.filter() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter">
+    Complete documentation for the filter method
+  </Card>
+  <Card title="Array.prototype.reduce() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce">
+    Complete documentation for the reduce method
+  </Card>
+  <Card title="Array — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">
+    Overview of all array methods in JavaScript
+  </Card>
+</CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="JavaScript Functional Programming — map, filter and reduce" icon="newspaper" href="https://medium.com/jsguru/javascript-functional-programming-map-filter-and-reduce-846ff9ba492d">
-    By Bojan Gvozderac
+  <Card title="Array Methods — javascript.info" icon="newspaper" href="https://javascript.info/array-methods">
+    Comprehensive reference covering all array methods with interactive examples. Includes a visual diagram for reduce and 13 practice tasks with solutions.
   </Card>
-  <Card title="Learn map, filter and reduce in Javascript" icon="newspaper" href="https://medium.com/@joomiguelcunha/learn-map-filter-and-reduce-in-javascript-ea59009593c4">
-    By João Miguel Cunha
+  <Card title="An Illustrated Guide to Map, Reduce, and Filter" icon="newspaper" href="https://css-tricks.com/an-illustrated-and-musical-guide-to-map-reduce-and-filter-array-methods/">
+    Hand-drawn illustrations make these concepts stick. Filter as a strainer, reduce as cooking sauce. Even includes a song to help you remember!
+  </Card>
+  <Card title="Map, Reduce, and Filter Explained with Examples" icon="newspaper" href="https://www.freecodecamp.org/news/javascript-map-reduce-and-filter-explained-with-examples/">
+    Concise, beginner-friendly introduction with clean code examples. Gets straight to practical usage without overwhelming theory.
+  </Card>
+  <Card title="Differences Between forEach and map" icon="newspaper" href="https://www.freecodecamp.org/news/4-main-differences-between-foreach-and-map/">
+    Explains the 4 key differences with side-by-side comparisons. Includes performance testing code you can run yourself.
+  </Card>
+  <Card title="Simplify Your JavaScript with map, reduce, filter" icon="newspaper" href="https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d">
+    Star Wars themed examples make learning fun. Excellent section on method chaining and building elegant data pipelines.
+  </Card>
+  <Card title="How to Write Your Own map, filter, reduce" icon="newspaper" href="https://www.freecodecamp.org/news/how-to-write-your-own-map-filter-and-reduce-functions-in-javascript-ab1e35679d26/">
+    Build these methods from scratch to understand how they work internally. Great for interview prep and deepening your knowledge.
   </Card>
 </CardGroup>
-
-- [JavaScript's Map, Reduce, and Filter — Dan Martensen](https://danmartensen.svbtle.com/javascripts-map-reduce-and-filter)
-- [How to Use Map, Filter, & Reduce in JavaScript — Peleke Sengstacke](https://code.tutsplus.com/tutorials/how-to-use-map-filter-reduce-in-javascript--cms-26209)
-- [JavaScript — Learn to Chain Map, Filter, and Reduce — Brandon Morelli](https://codeburst.io/javascript-learn-to-chain-map-filter-and-reduce-acd2d0562cd4)
-- [Javascript data structure with map, reduce, filter and ES6 — Deepak Gupta](https://codeburst.io/write-beautiful-javascript-with-%CE%BB-fp-es6-350cd64ab5bf)
-- [Understanding map, filter and reduce in Javascript — Luuk Gruijs](https://hackernoon.com/understanding-map-filter-and-reduce-in-javascript-5df1c7eee464)
-- [Functional Programming in JS: map, filter, reduce (Pt. 5) — Omer Goldberg](https://hackernoon.com/functional-programming-in-js-map-filter-reduce-pt-5-308a205fdd5f)
-- [Arrow Functions: Fat and Concise Syntax in JavaScript — Kyle Pennell](https://www.sitepoint.com/es6-arrow-functions-new-fat-concise-syntax-javascript/)
-- [JavaScript: Arrow Functions for Beginners — Brandon Morelli](https://codeburst.io/javascript-arrow-functions-for-beginners-926947fc0cdc)
-- [When (and why) you should use ES6 arrow functions — and when you shouldn't — Cynthia Lee](https://medium.freecodecamp.org/when-and-why-you-should-use-es6-arrow-functions-and-when-you-shouldnt-3d851d7f0b26)
-- [Simplify your JavaScript – Use .map(), .reduce(), and .filter() — Etienne Talbot](https://medium.com/poka-techblog/simplify-your-javascript-use-map-reduce-and-filter-bd02c593cc2d)
-- [JavaScript's Reduce Method Explained By Going On a Diet — Kevin Kononenko](https://blog.codeanalogies.com/2018/07/24/javascripts-reduce-method-explained-by-going-on-a-diet/)
-- [How to write your own map, filter and reduce functions in JavaScript — Hemand Nair](https://medium.freecodecamp.org/how-to-write-your-own-map-filter-and-reduce-functions-in-javascript-ab1e35679d26)
-- [JavaScript Map – How to Use the JS .map() Function — FreeCodeCamp](https://www.freecodecamp.org/news/javascript-map-how-to-use-the-js-map-function-array-method/)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="Map, Filter and Reduce" icon="video" href="https://www.youtube.com/watch?v=UXiYii0Y7Nw">
-    By Lydia Hallie
+  <Card title="Higher-order Functions" icon="video" href="https://www.youtube.com/watch?v=BMUiFMZr7vk">
+    Fun Fun Function's legendary intro to functional programming. Mattias explains the mental model that makes map, filter, reduce click.
   </Card>
-  <Card title="Map, Filter and Reduce" icon="video" href="https://youtu.be/zdp0zrpKzIE?si=6QusFzD6tmwn-el4">
-    By Akshaay Saini
+  <Card title="Reduce Basics" icon="video" href="https://www.youtube.com/watch?v=Wl98eZpkp-c">
+    The hardest method gets its own deep-dive. Clear accumulator examples that finally make reduce make sense.
+  </Card>
+  <Card title="Higher Order Functions & Arrays" icon="video" href="https://www.youtube.com/watch?v=rRgD1yVwIvE">
+    Traversy Media's complete crash course with live coding. Covers forEach, map, filter, reduce, sort, and find in one session.
+  </Card>
+  <Card title="8 Must Know JavaScript Array Methods" icon="video" href="https://www.youtube.com/watch?v=R8rmfD9Y5-c">
+    Web Dev Simplified covers the most useful methods in 12 focused minutes. Perfect for a quick refresher on when to use what.
+  </Card>
+  <Card title="Map, Filter & Reduce — Namaste JavaScript" icon="video" href="https://www.youtube.com/watch?v=zdp0zrpKzIE">
+    Akshay Saini's interview-prep deep-dive. Includes polyfill implementations and common interview questions about these methods.
   </Card>
 </CardGroup>
-
-- [Functional JavaScript: Map, forEach, Reduce, Filter — Theodore Anderson](https://www.youtube.com/watch?v=vytzLlY_wmU)
-- [JavaScript Array superpowers: Map, Filter, Reduce (part I) — Michael Rosata](https://www.youtube.com/watch?v=qTeeVd8hOFY)
-- [JavaScript Array superpowers: Map, Filter, Reduce (part 2) — Michael Rosata](https://www.youtube.com/watch?v=gIm9xLYudL0)
-- [JavaScript Higher Order Functions - Filter, Map, Sort & Reduce — Epicop](https://www.youtube.com/watch?v=zYBeEPxNSbw)
-- [Arrow functions in JavaScript - What, Why and How — Fun Fun Function](https://www.youtube.com/watch?v=6sQDTgOqh-I)
-- [Learning Functional Programming with JavaScript — Anjana Vakil - JSUnconf](https://www.youtube.com/watch?v=e-5obm1G_FY&t=1521s)
-- [Reduce basics - Part 3 of FP in JavaScript - Fun Fun Function](https://www.youtube.com/watch?v=Wl98eZpkp-c)
-- [Reduce Advanced - Part 4 of FP in JavaScript - Fun Fun Function](https://www.youtube.com/watch?v=1DMolJ2FrNY&t=621s)
-- [Different array methods in 1 minute | Midudev (Spanish)](https://youtu.be/Ah7-PPjQ5Ls)
