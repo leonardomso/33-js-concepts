@@ -1,47 +1,805 @@
 ---
-title: "Pure Functions: Side Effects & Immutability in JavaScript"
-sidebarTitle: "Pure Functions: Side Effects & Immutability"
-description: "Learn pure functions in JavaScript — functions with no side effects that always return the same output for the same input. Master immutability, state mutation, and predictable code."
+title: "Pure Functions: Writing Predictable Code in JavaScript"
+sidebarTitle: "Pure Functions: Writing Predictable Code"
+description: "Learn pure functions in JavaScript. Understand the two rules of purity, avoid side effects, and write testable, predictable code with immutable patterns."
 ---
 
-## Overview
+Why does the same function sometimes give you different results? Why is some code easy to test while other code requires elaborate setup and mocking? Why do bugs seem to appear "randomly" when your logic looks correct?
 
-**Pure functions** are functions that always return the same output for the same input and have no side effects. They don't modify external state or depend on external mutable state. Understanding pure functions, side effects, and state mutation is fundamental to writing predictable and testable JavaScript code.
+The answer often comes down to **pure functions**. They're at the heart of functional programming, and understanding them will change how you write JavaScript.
+
+```javascript
+// A pure function: same input always gives same output
+function add(a, b) {
+  return a + b
+}
+
+add(2, 3)  // 5
+add(2, 3)  // 5, always 5, no matter when or where you call it
+```
+
+A pure function is simple, predictable, and trustworthy. Once you understand why, you'll start seeing opportunities to write cleaner code everywhere.
+
+<Info>
+**What you'll learn in this guide:**
+- The two rules that make a function "pure"
+- What side effects are and how they create bugs
+- How to identify pure vs impure functions
+- Practical patterns for avoiding mutations
+- When pure functions aren't possible (and what to do instead)
+- Why purity makes testing and debugging much easier
+</Info>
+
+<Warning>
+**Helpful background:** This guide references object and array mutations frequently. If you're not comfortable with how JavaScript handles [value vs reference types](/concepts/value-reference-types), read that guide first. It explains why `const arr = [1,2,3]; arr.push(4)` works but shouldn't surprise you.
+</Warning>
+
+---
+
+## What is a Pure Function?
+
+A **pure function** is a function that follows two simple rules:
+
+1. **Same input → Same output**: Given the same arguments, it always returns the same result
+2. **No side effects**: It doesn't change anything outside itself
+
+That's it. If a function follows both rules, it's pure. If it breaks either rule, it's impure.
+
+```javascript
+// ✓ PURE: Follows both rules
+function double(x) {
+  return x * 2
+}
+
+double(5)  // 10
+double(5)  // 10, always 10
+```
+
+Using [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) breaks purity because it introduces randomness:
+
+```javascript
+// ❌ IMPURE: Breaks rule 1 (different output for same input)
+function randomDouble(x) {
+  return x * Math.random()
+}
+
+randomDouble(5)  // 2.3456...
+randomDouble(5)  // 4.1234... different every time!
+```
+
+```javascript
+// ❌ IMPURE: Breaks rule 2 (has a side effect)
+let total = 0
+
+function addToTotal(x) {
+  total += x  // Modifies external variable!
+  return total
+}
+
+addToTotal(5)  // 5
+addToTotal(5)  // 10. Different result because total changed!
+```
+
+<CardGroup cols={2}>
+  <Card title="Functions — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">
+    MDN guide covering JavaScript function fundamentals
+  </Card>
+  <Card title="Functional Programming — Wikipedia" icon="book" href="https://en.wikipedia.org/wiki/Pure_function">
+    Formal definition of pure functions in computer science
+  </Card>
+</CardGroup>
+
+---
+
+## The Kitchen Recipe Analogy
+
+Think of a pure function like a recipe. If you give a recipe the same ingredients, you get the same dish every time. The recipe doesn't care what time it is, what else is in your kitchen, or what you cooked yesterday.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        PURE VS IMPURE FUNCTIONS                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  PURE FUNCTION (Like a Recipe)                                           │
+│  ─────────────────────────────                                           │
+│                                                                          │
+│     Ingredients           Recipe            Dish                         │
+│    ┌───────────┐       ┌─────────┐       ┌───────┐                       │
+│    │ 2 eggs    │       │         │       │       │                       │
+│    │ flour     │ ────► │  mix &  │ ────► │ cake  │                       │
+│    │ sugar     │       │  bake   │       │       │                       │
+│    └───────────┘       └─────────┘       └───────┘                       │
+│                                                                          │
+│    ✓ Same ingredients = Same cake, every time                            │
+│    ✓ Doesn't rearrange your kitchen                                      │
+│    ✓ Doesn't depend on the weather                                       │
+│                                                                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  IMPURE FUNCTION (Unpredictable Chef)                                    │
+│  ────────────────────────────────────                                    │
+│                                                                          │
+│    ┌───────────┐       ┌─────────┐       ┌───────┐                       │
+│    │ 2 eggs    │       │ checks  │       │  ???  │                       │
+│    │ flour     │ ────► │ clock,  │ ────► │       │                       │
+│    │ sugar     │       │ mood... │       │       │                       │
+│    └───────────┘       └─────────┘       └───────┘                       │
+│                                                                          │
+│    ✗ Same ingredients might give different results                       │
+│    ✗ Might rearrange your whole kitchen while cooking                    │
+│    ✗ Depends on external factors you can't control                       │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+A pure function is like a recipe: predictable, self-contained, and trustworthy. An impure function is like a chef who checks the weather, changes the recipe based on mood, and rearranges your kitchen while cooking.
+
+---
+
+## Rule 1: Same Input → Same Output
+
+This rule is also called **referential transparency**. It means you could replace a function call with its result and the program would work exactly the same.
+
+[`Math.max()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) is a great example of a pure function:
+
+```javascript
+// ✓ PURE: Math.max always returns the same result for the same inputs
+Math.max(2, 8, 5)  // 8
+Math.max(2, 8, 5)  // 8, always 8
+
+// You could replace Math.max(2, 8, 5) with 8 anywhere in your code
+// and nothing would change. That's referential transparency.
+```
+
+### What Breaks This Rule?
+
+Anything that makes the output depend on something other than the inputs:
+
+<Tabs>
+  <Tab title="Random Values">
+    ```javascript
+    // ❌ IMPURE: Output depends on randomness
+    function getRandomDiscount(price) {
+      return price * Math.random()
+    }
+
+getRandomDiscount(100)  // 47.23...
+getRandomDiscount(100)  // 82.91... different!
+    ```
+  </Tab>
+  <Tab title="Current Time">
+    Using [`new Date()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) makes functions impure because the output depends on when you call them:
+    
+    ```javascript
+    // ❌ IMPURE: Output depends on when you call it
+    function getGreeting(name) {
+      const hour = new Date().getHours()
+      if (hour < 12) return `Good morning, ${name}`
+      return `Good afternoon, ${name}`
+    }
+
+    // Same input, different output depending on time of day
+    ```
+  </Tab>
+  <Tab title="External State">
+    ```javascript
+    // ❌ IMPURE: Output depends on external variable
+    let taxRate = 0.08
+
+    function calculateTotal(price) {
+      return price + (price * taxRate)
+    }
+
+    calculateTotal(100)  // 108
+    taxRate = 0.10
+    calculateTotal(100)  // 110. Different!
+    ```
+  </Tab>
+</Tabs>
+
+### How to Fix It
+
+Pass everything the function needs as arguments:
+
+```javascript
+// ✓ PURE: Tax rate is now an input, not external state
+function calculateTotal(price, taxRate) {
+  return price + (price * taxRate)
+}
+
+calculateTotal(100, 0.08)  // 108
+calculateTotal(100, 0.08)  // 108, always the same
+calculateTotal(100, 0.10)  // 110 — different input, different output (that's fine!)
+```
+
+<Tip>
+**Quick test for Rule 1:** Can you predict the output just by looking at the inputs? If you need to know the current time, check a global variable, or run it to find out, it's probably not pure.
+</Tip>
+
+---
+
+## Rule 2: No Side Effects
+
+A **side effect** is anything a function does besides computing and returning a value. Side effects are actions that affect the world outside the function.
+
+### Common Side Effects
+
+| Side Effect | Example | Why It's a Problem |
+|-------------|---------|-------------------|
+| **Mutating input** | `array.push(item)` | Changes data the caller might still be using |
+| **Modifying external variables** | `counter++` | Creates hidden dependencies |
+| **Console output** | `console.log()` | Does something besides returning a value |
+| **DOM manipulation** | `element.innerHTML = '...'` | Changes the page state |
+| **HTTP requests** | `fetch('/api/data')` | Communicates with external systems |
+| **Writing to storage** | `localStorage.setItem()` | Persists data outside the function |
+| **Throwing exceptions** | `throw new Error()` | Exits function in an unexpected way |
+
+```javascript
+// ❌ IMPURE: Multiple side effects
+function processUser(user) {
+  user.lastLogin = new Date()        // Side effect: mutates input
+  console.log(`User ${user.name}`)   // Side effect: console output
+  userCount++                         // Side effect: modifies external variable
+  return user
+}
+
+// ✓ PURE: Returns new data, no side effects
+function processUser(user, loginTime) {
+  return {
+    ...user,
+    lastLogin: loginTime
+  }
+}
+```
+
+<Note>
+**Is `console.log()` really that bad?** Technically, yes. It's a side effect. But practically? It's fine for debugging. The key is understanding that it makes your function impure. Don't let `console.log` statements slip into production code that should be pure.
+</Note>
+
+---
+
+## The #1 Pure Functions Mistake: Mutations
+
+The most common way developers accidentally create impure functions is by **mutating objects or arrays** that were passed in.
+
+```javascript
+// ❌ IMPURE: Mutates the input array
+function addItem(cart, item) {
+  cart.push(item)  // This changes the original cart!
+  return cart
+}
+
+const myCart = ['apple', 'banana']
+const newCart = addItem(myCart, 'orange')
+
+console.log(myCart)   // ['apple', 'banana', 'orange'] — Original changed!
+console.log(newCart)  // ['apple', 'banana', 'orange']
+console.log(myCart === newCart)  // true — They're the same array!
+```
+
+This creates bugs because any other code using `myCart` now sees unexpected changes. The fix is simple: return a **new** array instead of modifying the original.
+
+```javascript
+// ✓ PURE: Returns a new array, original unchanged
+function addItem(cart, item) {
+  return [...cart, item]  // Spread into new array
+}
+
+const myCart = ['apple', 'banana']
+const newCart = addItem(myCart, 'orange')
+
+console.log(myCart)   // ['apple', 'banana'] — Original unchanged!
+console.log(newCart)  // ['apple', 'banana', 'orange']
+console.log(myCart === newCart)  // false — Different arrays
+```
+
+### Shallow Copy Trap
+
+Watch out: the [spread operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) only creates a **shallow copy**. Nested objects are still shared:
+
+```javascript
+// ⚠️ DANGER: Shallow copy with nested objects
+const user = {
+  name: 'Alice',
+  address: { city: 'NYC', zip: '10001' }
+}
+
+const updatedUser = { ...user, name: 'Bob' }
+
+// Top level is a new object...
+console.log(user === updatedUser)  // false ✓
+
+// But nested object is SHARED
+updatedUser.address.city = 'LA'
+console.log(user.address.city)  // 'LA'. Original changed!
+```
+
+For nested objects, use [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) for a deep copy:
+
+```javascript
+// ✓ SAFE: Deep clone for nested objects
+const user = {
+  name: 'Alice',
+  address: { city: 'NYC', zip: '10001' }
+}
+
+const updatedUser = {
+  ...structuredClone(user),
+  name: 'Bob'
+}
+
+updatedUser.address.city = 'LA'
+console.log(user.address.city)  // 'NYC' — Original safe!
+```
+
+<Warning>
+**The Trap:** Spread operator (`...`) only copies one level deep. If you have nested objects or arrays, mutations to the nested data will affect the original. Use `structuredClone()` for deep copies, or see our [Value vs Reference Types](/concepts/value-reference-types) guide for more patterns.
+</Warning>
+
+---
+
+## Immutable Patterns for Pure Functions
+
+Here are the most common patterns for writing pure functions that handle objects and arrays:
+
+### Updating Objects
+
+```javascript
+// ❌ IMPURE: Mutates the object
+function updateEmail(user, email) {
+  user.email = email
+  return user
+}
+
+// ✓ PURE: Returns new object with updated property
+function updateEmail(user, email) {
+  return { ...user, email }
+}
+```
+
+### Adding to Arrays
+
+```javascript
+// ❌ IMPURE: Mutates the array
+function addTodo(todos, newTodo) {
+  todos.push(newTodo)
+  return todos
+}
+
+// ✓ PURE: Returns new array with item added
+function addTodo(todos, newTodo) {
+  return [...todos, newTodo]
+}
+```
+
+### Removing from Arrays
+
+```javascript
+// ❌ IMPURE: Mutates the array
+function removeTodo(todos, index) {
+  todos.splice(index, 1)
+  return todos
+}
+
+// ✓ PURE: Returns new array without the item
+function removeTodo(todos, index) {
+  return todos.filter((_, i) => i !== index)
+}
+```
+
+### Updating Array Items
+
+```javascript
+// ❌ IMPURE: Mutates item in array
+function completeTodo(todos, index) {
+  todos[index].completed = true
+  return todos
+}
+
+// ✓ PURE: Returns new array with updated item
+function completeTodo(todos, index) {
+  return todos.map((todo, i) => 
+    i === index ? { ...todo, completed: true } : todo
+  )
+}
+```
+
+### Sorting Arrays
+
+```javascript
+// ❌ IMPURE: sort() mutates the original array!
+function getSorted(numbers) {
+  return numbers.sort((a, b) => a - b)
+}
+
+// ✓ PURE: Copy first, then sort
+function getSorted(numbers) {
+  return [...numbers].sort((a, b) => a - b)
+}
+
+// ✓ PURE (ES2023+): Use toSorted() which returns a new array
+function getSorted(numbers) {
+  return numbers.toSorted((a, b) => a - b)
+}
+```
+
+<Tip>
+**ES2023 added non-mutating versions** of several array methods: `toSorted()`, `toReversed()`, `toSpliced()`, and `with()`. These are perfect for pure functions. Check browser support before using in production.
+</Tip>
+
+---
+
+## Why Pure Functions Matter
+
+Writing pure functions isn't just about following rules. It brings real, practical benefits:
+
+<AccordionGroup>
+  <Accordion title="1. Easier to Test">
+    Pure functions are a testing dream. No mocking, no setup, no cleanup. Just call the function and check the result.
+    
+    ```javascript
+    // Testing a pure function is trivial
+    function add(a, b) {
+      return a + b
+    }
+
+    // Test
+    expect(add(2, 3)).toBe(5)
+    expect(add(-1, 1)).toBe(0)
+    expect(add(0, 0)).toBe(0)
+    // Done! No mocks, no setup, no teardown
+    ```
+    
+    Compare this to testing a function that reads from the DOM, makes API calls, or depends on global state. You'd need elaborate setup just to run one test.
+  </Accordion>
+  
+  <Accordion title="2. Easier to Debug">
+    When something goes wrong, pure functions narrow down the problem fast. If a pure function returns the wrong value, the bug is in *that function*. It can't be caused by some other code changing global state.
+    
+    ```javascript
+    // If calculateTax(100, 0.08) returns the wrong value,
+    // the bug MUST be inside calculateTax.
+    // No need to check what other code ran before it.
+    function calculateTax(amount, rate) {
+      return amount * rate
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Safe to Cache (Memoization)">
+    Since pure functions always return the same output for the same input, you can safely cache their results. This is called [memoization](https://developer.mozilla.org/en-US/docs/Glossary/Memoization).
+    
+    ```javascript
+    // Expensive calculation - safe to cache because it's pure
+    function fibonacci(n) {
+      if (n <= 1) return n
+      return fibonacci(n - 1) + fibonacci(n - 2)
+    }
+
+    // With memoization, fibonacci(40) computes once, then returns cached result
+    ```
+    
+    You can't safely cache impure functions because they might need to return different values even with the same inputs.
+  </Accordion>
+  
+  <Accordion title="4. Safe to Parallelize">
+    Pure functions don't depend on shared state, so they can safely run in parallel. This is how libraries like TensorFlow process massive datasets across multiple CPU cores or GPU threads.
+    
+    ```javascript
+    // These can all run at the same time - no conflicts!
+    const results = await Promise.all([
+      processChunk(data.slice(0, 1000)),
+      processChunk(data.slice(1000, 2000)),
+      processChunk(data.slice(2000, 3000))
+    ])
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Easier to Understand">
+    When you see a pure function, you know everything it can do is right there in the code. No hidden dependencies, no spooky action at a distance.
+    
+    ```javascript
+    // You can understand this function completely by reading it
+    function formatPrice(cents, currency = 'USD') {
+      const dollars = cents / 100
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency
+      }).format(dollars)
+    }
+    ```
+    
+    This function uses [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) but remains pure because the same inputs always produce the same formatted output.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## When Pure Functions Aren't Possible
+
+Let's be realistic: you can't build useful applications with *only* pure functions. At some point you need to:
+
+- Read from and write to the DOM
+- Make HTTP requests
+- Log errors
+- Save to localStorage
+- Respond to user events
+
+The strategy is to **push impure code to the edges** of your application. Keep the core logic pure, and isolate the impure parts.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      STRUCTURE OF A WELL-DESIGNED APP                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  EDGES (Impure)              CORE (Pure)              EDGES (Impure)     │
+│  ──────────────              ──────────              ──────────────      │
+│                                                                          │
+│  ┌──────────────┐         ┌──────────────┐         ┌──────────────┐      │
+│  │ Read from    │         │ Transform    │         │ Write to     │      │
+│  │ DOM, API,    │ ──────► │ Calculate    │ ──────► │ DOM, API,    │      │
+│  │ user input   │         │ Process      │         │ console      │      │
+│  └──────────────┘         └──────────────┘         └──────────────┘      │
+│                                                                          │
+│     INPUT                    LOGIC                    OUTPUT             │
+│   (impure)                  (pure)                  (impure)             │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Example: Separating Pure from Impure
+
+```javascript
+// IMPURE: Reads from DOM
+function getUserInput() {
+  return document.querySelector('#username').value
+}
+
+// PURE: Transforms data (no DOM access)
+function formatUsername(name) {
+  return name.trim().toLowerCase()
+}
+
+// PURE: Validates data (no side effects)
+function isValidUsername(name) {
+  return name.length >= 3 && name.length <= 20
+}
+
+// IMPURE: Writes to DOM
+function displayError(message) {
+  document.querySelector('#error').textContent = message
+}
+
+// Orchestration: impure code at the edges
+function handleSubmit() {
+  const raw = getUserInput()           // Impure: read
+  const formatted = formatUsername(raw) // Pure: transform
+  const isValid = isValidUsername(formatted) // Pure: validate
+  
+  if (!isValid) {
+    displayError('Username must be 3-20 characters') // Impure: write
+  }
+}
+```
+
+The pure functions (`formatUsername`, `isValidUsername`) are easy to test and reuse. The impure functions are isolated at the edges where they're easy to find and manage.
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about pure functions:**
+
+1. **Two rules define purity**: same input → same output, and no side effects
+
+2. **Side effects** include mutations, console.log, DOM access, HTTP requests, randomness, and current time
+
+3. **Mutations are the #1 trap**. Use spread operator or `structuredClone()` to return new data instead
+
+4. **Shallow copies aren't enough** for nested objects. The spread operator only copies one level deep
+
+5. **Pure functions are easier to test**. No mocking, no setup. Just input and expected output
+
+6. **Pure functions are easier to debug**. If the output is wrong, the bug is in that function
+
+7. **Pure functions can be cached**. Same input always means same output, so memoization is safe
+
+8. **You can't avoid impurity entirely**. The goal is to isolate it at the edges of your application
+
+9. **console.log is technically impure** but acceptable for debugging. Just don't let it slip into logic that should be pure
+
+10. **ES2023 added `toSorted()`, `toReversed()`** and other non-mutating array methods. Use them when you can!
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What two rules define a pure function?">
+    **Answer:**
+    
+    A pure function must follow both rules:
+    
+    1. **Same input → Same output**: Given the same arguments, it always returns the same result (referential transparency)
+    2. **No side effects**: It doesn't modify anything outside itself (no mutations, no I/O, no external state changes)
+    
+    ```javascript
+    // Pure: follows both rules
+    function multiply(a, b) {
+      return a * b
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Is this function pure? Why or why not?">
+    ```javascript
+    function greet(name) {
+      return `Hello, ${name}! The time is ${new Date().toLocaleTimeString()}`
+    }
+    ```
+    
+    **Answer:**
+    
+    No, this function is **impure**. It breaks Rule 1 (same input → same output) because it uses `new Date()`. Calling `greet('Alice')` at 10:00 AM gives a different result than calling it at 3:00 PM, even though the input is the same.
+    
+    To make it pure, pass the time as a parameter:
+    
+    ```javascript
+    function greet(name, time) {
+      return `Hello, ${name}! The time is ${time}`
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What's wrong with this function?">
+    ```javascript
+    function addToCart(cart, item) {
+      cart.push(item)
+      return cart
+    }
+    ```
+    
+    **Answer:**
+    
+    This function **mutates its input**. The `push()` method modifies the original `cart` array, which is a side effect. Any other code using that cart array will see unexpected changes.
+    
+    Fix it by returning a new array:
+    
+    ```javascript
+    function addToCart(cart, item) {
+      return [...cart, item]
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: How do you safely update a nested object in a pure function?">
+    **Answer:**
+    
+    Use `structuredClone()` for a deep copy, or carefully spread at each level:
+    
+    ```javascript
+    // Option 1: structuredClone (simplest)
+    function updateCity(user, newCity) {
+      const copy = structuredClone(user)
+      copy.address.city = newCity
+      return copy
+    }
+
+    // Option 2: Spread at each level
+    function updateCity(user, newCity) {
+      return {
+        ...user,
+        address: {
+          ...user.address,
+          city: newCity
+        }
+      }
+    }
+    ```
+    
+    Note: A simple `{ ...user }` shallow copy would still share the nested `address` object with the original.
+  </Accordion>
+  
+  <Accordion title="Question 5: Why are pure functions easier to test?">
+    **Answer:**
+    
+    Pure functions only depend on their inputs and only produce their return value. This means:
+    
+    - **No setup needed**: You don't need to configure global state, mock APIs, or set up DOM elements
+    - **No cleanup needed**: The function doesn't change anything, so there's nothing to reset
+    - **Predictable**: Same input always gives same output, so tests are deterministic
+    - **Isolated**: If a test fails, the bug must be in that function
+    
+    ```javascript
+    // Testing a pure function - simple and straightforward
+    expect(add(2, 3)).toBe(5)
+    expect(formatName('  ALICE  ')).toBe('alice')
+    expect(isValidEmail('test@example.com')).toBe(true)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: When is it okay to have impure functions?">
+    **Answer:**
+    
+    Impure functions are necessary for any real application. You need them to:
+    
+    - Read user input from the DOM
+    - Make HTTP requests to APIs
+    - Write output to the screen
+    - Save data to localStorage or databases
+    - Log errors and debugging info
+    
+    The strategy is to **isolate impurity at the edges** of your application. Keep your core business logic in pure functions, and use impure functions only for I/O operations. This gives you the best of both worlds: testable, predictable logic with the ability to interact with the outside world.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Value vs Reference Types" icon="diagram-project" href="/concepts/value-reference-types">
+    Understanding mutations, shallow vs deep copies, and why objects behave differently than primitives
+  </Card>
+  <Card title="Higher-Order Functions" icon="arrows-repeat" href="/concepts/higher-order-functions">
+    Functions that take or return functions, perfect for composing pure functions
+  </Card>
+  <Card title="map, reduce & filter" icon="filter" href="/concepts/map-reduce-filter">
+    Non-mutating array methods that return new arrays, ideal for pure functions
+  </Card>
+  <Card title="Currying & Composition" icon="wand-magic-sparkles" href="/concepts/currying-composition">
+    Advanced patterns for building complex pure functions from simple ones
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Array Methods — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">
+    Complete reference for all array methods, including which ones mutate
+  </Card>
+  <Card title="Spread Syntax — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">
+    How to use the spread operator for shallow copies of arrays and objects
+  </Card>
+  <Card title="structuredClone() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/structuredClone">
+    Modern API for deep cloning objects, including nested structures
+  </Card>
+  <Card title="Object.freeze() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">
+    How to make objects immutable (though only shallowly)
+  </Card>
+</CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="Javascript and Functional Programming — Pure Functions" icon="newspaper" href="https://hackernoon.com/javascript-and-functional-programming-pt-3-pure-functions-d572bb52e21c">
-    By Omer Goldberg
+  <Card title="What Is a Pure Function in JavaScript?" icon="newspaper" href="https://www.freecodecamp.org/news/what-is-a-pure-function-in-javascript-acb887375dfe/">
+    Yazeed Bzadough's checklist approach with clear examples. Perfect starting point for understanding the two rules of pure functions and common side effects.
   </Card>
   <Card title="Master the JavaScript Interview: What is a Pure Function?" icon="newspaper" href="https://medium.com/javascript-scene/master-the-javascript-interview-what-is-a-pure-function-d1c076bec976">
-    By Eric Elliott
+    Eric Elliott's deep dive into referential transparency and shared state. Includes real-world examples of race conditions caused by impure functions.
+  </Card>
+  <Card title="Making your JavaScript Pure" icon="newspaper" href="https://alistapart.com/article/making-your-javascript-pure/">
+    Jack Franklin's practical guide focusing on testability. Excellent "before and after" refactoring examples that show how to transform impure code.
+  </Card>
+  <Card title="How to Deal with Dirty Side Effects in Pure Functional JavaScript" icon="newspaper" href="https://jrsinclair.com/articles/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/">
+    James Sinclair's advanced guide to dependency injection and the Effect pattern. For when you're ready to take functional programming to the next level.
   </Card>
 </CardGroup>
-
-- [JavaScript: What Are Pure Functions And Why Use Them? — James Jeffery](https://medium.com/@jamesjefferyuk/javascript-what-are-pure-functions-4d4d5392d49c)
-- [Pure functions in JavaScript — @nicoespeon](http://www.nicoespeon.com/en/2015/01/pure-functions-javascript/)
-- [Functional Programming: Pure Functions — Arne Brasseur](https://www.sitepoint.com/functional-programming-pure-functions/)
-- [Making your JavaScript Pure — Jack Franklin](https://alistapart.com/article/making-your-javascript-pure)
-- [Arrays, Objects and Mutations — Federico Knüssel](https://medium.com/@fknussel/arrays-objects-and-mutations-6b23348b54aa)
-- [The State of Immutability — Maciej Sikora](https://medium.com/dailyjs/the-state-of-immutability-169d2cd11310)
-- [How to deal with dirty side effects in your pure functional JavaScript — James Sinclair](https://jrsinclair.com/articles/2018/how-to-deal-with-dirty-side-effects-in-your-pure-functional-javascript/)
-- [Preventing Side Effects in JavaScript — David Walsh](https://davidwalsh.name/preventing-sideeffects-javascript)
-- [JavaScript: Pure Functions — William S. Vincent](https://wsvincent.com/javascript-pure-functions/)
-- [Functional programming paradigms in modern JavaScript: Pure functions — Alexander Kondov](https://hackernoon.com/functional-programming-paradigms-in-modern-javascript-pure-functions-797d9abbee1)
-- [Understanding Javascript Mutation and Pure Functions — Chidume Nnamdi](https://blog.bitsrc.io/understanding-javascript-mutation-and-pure-functions-7231cc2180d3)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="Pure Functions" icon="video" href="https://www.youtube.com/watch?v=dZ41D6LDSBg">
-    By Hexlet
+  <Card title="Pure Functions — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=BMUiFMZr7vk">
+    Mattias Petter Johansson's entertaining introduction to pure functions. Part of his excellent functional programming series that makes complex topics approachable.
   </Card>
-  <Card title="Pure Functions - Functional Programming in JavaScript" icon="video" href="https://www.youtube.com/watch?v=Jh_Uzqzz_wM">
-    By Paul McBride
+  <Card title="Pure vs Impure Functions" icon="video" href="https://www.youtube.com/watch?v=AHbRVJzpB54">
+    Theodore Anderson's clear comparison of pure and impure functions with practical JavaScript examples and visual explanations.
+  </Card>
+  <Card title="JavaScript Pure Functions" icon="video" href="https://www.youtube.com/watch?v=frT3H-eBmPc">
+    Seth Alexander's focused tutorial covering the fundamentals of pure functions and their benefits for writing maintainable code.
   </Card>
 </CardGroup>
-
-- [JavaScript Pure Functions — Seth Alexander](https://www.youtube.com/watch?v=frT3H-eBmPc)
-- [JavaScript Pure vs Impure Functions Explained — Theodore Anderson](https://www.youtube.com/watch?v=AHbRVJzpB54)
-- [Pure Functions - Programação Funcional: Parte 1 - Fun Fun Function](https://www.youtube.com/watch?v=BMUiFMZr7vk)
