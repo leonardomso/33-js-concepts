@@ -325,9 +325,13 @@ console.log(result)  // "thenable value" (after 1 second)
 **Pro tip:** Only use `await` when you're actually waiting for a Promise. Awaiting non-Promise values works but adds unnecessary overhead and confuses anyone reading your code.
 </Tip>
 
+<Note>
+**Technical detail:** Even when awaiting an already-resolved Promise or a non-Promise value, execution still pauses until the next microtask. This is why `await` always yields control back to the caller before continuing.
+</Note>
+
 ### await Pauses the Function, Not the Thread
 
-This trips people up: `await` pauses only the async function it's in, not the entire JavaScript thread. Other code can run while waiting:
+This trips people up. `await` pauses only the async function it's in, not the entire JavaScript thread. Other code can run while waiting:
 
 ```javascript
 async function slowOperation() {
@@ -436,7 +440,7 @@ This is why understanding the [Event Loop](/concepts/event-loop) is so important
 
 ## Error Handling with try/catch
 
-Finally, **error handling that doesn't make you want to flip a table**. Instead of chaining `.catch()` after `.then()` after `.catch()`, you get to use good old try/catch blocks.
+Finally, error handling that doesn't make you want to flip a table. Instead of chaining `.catch()` after `.then()` after `.catch()`, you get to use good old try/catch blocks.
 
 ### Basic try/catch Pattern
 
@@ -585,7 +589,7 @@ async function fetchData() {
 
 ## Sequential vs Parallel Execution
 
-This is a big one. **By default, await makes operations sequential**, but often you want them to run in parallel.
+This is a big one. By default, `await` makes operations sequential, but often you want them to run in parallel.
 
 ### The Problem: Unnecessary Sequential Execution
 
@@ -675,9 +679,9 @@ async function getUserDashboard(userId) {
 
 ### Promise.all vs Promise.allSettled
 
-**[Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all):** Fails fast. If any Promise rejects, the whole thing rejects.
+**[Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all)** fails fast. If any Promise rejects, the whole thing rejects.
 
-**[Promise.allSettled](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled):** Waits for all Promises, gives you results for each (fulfilled or rejected).
+**[Promise.allSettled](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)** waits for all Promises and gives you results for each (fulfilled or rejected).
 
 ```javascript
 // Promise.all - fails fast
@@ -755,7 +759,7 @@ async function processOrder(orderId) {
 
 ### Mistake #1: Forgetting await
 
-Without `await`, you get a Promise object instead of the resolved value:
+Without `await`, you get a Promise object instead of the resolved value.
 
 ```javascript
 // ❌ WRONG - response is a Promise, not a Response!
@@ -779,7 +783,7 @@ async function fetchUser() {
 
 ### Mistake #2: Using await in forEach
 
-`forEach` and async don't play well together — it just fires and forgets:
+`forEach` and async don't play well together. It just fires and forgets:
 
 ```javascript
 // ❌ WRONG - forEach doesn't await!
@@ -838,7 +842,7 @@ async function getData() {
 
 ### Mistake #4: Not Handling Errors
 
-Unhandled Promise rejections can crash your application:
+Unhandled Promise rejections can crash your application.
 
 ```javascript
 // ❌ WRONG - No error handling
@@ -865,35 +869,25 @@ async function safeOperation() {
 riskyOperation().catch(err => console.error('Failed:', err))
 ```
 
-### Mistake #5: await Inside try Block Returns
+### Mistake #5: Missing await Before return in try/catch
 
-Be careful with where you place `await` relative to `return`:
+If you want to catch errors from a Promise inside a try/catch, you **must** use `await`. Without it, the Promise is returned before it settles, and the catch block never runs:
 
 ```javascript
-// ❌ SUBTLE BUG - The await is pointless here
+// ❌ WRONG - catch block won't catch fetch errors!
 async function fetchData() {
   try {
-    return await fetch('/api/data')  // await is unnecessary
+    return fetch('/api/data')  // Promise returned before it settles
   } catch (error) {
+    // This NEVER runs for fetch errors!
     console.error('Error:', error)
   }
 }
 
-// This is equivalent and cleaner:
+// ✓ CORRECT - await lets catch block handle errors
 async function fetchData() {
   try {
-    return fetch('/api/data')  // No await needed
-  } catch (error) {
-    // BUT: This catch won't catch fetch errors!
-    console.error('Error:', error)
-  }
-}
-
-// ✓ CORRECT - If you want to catch errors, process the result
-async function fetchData() {
-  try {
-    const response = await fetch('/api/data')
-    return response  // Now errors ARE caught
+    return await fetch('/api/data')  // await IS needed here
   } catch (error) {
     console.error('Error:', error)
     throw error
@@ -901,15 +895,41 @@ async function fetchData() {
 }
 ```
 
-<Tip>
-**Quick check:** If you have a try/catch and want to catch errors from a Promise, make sure to `await` it on a separate line before returning.
-</Tip>
+**Why does this happen?** When you `return fetch(...)` without `await`, the Promise is immediately returned to the caller. If that Promise later rejects, the rejection happens *outside* the try/catch block, so the catch never sees it.
+
+<Warning>
+**Common misconception:** Some guides say `return await` is redundant. That's only true *outside* of try/catch blocks. Inside try/catch, you need `await` to catch errors from the Promise.
+</Warning>
+
+```javascript
+// Outside try/catch, these ARE equivalent:
+async function noTryCatch() {
+  return await fetch('/api/data')  // await is optional here
+}
+
+async function noTryCatchSimpler() {
+  return fetch('/api/data')  // Same result, slightly cleaner
+}
+
+// But inside try/catch, they behave DIFFERENTLY:
+async function withTryCatch() {
+  try {
+    return await fetch('/api/data')  // Errors ARE caught
+  } catch (e) { /* handles errors */ }
+}
+
+async function brokenTryCatch() {
+  try {
+    return fetch('/api/data')  // Errors NOT caught!
+  } catch (e) { /* never runs for fetch errors */ }
+}
+```
 
 ---
 
 ## async/await vs Promise Chains
 
-Both async/await and Promise chains achieve the same thing. The choice often comes down to readability and personal preference.
+Both async/await and Promise chains achieve the same result. The choice often comes down to readability and personal preference.
 
 ### Comparison Table
 
@@ -996,7 +1016,7 @@ async function robustFetch(url, retries = 3) {
 
 ## Top-Level await
 
-[Top-level await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#top-level-await) allows you to use `await` outside of async functions, but only in ES modules.
+[Top-level await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/await#top-level-await) allows you to use `await` outside of async functions. This only works in ES modules.
 
 ```javascript
 // config.js (ES module)
@@ -1039,7 +1059,7 @@ export const supportsWebGL = await checkWebGLSupport()
 ```
 
 <Warning>
-**Careful:** Top-level await blocks the loading of the module and any modules that import it. Use it sparingly and only when you truly need the value before the module can be used.
+**Careful:** Top-level await blocks the loading of the module and any modules that import it. Use it sparingly, only when you truly need the value before the module can be used.
 </Warning>
 
 ---
@@ -1317,32 +1337,43 @@ Done
 
 ```javascript
 async function getData() {
-  return await fetch('/api/data')
+  try {
+    return fetch('/api/data')
+  } catch (error) {
+    console.error('Failed:', error)
+    return null
+  }
 }
 ```
 
 <Accordion title="Answer">
-**Issue:** The `await` is unnecessary.
+**Issue:** The `catch` block will never catch fetch errors.
 
-Since `getData` is already async, it will return a Promise. You don't need to `await` before returning. The Promise will be returned directly.
+When you `return fetch(...)` without `await`, the Promise is returned *before* it settles. If the fetch later fails, the rejection happens outside the try/catch block.
 
 ```javascript
-// Equivalent, simpler:
-async function getData() {
-  return fetch('/api/data')
-}
-
-// The 'await' only matters if you need to do something with the result
-// or if you're in a try/catch and want to catch errors:
+// ❌ WRONG - catch never runs for fetch errors
 async function getData() {
   try {
-    return await fetch('/api/data')  // await IS needed here to catch errors
+    return fetch('/api/data')  // Promise returned immediately
   } catch (error) {
-    console.error(error)
-    throw error
+    console.error('Failed:', error)  // Never runs!
+    return null
+  }
+}
+
+// ✓ CORRECT - await lets catch block handle errors
+async function getData() {
+  try {
+    return await fetch('/api/data')  // await IS needed
+  } catch (error) {
+    console.error('Failed:', error)  // Now this runs on error
+    return null
   }
 }
 ```
+
+**Note:** Outside of try/catch, `return await` and `return` behave the same. The `await` only matters when you need to catch errors or do something with the value before returning.
 </Accordion>
 
 ---
