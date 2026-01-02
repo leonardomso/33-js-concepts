@@ -77,9 +77,9 @@ Here's a simple example that sums numbers from 1 to `n`:
 
 ```javascript
 function sumTo(n) {
-  // Base case: when n is 1, we know the answer
-  if (n === 1) {
-    return 1
+  // Base case: when n is 1 or less, return n
+  if (n <= 1) {
+    return n
   }
   
   // Recursive case: n plus the sum of everything below it
@@ -87,6 +87,8 @@ function sumTo(n) {
 }
 
 console.log(sumTo(5))  // 15 (5 + 4 + 3 + 2 + 1)
+console.log(sumTo(1))  // 1
+console.log(sumTo(0))  // 0
 ```
 
 The function asks: "What's the sum from 1 to 5?" It answers: "5 plus the sum from 1 to 4." Then it asks the same question with 4, then 3, then 2, until it reaches 1, which it knows is just 1.
@@ -134,7 +136,7 @@ When you find the smallest doll, you start closing them back up. In recursion, o
 
 ## How Recursion Works Under the Hood
 
-To understand recursion, you need to understand how the [call stack](/concepts/call-stack) works. Every time a function is called, JavaScript creates an **[execution context](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this#function_context)** and pushes it onto the call stack. When the function returns, its context is popped off.
+To understand recursion, you need to understand how the [call stack](/concepts/call-stack) works. Every time a function is called, JavaScript creates an **[execution context](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** and pushes it onto the call stack. When the function returns, its context is popped off.
 
 With recursion, multiple execution contexts for the *same function* stack up:
 
@@ -216,6 +218,10 @@ sumTo(3)
 ## Classic Recursive Patterns
 
 Here are the most common recursive algorithms you'll encounter. Understanding these patterns will help you recognize when recursion is the right tool.
+
+<Note>
+The examples below assume valid, non-negative integer inputs. In production code, you'd want to validate inputs and handle edge cases like negative numbers or non-integers.
+</Note>
 
 <AccordionGroup>
   <Accordion title="Factorial (n!)">
@@ -303,12 +309,13 @@ Here are the most common recursive algorithms you'll encounter. Understanding th
     
     ```javascript
     function sumTo(n) {
-      if (n === 1) return 1
+      if (n <= 1) return n
       return n + sumTo(n - 1)
     }
     
     console.log(sumTo(5))    // 15 (1+2+3+4+5)
     console.log(sumTo(100))  // 5050
+    console.log(sumTo(0))    // 0
     ```
     
     **Note:** There's a mathematical formula for this: `n * (n + 1) / 2`, which is O(1) instead of O(n). For simple sums, the formula is better. But the recursive approach teaches the pattern.
@@ -909,7 +916,7 @@ The iterative version uses heap memory (the array) instead of stack memory, so i
     console.log(arrayLength([]))            // 0
     ```
     
-    Note: We use `arr.length === 0` for the check, but we're counting by recurring through elements, not using `.length` to get the answer.
+    Note: We use `.length` only to check if the array is empty (our base case). The actual counting happens through recursion, not by directly returning `.length`.
   </Accordion>
   
   <Accordion title="Why is naive Fibonacci recursion inefficient, and how would you fix it?">
@@ -1016,8 +1023,8 @@ The iterative version uses heap memory (the array) instead of stack memory, so i
   <Card title="Recursion Explained (with Examples)" icon="newspaper" href="https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m">
     Visual explanation of factorial and Fibonacci with tree diagrams. Includes memoization introduction.
   </Card>
-  <Card title="Learn and Understand Recursion in JavaScript" icon="newspaper" href="https://codeburst.io/learn-and-understand-recursion-in-javascript-b588218e87ea">
-    Practical guide with real-world examples and tips for thinking recursively.
+  <Card title="JavaScript Recursive Function" icon="newspaper" href="https://www.javascripttutorial.net/javascript-recursive-function/">
+    Clear tutorial covering recursive function basics, countdowns, and sum calculations with detailed step-by-step explanations.
   </Card>
 </CardGroup>
 

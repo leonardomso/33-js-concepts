@@ -108,7 +108,7 @@ describe('Recursion', () => {
 
     describe('Sum to N', () => {
       function sumTo(n) {
-        if (n === 1) return 1
+        if (n <= 1) return n
         return n + sumTo(n - 1)
       }
 
@@ -118,8 +118,9 @@ describe('Recursion', () => {
         expect(sumTo(100)).toBe(5050)
       })
 
-      it('should handle base case', () => {
+      it('should handle base cases', () => {
         expect(sumTo(1)).toBe(1)
+        expect(sumTo(0)).toBe(0)
       })
     })
 
