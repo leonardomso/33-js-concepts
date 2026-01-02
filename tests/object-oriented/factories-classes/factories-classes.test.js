@@ -1361,6 +1361,53 @@ describe('Factories and Classes', () => {
       })
     })
 
+    describe('Arrow Function Class Fields', () => {
+      it('should auto-bind this with arrow function class fields', () => {
+        class Button {
+          count = 0
+
+          // Arrow function automatically binds 'this' to the instance
+          handleClick = () => {
+            this.count++
+            return this.count
+          }
+        }
+
+        const button = new Button()
+
+        // Works when called directly
+        expect(button.handleClick()).toBe(1)
+
+        // Extract the method
+        const handler = button.handleClick
+
+        // Works even when extracted! 'this' is still bound to button
+        expect(handler()).toBe(2)
+        expect(button.count).toBe(2)
+      })
+
+      it('should show regular methods lose this when extracted', () => {
+        class Counter {
+          count = 0
+
+          // Regular method - 'this' depends on call context
+          increment() {
+            this.count++
+            return this.count
+          }
+        }
+
+        const counter = new Counter()
+        expect(counter.increment()).toBe(1)
+
+        // Extract the method
+        const increment = counter.increment
+
+        // 'this' is undefined in strict mode when called standalone
+        expect(() => increment()).toThrow()
+      })
+    })
+
     describe('Method Chaining', () => {
       it('should support method chaining in class', () => {
         class Builder {

@@ -505,7 +505,7 @@ When you call `new Player("Alice")`, JavaScript performs **4 steps**:
     Runs the constructor with `this` bound to the new object
   </Step>
   <Step title="Return the object">
-    Returns `obj` automatically (unless the constructor explicitly returns a different object)
+    Returns `obj` automatically (unless the constructor explicitly returns a different non-null object; primitive return values are ignored)
   </Step>
 </Steps>
 
@@ -876,7 +876,7 @@ console.log(temp.celsius);     // ~37.78 (converted)
 
 ### [Private Fields (#)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields) — True Privacy
 
-ES2022 introduced **private fields** with the `#` prefix. Unlike the `_underscore` convention, these are **truly private**:
+ES2020 introduced **private fields** with the `#` prefix. Unlike the `_underscore` convention, these are **truly private**:
 
 ```javascript
 class BankAccount {
@@ -1156,6 +1156,28 @@ console.log(safeCounter.getCount());  // 1
 <Warning>
 **The `this` Trap:** When you extract a method from an object and call it standalone, `this` is no longer bound to the original object. Factory functions that use closures instead of `this` avoid this problem entirely.
 </Warning>
+
+<Tip>
+**Arrow Function Class Fields:** In classes, you can use arrow functions as class fields to auto-bind `this`:
+
+```javascript
+class Button {
+  count = 0;
+  
+  // Arrow function automatically binds 'this' to the instance
+  handleClick = () => {
+    this.count++;
+    console.log(`Clicked ${this.count} times`);
+  };
+}
+
+const button = new Button();
+const handler = button.handleClick;
+handler();  // Works! 'this' is still bound to button
+```
+
+This is an alternative to manually binding methods with `.bind(this)` in the constructor.
+</Tip>
 
 ---
 
@@ -1660,7 +1682,7 @@ nemo.swim();      // Works
 | **`instanceof`** | Doesn't work | Works |
 | **True privacy** | Closures | Private fields (#) |
 | **Memory efficiency** | Each instance has own methods | Methods shared via prototype |
-| **`this` binding** | Not an issue (no `this` in returned object) | Must be careful with `this` |
+| **`this` binding** | Can avoid `this` with closures | Must be careful with `this` |
 | **Inheritance** | Composition (flexible) | `extends` (hierarchical) |
 | **Familiarity** | Functional style | OOP style (familiar to Java/C# devs) |
 
@@ -1974,11 +1996,11 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
   <Card title="How To Use Classes in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/understanding-classes-in-javascript">
     Tania builds a Character class step by step, adding features one at a time. Great if you want to follow along and type the code yourself.
   </Card>
-  <Card title="JavaScript Classes — Under The Hood" icon="newspaper" href="https://medium.com/tech-tajawal/javascript-classes-under-the-hood-6b26d2667677">
+  <Card title="JavaScript Classes — Under The Hood" icon="newspaper" href="https://talkingtech.io/javascript-classes-under-the-hood/">
     Shows the ES5 equivalent of every ES6 class feature side by side. Read this to understand what JavaScript is really doing when you write a class.
   </Card>
   <Card title="Factory Functions in JavaScript" icon="newspaper" href="https://atendesigngroup.com/blog/factory-functions-javascript">
-    Focuses on the closure-based privacy pattern with a bank account example. Short and focused if you just want to learn factories.
+    A classic introduction to factory functions using a Car example. Shows the self-pattern for avoiding `this` issues and private variables with closures.
   </Card>
   <Card title="Class vs Factory function" icon="newspaper" href="https://medium.freecodecamp.org/class-vs-factory-function-exploring-the-way-forward-73258b6a8d15">
     Cristi Salcescu's comparison of both approaches with pros, cons, and when to use each.
