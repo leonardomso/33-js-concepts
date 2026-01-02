@@ -232,7 +232,7 @@ A **side effect** is anything a function does besides computing and returning a 
 | **DOM manipulation** | `element.innerHTML = '...'` | Changes the page state |
 | **HTTP requests** | `fetch('/api/data')` | Communicates with external systems |
 | **Writing to storage** | `localStorage.setItem()` | Persists data outside the function |
-| **Throwing exceptions** | `throw new Error()` | Exits function in an unexpected way |
+| **Throwing exceptions** | `throw new Error()` | Breaks normal control flow (debated) |
 
 ```javascript
 // ❌ IMPURE: Multiple side effects
@@ -331,6 +331,10 @@ const updatedUser = {
 updatedUser.address.city = 'LA'
 console.log(user.address.city)  // 'NYC' — Original safe!
 ```
+
+<Note>
+**Limitation:** `structuredClone()` cannot clone functions or DOM nodes. It will throw a `DataCloneError` for these types.
+</Note>
 
 <Warning>
 **The Trap:** Spread operator (`...`) only copies one level deep. If you have nested objects or arrays, mutations to the nested data will affect the original. Use `structuredClone()` for deep copies, or see our [Value vs Reference Types](/concepts/value-reference-types) guide for more patterns.
@@ -467,7 +471,7 @@ Writing pure functions isn't just about following rules. It brings real, practic
   </Accordion>
   
   <Accordion title="3. Safe to Cache (Memoization)">
-    Since pure functions always return the same output for the same input, you can safely cache their results. This is called [memoization](https://developer.mozilla.org/en-US/docs/Glossary/Memoization).
+    Since pure functions always return the same output for the same input, you can safely cache their results. This is called memoization.
     
     ```javascript
     // Expensive calculation - safe to cache because it's pure
@@ -793,8 +797,8 @@ The pure functions (`formatUsername`, `isValidUsername`) are easy to test and re
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="Pure Functions — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=BMUiFMZr7vk">
-    Mattias Petter Johansson's entertaining introduction to pure functions. Part of his excellent functional programming series that makes complex topics approachable.
+  <Card title="Refactoring Into Pure Functions — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=cUrEedgvJSk">
+    Mattias Petter Johansson demonstrates refactoring JavaScript code into tiny, pure, composable functions. Part of his excellent functional programming series that makes complex topics approachable.
   </Card>
   <Card title="Pure vs Impure Functions" icon="video" href="https://www.youtube.com/watch?v=AHbRVJzpB54">
     Theodore Anderson's clear comparison of pure and impure functions with practical JavaScript examples and visual explanations.
