@@ -119,29 +119,29 @@ Generators click when you have the right mental picture. Think of them like a **
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    GENERATOR AS A VENDING MACHINE                        │
+│                    GENERATOR AS A VENDING MACHINE                       │
 ├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│     YOU                                    VENDING MACHINE               │
-│   (caller)                                   (generator)                 │
-│                                                                          │
-│  ┌─────────┐                              ┌─────────────────┐            │
-│  │         │                              │  ┌───────────┐  │            │
-│  │  "I'll  │ ──── Press button ─────────► │  │  Snack A  │  │            │
-│  │  have   │      (call .next())          │  ├───────────┤  │            │
-│  │   one"  │                              │  │  Snack B  │  │            │
-│  │         │ ◄─── Dispense one item ───── │  ├───────────┤  │            │
-│  │         │      (yield value)           │  │  Snack C  │  │            │
-│  │         │                              │  └───────────┘  │            │
-│  │         │      * Machine PAUSES *      │                 │            │
-│  │         │      * Waits for next *      │   [  PAUSED  ]  │            │
-│  │         │      * button press   *      │                 │            │
-│  └─────────┘                              └─────────────────┘            │
-│                                                                          │
-│  KEY INSIGHT: The machine remembers where it stopped!                    │
-│  When you press the button again, it gives you the NEXT item,            │
-│  not the first one again.                                                │
-│                                                                          │
+│                                                                         │
+│     YOU                                    VENDING MACHINE              │
+│   (caller)                                   (generator)                │
+│                                                                         │
+│  ┌─────────┐                              ┌─────────────────┐           │
+│  │         │                              │  ┌───────────┐  │           │
+│  │  "I'll  │ ──── Press button ─────────► │  │  Snack A  │  │           │
+│  │  have   │      (call .next())          │  ├───────────┤  │           │
+│  │   one"  │                              │  │  Snack B  │  │           │
+│  │         │ ◄─── Dispense one item ───── │  ├───────────┤  │           │
+│  │         │      (yield value)           │  │  Snack C  │  │           │
+│  │         │                              │  └───────────┘  │           │
+│  │         │      * Machine PAUSES *      │                 │           │
+│  │         │      * Waits for next *      │   [  PAUSED  ]  │           │
+│  │         │      * button press   *      │                 │           │
+│  └─────────┘                              └─────────────────┘           │
+│                                                                         │
+│  KEY INSIGHT: The machine remembers where it stopped!                   │
+│  When you press the button again, it gives you the NEXT item,           │
+│  not the first one again.                                               │
+│                                                                         │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -376,29 +376,100 @@ console.log(chat.next('Blue').value)
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│                    DATA FLOW WITH yield                                  │
+│                        DATA FLOW WITH yield                             │
 ├─────────────────────────────────────────────────────────────────────────┤
-│                                                                          │
-│   CALLER                                     GENERATOR                   │
-│                                                                          │
-│   .next()        ─────────────────────►     starts execution             │
-│                  ◄─────────────────────     yield 'question'             │
-│                                                                          │
-│   .next('Alice') ─────────────────────►     const name = 'Alice'         │
-│                  ◄─────────────────────     yield 'Hello Alice'          │
-│                                                                          │
-│   .next('Blue')  ─────────────────────►     const color = 'Blue'         │
-│                  ◄─────────────────────     yield 'Blue is great'        │
-│                                                                          │
-│   The value passed to .next() becomes the RESULT of the yield           │
-│   expression inside the generator.                                       │
-│                                                                          │
+│                                                                         │
+│   CALLER                                     GENERATOR                  │
+│                                                                         │
+│   .next()        ─────────────────────►     starts execution            │
+│                  ◄─────────────────────     yield 'question'            │
+│                                                                         │
+│   .next('Alice') ─────────────────────►     const name = 'Alice'        │
+│                  ◄─────────────────────     yield 'Hello Alice'         │
+│                                                                         │
+│   .next('Blue')  ─────────────────────►     const color = 'Blue'        │
+│                  ◄─────────────────────     yield 'Blue is great'       │
+│                                                                         │
+│   The value passed to .next() becomes the RESULT of the yield          │
+│   expression inside the generator.                                      │
+│                                                                         │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
 <Note>
 **Why no value in the first `.next()`?** The first call starts the generator and runs until the first `yield`. There's no `yield` waiting to receive a value yet, so anything you pass gets ignored.
 </Note>
+
+### Generator Control Methods: `.return()` and `.throw()`
+
+Beyond `.next()`, generators have two more control methods that give you full control over execution.
+
+#### Early Termination with `.return()`
+
+The `.return(value)` method ends the generator immediately and returns the specified value:
+
+```javascript
+function* countdown() {
+  yield 3
+  yield 2
+  yield 1
+  yield 'Liftoff!'
+}
+
+const rocket = countdown()
+
+console.log(rocket.next())           // { value: 3, done: false }
+console.log(rocket.return('Aborted')) // { value: 'Aborted', done: true }
+console.log(rocket.next())           // { value: undefined, done: true }
+// Generator is now closed — subsequent .next() calls return done: true
+```
+
+This is useful for cleanup or when you need to stop iteration early.
+
+#### Error Injection with `.throw()`
+
+The `.throw(error)` method throws an exception at the current `yield` point. If the generator has a `try/catch`, it can handle the error:
+
+```javascript
+function* resilientGenerator() {
+  try {
+    yield 'A'
+    yield 'B'
+    yield 'C'
+  } catch (e) {
+    yield `Caught: ${e.message}`
+  }
+  yield 'Done'
+}
+
+const gen = resilientGenerator()
+
+console.log(gen.next().value)  // "A"
+console.log(gen.throw(new Error('Oops!')).value)  // "Caught: Oops!"
+console.log(gen.next().value)  // "Done"
+```
+
+If there's no `try/catch`, the error propagates out:
+
+```javascript
+function* fragileGenerator() {
+  yield 'A'
+  yield 'B'  // Error thrown here if we call .throw() after first yield
+}
+
+const gen = fragileGenerator()
+gen.next()  // { value: 'A', done: false }
+
+try {
+  gen.throw(new Error('Boom!'))
+} catch (e) {
+  console.log(e.message)  // "Boom!"
+}
+```
+
+<Tip>
+These methods complete the generator's interface. While `.next()` is used most often, `.return()` and `.throw()` give you full control over generator execution — useful for resource cleanup and error handling in complex workflows.
+</Tip>
 
 ---
 
