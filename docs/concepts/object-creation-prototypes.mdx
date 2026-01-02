@@ -417,13 +417,13 @@ The [`new`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Op
     JavaScript creates a fresh object: `const obj = {}`
   </Step>
   <Step title="Link the prototype">
-    Sets `obj`'s `[[Prototype]]` to `Constructor.prototype`
+    Sets `obj`'s `[[Prototype]]` to `Constructor.prototype` (if it's an object). If `Constructor.prototype` is not an object (e.g., a primitive), the new object uses `Object.prototype` instead.
   </Step>
   <Step title="Execute the constructor">
     Runs the constructor with `this` bound to the new object
   </Step>
   <Step title="Return the object">
-    Returns `obj` (unless the constructor explicitly returns a different object)
+    Returns `obj` (unless the constructor explicitly returns a non-primitive value)
   </Step>
 </Steps>
 
@@ -501,7 +501,9 @@ function myNew(Constructor, ...args) {
   // Step 3: Run constructor with 'this' = obj
   const result = Constructor.apply(obj, args)
   
-  // Step 4: Return result if it's an object, otherwise return obj
+  // Step 4: Return result if it's a non-primitive, otherwise return obj
+  // Note: Functions are also objects, so constructors returning functions
+  // will override the default return as well
   return (result !== null && typeof result === 'object') ? result : obj
 }
 
@@ -512,6 +514,10 @@ const player2 = myNew(Player, "Bob", 100)
 console.log(player1 instanceof Player)  // true
 console.log(player2 instanceof Player)  // true
 ```
+
+<Note>
+**Edge case:** If a constructor returns a function, that function is returned instead of the new object (since functions are objects in JavaScript). This is rare in practice but technically allowed by the spec.
+</Note>
 
 <Warning>
 **Don't forget `new`!** Without it, `this` in a constructor refers to the global object (or `undefined` in strict mode), causing bugs. ES6 classes throw an error if you forget `new`, which is safer.
@@ -709,6 +715,22 @@ console.log("own" in obj)        // true
 console.log("inherited" in obj)  // true
 ```
 
+<Tip>
+**Modern alternative: `Object.hasOwn()`** (ES2022+)
+
+Use [`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) instead of `hasOwnProperty()`. It's safer because it works on objects with a `null` prototype and can't be shadowed:
+
+```javascript
+// hasOwnProperty can be shadowed or unavailable
+const nullProto = Object.create(null)
+nullProto.key = "value"
+// nullProto.hasOwnProperty("key")  // TypeError: not a function
+
+// Object.hasOwn always works
+Object.hasOwn(nullProto, "key")  // true
+```
+</Tip>
+
 ### Object.keys() vs for...in
 
 ```javascript
@@ -813,26 +835,31 @@ console.log(Player.prototype)  // { constructor: Player }
 
 ### Mistake 3: Prototype Pollution
 
-When using objects as dictionaries, user input could overwrite prototype properties:
+[Prototype pollution](https://developer.mozilla.org/en-US/docs/Web/Security/Attacks/Prototype_pollution) occurs when attackers can modify `Object.prototype`, affecting all objects. This is a real security vulnerability:
 
 ```javascript
-// ❌ DANGEROUS with user input
-const userData = {}
+// ❌ DANGEROUS - merging untrusted data can pollute prototypes
+const maliciousPayload = JSON.parse('{"__proto__": {"isAdmin": true}}')
 
-// Imagine this comes from user input
-const key = "__proto__"
-const value = { isAdmin: true }
+const user = {}
+Object.assign(user, maliciousPayload)  // Pollution via Object.assign!
 
-userData[key] = value  // In some environments, this pollutes the prototype!
+// Now ALL objects have isAdmin!
+const anotherUser = {}
+console.log(anotherUser.isAdmin)  // true - polluted!
 
-// Safer approach: use null prototype or Map
+// ✓ SAFER - use null prototype objects for dictionaries
 const safeDict = Object.create(null)
-safeDict[key] = value  // No prototype to pollute
+safeDict["__proto__"] = "safe"  // Just a regular property, no pollution
 
-// Or use Map for dictionaries
+// ✓ SAFEST - use Map for key-value storage with untrusted keys
 const map = new Map()
-map.set(key, value)  // Completely safe
+map.set("__proto__", "value")  // Completely safe
 ```
+
+<Warning>
+**Prototype pollution attacks** can occur through `Object.assign()`, object spread (`{...obj}`), deep merge utilities, and JSON parsing. Always sanitize untrusted input and consider using `Object.create(null)` or `Map` for user-controlled keys.
+</Warning>
 
 ### Mistake 4: Shared Reference on Prototype
 
@@ -1078,8 +1105,8 @@ function Player(name) {
   <Card title="Understanding Prototypes in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/understanding-prototypes-and-inheritance-in-javascript">
     Walks through building a full inheritance hierarchy from scratch with runnable examples. Great for developers who learn by building rather than reading theory.
   </Card>
-  <Card title="JavaScript Object Creation Patterns" icon="newspaper" href="https://www.patterns.dev/vanilla/object-creation-patterns">
-    Compares factory functions, constructor patterns, and Object.create() side by side. Helps you choose the right pattern for your specific use case.
+  <Card title="Object-Oriented JavaScript" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Advanced_JavaScript_objects">
+    MDN's learning path covering object basics, prototypes, and classes. Includes hands-on exercises and a practical project to solidify your understanding.
   </Card>
   <Card title="The Prototype Chain Explained" icon="newspaper" href="https://javascript.info/prototype-inheritance">
     Includes interactive code examples you can edit and run in the browser. The "tasks" section at the end tests your understanding with practical challenges.
