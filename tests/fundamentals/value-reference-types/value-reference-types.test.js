@@ -253,13 +253,17 @@ describe('Value Types and Reference Types', () => {
 
   describe('Deep Freeze', () => {
     it('should freeze nested objects with deep freeze function', () => {
-      function deepFreeze(obj) {
+      function deepFreeze(obj, seen = new WeakSet()) {
+        // Prevent infinite loops from circular references
+        if (seen.has(obj)) return obj
+        seen.add(obj)
+        
         const propNames = Reflect.ownKeys(obj)
         
         for (const name of propNames) {
           const value = obj[name]
           if (value && typeof value === "object") {
-            deepFreeze(value)
+            deepFreeze(value, seen)
           }
         }
         
@@ -274,6 +278,35 @@ describe('Value Types and Reference Types', () => {
       // In strict mode, this throws TypeError since nested object is now frozen
       expect(() => { user.address.city = "LA" }).toThrow(TypeError)
       expect(user.address.city).toBe("NYC") // Now blocked!
+    })
+
+    it('should handle circular references without infinite loop', () => {
+      function deepFreeze(obj, seen = new WeakSet()) {
+        if (seen.has(obj)) return obj
+        seen.add(obj)
+        
+        const propNames = Reflect.ownKeys(obj)
+        
+        for (const name of propNames) {
+          const value = obj[name]
+          if (value && typeof value === "object") {
+            deepFreeze(value, seen)
+          }
+        }
+        
+        return Object.freeze(obj)
+      }
+
+      // Create object with circular reference
+      const obj = { name: "test" }
+      obj.self = obj  // Circular reference
+
+      // Should not throw or hang - handles circular reference
+      const frozen = deepFreeze(obj)
+      
+      expect(Object.isFrozen(frozen)).toBe(true)
+      expect(frozen.self).toBe(frozen) // Circular reference preserved
+      expect(() => { frozen.name = "changed" }).toThrow(TypeError)
     })
   })
 

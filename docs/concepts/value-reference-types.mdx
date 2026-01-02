@@ -42,19 +42,23 @@ JavaScript has two categories of data types that behave very differently:
 
 | Type | Example | Stored As |
 |------|---------|-----------|
-| `string` | `"hello"` | The actual characters |
-| `number` | `42` | The actual number |
-| `bigint` | `9007199254740993n` | The actual large integer |
-| `boolean` | `true` | The actual boolean |
+| `string` | `"hello"` | The string value |
+| `number` | `42` | The numeric value |
+| `bigint` | `9007199254740993n` | The large integer value |
+| `boolean` | `true` | The boolean value |
 | `undefined` | `undefined` | The undefined value |
 | `null` | `null` | The null value |
 | [`symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) | `Symbol("id")` | The unique symbol |
 
 **Key characteristics:**
-- Stored directly in the variable
+- Behave as if stored directly in the variable
 - Immutable — you can't change them, only replace them
 - Copied by value — copies are independent
 - Compared by value — same value = equal
+
+<Info>
+**Under the hood:** Modern JavaScript engines optimize string storage through a technique called "string interning" — identical strings may share the same memory location internally. However, this is an optimization detail; strings still *behave* as independent values when you work with them.
+</Info>
 
 ### Reference Types
 
@@ -118,6 +122,10 @@ This difference between "storing the value itself" vs "storing a map to the valu
 ## How Memory Works: Stack vs Heap
 
 To truly understand the difference, you need to know where JavaScript stores data.
+
+<Info>
+**Important note:** The stack/heap model described below is a **conceptual simplification** to help you understand how value types and reference types *behave*. The JavaScript specification doesn't define where values are stored in memory—actual engines (V8, SpiderMonkey, etc.) may optimize storage differently. What matters is understanding the *behavior* difference, not the physical memory location.
+</Info>
 
 ### The Stack: Home of Primitives
 
@@ -380,6 +388,8 @@ arr1.length === arr2.length && arr1.every((v, i) => v === arr2[i])
 // For complex cases, use a library like Lodash
 _.isEqual(obj1, obj2)
 ```
+
+**Caution with JSON.stringify:** Property order matters! `{a:1, b:2}` and `{b:2, a:1}` will produce different strings even though they're logically equal. It also fails with `undefined`, functions, Symbols, circular references, `NaN`, and `Infinity`. For reliable deep equality, use a library like Lodash's `_.isEqual()`.
 </Tip>
 
 ---
@@ -608,7 +618,11 @@ console.log(user.address.city); // "LA"
 To freeze nested objects too, you need a recursive "deep freeze" function:
 
 ```javascript
-function deepFreeze(obj) {
+function deepFreeze(obj, seen = new WeakSet()) {
+  // Prevent infinite loops from circular references
+  if (seen.has(obj)) return obj;
+  seen.add(obj);
+  
   // Get all property names (including symbols)
   const propNames = Reflect.ownKeys(obj);
   
@@ -616,7 +630,7 @@ function deepFreeze(obj) {
   for (const name of propNames) {
     const value = obj[name];
     if (value && typeof value === "object") {
-      deepFreeze(value);
+      deepFreeze(value, seen);
     }
   }
   
@@ -632,6 +646,10 @@ const user = deepFreeze({
 user.address.city = "LA";       // Now this is blocked too!
 console.log(user.address.city); // "NYC"
 ```
+
+<Info>
+**Why the `seen` WeakSet?** Objects can have circular references (e.g., `obj.self = obj`). Without tracking visited objects, the function would recurse infinitely. The WeakSet ensures each object is only processed once.
+</Info>
 
 ### Related Methods: freeze vs seal vs preventExtensions
 
@@ -776,6 +794,7 @@ const deep = JSON.parse(JSON.stringify(original));
     - Cannot clone property descriptors, getters/setters
     - Cannot clone the prototype chain
     - Symbol-keyed properties are ignored
+    - Error objects lose their stack trace (only `message` is preserved)
     - Not available in older browsers (pre-2022)
     
     ```javascript
