@@ -1,73 +1,1182 @@
 ---
-title: "Modern JavaScript Syntax: ES6+ Features You Need to Know"
+title: "Modern JavaScript Syntax: ES6+ Features That Changed Everything"
 sidebarTitle: "Modern JavaScript Syntax: ES6+ Features"
-description: "Learn modern JavaScript syntax — destructuring, spread/rest operators, optional chaining, nullish coalescing, and template literals. Master the ES6+ features used in every modern codebase."
+description: "Learn modern JavaScript ES6+ syntax. Covers destructuring, spread/rest operators, arrow functions, optional chaining, nullish coalescing, and template literals with practical examples."
 ---
 
-## Overview
+Why does JavaScript code written in 2015 look so different from code written today? How do developers write such concise, readable code without all the boilerplate?
 
-**Modern JavaScript syntax** (ES6 and beyond) introduced powerful features that make code more concise, readable, and expressive. Features like destructuring, spread operators, optional chaining (`?.`), and nullish coalescing (`??`) are now used in virtually every JavaScript codebase and framework.
+```javascript
+// The old way (pre-ES6)
+var city = user && user.address && user.address.city;  // undefined if missing
+var copy = arr.slice();
+var merged = Object.assign({}, obj1, obj2);
+
+// The modern way
+const city = user?.address?.city;  // undefined if missing
+const copy = [...arr];
+const merged = { ...obj1, ...obj2 };
+```
+
+The answer is **ES6 (ECMAScript 2015)** and the yearly updates that followed. These additions didn't just add features. They transformed how we write JavaScript. Features like [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), and [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) are now everywhere: in tutorials, open-source projects, and job interviews.
 
 <Info>
 **What you'll learn in this guide:**
-- Destructuring (objects and arrays)
-- Spread operator (`...`) and rest parameters
-- Optional chaining (`?.`)
-- Nullish coalescing (`??`)
+- Arrow functions and how they handle `this` differently
+- Destructuring objects and arrays to extract values cleanly
+- Spread operator (`...`) for copying and merging
+- Rest parameters for collecting function arguments
+- Template literals for string interpolation
+- Optional chaining (`?.`) to avoid "cannot read property of undefined"
+- Nullish coalescing (`??`) vs logical OR (`||`)
 - Logical assignment operators (`??=`, `||=`, `&&=`)
-- Template literals and tagged templates
-- Default parameters
-- Short-circuit evaluation patterns
-- Computed property names
+- Default parameters for functions
+- Enhanced object literals (shorthand syntax)
+- Map, Set, and Symbol basics
+- The `for...of` loop for iterating values
 </Info>
+
+<Warning>
+**Prerequisite:** This guide touches on `let`, `const`, and `var` briefly. For a deep dive into how they differ (block scope, hoisting, temporal dead zone), read our [Scope and Closures](/concepts/scope-and-closures) guide first.
+</Warning>
+
+---
+
+## A Quick Note on let, const, and var
+
+Before ES6, `var` was the only way to declare variables. Now we have `let` and `const`, which behave differently:
+
+| Feature | `var` | `let` | `const` |
+|---------|-------|-------|---------|
+| Scope | Function | Block | Block |
+| Hoisting | Yes (undefined) | Yes (TDZ) | Yes (TDZ) |
+| Redeclaration | Allowed | Error | Error |
+| Reassignment | Allowed | Allowed | Error |
+
+```javascript
+// var is function-scoped (can cause bugs)
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// Output: 3, 3, 3
+
+// let is block-scoped (each iteration gets its own i)
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 100);
+}
+// Output: 0, 1, 2
+```
+
+**The modern rule:** Use `const` by default. Use `let` when you need to reassign. Avoid `var`.
+
+For the full explanation of scope, hoisting, and the temporal dead zone, see [Scope and Closures](/concepts/scope-and-closures).
+
+---
+
+## Arrow Functions
+
+[Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) provide a shorter syntax for writing functions. But the real difference is how they handle `this`.
+
+### The Syntax
+
+```javascript
+// Traditional function
+function add(a, b) {
+  return a + b;
+}
+
+// Arrow function variations
+const add = (a, b) => a + b;              // Implicit return (single expression)
+const add = (a, b) => { return a + b; };  // Block body (explicit return needed)
+const square = x => x * x;                // Single param: parentheses optional
+const greet = () => 'Hello!';             // No params: parentheses required
+```
+
+### Arrow Functions and `this`
+
+Here's the big difference: arrow functions don't have their own `this`. They inherit `this` from the surrounding code (lexical scope).
+
+```javascript
+// Problem with regular functions
+const counter = {
+  count: 0,
+  start: function() {
+    setInterval(function() {
+      this.count++;  // 'this' is NOT the counter object!
+      console.log(this.count);
+    }, 1000);
+  }
+};
+counter.start();  // NaN, NaN, NaN...
+
+// Solution with arrow functions
+const counter = {
+  count: 0,
+  start: function() {
+    setInterval(() => {
+      this.count++;  // 'this' IS the counter object
+      console.log(this.count);
+    }, 1000);
+  }
+};
+counter.start();  // 1, 2, 3...
+```
+
+For a complete exploration of `this` binding rules, see [this, call, apply and bind](/concepts/this-call-apply-bind).
+
+### When NOT to Use Arrow Functions
+
+Arrow functions aren't always the right choice:
+
+```javascript
+// ❌ DON'T use as object methods
+const user = {
+  name: 'Alice',
+  greet: () => {
+    console.log(`Hi, I'm ${this.name}`);  // 'this' is NOT user!
+  }
+};
+user.greet();  // "Hi, I'm undefined"
+
+// ✓ USE regular function for methods
+const user = {
+  name: 'Alice',
+  greet() {
+    console.log(`Hi, I'm ${this.name}`);
+  }
+};
+user.greet();  // "Hi, I'm Alice"
+
+// ❌ DON'T use as constructors
+const Person = (name) => { this.name = name; };
+new Person('Alice');  // TypeError: Person is not a constructor
+
+// ❌ Arrow functions don't have their own 'arguments'
+const logArgs = () => console.log(arguments);  // ReferenceError (use ...rest instead)
+```
+
+### The Object Literal Trap
+
+Returning an object literal requires parentheses:
+
+```javascript
+// ❌ WRONG - curly braces are interpreted as function body
+const createUser = name => { name: name };
+console.log(createUser('Alice'));  // undefined (it's a labeled statement!)
+
+// ❌ ALSO WRONG - adding more properties causes a SyntaxError
+// const createUser = name => { name: name, active: true };  // SyntaxError!
+
+// ✓ CORRECT - wrap object literal in parentheses
+const createUser = name => ({ name: name, active: true });
+console.log(createUser('Alice'));  // { name: 'Alice', active: true }
+```
+
+---
+
+## Destructuring Assignment
+
+[Destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) lets you unpack values from arrays or properties from objects into distinct variables.
+
+### Array Destructuring
+
+```javascript
+const colors = ['red', 'green', 'blue'];
+
+// Basic destructuring
+const [first, second, third] = colors;
+console.log(first);   // "red"
+console.log(second);  // "green"
+
+// Skip elements with empty slots
+const [primary, , tertiary] = colors;
+console.log(tertiary);  // "blue"
+
+// Default values
+const [a, b, c, d = 'yellow'] = colors;
+console.log(d);  // "yellow"
+
+// Rest pattern (collect remaining elements)
+const [head, ...tail] = colors;
+console.log(head);  // "red"
+console.log(tail);  // ["green", "blue"]
+```
+
+**Swap variables without a temp:**
+
+```javascript
+let x = 1;
+let y = 2;
+
+[x, y] = [y, x];
+
+console.log(x);  // 2
+console.log(y);  // 1
+```
+
+### Object Destructuring
+
+```javascript
+const user = {
+  name: 'Alice',
+  age: 25,
+  address: {
+    city: 'Portland',
+    country: 'USA'
+  }
+};
+
+// Basic destructuring
+const { name, age } = user;
+console.log(name);  // "Alice"
+
+// Rename variables
+const { name: userName, age: userAge } = user;
+console.log(userName);  // "Alice"
+
+// Default values
+const { name, role = 'guest' } = user;
+console.log(role);  // "guest"
+
+// Nested destructuring
+const { address: { city } } = user;
+console.log(city);  // "Portland"
+
+// Rest pattern
+const { name, ...rest } = user;
+console.log(rest);  // { age: 25, address: { city: 'Portland', country: 'USA' } }
+```
+
+### Destructuring in Function Parameters
+
+This pattern is everywhere in modern JavaScript:
+
+```javascript
+// Without destructuring
+function createUser(options) {
+  const name = options.name;
+  const age = options.age || 18;
+  const role = options.role || 'user';
+  return { name, age, role };
+}
+
+// With destructuring
+function createUser({ name, age = 18, role = 'user' }) {
+  return { name, age, role };
+}
+
+// With default for the entire parameter (prevents error if called with no args)
+function greet({ name = 'Guest' } = {}) {
+  return `Hello, ${name}!`;
+}
+
+greet();                  // "Hello, Guest!"
+greet({ name: 'Alice' }); // "Hello, Alice!"
+```
+
+### Common Mistake: Destructuring to Existing Variables
+
+```javascript
+let name, age;
+
+// ❌ WRONG - JavaScript thinks {} is a code block
+{ name, age } = user;  // SyntaxError
+
+// ✓ CORRECT - wrap in parentheses
+({ name, age } = user);
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    DESTRUCTURING VISUALIZED                              │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   ARRAY DESTRUCTURING                 OBJECT DESTRUCTURING               │
+│   ───────────────────                 ────────────────────               │
+│                                                                          │
+│   const [a, b, c] = [1, 2, 3]        const {x, y} = {x: 10, y: 20}      │
+│                                                                          │
+│   [1, 2, 3]                           { x: 10, y: 20 }                   │
+│    │  │  │                              │       │                        │
+│    │  │  └──► c = 3                     │       └──► y = 20              │
+│    │  └─────► b = 2                     └──────────► x = 10              │
+│    └────────► a = 1                                                      │
+│                                                                          │
+│   Position matters!                   Property name matters!             │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Spread and Rest Operators
+
+The `...` syntax does two different things depending on context:
+
+| Context | Name | What It Does |
+|---------|------|--------------|
+| Function call, array/object literal | **Spread** | Expands an iterable into individual elements |
+| Function parameter, destructuring | **Rest** | Collects multiple elements into an array |
+
+### Spread Operator
+
+**Spreading arrays:**
+
+```javascript
+const arr1 = [1, 2, 3];
+const arr2 = [4, 5, 6];
+
+// Combine arrays
+const combined = [...arr1, ...arr2];
+console.log(combined);  // [1, 2, 3, 4, 5, 6]
+
+// Copy an array
+const copy = [...arr1];
+console.log(copy);  // [1, 2, 3]
+
+// Insert elements
+const withMiddle = [0, ...arr1, 4];
+console.log(withMiddle);  // [0, 1, 2, 3, 4]
+
+// Pass array as function arguments
+console.log(Math.max(...arr1));  // 3
+```
+
+**Spreading objects:**
+
+```javascript
+const defaults = { theme: 'light', fontSize: 14 };
+const userPrefs = { theme: 'dark' };
+
+// Merge objects (later properties override earlier)
+const settings = { ...defaults, ...userPrefs };
+console.log(settings);  // { theme: 'dark', fontSize: 14 }
+
+// Copy and update
+const updated = { ...user, name: 'Bob' };
+
+// Copy an object (shallow!)
+const copy = { ...original };
+```
+
+### Rest Parameters
+
+```javascript
+// Collect all arguments into an array
+function sum(...numbers) {
+  return numbers.reduce((total, n) => total + n, 0);
+}
+console.log(sum(1, 2, 3, 4));  // 10
+
+// Collect remaining arguments
+function logFirst(first, ...rest) {
+  console.log('First:', first);
+  console.log('Rest:', rest);
+}
+logFirst('a', 'b', 'c', 'd');
+// First: a
+// Rest: ['b', 'c', 'd']
+```
+
+**Rest in destructuring:**
+
+```javascript
+// Arrays
+const [first, second, ...others] = [1, 2, 3, 4, 5];
+console.log(others);  // [3, 4, 5]
+
+// Objects
+const { id, ...otherProps } = { id: 1, name: 'Alice', age: 25 };
+console.log(otherProps);  // { name: 'Alice', age: 25 }
+```
+
+### The Shallow Copy Trap
+
+Spread creates **shallow copies**. Nested objects are still referenced:
+
+```javascript
+const original = {
+  name: 'Alice',
+  address: { city: 'Portland' }
+};
+
+const copy = { ...original };
+
+// Modifying nested object affects both!
+copy.address.city = 'Seattle';
+console.log(original.address.city);  // "Seattle" — oops!
+
+// For deep copies, use structuredClone (modern) or JSON (with limitations)
+const deepCopy = structuredClone(original);
+```
+
+---
+
+## Template Literals
+
+[Template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) use backticks (`` ` ``) instead of quotes and support string interpolation and multi-line strings.
+
+### Basic Interpolation
+
+```javascript
+const name = 'Alice';
+const age = 25;
+
+// Old way
+const message = 'Hello, ' + name + '! You are ' + age + ' years old.';
+
+// Template literal
+const message = `Hello, ${name}! You are ${age} years old.`;
+
+// Expressions work too
+const price = 19.99;
+const tax = 0.1;
+const total = `Total: $${(price * (1 + tax)).toFixed(2)}`;
+console.log(total);  // "Total: $21.99"
+```
+
+### Multi-line Strings
+
+```javascript
+// Old way (awkward)
+const html = '<div>\n' +
+  '  <h1>Title</h1>\n' +
+  '  <p>Content</p>\n' +
+  '</div>';
+
+// Template literal (natural)
+const html = `
+  <div>
+    <h1>${title}</h1>
+    <p>${content}</p>
+  </div>
+`;
+```
+
+### Tagged Templates
+
+Tagged templates let you process template literals with a function:
+
+```javascript
+function highlight(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i] ? `<mark>${values[i]}</mark>` : '';
+    return result + str + value;
+  }, '');
+}
+
+const query = 'JavaScript';
+const count = 42;
+
+const result = highlight`Found ${count} results for ${query}`;
+console.log(result);
+// "Found <mark>42</mark> results for <mark>JavaScript</mark>"
+```
+
+Tagged templates power libraries like [styled-components](https://styled-components.com/) (CSS-in-JS) and [GraphQL](https://graphql.org/) query builders.
+
+---
+
+## Optional Chaining (`?.`)
+
+[Optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) lets you safely access nested properties without checking each level for null or undefined.
+
+### The Problem It Solves
+
+```javascript
+const user = {
+  name: 'Alice',
+  // address is undefined
+};
+
+// Old way (verbose and error-prone)
+const city = user && user.address && user.address.city;
+
+// Old way (slightly better)
+const city = user.address ? user.address.city : undefined;
+
+// Modern way
+const city = user?.address?.city;  // undefined (no error!)
+```
+
+### Three Syntax Forms
+
+```javascript
+// Property access
+const city = user?.address?.city;
+
+// Bracket notation (for dynamic keys)
+const prop = 'address';
+const value = user?.[prop]?.city;
+
+// Function calls (only call if function exists)
+const result = user?.getName?.();
+```
+
+### Short-Circuit Behavior
+
+When the left side is `null` or `undefined`, evaluation stops immediately and returns `undefined`:
+
+```javascript
+const user = null;
+
+// Without optional chaining
+user.address.city;  // TypeError: Cannot read property 'address' of null
+
+// With optional chaining
+user?.address?.city;  // undefined (evaluation stops at user)
+```
+
+### Don't Overuse It
+
+```javascript
+// ❌ BAD - if user should always exist, you're hiding bugs
+function processUser(user) {
+  return user?.name?.toUpperCase();  // Silently returns undefined
+}
+
+// ✓ GOOD - fail fast when data is invalid
+function processUser(user) {
+  if (!user) throw new Error('User is required');
+  return user.name.toUpperCase();
+}
+
+// ✓ GOOD - use when null/undefined is a valid possibility
+const displayName = apiResponse?.data?.user?.displayName ?? 'Anonymous';
+```
+
+---
+
+## Nullish Coalescing (`??`)
+
+The [nullish coalescing operator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) returns the right-hand side when the left-hand side is `null` or `undefined`. This is different from `||`, which returns the right-hand side for any falsy value.
+
+### `??` vs `||`
+
+| Value | `value \|\| 'default'` | `value ?? 'default'` |
+|-------|----------------------|---------------------|
+| `null` | `'default'` | `'default'` |
+| `undefined` | `'default'` | `'default'` |
+| `0` | `'default'` | `0` |
+| `''` | `'default'` | `''` |
+| `false` | `'default'` | `false` |
+| `NaN` | `'default'` | `NaN` |
+
+```javascript
+// Problem with ||
+const count = response.count || 10;
+// If response.count is 0, this incorrectly returns 10!
+
+// Solution with ??
+const count = response.count ?? 10;
+// Only returns 10 if count is null or undefined
+// Returns 0 if count is 0 (which is what we want)
+
+// Common use cases
+const port = process.env.PORT ?? 3000;
+const username = inputValue ?? 'guest';
+const timeout = options.timeout ?? 5000;
+```
+
+### Combining with Optional Chaining
+
+These two operators work great together:
+
+```javascript
+const city = user?.address?.city ?? 'Unknown';
+const count = response?.data?.items?.length ?? 0;
+```
+
+### Logical Assignment Operators
+
+ES2021 added assignment versions of logical operators:
+
+```javascript
+// Nullish coalescing assignment
+user.name ??= 'Anonymous';
+// Only assigns if user.name is null or undefined
+// (short-circuits: skips assignment if value already exists)
+
+// Logical OR assignment
+options.debug ||= false;
+// Only assigns if options.debug is falsy
+
+// Logical AND assignment
+user.lastLogin &&= new Date();
+// Only assigns if user.lastLogin is truthy
+```
+
+```javascript
+// Practical example: initializing config
+function configure(options = {}) {
+  options.retries ??= 3;
+  options.timeout ??= 5000;
+  options.cache ??= true;
+  return options;
+}
+
+configure({});                    // { retries: 3, timeout: 5000, cache: true }
+configure({ retries: 0 });        // { retries: 0, timeout: 5000, cache: true }
+configure({ timeout: null });     // { retries: 3, timeout: 5000, cache: true }
+```
+
+---
+
+## Default Parameters
+
+[Default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters) let you specify fallback values for function arguments.
+
+```javascript
+// Old way
+function greet(name, greeting) {
+  name = name || 'Guest';
+  greeting = greeting || 'Hello';
+  return `${greeting}, ${name}!`;
+}
+
+// Modern way
+function greet(name = 'Guest', greeting = 'Hello') {
+  return `${greeting}, ${name}!`;
+}
+
+greet();                    // "Hello, Guest!"
+greet('Alice');             // "Hello, Alice!"
+greet('Alice', 'Hi');       // "Hi, Alice!"
+```
+
+### Only `undefined` Triggers Defaults
+
+```javascript
+function example(value = 'default') {
+  return value;
+}
+
+example(undefined);  // "default"
+example(null);       // null (NOT "default"!)
+example(0);          // 0
+example('');         // ''
+example(false);      // false
+```
+
+### Defaults Can Reference Earlier Parameters
+
+```javascript
+function createRect(width, height = width) {
+  return { width, height };
+}
+
+createRect(10);       // { width: 10, height: 10 }
+createRect(10, 20);   // { width: 10, height: 20 }
+```
+
+### Defaults Can Be Expressions
+
+```javascript
+function createId(prefix = 'id', timestamp = Date.now()) {
+  return `${prefix}_${timestamp}`;
+}
+
+// Date.now() is called each time (not once at definition)
+createId();  // "id_1704067200000"
+createId();  // "id_1704067200001" (different!)
+```
+
+---
+
+## Enhanced Object Literals
+
+ES6 added several shortcuts for creating objects.
+
+### Property Shorthand
+
+When the property name matches the variable name:
+
+```javascript
+const name = 'Alice';
+const age = 25;
+
+// Old way
+const user = { name: name, age: age };
+
+// Shorthand
+const user = { name, age };
+console.log(user);  // { name: 'Alice', age: 25 }
+```
+
+### Method Shorthand
+
+```javascript
+// Old way
+const calculator = {
+  add: function(a, b) {
+    return a + b;
+  }
+};
+
+// Shorthand
+const calculator = {
+  add(a, b) {
+    return a + b;
+  },
+  
+  // Works with async too
+  async fetchData(url) {
+    const response = await fetch(url);
+    return response.json();
+  }
+};
+```
+
+### Computed Property Names
+
+Use expressions as property names:
+
+```javascript
+const key = 'dynamicKey';
+const index = 0;
+
+const obj = {
+  [key]: 'value',
+  [`item_${index}`]: 'first item',
+  ['get' + 'Name']() {
+    return this.name;
+  }
+};
+
+console.log(obj.dynamicKey);  // "value"
+console.log(obj.item_0);      // "first item"
+```
+
+**Practical example:**
+
+```javascript
+function createState(key, value) {
+  return {
+    [key]: value,
+    [`set${key.charAt(0).toUpperCase() + key.slice(1)}`](newValue) {
+      this[key] = newValue;
+    }
+  };
+}
+
+const state = createState('count', 0);
+console.log(state);  // { count: 0, setCount: [Function] }
+state.setCount(5);
+console.log(state.count);  // 5
+```
+
+---
+
+## Map, Set, and Symbol
+
+ES6 introduced new built-in data structures and a new primitive type.
+
+### Map
+
+[Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) is a collection of key-value pairs where keys can be any type (not just strings).
+
+```javascript
+const map = new Map();
+
+// Any value can be a key
+const objKey = { id: 1 };
+map.set('string', 'value1');
+map.set(42, 'value2');
+map.set(objKey, 'value3');
+
+console.log(map.get(objKey));  // "value3"
+console.log(map.size);         // 3
+console.log(map.has('string')); // true
+
+// Iteration (maintains insertion order)
+for (const [key, value] of map) {
+  console.log(key, value);
+}
+
+// Convert to/from arrays
+const arr = [...map];  // [['string', 'value1'], [42, 'value2'], ...]
+const map2 = new Map([['a', 1], ['b', 2]]);
+```
+
+**When to use Map vs Object:**
+
+| Use Case | Object | Map |
+|----------|--------|-----|
+| Keys are strings | ✓ | ✓ |
+| Keys are any type | ✗ | ✓ |
+| Need insertion order | ✓ (string keys) | ✓ |
+| Need size property | ✗ | ✓ |
+| Frequent add/remove | Slower | Faster |
+| JSON serialization | ✓ | ✗ |
+
+### Set
+
+[Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) is a collection of unique values.
+
+```javascript
+const set = new Set([1, 2, 3, 3, 3]);
+console.log(set);  // Set { 1, 2, 3 }
+
+set.add(4);
+set.delete(1);
+console.log(set.has(2));  // true
+console.log(set.size);    // 3
+
+// Remove duplicates from array
+const numbers = [1, 2, 2, 3, 3, 3];
+const unique = [...new Set(numbers)];
+console.log(unique);  // [1, 2, 3]
+
+// Set operations
+const a = new Set([1, 2, 3]);
+const b = new Set([2, 3, 4]);
+
+const union = new Set([...a, ...b]);           // {1, 2, 3, 4}
+const intersection = [...a].filter(x => b.has(x));  // [2, 3]
+const difference = [...a].filter(x => !b.has(x));   // [1]
+```
+
+### Symbol
+
+[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) is a primitive type for unique identifiers.
+
+```javascript
+// Every Symbol is unique
+const sym1 = Symbol('description');
+const sym2 = Symbol('description');
+console.log(sym1 === sym2);  // false
+
+// Use as object keys (hidden from normal iteration)
+const ID = Symbol('id');
+const user = {
+  name: 'Alice',
+  [ID]: 12345
+};
+
+console.log(user[ID]);        // 12345
+console.log(Object.keys(user));  // ['name'] (Symbol not included)
+
+// Well-known Symbols customize object behavior
+const collection = {
+  items: [1, 2, 3],
+  [Symbol.iterator]() {
+    let i = 0;
+    return {
+      next: () => ({
+        value: this.items[i],
+        done: i++ >= this.items.length
+      })
+    };
+  }
+};
+
+for (const item of collection) {
+  console.log(item);  // 1, 2, 3
+}
+```
+
+---
+
+## for...of Loop
+
+The [for...of](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of) loop iterates over iterable objects (arrays, strings, Maps, Sets, etc.).
+
+```javascript
+// Arrays
+const colors = ['red', 'green', 'blue'];
+for (const color of colors) {
+  console.log(color);  // "red", "green", "blue"
+}
+
+// Strings
+for (const char of 'hello') {
+  console.log(char);  // "h", "e", "l", "l", "o"
+}
+
+// Maps
+const map = new Map([['a', 1], ['b', 2]]);
+for (const [key, value] of map) {
+  console.log(key, value);  // "a" 1, "b" 2
+}
+
+// Sets
+const set = new Set([1, 2, 3]);
+for (const num of set) {
+  console.log(num);  // 1, 2, 3
+}
+
+// With destructuring
+const users = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 30 }
+];
+for (const { name, age } of users) {
+  console.log(`${name} is ${age}`);
+}
+```
+
+### for...of vs for...in
+
+| | `for...of` | `for...in` |
+|---|-----------|-----------|
+| Iterates over | Values | Keys (property names) |
+| Works with | Iterables (Array, String, Map, Set) | Objects |
+| Array indices | Use `.entries()` | Yes (as strings) |
+
+```javascript
+const arr = ['a', 'b', 'c'];
+
+for (const value of arr) {
+  console.log(value);  // "a", "b", "c" (values)
+}
+
+for (const index in arr) {
+  console.log(index);  // "0", "1", "2" (keys as strings)
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about modern JavaScript syntax:**
+
+1. **Arrow functions inherit `this`** from the enclosing scope. Don't use them as object methods or constructors.
+
+2. **Destructuring extracts values** from arrays (by position) and objects (by property name). Use it for cleaner function parameters.
+
+3. **Spread (`...`) expands**, rest (`...`) collects. Same syntax, different contexts.
+
+4. **`??` checks for null/undefined only**. Use it when `0`, `''`, or `false` are valid values. Use `||` when you want fallback for any falsy value.
+
+5. **Optional chaining (`?.`)** prevents "cannot read property of undefined" errors. Don't overuse it or you'll hide bugs.
+
+6. **Template literals** use backticks and support `${expressions}` and multi-line strings.
+
+7. **Default parameters trigger only on `undefined`**, not `null` or other falsy values.
+
+8. **Map keys can be any type**, maintain insertion order, and have a `.size` property. Use Map when Object doesn't fit.
+
+9. **Set stores unique values**. Spread a Set to deduplicate an array: `[...new Set(arr)]`.
+
+10. **`for...of` iterates values**, `for...in` iterates keys. Use `for...of` for arrays.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the output of `0 ?? 'default'` vs `0 || 'default'`?">
+    **Answer:**
+    
+    - `0 ?? 'default'` returns `0`
+    - `0 || 'default'` returns `'default'`
+    
+    The nullish coalescing operator (`??`) only returns the right side for `null` or `undefined`. Since `0` is neither, it returns `0`.
+    
+    The logical OR (`||`) returns the right side for any falsy value. Since `0` is falsy, it returns `'default'`.
+    
+    ```javascript
+    // Use ?? when 0 is a valid value
+    const count = response.count ?? 10;
+    
+    // Use || when any falsy value should trigger default
+    const name = input || 'Anonymous';
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: How do you return an object literal from an arrow function?">
+    **Answer:**
+    
+    Wrap the object literal in parentheses:
+    
+    ```javascript
+    // ❌ WRONG - braces interpreted as function body
+    const createUser = name => { name, active: true };
+    // Returns undefined
+    
+    // ✓ CORRECT - parentheses make it an expression
+    const createUser = name => ({ name, active: true });
+    // Returns { name: '...', active: true }
+    ```
+    
+    Without parentheses, JavaScript interprets `{ }` as a function body block, not an object literal. The parentheses force it to be treated as an expression.
+  </Accordion>
+  
+  <Accordion title="Question 3: What's the difference between spread and rest?">
+    **Answer:**
+    
+    They use the same `...` syntax but do opposite things:
+    
+    **Spread** expands an iterable into individual elements:
+    ```javascript
+    const arr = [1, 2, 3];
+    console.log(...arr);        // 1 2 3 (individual values)
+    const copy = [...arr];      // [1, 2, 3] (new array)
+    Math.max(...arr);           // 3 (arguments spread)
+    ```
+    
+    **Rest** collects multiple elements into an array:
+    ```javascript
+    function sum(...numbers) {  // Collects all args
+      return numbers.reduce((a, b) => a + b, 0);
+    }
+    
+    const [first, ...rest] = [1, 2, 3, 4];
+    // first = 1, rest = [2, 3, 4]
+    ```
+    
+    **Rule of thumb:** In a function definition or destructuring pattern, it's rest. Everywhere else (function calls, array/object literals), it's spread.
+  </Accordion>
+  
+  <Accordion title="Question 4: Why shouldn't you use arrow functions as object methods?">
+    **Answer:**
+    
+    Arrow functions don't have their own `this`. They inherit `this` from the enclosing lexical scope, which is usually the global object or `undefined` (in strict mode).
+    
+    ```javascript
+    const user = {
+      name: 'Alice',
+      
+      // ❌ Arrow function - 'this' is NOT the user object
+      greetArrow: () => {
+        console.log(`Hi, I'm ${this.name}`);
+      },
+      
+      // ✓ Regular function - 'this' IS the user object
+      greetRegular() {
+        console.log(`Hi, I'm ${this.name}`);
+      }
+    };
+    
+    user.greetArrow();   // "Hi, I'm undefined"
+    user.greetRegular(); // "Hi, I'm Alice"
+    ```
+    
+    Use regular functions (or method shorthand) for object methods when you need access to `this`.
+  </Accordion>
+  
+  <Accordion title="Question 5: How do you swap two variables without a temporary variable?">
+    **Answer:**
+    
+    Use array destructuring:
+    
+    ```javascript
+    let a = 1;
+    let b = 2;
+    
+    [a, b] = [b, a];
+    
+    console.log(a);  // 2
+    console.log(b);  // 1
+    ```
+    
+    This creates a temporary array `[b, a]` (which is `[2, 1]`), then destructures it back into `a` and `b` in the new order.
+  </Accordion>
+  
+  <Accordion title="Question 6: What does `user?.address?.city ?? 'Unknown'` return if user is null?">
+    **Answer:**
+    
+    It returns `'Unknown'`.
+    
+    Here's the evaluation:
+    1. `user?.address` — `user` is `null`, so optional chaining short-circuits and returns `undefined`
+    2. `undefined?.city` — This never runs because we already got `undefined`
+    3. `undefined ?? 'Unknown'` — `undefined` is nullish, so we get `'Unknown'`
+    
+    ```javascript
+    const user = null;
+    const city = user?.address?.city ?? 'Unknown';
+    console.log(city);  // "Unknown"
+    
+    // Without optional chaining, this would throw:
+    // TypeError: Cannot read property 'address' of null
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Scope and Closures" icon="layer-group" href="/concepts/scope-and-closures">
+    Deep dive into let, const, var, block scope, and the temporal dead zone
+  </Card>
+  <Card title="this, call, apply and bind" icon="bullseye" href="/concepts/this-call-apply-bind">
+    Understanding arrow function this binding in context of all binding rules
+  </Card>
+  <Card title="ES Modules" icon="box" href="/concepts/es-modules">
+    Modern import/export syntax for organizing JavaScript code
+  </Card>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    Async features that pair well with modern syntax like async/await
+  </Card>
+</CardGroup>
+
+---
 
 ## Reference
 
 <CardGroup cols={2}>
   <Card title="Destructuring Assignment — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment">
-    MDN documentation for destructuring
-  </Card>
-  <Card title="Optional Chaining — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">
-    MDN documentation for optional chaining (?.)
-  </Card>
-  <Card title="Nullish Coalescing — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing">
-    MDN documentation for nullish coalescing (??)
+    Complete reference for array and object destructuring patterns
   </Card>
   <Card title="Spread Syntax — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax">
-    MDN documentation for spread syntax (...)
+    Documentation for the spread operator in arrays, objects, and function calls
+  </Card>
+  <Card title="Arrow Functions — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions">
+    Arrow function syntax, limitations, and this binding behavior
+  </Card>
+  <Card title="Optional Chaining — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining">
+    Safe property access with the ?. operator
+  </Card>
+  <Card title="Nullish Coalescing — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing">
+    The ?? operator and how it differs from ||
+  </Card>
+  <Card title="Template Literals — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">
+    String interpolation, multi-line strings, and tagged templates
   </Card>
 </CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="ES6 Destructuring: The Complete Guide" icon="newspaper" href="https://codeburst.io/es6-destructuring-the-complete-guide-7f842d08b98f">
-    By Glad Chinda
+  <Card title="Destructuring Assignment" icon="newspaper" href="https://javascript.info/destructuring-assignment">
+    Thorough breakdown of both array and object destructuring with progressive examples from basic to nested patterns. Includes interactive exercises that reinforce each concept.
   </Card>
-  <Card title="Optional Chaining in JavaScript" icon="newspaper" href="https://javascript.info/optional-chaining">
-    By JavaScript.info
+  <Card title="Rest Parameters and Spread Syntax" icon="newspaper" href="https://javascript.info/rest-parameters-spread">
+    Clearly distinguishes between the visually identical `...` syntax for rest vs spread. The comparison with the legacy `arguments` object shows why modern features are preferred.
+  </Card>
+  <Card title="Optional Chaining" icon="newspaper" href="https://javascript.info/optional-chaining">
+    Walks through the evolution from verbose `&&` chains to elegant optional chaining, covering all three syntax forms. Includes guidance on when NOT to overuse it.
+  </Card>
+  <Card title="Nullish Coalescing Operator" icon="newspaper" href="https://javascript.info/nullish-coalescing-operator">
+    Explains the crucial difference between `??` and `||`. This distinction prevents common bugs when working with legitimate zero or empty string values.
+  </Card>
+  <Card title="A Dead Simple Intro to Destructuring" icon="newspaper" href="https://wesbos.com/destructuring-objects">
+    Wes Bos's practical teaching style with real-world examples including API response handling and deeply nested data extraction. Short, focused, and immediately applicable.
+  </Card>
+  <Card title="Template Literals" icon="newspaper" href="https://css-tricks.com/template-literals/">
+    Goes beyond basic interpolation to explore tagged template literals for building custom DSLs and sanitizing user input. Includes a practical reusable template function.
   </Card>
 </CardGroup>
-
-- [JavaScript Destructuring — Wes Bos](https://wesbos.com/destructuring-objects)
-- [ES6 Spread Operator — JavaScript.info](https://javascript.info/rest-parameters-spread)
-- [Nullish Coalescing Operator Explained — freeCodeCamp](https://www.freecodecamp.org/news/nullish-coalescing-operator-in-javascript/)
-- [ES6 Template Literals — CSS-Tricks](https://css-tricks.com/template-literals/)
-- [Tagged Template Literals — Wes Bos](https://wesbos.com/tagged-template-literals)
-- [JavaScript's Logical Assignment Operators — V8 Blog](https://v8.dev/features/logical-assignment)
-- [Rest Parameters and Spread Syntax — JavaScript.info](https://javascript.info/rest-parameters-spread)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="JavaScript ES6 Destructuring" icon="video" href="https://www.youtube.com/watch?v=NIq3qLaHCIs">
-    By Web Dev Simplified
+  <Card title="JavaScript Destructuring in 100 Seconds" icon="video" href="https://www.youtube.com/watch?v=UgEaJBz3bjY">
+    Fireship's rapid-fire format packs array destructuring, object destructuring, default values, and nested patterns into a dense but digestible 100 seconds.
   </Card>
-  <Card title="Optional Chaining & Nullish Coalescing" icon="video" href="https://www.youtube.com/watch?v=v2tJ3nzXh8I">
-    By Web Dev Simplified
+  <Card title="JavaScript ES6 Arrow Functions Tutorial" icon="video" href="https://www.youtube.com/watch?v=h33Srr5J9nY">
+    Kyle from Web Dev Simplified walks through arrow function syntax variations, implicit returns, and the critical `this` binding differences from traditional functions.
+  </Card>
+  <Card title="Spread Operator and Rest Parameters" icon="video" href="https://www.youtube.com/watch?v=iLx4ma8ZqvQ">
+    Practical use cases including array concatenation, object merging, and function argument collection with side-by-side comparisons to ES5 alternatives.
+  </Card>
+  <Card title="Optional Chaining Explained" icon="video" href="https://www.youtube.com/watch?v=v2tJ3nzXh8I">
+    Shows how optional chaining eliminates defensive coding patterns when accessing deeply nested object properties. Includes real-world API response examples.
   </Card>
 </CardGroup>
-
-- [ES6 Spread Operator and Rest Parameters — Traversy Media](https://www.youtube.com/watch?v=iLx4ma8ZqvQ)
-- [JavaScript Template Literals — Programming with Mosh](https://www.youtube.com/watch?v=NgF9-pdTDGs)
-- [ES6 Features Every JavaScript Developer Should Know — Fireship](https://www.youtube.com/watch?v=NCwa_xi0Uuc)
