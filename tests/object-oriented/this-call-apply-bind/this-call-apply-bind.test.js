@@ -1222,14 +1222,16 @@ describe('this, call, apply and bind', () => {
           // Step 1: Create empty object
           const newObject = {}
           
-          // Step 2: Link prototype
-          Object.setPrototypeOf(newObject, Constructor.prototype)
+          // Step 2: Link prototype if it's an object
+          if (Constructor.prototype !== null && typeof Constructor.prototype === 'object') {
+            Object.setPrototypeOf(newObject, Constructor.prototype)
+          }
           
           // Step 3: Bind this and execute
           const result = Constructor.apply(newObject, args)
           
-          // Step 4: Return object (unless constructor returns an object)
-          return result instanceof Object ? result : newObject
+          // Step 4: Return object (unless constructor returns a non-primitive)
+          return result !== null && typeof result === 'object' ? result : newObject
         }
 
         function Person(name) {
@@ -1252,9 +1254,11 @@ describe('this, call, apply and bind', () => {
       it('should return custom object if constructor returns one', () => {
         function simulateNew(Constructor, ...args) {
           const newObject = {}
-          Object.setPrototypeOf(newObject, Constructor.prototype)
+          if (Constructor.prototype !== null && typeof Constructor.prototype === 'object') {
+            Object.setPrototypeOf(newObject, Constructor.prototype)
+          }
           const result = Constructor.apply(newObject, args)
-          return result instanceof Object ? result : newObject
+          return result !== null && typeof result === 'object' ? result : newObject
         }
 
         function ReturnsObject() {
@@ -1265,6 +1269,28 @@ describe('this, call, apply and bind', () => {
         const obj = simulateNew(ReturnsObject)
         expect(obj.custom).toBe("object")
         expect(obj.name).toBeUndefined()
+      })
+
+      it('should handle constructor with non-object prototype', () => {
+        function simulateNew(Constructor, ...args) {
+          const newObject = {}
+          if (Constructor.prototype !== null && typeof Constructor.prototype === 'object') {
+            Object.setPrototypeOf(newObject, Constructor.prototype)
+          }
+          const result = Constructor.apply(newObject, args)
+          return result !== null && typeof result === 'object' ? result : newObject
+        }
+
+        function WeirdConstructor(value) {
+          this.value = value
+        }
+        // Set prototype to a primitive (edge case)
+        WeirdConstructor.prototype = null
+
+        const obj = simulateNew(WeirdConstructor, 42)
+        expect(obj.value).toBe(42)
+        // When prototype is null, object keeps Object.prototype
+        expect(Object.getPrototypeOf(obj)).toBe(Object.prototype)
       })
     })
 

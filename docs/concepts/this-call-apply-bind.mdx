@@ -237,14 +237,17 @@ function simulateNew(Constructor, ...args) {
   // Step 1: Create empty object
   const newObject = {};
   
-  // Step 2: Link prototype (see Object.setPrototypeOf on MDN)
-  Object.setPrototypeOf(newObject, Constructor.prototype);
+  // Step 2: Link prototype if it's an object
+  // (If prototype isn't an object, newObject keeps Object.prototype)
+  if (Constructor.prototype !== null && typeof Constructor.prototype === 'object') {
+    Object.setPrototypeOf(newObject, Constructor.prototype);
+  }
   
   // Step 3: Bind this and execute
   const result = Constructor.apply(newObject, args);
   
-  // Step 4: Return object (unless constructor returns an object)
-  return result instanceof Object ? result : newObject;
+  // Step 4: Return object (unless constructor returns a non-primitive)
+  return result !== null && typeof result === 'object' ? result : newObject;
 }
 
 // These are equivalent:
@@ -273,7 +276,7 @@ console.log(rect.getArea());  // 50
 ```
 
 <Tip>
-For more on constructors, the `new` keyword, and `instanceof`, see the [new, Constructor, instanceof](/concepts/new-constructor) concept page.
+For more on constructors, the `new` keyword, and prototypes, see the [Object Creation & Prototypes](/concepts/object-creation-prototypes) concept page.
 </Tip>
 
 ---
@@ -1226,17 +1229,27 @@ class SearchBox {
 const ArrowClass = () => {};
 new ArrowClass();  // TypeError: ArrowClass is not a constructor
 
-// 2. No 'arguments' object (arrow functions don't have their own arguments binding)
+// 2. No own 'arguments' object
+// Arrow functions inherit 'arguments' from enclosing function scope (if any)
+function outer() {
+  const arrow = () => {
+    console.log(arguments);  // Works! Uses outer's arguments
+  };
+  arrow();
+}
+outer(1, 2, 3);  // logs [1, 2, 3]
+
+// But at module/global scope with no enclosing function:
 const arrow = () => {
   console.log(arguments);  // ReferenceError: arguments is not defined
 };
 
-// Use rest parameters instead
+// Use rest parameters instead (recommended)
 const arrowWithRest = (...args) => {
-  console.log(args);  // Works!
+  console.log(args);  // Works everywhere!
 };
 
-// 3. No 'super' in standalone arrows (works in class methods)
+// 3. No own 'super' binding (inherits from enclosing class method if any)
 
 // 4. Cannot be used as generators
 // There's no arrow generator syntax - you must use function*
@@ -1402,13 +1415,13 @@ Try to figure out what `this` refers to in each example before revealing the ans
   <Card title="Scope & Closures" icon="eye" href="/concepts/scope-and-closures">
     How variables are accessed — related to lexical this in arrow functions
   </Card>
-  <Card title="new, Constructor, instanceof" icon="hammer" href="/concepts/new-constructor">
+  <Card title="Object Creation & Prototypes" icon="hammer" href="/concepts/object-creation-prototypes">
     How the new keyword creates objects and binds this
   </Card>
   <Card title="Factories and Classes" icon="industry" href="/concepts/factories-classes">
     Object creation patterns that rely on this binding
   </Card>
-  <Card title="Prototype" icon="link" href="/concepts/prototype">
+  <Card title="Inheritance & Polymorphism" icon="link" href="/concepts/inheritance-polymorphism">
     Understanding the prototype chain and method inheritance
   </Card>
 </CardGroup>
