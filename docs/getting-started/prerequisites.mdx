@@ -1,0 +1,170 @@
+---
+title: "JavaScript Setup: Tools You Need to Start Learning"
+sidebarTitle: "Prerequisites"
+description: "Set up your JavaScript learning environment in minutes. All you need is a browser and optionally a code editor. Perfect for complete beginners."
+---
+
+## What Do You Need to Learn JavaScript?
+
+This guide is designed for everyone, including complete beginners. You don't need to know any programming language before starting.
+
+All you need are a few free tools that you probably already have.
+
+---
+
+## Required: A Web Browser
+
+JavaScript runs in every web browser. You can use any modern browser:
+
+| Browser | DevTools Shortcut |
+|---------|------------------|
+| **Chrome** (recommended) | F12 or Cmd+Option+J (Mac) |
+| **Firefox** | F12 or Cmd+Option+I (Mac) |
+| **Safari** | Cmd+Option+C (enable in Preferences first) |
+| **Edge** | F12 |
+
+<Tip>
+**We recommend Chrome** for learning. It has excellent developer tools and most tutorials use it for screenshots and examples.
+</Tip>
+
+### Using the Browser Console
+
+The browser console is where you'll run JavaScript code. Here's how to open it:
+
+<Steps>
+  <Step title="Open any webpage">
+    Even a blank tab works
+  </Step>
+  <Step title="Open Developer Tools">
+    Press **F12** (Windows/Linux) or **Cmd+Option+J** (Mac)
+  </Step>
+  <Step title="Click the Console tab">
+    This is your JavaScript playground
+  </Step>
+  <Step title="Type code and press Enter">
+    Try typing `console.log("Hello!")` and press Enter
+  </Step>
+</Steps>
+
+```javascript
+// Type this in your console right now
+console.log("Hello, JavaScript!")
+// Output: Hello, JavaScript!
+
+// Try some math
+2 + 2
+// Output: 4
+
+// Create a variable
+const name = "Your Name"
+console.log(name)
+// Output: Your Name
+```
+
+That's it. You're ready to learn JavaScript.
+
+---
+
+## Recommended: A Code Editor
+
+While you can learn a lot in the browser console, a code editor makes writing longer code much easier.
+
+### Free Options
+
+<CardGroup cols={2}>
+  <Card title="VS Code" icon="code" href="https://code.visualstudio.com/">
+    **Most popular choice.** Free, powerful, with excellent JavaScript support. Works on Windows, Mac, and Linux.
+  </Card>
+  <Card title="Sublime Text" icon="code" href="https://www.sublimetext.com/">
+    **Fast and lightweight.** Free to evaluate, works on all platforms.
+  </Card>
+</CardGroup>
+
+### Online Editors (No Installation)
+
+If you don't want to install anything, these online editors work great:
+
+<CardGroup cols={2}>
+  <Card title="CodePen" icon="codepen" href="https://codepen.io/">
+    Great for quick experiments. See your code run instantly.
+  </Card>
+  <Card title="JSFiddle" icon="js" href="https://jsfiddle.net/">
+    Simple and clean. Good for testing snippets.
+  </Card>
+  <Card title="StackBlitz" icon="bolt" href="https://stackblitz.com/">
+    Full development environment in your browser.
+  </Card>
+  <Card title="CodeSandbox" icon="box" href="https://codesandbox.io/">
+    Perfect for larger projects and frameworks.
+  </Card>
+</CardGroup>
+
+---
+
+## Optional: Node.js
+
+[Node.js](https://nodejs.org/) lets you run JavaScript outside the browser, on your computer's command line.
+
+**You don't need Node.js to learn from this guide.** Everything can be done in the browser.
+
+However, if you want to:
+- Run JavaScript files from your terminal
+- Use JavaScript for backend development later
+- Follow along with some advanced tutorials
+
+Then install the **LTS (Long Term Support)** version from [nodejs.org](https://nodejs.org/).
+
+### Checking if Node.js is Installed
+
+Open your terminal (Command Prompt on Windows, Terminal on Mac/Linux) and type:
+
+```bash
+node --version
+```
+
+If you see a version number like `v20.10.0`, you're good to go.
+
+---
+
+## Your First JavaScript Code
+
+Let's make sure everything works. Open your browser console and type:
+
+```javascript
+// Variables
+const message = "I'm learning JavaScript!"
+console.log(message)
+
+// A simple function
+function greet(name) {
+  return "Hello, " + name + "!"
+}
+
+console.log(greet("World"))
+// Output: Hello, World!
+```
+
+If you see the output, congratulations! You're ready to start learning.
+
+---
+
+## Summary
+
+| Tool | Required? | Purpose |
+|------|-----------|---------|
+| Web Browser | Yes | Run JavaScript, use DevTools console |
+| Code Editor | Recommended | Write and save longer code |
+| Node.js | Optional | Run JavaScript outside the browser |
+
+---
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Learning Paths" icon="map" href="/getting-started/learning-paths">
+    Find the right learning path for your goals
+  </Card>
+  <Card title="Start with Primitives" icon="play" href="/concepts/primitive-types">
+    Jump into the first concept
+  </Card>
+</CardGroup>

@@ -27,7 +27,10 @@
             "icon": "rocket",
             "pages": [
               "index",
-              "introduction"
+              "getting-started/about",
+              "getting-started/how-to-learn",
+              "getting-started/prerequisites",
+              "getting-started/learning-paths"
             ]
           },
           {
