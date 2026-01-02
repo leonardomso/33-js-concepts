@@ -1,62 +1,999 @@
 ---
-title: "Error Handling: Managing Errors & Exceptions in JavaScript"
-sidebarTitle: "Error Handling: Managing Errors & Exceptions"
-description: "Learn JavaScript error handling — try/catch/finally, Error types, custom errors, and async error patterns. Master throwing, catching, and handling errors in sync and async code."
+title: "Error Handling: Managing Errors Gracefully in JavaScript"
+sidebarTitle: "Error Handling: Managing Errors Gracefully"
+description: "Learn JavaScript error handling with try/catch/finally. Understand Error types, custom errors, async error patterns, and best practices for robust code."
 ---
 
-## Overview
+What happens when something goes wrong in your JavaScript code? How do you prevent one small error from crashing your entire application? How do you give users helpful feedback instead of a cryptic error message?
 
-**Error handling** is how you detect, respond to, and recover from errors in your code. JavaScript provides the `try...catch...finally` statement for synchronous errors, and special patterns for handling Promise rejections and async/await errors. Proper error handling makes your applications more robust and debuggable.
+```javascript
+// Without error handling - your app crashes
+const userData = JSON.parse('{ invalid json }')  // SyntaxError!
+
+// With error handling - you stay in control
+try {
+  const userData = JSON.parse('{ invalid json }')
+} catch (error) {
+  console.log('Could not parse user data:', error.message)
+  // Show user a friendly message, use default data, etc.
+}
+```
+
+**[Error handling](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling#exception_handling_statements)** is how you detect, respond to, and recover from errors in your code. JavaScript provides the `try...catch...finally` statement for synchronous errors and special patterns for handling async errors in [Promises](/concepts/promises) and [async/await](/concepts/async-await).
 
 <Info>
 **What you'll learn in this guide:**
-- The `try...catch...finally` statement
-- Built-in Error types (TypeError, ReferenceError, SyntaxError, etc.)
-- Throwing errors with the `throw` statement
-- Creating custom Error classes
-- Async error handling (Promise `.catch()`, async/await)
-- Global error handlers (`window.onerror`, `unhandledrejection`)
-- Error handling best practices
+- The `try...catch...finally` statement and when to use each block
+- The Error object and its properties (name, message, stack)
+- Built-in Error types: TypeError, ReferenceError, SyntaxError, and more
+- How to throw your own errors with meaningful messages
+- Creating custom Error classes for better error categorization
+- Error handling patterns for async code
+- Global error handlers for catching uncaught errors
+- Common mistakes and real-world patterns
 </Info>
+
+<Warning>
+**Helpful prerequisite:** This guide covers async error handling briefly. For a deeper dive into async patterns, check out [Promises](/concepts/promises) and [async/await](/concepts/async-await) first.
+</Warning>
+
+---
+
+## What is Error Handling in JavaScript?
+
+Errors happen. Users enter invalid data, network requests fail, APIs return unexpected responses, and sometimes we just make typos. **Error handling** is your strategy for detecting, responding to, and recovering from these problems gracefully. In JavaScript, you use the `try...catch` statement to catch errors, the `throw` statement to create them, and the `Error` object to describe what went wrong.
+
+<CardGroup cols={2}>
+  <Card title="Error — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">
+    Official MDN documentation for the Error object
+  </Card>
+  <Card title="try...catch — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch">
+    MDN documentation for the try...catch statement
+  </Card>
+</CardGroup>
+
+---
+
+## The Safety Net Analogy
+
+Think of error handling like a trapeze act at a circus. The acrobat (your code) performs risky moves high above the ground. The safety net (your catch block) is there to catch them if they fall. And no matter what happens, the show must go on (your finally block).
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       THE SAFETY NET ANALOGY                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│     try {                         TRAPEZE ACT                            │
+│       riskyMove()                 ┌─────────┐                            │
+│     }                             │ ACROBAT │  ← Your risky code         │
+│                                   └────┬────┘                            │
+│                                        │                                 │
+│     catch (error) {                    ▼  FALLS!                         │
+│       recover()              ═══════════════════════                     │
+│     }                            SAFETY NET  ← Catches the error         │
+│                                                                          │
+│     finally {                   The show continues!                      │
+│       cleanup()                 (runs no matter what)                    │
+│     }                                                                    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+| Circus | JavaScript | Purpose |
+|--------|------------|---------|
+| Trapeze act | `try` block | Code that might fail |
+| Safety net | `catch` block | Handles the error if one occurs |
+| Show continues | `finally` block | Cleanup that always runs |
+| Acrobat falls | Error is thrown | Something went wrong |
+
+---
+
+## The try/catch/finally Statement
+
+The **[`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)** statement is JavaScript's primary tool for handling errors. Here's the full syntax:
+
+```javascript
+try {
+  // Code that might throw an error
+  const result = riskyOperation()
+  console.log(result)
+  
+} catch (error) {
+  // Code that runs if an error is thrown
+  console.error('Something went wrong:', error.message)
+  
+} finally {
+  // Code that ALWAYS runs, error or not
+  cleanup()
+}
+```
+
+### The try Block
+
+The `try` block contains code that might throw an error. If an error occurs, execution immediately jumps to the `catch` block.
+
+```javascript
+try {
+  console.log('Starting...')      // Runs
+  JSON.parse('{ bad json }')      // Error! Jump to catch
+  console.log('This never runs')  // Skipped
+}
+```
+
+### The catch Block
+
+The `catch` block receives the error object and handles it. This is where you log errors, show user messages, or attempt recovery.
+
+```javascript
+try {
+  const data = JSON.parse(userInput)
+} catch (error) {
+  // error contains information about what went wrong
+  console.log(error.name)     // "SyntaxError"
+  console.log(error.message)  // "Unexpected token b in JSON..."
+  
+  // You can recover gracefully
+  const data = { fallback: true }
+}
+```
+
+<Tip>
+**Optional catch binding:** If you don't need the error object, you can omit it (ES2019+):
+
+```javascript
+try {
+  JSON.parse(maybeJson)
+} catch {
+  // No (error) parameter needed if you don't use it
+  return null
+}
+```
+</Tip>
+
+### The finally Block
+
+The `finally` block always runs, whether an error occurred or not. It's perfect for cleanup code like closing connections or hiding loading spinners.
+
+```javascript
+let isLoading = true
+
+try {
+  const data = await fetchData()
+  displayData(data)
+} catch (error) {
+  showErrorMessage(error)
+} finally {
+  // This runs no matter what!
+  isLoading = false
+  hideLoadingSpinner()
+}
+```
+
+<Warning>
+**finally runs even with return:** If you return from a try or catch block, finally still executes before the function returns:
+
+```javascript
+function example() {
+  try {
+    return 'from try'
+  } finally {
+    console.log('finally runs!')  // This still logs!
+  }
+}
+
+example()  // Logs "finally runs!", then returns "from try"
+```
+</Warning>
+
+### try/catch Only Works Synchronously
+
+This trips people up: `try/catch` won't catch errors in callbacks that run later.
+
+```javascript
+// ❌ WRONG - catch won't catch this error!
+try {
+  setTimeout(() => {
+    throw new Error('Async error')
+  }, 1000)
+} catch (error) {
+  console.log('This never runs')
+}
+
+// ✓ CORRECT - try/catch inside the callback
+setTimeout(() => {
+  try {
+    throw new Error('Async error')
+  } catch (error) {
+    console.log('Caught:', error.message)
+  }
+}, 1000)
+```
+
+For async code, see the [Async Error Handling](#async-error-handling) section.
+
+---
+
+## The Error Object
+
+When an error occurs, JavaScript creates an **[Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)** object with information about what went wrong.
+
+### Error Properties
+
+| Property | Description | Example |
+|----------|-------------|---------|
+| `name` | The type of error | `"TypeError"`, `"ReferenceError"` |
+| `message` | Human-readable description | `"Cannot read property 'x' of undefined"` |
+| `stack` | Call stack when error occurred (non-standard but widely supported) | Shows file names, line numbers |
+| `cause` | Original error (ES2022+) | Used for error chaining |
+
+```javascript
+try {
+  undefinedVariable
+} catch (error) {
+  console.log(error.name)     // "ReferenceError"
+  console.log(error.message)  // "undefinedVariable is not defined"
+  console.log(error.stack)    // Full stack trace with line numbers
+}
+```
+
+The `stack` property is essential for debugging. It shows exactly where the error occurred and the chain of function calls that led to it.
+
+---
+
+## Built-in Error Types
+
+JavaScript has several built-in error types. Knowing them helps you understand what went wrong and how to fix it.
+
+| Error Type | When It Occurs | Common Cause |
+|------------|----------------|--------------|
+| **[Error](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)** | Generic error | Base class, used for custom errors |
+| **[TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError)** | Wrong type | `null.foo`, calling non-function |
+| **[ReferenceError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError)** | Invalid reference | Using undefined variable |
+| **[SyntaxError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError)** | Invalid syntax | Bad JSON, missing brackets |
+| **[RangeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError)** | Value out of range | `new Array(-1)` |
+| **[URIError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError)** | Bad URI encoding | `decodeURIComponent('%')` |
+| **[AggregateError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AggregateError)** | Multiple errors | `Promise.any()` all reject |
+
+<AccordionGroup>
+  <Accordion title="TypeError - The most common error">
+    Occurs when a value is not the expected type, like calling a method on `null` or `undefined`:
+    
+    ```javascript
+    const user = null
+    console.log(user.name)  // TypeError: Cannot read property 'name' of null
+    
+    const notAFunction = 42
+    notAFunction()  // TypeError: notAFunction is not a function
+    ```
+    
+    **Fix:** Check if values exist before using them:
+    ```javascript
+    console.log(user?.name)  // undefined (no error)
+    ```
+  </Accordion>
+  
+  <Accordion title="ReferenceError - Variable doesn't exist">
+    Occurs when you try to use a variable that hasn't been declared:
+    
+    ```javascript
+    console.log(userName)  // ReferenceError: userName is not defined
+    ```
+    
+    **Common causes:** Typos in variable names, forgetting to import, using variables before declaration.
+  </Accordion>
+  
+  <Accordion title="SyntaxError - Invalid code or JSON">
+    Occurs when code has invalid syntax or when parsing invalid JSON:
+    
+    ```javascript
+    JSON.parse('{ name: "John" }')  // SyntaxError: Unexpected token n
+    // JSON requires double quotes: { "name": "John" }
+    
+    JSON.parse('')  // SyntaxError: Unexpected end of JSON input
+    ```
+    
+    **Note:** Syntax errors in your source code are caught at parse time, not runtime. `try/catch` only catches runtime SyntaxErrors like invalid JSON.
+  </Accordion>
+  
+  <Accordion title="RangeError - Value out of bounds">
+    Occurs when a value is outside its allowed range:
+    
+    ```javascript
+    new Array(-1)            // RangeError: Invalid array length
+    (1.5).toFixed(200)       // RangeError: precision out of range (max is 100)
+    'x'.repeat(Infinity)     // RangeError: Invalid count value
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## The throw Statement
+
+The **[`throw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw)** statement lets you create your own errors. When you throw, execution stops and jumps to the nearest catch block.
+
+```javascript
+function divide(a, b) {
+  if (b === 0) {
+    throw new Error('Cannot divide by zero')
+  }
+  return a / b
+}
+
+try {
+  const result = divide(10, 0)
+} catch (error) {
+  console.log(error.message)  // "Cannot divide by zero"
+}
+```
+
+### Always Throw Error Objects
+
+Technically you can throw anything, but always throw Error objects. They include a stack trace for debugging.
+
+```javascript
+// ❌ BAD - No stack trace, hard to debug
+throw 'Something went wrong'
+throw 404
+throw { message: 'Error' }
+
+// ✓ GOOD - Includes stack trace
+throw new Error('Something went wrong')
+throw new TypeError('Expected a string')
+throw new RangeError('Value must be between 0 and 100')
+```
+
+### Creating Meaningful Error Messages
+
+Good error messages tell you what went wrong and ideally how to fix it:
+
+```javascript
+// ❌ Vague
+throw new Error('Invalid input')
+
+// ✓ Specific
+throw new Error('Email address is invalid: missing @ symbol')
+throw new TypeError(`Expected string but got ${typeof value}`)
+throw new RangeError(`Age must be between 0 and 150, got ${age}`)
+```
+
+---
+
+## Custom Error Classes
+
+For larger applications, create custom error classes to categorize errors and add extra information.
+
+```javascript
+class ValidationError extends Error {
+  constructor(message) {
+    super(message)
+    this.name = 'ValidationError'
+  }
+}
+
+class NetworkError extends Error {
+  constructor(message, statusCode) {
+    super(message)
+    this.name = 'NetworkError'
+    this.statusCode = statusCode
+  }
+}
+```
+
+### The Auto-Naming Pattern
+
+Instead of manually setting `this.name` in every class, use the constructor name:
+
+```javascript
+class AppError extends Error {
+  constructor(message, options) {
+    super(message, options)
+    this.name = this.constructor.name  // Automatically uses class name
+  }
+}
+
+class ValidationError extends AppError {}
+class DatabaseError extends AppError {}
+class NetworkError extends AppError {}
+
+// All have correct names automatically
+throw new ValidationError('Invalid email')  // error.name === "ValidationError"
+```
+
+### Using instanceof for Error Handling
+
+Custom errors let you handle different error types differently:
+
+```javascript
+try {
+  await saveUser(userData)
+} catch (error) {
+  if (error instanceof ValidationError) {
+    // Show validation message to user
+    showFieldErrors(error.fields)
+  } else if (error instanceof NetworkError) {
+    // Network issue - maybe retry
+    showRetryButton()
+  } else {
+    // Unknown error - log and show generic message
+    console.error('Unexpected error:', error)
+    showGenericError()
+  }
+}
+```
+
+### Error Chaining with cause (ES2022+)
+
+When catching and re-throwing errors, preserve the original error using the `cause` option:
+
+```javascript
+async function fetchUserData(userId) {
+  try {
+    const response = await fetch(`/api/users/${userId}`)
+    return await response.json()
+  } catch (error) {
+    // Wrap the original error with more context
+    throw new Error(`Failed to load user ${userId}`, { cause: error })
+  }
+}
+
+// Later, you can access the original error
+try {
+  await fetchUserData(123)
+} catch (error) {
+  console.log(error.message)       // "Failed to load user 123"
+  console.log(error.cause.message) // Original fetch error
+}
+```
+
+---
+
+## Async Error Handling
+
+Error handling works differently with asynchronous code. Here's a quick overview. For comprehensive coverage, see our [Promises](/concepts/promises) and [async/await](/concepts/async-await) guides.
+
+### With Promises: .catch()
+
+Use `.catch()` to handle errors in Promise chains:
+
+```javascript
+fetch('/api/users')
+  .then(response => response.json())
+  .then(users => displayUsers(users))
+  .catch(error => {
+    // Catches errors from fetch, json parsing, or displayUsers
+    console.error('Failed to load users:', error)
+  })
+  .finally(() => {
+    hideLoadingSpinner()
+  })
+```
+
+### With async/await: try/catch
+
+With async/await, use regular try/catch blocks:
+
+```javascript
+async function loadUsers() {
+  try {
+    const response = await fetch('/api/users')
+    const users = await response.json()
+    return users
+  } catch (error) {
+    console.error('Failed to load users:', error)
+    throw error  // Re-throw if caller should handle it
+  }
+}
+```
+
+### The fetch() Trap: Check response.ok
+
+This catches many developers off guard: **`fetch()` doesn't throw on HTTP errors** like 404 or 500. It only throws on network failures.
+
+```javascript
+// ❌ WRONG - This won't catch 404 or 500 errors!
+try {
+  const response = await fetch('/api/users/999')
+  const user = await response.json()  // Might fail on error response
+} catch (error) {
+  // Only catches network errors, not HTTP errors
+}
+
+// ✓ CORRECT - Check response.ok
+try {
+  const response = await fetch('/api/users/999')
+  
+  if (!response.ok) {
+    throw new Error(`HTTP error: ${response.status}`)
+  }
+  
+  const user = await response.json()
+} catch (error) {
+  // Now catches both network AND HTTP errors
+  console.error('Request failed:', error.message)
+}
+```
+
+<Warning>
+**The #1 async mistake:** Using `forEach` with async callbacks doesn't work as expected. Use `for...of` for sequential or `Promise.all` for parallel. See our [async/await guide](/concepts/async-await) for details.
+</Warning>
+
+---
+
+## Global Error Handlers
+
+Global error handlers catch errors that slip through your try/catch blocks. They're a safety net of last resort, not a replacement for proper error handling.
+
+### window.onerror - Synchronous Errors
+
+Catches uncaught errors in the browser:
+
+```javascript
+window.onerror = function(message, source, lineno, colno, error) {
+  console.log('Uncaught error:', message)
+  console.log('Source:', source, 'Line:', lineno)
+  
+  // Send to error tracking service
+  logErrorToService(error)
+  
+  // Return true to prevent default browser error handling
+  return true
+}
+```
+
+### unhandledrejection - Promise Rejections
+
+Catches unhandled Promise rejections:
+
+```javascript
+window.addEventListener('unhandledrejection', event => {
+  console.warn('Unhandled promise rejection:', event.reason)
+  
+  // Prevent the default browser warning
+  event.preventDefault()
+  
+  // Log to error tracking service
+  logErrorToService(event.reason)
+})
+```
+
+<Tip>
+**When to use global handlers:**
+- Logging errors to a service like Sentry or LogRocket
+- Showing a generic "something went wrong" message
+- Tracking errors in production
+
+**Not for:** Regular error handling. Always prefer specific try/catch blocks.
+</Tip>
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Empty catch Blocks (Swallowing Errors)
+
+```javascript
+// ❌ WRONG - Error is silently lost
+try {
+  riskyOperation()
+} catch (error) {
+  // Nothing here - you'll never know something failed
+}
+
+// ✓ CORRECT - At minimum, log the error
+try {
+  riskyOperation()
+} catch (error) {
+  console.error('Operation failed:', error)
+}
+```
+
+### Mistake 2: Catching Too Broadly
+
+```javascript
+// ❌ WRONG - Hides programming bugs
+try {
+  processData(data)
+  undefinedVriable  // Typo! This bug is now hidden
+} catch (error) {
+  return 'Something went wrong'
+}
+
+// ✓ CORRECT - Only catch expected errors
+try {
+  return JSON.parse(userInput)
+} catch (error) {
+  if (error instanceof SyntaxError) {
+    return null  // Expected: invalid JSON
+  }
+  throw error  // Unexpected: re-throw
+}
+```
+
+### Mistake 3: Throwing Strings Instead of Errors
+
+```javascript
+// ❌ WRONG - No stack trace
+throw 'User not found'
+
+// ✓ CORRECT - Has stack trace for debugging
+throw new Error('User not found')
+```
+
+### Mistake 4: Not Re-throwing When Needed
+
+```javascript
+// ❌ WRONG - Caller doesn't know an error occurred
+async function fetchData() {
+  try {
+    return await fetch('/api/data')
+  } catch (error) {
+    console.log('Error:', error)
+    // Returns undefined - caller thinks it succeeded!
+  }
+}
+
+// ✓ CORRECT - Re-throw or return meaningful value
+async function fetchData() {
+  try {
+    return await fetch('/api/data')
+  } catch (error) {
+    console.log('Error:', error)
+    throw error  // Let caller handle it
+    // OR: return null with explicit meaning
+  }
+}
+```
+
+### Mistake 5: Forgetting try/catch is Synchronous
+
+```javascript
+// ❌ WRONG - Won't catch async errors
+try {
+  setTimeout(() => {
+    throw new Error('Async error')  // Uncaught!
+  }, 1000)
+} catch (error) {
+  console.log('Never runs')
+}
+
+// ✓ CORRECT - Put try/catch inside callback
+setTimeout(() => {
+  try {
+    throw new Error('Async error')
+  } catch (error) {
+    console.log('Caught:', error.message)
+  }
+}, 1000)
+```
+
+---
+
+## Real-World Patterns
+
+### Retry Pattern
+
+Automatically retry failed operations, useful for flaky network requests:
+
+```javascript
+async function fetchWithRetry(url, retries = 3) {
+  for (let i = 0; i < retries; i++) {
+    try {
+      const response = await fetch(url)
+      if (!response.ok) throw new Error(`HTTP ${response.status}`)
+      return await response.json()
+    } catch (error) {
+      if (i === retries - 1) throw error  // Last attempt, give up
+      
+      // Wait before retrying (exponential backoff)
+      await new Promise(r => setTimeout(r, 1000 * Math.pow(2, i)))
+    }
+  }
+}
+```
+
+### Validation Error Pattern
+
+Collect multiple validation errors at once:
+
+```javascript
+class ValidationError extends Error {
+  constructor(errors) {
+    super('Validation failed')
+    this.name = 'ValidationError'
+    this.errors = errors  // { email: "Invalid email", age: "Must be positive" }
+  }
+}
+
+function validateUser(data) {
+  const errors = {}
+  
+  if (!data.email?.includes('@')) {
+    errors.email = 'Invalid email address'
+  }
+  if (data.age < 0) {
+    errors.age = 'Age must be positive'
+  }
+  
+  if (Object.keys(errors).length > 0) {
+    throw new ValidationError(errors)
+  }
+}
+
+// Usage
+try {
+  validateUser({ email: 'bad', age: -5 })
+} catch (error) {
+  if (error instanceof ValidationError) {
+    // Show errors next to form fields
+    Object.entries(error.errors).forEach(([field, message]) => {
+      showFieldError(field, message)
+    })
+  }
+}
+```
+
+### Graceful Degradation
+
+Try the ideal path, fall back to alternatives:
+
+```javascript
+async function loadUserPreferences(userId) {
+  try {
+    // Try to fetch from API
+    return await fetchFromApi(`/preferences/${userId}`)
+  } catch (apiError) {
+    console.warn('API unavailable, trying cache:', apiError.message)
+    
+    try {
+      // Fall back to local storage
+      const cached = localStorage.getItem(`prefs_${userId}`)
+      if (cached) return JSON.parse(cached)
+    } catch (cacheError) {
+      console.warn('Cache unavailable:', cacheError.message)
+    }
+    
+    // Fall back to defaults
+    return { theme: 'light', language: 'en' }
+  }
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Use try/catch for synchronous code** — Wrap risky operations and handle errors appropriately
+
+2. **try/catch is synchronous** — It won't catch errors in callbacks. Use `.catch()` for Promises or try/catch inside async functions
+
+3. **Always throw Error objects, not strings** — Error objects include stack traces that are essential for debugging
+
+4. **Always check response.ok with fetch** — `fetch()` doesn't throw on HTTP errors like 404 or 500
+
+5. **Create custom Error classes** — They help categorize errors and add context for better handling
+
+6. **Use finally for cleanup** — Code in finally always runs, perfect for hiding spinners or closing connections
+
+7. **Don't swallow errors** — Empty catch blocks hide bugs. Always log or re-throw
+
+8. **Use error.cause for chaining** — Preserve original errors when wrapping them with more context
+
+9. **Re-throw errors you can't handle** — If you catch an error you didn't expect, re-throw it
+
+10. **Use global handlers as a safety net** — They're for logging and tracking, not for regular error handling
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between try/catch and Promise .catch()?">
+    **Answer:**
+    
+    `try/catch` only catches **synchronous** errors. If you have async code inside the try block (like setTimeout callbacks), errors won't be caught.
+    
+    Promise `.catch()` catches **Promise rejections**, which are async. With async/await, you can use try/catch because `await` converts rejections to thrown errors.
+    
+    ```javascript
+    // try/catch with async/await - works!
+    try {
+      await fetch('/api/data')
+    } catch (error) {
+      // Catches rejections because await converts them
+    }
+    
+    // try/catch with callbacks - doesn't work!
+    try {
+      setTimeout(() => { throw new Error() }, 1000)
+    } catch (error) {
+      // Never runs - the error is thrown later
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Why doesn't fetch() throw on 404 or 500 errors?">
+    **Answer:**
+    
+    `fetch()` only throws on **network failures** (can't reach the server). HTTP errors like 404 (Not Found) or 500 (Server Error) are valid HTTP responses, so `fetch()` resolves successfully.
+    
+    You must check `response.ok` to detect HTTP errors:
+    
+    ```javascript
+    const response = await fetch('/api/users/999')
+    
+    if (!response.ok) {
+      // 404, 500, etc.
+      throw new Error(`HTTP error: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: Why should you throw Error objects instead of strings?">
+    **Answer:**
+    
+    Error objects include a **stack trace** showing where the error occurred and the chain of function calls. Strings don't have this information.
+    
+    ```javascript
+    throw 'Something went wrong'  // No stack trace
+    throw new Error('Something went wrong')  // Has stack trace
+    ```
+    
+    The stack trace is essential for debugging, especially in production where you can't use a debugger.
+  </Accordion>
+  
+  <Accordion title="Question 4: What does the finally block do?">
+    **Answer:**
+    
+    The `finally` block **always runs**, whether an error occurred or not, and even if there's a `return` statement in try or catch. It's ideal for cleanup code.
+    
+    ```javascript
+    function example() {
+      try {
+        return 'success'
+      } catch (error) {
+        return 'error'
+      } finally {
+        console.log('Cleanup!')  // Always runs!
+      }
+    }
+    
+    example()  // Logs "Cleanup!" then returns "success"
+    ```
+    
+    Use it for: hiding loading spinners, closing connections, releasing resources.
+  </Accordion>
+  
+  <Accordion title="Question 5: How do you handle different error types differently?">
+    **Answer:**
+    
+    Use `instanceof` to check the error type, or check `error.name`:
+    
+    ```javascript
+    try {
+      riskyOperation()
+    } catch (error) {
+      if (error instanceof TypeError) {
+        console.log('Type error:', error.message)
+      } else if (error instanceof SyntaxError) {
+        console.log('Syntax error:', error.message)
+      } else {
+        // Unknown error - re-throw it
+        throw error
+      }
+    }
+    ```
+    
+    This is especially useful with custom error classes:
+    
+    ```javascript
+    if (error instanceof ValidationError) {
+      showFormErrors(error.errors)
+    } else if (error instanceof NetworkError) {
+      showOfflineMessage()
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: What's wrong with this code?">
+    ```javascript
+    try {
+      const result = riskyOperation()
+    } catch (e) {
+      // Handle error
+    }
+    
+    console.log(result)  // ???
+    ```
+    
+    **Answer:**
+    
+    `result` is scoped to the try block. It doesn't exist outside of it, so `console.log(result)` throws a ReferenceError.
+    
+    **Fix:** Declare the variable outside the try block:
+    
+    ```javascript
+    let result
+    
+    try {
+      result = riskyOperation()
+    } catch (e) {
+      result = 'fallback value'
+    }
+    
+    console.log(result)  // Works!
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    Error handling with .catch() and Promise rejection patterns
+  </Card>
+  <Card title="async/await" icon="hourglass" href="/concepts/async-await">
+    Using try/catch with async functions for cleaner async error handling
+  </Card>
+  <Card title="Callbacks" icon="phone" href="/concepts/callbacks">
+    Error-first callbacks: the original async error handling pattern
+  </Card>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    Understand why try/catch doesn't work with async callbacks
+  </Card>
+</CardGroup>
+
+---
 
 ## Reference
 
 <CardGroup cols={2}>
   <Card title="Error — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">
-    MDN documentation for the Error object
+    Complete reference for the Error object and its properties
   </Card>
   <Card title="try...catch — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch">
-    MDN documentation for try...catch statement
+    Documentation for try, catch, and finally blocks
+  </Card>
+  <Card title="throw — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/throw">
+    How to throw your own errors
+  </Card>
+  <Card title="Control Flow — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling">
+    MDN guide covering error handling in context
   </Card>
 </CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="Error handling, try...catch" icon="newspaper" href="https://javascript.info/try-catch">
-    By JavaScript.info
+  <Card title="Error handling, try...catch — JavaScript.info" icon="newspaper" href="https://javascript.info/try-catch">
+    The definitive guide to JavaScript error handling. Covers everything from basics to rethrowing, with clear examples and interactive exercises.
   </Card>
-  <Card title="A Guide to Error Handling in JavaScript" icon="newspaper" href="https://www.sitepoint.com/javascript-error-handling/">
-    By SitePoint
+  <Card title="Custom errors, extending Error — JavaScript.info" icon="newspaper" href="https://javascript.info/custom-errors">
+    Learn to create custom error classes with proper inheritance. The wrapping exceptions pattern here is essential for larger applications.
+  </Card>
+  <Card title="A Definitive Guide to Handling Errors in JavaScript — Kinsta" icon="newspaper" href="https://kinsta.com/blog/errors-in-javascript/">
+    Comprehensive overview covering all error types, stack traces, and production error handling strategies with middleware examples.
   </Card>
 </CardGroup>
-
-- [JavaScript Error Handling — A Beginner's Guide — freeCodeCamp](https://www.freecodecamp.org/news/javascript-error-handling/)
-- [Error Handling in JavaScript — Dmitri Pavlutin](https://dmitripavlutin.com/javascript-error-handling/)
-- [Custom errors, extending Error — JavaScript.info](https://javascript.info/custom-errors)
-- [A Definitive Guide to Handling Errors in JavaScript — Kinsta](https://kinsta.com/blog/errors-in-javascript/)
-- [How to Handle Errors in JavaScript — Rollbar](https://rollbar.com/guides/javascript/how-to-handle-errors-in-javascript/)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="JavaScript Error Handling" icon="video" href="https://www.youtube.com/watch?v=blBoIyNhGvY">
-    By Web Dev Simplified
+  <Card title="JavaScript Error Handling — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=blBoIyNhGvY">
+    Clear 15-minute walkthrough of try/catch/finally with practical examples. Perfect if you prefer watching code being written.
   </Card>
-  <Card title="Error Handling in JavaScript" icon="video" href="https://www.youtube.com/watch?v=cFTFtuEQ-10">
-    By Fireship
+  <Card title="try, catch, finally, throw — Fireship" icon="video" href="https://www.youtube.com/watch?v=cFTFtuEQ-10">
+    Fast-paced overview of error handling fundamentals. Great for a quick refresher or introduction to the topic.
+  </Card>
+  <Card title="JavaScript Error Handling — The Coding Train" icon="video" href="https://www.youtube.com/watch?v=1Rq_LrpcgIM">
+    Beginner-friendly explanation with live coding examples showing exactly when errors occur and how to handle them.
   </Card>
 </CardGroup>
-
-- [Try, Catch, Finally in JavaScript — techsith](https://www.youtube.com/watch?v=s6M1nd7DtCE)
-- [JavaScript Error Handling — The Coding Train](https://www.youtube.com/watch?v=1Rq_LrpcgIM)
