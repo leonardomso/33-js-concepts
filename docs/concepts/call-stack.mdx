@@ -100,7 +100,7 @@ JavaScript is **[single-threaded](https://developer.mozilla.org/en-US/docs/Gloss
 3. **Keep track of local variables** — Each function has its own variables that shouldn't interfere with others
 
 <Info>
-**ECMAScript Specification**: According to the official JavaScript specification, the call stack is implemented through "[execution contexts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this#description)." Each function call creates a new execution context that gets pushed onto the stack.
+**ECMAScript Specification**: According to the official JavaScript specification, the call stack is implemented through "[execution contexts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#stack_and_execution_contexts)." Each function call creates a new execution context that gets pushed onto the stack.
 </Info>
 
 ---
@@ -219,7 +219,7 @@ console.log("Done!");
 
 ## Execution Context: What's Actually on the Stack?
 
-When we say a function is "on the stack," what does that actually mean? Each entry on the call stack is called an **[execution context](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this#description)** (or **stack frame**). It contains everything JavaScript needs to execute that function.
+When we say a function is "on the stack," what does that actually mean? Each entry on the call stack is called an **[execution context](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#stack_and_execution_contexts)**, sometimes referred to as a **stack frame** in general computer science terms. It contains everything JavaScript needs to execute that function.
 
 <AccordionGroup>
   <Accordion title="Function Arguments">
@@ -476,8 +476,12 @@ Stack: [ empty ]
 | Browser | Error Message |
 |---------|---------------|
 | Chrome | `RangeError: Maximum call stack size exceeded` |
-| Firefox | `InternalError: too much recursion` |
+| Firefox | `InternalError: too much recursion` (non-standard) |
 | Safari | `RangeError: Maximum call stack size exceeded` |
+
+<Note>
+Firefox uses `InternalError` which is a non-standard error type specific to the SpiderMonkey engine. Chrome and Safari use the standard `RangeError`.
+</Note>
 
 ### Common Causes of Stack Overflow
 
@@ -619,7 +623,7 @@ You might be wondering: "If JavaScript can only do one thing at a time, how does
 Great question! The call stack is only **part** of the picture.
 
 <Note>
-When you use asynchronous functions like [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout), [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), or event listeners, JavaScript doesn't put them on the call stack immediately. Instead, they go through a different system involving the **[Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop)** and **Callback Queue**.
+When you use asynchronous functions like [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout), [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), or event listeners, JavaScript doesn't put them on the call stack immediately. Instead, they go through a different system involving the **[Event Loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop)** and **Task Queue**.
 
 This is covered in detail in the [Event Loop](/concepts/event-loop) section.
 </Note>
