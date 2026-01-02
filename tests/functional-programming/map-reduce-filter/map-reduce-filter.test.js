@@ -686,4 +686,94 @@ describe('map, reduce, filter', () => {
       expect(result).toBe(18)
     })
   })
+  
+  describe('ES2023+ Array Methods', () => {
+    it('reduceRight() reduces from right to left', () => {
+      const letters = ['a', 'b', 'c']
+      const result = letters.reduceRight((acc, s) => acc + s, '')
+      
+      expect(result).toBe('cba')
+    })
+    
+    it('toSorted() returns sorted copy without mutating original', () => {
+      const nums = [3, 1, 2]
+      const sorted = nums.toSorted()
+      
+      expect(sorted).toEqual([1, 2, 3])
+      expect(nums).toEqual([3, 1, 2]) // Original unchanged
+    })
+    
+    it('toReversed() returns reversed copy without mutating original', () => {
+      const nums = [1, 2, 3]
+      const reversed = nums.toReversed()
+      
+      expect(reversed).toEqual([3, 2, 1])
+      expect(nums).toEqual([1, 2, 3]) // Original unchanged
+    })
+    
+    it('toSpliced() returns modified copy without mutating original', () => {
+      const nums = [1, 2, 3, 4, 5]
+      const spliced = nums.toSpliced(1, 2, 'a', 'b')
+      
+      expect(spliced).toEqual([1, 'a', 'b', 4, 5])
+      expect(nums).toEqual([1, 2, 3, 4, 5]) // Original unchanged
+    })
+    
+    it('Object.groupBy() groups elements by key (ES2024, Node 21+)', () => {
+      // Skip test if Object.groupBy is not available (requires Node 21+)
+      if (typeof Object.groupBy !== 'function') {
+        console.log('Skipping: Object.groupBy not available in this Node version')
+        return
+      }
+      
+      const people = [
+        { name: 'Alice', department: 'Engineering' },
+        { name: 'Bob', department: 'Marketing' },
+        { name: 'Charlie', department: 'Engineering' }
+      ]
+      
+      const byDepartment = Object.groupBy(people, person => person.department)
+      
+      expect(byDepartment.Engineering).toEqual([
+        { name: 'Alice', department: 'Engineering' },
+        { name: 'Charlie', department: 'Engineering' }
+      ])
+      expect(byDepartment.Marketing).toEqual([
+        { name: 'Bob', department: 'Marketing' }
+      ])
+    })
+  })
+  
+  describe('Async Callbacks', () => {
+    it('map with async returns array of Promises', async () => {
+      const ids = [1, 2, 3]
+      
+      // Simulate async operation
+      const asyncDouble = async (n) => n * 2
+      
+      // Without Promise.all, you get Promises
+      const promiseArray = ids.map(id => asyncDouble(id))
+      
+      expect(promiseArray[0]).toBeInstanceOf(Promise)
+      
+      // With Promise.all, you get resolved values
+      const results = await Promise.all(promiseArray)
+      expect(results).toEqual([2, 4, 6])
+    })
+    
+    it('async filter workaround using map then filter', async () => {
+      const numbers = [1, 2, 3, 4, 5]
+      
+      // Simulate async predicate
+      const asyncIsEven = async (n) => n % 2 === 0
+      
+      // Step 1: Get boolean results for each element
+      const checks = await Promise.all(numbers.map(n => asyncIsEven(n)))
+      
+      // Step 2: Filter using the boolean results
+      const evens = numbers.filter((_, index) => checks[index])
+      
+      expect(evens).toEqual([2, 4])
+    })
+  })
 })

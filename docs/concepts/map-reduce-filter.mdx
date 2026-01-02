@@ -34,6 +34,7 @@ That's **[map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 - Real-world patterns for extracting, filtering, and aggregating data
 - Other useful array methods like find(), some(), and every()
 - How to implement map and filter using reduce (advanced)
+- How to handle async callbacks with these methods
 </Info>
 
 <Warning>
@@ -584,6 +585,16 @@ console.log(byDepartment)
 // }
 ```
 
+<Note>
+**Modern Alternative (ES2024):** JavaScript now has `Object.groupBy()` which does this in one line:
+
+```javascript
+const byDepartment = Object.groupBy(people, person => person.department)
+```
+
+This is cleaner for simple grouping, but reduce is still useful when you need custom accumulation logic. Note: `Object.groupBy()` requires Node.js 21+ or modern browsers (Chrome 117+, Firefox 119+, Safari 17.4+).
+</Note>
+
 #### Building Objects from Arrays
 
 ```javascript
@@ -964,10 +975,14 @@ JavaScript has many more array methods beyond map, filter, and reduce. Here's a 
 | `flat(depth)` | Array | Flattens nested arrays |
 | `flatMap(fn)` | Array | map() then flat(1) |
 | `forEach(fn)` | undefined | Executes function for side effects |
+| `reduceRight(fn, init)` | Any | Like reduce(), but right-to-left |
 | `sort(fn)` | Array | Sorts in place (mutates!) |
+| `toSorted(fn)` | Array | Returns sorted copy (no mutation) — ES2023 |
 | `reverse()` | Array | Reverses in place (mutates!) |
+| `toReversed()` | Array | Returns reversed copy (no mutation) — ES2023 |
 | `slice(start, end)` | Array | Returns portion (no mutation) |
 | `splice(start, count)` | Array | Removes/adds elements (mutates!) |
+| `toSpliced(start, count)` | Array | Returns modified copy (no mutation) — ES2023 |
 
 ### Quick Examples
 
@@ -994,6 +1009,17 @@ numbers.includes(3)  // true
 
 // flatMap: Map and flatten
 [1, 2].flatMap(n => [n, n * 2])  // [1, 2, 2, 4]
+
+// reduceRight: Reduce from right to left
+['a', 'b', 'c'].reduceRight((acc, s) => acc + s, '')  // 'cba'
+
+// toSorted: Non-mutating sort (ES2023)
+const nums = [3, 1, 2]
+const sorted = nums.toSorted()  // [1, 2, 3]
+console.log(nums)  // [3, 1, 2] — original unchanged!
+
+// toReversed: Non-mutating reverse (ES2023)
+const reversed = nums.toReversed()  // [2, 1, 3]
 ```
 
 ### Which Method Should I Use?
@@ -1022,6 +1048,69 @@ numbers.includes(3)  // true
 
 ---
 
+## Async Callbacks: The Hidden Gotcha
+
+One thing that catches developers off guard: `map()`, `filter()`, and `reduce()` don't wait for async callbacks. They run synchronously, which means you'll get an array of Promises instead of resolved values.
+
+```javascript
+const userIds = [1, 2, 3]
+
+// ❌ WRONG: Returns array of Promises, not users
+const users = userIds.map(async (id) => {
+  const response = await fetch(`/api/users/${id}`)
+  return response.json()
+})
+
+console.log(users)  // [Promise, Promise, Promise]
+```
+
+### The Solution: Promise.all()
+
+Wrap the map result in `Promise.all()` to wait for all Promises to resolve:
+
+```javascript
+const userIds = [1, 2, 3]
+
+// ✓ CORRECT: Wait for all Promises to resolve
+const users = await Promise.all(
+  userIds.map(async (id) => {
+    const response = await fetch(`/api/users/${id}`)
+    return response.json()
+  })
+)
+
+console.log(users)  // [{...}, {...}, {...}] — actual user objects
+```
+
+### Async Filter is Trickier
+
+For filter, you need a two-step approach since filter expects a boolean, not a Promise:
+
+```javascript
+const numbers = [1, 2, 3, 4, 5]
+
+// Check if a number is "valid" via async operation
+async function isValid(n) {
+  // Imagine this calls an API
+  return n % 2 === 0
+}
+
+// ❌ WRONG: filter doesn't await
+const evens = numbers.filter(async (n) => await isValid(n))
+console.log(evens)  // [1, 2, 3, 4, 5] — all items! (Promises are truthy)
+
+// ✓ CORRECT: Map to booleans first, then filter
+const checks = await Promise.all(numbers.map(n => isValid(n)))
+const evens2 = numbers.filter((_, index) => checks[index])
+console.log(evens2)  // [2, 4]
+```
+
+<Tip>
+**For sequential async operations** (when order matters or you need to limit concurrency), use a `for...of` loop instead of map. Array methods run all callbacks immediately in parallel.
+</Tip>
+
+---
+
 ## Key Takeaways
 
 <Info>
@@ -1045,7 +1134,7 @@ numbers.includes(3)  // true
 
 9. **Use find() for single item lookup** — It's more efficient than filter()[0] because it stops at the first match.
 
-10. **Async callbacks need Promise.all** — map/filter/reduce don't wait for async callbacks. Wrap in Promise.all().
+10. **Async callbacks need Promise.all()** — map/filter/reduce don't wait for async callbacks. Wrap in Promise.all() to resolve them.
 </Info>
 
 ---
