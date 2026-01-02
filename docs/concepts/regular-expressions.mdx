@@ -1,65 +1,661 @@
 ---
 title: "Regular Expressions: Pattern Matching in JavaScript"
 sidebarTitle: "Regular Expressions: Pattern Matching"
-description: "Learn regular expressions in JavaScript — pattern syntax, flags, methods like test/match/replace, and common patterns. Master regex for validation, parsing, and text manipulation."
+description: "Learn regular expressions in JavaScript. Covers pattern syntax, character classes, quantifiers, flags, capturing groups, and methods like test, match, and replace."
 ---
 
-## Overview
+How do you check if an email address is valid? How do you find and replace all phone numbers in a document? How can you extract hashtags from a tweet?
 
-**Regular expressions** (regex) are patterns used to match character combinations in strings. JavaScript provides built-in regex support through the `RegExp` object and string methods. Mastering regex enables powerful text validation, searching, and transformation — essential skills for form validation, data parsing, and text processing.
+```javascript
+// Check if a string contains only digits
+const isAllDigits = /^\d+$/.test('12345')
+console.log(isAllDigits)  // true
+
+// Find all words starting with capital letters
+const text = 'Hello World from JavaScript'
+const capitalWords = text.match(/\b[A-Z][a-z]*\b/g)
+console.log(capitalWords)  // ["Hello", "World"]
+```
+
+The answer is **[regular expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions)** (often called "regex" or "regexp"). They're patterns that describe what you're looking for in text, and JavaScript has powerful built-in support for them.
 
 <Info>
 **What you'll learn in this guide:**
-- Regex literal syntax (`/pattern/flags`) vs `RegExp` constructor
+- Creating regex with literals (`/pattern/`) and the `RegExp` constructor
 - Character classes, quantifiers, and anchors
-- Capturing groups and backreferences
-- Lookahead and lookbehind assertions
-- Common methods: `test()`, `match()`, `matchAll()`, `replace()`, `split()`
-- Flags: `g`, `i`, `m`, `s`, `u`, `y`
-- Common patterns (email, phone, URL validation)
-- Performance considerations and regex best practices
+- Key methods: `test()`, `match()`, `replace()`, `split()`
+- Capturing groups for extracting parts of matches
+- Flags that change how patterns match
+- Common real-world patterns (email, phone, URL)
 </Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you're comfortable with [strings](/concepts/primitive-types) in JavaScript. You don't need any prior regex experience — we'll start from the basics.
+</Warning>
+
+---
+
+## What Are Regular Expressions?
+
+A **[regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)** is a pattern used to match character combinations in strings. In JavaScript, regex are objects that you can use with string methods to search, validate, extract, and replace text. They use a special syntax where characters like `\d`, `*`, and `^` have special meanings beyond their literal values.
+
+### Two Ways to Create Regex
+
+```javascript
+// 1. Literal syntax (preferred for static patterns)
+const pattern1 = /hello/
+
+// 2. Constructor syntax (useful for dynamic patterns)
+const pattern2 = new RegExp('hello')
+
+// Both work the same way
+console.log(pattern1.test('hello world'))  // true
+console.log(pattern2.test('hello world'))  // true
+```
+
+Use the literal syntax when you know the pattern ahead of time. Use the constructor when you need to build patterns dynamically, like from user input:
+
+```javascript
+function findWord(text, word) {
+  const pattern = new RegExp(word, 'gi')  // case-insensitive, global
+  return text.match(pattern)
+}
+
+console.log(findWord('Hello hello HELLO', 'hello'))  // ["Hello", "hello", "HELLO"]
+```
+
+---
+
+## The Detective Analogy
+
+Think of regex like giving a detective a description to find suspects in a crowd:
+
+- **Literal characters** (`abc`) — "Find someone named 'abc'"
+- **Character classes** (`[aeiou]`) — "Find someone with a vowel in their name"
+- **Quantifiers** (`a+`) — "Find someone with one or more 'a's in their name"
+- **Anchors** (`^`, `$`) — "They must be at the start/end of the line"
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         REGEX PATTERN MATCHING                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   Pattern: /\d{3}-\d{4}/          String: "Call 555-1234 today"         │
+│                                                                          │
+│   Step 1: Find 3 digits (\d{3})   →  "555" ✓                            │
+│   Step 2: Find a hyphen (-)       →  "-"   ✓                            │
+│   Step 3: Find 4 digits (\d{4})   →  "1234" ✓                           │
+│                                                                          │
+│   Result: Match found! → "555-1234"                                      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Building Blocks: Character Classes
+
+Character classes let you match *types* of characters rather than specific ones.
+
+| Pattern | Matches | Example |
+|---------|---------|---------|
+| `.` | Any character except newline | `/a.c/` matches "abc", "a1c", "a-c" |
+| `\d` | Any digit [0-9] | `/\d{3}/` matches "123" |
+| `\D` | Any non-digit | `/\D+/` matches "abc" |
+| `\w` | Word character [A-Za-z0-9_] | `/\w+/` matches "hello_123" |
+| `\W` | Non-word character | `/\W/` matches "!" or " " |
+| `\s` | Whitespace (space, tab, newline) | `/\s+/` matches "   " |
+| `\S` | Non-whitespace | `/\S+/` matches "hello" |
+| `[abc]` | Any of a, b, or c | `/[aeiou]/` matches any vowel |
+| `[^abc]` | Not a, b, or c | `/[^0-9]/` matches non-digits |
+| `[a-z]` | Character range | `/[A-Za-z]/` matches any letter |
+
+```javascript
+// Match a phone number pattern: 3 digits, hyphen, 4 digits
+const phone = /\d{3}-\d{4}/
+console.log(phone.test('555-1234'))  // true
+console.log(phone.test('55-1234'))   // false
+
+// Match words (letters, digits, underscores)
+const words = 'hello_world 123 test!'
+console.log(words.match(/\w+/g))  // ["hello_world", "123", "test"]
+```
+
+---
+
+## Building Blocks: Quantifiers
+
+Quantifiers specify how many times a pattern should repeat.
+
+| Quantifier | Meaning | Example |
+|------------|---------|---------|
+| `*` | 0 or more | `/ab*c/` matches "ac", "abc", "abbbbc" |
+| `+` | 1 or more | `/ab+c/` matches "abc", "abbbbc" (not "ac") |
+| `?` | 0 or 1 (optional) | `/colou?r/` matches "color", "colour" |
+| `{n}` | Exactly n times | `/\d{4}/` matches "2024" |
+| `{n,}` | n or more times | `/\d{2,}/` matches "12", "123", "1234" |
+| `{n,m}` | Between n and m times | `/\d{2,4}/` matches "12", "123", "1234" |
+
+```javascript
+// Match optional 's' for plural
+const plural = /apple(s)?/
+console.log(plural.test('apple'))   // true
+console.log(plural.test('apples'))  // true
+
+// Match 1 or more digits
+const numbers = 'I have 42 apples and 7 oranges'
+console.log(numbers.match(/\d+/g))  // ["42", "7"]
+```
+
+---
+
+## Building Blocks: Anchors
+
+Anchors match *positions* in the string, not characters.
+
+| Anchor | Position |
+|--------|----------|
+| `^` | Start of string (or line with `m` flag) |
+| `$` | End of string (or line with `m` flag) |
+| `\b` | Word boundary |
+| `\B` | Not a word boundary |
+
+```javascript
+// Must start with "Hello"
+console.log(/^Hello/.test('Hello World'))   // true
+console.log(/^Hello/.test('Say Hello'))     // false
+
+// Must end with a digit
+console.log(/\d$/.test('Room 42'))   // true
+console.log(/\d$/.test('42 rooms'))  // false
+
+// Word boundaries prevent partial matches
+console.log(/\bcat\b/.test('cat'))       // true
+console.log(/\bcat\b/.test('category'))  // false (cat is part of a larger word)
+```
+
+---
+
+## Methods for Using Regex
+
+JavaScript provides several methods for working with regular expressions:
+
+| Method | Returns | Use Case |
+|--------|---------|----------|
+| `regex.test(str)` | `true` or `false` | Simple validation |
+| `str.match(regex)` | Array or `null` | Find matches |
+| `str.matchAll(regex)` | Iterator | Find all matches with details |
+| `str.search(regex)` | Index or `-1` | Find position of first match |
+| `str.replace(regex, replacement)` | New string | Replace matches |
+| `str.split(regex)` | Array | Split by pattern |
+| `regex.exec(str)` | Match array or `null` | Detailed match info (stateful) |
+
+### test() — Simple Validation
+
+```javascript
+const emailPattern = /\S+@\S+\.\S+/
+
+console.log(emailPattern.test('user@example.com'))  // true
+console.log(emailPattern.test('invalid-email'))     // false
+```
+
+### match() — Find Matches
+
+```javascript
+const text = 'My numbers: 123, 456, 789'
+
+// Without 'g' flag: returns first match with details
+console.log(text.match(/\d+/))
+// ["123", index: 12, input: "My numbers: 123, 456, 789"]
+
+// With 'g' flag: returns all matches
+console.log(text.match(/\d+/g))
+// ["123", "456", "789"]
+```
+
+### matchAll() — All Matches with Details
+
+When you need all matches AND details (like captured groups), use `matchAll()`. It requires the `g` flag and returns an iterator:
+
+```javascript
+const text = 'Call 555-1234 or 555-5678'
+const pattern = /(\d{3})-(\d{4})/g
+
+for (const match of text.matchAll(pattern)) {
+  console.log(`Found: ${match[0]}, Prefix: ${match[1]}, Number: ${match[2]}`)
+}
+// "Found: 555-1234, Prefix: 555, Number: 1234"
+// "Found: 555-5678, Prefix: 555, Number: 5678"
+```
+
+### search() — Find Position
+
+```javascript
+const text = 'Hello World'
+console.log(text.search(/World/))  // 6 (index where match starts)
+console.log(text.search(/xyz/))    // -1 (not found)
+```
+
+### replace() — Replace Matches
+
+```javascript
+// Replace first occurrence
+console.log('hello world'.replace(/o/, '0'))
+// "hell0 world"
+
+// Replace all occurrences (with 'g' flag)
+console.log('hello world'.replace(/o/g, '0'))
+// "hell0 w0rld"
+
+// Use captured groups in replacement
+console.log('John Smith'.replace(/(\w+) (\w+)/, '$2, $1'))
+// "Smith, John"
+```
+
+### split() — Split by Pattern
+
+```javascript
+// Split on one or more whitespace characters
+const words = 'hello   world  foo'.split(/\s+/)
+console.log(words)  // ["hello", "world", "foo"]
+
+// Split on commas with optional spaces
+const items = 'a, b,c , d'.split(/\s*,\s*/)
+console.log(items)  // ["a", "b", "c", "d"]
+```
+
+### exec() — Detailed Match Info
+
+`exec()` is similar to `match()` but is called on the regex. With the `g` flag, calling it repeatedly finds the next match each time:
+
+```javascript
+const pattern = /\d+/g
+const text = 'a1b22c333'
+
+console.log(pattern.exec(text))  // ["1", index: 1]
+console.log(pattern.exec(text))  // ["22", index: 3]
+console.log(pattern.exec(text))  // ["333", index: 6]
+console.log(pattern.exec(text))  // null (no more matches)
+```
+
+---
+
+## Flags
+
+Flags modify how the pattern matches. Add them after the closing slash.
+
+| Flag | Name | Effect |
+|------|------|--------|
+| `g` | Global | Find all matches, not just the first |
+| `i` | Case-insensitive | `a` matches `A` |
+| `m` | Multiline | `^` and `$` match at each line's start/end |
+| `s` | DotAll | `.` matches newlines too |
+
+```javascript
+// Case-insensitive matching
+console.log(/hello/i.test('HELLO'))  // true
+
+// Global: find all matches
+console.log('abcabc'.match(/a/g))   // ["a", "a"]
+console.log('abcabc'.match(/a/))    // ["a", index: 0, input: "abcabc", ...] (first match with details)
+
+// Multiline: ^ and $ match each line
+const multiline = 'line1\nline2\nline3'
+console.log(multiline.match(/^line\d/gm))  // ["line1", "line2", "line3"]
+```
+
+---
+
+## Capturing Groups
+
+Parentheses `()` create **capturing groups** that let you extract parts of a match.
+
+```javascript
+// Extract area code and number separately
+const phonePattern = /\((\d{3})\) (\d{3}-\d{4})/
+const match = '(555) 123-4567'.match(phonePattern)
+
+console.log(match[0])  // "(555) 123-4567" (full match)
+console.log(match[1])  // "555" (first group)
+console.log(match[2])  // "123-4567" (second group)
+```
+
+### Named Groups
+
+Use `(?<name>pattern)` to give groups meaningful names:
+
+```javascript
+const datePattern = /(?<month>\d{2})-(?<day>\d{2})-(?<year>\d{4})/
+const match = '12-25-2024'.match(datePattern)
+
+console.log(match.groups.month)  // "12"
+console.log(match.groups.day)    // "25"
+console.log(match.groups.year)   // "2024"
+```
+
+### Using Groups in Replace
+
+Reference captured groups with `$1`, `$2`, etc. (or `$<name>` for named groups):
+
+```javascript
+// Reformat date from MM-DD-YYYY to YYYY/MM/DD
+const date = '12-25-2024'
+const reformatted = date.replace(
+  /(\d{2})-(\d{2})-(\d{4})/,
+  '$3/$1/$2'
+)
+console.log(reformatted)  // "2024/12/25"
+```
+
+---
+
+## The #1 Regex Mistake: Greedy vs Lazy
+
+By default, quantifiers are **greedy**. They match as much as possible. Add `?` to make them **lazy** (match as little as possible).
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                          GREEDY VS LAZY                                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   String: "<div>Hello</div><div>World</div>"                             │
+│                                                                          │
+│   GREEDY: /<div>.*<\/div>/        LAZY: /<div>.*?<\/div>/               │
+│   Matches: "<div>Hello</div>      Matches: "<div>Hello</div>"           │
+│            <div>World</div>"                                             │
+│   (Everything from first          (Just the first div)                   │
+│    <div> to LAST </div>)                                                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+```javascript
+const html = '<div>Hello</div><div>World</div>'
+
+// Greedy: matches everything between first <div> and LAST </div>
+console.log(html.match(/<div>.*<\/div>/)[0])
+// "<div>Hello</div><div>World</div>"
+
+// Lazy: stops at first </div>
+console.log(html.match(/<div>.*?<\/div>/)[0])
+// "<div>Hello</div>"
+```
+
+<Tip>
+**Rule of Thumb:** When matching content between delimiters (like HTML tags, quotes, or brackets), prefer lazy quantifiers (`*?`, `+?`) to avoid matching too much.
+</Tip>
+
+---
+
+## Common Patterns
+
+Here are some practical patterns you can use in your projects:
+
+```javascript
+// Email (basic validation)
+const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+console.log(email.test('user@example.com'))  // true
+
+// URL
+const url = /^https?:\/\/[^\s]+$/
+console.log(url.test('https://example.com/path'))  // true
+
+// Phone (US format: 123-456-7890 or (123) 456-7890)
+const phone = /^(\(\d{3}\)|\d{3})[-.\s]?\d{3}[-.\s]?\d{4}$/
+console.log(phone.test('(555) 123-4567'))  // true
+console.log(phone.test('555-123-4567'))    // true
+
+// Username (alphanumeric, 3-16 chars)
+const username = /^[a-zA-Z0-9_]{3,16}$/
+console.log(username.test('john_doe123'))  // true
+```
+
+<Warning>
+**Don't go overboard.** Regex is great for pattern matching, but it's not always the best tool. For complex validation like email addresses (which have a surprisingly complex spec), consider using a dedicated validation library. The email regex above works for most cases but won't catch every edge case.
+</Warning>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Regex = patterns for strings** — They describe what you're looking for, not literal text
+
+2. **Two ways to create** — `/pattern/` literals or `new RegExp('pattern')`
+
+3. **Character classes** — `\d` (digits), `\w` (word chars), `\s` (whitespace), `.` (any)
+
+4. **Quantifiers** — `*` (0+), `+` (1+), `?` (0-1), `{n,m}` (specific range)
+
+5. **Anchors** — `^` (start), `$` (end), `\b` (word boundary)
+
+6. **test() for validation** — Returns true/false
+
+7. **match() for extraction** — Returns matches or null
+
+8. **Flags change behavior** — `g` (global), `i` (case-insensitive), `m` (multiline)
+
+9. **Groups capture parts** — Use `()` to extract portions of matches
+
+10. **Greedy vs lazy** — Add `?` after quantifiers to match minimally
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between /pattern/ and new RegExp('pattern')?">
+    **Answer:**
+    
+    Both create a regex object, but they differ in when to use them:
+    
+    - **Literal `/pattern/`** — Use for static patterns known at write time. The pattern is compiled when the script loads.
+    - **`new RegExp('pattern')`** — Use for dynamic patterns built at runtime (e.g., from user input). Remember to escape backslashes: `new RegExp('\\d+')`.
+    
+    ```javascript
+    // Static pattern - use literal
+    const digits = /\d+/
+    
+    // Dynamic pattern - use constructor
+    const searchTerm = 'hello'
+    const dynamic = new RegExp(searchTerm, 'gi')
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: What does \b match?">
+    **Answer:**
+    
+    `\b` matches a **word boundary** — the position between a word character (`\w`) and a non-word character. It doesn't match any actual character; it matches a position.
+    
+    ```javascript
+    // \b prevents partial matches
+    console.log(/\bcat\b/.test('cat'))       // true
+    console.log(/\bcat\b/.test('category'))  // false
+    console.log(/\bcat\b/.test('the cat'))   // true
+    ```
+    
+    Word boundaries are useful when you want to match whole words only.
+  </Accordion>
+  
+  <Accordion title="Question 3: How do you make a quantifier lazy?">
+    **Answer:**
+    
+    Add a `?` after the quantifier to make it lazy (non-greedy):
+    
+    - `*?` — Match 0 or more, as few as possible
+    - `+?` — Match 1 or more, as few as possible
+    - `??` — Match 0 or 1, preferring 0
+    - `{n,m}?` — Match between n and m, as few as possible
+    
+    ```javascript
+    const text = '<b>bold</b> and <b>more bold</b>'
+    
+    // Greedy: matches everything between first <b> and last </b>
+    text.match(/<b>.*<\/b>/)[0]   // "<b>bold</b> and <b>more bold</b>"
+    
+    // Lazy: matches just the first <b>...</b>
+    text.match(/<b>.*?<\/b>/)[0]  // "<b>bold</b>"
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: What's the difference between match() with and without the g flag?">
+    **Answer:**
+    
+    - **Without `g`**: Returns first match with full details (captured groups, index, input)
+    - **With `g`**: Returns array of all matches (just the matched strings, no details)
+    
+    ```javascript
+    const text = 'cat and cat'
+    
+    // Without g: detailed info about first match
+    text.match(/cat/)
+    // ["cat", index: 0, input: "cat and cat"]
+    
+    // With g: all matches, no details
+    text.match(/cat/g)
+    // ["cat", "cat"]
+    ```
+    
+    Use `matchAll()` if you need both all matches AND details for each.
+  </Accordion>
+  
+  <Accordion title="Question 5: How do you reference a captured group in a replacement string?">
+    **Answer:**
+    
+    Use `$1`, `$2`, etc. for numbered groups, or `$<name>` for named groups:
+    
+    ```javascript
+    // Numbered groups
+    'John Smith'.replace(/(\w+) (\w+)/, '$2, $1')
+    // "Smith, John"
+    
+    // Named groups
+    '2024-12-25'.replace(
+      /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/,
+      '$<month>/$<day>/$<year>'
+    )
+    // "12/25/2024"
+    
+    // $& references the entire match
+    'hello'.replace(/\w+/, '[$&]')
+    // "[hello]"
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: How do you match special regex characters literally?">
+    **Answer:**
+    
+    Escape special characters with a backslash `\`. Characters that need escaping: `. * + ? ^ $ { } [ ] \ | ( )` and `/` in literal syntax
+    
+    ```javascript
+    // Match a literal period
+    /\./.test('file.txt')       // true
+    /\./.test('filetxt')        // false
+    
+    // Match a literal dollar sign
+    /\$\d+/.test('$100')        // true
+    
+    // When using RegExp constructor, double-escape
+    new RegExp('\\d+\\.\\d+')   // matches "3.14"
+    ```
+    
+    For dynamic patterns from user input, escape all special chars:
+    
+    ```javascript
+    function escapeRegex(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+    }
+    
+    const userInput = 'hello.world'
+    const pattern = new RegExp(escapeRegex(userInput))
+    pattern.test('hello.world')  // true
+    pattern.test('helloXworld')  // false
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Primitive Types" icon="cube" href="/concepts/primitive-types">
+    Strings are one of JavaScript's primitive types
+  </Card>
+  <Card title="Map, Reduce, Filter" icon="filter" href="/concepts/map-reduce-filter">
+    Process arrays of matches from regex operations
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation" href="/concepts/error-handling">
+    Invalid regex patterns throw SyntaxError
+  </Card>
+  <Card title="Clean Code" icon="broom" href="/concepts/clean-code">
+    Write maintainable regex with comments and named groups
+  </Card>
+</CardGroup>
+
+---
 
 ## Reference
 
 <CardGroup cols={2}>
   <Card title="Regular Expressions — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">
-    MDN guide to regular expressions
+    Comprehensive MDN guide covering all regex syntax and features
   </Card>
-  <Card title="RegExp — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">
-    MDN documentation for the RegExp object
+  <Card title="RegExp Object — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">
+    Reference for the RegExp constructor, methods, and properties
+  </Card>
+  <Card title="String.prototype.match() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/match">
+    Documentation for the match() method
+  </Card>
+  <Card title="String.prototype.replace() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace">
+    Documentation for the replace() method
   </Card>
 </CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="Regular Expressions" icon="newspaper" href="https://javascript.info/regular-expressions">
-    By JavaScript.info — comprehensive tutorial
+  <Card title="Regular Expressions — JavaScript.info" icon="newspaper" href="https://javascript.info/regular-expressions">
+    Multi-chapter deep dive covering every regex feature with interactive examples. The go-to tutorial for learning regex thoroughly.
+  </Card>
+  <Card title="Learn Regex the Easy Way" icon="newspaper" href="https://github.com/ziishaned/learn-regex">
+    Visual cheatsheet with clear examples for each pattern type. Great reference when you forget specific syntax. 46k+ GitHub stars.
+  </Card>
+  <Card title="Regular Expressions — Eloquent JavaScript" icon="newspaper" href="https://eloquentjavascript.net/09_regexp.html">
+    Chapter from the classic free JavaScript book. Explains the theory and mechanics behind regex with elegant examples.
   </Card>
   <Card title="A Practical Guide to Regular Expressions" icon="newspaper" href="https://www.freecodecamp.org/news/practical-regex-guide-with-real-life-examples/">
-    By freeCodeCamp
+    Hands-on freeCodeCamp guide focused on real-world use cases like log parsing, file renaming, and form validation.
   </Card>
 </CardGroup>
-
-- [Learn Regex the Easy Way — Zeeshan Ahmad](https://github.com/ziishaned/learn-regex)
-- [Regular Expressions Demystified — Vijay Kumar](https://dev.to/vijay/regular-expressions-demystified-4hcn)
-- [Regex Cheat Sheet — Quick Reference](https://quickref.me/regex)
-- [Regular Expressions in JavaScript — Eloquent JavaScript](https://eloquentjavascript.net/09_regexp.html)
-- [JavaScript Regular Expressions — W3Schools](https://www.w3schools.com/js/js_regexp.asp)
-- [Named Capture Groups in JavaScript Regex — V8 Blog](https://v8.dev/features/regexp-named-captures)
 
 ## Videos
 
 <CardGroup cols={2}>
   <Card title="Learn Regular Expressions In 20 Minutes" icon="video" href="https://www.youtube.com/watch?v=rhzKDrUiJVk">
-    By Web Dev Simplified
+    Web Dev Simplified covers all the essentials without filler. Great if you want to learn regex quickly and start using it.
   </Card>
   <Card title="Regular Expressions (Regex) in JavaScript" icon="video" href="https://www.youtube.com/watch?v=909NfO1St0A">
-    By Fireship
+    Fireship's fast-paced 100 seconds style overview. Perfect for a quick refresher or introduction to what regex can do.
+  </Card>
+  <Card title="JavaScript Regex — Programming with Mosh" icon="video" href="https://www.youtube.com/watch?v=VrT3TRDDE4M">
+    Mosh Hamedani's beginner-friendly walkthrough with practical JavaScript examples you can follow along with.
   </Card>
 </CardGroup>
 
-- [Regular Expressions (RegEx) Tutorial — The Coding Train](https://www.youtube.com/playlist?list=PLRqwX-V7Uu6YEypLuls7iidwHMdCM6o2w)
-- [JavaScript Regex — Programming with Mosh](https://www.youtube.com/watch?v=VrT3TRDDE4M)
-- [Regex Tutorial — Corey Schafer](https://www.youtube.com/watch?v=sa-TUpSx1JA)
+## Tools
+
+<CardGroup cols={2}>
+  <Card title="regex101" icon="flask" href="https://regex101.com/">
+    Interactive regex tester with real-time explanation of your pattern. Shows match groups, explains each part, and lets you test against sample text.
+  </Card>
+  <Card title="RegExr" icon="wand-magic-sparkles" href="https://regexr.com/">
+    Visual regex editor with community patterns and a helpful cheatsheet sidebar. Great for learning and building patterns.
+  </Card>
+  <Card title="Regexlearn" icon="graduation-cap" href="https://regexlearn.com/">
+    Interactive step-by-step tutorial that teaches regex through practice. Gamified learning with progressive difficulty.
+  </Card>
+</CardGroup>

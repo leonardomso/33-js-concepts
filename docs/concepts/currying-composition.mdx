@@ -541,17 +541,15 @@ composed(5)  // 25
 Why compose instead of nesting? Because this:
 
 ```javascript
-subtract5(multiply2(add10(toString(trim(getName(user))))))
+addGreeting(capitalize(trim(getName(user))))
 ```
 
 Becomes this:
 
 ```javascript
 const processUser = compose(
-  subtract5,
-  multiply2,
-  add10,
-  toNumber,
+  addGreeting,
+  capitalize,
   trim,
   getName
 )
@@ -708,7 +706,9 @@ const pipe = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x)
 const removeSpaces = str => str.trim()
 const toLowerCase = str => str.toLowerCase()
 const splitWords = str => str.split(' ')
-const capitalizeFirst = words => words.map(w => w[0].toUpperCase() + w.slice(1))
+const capitalizeFirst = words => words.map((w, i) => 
+  i === 0 ? w : w[0].toUpperCase() + w.slice(1)
+)
 const joinWords = words => words.join('')
 
 // Compose them into a pipeline
@@ -720,8 +720,8 @@ const toCamelCase = pipe(
   joinWords
 )
 
-toCamelCase('  HELLO WORLD  ')  // 'HelloWorld'
-toCamelCase('my variable name') // 'MyVariableName'
+toCamelCase('  HELLO WORLD  ')  // 'helloWorld'
+toCamelCase('my variable name') // 'myVariableName'
 ```
 
 ### Real-World Pipeline: Processing API Data
@@ -1345,7 +1345,7 @@ function getThemeEmoji(user) {
   <Card title="Compose and Pipe — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=yd2FZ1kP5wE">
     Kyle Cook's clear, beginner-friendly walkthrough of compose and pipe with practical examples you can follow along with.
   </Card>
-  <Card title="JavaScript Functional Programming — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=e-5obm1G_FY">
-    Brad Traversy covers functional programming patterns including currying and composition in his practical, project-focused style.
+  <Card title="Learning Functional Programming with JavaScript — Anjana Vakil" icon="video" href="https://www.youtube.com/watch?v=e-5obm1G_FY">
+    A beloved JSUnconf talk that explains functional programming concepts with clarity and humor. Anjana's approachable style makes abstract concepts feel tangible.
   </Card>
 </CardGroup>
