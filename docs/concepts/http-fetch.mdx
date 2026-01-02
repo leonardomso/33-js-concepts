@@ -386,11 +386,12 @@ response.type        // "basic", "cors", etc.
 response.redirected  // true if response came from a redirect
 
 // Body methods (each returns a Promise)
-response.json()      // Parse body as JSON
-response.text()      // Parse body as plain text
-response.blob()      // Parse body as binary Blob
-response.formData()  // Parse body as FormData
+response.json()        // Parse body as JSON
+response.text()        // Parse body as plain text
+response.blob()        // Parse body as binary Blob
+response.formData()    // Parse body as FormData
 response.arrayBuffer() // Parse body as ArrayBuffer
+response.bytes()       // Parse body as Uint8Array
 ```
 
 <Warning>
@@ -1085,9 +1086,6 @@ This example uses browser DOM APIs (`addEventListener`, `searchInput`). In Node.
   <Card title="Fetch API Error Handling" icon="newspaper" href="https://www.tjvantoll.com/2015/09/13/fetch-and-errors/">
     The article that explains why fetch doesn't reject on 404/500. Short read that saves you hours of debugging the "#1 fetch mistake."
   </Card>
-  <Card title="Abort Controller: Why and How" icon="newspaper" href="https://blog.openreplay.com/abort-controller--why-and-how-to-use-it/">
-    Shows the timeout and search-input patterns with working code examples. Read this when you need to cancel requests in a real project.
-  </Card>
 </CardGroup>
 
 ## Videos
@@ -1101,8 +1099,5 @@ This example uses browser DOM APIs (`addEventListener`, `searchInput`). In Node.
   </Card>
   <Card title="Async JS Crash Course - Callbacks, Promises, Async/Await" icon="video" href="https://www.youtube.com/watch?v=PoRJizFvM7s">
     Covers callbacks, Promises, and async/await before getting to fetch. Watch this if you want the full async picture, not just fetch.
-  </Card>
-  <Card title="JavaScript Fetch with Request and Headers Objects" icon="video" href="https://www.youtube.com/watch?v=CVZhFBjn8Rw">
-    Goes deeper into the Request and Headers objects most tutorials skip. Watch after you know the basics and want to level up.
   </Card>
 </CardGroup>
