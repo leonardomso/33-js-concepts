@@ -1,47 +1,1258 @@
 ---
-title: "Data Structures: Organizing Data in JavaScript"
-sidebarTitle: "Data Structures: Organizing Data"
-description: "Learn data structures in JavaScript — arrays, objects, stacks, queues, linked lists, trees, and graphs. Understand how to organize and access data efficiently."
+title: "Data Structures: Organizing and Storing Data in JavaScript"
+sidebarTitle: "Data Structures: Organizing and Storing Data"
+description: "Learn JavaScript data structures from built-in Arrays, Objects, Maps, and Sets to implementing Stacks, Queues, and Linked Lists. Understand when to use each structure."
 ---
 
-## Overview
+Why does finding an item in an array take longer as it grows? Why can you look up an object property instantly regardless of how many properties it has? The answer lies in **data structures**.
 
-Data structures are ways of organizing and storing data so that it can be accessed and modified efficiently. JavaScript provides built-in data structures like Arrays and Objects, as well as ES6 additions like Map and Set. Understanding data structures is crucial for writing efficient algorithms.
+```javascript
+// Array: searching gets slower as the array grows
+const users = ['alice', 'bob', 'charlie', /* ...thousands more */]
+users.includes('zara')  // Has to check every element - O(n)
+
+// Object: lookup is instant regardless of size
+const userMap = { alice: 1, bob: 2, charlie: 3, /* ...thousands more */ }
+userMap['zara']  // Direct access - O(1)
+```
+
+A **data structure** is a way of organizing data so it can be used efficiently. The right structure makes your code faster and cleaner. The wrong one can make simple operations painfully slow.
+
+<Info>
+**What you'll learn in this guide:**
+- JavaScript's built-in structures: Array, Object, Map, Set, WeakMap, WeakSet
+- When to use each built-in structure
+- How to implement: Stack, Queue, Linked List, Binary Search Tree
+- Choosing the right data structure for the job
+- Common interview questions and patterns
+</Info>
+
+<Warning>
+**Prerequisites:** This guide shows time complexity (like O(1) and O(n)) for operations. If you're not familiar with Big O notation, check out our [Algorithms & Big O guide](/concepts/algorithms-big-o) first. We also use [classes](/concepts/factories-classes) for implementations.
+</Warning>
+
+---
+
+## What Are Data Structures?
+
+Think of data structures like different ways to organize a library. You could:
+
+- **Stack books on a table** — Easy to add/remove from the top, but finding a specific book means digging through the pile
+- **Line them up on a shelf** — Easy to browse in order, but adding a book in the middle means shifting everything
+- **Organize by category with an index** — Finding any book is fast, but you need to maintain the index
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    DATA STRUCTURE TRADE-OFFS                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   ARRAY                    OBJECT/MAP               LINKED LIST          │
+│   ┌─┬─┬─┬─┬─┐              ┌────────────┐           ┌───┐   ┌───┐        │
+│   │0│1│2│3│4│              │ key: value │           │ A │──►│ B │──►     │
+│   └─┴─┴─┴─┴─┘              │ key: value │           └───┘   └───┘        │
+│                            └────────────┘                                │
+│   ✓ Fast index access      ✓ Fast key lookup       ✓ Fast insert/delete │
+│   ✓ Ordered                ✓ Flexible keys         ✗ Slow search        │
+│   ✗ Slow insert in middle  ✗ No order (Object)     ✗ No index access    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Every data structure has trade-offs. Your job is to pick the one that makes your most frequent operations fast.
+
+---
+
+## JavaScript's Built-in Data Structures
+
+JavaScript gives you several data structures out of the box. Let's look at each one.
+
+### Arrays
+
+An **[Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)** is an ordered collection of values, accessed by numeric index. It's the most common data structure in JavaScript.
+
+```javascript
+const fruits = ['apple', 'banana', 'cherry']
+
+// Access by index - O(1)
+fruits[0]  // 'apple'
+
+// Add to end - O(1)
+fruits.push('date')  // ['apple', 'banana', 'cherry', 'date']
+
+// Remove from end - O(1)
+fruits.pop()  // 'date'
+
+// Add to beginning - O(n) - shifts all elements!
+fruits.unshift('apricot')  // ['apricot', 'apple', 'banana', 'cherry']
+
+// Search - O(n)
+fruits.indexOf('banana')  // 3
+fruits.includes('mango')  // false
+```
+
+**Time Complexity:**
+
+| Operation | Method | Complexity | Why |
+|-----------|--------|------------|-----|
+| Access by index | `arr[i]` | O(1) | Direct memory access |
+| Add/remove at end | `push()`, `pop()` | O(1) | No shifting needed |
+| Add/remove at start | `unshift()`, `shift()` | O(n) | Must shift all elements |
+| Search | `indexOf()`, `includes()` | O(n) | Must check each element |
+| Insert in middle | `splice()` | O(n) | Must shift elements after |
+
+**When to use Arrays:**
+- You need ordered data
+- You access elements by position
+- You mostly add/remove from the end
+- You need to iterate over all elements
+
+---
+
+### Objects
+
+An **[Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)** stores key-value pairs where keys are strings or Symbols. It's JavaScript's fundamental way to group related data.
+
+```javascript
+const user = {
+  name: 'Alice',
+  age: 30,
+  email: 'alice@example.com'
+}
+
+// Access - O(1)
+user.name        // 'Alice'
+user['age']      // 30
+
+// Add/Update - O(1)
+user.role = 'admin'
+
+// Delete - O(1)
+delete user.email
+
+// Check if key exists - O(1)
+'name' in user           // true
+user.hasOwnProperty('name')  // true
+```
+
+**Limitations of Objects:**
+- Keys are converted to strings (numbers become "1", "2", etc.)
+- Objects have a prototype chain (inherited properties)
+- No built-in `.size` property
+- Property order is preserved in ES2015+, but with specific rules: integer keys are sorted numerically first, then string keys appear in insertion order
+
+**When to use Objects:**
+- Storing entity data (user profiles, settings)
+- When keys are known strings
+- Configuration objects
+- JSON data
+
+---
+
+### Map
+
+A **[Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map)** is like an Object but with superpowers: keys can be *any* type, it maintains insertion order, and has a `.size` property.
+
+```javascript
+const map = new Map()
+
+// Keys can be ANY type
+map.set('string', 'works')
+map.set(123, 'number key')
+map.set({ id: 1 }, 'object key')
+map.set(true, 'boolean key')
+
+// Access - O(1)
+map.get('string')  // 'works'
+map.get(123)       // 'number key'
+
+// Size is built-in
+map.size  // 4
+
+// Check existence - O(1)
+map.has('string')  // true
+
+// Delete - O(1)
+map.delete(123)
+
+// Iteration (maintains insertion order)
+for (const [key, value] of map) {
+  console.log(key, value)
+}
+```
+
+**Map vs Object:**
+
+| Feature | Map | Object |
+|---------|-----|--------|
+| Key types | Any | String or Symbol |
+| Order | Guaranteed insertion order | Preserved (integer keys sorted first) |
+| Size | `map.size` | `Object.keys(obj).length` |
+| Iteration | Directly iterable | Need `Object.keys()` |
+| Performance | Better for frequent add/delete | Better for static data |
+| Prototype | None | Has prototype chain |
+
+**When to use Map:**
+- Keys aren't strings (objects, functions, etc.)
+- You need to know the size frequently
+- You add/delete keys often
+- Order matters
+
+```javascript
+// Common use: counting occurrences
+function countWords(text) {
+  const words = text.toLowerCase().split(/\s+/)
+  const counts = new Map()
+  
+  for (const word of words) {
+    counts.set(word, (counts.get(word) || 0) + 1)
+  }
+  
+  return counts
+}
+
+countWords('the cat and the dog')
+// Map { 'the' => 2, 'cat' => 1, 'and' => 1, 'dog' => 1 }
+```
+
+---
+
+### Set
+
+A **[Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set)** stores unique values. Duplicates are automatically ignored.
+
+```javascript
+const set = new Set()
+
+// Add values - O(1)
+set.add(1)
+set.add(2)
+set.add(2)  // Ignored - already exists
+set.add('hello')
+
+set.size  // 3 (not 4!)
+
+// Check existence - O(1)
+set.has(2)  // true
+
+// Delete - O(1)
+set.delete(1)
+
+// Iteration
+for (const value of set) {
+  console.log(value)
+}
+```
+
+**The classic use case: removing duplicates**
+
+```javascript
+const numbers = [1, 2, 2, 3, 3, 3, 4]
+const unique = [...new Set(numbers)]  // [1, 2, 3, 4]
+```
+
+**Set Operations (ES2024+):**
+
+<Note>
+These methods are part of ES2024 and are supported in all modern browsers as of late 2024. Check [browser compatibility](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set#browser_compatibility) if you need to support older browsers.
+</Note>
+
+```javascript
+const a = new Set([1, 2, 3])
+const b = new Set([2, 3, 4])
+
+// Union: elements in either set
+a.union(b)  // Set {1, 2, 3, 4}
+
+// Intersection: elements in both sets
+a.intersection(b)  // Set {2, 3}
+
+// Difference: elements in a but not in b
+a.difference(b)  // Set {1}
+
+// Symmetric difference: elements in either but not both
+a.symmetricDifference(b)  // Set {1, 4}
+
+// Subset check
+new Set([1, 2]).isSubsetOf(a)  // true
+```
+
+**When to use Set:**
+- You need unique values
+- You check "does this exist?" frequently
+- Removing duplicates from arrays
+- Tracking visited items
+
+---
+
+### WeakMap and WeakSet
+
+<Accordion title="WeakMap and WeakSet (Advanced)">
+
+**[WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)** and **[WeakSet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)** are special versions where keys (WeakMap) or values (WeakSet) are held "weakly." This means they don't prevent garbage collection.
+
+**WeakMap:**
+- Keys must be objects (or non-registered symbols)
+- If the key object has no other references, it gets garbage collected
+- Not iterable (no `.keys()`, `.values()`, `.forEach()`)
+- No `.size` property
+
+```javascript
+const privateData = new WeakMap()
+
+class User {
+  constructor(name, password) {
+    this.name = name
+    // Store private data that can't be accessed externally
+    privateData.set(this, { password })
+  }
+  
+  checkPassword(input) {
+    return privateData.get(this).password === input
+  }
+}
+
+const user = new User('Alice', 'secret123')
+user.name  // 'Alice'
+user.password  // undefined - it's private!
+user.checkPassword('secret123')  // true
+
+// When 'user' is garbage collected, the private data is too
+```
+
+**WeakSet:**
+- Values must be objects
+- Useful for tracking which objects have been processed
+
+```javascript
+const processed = new WeakSet()
+
+function processOnce(obj) {
+  if (processed.has(obj)) {
+    return  // Already processed
+  }
+  
+  processed.add(obj)
+  // Do expensive processing...
+}
+```
+
+**When to use Weak versions:**
+- Caching computed data for objects
+- Storing private instance data
+- Tracking objects without preventing garbage collection
+
+</Accordion>
+
+---
+
+## Implementing Common Data Structures
+
+JavaScript doesn't have built-in Stack, Queue, or Linked List classes, but they're easy to implement and important to understand.
+
+### Stack (LIFO)
+
+A **Stack** follows Last-In-First-Out: the last item added is the first removed. Think of a stack of plates.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                              STACK (LIFO)                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│     push(4)        pop()                                                 │
+│        │             │                                                   │
+│        ▼             ▼                                                   │
+│      ┌───┐         ┌───┐                                                 │
+│      │ 4 │ ◄─ top  │   │                                                 │
+│      ├───┤         ├───┤                                                 │
+│      │ 3 │         │ 3 │ ◄─ top                                          │
+│      ├───┤         ├───┤                                                 │
+│      │ 2 │         │ 2 │                                                 │
+│      ├───┤         ├───┤                                                 │
+│      │ 1 │         │ 1 │                                                 │
+│      └───┘         └───┘                                                 │
+│                                                                          │
+│   "Last in, first out" - like a stack of plates                          │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Real-world uses:**
+- Browser history (back button)
+- Undo/redo functionality
+- Function call stack
+- Expression evaluation (parentheses matching)
+
+**Implementation:**
+
+```javascript
+class Stack {
+  constructor() {
+    this.items = []
+  }
+  
+  push(item) {
+    this.items.push(item)
+  }
+  
+  pop() {
+    return this.items.pop()
+  }
+  
+  peek() {
+    return this.items[this.items.length - 1]
+  }
+  
+  isEmpty() {
+    return this.items.length === 0
+  }
+  
+  size() {
+    return this.items.length
+  }
+}
+
+// Usage
+const stack = new Stack()
+stack.push(1)
+stack.push(2)
+stack.push(3)
+stack.peek()   // 3 (look at top without removing)
+stack.pop()    // 3
+stack.pop()    // 2
+stack.size()   // 1
+```
+
+**Time Complexity:** All operations are O(1).
+
+---
+
+### Queue (FIFO)
+
+A **Queue** follows First-In-First-Out: the first item added is the first removed. Think of a line at a store.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                              QUEUE (FIFO)                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   enqueue(4)                                        dequeue()            │
+│       │                                                 │                │
+│       ▼                                                 ▼                │
+│     ┌───┬───┬───┬───┐                             ┌───┬───┬───┐          │
+│     │ 4 │ 3 │ 2 │ 1 │  ───────────────────────►   │ 4 │ 3 │ 2 │          │
+│     └───┴───┴───┴───┘                             └───┴───┴───┘          │
+│     back          front                           back      front        │
+│                                                                          │
+│   "First in, first out" - like a line at a store                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Real-world uses:**
+- Task scheduling
+- Print queue
+- BFS graph traversal
+- Message queues
+
+**Implementation:**
+
+```javascript
+class Queue {
+  constructor() {
+    this.items = []
+  }
+  
+  enqueue(item) {
+    this.items.push(item)
+  }
+  
+  dequeue() {
+    return this.items.shift()  // Note: O(n) with arrays!
+  }
+  
+  front() {
+    return this.items[0]
+  }
+  
+  isEmpty() {
+    return this.items.length === 0
+  }
+  
+  size() {
+    return this.items.length
+  }
+}
+
+// Usage
+const queue = new Queue()
+queue.enqueue('first')
+queue.enqueue('second')
+queue.enqueue('third')
+queue.dequeue()  // 'first'
+queue.front()    // 'second'
+```
+
+<Warning>
+**Performance note:** Using `shift()` on an array is O(n) because all remaining elements must be re-indexed. For performance-critical code, use a linked list implementation or an object with head/tail pointers.
+</Warning>
+
+---
+
+### Linked List
+
+A **Linked List** is a chain of nodes where each node points to the next. Unlike arrays, elements aren't stored in contiguous memory.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                            LINKED LIST                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   head                                                     tail          │
+│     │                                                        │           │
+│     ▼                                                        ▼           │
+│   ┌──────────┐     ┌──────────┐     ┌──────────┐     ┌──────────┐       │
+│   │ value: 1 │     │ value: 2 │     │ value: 3 │     │ value: 4 │       │
+│   │ next: ───────► │ next: ───────► │ next: ───────► │ next: null│      │
+│   └──────────┘     └──────────┘     └──────────┘     └──────────┘       │
+│                                                                          │
+│   Nodes can be anywhere in memory - connected by references              │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Linked List vs Array:**
+
+| Operation | Array | Linked List |
+|-----------|-------|-------------|
+| Access by index | O(1) | O(n) |
+| Insert at beginning | O(n) | O(1) |
+| Insert at end | O(1) | O(1) with tail pointer |
+| Insert in middle | O(n) | O(1) if you have the node |
+| Search | O(n) | O(n) |
+
+**Implementation:**
+
+```javascript
+class Node {
+  constructor(value) {
+    this.value = value
+    this.next = null
+  }
+}
+
+class LinkedList {
+  constructor() {
+    this.head = null
+    this.size = 0
+  }
+  
+  // Add to beginning - O(1)
+  prepend(value) {
+    const node = new Node(value)
+    node.next = this.head
+    this.head = node
+    this.size++
+  }
+  
+  // Add to end - O(n)
+  append(value) {
+    const node = new Node(value)
+    
+    if (!this.head) {
+      this.head = node
+    } else {
+      let current = this.head
+      while (current.next) {
+        current = current.next
+      }
+      current.next = node
+    }
+    this.size++
+  }
+  
+  // Find a value - O(n)
+  find(value) {
+    let current = this.head
+    while (current) {
+      if (current.value === value) {
+        return current
+      }
+      current = current.next
+    }
+    return null
+  }
+  
+  // Convert to array for easy viewing
+  toArray() {
+    const result = []
+    let current = this.head
+    while (current) {
+      result.push(current.value)
+      current = current.next
+    }
+    return result
+  }
+}
+
+// Usage
+const list = new LinkedList()
+list.prepend(1)
+list.append(2)
+list.append(3)
+list.prepend(0)
+list.toArray()  // [0, 1, 2, 3]
+list.find(2)    // Node { value: 2, next: Node }
+```
+
+**When to use Linked Lists:**
+- Frequent insertions/deletions at the beginning
+- You don't need random access by index
+- Implementing queues (for O(1) dequeue)
+
+---
+
+### Binary Search Tree
+
+A **Binary Search Tree (BST)** is a hierarchical structure where each node has at most two children. The left child is smaller, the right child is larger.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        BINARY SEARCH TREE                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│                              ┌────┐                                      │
+│                              │ 10 │  ◄─ root                             │
+│                              └────┘                                      │
+│                             /      \                                     │
+│                        ┌────┐      ┌────┐                                │
+│                        │ 5  │      │ 15 │                                │
+│                        └────┘      └────┘                                │
+│                       /    \           \                                 │
+│                  ┌────┐  ┌────┐      ┌────┐                              │
+│                  │ 3  │  │ 7  │      │ 20 │                              │
+│                  └────┘  └────┘      └────┘                              │
+│                                                                          │
+│   Rule: left child < parent < right child                                │
+│   This makes searching fast: just go left or right!                      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Time Complexity:**
+
+| Operation | Average | Worst (unbalanced) |
+|-----------|---------|-------------------|
+| Search | O(log n) | O(n) |
+| Insert | O(log n) | O(n) |
+| Delete | O(log n) | O(n) |
+
+**Implementation:**
+
+```javascript
+class TreeNode {
+  constructor(value) {
+    this.value = value
+    this.left = null
+    this.right = null
+  }
+}
+
+class BinarySearchTree {
+  constructor() {
+    this.root = null
+  }
+  
+  insert(value) {
+    const node = new TreeNode(value)
+    
+    if (!this.root) {
+      this.root = node
+      return
+    }
+    
+    let current = this.root
+    while (true) {
+      if (value < current.value) {
+        // Go left
+        if (!current.left) {
+          current.left = node
+          return
+        }
+        current = current.left
+      } else {
+        // Go right
+        if (!current.right) {
+          current.right = node
+          return
+        }
+        current = current.right
+      }
+    }
+  }
+  
+  search(value) {
+    let current = this.root
+    
+    while (current) {
+      if (value === current.value) {
+        return current
+      }
+      current = value < current.value ? current.left : current.right
+    }
+    
+    return null
+  }
+  
+  // In-order traversal: left, root, right (gives sorted order)
+  inOrder(node = this.root, result = []) {
+    if (node) {
+      this.inOrder(node.left, result)
+      result.push(node.value)
+      this.inOrder(node.right, result)
+    }
+    return result
+  }
+}
+
+// Usage
+const bst = new BinarySearchTree()
+bst.insert(10)
+bst.insert(5)
+bst.insert(15)
+bst.insert(3)
+bst.insert(7)
+bst.insert(20)
+
+bst.search(7)   // TreeNode { value: 7, ... }
+bst.search(100) // null
+bst.inOrder()   // [3, 5, 7, 10, 15, 20] - sorted!
+```
+
+**When to use BST:**
+- You need fast search, insert, and delete (O(log n) average)
+- Data needs to stay sorted
+- Implementing autocomplete, spell checkers
+
+---
+
+### Graph
+
+<Accordion title="Graph (Brief Overview)">
+
+A **Graph** consists of nodes (vertices) connected by edges. Think social networks (people connected by friendships) or maps (cities connected by roads).
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                              GRAPH                                       │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│              A ─────── B                                                 │
+│             /│\        │                                                 │
+│            / │ \       │                                                 │
+│           /  │  \      │                                                 │
+│          C   │   D ────┘                                                 │
+│           \  │  /                                                        │
+│            \ │ /                                                         │
+│             \│/                                                          │
+│              E                                                           │
+│                                                                          │
+│   Adjacency List representation:                                         │
+│   A: [B, C, D, E]                                                        │
+│   B: [A, D]                                                              │
+│   C: [A, E]                                                              │
+│   ...                                                                    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Basic Implementation (Adjacency List):**
+
+```javascript
+class Graph {
+  constructor() {
+    this.adjacencyList = new Map()
+  }
+  
+  addVertex(vertex) {
+    if (!this.adjacencyList.has(vertex)) {
+      this.adjacencyList.set(vertex, [])
+    }
+  }
+  
+  addEdge(v1, v2) {
+    this.adjacencyList.get(v1).push(v2)
+    this.adjacencyList.get(v2).push(v1)  // For undirected graph
+  }
+  
+  // Breadth-First Search - uses Queue (FIFO)
+  bfs(start) {
+    const visited = new Set()
+    const queue = [start]
+    const result = []
+    
+    while (queue.length) {
+      const vertex = queue.shift()
+      if (visited.has(vertex)) continue
+      
+      visited.add(vertex)
+      result.push(vertex)
+      
+      for (const neighbor of this.adjacencyList.get(vertex)) {
+        if (!visited.has(neighbor)) {
+          queue.push(neighbor)
+        }
+      }
+    }
+    
+    return result
+  }
+  
+  // Depth-First Search - uses Stack (LIFO) via recursion
+  dfs(start, visited = new Set(), result = []) {
+    if (visited.has(start)) return result
+    
+    visited.add(start)
+    result.push(start)
+    
+    for (const neighbor of this.adjacencyList.get(start)) {
+      this.dfs(neighbor, visited, result)
+    }
+    
+    return result
+  }
+}
+
+// Usage
+const graph = new Graph()
+graph.addVertex('A')
+graph.addVertex('B')
+graph.addVertex('C')
+graph.addEdge('A', 'B')
+graph.addEdge('A', 'C')
+graph.addEdge('B', 'C')
+graph.bfs('A')  // ['A', 'B', 'C'] - level by level
+graph.dfs('A')  // ['A', 'B', 'C'] - goes deep first
+```
+
+**Real-world uses:**
+- Social networks (friend connections)
+- Maps and navigation (shortest path)
+- Recommendation systems
+- Dependency resolution (package managers)
+
+</Accordion>
+
+---
+
+## Choosing the Right Data Structure
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    WHICH DATA STRUCTURE SHOULD I USE?                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   Need ordered data with index access?                                   │
+│      └──► ARRAY                                                          │
+│                                                                          │
+│   Need key-value pairs with string keys?                                 │
+│      └──► OBJECT (static data) or MAP (dynamic)                          │
+│                                                                          │
+│   Need key-value with any type as key?                                   │
+│      └──► MAP                                                            │
+│                                                                          │
+│   Need unique values only?                                               │
+│      └──► SET                                                            │
+│                                                                          │
+│   Need LIFO (last in, first out)?                                        │
+│      └──► STACK                                                          │
+│                                                                          │
+│   Need FIFO (first in, first out)?                                       │
+│      └──► QUEUE                                                          │
+│                                                                          │
+│   Need fast insert/delete at beginning?                                  │
+│      └──► LINKED LIST                                                    │
+│                                                                          │
+│   Need fast search + sorted data?                                        │
+│      └──► BINARY SEARCH TREE                                             │
+│                                                                          │
+│   Modeling relationships/connections?                                    │
+│      └──► GRAPH                                                          │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+| Use Case | Best Structure | Why |
+|----------|----------------|-----|
+| Todo list | Array | Ordered, index access |
+| User settings | Object | String keys, static |
+| Word frequency counter | Map | Easy increment, any key |
+| Tag system | Set | Unique values |
+| Browser back button | Stack | LIFO |
+| Task scheduler | Queue | FIFO |
+| Playlist with prev/next | Linked List (doubly) | O(1) traversal |
+| Dictionary/autocomplete | Trie | Fast prefix search |
+| Social network | Graph | Connections |
+
+---
+
+## Common Interview Questions
+
+Interview questions often test your understanding of data structures. Here are patterns you'll encounter:
+
+<AccordionGroup>
+  <Accordion title="Array: Two Sum">
+    **Problem:** Find two numbers in an array that add up to a target.
+    
+    **Approach:** Use a Map to store numbers you've seen. For each number, check if `target - number` exists in the Map.
+    
+    ```javascript
+    function twoSum(nums, target) {
+      const seen = new Map()
+      
+      for (let i = 0; i < nums.length; i++) {
+        const complement = target - nums[i]
+        
+        if (seen.has(complement)) {
+          return [seen.get(complement), i]
+        }
+        
+        seen.set(nums[i], i)
+      }
+      
+      return []
+    }
+    
+    twoSum([2, 7, 11, 15], 9)  // [0, 1]
+    ```
+    
+    **Why Map?** O(1) lookup turns O(n²) brute force into O(n).
+  </Accordion>
+  
+  <Accordion title="Stack: Valid Parentheses">
+    **Problem:** Check if a string of brackets is valid: `()[]{}`.
+    
+    **Approach:** Push opening brackets onto stack. When you see a closing bracket, pop and check if it matches.
+    
+    ```javascript
+    function isValid(s) {
+      const stack = []
+      const pairs = { ')': '(', ']': '[', '}': '{' }
+      
+      for (const char of s) {
+        if (char in pairs) {
+          // Closing bracket - check if it matches
+          if (stack.pop() !== pairs[char]) {
+            return false
+          }
+        } else {
+          // Opening bracket - push to stack
+          stack.push(char)
+        }
+      }
+      
+      return stack.length === 0
+    }
+    
+    isValid('([{}])')  // true
+    isValid('([)]')    // false
+    ```
+  </Accordion>
+  
+  <Accordion title="Linked List: Reverse">
+    **Problem:** Reverse a linked list.
+    
+    **Approach:** Keep track of previous, current, and next. Reverse pointers as you go.
+    
+    ```javascript
+    function reverseList(head) {
+      let prev = null
+      let current = head
+      
+      while (current) {
+        const next = current.next  // Save next
+        current.next = prev        // Reverse pointer
+        prev = current             // Move prev forward
+        current = next             // Move current forward
+      }
+      
+      return prev  // New head
+    }
+    ```
+    
+    **Key insight:** You need three pointers to avoid losing references.
+  </Accordion>
+  
+  <Accordion title="Linked List: Detect Cycle">
+    **Problem:** Determine if a linked list has a cycle.
+    
+    **Approach:** Floyd's Tortoise and Hare - use two pointers, one fast (2 steps) and one slow (1 step). If they meet, there's a cycle.
+    
+    ```javascript
+    function hasCycle(head) {
+      let slow = head
+      let fast = head
+      
+      while (fast && fast.next) {
+        slow = slow.next
+        fast = fast.next.next
+        
+        if (slow === fast) {
+          return true  // They met - cycle exists
+        }
+      }
+      
+      return false  // Fast reached end - no cycle
+    }
+    ```
+    
+    **Why this works:** In a cycle, the fast pointer will eventually "lap" the slow pointer.
+  </Accordion>
+  
+  <Accordion title="Tree: Maximum Depth">
+    **Problem:** Find the maximum depth of a binary tree.
+    
+    **Approach:** Recursively find the depth of left and right subtrees, take the max.
+    
+    ```javascript
+    function maxDepth(root) {
+      if (!root) return 0
+      
+      const leftDepth = maxDepth(root.left)
+      const rightDepth = maxDepth(root.right)
+      
+      return Math.max(leftDepth, rightDepth) + 1
+    }
+    ```
+    
+    **Base case:** Empty tree has depth 0.
+  </Accordion>
+  
+  <Accordion title="Queue: Implement with Two Stacks">
+    **Problem:** Implement a queue using only stacks.
+    
+    **Approach:** Use two stacks. Push to stack1. For dequeue, if stack2 is empty, pour all of stack1 into stack2 (reversing order), then pop from stack2.
+    
+    ```javascript
+    class QueueFromStacks {
+      constructor() {
+        this.stack1 = []  // For enqueue
+        this.stack2 = []  // For dequeue
+      }
+      
+      enqueue(item) {
+        this.stack1.push(item)
+      }
+      
+      dequeue() {
+        if (this.stack2.length === 0) {
+          // Pour stack1 into stack2
+          while (this.stack1.length) {
+            this.stack2.push(this.stack1.pop())
+          }
+        }
+        return this.stack2.pop()
+      }
+    }
+    ```
+    
+    **Amortized O(1):** Each element is moved at most twice.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Arrays** are great for ordered data with index access. Push/pop are O(1), but shift/unshift are O(n).
+
+2. **Objects** store string-keyed data. Use them for static configuration and entity data.
+
+3. **Map** is the better choice when keys aren't strings, you need `.size`, or you add/delete frequently.
+
+4. **Set** stores unique values. The `[...new Set(arr)]` trick removes duplicates instantly.
+
+5. **Stack (LIFO)** is perfect for undo/redo, parsing expressions, and DFS traversal.
+
+6. **Queue (FIFO)** is ideal for task scheduling and BFS traversal. Use a linked list for O(1) dequeue.
+
+7. **Linked Lists** excel at insertions/deletions but lack random access. Use when you frequently modify the beginning.
+
+8. **Binary Search Trees** give O(log n) search/insert/delete on average. They keep data sorted.
+
+9. **Choose based on your most frequent operation.** What makes one structure fast makes another slow.
+
+10. **Interview tip:** When you need O(1) lookup, think Map or Set. When you need to track order of operations, think Stack or Queue.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: When would you use a Map instead of an Object?">
+    **Answer:**
+    
+    Use Map when:
+    - Keys are not strings (objects, numbers, etc.)
+    - You need to know the size frequently (`.size` vs `Object.keys().length`)
+    - You add/delete keys often (Map is optimized for this)
+    - You need guaranteed insertion order
+    - You want to avoid prototype chain issues
+    
+    Use Object when:
+    - Keys are known strings
+    - You're working with JSON data
+    - You need object destructuring or spread syntax
+  </Accordion>
+  
+  <Accordion title="Question 2: Why is array shift() O(n) but pop() O(1)?">
+    **Answer:**
+    
+    `pop()` removes from the end. No other elements need to move.
+    
+    `shift()` removes from the beginning. Every remaining element must be re-indexed:
+    - Element at index 1 moves to 0
+    - Element at index 2 moves to 1
+    - ...and so on
+    
+    This is why Queue implementations with arrays have O(n) dequeue. For O(1), use a linked list or object with head/tail pointers.
+  </Accordion>
+  
+  <Accordion title="Question 3: What's the difference between a Stack and a Queue?">
+    **Answer:**
+    
+    **Stack (LIFO):** Last In, First Out
+    - Like a stack of plates - you take from the top
+    - `push()` and `pop()` operate on the same end
+    - Use for: undo/redo, back button, recursion
+    
+    **Queue (FIFO):** First In, First Out  
+    - Like a line at a store - first person in line is served first
+    - `enqueue()` adds to back, `dequeue()` removes from front
+    - Use for: task scheduling, BFS, print queues
+  </Accordion>
+  
+  <Accordion title="Question 4: When would a Linked List be better than an Array?">
+    **Answer:**
+    
+    Linked List wins when:
+    - You frequently insert/delete at the beginning (O(1) vs O(n))
+    - You don't need random access by index
+    - You're implementing a queue (O(1) dequeue)
+    - Memory is fragmented (nodes can be anywhere)
+    
+    Array wins when:
+    - You need index-based access
+    - You iterate sequentially often
+    - You mostly add/remove from the end
+    - You need `.length`, `.map()`, `.filter()`, etc.
+  </Accordion>
+  
+  <Accordion title="Question 5: What makes Binary Search Trees fast?">
+    **Answer:**
+    
+    BSTs use the rule: left < parent < right. This means:
+    
+    - To find a value, compare with root
+    - If smaller, go left; if larger, go right
+    - Each comparison eliminates half the remaining nodes
+    
+    This gives O(log n) search, insert, and delete (on average).
+    
+    **Catch:** If you insert sorted data, the tree becomes a linked list (all nodes on one side), and operations become O(n). Self-balancing trees (AVL, Red-Black) solve this.
+  </Accordion>
+  
+  <Accordion title="Question 6: How would you remove duplicates from an array?">
+    **Answer:**
+    
+    The cleanest way is with Set:
+    
+    ```javascript
+    const unique = [...new Set(array)]
+    ```
+    
+    This works because:
+    1. `new Set(array)` creates a Set (which only keeps unique values)
+    2. `[...set]` spreads the Set back into an array
+    
+    Time complexity: O(n) - each element is processed once.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Algorithms & Big O" icon="gauge-high" href="/concepts/algorithms-big-o">
+    Understanding time complexity helps you choose the right data structure
+  </Card>
+  <Card title="Factories & Classes" icon="industry" href="/concepts/factories-classes">
+    The class syntax used to implement data structures
+  </Card>
+  <Card title="Higher-Order Functions" icon="function" href="/concepts/higher-order-functions">
+    Array methods like map, filter, and reduce
+  </Card>
+  <Card title="Recursion" icon="arrow-rotate-left" href="/concepts/recursion">
+    Essential for tree and graph traversal algorithms
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Array — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">
+    Complete reference for JavaScript arrays
+  </Card>
+  <Card title="Object — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">
+    Documentation for Object methods and properties
+  </Card>
+  <Card title="Map — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">
+    Guide to the Map collection type
+  </Card>
+  <Card title="Set — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">
+    Documentation for Set and its new ES2024 methods
+  </Card>
+  <Card title="WeakMap — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">
+    When to use WeakMap for memory management
+  </Card>
+  <Card title="Data Structures Guide — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Data_structures">
+    MDN's overview of JavaScript data types and structures
+  </Card>
+</CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="Data Structures in JavaScript" icon="newspaper" href="https://medium.com/siliconwat/data-structures-in-javascript-1b9aed0ea17c">
-    By Thon Ly
+  <Card title="Map and Set — JavaScript.info" icon="newspaper" href="https://javascript.info/map-set">
+    The clearest explanation of Map and Set with interactive examples. Covers WeakMap and WeakSet too.
   </Card>
-  <Card title="Algorithms and Data Structures in JavaScript" icon="newspaper" href="https://itnext.io/algorithms-and-data-structures-in-javascript-a71548f902cb">
-    By Oleksii Trekhleb
+  <Card title="JavaScript Algorithms and Data Structures" icon="newspaper" href="https://github.com/trekhleb/javascript-algorithms">
+    Oleksii Trekhleb's legendary GitHub repo with implementations of every data structure and algorithm in JavaScript. Over 180k stars for good reason.
+  </Card>
+  <Card title="Data Structures in JavaScript" icon="newspaper" href="https://www.freecodecamp.org/news/data-structures-in-javascript-with-examples/">
+    freeCodeCamp's practical guide covering arrays through graphs with real-world examples you can follow along with.
+  </Card>
+  <Card title="Itsy Bitsy Data Structures" icon="newspaper" href="https://github.com/jamiebuilds/itsy-bitsy-data-structures">
+    Jamie Kyle's annotated source code explaining data structures in ~200 lines. Perfect if you learn by reading well-commented code.
   </Card>
 </CardGroup>
-
-- [Data Structures: Objects and Arrays ― Chris Nwamba](https://scotch.io/courses/10-need-to-know-javascript-concepts/data-structures-objects-and-arrays)
-- [Data structures in JavaScript — Benoit Vallon](http://blog.benoitvallon.com/data-structures-in-javascript/data-structures-in-javascript/)
-- [Playing with Data Structures in Javascript — Anish K.](https://blog.cloudboost.io/playing-with-data-structures-in-javascript-stack-a55ebe50f29d)
-- [The Little Guide of Queue in JavaScript — Germán Cutraro](https://hackernoon.com/the-little-guide-of-queue-in-javascript-4f67e79260d9)
-- [All algorithms writing with JavaScript in the book 'Algorithms Fourth Edition'](https://github.com/barretlee/algorithms)
-- [Collection of classic computer science paradigms in JavaScript](https://github.com/nzakas/computer-science-in-javascript)
-- [All the things you didn't know you wanted to know about data structures](https://github.com/jamiebuilds/itsy-bitsy-data-structures)
-- [JavaScript Data Structures: 40 Part Series — miku86](https://dev.to/miku86/series/3259)
-- [Data Structures: Understanding Graphs — Rachel Hawa](https://medium.com/javascript-in-plain-english/data-structures-understanding-graphs-82509d35e6b5)
-- [Data Structures Two Ways: Linked List (Pt 1) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-2n61)
-- [Data Structures Two Ways: Linked List (Pt 2) — Freddie Duffield](https://dev.to/freddieduffield/data-structures-two-ways-linked-list-pt2-2i60)
-- [Graph Data Structures Explained in JavaScript — Adrian Mejia](https://dev.to/amejiarosario/graph-data-structures-for-beginners-5edn)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="Algorithms In Javascript | Ace Your Interview" icon="video" href="https://www.youtube.com/watch?v=H_EBPZgiAas&list=PLDmvslp_VR0zYUSth_8O69p4_cmvZEgLa">
-    By Eduonix Learning Solutions
-  </Card>
   <Card title="Data Structures and Algorithms in JavaScript" icon="video" href="https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ">
-    By freeCodeCamp
+    freeCodeCamp's complete 8-hour course covering everything from Big O to graph algorithms. Great for interview prep.
+  </Card>
+  <Card title="JavaScript Data Structures: Getting Started" icon="video" href="https://www.youtube.com/watch?v=41GSinwoMYA">
+    Academind's beginner-friendly introduction focusing on when and why to use each structure, not just how.
+  </Card>
+  <Card title="Data Structures Easy to Advanced" icon="video" href="https://www.youtube.com/watch?v=RBSGKlAvoiM">
+    William Fiset's comprehensive course with animations that make complex structures like trees and graphs click.
   </Card>
 </CardGroup>
-
-- [Learning JavaScript Data Structures and Algorithms: Sorting — Packt Video](https://www.youtube.com/watch?v=Ymh_AurrMbA)
-- [JavaScript Data Structures: Getting Started — Academind](https://www.youtube.com/watch?v=41GSinwoMYA&ab_channel=Academind)
