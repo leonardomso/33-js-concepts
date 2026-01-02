@@ -32,7 +32,7 @@ A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
 - How to create Promises with the Promise constructor
 - How to consume Promises with `.then()`, `.catch()`, and `.finally()`
 - How Promise chaining works and why it's powerful
-- All the Promise static methods: `all`, `allSettled`, `race`, `any`, `resolve`, `reject`
+- All the Promise static methods: `all`, `allSettled`, `race`, `any`, `resolve`, `reject`, `withResolvers`, `try`
 - Common patterns and mistakes to avoid
 </Info>
 
@@ -281,6 +281,37 @@ outerPromise.then(value => {
 ```
 
 When you resolve a Promise with another Promise, the outer Promise "adopts" the state of the inner one. This is called **Promise unwrapping**. The outer Promise automatically follows whatever happens to the inner Promise.
+
+### Thenables
+
+JavaScript doesn't just work with native Promises — it also supports **thenables**. A thenable is any object with a `.then()` method. This allows Promises to interoperate with Promise-like objects from libraries:
+
+```javascript
+// A thenable is any object with a .then() method
+const thenable = {
+  then(onFulfilled, onRejected) {
+    onFulfilled(42)
+  }
+}
+
+// Promise.resolve() unwraps thenables
+Promise.resolve(thenable).then(value => {
+  console.log(value)  // 42
+})
+
+// Returning a thenable from .then() also works
+Promise.resolve('start')
+  .then(() => thenable)
+  .then(value => console.log(value))  // 42
+```
+
+This is why `Promise.resolve()` doesn't always return a new Promise — if you pass it a native Promise, it returns the same Promise:
+
+```javascript
+const p = Promise.resolve('hello')
+const p2 = Promise.resolve(p)
+console.log(p === p2)  // true
+```
 
 ---
 
@@ -930,6 +961,8 @@ Promise.all([
 - You need ALL results to proceed
 - Any single failure should abort the whole operation
 - You want to run Promises in parallel and wait for all
+
+**Note:** `Promise.all([])` with an empty array resolves immediately with `[]`. Also, non-Promise values in the array are automatically wrapped with `Promise.resolve()`.
 </Tip>
 
 ### Promise.allSettled() — Wait for All (No Short-Circuit)
@@ -1024,6 +1057,8 @@ Promise.race([
 ])
   .catch(error => console.log(error.message))  // "Fast failure"
 ```
+
+**Edge case:** `Promise.race([])` with an empty array returns a Promise that **never settles** (stays pending forever). This is rarely useful and usually indicates a bug.
 </Warning>
 
 ### Promise.any() — First to Fulfill Wins
@@ -1085,16 +1120,18 @@ fetchFromFastestMirror(mirrors)
 - You only need one successful result
 - You have multiple sources/fallbacks and want the first success
 - Rejections should be ignored unless everything fails
+
+**Edge case:** `Promise.any([])` with an empty array immediately rejects with an `AggregateError` (since there are no Promises that could fulfill).
 </Tip>
 
 ### Comparison Table
 
-| Method | Fulfills when... | Rejects when... | Use case |
-|--------|-----------------|-----------------|----------|
-| `Promise.all()` | ALL fulfill | ANY rejects | Need all results, fail-fast |
-| `Promise.allSettled()` | ALL settle | Never | Need all results, tolerate failures |
-| `Promise.race()` | First settles | First settles (if rejection) | Timeout, fastest response |
-| `Promise.any()` | First fulfills | ALL reject | First success, ignore failures |
+| Method | Fulfills when... | Rejects when... | Empty array `[]` | Use case |
+|--------|-----------------|-----------------|------------------|----------|
+| `Promise.all()` | ALL fulfill | ANY rejects | Fulfills with `[]` | Need all results, fail-fast |
+| `Promise.allSettled()` | ALL settle | Never | Fulfills with `[]` | Need all results, tolerate failures |
+| `Promise.race()` | First to settle fulfills | First to settle rejects | Never settles | Timeout, fastest response |
+| `Promise.any()` | ANY fulfills | ALL reject | Rejects (AggregateError) | First success, ignore failures |
 
 ### Promise.withResolvers()
 
@@ -1120,6 +1157,59 @@ const promise = new Promise((res, rej) => {
 
 // Now resolve/reject are available outside
 ```
+
+### Promise.try()
+
+**[`Promise.try()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/try)** (Baseline 2025) takes a callback of any kind and wraps its result in a Promise. This is useful when you have a function that might be synchronous or asynchronous and you want to handle both cases uniformly:
+
+```javascript
+// The problem: func() might throw synchronously OR return a Promise
+// This doesn't catch synchronous errors:
+Promise.resolve(func()).catch(handleError)  // Sync throw escapes!
+
+// This works but is verbose:
+new Promise((resolve) => resolve(func()))
+
+// Promise.try() is cleaner:
+Promise.try(func)
+```
+
+**Real example: handling callbacks that might be sync or async**
+
+```javascript
+function processData(callback) {
+  return Promise.try(callback)
+    .then(result => console.log('Result:', result))
+    .catch(error => console.error('Error:', error))
+    .finally(() => console.log('Done'))
+}
+
+// Works with sync functions
+processData(() => 'sync result')
+
+// Works with async functions
+processData(async () => 'async result')
+
+// Catches sync throws
+processData(() => { throw new Error('sync error') })
+
+// Catches async rejections
+processData(async () => { throw new Error('async error') })
+```
+
+You can also pass arguments to the callback:
+
+```javascript
+// Instead of creating a closure:
+Promise.try(() => fetchUser(userId))
+
+// You can pass arguments directly:
+Promise.try(fetchUser, userId)
+```
+
+<Note>
+`Promise.try()` calls the function **synchronously** (like the Promise constructor executor), unlike `.then()` which always runs callbacks asynchronously. If possible, it resolves the promise immediately.
+</Note>
 
 ---
 
@@ -1600,6 +1690,12 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
   </Card>
   <Card title="Promise.allSettled() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled">
     Documentation for Promise.allSettled() with examples
+  </Card>
+  <Card title="Promise.try() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/try">
+    Documentation for Promise.try() (Baseline 2025)
+  </Card>
+  <Card title="Promise.withResolvers() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/withResolvers">
+    Documentation for Promise.withResolvers() (ES2024)
   </Card>
 </CardGroup>
 
