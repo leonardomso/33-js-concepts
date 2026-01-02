@@ -729,31 +729,35 @@ clone.id = 'new-unique-id'
 When adding many elements, using a **[`DocumentFragment`](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment)** is more efficient:
 
 ```javascript
-// Bad: Multiple reflows
+// Bad: Multiple DOM updates (potentially multiple reflows)
 const ul = document.querySelector('ul')
 for (let i = 0; i < 1000; i++) {
   const li = document.createElement('li')
   li.textContent = `Item ${i}`
-  ul.appendChild(li)  // Triggers reflow each time!
+  ul.appendChild(li)  // Modifies live DOM each iteration
 }
 
-// Good: Single reflow
+// Good: Single DOM update
 const ul = document.querySelector('ul')
 const fragment = document.createDocumentFragment()
 
 for (let i = 0; i < 1000; i++) {
   const li = document.createElement('li')
   li.textContent = `Item ${i}`
-  fragment.appendChild(li)  // No reflow (fragment is detached)
+  fragment.appendChild(li)  // No DOM update (fragment is detached)
 }
 
-ul.appendChild(fragment)  // Single reflow!
+ul.appendChild(fragment)  // Single DOM update!
 ```
 
 A `DocumentFragment` is a lightweight container that:
 - Is not part of the DOM tree
 - Has no parent
 - When appended, only its **children** are inserted (the fragment itself disappears)
+
+<Note>
+**Modern browser optimization:** Browsers may batch consecutive DOM modifications and perform a single reflow. However, using DocumentFragment is still the recommended pattern because it's explicit, works consistently across all browsers, and avoids any risk of forced synchronous layouts if you read layout properties between writes.
+</Note>
 
 ---
 
@@ -1220,15 +1224,15 @@ result.textContent = text
 ### Batch DOM Updates
 
 ```javascript
-// Bad: 3 separate reflows
+// Avoid: Multiple style changes (may trigger multiple reflows)
 element.style.width = '100px'
 element.style.height = '200px'
 element.style.margin = '10px'
 
-// Good: Single reflow with cssText
+// Better: Single style assignment with cssText
 element.style.cssText = 'width: 100px; height: 200px; margin: 10px;'
 
-// Good: Single reflow with class
+// Best: Use a CSS class (cleanest and most maintainable)
 element.classList.add('my-styles')
 
 // Good: DocumentFragment for multiple elements
@@ -1240,6 +1244,10 @@ items.forEach(item => {
 })
 ul.appendChild(fragment)  // Single DOM update
 ```
+
+<Tip>
+**Why batch?** While modern browsers often optimize consecutive style changes into a single reflow, this optimization breaks if you read a layout property (like `offsetWidth`) between writes. Batching explicitly avoids this risk and makes your intent clear.
+</Tip>
 
 ### Avoid Layout Thrashing
 
@@ -2108,7 +2116,7 @@ input.value                  // "hello"
   <Card title="How to traverse the DOM in JavaScript" icon="newspaper" href="https://medium.com/javascript-in-plain-english/how-to-traverse-the-dom-in-javascript-d6555c335b4e">
     Covers every traversal method with console output screenshots. Useful reference when you forget which property to use for siblings vs children.
   </Card>
-  <Card title="Render Tree Construction" icon="newspaper" href="https://developers.google.com/web/fundamentals/performance/critical-rendering-path/render-tree-construction">
+  <Card title="Render Tree Construction" icon="newspaper" href="https://web.dev/articles/critical-rendering-path/render-tree-construction">
     Google's official explanation of the Critical Rendering Path. Essential reading if you want to understand why some DOM operations are slow.
   </Card>
   <Card title="What, exactly, is the DOM?" icon="newspaper" href="https://bitsofco.de/what-exactly-is-the-dom/">
