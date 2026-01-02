@@ -347,7 +347,7 @@ value || defaultValue  // logical OR
 
 ### The 8 Falsy Values (Memorize These!)
 
-There are exactly **8 values** that convert to `false`. Everything else is `true`.
+There are **8 common values** that convert to `false`. Everything else is `true`.
 
 ```javascript
 // THE FALSY EIGHT
@@ -360,6 +360,10 @@ Boolean(null)         // false
 Boolean(undefined)    // false
 Boolean(NaN)          // false
 ```
+
+<Info>
+**Technical note:** There's actually a 9th falsy value: [`document.all`](https://developer.mozilla.org/en-US/docs/Web/API/Document/all). It's a legacy browser API that returns `false` in boolean context despite being an object. You'll rarely encounter it in modern code, but it exists for backwards compatibility with ancient websites.
+</Info>
 
 ### Everything Else Is Truthy!
 
@@ -834,7 +838,7 @@ if (x == true) { }  // Don't do this!
 if (x) { }          // Do this instead
 
 // BAD: Using == with 0 or ""
-if (x == 0) { }     // Might match "", null behavior is weird
+if (x == 0) { }     // Matches "", but not null (null == 0 is false!)
 if (x === 0) { }    // Clear intent
 
 // BAD: Truthy check when you need specific type
@@ -860,7 +864,7 @@ function process(count) {
 
 2. **Implicit vs Explicit** — Know when JS converts automatically vs when you control it
 
-3. **The 8 falsy values** — `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN` — everything else is truthy
+3. **The 8 common falsy values** — `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN` — everything else is truthy (plus the rare `document.all`)
 
 4. **+ is special** — It prefers string concatenation if ANY operand is a string
 
@@ -888,7 +892,7 @@ function process(count) {
     The `+` operator, when one operand is a string, performs string concatenation. The number `3` is converted to `"3"`, resulting in `"5" + "3" = "53"`.
   </Accordion>
   
-  <Accordion title="Question 2: What are the 8 falsy values in JavaScript?">
+  <Accordion title="Question 2: What are the 8 common falsy values in JavaScript?">
     **Answer:**
     1. `false`
     2. `0`
@@ -900,6 +904,8 @@ function process(count) {
     8. `NaN`
     
     Everything else is truthy, including `[]`, `{}`, `"0"`, and `"false"`.
+    
+    **Bonus:** There's also a 9th falsy value — `document.all` — a legacy browser API you'll rarely encounter.
   </Accordion>
   
   <Accordion title="Question 3: Why does [] == ![] return true?">
