@@ -1,43 +1,941 @@
 ---
-title: "JavaScript Engines: How Your Code Gets Executed"
-sidebarTitle: "JavaScript Engines: How Code Gets Executed"
-description: "Learn how JavaScript engines work — V8, SpiderMonkey, parsing, compilation, JIT optimization, and the execution pipeline. Understand what happens when your code runs."
+title: "JavaScript Engines: How V8 Runs Your Code in JavaScript"
+sidebarTitle: "JavaScript Engines: How V8 Runs Your Code"
+description: "Learn how JavaScript engines work. Understand V8's architecture, parsing, compilation, JIT optimization, hidden classes, inline caching, and garbage collection."
 ---
 
-## Overview
+What happens when you run JavaScript code? How does a browser turn `const x = 1 + 2` into something your computer actually executes? When you write a function, what transforms those characters into instructions your CPU understands?
 
-JavaScript engines are programs that execute JavaScript code. The most well-known engines include **V8** (Chrome, Node.js), **SpiderMonkey** (Firefox), and **JavaScriptCore** (Safari). These engines parse, compile, and execute JavaScript code, often using Just-In-Time (JIT) compilation for performance optimization.
+```javascript
+function greet(name) {
+  return "Hello, " + name + "!"
+}
+
+greet("World")  // "Hello, World!"
+```
+
+Behind every line of JavaScript is a **JavaScript engine**. It's the program that reads your code, understands it, and makes it run. The most popular engine is **[V8](https://v8.dev/)**, which powers Chrome, Node.js, Deno, and Electron. Understanding how V8 works helps you write faster code and debug performance issues.
+
+<Info>
+**What you'll learn in this guide:**
+- What a JavaScript engine is and what it does
+- How V8 parses your code and builds an Abstract Syntax Tree
+- How Ignition (interpreter) and TurboFan (compiler) work together
+- What JIT compilation is and why it makes JavaScript fast
+- How hidden classes and inline caching optimize property access
+- How garbage collection automatically manages memory
+- Practical tips for writing engine-friendly code
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you're comfortable with basic JavaScript syntax. Some concepts connect to the [Call Stack](/concepts/call-stack) and [Event Loop](/concepts/event-loop), so reading those first helps!
+</Warning>
+
+---
+
+## What is a JavaScript Engine?
+
+A **JavaScript engine** is a program that executes JavaScript code. It takes the source code you write and converts it into machine code that your computer's processor can run.
+
+Every browser has its own JavaScript engine:
+
+| Browser | Engine | Also Used By |
+|---------|--------|--------------|
+| Chrome | **V8** | Node.js, Deno, Electron |
+| Firefox | SpiderMonkey | — |
+| Safari | JavaScriptCore | Bun |
+| Edge | V8 (since 2020) | — |
+
+We'll focus on **V8** since it's the most widely used engine and powers both browser and server-side JavaScript.
+
+<Note>
+All JavaScript engines implement the [ECMAScript specification](https://tc39.es/ecma262/), which defines how the language should work. That's why JavaScript behaves the same way whether you run it in Chrome, Firefox, or Node.js.
+</Note>
+
+---
+
+## How Does a JavaScript Engine Work?
+
+Think of V8 as a **factory** that manufactures results from your code:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     THE V8 JAVASCRIPT FACTORY                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  RAW MATERIALS        QUALITY CONTROL        BLUEPRINT                   │
+│  (Source Code)        (Parser)               (AST)                       │
+│  ┌──────────────┐    ┌──────────────┐    ┌──────────────┐               │
+│  │ function     │    │  Break into  │    │  Tree of     │               │
+│  │ add(a, b) {  │ ─► │  tokens,     │ ─► │  operations  │               │
+│  │   return a+b │    │  check       │    │  to perform  │               │
+│  │ }            │    │  syntax      │    │              │               │
+│  └──────────────┘    └──────────────┘    └──────┬───────┘               │
+│                                                  │                       │
+│                                                  ▼                       │
+│  ┌───────────────────────────────────────────────────────────────────┐  │
+│  │                      ASSEMBLY LINE                                 │  │
+│  │  ┌─────────────────┐              ┌─────────────────────────┐     │  │
+│  │  │    IGNITION     │              │       TURBOFAN          │     │  │
+│  │  │   (Interpreter) │  ─────────►  │  (Optimizing Compiler)  │     │  │
+│  │  │                 │   "hot"      │                         │     │  │
+│  │  │  Steady workers │   code       │  Fast robotic assembly  │     │  │
+│  │  │  Start quickly  │              │  Takes time to set up   │     │  │
+│  │  └─────────────────┘              └─────────────────────────┘     │  │
+│  └───────────────────────────────────────────────────────────────────┘  │
+│                                                                          │
+│                              ▼                                           │
+│                     ┌──────────────┐                                    │
+│                     │    OUTPUT    │                                    │
+│                     │   (Result)   │                                    │
+│                     └──────────────┘                                    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Here's the analogy:
+
+- **Raw materials (source code)**: Your JavaScript files come in as text
+- **Quality control (parser)**: Checks for syntax errors, breaks code into pieces
+- **Blueprint (AST)**: A structured representation of what needs to be built
+- **Assembly line workers (Ignition)**: Start working immediately, steady pace
+- **Robotic automation (TurboFan)**: Takes time to set up, but once running, it's much faster
+
+Just like a factory might start with manual workers and add robots for repetitive tasks, V8 starts interpreting code immediately, then optimizes the parts that run frequently.
+
+---
+
+## How Does V8 Execute Your Code?
+
+When you run JavaScript, V8 processes your code through several stages. Let's trace through what happens when V8 executes this code:
+
+```javascript
+function add(a, b) {
+  return a + b
+}
+
+add(1, 2)  // 3
+```
+
+### Step 1: Parsing
+
+First, V8 needs to understand your code. The **parser** reads the source text and converts it into a structured format.
+
+<Steps>
+  <Step title="Tokenization (Lexical Analysis)">
+    The code is broken into **tokens**, the smallest meaningful pieces:
+    
+    ```
+    'function' 'add' '(' 'a' ',' 'b' ')' '{' 'return' 'a' '+' 'b' '}' 
+    ```
+    
+    Each token is classified: `function` is a keyword, `add` is an identifier, `+` is an operator.
+  </Step>
+  
+  <Step title="Building the AST (Syntactic Analysis)">
+    Tokens are organized into an **Abstract Syntax Tree (AST)**, a tree structure that represents your code's meaning:
+    
+    ```
+    FunctionDeclaration
+    ├── name: "add"
+    ├── params: ["a", "b"]
+    └── body: ReturnStatement
+              └── BinaryExpression
+                  ├── left: Identifier "a"
+                  ├── operator: "+"
+                  └── right: Identifier "b"
+    ```
+    
+    The AST captures *what* your code does, without the original syntax (semicolons, whitespace, etc.).
+  </Step>
+</Steps>
+
+<Tip>
+**See it yourself:** You can explore how JavaScript is parsed using [AST Explorer](https://astexplorer.net/). Paste any JavaScript code and see the resulting tree structure.
+</Tip>
+
+### Step 2: Ignition (The Interpreter)
+
+Once V8 has the AST, **Ignition** takes over. Ignition is V8's interpreter. It walks through the AST and generates **bytecode**, a compact representation of your code.
+
+```
+Bytecode for add(a, b):
+  Ldar a1        // Load argument 'a' into accumulator
+  Add a2         // Add argument 'b' to accumulator
+  Return         // Return the accumulator value
+```
+
+Ignition then **executes** this bytecode immediately. No waiting around for optimization. Your code starts running right away.
+
+While executing, Ignition also collects **profiling data**:
+- Which functions are called often?
+- What types of values does each variable hold?
+- Which branches of if/else statements are taken?
+
+This profiling data becomes important for the next step.
+
+### Step 3: TurboFan (The Optimizing Compiler)
+
+When Ignition notices a function is called many times (it becomes "hot"), V8 decides it's worth spending time to optimize it. Enter **TurboFan**, V8's optimizing compiler.
+
+TurboFan takes the bytecode and profiling data, then generates **highly optimized machine code**. It makes assumptions based on the profiling data:
+
+```javascript
+function add(a, b) {
+  return a + b
+}
+
+// V8 observes: add() is always called with numbers
+add(1, 2)
+add(3, 4)
+add(5, 6)
+// ... called many more times with numbers
+
+// TurboFan thinks: "This always gets numbers. I'll optimize for that!"
+// Generates machine code that assumes a and b are numbers
+```
+
+The optimized code runs **much faster** than interpreted bytecode because:
+- It's native machine code, not bytecode that needs interpretation
+- It makes type assumptions (no need to check "is this a number?" every time)
+- It can inline function calls, eliminate dead code, and apply other optimizations
+
+### Step 4: Deoptimization (The Fallback)
+
+But what if TurboFan's assumptions are wrong?
+
+```javascript
+// After 1000 calls with numbers...
+add("hello", "world")  // Strings! TurboFan assumed numbers!
+```
+
+When this happens, V8 performs **deoptimization**. It throws away the optimized machine code and falls back to Ignition's bytecode. The function runs slower temporarily, but at least it runs correctly.
+
+V8 might try to optimize again later, this time with better information about the actual types being used.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE OPTIMIZATION CYCLE                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│     Source Code                                                          │
+│          │                                                               │
+│          ▼                                                               │
+│     ┌─────────┐                                                         │
+│     │  Parse  │                                                         │
+│     └────┬────┘                                                         │
+│          │                                                               │
+│          ▼                                                               │
+│     ┌─────────┐        profile         ┌───────────┐                    │
+│     │ Ignition │ ───────────────────► │ TurboFan  │                    │
+│     │(bytecode)│                       │(optimized)│                    │
+│     └────┬────┘ ◄─────────────────── └─────┬─────┘                    │
+│          │         deoptimize              │                            │
+│          │                                 │                            │
+│          ▼                                 ▼                            │
+│      [Execute]                        [Execute]                         │
+│       (slower)                        (faster!)                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## What is JIT Compilation?
+
+You might have heard that JavaScript is an "interpreted language." That's only half the story. Modern JavaScript engines use **JIT compilation** (Just-In-Time), which combines interpretation and compilation.
+
+### The Three Approaches
+
+<Tabs>
+  <Tab title="Interpreted">
+    **Pure Interpretation** (like old JavaScript engines)
+    
+    - Source code is executed line by line
+    - No compilation step
+    - Starts fast, but runs slow
+    - Every time a function runs, it's re-interpreted
+    
+    ```
+    Source → Execute → Execute → Execute...
+    ```
+  </Tab>
+  
+  <Tab title="Compiled">
+    **Ahead-of-Time Compilation** (like C/C++)
+    
+    - Source code is compiled to machine code before running
+    - Slow startup (must compile everything first)
+    - Very fast execution
+    - Can't adapt to runtime information
+    
+    ```
+    Source → Compile (wait...) → Execute (fast!)
+    ```
+  </Tab>
+  
+  <Tab title="JIT (V8)">
+    **Just-In-Time Compilation** (V8's approach)
+    
+    - Start executing immediately with interpreter
+    - Compile "hot" code to machine code while running
+    - Best of both worlds: fast startup AND fast execution
+    - Can use runtime information for smarter optimizations
+    
+    ```
+    Source → Interpret (start fast!) → Compile hot code → Execute (faster!)
+    ```
+  </Tab>
+</Tabs>
+
+### Why JavaScript Needs JIT
+
+JavaScript is a **dynamic language**. Variables can hold any type, objects can change shape, and functions can be redefined at runtime. This makes ahead-of-time compilation difficult because the compiler doesn't know what types to expect.
+
+```javascript
+function process(x) {
+  return x.value * 2
+}
+
+// x could be anything!
+process({ value: 10 })        // Object with number
+process({ value: "hello" })   // Object with string (NaN result)
+process({ value: 10, extra: 5 }) // Different shape
+```
+
+JIT compilation solves this by:
+1. Starting with interpretation (works for any types)
+2. Observing what types actually appear at runtime
+3. Compiling optimized code based on real observations
+4. Falling back to interpretation if observations were wrong
+
+<Warning>
+**The "warm-up" period:** When you first run JavaScript code, it's slower because it's being interpreted. After functions run many times, they get optimized and become faster. This is why benchmarks often include a "warm-up" phase.
+</Warning>
+
+---
+
+## What Are Hidden Classes?
+
+**Hidden classes** (called "Maps" in V8, "Shapes" in other engines) are internal data structures that V8 uses to track object shapes. They let V8 know exactly where to find properties like `obj.x` without searching through every property name.
+
+Why does V8 need them? JavaScript objects are dynamic. You can add or remove properties at any time. This flexibility creates a problem: how does V8 efficiently access `obj.x` if objects can have any shape?
+
+### The Problem
+
+Consider accessing a property:
+
+```javascript
+function getX(obj) {
+  return obj.x
+}
+```
+
+Without optimization, every call to `getX` would need to:
+1. Look up the object's list of properties
+2. Search for a property named "x"
+3. Get the value at that property's location
+
+That's slow, especially for hot code.
+
+### The Solution: Hidden Classes
+
+V8 assigns a **hidden class** to every object. Objects with the same properties in the same order share the same hidden class.
+
+```javascript
+const point1 = { x: 1, y: 2 }
+const point2 = { x: 5, y: 10 }
+
+// point1 and point2 have the SAME hidden class!
+// V8 knows: "For objects with this hidden class, 'x' is at offset 0, 'y' is at offset 1"
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         HIDDEN CLASSES                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   Hidden Class HC1                point1              point2             │
+│   ┌────────────────────┐         ┌────────┐         ┌────────┐          │
+│   │ x: offset 0        │ ◄────── │ HC1    │         │ HC1    │ ◄──┐     │
+│   │ y: offset 1        │         ├────────┤         ├────────┤    │     │
+│   └────────────────────┘         │ [0]: 1 │         │ [0]: 5 │    │     │
+│           ▲                      │ [1]: 2 │         │ [1]: 10│    │     │
+│           │                      └────────┘         └────────┘    │     │
+│           │                                                       │     │
+│           └───────────────────── Same hidden class! ──────────────┘     │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Now, when V8 sees `getX(point1)`, it can:
+1. Check the hidden class (one comparison)
+2. Read the value at offset 0 (direct memory access)
+
+No property name lookup needed!
+
+### Transition Chains
+
+What happens when you add properties to an object? V8 creates **transition chains**:
+
+```javascript
+const obj = {}        // Hidden class: HC0 (empty)
+obj.x = 1             // Transition to HC1 (has x at offset 0)
+obj.y = 2             // Transition to HC2 (has x at 0, y at 1)
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       TRANSITION CHAIN                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   const obj = {}      obj.x = 1          obj.y = 2                       │
+│                                                                          │
+│   ┌──────────┐       ┌──────────┐       ┌──────────┐                    │
+│   │   HC0    │ ───►  │   HC1    │ ───►  │   HC2    │                    │
+│   │  (empty) │ add x │ x: off 0 │ add y │ x: off 0 │                    │
+│   └──────────┘       └──────────┘       │ y: off 1 │                    │
+│                                         └──────────┘                    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Warning>
+**Property order matters!** These two objects have **different** hidden classes:
+
+```javascript
+const a = { x: 1, y: 2 }  // HC with x then y
+const b = { y: 2, x: 1 }  // Different HC with y then x
+```
+
+This means V8 can't share optimizations between them. Always add properties in the same order!
+</Warning>
+
+---
+
+## What is Inline Caching?
+
+**Inline Caching (IC)** is an optimization where V8 remembers where it found a property and reuses that information on subsequent calls. Instead of looking up property locations every time, V8 caches: "For this hidden class, property X is at memory offset Y."
+
+This optimization is possible because of hidden classes. When V8 knows an object's shape, it can cache the exact memory location of each property.
+
+### How Inline Caching Works
+
+```javascript
+function getX(obj) {
+  return obj.x  // V8 caches: "For HC1, x is at offset 0"
+}
+
+const p1 = { x: 1, y: 2 }
+const p2 = { x: 5, y: 10 }
+
+getX(p1)  // First call: look up x, cache the location
+getX(p2)  // Second call: same hidden class! Use cached location
+getX(p1)  // Third call: cache hit again!
+```
+
+The first time `getX` runs, V8 does the full property lookup. But it **caches** the result: "For objects with hidden class HC1, property 'x' is at memory offset 0."
+
+Subsequent calls with the same hidden class skip the lookup entirely.
+
+### IC States: Monomorphic, Polymorphic, Megamorphic
+
+The inline cache can be in different states depending on how many different hidden classes it encounters:
+
+<AccordionGroup>
+  <Accordion title="Monomorphic (Fastest)">
+    The function always sees objects with the **same** hidden class.
+    
+    ```javascript
+    function getX(obj) {
+      return obj.x
+    }
+    
+    // All objects have the same shape
+    getX({ x: 1, y: 2 })
+    getX({ x: 3, y: 4 })
+    getX({ x: 5, y: 6 })
+    
+    // IC: "Always HC1, x at offset 0" - ONE entry, super fast!
+    ```
+    
+    **Performance:** Excellent. Single comparison, direct memory access.
+  </Accordion>
+  
+  <Accordion title="Polymorphic (Still Good)">
+    The function sees a **few** different hidden classes (typically 2-4).
+    
+    ```javascript
+    function getX(obj) {
+      return obj.x
+    }
+    
+    getX({ x: 1 })              // Shape A
+    getX({ x: 2, y: 3 })        // Shape B  
+    getX({ x: 4, y: 5, z: 6 })  // Shape C
+    
+    // IC: "Could be A, B, or C" - checks a few options
+    ```
+    
+    **Performance:** Good. Checks a small list of known shapes.
+  </Accordion>
+  
+  <Accordion title="Megamorphic (Slowest)">
+    The function sees **many** different hidden classes.
+    
+    ```javascript
+    function getX(obj) {
+      return obj.x
+    }
+    
+    // Every call has a completely different shape
+    getX({ x: 1 })
+    getX({ x: 2, a: 1 })
+    getX({ x: 3, b: 2 })
+    getX({ x: 4, c: 3 })
+    getX({ x: 5, d: 4 })
+    // ... many more different shapes
+    
+    // IC gives up: "Too many shapes, doing full lookup every time"
+    ```
+    
+    **Performance:** Poor. Falls back to generic property lookup.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+**For best performance:** Pass objects with consistent shapes to your functions. Factory functions help:
+
+```javascript
+// Good: Factory creates consistent shapes
+function createPoint(x, y) {
+  return { x, y }
+}
+
+getX(createPoint(1, 2))
+getX(createPoint(3, 4))  // Same shape, monomorphic IC!
+```
+</Tip>
+
+---
+
+## How Does Garbage Collection Work?
+
+Unlike languages like C where you manually allocate and free memory, JavaScript automatically manages memory through **garbage collection (GC)**. V8's garbage collector is called **Orinoco**.
+
+### The Generational Hypothesis
+
+V8's GC is based on an observation about how programs use memory: **most objects die young**.
+
+Think about it: temporary variables, intermediate calculation results, short-lived callbacks. They're created, used briefly, and never needed again. Only some objects (your app's state, cached data) live for a long time.
+
+V8 exploits this by splitting memory into generations:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        V8 MEMORY HEAP                                    │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   YOUNG GENERATION                      OLD GENERATION                   │
+│   (Short-lived objects)                 (Long-lived objects)             │
+│                                                                          │
+│   ┌─────────────────────────┐          ┌─────────────────────────┐      │
+│   │ Nursery  │ Intermediate │   ───►   │  Survived multiple GCs  │      │
+│   │          │              │ survives │                         │      │
+│   │  New     │  Survived    │          │  App state, caches,     │      │
+│   │  objects │  one GC      │          │  long-lived data        │      │
+│   └─────────────────────────┘          └─────────────────────────┘      │
+│                                                                          │
+│   Minor GC (Scavenger)                  Major GC (Mark-Compact)          │
+│   • Very fast                           • Slower but thorough            │
+│   • Runs frequently                     • Runs less often                │
+│   • Only scans young gen                • Scans entire heap              │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Minor GC: The Scavenger
+
+New objects are allocated in the **young generation**. When it fills up, V8 runs a **minor GC** (called the Scavenger):
+
+1. Find all live objects in the young generation
+2. Copy survivors to a new space
+3. Objects that survive multiple collections get promoted to the old generation
+
+This is fast because:
+- Most young objects are dead (no need to copy them)
+- The young generation is small
+- Only copying live objects means no fragmentation
+
+### Major GC: Mark-Compact
+
+The **old generation** is collected less frequently with a **major GC**:
+
+<Steps>
+  <Step title="Marking">
+    Starting from "roots" (global variables, stack), V8 follows all references and marks every reachable object as "live."
+  </Step>
+  
+  <Step title="Sweeping">
+    Dead objects (unmarked) leave gaps in memory. V8 adds these gaps to a "free list" for future allocations.
+  </Step>
+  
+  <Step title="Compaction">
+    To reduce fragmentation, V8 may move live objects together, like defragmenting a hard drive.
+  </Step>
+</Steps>
+
+### Concurrent and Parallel GC
+
+Modern V8 uses advanced techniques to minimize pauses:
+
+- **Parallel:** Multiple threads do GC work simultaneously
+- **Incremental:** GC work is broken into small chunks, interleaved with JavaScript execution
+- **Concurrent:** GC runs in the background while JavaScript continues executing
+
+This means you rarely notice GC pauses in modern JavaScript applications.
+
+---
+
+## How Do You Write Engine-Friendly Code?
+
+Now that you understand how V8 works, here are practical tips to help the engine optimize your code:
+
+### 1. Initialize Objects Consistently
+
+Give objects the same shape by adding properties in the same order:
+
+```javascript
+// ✓ Good: Consistent shape
+function createUser(name, age) {
+  return { name, age }  // Always name, then age
+}
+
+// ❌ Bad: Inconsistent shapes
+function createUser(name, age) {
+  const user = {}
+  if (name) user.name = name  // Sometimes name first
+  if (age) user.age = age     // Sometimes age first
+  return user
+}
+```
+
+### 2. Avoid Changing Types
+
+Keep variables holding the same type throughout their lifetime:
+
+```javascript
+// ✓ Good: Consistent types
+let count = 0
+count = 1
+count = 2
+
+// ❌ Bad: Type changes trigger deoptimization
+let count = 0
+count = "none"  // Now it's a string!
+count = null    // Now it's null!
+```
+
+### 3. Use Arrays Correctly
+
+Avoid "holes" in arrays and don't mix types:
+
+```javascript
+// ✓ Good: Dense array with consistent types
+const numbers = [1, 2, 3, 4, 5]
+
+// ❌ Bad: Sparse array with holes
+const sparse = []
+sparse[0] = 1
+sparse[1000] = 2  // Creates 999 "holes"
+
+// ❌ Bad: Mixed types
+const mixed = [1, "two", 3, null, { four: 4 }]
+```
+
+### 4. Avoid [`delete`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/delete) on Objects
+
+Using `delete` changes an object's hidden class and can cause deoptimization:
+
+```javascript
+// ❌ Bad: Using delete
+const user = { name: "Alice", age: 30, temp: true }
+delete user.temp  // Changes hidden class!
+
+// ✓ Good: Set to undefined or use a different structure
+const user = { name: "Alice", age: 30, temp: true }
+user.temp = undefined  // Hidden class stays the same
+```
+
+<Note>
+Setting a property to `undefined` keeps the property on the object (it just has no value). If you need to truly remove properties frequently, consider using a `Map` instead of a plain object.
+</Note>
+
+### 5. Prefer Monomorphic Code
+
+Design functions to work with objects of the same shape:
+
+```javascript
+// ✓ Good: Monomorphic - always same shape
+class Point {
+  constructor(x, y) {
+    this.x = x
+    this.y = y
+  }
+}
+
+function distance(p1, p2) {
+  const dx = p1.x - p2.x
+  const dy = p1.y - p2.y
+  return Math.sqrt(dx * dx + dy * dy)
+}
+
+distance(new Point(0, 0), new Point(3, 4))  // All Points, same shape
+```
+
+---
+
+## Common Misconceptions
+
+<AccordionGroup>
+  <Accordion title="'JavaScript is interpreted, not compiled'">
+    **Partially true, but misleading.** Modern JavaScript engines use JIT compilation. Your code is initially interpreted, but hot functions are compiled to native machine code. V8's TurboFan generates highly optimized machine code that rivals traditionally compiled languages for computational tasks.
+  </Accordion>
+  
+  <Accordion title="'More code = slower execution'">
+    **Not necessarily!** V8 performs dead code elimination and function inlining. A well-structured program with more lines can be faster than a "clever" one-liner that's hard to optimize. Write clear, predictable code and let the engine optimize it.
+  </Accordion>
+  
+  <Accordion title="'I need to manually manage memory in JavaScript'">
+    **No!** JavaScript has automatic garbage collection. You don't need to (and can't) manually free memory. However, you should avoid creating unnecessary object references that prevent garbage collection (memory leaks).
+    
+    ```javascript
+    // Potential memory leak: event listener keeps reference
+    element.addEventListener("click", () => {
+      console.log(largeData)  // largeData can't be GC'd
+    })
+    
+    // Fix: Remove listener when done
+    element.removeEventListener("click", handler)
+    ```
+  </Accordion>
+  
+  <Accordion title="'eval() is just slow'">
+    **It's worse than slow.** [`eval()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval) prevents many optimizations because V8 can't predict what code will run. Variables in scope become "unoptimizable" because `eval` might access them. Avoid `eval()` and [`new Function()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/Function) with dynamic strings.
+  </Accordion>
+  
+  <Accordion title="'typeof null === 'object' is a V8 bug'">
+    **No, it's in the ECMAScript specification.** This is a historical quirk from JavaScript's original implementation that was kept for backwards compatibility. All JavaScript engines must return `"object"` for [`typeof null`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#typeof_null) to comply with the spec.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **V8 powers Chrome, Node.js, and Deno.** It's the most widely used JavaScript engine and determines how your code runs.
+
+2. **Code goes through multiple stages:** Source → Parse → AST → Bytecode (Ignition) → Optimized Machine Code (TurboFan).
+
+3. **Ignition interprets immediately.** Your code starts running right away without waiting for compilation.
+
+4. **TurboFan optimizes hot code.** Functions called many times get compiled to fast machine code based on observed types.
+
+5. **Deoptimization happens when assumptions fail.** If you pass unexpected types, V8 falls back to slower bytecode.
+
+6. **Hidden classes enable fast property access.** Objects with the same properties in the same order share optimization metadata.
+
+7. **Inline caching remembers property locations.** Monomorphic code (same shapes) is fastest; megamorphic code (many shapes) is slowest.
+
+8. **Garbage collection is automatic and generational.** Most objects die young; V8 optimizes for this with separate young/old generations.
+
+9. **Write consistent, predictable code.** Same shapes, same types, dense arrays. Help the engine help you.
+
+10. **Avoid anti-patterns:** `delete` on objects, sparse arrays, changing variable types, and `eval()`.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between Ignition and TurboFan?">
+    **Answer:**
+    
+    **Ignition** is V8's interpreter. It generates bytecode from the AST and executes it immediately. It's fast to start but doesn't produce the fastest possible code. While running, it collects profiling data about types and execution patterns.
+    
+    **TurboFan** is V8's optimizing compiler. It takes bytecode and profiling data from Ignition, then generates highly optimized machine code. It takes longer to compile but produces much faster code. TurboFan kicks in for "hot" functions that run many times.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why does property order matter when creating objects?">
+    **Answer:**
+    
+    V8 assigns hidden classes to objects based on their properties **and the order those properties were added**. Objects with the same properties in the same order share a hidden class and can use the same optimizations.
+    
+    ```javascript
+    const a = { x: 1, y: 2 }  // Hidden class A
+    const b = { y: 2, x: 1 }  // Hidden class B (different!)
+    ```
+    
+    Different hidden classes mean different inline cache entries and less optimization sharing. For best performance, always add properties in a consistent order.
+  </Accordion>
+  
+  <Accordion title="Question 3: What triggers deoptimization?">
+    **Answer:**
+    
+    Deoptimization happens when TurboFan's assumptions about your code are violated. Common triggers include:
+    
+    - **Type changes:** A function optimized for numbers receives a string
+    - **Hidden class changes:** An object's shape changes (adding/deleting properties)
+    - **Unexpected values:** `undefined` where a number was expected
+    - **Megamorphic call sites:** Too many different object shapes at one location
+    
+    ```javascript
+    function add(a, b) { return a + b }
+    
+    // Optimized for numbers
+    add(1, 2)
+    add(3, 4)
+    
+    // Deoptimizes!
+    add("hello", "world")
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: What is inline caching and why does it speed up property access?">
+    **Answer:**
+    
+    Inline caching (IC) is an optimization where V8 remembers where it found a property for a given hidden class. Instead of doing a full property lookup every time, it caches: "For objects with hidden class X, property 'foo' is at memory offset Y."
+    
+    On subsequent accesses with the same hidden class, V8 skips the lookup and reads directly from the cached offset. This turns an O(n) dictionary lookup into an O(1) memory access.
+    
+    ```javascript
+    function getX(obj) {
+      return obj.x  // IC: "For HC1, x is at offset 0"
+    }
+    
+    getX({ x: 1, y: 2 })  // Cache miss, full lookup, cache result
+    getX({ x: 3, y: 4 })  // Cache hit! Direct access to offset 0
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: What is the 'generational hypothesis' in garbage collection?">
+    **Answer:**
+    
+    The generational hypothesis states that **most objects die young**. Temporary variables, function arguments, intermediate results. They're created, used briefly, and become garbage quickly.
+    
+    V8 exploits this by dividing the heap into:
+    - **Young generation:** Where new objects are allocated. Collected frequently with a fast "scavenger" algorithm.
+    - **Old generation:** Objects that survive multiple young generation collections. Collected less frequently with a slower but thorough algorithm.
+    
+    This is efficient because checking young objects frequently catches most garbage quickly, while long-lived objects aren't constantly re-checked.
+  </Accordion>
+  
+  <Accordion title="Question 6: Which code pattern is more engine-friendly?">
+    ```javascript
+    // Pattern A
+    function createPoint(x, y) {
+      return { x: x, y: y }
+    }
+    
+    // Pattern B
+    function createPoint(x, y) {
+      const point = {}
+      point.x = x
+      point.y = y
+      return point
+    }
+    ```
+    
+    **Answer:**
+    
+    **Pattern A is more engine-friendly.** 
+    
+    In Pattern A, the object literal `{ x: x, y: y }` creates an object with a known shape immediately. V8 can skip the empty object transition.
+    
+    In Pattern B, the object goes through three hidden class transitions:
+    1. `{}` - empty shape
+    2. `{ x }` - after adding x
+    3. `{ x, y }` - after adding y
+    
+    Pattern A is faster to create and produces the same final shape more directly. Modern engines optimize object literals with known properties, skipping intermediate shapes.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Call Stack" icon="layer-group" href="/concepts/call-stack">
+    How V8 tracks function execution and manages execution contexts
+  </Card>
+  <Card title="Event Loop" icon="rotate" href="/concepts/event-loop">
+    How async code runs alongside the single-threaded JavaScript engine
+  </Card>
+  <Card title="Primitive Types" icon="cube" href="/concepts/primitive-types">
+    How V8 represents and optimizes different value types
+  </Card>
+  <Card title="Value vs Reference Types" icon="code-branch" href="/concepts/value-reference-types">
+    How the engine stores primitives vs objects in memory
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="JavaScript technologies overview — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/JavaScript_technologies_overview">
+    Overview of JavaScript engines, ECMAScript, and how the language relates to browser APIs.
+  </Card>
+  <Card title="Memory Management — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_Management">
+    How JavaScript manages memory allocation and garbage collection.
+  </Card>
+  <Card title="V8 Documentation" icon="book" href="https://v8.dev/docs">
+    Official V8 documentation covering Ignition, TurboFan, and engine internals.
+  </Card>
+</CardGroup>
 
 ## Articles
 
 <CardGroup cols={2}>
-  <Card title="JavaScript Engines" icon="newspaper" href="http://www.softwaremag.com/javascript-engines/">
-    By Jen Looper
+  <Card title="JavaScript engine fundamentals: Shapes and Inline Caches" icon="newspaper" href="https://mathiasbynens.be/notes/shapes-ics">
+    Mathias Bynens and Benedikt Meurer explain how all JavaScript engines optimize property access. Includes excellent diagrams showing hidden classes and IC states.
   </Card>
-  <Card title="Understanding How the Chrome V8 Engine Translates JavaScript into Machine Code" icon="newspaper" href="https://medium.freecodecamp.org/understanding-the-core-of-nodejs-the-powerful-chrome-v8-engine-79e7eb8af964">
-    By DroidHead
+  <Card title="JavaScript engine fundamentals: optimizing prototypes" icon="newspaper" href="https://mathiasbynens.be/notes/prototypes">
+    The follow-up article covering how engines optimize prototype chain lookups. Essential reading for understanding object-oriented JavaScript performance.
+  </Card>
+  <Card title="Launching Ignition and TurboFan" icon="newspaper" href="https://v8.dev/blog/launching-ignition-and-turbofan">
+    V8 team's announcement of the Ignition + TurboFan pipeline. Explains why the new architecture is faster and uses less memory.
+  </Card>
+  <Card title="Trash talk: the Orinoco garbage collector" icon="newspaper" href="https://v8.dev/blog/trash-talk">
+    Deep dive into V8's modern garbage collector. Covers parallel, incremental, and concurrent techniques that minimize pause times.
+  </Card>
+  <Card title="How V8 optimizes array operations" icon="newspaper" href="https://v8.dev/blog/elements-kinds">
+    V8 blog post explaining different "elements kinds" for arrays and how to write array code that V8 can optimize effectively.
+  </Card>
+  <Card title="Blazingly fast parsing, part 1: optimizing the scanner" icon="newspaper" href="https://v8.dev/blog/scanner">
+    How V8 optimizes the first stage of code processing. Shows the engineering that makes JavaScript parsing fast.
   </Card>
 </CardGroup>
-
-- [Understanding V8's Bytecode — Franziska Hinkelmann](https://medium.com/dailyjs/understanding-v8s-bytecode-317d46c94775)
-- [JavaScript essentials: why you should know how the engine works - Rainer Hahnekamp](https://www.freecodecamp.org/news/javascript-essentials-why-you-should-know-how-the-engine-works-c2cc0d321553)
-- [JavaScript engine fundamentals: Shapes and Inline Caches](https://mathiasbynens.be/notes/shapes-ics)
-- [JavaScript engine fundamentals: optimizing prototypes](https://mathiasbynens.be/notes/prototypes)
-- [How V8 optimizes array operations](https://v8.dev/blog/elements-kinds)
-- [JavaScript Internals: JavaScript engine, Run-time environment & setTimeout Web API — Rupesh Mishra](https://blog.bitsrc.io/javascript-internals-javascript-engine-run-time-environment-settimeout-web-api-eeed263b1617)
 
 ## Videos
 
 <CardGroup cols={2}>
-  <Card title="JavaScript Engines: The Good Parts™" icon="video" href="https://www.youtube.com/watch?v=5nmpokoRaZI">
-    By Mathias Bynens & Benedikt Meurer
+  <Card title="JavaScript Engines: The Good Parts" icon="video" href="https://www.youtube.com/watch?v=5nmpokoRaZI">
+    Mathias Bynens and Benedikt Meurer at JSConf EU 2018. The definitive talk on JavaScript engine internals with beautiful visualizations of shapes, ICs, and optimization.
   </Card>
-  <Card title="JS Engine EXPOSED - Google's V8 Architecture" icon="video" href="https://www.youtube.com/watch?v=2WJL19wDH68">
-    By Akshay Saini — Namaste JavaScript
+  <Card title="JS Engine EXPOSED — Google's V8 Architecture" icon="video" href="https://www.youtube.com/watch?v=2WJL19wDH68">
+    Akshay Saini's Namaste JavaScript episode on V8. Beginner-friendly explanation of parsing, compilation, and the execution pipeline.
+  </Card>
+  <Card title="Understanding the V8 JavaScript Engine" icon="video" href="https://www.youtube.com/watch?v=xckH5s3UuX4">
+    freeCodeCamp talk covering V8's architecture from a Node.js perspective. Great for understanding how the engine powers server-side JavaScript.
+  </Card>
+  <Card title="A Sneak Peek Into Super Fast V8 Internals" icon="video" href="https://www.youtube.com/watch?v=wz7Znu6tqFw">
+    Chrome DevSummit talk showing how V8 optimizes real-world patterns. Includes profiling examples and optimization tips.
   </Card>
 </CardGroup>
-
-- [How JavaScript Code is executed? How Javascript works behind the scenes](https://youtu.be/iLWTnMzWtj4)
-- [Understanding the V8 JavaScript Engine - freeCodeCamp Talks](https://www.youtube.com/watch?v=xckH5s3UuX4)
-- [JavaScript Under The Hood - JavaScript Engine Overview - Traversy Media](https://www.youtube.com/watch?v=oc6faXVc54E)
-- [Arindam Paul - JavaScript VM internals, EventLoop, Async and ScopeChains](https://www.youtube.com/watch?v=QyUFheng6J0)
