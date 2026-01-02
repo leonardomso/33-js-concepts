@@ -36,7 +36,7 @@ The answer is **callbacks**: functions you pass to other functions, saying "call
 </Info>
 
 <Warning>
-**Prerequisites:** This guide assumes familiarity with [the Event Loop](/concepts/event-loop). It's the mechanism that makes async callbacks work! You should also understand [higher-order functions](/concepts/higher-order-functions), since callbacks are higher-order functions in action.
+**Prerequisites:** This guide assumes familiarity with [the Event Loop](/concepts/event-loop). It's the mechanism that makes async callbacks work! You should also understand [higher-order functions](/concepts/higher-order-functions), since callbacks are passed to higher-order functions.
 </Warning>
 
 ---
@@ -1025,10 +1025,10 @@ console.log(value)  // "initial" or the data? Depends on cache!
 // ✓ CORRECT - always async
 function getData(cache, callback) {
   if (cache.has('data')) {
-    // Use setImmediate, process.nextTick, or setTimeout to make it async
-    setImmediate(function() {
+    // Use setTimeout to make it async (works in browsers and Node.js)
+    setTimeout(function() {
       callback(null, cache.get('data'))
-    })
+    }, 0)
     return
   }
   
