@@ -181,6 +181,7 @@ const greet = () => "Hello!";
 function() {
   console.log("This causes a syntax error!");
 }();  // SyntaxError: Function statements require a function name
+      // (exact error message varies by browser)
 
 // ✓ This WORKS — Parentheses make it an expression
 (function() {
@@ -258,7 +259,7 @@ There are several ways to write an IIFE. They all do the same thing:
 
 ### Why Were IIFEs Invented?
 
-Before ES6 modules, JavaScript had a big problem: **everything was global**. Variables declared with [`var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var) outside of functions became global, leading to conflicts:
+Before ES6 modules, JavaScript had a big problem: **everything was global**. When scripts were loaded with regular `<script>` tags, variables declared with [`var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var) outside of functions became global and were shared across all scripts on the page, leading to conflicts:
 
 ```javascript
 // file1.js
@@ -1097,7 +1098,9 @@ import { sharedThing } from './shared.js';
 import { sharedThing } from './shared.js';
 ```
 
-### 4. Use Default Exports for Components/Classes
+### 4. Consider Default Exports for Components/Classes
+
+A common convention is to use default exports when a module has one main purpose:
 
 ```javascript
 // Components are usually one-per-file
@@ -1458,17 +1461,17 @@ Try to answer each question before revealing the solution:
   <Card title="ES6 Modules in Depth" icon="newspaper" href="https://ponyfoo.com/articles/es6-modules-in-depth">
     Nicolás Bevacqua's thorough exploration of edge cases like circular dependencies and live bindings. Read this after you understand the basics.
   </Card>
-  <Card title="Using JavaScript modules on the web" icon="newspaper" href="https://developers.google.com/web/fundamentals/primers/modules">
-    Google's guide to using modules in browsers, including performance tips.
+  <Card title="JavaScript modules — V8" icon="newspaper" href="https://v8.dev/features/modules">
+    The V8 team's comprehensive guide covering native module loading, performance recommendations, and future developments. Includes practical tips on bundling vs unbundled deployment.
   </Card>
-  <Card title="Understanding ES6 Modules" icon="newspaper" href="https://www.sitepoint.com/understanding-es6-modules/">
-    Walks through setting up modules in both browser and Node.js environments. Includes a complete example project structure you can copy.
+  <Card title="Modules — javascript.info" icon="newspaper" href="https://javascript.info/modules-intro">
+    Interactive tutorial walking through module basics with live code examples. Covers both browser and Node.js usage patterns with clear, beginner-friendly explanations.
   </Card>
   <Card title="All you need to know about Expressions, Statements and Expression Statements" icon="newspaper" href="https://dev.to/promhize/javascript-in-depth-all-you-need-to-know-about-expressions-statements-and-expression-statements-5k2">
     Explains why `function(){}()` fails but `(function(){})()` works. The expression vs statement distinction finally makes sense after reading this.
   </Card>
-  <Card title="Function Expressions vs Function Declarations" icon="newspaper" href="https://www.sitepoint.com/function-expressions-vs-declarations/">
-    Covers hoisting behavior, named vs anonymous expressions, and arrow functions. Helps you choose the right syntax for each situation.
+  <Card title="Function Expressions — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function">
+    MDN's official reference on function expressions, covering syntax, hoisting behavior differences from declarations, and named function expressions. Includes interactive examples.
   </Card>
 </CardGroup>
 
@@ -1490,7 +1493,7 @@ Try to answer each question before revealing the solution:
   <Card title="Expressions vs. Statements in JavaScript" icon="video" href="https://www.youtube.com/watch?v=WVyCrI1cHi8">
     Uses simple examples to show why expressions produce values and statements perform actions. Essential for understanding IIFE syntax.
   </Card>
-  <Card title="JavaScript - Expression vs. Statement" icon="video" href="https://www.youtube.com/watch?v=3jDpNGJkupA">
-    Answers "can I use this in an if condition?" and similar practical questions. Helps you recognize expressions vs statements in real code.
+  <Card title="JavaScript Functions — Programming with Mosh" icon="video" href="https://www.youtube.com/watch?v=N8ap4k_1QEQ">
+    Comprehensive overview of JavaScript functions covering declarations, expressions, hoisting, and scope. Clear explanations with practical examples.
   </Card>
 </CardGroup>
