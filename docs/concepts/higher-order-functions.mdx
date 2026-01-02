@@ -206,7 +206,7 @@ console.log(triple(5))   // 15
 ```
 
 <Note>
-**Not all languages have first-class functions.** In older languages like C or Java (before version 8), you couldn't easily pass functions around. JavaScript's first-class functions make functional programming patterns natural and powerful.
+**Not all languages have first-class functions.** In languages like C, you can't easily pass functions around as values. Java added lambda expressions in version 8, but they work differently than JavaScript functions. JavaScript's first-class functions make functional programming patterns natural and powerful.
 </Note>
 
 ---
@@ -305,8 +305,9 @@ console.log(calculate(radii, diameter))
 Now adding a new calculation is easy. Just write a new formula function:
 
 ```javascript
-const volume = r => (4/3) * Math.PI * r * r * r
-console.log(calculate(radii, volume))
+// Works for any formula that takes a radius!
+const squaredRadius = r => r * r
+console.log(calculate(radii, squaredRadius))  // [1, 4, 9]
 ```
 
 ### Example: An `unless` Function
@@ -417,7 +418,7 @@ The original functions (`Math.max`, `Math.floor`) are unchanged. We've created n
 │   │                 │               │  1. Log the arguments           │ │
 │   │   Math.max      │    noisy()    │  2. Call Math.max               │ │
 │   │                 │   ────────►   │  3. Log the result              │ │
-│   │   (3,1,4) → 4   │               │  4. Return the result           │ │
+│   │ (3,1,4,1,5) → 5 │               │  4. Return the result           │ │
 │   │                 │               │                                  │ │
 │   └─────────────────┘               └─────────────────────────────────┘ │
 │                                                                          │
@@ -444,12 +445,13 @@ function createValidator(min, max) {
 
 const isValidAge = createValidator(0, 120)
 const isValidPercentage = createValidator(0, 100)
-const isValidTemperature = createValidator(-273.15, 1000000)
+const isValidRating = createValidator(1, 5)
 
 console.log(isValidAge(25))         // true
 console.log(isValidAge(150))        // false
 console.log(isValidPercentage(50))  // true
 console.log(isValidPercentage(101)) // false
+console.log(isValidRating(3))       // true
 ```
 
 ### Example: Creating Formatters
@@ -592,14 +594,14 @@ JavaScript provides many built-in higher-order functions, especially for working
 
 | Method | What it does | Returns |
 |--------|--------------|---------|
-| `forEach(fn)` | Calls `fn` on each element | `undefined` |
-| `map(fn)` | Transforms each element with `fn` | New array |
-| `filter(fn)` | Keeps elements where `fn` returns `true` | New array |
-| `reduce(fn, init)` | Accumulates elements into single value | Single value |
-| `find(fn)` | Returns first element where `fn` returns `true` | Element or `undefined` |
-| `some(fn)` | Tests if any element passes `fn` | `boolean` |
-| `every(fn)` | Tests if all elements pass `fn` | `boolean` |
-| `sort(fn)` | Sorts elements using comparator `fn` | Sorted array (mutates!) |
+| [`forEach(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) | Calls `fn` on each element | `undefined` |
+| [`map(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) | Transforms each element with `fn` | New array |
+| [`filter(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) | Keeps elements where `fn` returns `true` | New array |
+| [`reduce(fn, init)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) | Accumulates elements into single value | Single value |
+| [`find(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) | Returns first element where `fn` returns `true` | Element or `undefined` |
+| [`some(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) | Tests if any element passes `fn` | `boolean` |
+| [`every(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every) | Tests if all elements pass `fn` | `boolean` |
+| [`sort(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) | Sorts elements using comparator `fn` | Sorted array (mutates!) |
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5]

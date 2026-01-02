@@ -263,21 +263,21 @@ describe('Higher-Order Functions', () => {
       expect(askHowAreYou('Charlie')).toBe('How are you, Charlie?')
     })
 
-    it('should create temperature validator', () => {
+    it('should create rating validator', () => {
       function createValidator(min, max) {
         return function(value) {
           return value >= min && value <= max
         }
       }
       
-      // Absolute zero in Celsius is -273.15
-      const isValidTemperature = createValidator(-273.15, 1000000)
+      // Rating from 1 to 5 stars
+      const isValidRating = createValidator(1, 5)
       
-      expect(isValidTemperature(25)).toBe(true)
-      expect(isValidTemperature(-273.15)).toBe(true)   // Exactly at absolute zero
-      expect(isValidTemperature(-300)).toBe(false)     // Below absolute zero
-      expect(isValidTemperature(1000000)).toBe(true)   // At max
-      expect(isValidTemperature(1000001)).toBe(false)  // Above max
+      expect(isValidRating(3)).toBe(true)
+      expect(isValidRating(1)).toBe(true)    // At min
+      expect(isValidRating(5)).toBe(true)    // At max
+      expect(isValidRating(0)).toBe(false)   // Below min
+      expect(isValidRating(6)).toBe(false)   // Above max
     })
   })
 
