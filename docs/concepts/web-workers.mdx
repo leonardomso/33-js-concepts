@@ -345,7 +345,26 @@ Communication between workers and the main thread happens through [`postMessage(
 
 ### The Structured Clone Algorithm
 
-When you send data via `postMessage`, it's **copied** using the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). This is deeper than `JSON.stringify`: it handles more types and preserves object references within the data.
+When you send data via `postMessage`, it's **copied** using the [structured clone algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). This is deeper than `JSON.stringify`: it handles more types, preserves object references within the data, and even supports circular references.
+
+<Tip>
+You can use the global [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone) function to deep-clone objects using the same algorithm. This is useful for copying complex data outside of worker communication:
+
+```javascript
+const original = {
+  name: 'Alice',
+  date: new Date(),
+  nested: { deep: true }
+}
+
+// Deep clone with structuredClone (handles Date, Map, Set, etc.)
+const clone = structuredClone(original)
+
+clone.name = 'Bob'
+console.log(original.name)  // 'Alice' (unchanged)
+console.log(clone.date instanceof Date)  // true (Date preserved!)
+```
+</Tip>
 
 ```javascript
 // main.js
@@ -369,12 +388,17 @@ worker.postMessage(data)
 |-----------|--------------|
 | Primitives (string, number, boolean, null, undefined) | Functions |
 | Plain objects and arrays | DOM nodes |
-| Date objects | Error objects (partially) |
-| RegExp objects | Symbols |
-| Blob, File, FileList | WeakMap, WeakSet |
-| ArrayBuffer, TypedArrays | Objects with prototype chains |
-| Map, Set | Getters/setters |
-| ImageBitmap, ImageData | Proxies |
+| Date objects | Symbols |
+| RegExp objects | WeakMap, WeakSet |
+| Blob, File, FileList | Objects with prototype chains |
+| ArrayBuffer, TypedArrays | Getters/setters |
+| Map, Set | Proxies |
+| Error objects (standard types) | |
+| ImageBitmap, ImageData | |
+
+<Note>
+**Error cloning:** Only standard error types can be cloned (`Error`, `EvalError`, `RangeError`, `ReferenceError`, `SyntaxError`, `TypeError`, `URIError`). The `name` and `message` properties are preserved, and browsers may also preserve `stack` and `cause`.
+</Note>
 
 ```javascript
 // ✓ These work
@@ -490,7 +514,7 @@ console.time('transfer')
 worker.postMessage(hugeBuffer, [hugeBuffer])
 console.timeEnd('transfer')  // Nearly instant!
 
-// WARNING: hugeBuffer is now "neutered" (empty)
+// WARNING: hugeBuffer is now "detached" (unusable)
 console.log(hugeBuffer.byteLength)  // 0
 console.log(array.length)  // 0
 ```
@@ -520,6 +544,13 @@ self.onmessage = (event) => {
 | [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) | Streaming data |
 | [`WritableStream`](https://developer.mozilla.org/en-US/docs/Web/API/WritableStream) | Streaming data |
 | [`TransformStream`](https://developer.mozilla.org/en-US/docs/Web/API/TransformStream) | Streaming transforms |
+| [`AudioData`](https://developer.mozilla.org/en-US/docs/Web/API/AudioData) | Audio processing (WebCodecs) |
+| [`VideoFrame`](https://developer.mozilla.org/en-US/docs/Web/API/VideoFrame) | Video processing (WebCodecs) |
+| [`RTCDataChannel`](https://developer.mozilla.org/en-US/docs/Web/API/RTCDataChannel) | WebRTC data channels |
+
+<Note>
+This table shows the most commonly used transferable objects. For a complete list including newer APIs like `MediaStreamTrack` and `WebTransportSendStream`, see MDN's [Transferable objects](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Transferable_objects) documentation.
+</Note>
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -626,7 +657,7 @@ Use shared workers for:
 - Reducing resource usage for identical workers
 
 <Warning>
-Shared Workers have limited browser support. Check [caniuse.com](https://caniuse.com/sharedworkers) before using. They're not supported in Safari at all.
+Shared Workers have limited browser support. They work in Chrome, Firefox, Edge, and Safari 16+, but are **not supported on Android browsers** (Chrome for Android, Samsung Internet). Check [caniuse.com](https://caniuse.com/sharedworkers) before using in production.
 </Warning>
 
 ### Service Workers (Brief Overview)
@@ -718,7 +749,8 @@ function animate() {
     100
   )
   
-  // Request next frame (in worker context)
+  // Request next frame
+  // Note: requestAnimationFrame is available in dedicated workers only
   requestAnimationFrame(animate)
 }
 ```
@@ -1304,9 +1336,9 @@ function createWorkerFromString(code) {
   const url = URL.createObjectURL(blob)
   const worker = new Worker(url)
   
-  // Clean up the URL when done
-  worker.addEventListener('message', () => {}, { once: true })
-  URL.revokeObjectURL(url)  // Revoke after worker starts
+  // The URL can be revoked immediately after the worker is created.
+  // The browser keeps the blob data until the worker finishes loading.
+  URL.revokeObjectURL(url)
   
   return worker
 }
