@@ -39,7 +39,7 @@ Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event lo
 
 ## What is the Event Loop?
 
-The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. It continuously monitors the call stack and callback queues, pushing queued tasks to the stack when it's empty. This enables non-blocking behavior despite JavaScript being single-threaded.
+The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. It coordinates execution by checking callback queues when the call stack is empty, then pushing queued tasks to the stack for execution. This enables non-blocking behavior despite JavaScript being single-threaded.
 
 ### The Restaurant Analogy
 
@@ -177,7 +177,7 @@ To understand the Event Loop, you need to see the full picture:
 │  │   setTimeout()    setInterval()    fetch()    DOM events         │   │
 │  │   requestAnimationFrame()    IndexedDB    WebSockets             │   │
 │  │                                                                  │   │
-│  │   (These run in SEPARATE THREADS managed by the browser!)        │   │
+│  │   (These are handled outside of JavaScript execution!)           │   │
 │  └─────────────────────────────────────────────────────────────────┘   │
 │                                    │                                    │
 │                                    │ callbacks                          │
@@ -267,7 +267,7 @@ To understand the Event Loop, you need to see the full picture:
     - Timers
     - Child processes
     
-    These run in **separate threads** managed by the browser/Node.js, allowing JavaScript to remain non-blocking.
+    These are handled by the browser/Node.js runtime outside of JavaScript execution, allowing JavaScript to remain non-blocking.
   </Accordion>
   
   <Accordion title="Task Queue (Macrotask Queue)">
@@ -502,29 +502,30 @@ Even though the second promise is created AFTER setTimeout was registered, it st
 ### The Event Loop Algorithm (Simplified)
 
 ```javascript
-// Pseudocode for the Event Loop
+// Pseudocode for the Event Loop (per HTML specification)
 while (true) {
-  // 1. Run all synchronous code until call stack is empty
+  // 1. Process ONE task from the task queue (if available)
+  if (taskQueue.hasItems()) {
+    const task = taskQueue.dequeue();
+    execute(task);
+  }
   
-  // 2. Process ALL microtasks
+  // 2. Process ALL microtasks (until queue is empty)
   while (microtaskQueue.hasItems()) {
     const microtask = microtaskQueue.dequeue();
     execute(microtask);
     // New microtasks added during execution are also processed!
   }
   
-  // 3. Render if needed (browser decides)
+  // 3. Render if needed (browser decides, typically ~60fps)
   if (shouldRender()) {
+    // 3a. Run requestAnimationFrame callbacks
+    runAnimationFrameCallbacks();
+    // 3b. Perform style calculation, layout, and paint
     render();
   }
   
-  // 4. Process ONE task
-  if (taskQueue.hasItems()) {
-    const task = taskQueue.dequeue();
-    execute(task);
-  }
-  
-  // 5. Repeat
+  // 4. Repeat (go back to step 1)
 }
 ```
 
@@ -616,8 +617,8 @@ setTimeout(function run() {
   }
 }, 0);
 
-// Typical output: [1, 1, 1, 1, 4, 9, 14, 19, 24, 29]
-// First 4 are fast, then 4ms minimum kicks in
+// Typical output (varies by browser/system): [1, 1, 1, 1, 4, 9, 14, 19, 24, 29]
+// First 4-5 are fast, then 4ms minimum kicks in
 ```
 
 <Warning>
@@ -813,8 +814,8 @@ One Event Loop Iteration:
 │    a. Run requestAnimationFrame callbacks  ← HERE!              │
 │    b. Render/paint the screen                                   │
 ├─────────────────────────────────────────────────────────────────┤
-│ 4. If idle time available:                                      │
-│    Run requestIdleCallback callbacks                            │
+│ 4. If idle time remains before next frame:                      │
+│    Run requestIdleCallback callbacks (non-essential work)       │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
@@ -1009,12 +1010,20 @@ for (let i = 0; i < 3; i++) {
 // Output: 0, 1, 2
 ```
 
-**Fix with closure:**
+**Fix with closure (IIFE):**
 ```javascript
 for (var i = 0; i < 3; i++) {
   ((j) => {
     setTimeout(() => console.log(j), 0);
   })(i);
+}
+// Output: 0, 1, 2
+```
+
+**Fix with setTimeout's third parameter:**
+```javascript
+for (var i = 0; i < 3; i++) {
+  setTimeout((j) => console.log(j), 0, i);
 }
 // Output: 0, 1, 2
 ```
@@ -1446,7 +1455,7 @@ requestAnimationFrame(() => {
 
 The best way to truly understand the Event Loop is to **see it in action**.
 
-<Card title="Loupe - Event Loop Visualizer" icon="play" href="http://latentflip.com/loupe/">
+<Card title="Loupe - Event Loop Visualizer" icon="play" href="https://latentflip.com/loupe/">
   Created by Philip Roberts (author of the famous "What the heck is the event loop anyway?" talk). This tool lets you write JavaScript code and watch how it moves through the call stack, Web APIs, and callback queue in real-time.
 </Card>
 
@@ -1657,7 +1666,7 @@ Watch how:
 
 ## Tools
 
-<Card title="Loupe - Event Loop Visualizer" icon="play" href="http://latentflip.com/loupe/">
+<Card title="Loupe - Event Loop Visualizer" icon="play" href="https://latentflip.com/loupe/">
   Interactive tool by Philip Roberts to visualize how the call stack, Web APIs, and callback queue work together. Write code and watch it execute step by step.
 </Card>
 
