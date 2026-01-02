@@ -136,6 +136,10 @@ Scope exists for three critical reasons:
 
 JavaScript has three main types of scope. Understanding each one is fundamental to writing predictable code.
 
+<Note>
+ES6 modules also introduce **module scope**, where top-level variables are scoped to the module rather than being global. Learn more in our [IIFE, Modules and Namespaces](/concepts/iife-modules) guide.
+</Note>
+
 ### 1. Global Scope
 
 Variables declared outside of any function or block are in the **global scope**. They're accessible from anywhere in your code.
@@ -523,7 +527,7 @@ Shadowing can be confusing. While sometimes intentional, accidental shadowing is
 
 ## What is a Closure in JavaScript?
 
-A **[closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)** is a function bundled together with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to variables from an outer (enclosing) scope, even after that outer function has finished executing and returned. Every function in JavaScript creates a closure at creation time.
+A **[closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)** is the combination of a function bundled together with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to variables from an outer (enclosing) scope, even after that outer function has finished executing and returned. Every function in JavaScript creates a closure at creation time.
 
 Remember our office building analogy? A closure is like someone who worked in the private office, left the building, but still remembers exactly where everything was, and can still use that knowledge!
 
@@ -853,14 +857,18 @@ function createHeavyClosure() {
   const hugeData = new Array(1000000).fill('x');  // Large data
   
   return function() {
-    // Even if we don't use hugeData, it's still retained!
-    console.log('Hello');
+    // This reference to hugeData keeps the entire array in memory
+    console.log(hugeData.length);
   };
 }
 
 const leakyFunction = createHeavyClosure();
-// hugeData is still in memory because the closure might reference it
+// hugeData is still in memory because the closure references it
 ```
+
+<Note>
+Modern JavaScript engines like V8 can optimize closures that don't actually use outer variables. However, it's best practice to assume referenced variables are retained and explicitly clean up large data when you're done with it.
+</Note>
 
 ### Breaking Closure References
 
@@ -1099,7 +1107,7 @@ cleanup();  // Removes listener, allows memory to be freed
 ## Reference
 
 <CardGroup cols={2}>
-  <Card title="Closures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">
+  <Card title="Closures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures">
     Official MDN documentation on closures and lexical scoping
   </Card>
   <Card title="Scope — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Scope">
