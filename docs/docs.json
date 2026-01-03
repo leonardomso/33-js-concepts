@@ -1,6 +1,10 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "maple",
+  "appearance": {
+    "default": "dark",
+    "strict": true
+  },
   "name": "33 JavaScript Concepts",
   "description": "33 concepts every JavaScript developer should know",
   "colors": {
