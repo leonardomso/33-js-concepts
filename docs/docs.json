@@ -6,13 +6,38 @@
     "strict": true
   },
   "name": "33 JavaScript Concepts",
-  "description": "33 concepts every JavaScript developer should know",
+  "description": "Learn JavaScript with 33 essential concepts every developer should know. Free guide with clear explanations, practical code examples, and curated resources.",
   "colors": {
-    "primary": "#F7DF1E",
-    "light": "#FAFAFA",
-    "dark": "#1A1A1A"
+    "primary": "#F0DB4F",
+    "light": "#F0DB4F",
+    "dark": "#C9B83C"
   },
   "favicon": "/favicon.svg",
+  "seo": {
+    "indexing": "navigable",
+    "metatags": {
+      "og:type": "website",
+      "og:site_name": "33 JavaScript Concepts",
+      "og:locale": "en_US",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@leonardomso",
+      "twitter:creator": "@leonardomso",
+      "author": "Leonardo Maldonado",
+      "keywords": "JavaScript, JS, learn JavaScript, JavaScript tutorial, JavaScript concepts, JavaScript fundamentals, web development, programming, coding, closures, promises, async await, event loop, DOM, prototypes",
+      "language": "en",
+      "coverage": "Worldwide",
+      "distribution": "global",
+      "rating": "general",
+      "revisit-after": "7 days",
+      "category": "Technology, Education, Programming"
+    }
+  },
+  "search": {
+    "prompt": "Search JavaScript concepts..."
+  },
+  "metadata": {
+    "timestamp": true
+  },
   "navbar": {
     "links": [
       {
