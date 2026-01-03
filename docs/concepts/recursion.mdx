@@ -1,0 +1,1049 @@
+---
+title: "Recursion: Functions That Call Themselves in JavaScript"
+sidebarTitle: "Recursion: Functions That Call Themselves"
+description: "Learn recursion in JavaScript. Understand base cases, recursive calls, the call stack, and patterns like factorial, tree traversal, and memoization."
+---
+
+How do you solve a problem by breaking it into smaller versions of the same problem? What if a function could call itself to chip away at a task until it's done?
+
+```javascript
+function countdown(n) {
+  if (n === 0) {
+    console.log("Done!")
+    return
+  }
+  console.log(n)
+  countdown(n - 1)  // The function calls itself!
+}
+
+countdown(3)
+// 3
+// 2
+// 1
+// Done!
+```
+
+This is **[recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursion)**. The `countdown` function calls itself with a smaller number each time until it reaches zero. It's a powerful technique that lets you solve complex problems by breaking them into simpler, self-similar pieces.
+
+<Info>
+**What you'll learn in this guide:**
+- What recursion is and its two essential parts (base case and recursive case)
+- How recursion relates to the call stack
+- Classic recursive algorithms: factorial, Fibonacci, sum
+- Practical applications: traversing trees, nested objects, linked lists
+- Recursion vs iteration: when to use each
+- Common mistakes and how to avoid stack overflow
+- Optimization techniques: memoization and tail recursion
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [JavaScript functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions). It also helps to know how the [call stack](/concepts/call-stack) works, though we'll cover that relationship here.
+</Warning>
+
+---
+
+## What is Recursion?
+
+**[Recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursion)** is a programming technique where a function calls itself to solve a problem. Instead of using loops, the function breaks a problem into smaller versions of the same problem until it reaches a case simple enough to solve directly.
+
+<Note>
+**Recursion isn't unique to JavaScript.** It's a fundamental computer science concept found in virtually every programming language. The patterns you learn here apply whether you're writing Python, C++, Java, or any other language.
+</Note>
+
+Every recursive function has two essential parts:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     THE TWO PARTS OF RECURSION                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   function solve(problem) {                                              │
+│                                                                          │
+│     if (problem is simple enough) {   ← BASE CASE                       │
+│       return solution directly           Stops the recursion            │
+│     }                                                                    │
+│                                                                          │
+│     return solve(smaller problem)     ← RECURSIVE CASE                  │
+│   }                                      Calls itself with simpler input│
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+1. **Base Case**: The condition that stops the recursion. Without it, the function would call itself forever.
+
+2. **Recursive Case**: The part where the function calls itself with a simpler or smaller version of the problem.
+
+Here's a simple example that sums numbers from 1 to `n`:
+
+```javascript
+function sumTo(n) {
+  // Base case: when n is 1 or less, return n
+  if (n <= 1) {
+    return n
+  }
+  
+  // Recursive case: n plus the sum of everything below it
+  return n + sumTo(n - 1)
+}
+
+console.log(sumTo(5))  // 15 (5 + 4 + 3 + 2 + 1)
+console.log(sumTo(1))  // 1
+console.log(sumTo(0))  // 0
+```
+
+The function asks: "What's the sum from 1 to 5?" It answers: "5 plus the sum from 1 to 4." Then it asks the same question with 4, then 3, then 2, until it reaches 1, which it knows is just 1.
+
+---
+
+## The Russian Dolls Analogy
+
+Think of recursion like opening a set of Russian nesting dolls (matryoshka). Each doll contains a smaller version of itself, and you keep opening them until you reach the smallest one that can't be opened.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE RUSSIAN DOLLS ANALOGY                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   Opening the dolls (making recursive calls):                            │
+│                                                                          │
+│   ╔═══════════════════════════════╗                                      │
+│   ║                               ║                                      │
+│   ║   ╔═══════════════════════╗   ║                                      │
+│   ║   ║                       ║   ║                                      │
+│   ║   ║   ╔═══════════════╗   ║   ║                                      │
+│   ║   ║   ║               ║   ║   ║                                      │
+│   ║   ║   ║   ╔═══════╗   ║   ║   ║                                      │
+│   ║   ║   ║   ║   ◆   ║   ║   ║   ║  ← Smallest doll (BASE CASE)        │
+│   ║   ║   ║   ╚═══════╝   ║   ║   ║    Can't open further               │
+│   ║   ║   ║               ║   ║   ║                                      │
+│   ║   ║   ╚═══════════════╝   ║   ║                                      │
+│   ║   ║                       ║   ║                                      │
+│   ║   ╚═══════════════════════╝   ║                                      │
+│   ║                               ║                                      │
+│   ╚═══════════════════════════════╝                                      │
+│                                                                          │
+│   Each doll = a function call                                            │
+│   Opening a doll = making a recursive call                               │
+│   Smallest doll = base case (stop recursing)                             │
+│   Closing dolls back up = returning values back up the chain            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+When you find the smallest doll, you start closing them back up. In recursion, once you hit the base case, the return values bubble back up through each function call until you get your final answer.
+
+---
+
+## How Recursion Works Under the Hood
+
+To understand recursion, you need to understand how the [call stack](/concepts/call-stack) works. Every time a function is called, JavaScript creates an **[execution context](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** and pushes it onto the call stack. When the function returns, its context is popped off.
+
+With recursion, multiple execution contexts for the *same function* stack up:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE CALL STACK DURING RECURSION                       │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   sumTo(3) calls sumTo(2) calls sumTo(1)                                 │
+│                                                                          │
+│   STACK GROWING:                        STACK SHRINKING:                 │
+│   ───────────────                       ─────────────────                │
+│                                                                          │
+│   ┌───────────────┐                     ┌───────────────┐                │
+│   │  sumTo(1)     │  ← current          │               │  (popped)     │
+│   │  returns 1    │                     └───────────────┘                │
+│   ├───────────────┤                     ┌───────────────┐                │
+│   │  sumTo(2)     │                     │  sumTo(2)     │  ← current    │
+│   │  waiting...   │                     │  returns 2+1=3│                │
+│   ├───────────────┤                     ├───────────────┤                │
+│   │  sumTo(3)     │                     │  sumTo(3)     │                │
+│   │  waiting...   │                     │  waiting...   │                │
+│   └───────────────┘                     └───────────────┘                │
+│                                                                          │
+│   Each call waits for the one above it to return                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Let's trace through `sumTo(3)` step by step:
+
+<Steps>
+  <Step title="sumTo(3) is called">
+    `n` is 3, not 1, so we need to calculate `3 + sumTo(2)`. But we can't add yet because we don't know what `sumTo(2)` returns. This call waits.
+  </Step>
+  <Step title="sumTo(2) is called">
+    `n` is 2, not 1, so we need `2 + sumTo(1)`. This call also waits.
+  </Step>
+  <Step title="sumTo(1) is called — base case!">
+    `n` is 1, so we return `1` immediately. No more recursive calls.
+  </Step>
+  <Step title="sumTo(2) resumes">
+    Now it knows `sumTo(1)` returned 1, so it calculates `2 + 1 = 3` and returns 3.
+  </Step>
+  <Step title="sumTo(3) resumes">
+    Now it knows `sumTo(2)` returned 3, so it calculates `3 + 3 = 6` and returns 6.
+  </Step>
+</Steps>
+
+```javascript
+function sumTo(n) {
+  console.log(`Called sumTo(${n})`)
+  
+  if (n === 1) {
+    console.log(`  Base case! Returning 1`)
+    return 1
+  }
+  
+  const result = n + sumTo(n - 1)
+  console.log(`  sumTo(${n}) returning ${result}`)
+  return result
+}
+
+sumTo(3)
+// Called sumTo(3)
+// Called sumTo(2)
+// Called sumTo(1)
+//   Base case! Returning 1
+//   sumTo(2) returning 3
+//   sumTo(3) returning 6
+```
+
+<Tip>
+**Key insight:** Each recursive call creates its own copy of the function's local variables. The `n` in `sumTo(3)` is separate from the `n` in `sumTo(2)`. They don't interfere with each other.
+</Tip>
+
+---
+
+## Classic Recursive Patterns
+
+Here are the most common recursive algorithms you'll encounter. Understanding these patterns will help you recognize when recursion is the right tool.
+
+<Note>
+The examples below assume valid, non-negative integer inputs. In production code, you'd want to validate inputs and handle edge cases like negative numbers or non-integers.
+</Note>
+
+<AccordionGroup>
+  <Accordion title="Factorial (n!)">
+    The factorial of a number `n` (written as `n!`) is the product of all positive integers from 1 to n:
+    
+    - `5! = 5 × 4 × 3 × 2 × 1 = 120`
+    - `3! = 3 × 2 × 1 = 6`
+    - `1! = 1`
+    - `0! = 1` (by definition)
+    
+    The recursive insight: `n! = n × (n-1)!`
+    
+    ```javascript
+    function factorial(n) {
+      // Base case: 0! and 1! both equal 1
+      if (n <= 1) {
+        return 1
+      }
+      
+      // Recursive case: n! = n × (n-1)!
+      return n * factorial(n - 1)
+    }
+    
+    console.log(factorial(5))  // 120
+    console.log(factorial(0))  // 1
+    console.log(factorial(1))  // 1
+    ```
+    
+    **Trace of `factorial(4)`:**
+    ```
+    factorial(4) = 4 * factorial(3)
+                 = 4 * (3 * factorial(2))
+                 = 4 * (3 * (2 * factorial(1)))
+                 = 4 * (3 * (2 * 1))
+                 = 4 * (3 * 2)
+                 = 4 * 6
+                 = 24
+    ```
+  </Accordion>
+  
+  <Accordion title="Fibonacci Sequence">
+    The Fibonacci sequence starts with 0 and 1, and each subsequent number is the sum of the two before it:
+    
+    `0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...`
+    
+    The recursive definition:
+    - `fib(0) = 0`
+    - `fib(1) = 1`
+    - `fib(n) = fib(n-1) + fib(n-2)` for n > 1
+    
+    ```javascript
+    function fibonacci(n) {
+      // Base cases
+      if (n === 0) return 0
+      if (n === 1) return 1
+      
+      // Recursive case: sum of two preceding numbers
+      return fibonacci(n - 1) + fibonacci(n - 2)
+    }
+    
+    console.log(fibonacci(0))   // 0
+    console.log(fibonacci(1))   // 1
+    console.log(fibonacci(6))   // 8
+    console.log(fibonacci(10))  // 55
+    ```
+    
+    <Warning>
+    **Performance trap!** This naive implementation is very slow for large numbers. `fibonacci(40)` makes over 300 million function calls because it recalculates the same values repeatedly. We'll fix this with memoization later.
+    </Warning>
+    
+    ```
+    fibonacci(5) calls:
+                          fib(5)
+                         /      \
+                    fib(4)      fib(3)      ← fib(3) calculated twice!
+                   /     \      /    \
+               fib(3)  fib(2) fib(2) fib(1)
+              /    \
+          fib(2)  fib(1)
+    ```
+  </Accordion>
+  
+  <Accordion title="Sum of Numbers (1 to n)">
+    Sum all integers from 1 to n:
+    
+    ```javascript
+    function sumTo(n) {
+      if (n <= 1) return n
+      return n + sumTo(n - 1)
+    }
+    
+    console.log(sumTo(5))    // 15 (1+2+3+4+5)
+    console.log(sumTo(100))  // 5050
+    console.log(sumTo(0))    // 0
+    ```
+    
+    **Note:** There's a mathematical formula for this: `n * (n + 1) / 2`, which is O(1) instead of O(n). For simple sums, the formula is better. But the recursive approach teaches the pattern.
+  </Accordion>
+  
+  <Accordion title="Power Function (x^n)">
+    Calculate `x` raised to the power of `n`:
+    
+    ```javascript
+    function power(x, n) {
+      // Base case: anything to the power of 0 is 1
+      if (n === 0) return 1
+      
+      // Recursive case: x^n = x * x^(n-1)
+      return x * power(x, n - 1)
+    }
+    
+    console.log(power(2, 0))   // 1
+    console.log(power(2, 3))   // 8
+    console.log(power(2, 10))  // 1024
+    console.log(power(3, 4))   // 81
+    ```
+    
+    **Optimized version** using the property that `x^n = (x^(n/2))^2`:
+    
+    ```javascript
+    function powerFast(x, n) {
+      if (n === 0) return 1
+      
+      if (n % 2 === 0) {
+        // Even exponent: x^n = (x^(n/2))^2
+        const half = powerFast(x, n / 2)
+        return half * half
+      } else {
+        // Odd exponent: x^n = x * x^(n-1)
+        return x * powerFast(x, n - 1)
+      }
+    }
+    
+    console.log(powerFast(2, 10))  // 1024 (but faster!)
+    ```
+    
+    The optimized version runs in O(log n) time instead of O(n).
+  </Accordion>
+  
+  <Accordion title="Reverse a String">
+    Reverse a string character by character:
+    
+    ```javascript
+    function reverse(str) {
+      // Base case: empty string or single character
+      if (str.length <= 1) {
+        return str
+      }
+      
+      // Recursive case: last char + reverse of the rest
+      return str[str.length - 1] + reverse(str.slice(0, -1))
+    }
+    
+    console.log(reverse("hello"))  // "olleh"
+    console.log(reverse("a"))      // "a"
+    console.log(reverse(""))       // ""
+    ```
+    
+    **How it works:**
+    ```
+    reverse("cat")
+    = "t" + reverse("ca")
+    = "t" + ("a" + reverse("c"))
+    = "t" + ("a" + "c")
+    = "t" + "ac"
+    = "tac"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Practical Use Cases
+
+Recursion really shines when working with **nested or tree-like structures**. These [data structures](/concepts/data-structures) are naturally recursive, and recursion is often the most elegant solution.
+
+### Traversing Nested Objects
+
+Imagine you need to find all values in a deeply nested object:
+
+```javascript
+const data = {
+  name: "Company",
+  departments: {
+    engineering: {
+      frontend: { count: 5 },
+      backend: { count: 8 }
+    },
+    sales: { count: 12 }
+  }
+}
+
+function findAllCounts(obj) {
+  let total = 0
+  
+  for (const key in obj) {
+    if (key === "count") {
+      total += obj[key]
+    } else if (typeof obj[key] === "object" && obj[key] !== null) {
+      // Recurse into nested objects
+      total += findAllCounts(obj[key])
+    }
+  }
+  
+  return total
+}
+
+console.log(findAllCounts(data))  // 25
+```
+
+Without recursion, you'd need to know exactly how deep the nesting goes. With recursion, it handles any depth automatically.
+
+### Flattening Nested Arrays
+
+Turn a deeply nested array into a flat one:
+
+```javascript
+function flatten(arr) {
+  let result = []
+  
+  for (const item of arr) {
+    if (Array.isArray(item)) {
+      // Recurse into nested arrays
+      result = result.concat(flatten(item))
+    } else {
+      result.push(item)
+    }
+  }
+  
+  return result
+}
+
+console.log(flatten([1, [2, [3, 4]], 5]))
+// [1, 2, 3, 4, 5]
+
+console.log(flatten([1, [2, [3, [4, [5]]]]]))
+// [1, 2, 3, 4, 5]
+```
+
+### Walking the DOM Tree
+
+Traverse all elements in an HTML document:
+
+```javascript
+function walkDOM(node, callback) {
+  // Process this node
+  callback(node)
+  
+  // Recurse into child nodes
+  for (const child of node.children) {
+    walkDOM(child, callback)
+  }
+}
+
+// Example: log all tag names
+walkDOM(document.body, (node) => {
+  console.log(node.tagName)
+})
+```
+
+This pattern combines recursion with [higher-order functions](/concepts/higher-order-functions) (the callback). It's how browser developer tools display the DOM tree and how libraries traverse HTML structures.
+
+### Processing Linked Lists
+
+A linked list is a classic recursive data structure where each node points to the next:
+
+```javascript
+const list = {
+  value: 1,
+  next: {
+    value: 2,
+    next: {
+      value: 3,
+      next: null
+    }
+  }
+}
+
+// Sum all values in the list
+function sumList(node) {
+  if (node === null) return 0
+  return node.value + sumList(node.next)
+}
+
+console.log(sumList(list))  // 6
+
+// Print list in reverse order
+function printReverse(node) {
+  if (node === null) return
+  printReverse(node.next)  // First, go to the end
+  console.log(node.value)  // Then print on the way back
+}
+
+printReverse(list)
+// 3
+// 2
+// 1
+```
+
+### File System Traversal
+
+A conceptual example of how file explorers work:
+
+```javascript
+// Simulated file structure
+const fileSystem = {
+  name: "root",
+  type: "folder",
+  children: [
+    { name: "file1.txt", type: "file", size: 100 },
+    {
+      name: "docs",
+      type: "folder",
+      children: [
+        { name: "readme.md", type: "file", size: 50 },
+        { name: "notes.txt", type: "file", size: 25 }
+      ]
+    }
+  ]
+}
+
+function getTotalSize(node) {
+  if (node.type === "file") {
+    return node.size
+  }
+  
+  // Folder: sum sizes of all children
+  let total = 0
+  for (const child of node.children) {
+    total += getTotalSize(child)
+  }
+  return total
+}
+
+console.log(getTotalSize(fileSystem))  // 175
+```
+
+---
+
+## Recursion vs Iteration
+
+Every recursive solution can be rewritten using loops, and vice versa. Here's when to choose each:
+
+| Aspect | Recursion | Iteration (Loops) |
+|--------|-----------|-------------------|
+| **Readability** | Often cleaner for tree-like problems | Usually simpler for linear tasks |
+| **Memory** | Uses call stack (one frame per call) | Uses fixed/minimal memory |
+| **Performance** | Function call overhead | Generally faster |
+| **Stack Risk** | Stack overflow possible (~10,000+ calls) | No stack overflow risk |
+| **Best For** | Trees, graphs, nested structures | Simple counting, linear arrays |
+
+<Tabs>
+  <Tab title="Recursive">
+    ```javascript
+    // Recursive factorial
+    function factorial(n) {
+      if (n <= 1) return 1
+      return n * factorial(n - 1)
+    }
+    ```
+    
+    **Pros:** Matches the mathematical definition exactly. Easy to read.
+    
+    **Cons:** Uses O(n) stack space. Could overflow for large n.
+  </Tab>
+  <Tab title="Iterative">
+    ```javascript
+    // Iterative factorial
+    function factorial(n) {
+      let result = 1
+      for (let i = 2; i <= n; i++) {
+        result *= i
+      }
+      return result
+    }
+    ```
+    
+    **Pros:** Uses O(1) space. No stack overflow risk. Faster.
+    
+    **Cons:** Slightly less intuitive mapping to the math.
+  </Tab>
+</Tabs>
+
+### When to Use Recursion
+
+- **Tree structures**: DOM traversal, file systems, org charts
+- **Divide and conquer algorithms**: Merge sort, quick sort, binary search
+- **Problems with self-similar subproblems**: Factorial, Fibonacci, fractals
+- **When code clarity matters more than performance**: Prototyping, readable code
+
+### When to Use Iteration
+
+- **Simple loops**: Counting, summing arrays
+- **Performance-critical code**: Tight loops in hot paths
+- **Very deep structures**: Anything that might exceed ~10,000 levels
+- **Memory-constrained environments**: Each recursive call uses stack space
+
+<Tip>
+**Rule of thumb:** Start with whichever approach feels more natural for the problem. If you run into stack overflow issues or performance problems, consider converting to iteration.
+</Tip>
+
+---
+
+## Common Mistakes
+
+Here are the most frequent bugs when writing recursive functions:
+
+### Mistake #1: Missing or Incorrect Base Case
+
+Without a base case, the function calls itself forever until the stack overflows:
+
+```javascript
+// ❌ WRONG - No base case!
+function countdown(n) {
+  console.log(n)
+  countdown(n - 1)  // Never stops!
+}
+
+countdown(3)  // 3, 2, 1, 0, -1, -2... CRASH!
+// RangeError: Maximum call stack size exceeded
+```
+
+```javascript
+// ✓ CORRECT - Has a base case
+function countdown(n) {
+  if (n < 0) return  // Base case: stop at negative
+  console.log(n)
+  countdown(n - 1)
+}
+
+countdown(3)  // 3, 2, 1, 0 (then stops)
+```
+
+<Warning>
+**The error you'll see:** `RangeError: Maximum call stack size exceeded`. This means you've made too many recursive calls without returning. Check your base case!
+</Warning>
+
+### Mistake #2: Base Case That's Never Reached
+
+Even with a base case, if your logic never reaches it, you'll still crash:
+
+```javascript
+// ❌ WRONG - Base case can never be reached
+function countdown(n) {
+  if (n === 0) return  // Only stops at exactly 0
+  console.log(n)
+  countdown(n - 2)  // Skips over 0 when starting with odd number!
+}
+
+countdown(5)  // 5, 3, 1, -1, -3... CRASH!
+```
+
+```javascript
+// ✓ CORRECT - Base case is reachable
+function countdown(n) {
+  if (n <= 0) return  // Stops at 0 or below
+  console.log(n)
+  countdown(n - 2)
+}
+
+countdown(5)  // 5, 3, 1 (then stops)
+```
+
+### Mistake #3: Forgetting to Return the Recursive Call
+
+If you call the function recursively but don't return its result, you lose the value:
+
+```javascript
+// ❌ WRONG - Missing return
+function sum(n) {
+  if (n === 1) return 1
+  sum(n - 1) + n  // Calculated but not returned!
+}
+
+console.log(sum(5))  // undefined
+```
+
+```javascript
+// ✓ CORRECT - Returns the result
+function sum(n) {
+  if (n === 1) return 1
+  return sum(n - 1) + n  // Return the calculation
+}
+
+console.log(sum(5))  // 15
+```
+
+### Mistake #4: Modifying Shared State
+
+Be careful about variables outside the function that recursive calls might all modify:
+
+```javascript
+// ❌ PROBLEMATIC - Shared mutable state
+let count = 0
+
+function countNodes(node) {
+  if (node === null) return
+  count++  // All calls modify the same variable
+  countNodes(node.left)
+  countNodes(node.right)
+}
+// If you call countNodes twice, count keeps increasing!
+```
+
+```javascript
+// ✓ BETTER - Return values instead of mutating
+function countNodes(node) {
+  if (node === null) return 0
+  return 1 + countNodes(node.left) + countNodes(node.right)
+}
+// Each call is independent
+```
+
+### Mistake #5: Inefficient Overlapping Subproblems
+
+The naive Fibonacci implementation recalculates the same values many times:
+
+```javascript
+// ❌ VERY SLOW - Exponential time complexity
+function fib(n) {
+  if (n <= 1) return n
+  return fib(n - 1) + fib(n - 2)
+}
+
+fib(40)  // Takes several seconds!
+fib(50)  // Takes minutes or crashes
+```
+
+This is fixed with memoization, covered in the next section.
+
+---
+
+## Optimizing Recursive Functions
+
+### Memoization
+
+**Memoization** means caching the results of function calls so you don't recompute the same thing twice. It's especially useful for recursive functions with overlapping subproblems.
+
+```javascript
+// Fibonacci with memoization
+function fibonacci(n, memo = {}) {
+  // Check if we already calculated this
+  if (n in memo) {
+    return memo[n]
+  }
+  
+  // Base cases
+  if (n <= 1) return n
+  
+  // Calculate and cache the result
+  memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+  return memo[n]
+}
+
+console.log(fibonacci(50))   // 12586269025 (instant!)
+console.log(fibonacci(100))  // 354224848179262000000 (still instant!)
+```
+
+The naive Fibonacci has O(2^n) time complexity. With memoization, it's O(n). That's the difference between billions of operations and just 100.
+
+### Tail Recursion
+
+A **tail recursive** function is one where the recursive call is the very last thing the function does. There's no computation after the call returns.
+
+```javascript
+// NOT tail recursive - multiplication happens AFTER the recursive call
+function factorial(n) {
+  if (n <= 1) return 1
+  return n * factorial(n - 1)  // Still need to multiply after call returns
+}
+
+// Tail recursive version - uses an accumulator
+function factorialTail(n, accumulator = 1) {
+  if (n <= 1) return accumulator
+  return factorialTail(n - 1, accumulator * n)  // Nothing to do after this returns
+}
+```
+
+**Why does this matter?** In theory, tail recursive functions can be optimized by the JavaScript engine to reuse the same stack frame, avoiding stack overflow entirely. This is called **Tail Call Optimization (TCO)**.
+
+<Note>
+**Reality check:** Most JavaScript engines (V8 in Chrome/Node, SpiderMonkey in Firefox) **do not implement TCO**. Safari's JavaScriptCore is the notable exception. So in practice, tail recursion doesn't prevent stack overflow in most environments. Still, it's good to understand the concept, as it's important in functional programming languages like Haskell and Scheme.
+</Note>
+
+### Converting to Iteration
+
+If you're hitting stack limits, consider converting your recursion to a loop with an explicit stack:
+
+```javascript
+// Recursive tree traversal
+function sumTreeRecursive(node) {
+  if (node === null) return 0
+  return node.value + sumTreeRecursive(node.left) + sumTreeRecursive(node.right)
+}
+
+// Iterative version using explicit stack
+function sumTreeIterative(root) {
+  if (root === null) return 0
+  
+  let sum = 0
+  const stack = [root]
+  
+  while (stack.length > 0) {
+    const node = stack.pop()
+    sum += node.value
+    
+    if (node.right) stack.push(node.right)
+    if (node.left) stack.push(node.left)
+  }
+  
+  return sum
+}
+```
+
+The iterative version uses heap memory (the array) instead of stack memory, so it can handle much deeper structures.
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Recursion = a function calling itself** to solve smaller versions of the same problem
+
+2. **Every recursive function needs a base case** that stops the recursion without making another call
+
+3. **The recursive case** breaks the problem into a smaller piece and calls the function again
+
+4. **Recursion uses the call stack** — each call adds a new frame with its own local variables
+
+5. **The base case must be reachable** — if it's not, you'll get infinite recursion and a stack overflow
+
+6. **Recursion shines for tree-like structures**: DOM traversal, nested objects, file systems, linked lists
+
+7. **Loops are often better for simple iteration** — less overhead, no stack overflow risk
+
+8. **Watch for stack overflow** on deep recursion (most browsers limit to ~10,000 calls)
+
+9. **Memoization fixes inefficient recursion** by caching results of repeated subproblems
+
+10. **Recursion isn't JavaScript-specific** — it's a universal programming technique you'll use in any language
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What are the two essential parts of a recursive function?">
+    **Answer:**
+    
+    1. **Base case**: The condition that stops the recursion. It returns a value without making another recursive call.
+    
+    2. **Recursive case**: The part where the function calls itself with a simpler or smaller version of the problem.
+    
+    ```javascript
+    function example(n) {
+      if (n === 0) return "done"  // Base case
+      return example(n - 1)       // Recursive case
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="What happens if you forget the base case?">
+    **Answer:**
+    
+    The function calls itself infinitely until JavaScript throws a `RangeError: Maximum call stack size exceeded`. This is called a **stack overflow** because each call adds a frame to the call stack until it runs out of memory.
+    
+    ```javascript
+    // This will crash
+    function broken(n) {
+      return broken(n - 1)  // No base case to stop!
+    }
+    broken(5)  // RangeError: Maximum call stack size exceeded
+    ```
+  </Accordion>
+  
+  <Accordion title="Write a recursive function to find the length of an array without using .length">
+    **Answer:**
+    
+    ```javascript
+    function arrayLength(arr) {
+      // Base case: empty array has length 0
+      if (arr.length === 0) return 0
+      
+      // Recursive case: 1 + length of the rest
+      return 1 + arrayLength(arr.slice(1))
+    }
+    
+    console.log(arrayLength([1, 2, 3, 4]))  // 4
+    console.log(arrayLength([]))            // 0
+    ```
+    
+    Note: We use `.length` only to check if the array is empty (our base case). The actual counting happens through recursion, not by directly returning `.length`.
+  </Accordion>
+  
+  <Accordion title="Why is naive Fibonacci recursion inefficient, and how would you fix it?">
+    **Answer:**
+    
+    Naive Fibonacci recalculates the same values many times. For example, `fib(5)` calculates `fib(3)` twice, `fib(2)` three times, etc. This leads to exponential O(2^n) time complexity.
+    
+    **The fix: Memoization.** Cache results so each value is only calculated once:
+    
+    ```javascript
+    function fibonacci(n, memo = {}) {
+      if (n in memo) return memo[n]
+      if (n <= 1) return n
+      
+      memo[n] = fibonacci(n - 1, memo) + fibonacci(n - 2, memo)
+      return memo[n]
+    }
+    ```
+    
+    This reduces the time complexity to O(n).
+  </Accordion>
+  
+  <Accordion title="When should you choose recursion over a loop?">
+    **Answer:**
+    
+    **Choose recursion when:**
+    - Working with tree-like or nested structures (DOM, file systems, JSON)
+    - The problem naturally divides into self-similar subproblems
+    - Code clarity is more important than maximum performance
+    - Implementing divide-and-conquer algorithms
+    
+    **Choose loops when:**
+    - Iterating through flat, linear data
+    - Performance is critical
+    - You might recurse more than ~10,000 levels deep
+    - Memory is constrained
+  </Accordion>
+  
+  <Accordion title="How does recursion relate to the call stack?">
+    **Answer:**
+    
+    Each recursive call creates a new **execution context** that gets pushed onto the call stack. The function waits for its recursive call to return, keeping its context on the stack.
+    
+    When the base case is reached, contexts start popping off the stack as return values bubble back up. This is why deep recursion can cause stack overflow — too many contexts waiting at once.
+    
+    ```
+    sumTo(3) calls → sumTo(2) calls → sumTo(1)
+    
+    Stack: [sumTo(3), sumTo(2), sumTo(1)]
+                                    ↓ returns 1
+    Stack: [sumTo(3), sumTo(2)]
+                       ↓ returns 3
+    Stack: [sumTo(3)]
+              ↓ returns 6
+    Stack: []
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Call Stack" icon="layer-group" href="/concepts/call-stack">
+    How JavaScript tracks function execution — the foundation of how recursion works under the hood.
+  </Card>
+  <Card title="Higher-Order Functions" icon="function" href="/concepts/higher-order-functions">
+    Functions that take or return other functions. Many recursive patterns combine with higher-order functions.
+  </Card>
+  <Card title="Data Structures" icon="sitemap" href="/concepts/data-structures">
+    Trees, linked lists, and graphs — data structures that are naturally recursive.
+  </Card>
+  <Card title="Pure Functions" icon="sparkles" href="/concepts/pure-functions">
+    Functions with no side effects. Recursive functions work best when they're pure.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Recursion — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Recursion">
+    Official MDN definition with common examples including factorial, Fibonacci, and reduce.
+  </Card>
+  <Card title="Functions Guide: Recursion — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions#recursion">
+    MDN's guide on recursive functions in JavaScript with DOM traversal examples.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Recursion and Stack" icon="newspaper" href="https://javascript.info/recursion">
+    The definitive JavaScript recursion tutorial. Covers execution context, linked lists, and recursive data structures with interactive examples.
+  </Card>
+  <Card title="What is Recursion? A Recursive Function Explained" icon="newspaper" href="https://www.freecodecamp.org/news/what-is-recursion-in-javascript/">
+    Beginner-friendly introduction with step-by-step breakdowns. Great for understanding the "why" behind recursion.
+  </Card>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <Card title="Recursion Explained (with Examples)" icon="newspaper" href="https://dev.to/christinamcmahon/recursion-explained-with-examples-4k1m">
+    Visual explanation of factorial and Fibonacci with tree diagrams. Includes memoization introduction.
+  </Card>
+  <Card title="JavaScript Recursive Function" icon="newspaper" href="https://www.javascripttutorial.net/javascript-recursive-function/">
+    Clear tutorial covering recursive function basics, countdowns, and sum calculations with detailed step-by-step explanations.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="What Is Recursion - In Depth" icon="video" href="https://www.youtube.com/watch?v=6oDQaB2one8">
+    Web Dev Simplified breaks down recursion with clear visuals and practical examples. Great for visual learners.
+  </Card>
+  <Card title="Recursion" icon="video" href="https://www.youtube.com/watch?v=k7-N8R0-KY4">
+    Fun Fun Function's engaging explanation of recursion with personality and deeper conceptual insights.
+  </Card>
+</CardGroup>
+
+<CardGroup cols={2}>
+  <Card title="Recursion Crash Course" icon="video" href="https://www.youtube.com/watch?v=lMBVwYrmFZQ">
+    Colt Steele's practical crash course on recursion, perfect for interview preparation.
+  </Card>
+  <Card title="What on Earth is Recursion?" icon="video" href="https://www.youtube.com/watch?v=Mv9NEXX1VHc">
+    Computerphile explains recursion from a computer science perspective with great conceptual depth.
+  </Card>
+</CardGroup>

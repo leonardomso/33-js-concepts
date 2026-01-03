@@ -1,0 +1,951 @@
+---
+title: "Higher-Order Functions: Functions That Use Functions in JavaScript"
+sidebarTitle: "Higher-Order Functions: Functions That Use Functions"
+description: "Learn higher-order functions in JavaScript. Understand functions that accept or return other functions, create reusable abstractions, and write cleaner code."
+---
+
+What if you could tell a function *how* to do something, not just *what* data to work with? What if you could pass behavior itself as an argument, just like you pass numbers or strings?
+
+```javascript
+// Without higher-order functions: repetitive code
+for (let i = 0; i < 3; i++) {
+  console.log(i)
+}
+
+// With higher-order functions: reusable abstraction
+function repeat(times, action) {
+  for (let i = 0; i < times; i++) {
+    action(i)
+  }
+}
+
+repeat(3, console.log)           // 0, 1, 2
+repeat(3, i => console.log(i * 2))  // 0, 2, 4
+```
+
+This is the power of **higher-order functions**. They let you write functions that are flexible, reusable, and abstract. Instead of writing the same loop over and over with slightly different logic, you write one function and pass in the logic that changes.
+
+<Info>
+**What you'll learn in this guide:**
+- What makes a function "higher-order"
+- The connection between first-class functions and HOFs
+- How to create functions that accept other functions
+- How to create functions that return other functions (function factories)
+- How closures enable higher-order functions
+- Common mistakes and how to avoid them
+- When and why to use higher-order functions
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [scope and closures](/concepts/scope-and-closures). Closures are created when higher-order functions return other functions. You should also be familiar with [callbacks](/concepts/callbacks), since callbacks are the functions being passed to higher-order functions.
+</Warning>
+
+---
+
+## What is a Higher-Order Function?
+
+A **higher-order function** is a function that does at least one of these two things:
+
+1. **Accepts one or more functions as arguments**
+2. **Returns a function as its result**
+
+That's it. If a function takes a function or returns a function, it's higher-order.
+
+```javascript
+// 1. Accepts a function as an argument
+function doTwice(action) {
+  action()
+  action()
+}
+
+doTwice(() => console.log('Hello!'))
+// Hello!
+// Hello!
+
+// 2. Returns a function as its result
+function createGreeter(greeting) {
+  return function(name) {
+    return `${greeting}, ${name}!`
+  }
+}
+
+const sayHello = createGreeter('Hello')
+console.log(sayHello('Alice'))  // Hello, Alice!
+console.log(sayHello('Bob'))    // Hello, Bob!
+```
+
+<Tip>
+**The name "higher-order"** comes from mathematics, where functions that operate on other functions are considered to be at a "higher level" of abstraction. In JavaScript, we just call them higher-order functions, or HOFs for short.
+</Tip>
+
+### Why Does This Matter?
+
+Higher-order functions let you:
+
+- **Avoid repetition**: Write the structure once, vary the behavior
+- **Create abstractions**: Hide complexity behind simple interfaces  
+- **Build reusable utilities**: Functions that work with any logic you pass them
+- **Compose functionality**: Combine simple functions into complex ones
+
+Without higher-order functions, you'd repeat the same patterns over and over. With them, you write flexible code that adapts to different needs.
+
+---
+
+## The Pea Soup Analogy
+
+To understand why higher-order functions matter, let's look at an analogy from *Eloquent JavaScript*.
+
+Compare these two recipes for pea soup:
+
+**Recipe 1 (Low-level instructions):**
+
+> Put 1 cup of dried peas per person into a container. Add water until the peas are well covered. Leave the peas in water for at least 12 hours. Take the peas out of the water and put them in a cooking pan. Add 4 cups of water per person. Cover the pan and keep the peas simmering for two hours. Take half an onion per person. Cut it into pieces with a knife. Add it to the peas...
+
+**Recipe 2 (Higher-level instructions):**
+
+> Per person: 1 cup dried split peas, 4 cups of water, half a chopped onion, a stalk of celery, and a carrot.
+> 
+> Soak peas for 12 hours. Simmer for 2 hours. Chop and add vegetables. Cook for 10 more minutes.
+
+The second recipe is shorter and easier to understand. But it requires you to know what "soak", "simmer", and "chop" mean. These are **abstractions**. They hide the step-by-step details behind meaningful names.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         LEVELS OF ABSTRACTION                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   HIGH LEVEL (What you want)                                             │
+│   ┌───────────────────────────────────────────────────────────────┐     │
+│   │  "Calculate the area for each radius"                          │     │
+│   │                                                                 │     │
+│   │   radii.map(calculateArea)                                      │     │
+│   └───────────────────────────────────────────────────────────────┘     │
+│                              │                                           │
+│                              ▼                                           │
+│   MEDIUM LEVEL (How to iterate)                                          │
+│   ┌───────────────────────────────────────────────────────────────┐     │
+│   │  function map(array, transform) {                              │     │
+│   │    const result = []                                            │     │
+│   │    for (const item of array) {                                  │     │
+│   │      result.push(transform(item))                               │     │
+│   │    }                                                            │     │
+│   │    return result                                                │     │
+│   │  }                                                              │     │
+│   └───────────────────────────────────────────────────────────────┘     │
+│                              │                                           │
+│                              ▼                                           │
+│   LOW LEVEL (Step by step)                                               │
+│   ┌───────────────────────────────────────────────────────────────┐     │
+│   │  const result = []                                              │     │
+│   │  for (let i = 0; i < radii.length; i++) {                       │     │
+│   │    const radius = radii[i]                                      │     │
+│   │    const area = Math.PI * radius * radius                       │     │
+│   │    result.push(area)                                            │     │
+│   │  }                                                              │     │
+│   └───────────────────────────────────────────────────────────────┘     │
+│                                                                          │
+│   Higher-order functions let you work at the level that makes sense     │
+│   for your problem, hiding the mechanical details below.                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Higher-order functions are how we create these abstractions in JavaScript. We package up common patterns (like "do something to each item") into reusable functions, then pass in the specific behavior we need.
+
+---
+
+## First-Class Functions: The Foundation
+
+Higher-order functions are possible because JavaScript has **[first-class functions](https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function)**. This means functions are treated like any other value. You can:
+
+### 1. Assign Functions to Variables
+
+```javascript
+// Functions are values, just like numbers or strings
+const greet = function(name) {
+  return `Hello, ${name}!`
+}
+
+// Arrow functions work the same way
+const add = (a, b) => a + b
+
+console.log(greet('Alice'))  // Hello, Alice!
+console.log(add(2, 3))       // 5
+```
+
+### 2. Pass Functions as Arguments
+
+```javascript
+function callTwice(fn) {
+  fn()
+  fn()
+}
+
+callTwice(function() {
+  console.log('This runs twice!')
+})
+// This runs twice!
+// This runs twice!
+```
+
+### 3. Return Functions from Functions
+
+```javascript
+function createMultiplier(multiplier) {
+  // This returned function "remembers" the multiplier
+  return function(number) {
+    return number * multiplier
+  }
+}
+
+const double = createMultiplier(2)
+const triple = createMultiplier(3)
+
+console.log(double(5))   // 10
+console.log(triple(5))   // 15
+```
+
+<Note>
+**Not all languages have first-class functions.** In languages like C, you can't easily pass functions around as values. Java added lambda expressions in version 8, but they work differently than JavaScript functions. JavaScript's first-class functions make functional programming patterns natural and powerful.
+</Note>
+
+---
+
+## Higher-Order Functions That Accept Functions
+
+The most common type of HOF accepts a function as an argument. You pass in *what* should happen, and the HOF handles *when* and *how* it happens.
+
+### Example: A Reusable `repeat` Function
+
+Instead of writing loops everywhere, create a function that handles the looping:
+
+```javascript
+function repeat(times, action) {
+  for (let i = 0; i < times; i++) {
+    action(i)
+  }
+}
+
+// Now you can reuse this for any repeated action
+repeat(3, i => console.log(`Iteration ${i}`))
+// Iteration 0
+// Iteration 1
+// Iteration 2
+
+repeat(5, i => console.log('*'.repeat(i + 1)))
+// *
+// **
+// ***
+// ****
+// *****
+```
+
+The `repeat` function doesn't know or care what action you want to perform. It just knows how to repeat something. You provide the "something."
+
+### Example: A Flexible `calculate` Function
+
+Suppose you need to calculate different properties of circles:
+
+```javascript
+// Without HOF: repetitive code
+function calculateAreas(radii) {
+  const result = []
+  for (let i = 0; i < radii.length; i++) {
+    result.push(Math.PI * radii[i] * radii[i])
+  }
+  return result
+}
+
+function calculateCircumferences(radii) {
+  const result = []
+  for (let i = 0; i < radii.length; i++) {
+    result.push(2 * Math.PI * radii[i])
+  }
+  return result
+}
+
+function calculateDiameters(radii) {
+  const result = []
+  for (let i = 0; i < radii.length; i++) {
+    result.push(2 * radii[i])
+  }
+  return result
+}
+```
+
+That's a lot of repetition! The only thing that changes is the formula. Let's use a higher-order function:
+
+```javascript
+// With HOF: write the loop once, pass in the logic
+function calculate(radii, formula) {
+  const result = []
+  for (const radius of radii) {
+    result.push(formula(radius))
+  }
+  return result
+}
+
+// Define the specific logic separately
+const area = r => Math.PI * r * r
+const circumference = r => 2 * Math.PI * r
+const diameter = r => 2 * r
+
+const radii = [1, 2, 3]
+
+console.log(calculate(radii, area))
+// [3.14159..., 12.56637..., 28.27433...]
+
+console.log(calculate(radii, circumference))
+// [6.28318..., 12.56637..., 18.84955...]
+
+console.log(calculate(radii, diameter))
+// [2, 4, 6]
+```
+
+Now adding a new calculation is easy. Just write a new formula function:
+
+```javascript
+// Works for any formula that takes a radius!
+const squaredRadius = r => r * r
+console.log(calculate(radii, squaredRadius))  // [1, 4, 9]
+```
+
+### Example: An `unless` Function
+
+You can create new control flow abstractions:
+
+```javascript
+function unless(condition, action) {
+  if (!condition) {
+    action()
+  }
+}
+
+// Use it to express "do this unless that"
+repeat(5, n => {
+  unless(n % 2 === 1, () => {
+    console.log(n, 'is even')
+  })
+})
+// 0 is even
+// 2 is even
+// 4 is even
+```
+
+This reads almost like English: "Unless n is odd, log that it's even."
+
+---
+
+## Higher-Order Functions That Return Functions
+
+The second type of HOF returns a function. This is powerful because the returned function can "remember" values from when it was created.
+
+### Example: The `greaterThan` Factory
+
+```javascript
+function greaterThan(n) {
+  return function(m) {
+    return m > n
+  }
+}
+
+const greaterThan10 = greaterThan(10)
+const greaterThan100 = greaterThan(100)
+
+console.log(greaterThan10(11))   // true
+console.log(greaterThan10(5))    // false
+console.log(greaterThan100(50))  // false
+console.log(greaterThan100(150)) // true
+```
+
+`greaterThan` is a **function factory**. You give it a number, and it manufactures a new function that tests if other numbers are greater than that number.
+
+### Example: The `multiplier` Factory
+
+```javascript
+function multiplier(factor) {
+  return number => number * factor
+}
+
+const double = multiplier(2)
+const triple = multiplier(3)
+const tenX = multiplier(10)
+
+console.log(double(5))   // 10
+console.log(triple(5))   // 15
+console.log(tenX(5))     // 50
+
+// You can use the factory directly too
+console.log(multiplier(7)(3))  // 21
+```
+
+### Example: A `noisy` Wrapper
+
+Higher-order functions can wrap other functions to add behavior:
+
+```javascript
+function noisy(fn) {
+  return function(...args) {
+    console.log('Calling with arguments:', args)
+    const result = fn(...args)
+    console.log('Returned:', result)
+    return result
+  }
+}
+
+const noisyMax = noisy(Math.max)
+
+noisyMax(3, 1, 4, 1, 5)
+// Calling with arguments: [3, 1, 4, 1, 5]
+// Returned: 5
+
+const noisyFloor = noisy(Math.floor)
+
+noisyFloor(4.7)
+// Calling with arguments: [4.7]
+// Returned: 4
+```
+
+The original functions (`Math.max`, `Math.floor`) are unchanged. We've created new functions that log their inputs and outputs, wrapping the original behavior.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         THE WRAPPER PATTERN                              │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   Original Function                  Wrapped Function                    │
+│   ┌─────────────────┐               ┌─────────────────────────────────┐ │
+│   │                 │               │  1. Log the arguments           │ │
+│   │   Math.max      │    noisy()    │  2. Call Math.max               │ │
+│   │                 │   ────────►   │  3. Log the result              │ │
+│   │ (3,1,4,1,5) → 5 │               │  4. Return the result           │ │
+│   │                 │               │                                  │ │
+│   └─────────────────┘               └─────────────────────────────────┘ │
+│                                                                          │
+│   The wrapper adds behavior before and after, without changing           │
+│   the original function. This is the "decorator" pattern.                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Function Factories in Practice
+
+Function factories are functions that create and return other functions. They're useful when you need many similar functions that differ only in some configuration.
+
+### Example: Creating Validators
+
+```javascript
+function createValidator(min, max) {
+  return function(value) {
+    return value >= min && value <= max
+  }
+}
+
+const isValidAge = createValidator(0, 120)
+const isValidPercentage = createValidator(0, 100)
+const isValidRating = createValidator(1, 5)
+
+console.log(isValidAge(25))         // true
+console.log(isValidAge(150))        // false
+console.log(isValidPercentage(50))  // true
+console.log(isValidPercentage(101)) // false
+console.log(isValidRating(3))       // true
+```
+
+### Example: Creating Formatters
+
+```javascript
+function createFormatter(prefix, suffix) {
+  return function(value) {
+    return `${prefix}${value}${suffix}`
+  }
+}
+
+const formatDollars = createFormatter('$', '')
+const formatPercent = createFormatter('', '%')
+const formatParens = createFormatter('(', ')')
+
+console.log(formatDollars(99.99))   // $99.99
+console.log(formatPercent(75))      // 75%
+console.log(formatParens('aside'))  // (aside)
+```
+
+### Example: Pre-filling Arguments (Partial Application)
+
+```javascript
+function partial(fn, ...presetArgs) {
+  return function(...laterArgs) {
+    return fn(...presetArgs, ...laterArgs)
+  }
+}
+
+function greet(greeting, punctuation, name) {
+  return `${greeting}, ${name}${punctuation}`
+}
+
+const sayHello = partial(greet, 'Hello', '!')
+const askHowAreYou = partial(greet, 'How are you', '?')
+
+console.log(sayHello('Alice'))       // Hello, Alice!
+console.log(sayHello('Bob'))         // Hello, Bob!
+console.log(askHowAreYou('Charlie')) // How are you, Charlie?
+```
+
+---
+
+## The Closure Connection
+
+Higher-order functions that return functions rely on **[closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures)**. When a function is created inside another function, it "closes over" the variables in its surrounding scope, remembering them even after the outer function has finished.
+
+```javascript
+function createCounter(start = 0) {
+  let count = start  // This variable is "enclosed"
+  
+  return function() {
+    count++          // The inner function can access and modify it
+    return count
+  }
+}
+
+const counter1 = createCounter()
+const counter2 = createCounter(100)
+
+console.log(counter1())  // 1
+console.log(counter1())  // 2
+console.log(counter1())  // 3
+
+console.log(counter2())  // 101
+console.log(counter2())  // 102
+
+// Each counter has its own private count variable
+console.log(counter1())  // 4 (not affected by counter2)
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      HOW CLOSURES WORK WITH HOFs                         │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   createCounter(0)                  createCounter(100)                   │
+│   ┌─────────────────────┐           ┌─────────────────────┐             │
+│   │  count = 0          │           │  count = 100        │             │
+│   │                     │           │                     │             │
+│   │  ┌───────────────┐  │           │  ┌───────────────┐  │             │
+│   │  │ function() {  │  │           │  │ function() {  │  │             │
+│   │  │   count++     │◄─┼───────┐   │  │   count++     │◄─┼───────┐     │
+│   │  │   return count│  │       │   │  │   return count│  │       │     │
+│   │  │ }             │  │       │   │  │ }             │  │       │     │
+│   │  └───────────────┘  │       │   │  └───────────────┘  │       │     │
+│   └─────────────────────┘       │   └─────────────────────┘       │     │
+│              │                  │              │                  │     │
+│              ▼                  │              ▼                  │     │
+│         counter1 ───────────────┘         counter2 ───────────────┘     │
+│                                                                          │
+│   Each returned function has its own "backpack" containing the           │
+│   variables from when it was created. This is a closure.                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Private Variables Through Closures
+
+This pattern creates truly private variables. Nothing outside can access `count` directly:
+
+```javascript
+function createBankAccount(initialBalance) {
+  let balance = initialBalance  // Private variable
+  
+  return {
+    deposit(amount) {
+      if (amount > 0) {
+        balance += amount
+        return balance
+      }
+    },
+    withdraw(amount) {
+      if (amount > 0 && amount <= balance) {
+        balance -= amount
+        return balance
+      }
+      return 'Insufficient funds'
+    },
+    getBalance() {
+      return balance
+    }
+  }
+}
+
+const account = createBankAccount(100)
+console.log(account.getBalance())   // 100
+console.log(account.deposit(50))    // 150
+console.log(account.withdraw(30))   // 120
+
+// Can't access balance directly
+console.log(account.balance)        // undefined
+```
+
+---
+
+## Built-in Higher-Order Functions
+
+JavaScript provides many built-in higher-order functions, especially for working with arrays. These are covered in depth in the [Map, Reduce, and Filter](/concepts/map-reduce-filter) guide, but here's a quick overview:
+
+| Method | What it does | Returns |
+|--------|--------------|---------|
+| [`forEach(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach) | Calls `fn` on each element | `undefined` |
+| [`map(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map) | Transforms each element with `fn` | New array |
+| [`filter(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter) | Keeps elements where `fn` returns `true` | New array |
+| [`reduce(fn, init)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) | Accumulates elements into single value | Single value |
+| [`find(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find) | Returns first element where `fn` returns `true` | Element or `undefined` |
+| [`some(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some) | Tests if any element passes `fn` | `boolean` |
+| [`every(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every) | Tests if all elements pass `fn` | `boolean` |
+| [`sort(fn)`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort) | Sorts elements using comparator `fn` | Sorted array (mutates!) |
+
+```javascript
+const numbers = [1, 2, 3, 4, 5]
+
+// All of these accept a function as an argument
+numbers.forEach(n => console.log(n))         // Logs each number
+numbers.map(n => n * 2)                      // [2, 4, 6, 8, 10]
+numbers.filter(n => n > 2)                   // [3, 4, 5]
+numbers.reduce((sum, n) => sum + n, 0)       // 15
+numbers.find(n => n > 3)                     // 4
+numbers.some(n => n > 4)                     // true
+numbers.every(n => n > 0)                    // true
+```
+
+<Note>
+For a deep dive into these methods with practical examples, see [Map, Reduce, and Filter](/concepts/map-reduce-filter).
+</Note>
+
+---
+
+## Common Mistakes
+
+### 1. Forgetting to Return in Arrow Functions
+
+When using curly braces in arrow functions, you must explicitly `return`:
+
+```javascript
+// ❌ WRONG - implicit return only works without braces
+const double = numbers.map(n => {
+  n * 2  // This doesn't return anything!
+})
+console.log(double)  // [undefined, undefined, undefined, ...]
+
+// ✓ CORRECT - explicit return with braces
+const double = numbers.map(n => {
+  return n * 2
+})
+
+// ✓ CORRECT - implicit return without braces
+const double = numbers.map(n => n * 2)
+```
+
+### 2. Losing `this` Context
+
+When passing methods as callbacks, `this` may not be what you expect:
+
+```javascript
+const user = {
+  name: 'Alice',
+  greet() {
+    console.log(`Hello, I'm ${this.name}`)
+  }
+}
+
+// ❌ WRONG - 'this' is lost
+setTimeout(user.greet, 1000)  // "Hello, I'm undefined"
+
+// ✓ CORRECT - bind the context
+setTimeout(user.greet.bind(user), 1000)  // "Hello, I'm Alice"
+
+// ✓ CORRECT - use an arrow function wrapper
+setTimeout(() => user.greet(), 1000)  // "Hello, I'm Alice"
+```
+
+### 3. The `parseInt` Gotcha with `map`
+
+`map` passes three arguments to its callback: `(element, index, array)`. Some functions don't expect this:
+
+```javascript
+// ❌ WRONG - parseInt receives (string, index) and uses index as radix
+['1', '2', '3'].map(parseInt)  // [1, NaN, NaN]
+
+// Why? map calls:
+// parseInt('1', 0)  → 1 (radix 0 is treated as 10)
+// parseInt('2', 1)  → NaN (radix 1 is invalid)
+// parseInt('3', 2)  → NaN (3 is not valid in binary)
+
+// ✓ CORRECT - wrap parseInt to only pass the string
+['1', '2', '3'].map(str => parseInt(str, 10))  // [1, 2, 3]
+
+// ✓ CORRECT - use Number instead
+['1', '2', '3'].map(Number)  // [1, 2, 3]
+```
+
+### 4. Using Higher-Order Functions When a Simple Loop is Clearer
+
+Don't force HOFs when a simple loop would be clearer:
+
+```javascript
+// Sometimes this is clearer...
+let sum = 0
+for (const n of numbers) {
+  sum += n
+}
+
+// ...than this (for simple cases)
+const sum = numbers.reduce((acc, n) => acc + n, 0)
+```
+
+Use HOFs when they make the code more readable, not just to seem clever.
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **A higher-order function** accepts functions as arguments OR returns a function. If it does either, it's higher-order.
+
+2. **First-class functions** make HOFs possible. In JavaScript, functions are values you can assign, pass, and return.
+
+3. **HOFs that accept functions** let you parameterize behavior. Write the structure once, pass in what varies.
+
+4. **HOFs that return functions** create function factories. They "manufacture" specialized functions from a template.
+
+5. **Closures are the key** to functions returning functions. The returned function remembers variables from when it was created.
+
+6. **Built-in array methods** like `map`, `filter`, `reduce`, `forEach`, `find`, `some`, and `every` are all higher-order functions.
+
+7. **The abstraction benefit** is huge. HOFs let you work at the right level of abstraction, hiding mechanical details.
+
+8. **Watch out for common gotchas** like losing `this`, forgetting to return, and unexpected arguments like with `parseInt`.
+
+9. **Don't overuse HOFs**. Sometimes a simple loop is clearer. Use HOFs when they make code more readable, not less.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What makes a function 'higher-order'?">
+    **Answer:**
+    
+    A function is higher-order if it does at least one of these two things:
+    
+    1. Accepts one or more functions as arguments
+    2. Returns a function as its result
+    
+    ```javascript
+    // Accepts a function
+    function doTwice(fn) {
+      fn()
+      fn()
+    }
+    
+    // Returns a function
+    function multiplier(factor) {
+      return n => n * factor
+    }
+    
+    // Does both!
+    function compose(f, g) {
+      return x => f(g(x))
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="What's the relationship between callbacks and higher-order functions?">
+    **Answer:**
+    
+    They're two sides of the same coin:
+    
+    - A **callback** is a function passed to another function to be executed later
+    - A **higher-order function** is a function that accepts (or returns) other functions
+    
+    When you pass a callback to a higher-order function, the HOF decides when to call it.
+    
+    ```javascript
+    // setTimeout is a higher-order function
+    // The arrow function is the callback
+    setTimeout(() => console.log('Done!'), 1000)
+    
+    // map is a higher-order function
+    // n => n * 2 is the callback
+    [1, 2, 3].map(n => n * 2)
+    ```
+  </Accordion>
+  
+  <Accordion title="Why does ['1','2','3'].map(parseInt) return [1, NaN, NaN]?">
+    **Answer:**
+    
+    `map` passes three arguments to its callback: `(element, index, array)`. 
+    
+    `parseInt` accepts two arguments: `(string, radix)`. So `map` accidentally passes the index as the radix:
+    
+    ```javascript
+    // What map actually calls:
+    parseInt('1', 0)  // 1 (radix 0 → default base 10)
+    parseInt('2', 1)  // NaN (radix 1 is invalid)
+    parseInt('3', 2)  // NaN (3 is not valid binary)
+    ```
+    
+    The fix is to wrap `parseInt`:
+    
+    ```javascript
+    ['1', '2', '3'].map(str => parseInt(str, 10))  // [1, 2, 3]
+    // or
+    ['1', '2', '3'].map(Number)  // [1, 2, 3]
+    ```
+  </Accordion>
+  
+  <Accordion title="How do closures enable function factories?">
+    **Answer:**
+    
+    When a function returns another function, the inner function "closes over" variables from the outer function's scope. It remembers them even after the outer function has finished.
+    
+    ```javascript
+    function createMultiplier(factor) {
+      // 'factor' is captured by the returned function
+      return function(number) {
+        return number * factor
+      }
+    }
+    
+    const double = createMultiplier(2)  // factor = 2 is remembered
+    const triple = createMultiplier(3)  // factor = 3 is remembered
+    
+    console.log(double(5))  // 10 (uses factor = 2)
+    console.log(triple(5))  // 15 (uses factor = 3)
+    ```
+    
+    Each returned function has its own closure with its own `factor` value.
+  </Accordion>
+  
+  <Accordion title="When should you NOT use higher-order functions?">
+    **Answer:**
+    
+    Avoid HOFs when:
+    
+    1. **A simple loop is clearer** for your specific case
+    2. **Performance is critical** (loops can be faster for simple operations)
+    3. **The abstraction adds more complexity** than it removes
+    4. **You're chaining too many operations** making debugging hard
+    
+    ```javascript
+    // Sometimes this is perfectly fine:
+    let sum = 0
+    for (const n of numbers) {
+      sum += n
+    }
+    
+    // Don't force this just to use HOFs:
+    const sum = numbers.reduce((acc, n) => acc + n, 0)
+    ```
+    
+    The goal is readable, maintainable code. Use whatever achieves that.
+  </Accordion>
+  
+  <Accordion title="What's the difference between map() and forEach()?">
+    **Answer:**
+    
+    | Aspect | `map()` | `forEach()` |
+    |--------|---------|-------------|
+    | Returns | New array with transformed elements | `undefined` |
+    | Purpose | Transform data | Perform side effects |
+    | Chainable | Yes | No |
+    | Use when | You need the result | You just want to do something |
+    
+    ```javascript
+    const numbers = [1, 2, 3]
+    
+    // map: transforms and returns new array
+    const doubled = numbers.map(n => n * 2)
+    console.log(doubled)  // [2, 4, 6]
+    
+    // forEach: just executes, returns undefined
+    const result = numbers.forEach(n => console.log(n))
+    console.log(result)  // undefined
+    ```
+    
+    Use `map` when you need the transformed array. Use `forEach` when you just want to do something with each element (like logging or updating external state).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Callbacks" icon="phone" href="/concepts/callbacks">
+    Callbacks are functions passed to higher-order functions
+  </Card>
+  <Card title="Map, Reduce, Filter" icon="filter" href="/concepts/map-reduce-filter">
+    The most common built-in higher-order functions
+  </Card>
+  <Card title="Pure Functions" icon="sparkles" href="/concepts/pure-functions">
+    HOFs work best when combined with pure functions
+  </Card>
+  <Card title="Currying & Composition" icon="layer-group" href="/concepts/currying-composition">
+    Advanced patterns built on top of higher-order functions
+  </Card>
+  <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
+    Closures are what make functions returning functions work
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="First-class Function — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function">
+    The foundation that makes higher-order functions possible
+  </Card>
+  <Card title="Closures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">
+    Essential for understanding functions that return functions
+  </Card>
+  <Card title="Array Methods — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">
+    Reference for built-in higher-order array methods
+  </Card>
+  <Card title="Functions — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">
+    Complete guide to JavaScript functions
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Eloquent JavaScript, Chapter 5" icon="book" href="https://eloquentjavascript.net/05_higher_order.html">
+    The pea soup analogy and abstraction concepts come from this excellent free book. Includes exercises to practice HOF concepts.
+  </Card>
+  <Card title="Higher Order Functions in JavaScript — freeCodeCamp" icon="newspaper" href="https://www.freecodecamp.org/news/higher-order-functions-in-javascript-explained/">
+    Practical examples with shopping carts and user data. Great step-by-step explanations of map, filter, and reduce.
+  </Card>
+  <Card title="JavaScript Array Methods — javascript.info" icon="newspaper" href="https://javascript.info/array-methods">
+    Comprehensive coverage of all array HOF methods with interactive examples and exercises.
+  </Card>
+  <Card title="Understanding Higher-Order Functions — Sukhjinder Arora" icon="newspaper" href="https://blog.bitsrc.io/understanding-higher-order-functions-in-javascript-75461803bad">
+    Clear explanations with practical examples showing how to create custom higher-order functions.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Higher Order Functions — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=BMUiFMZr7vk">
+    Part of the legendary "Functional Programming in JavaScript" series. MPJ's engaging teaching style makes HOFs click.
+  </Card>
+  <Card title="Higher-Order Functions ft. Functional Programming — Akshay Saini" icon="video" href="https://www.youtube.com/watch?v=HkWxvB1RJq0">
+    Deep dive into HOFs with the calculate function example. Popular in the JavaScript community for its clear explanations.
+  </Card>
+  <Card title="JavaScript Higher Order Functions & Arrays — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=rRgD1yVwIvE">
+    Practical, project-based approach to understanding map, filter, reduce, and other array HOFs.
+  </Card>
+</CardGroup>

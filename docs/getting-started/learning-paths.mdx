@@ -1,0 +1,239 @@
+---
+title: "JavaScript Learning Paths: Beginner to Advanced"
+sidebarTitle: "Learning Paths"
+description: "Find the right JavaScript learning path for your level. Structured guides for beginners, intermediate developers, and technical interview preparation."
+---
+
+## Choose Your Path
+
+Not everyone starts from the same place. Choose a learning path that matches your experience and goals.
+
+<Tabs>
+  <Tab title="Beginner">
+    **For:** Complete beginners or those new to JavaScript
+    
+    **Time:** 4-8 weeks at a comfortable pace
+    
+    Start here if you're new to programming or just starting with JavaScript.
+  </Tab>
+  <Tab title="Intermediate">
+    **For:** Developers with some JavaScript experience
+    
+    **Time:** 2-4 weeks
+    
+    Choose this if you can write basic JavaScript but want to understand it more deeply.
+  </Tab>
+  <Tab title="Interview Prep">
+    **For:** Preparing for technical interviews
+    
+    **Time:** 1-2 weeks (review mode)
+    
+    Focus on concepts commonly asked in JavaScript interviews.
+  </Tab>
+</Tabs>
+
+---
+
+## Beginner Path
+
+If you're new to JavaScript, follow this order. Each concept builds on the previous ones.
+
+<Steps>
+  <Step title="Week 1-2: The Fundamentals">
+    Start with the building blocks of JavaScript.
+    
+    1. [Primitive Types](/concepts/primitive-types) - What types of data exist in JavaScript?
+    2. [Value vs Reference Types](/concepts/value-reference-types) - How is data stored and copied?
+    3. [Type Coercion](/concepts/type-coercion) - How JavaScript converts between types
+    4. [Equality Operators](/concepts/equality-operators) - The difference between == and ===
+  </Step>
+  
+  <Step title="Week 3-4: Scope and Functions">
+    Understand how JavaScript organizes and executes code.
+    
+    5. [Scope and Closures](/concepts/scope-and-closures) - Where variables are accessible
+    6. [Call Stack](/concepts/call-stack) - How JavaScript tracks function calls
+    7. [Event Loop](/concepts/event-loop) - How async code works
+  </Step>
+  
+  <Step title="Week 5-6: Working with Data">
+    Learn to transform and manipulate data.
+    
+    8. [Higher-Order Functions](/concepts/higher-order-functions) - Functions that work with functions
+    9. [map, reduce, filter](/concepts/map-reduce-filter) - Essential array methods
+    10. [Pure Functions](/concepts/pure-functions) - Writing predictable code
+  </Step>
+  
+  <Step title="Week 7-8: Async JavaScript">
+    Handle operations that take time.
+    
+    11. [Callbacks](/concepts/callbacks) - The original async pattern
+    12. [Promises](/concepts/promises) - Modern async handling
+    13. [async/await](/concepts/async-await) - Clean async syntax
+  </Step>
+</Steps>
+
+<Info>
+**Take your time.** There's no rush. If a concept doesn't click, spend more time on it before moving on. Revisit the resources, try different explanations, and practice with code.
+</Info>
+
+---
+
+## Intermediate Path
+
+You know JavaScript basics. Now deepen your understanding with these concepts:
+
+<Steps>
+  <Step title="How JavaScript Works">
+    Understand what's happening under the hood.
+    
+    1. [Call Stack](/concepts/call-stack) - How function execution is tracked
+    2. [Event Loop](/concepts/event-loop) - The concurrency model
+    3. [JavaScript Engines](/concepts/javascript-engines) - V8 and how code runs
+  </Step>
+  
+  <Step title="Object-Oriented JavaScript">
+    Master objects and prototypes.
+    
+    4. [this, call, apply, bind](/concepts/this-call-apply-bind) - Context binding
+    5. [Object Creation and Prototypes](/concepts/object-creation-prototypes) - The prototype chain
+    6. [Factories and Classes](/concepts/factories-classes) - Object creation patterns
+    7. [Inheritance and Polymorphism](/concepts/inheritance-polymorphism) - OOP in JavaScript
+  </Step>
+  
+  <Step title="Functional Programming">
+    Write cleaner, more predictable code.
+    
+    8. [Pure Functions](/concepts/pure-functions) - Side-effect free functions
+    9. [Higher-Order Functions](/concepts/higher-order-functions) - Functions as values
+    10. [Currying and Composition](/concepts/currying-composition) - Advanced patterns
+    11. [Recursion](/concepts/recursion) - Functions that call themselves
+  </Step>
+  
+  <Step title="Advanced Patterns">
+    Level up your code quality.
+    
+    12. [Design Patterns](/concepts/design-patterns) - Proven solutions
+    13. [Error Handling](/concepts/error-handling) - Graceful failure
+    14. [Clean Code](/concepts/clean-code) - Writing maintainable code
+  </Step>
+</Steps>
+
+---
+
+## Interview Prep Path
+
+Technical interviews often focus on these concepts. Make sure you can explain them clearly and write code examples.
+
+### Must-Know Concepts
+
+These come up in almost every JavaScript interview:
+
+| Concept | Why It's Asked | Key Things to Know |
+|---------|---------------|-------------------|
+| [Closures](/concepts/scope-and-closures) | Tests fundamental understanding | How inner functions access outer variables |
+| [this keyword](/concepts/this-call-apply-bind) | Common source of bugs | The four binding rules |
+| [Promises](/concepts/promises) | Essential for async code | Chaining, error handling, Promise.all |
+| [Event Loop](/concepts/event-loop) | Shows deep understanding | Call stack, task queue, microtasks |
+| [Prototypes](/concepts/object-creation-prototypes) | JavaScript's inheritance | Prototype chain, Object.create |
+
+### Common Interview Questions by Topic
+
+<AccordionGroup>
+  <Accordion title="Scope and Closures">
+    - What is a closure? Give an example.
+    - What's the difference between `var`, `let`, and `const`?
+    - Explain lexical scope.
+    - What is hoisting?
+    
+    **Study:** [Scope and Closures](/concepts/scope-and-closures)
+  </Accordion>
+  
+  <Accordion title="this Keyword">
+    - What are the rules for `this` binding?
+    - What's the difference between `call`, `apply`, and `bind`?
+    - How does `this` work in arrow functions?
+    - What's the output of [tricky this code]?
+    
+    **Study:** [this, call, apply, bind](/concepts/this-call-apply-bind)
+  </Accordion>
+  
+  <Accordion title="Async JavaScript">
+    - What's the difference between callbacks, promises, and async/await?
+    - How does the event loop work?
+    - What are microtasks vs macrotasks?
+    - How do you handle errors in async code?
+    
+    **Study:** [Promises](/concepts/promises), [async/await](/concepts/async-await), [Event Loop](/concepts/event-loop)
+  </Accordion>
+  
+  <Accordion title="Objects and Prototypes">
+    - How does prototypal inheritance work?
+    - What's the difference between classical and prototypal inheritance?
+    - Explain `Object.create()`.
+    - What's the prototype chain?
+    
+    **Study:** [Object Creation and Prototypes](/concepts/object-creation-prototypes)
+  </Accordion>
+  
+  <Accordion title="Data Structures and Algorithms">
+    - Implement common array methods (map, filter, reduce).
+    - What's the time complexity of [operation]?
+    - When would you use a Map vs an Object?
+    
+    **Study:** [Data Structures](/concepts/data-structures), [Algorithms and Big O](/concepts/algorithms-big-o)
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+**Practice explaining out loud.** In interviews, you need to articulate your thinking. Practice explaining each concept as if you're teaching someone else.
+</Tip>
+
+---
+
+## Topic-Based Paths
+
+Want to focus on a specific area? Here are paths organized by topic:
+
+### Async Mastery
+
+1. [Callbacks](/concepts/callbacks)
+2. [Promises](/concepts/promises)
+3. [async/await](/concepts/async-await)
+4. [Event Loop](/concepts/event-loop)
+5. [Generators and Iterators](/concepts/generators-iterators)
+
+### Object-Oriented JavaScript
+
+1. [Factories and Classes](/concepts/factories-classes)
+2. [this, call, apply, bind](/concepts/this-call-apply-bind)
+3. [Object Creation and Prototypes](/concepts/object-creation-prototypes)
+4. [Inheritance and Polymorphism](/concepts/inheritance-polymorphism)
+
+### Functional Programming
+
+1. [Pure Functions](/concepts/pure-functions)
+2. [Higher-Order Functions](/concepts/higher-order-functions)
+3. [map, reduce, filter](/concepts/map-reduce-filter)
+4. [Recursion](/concepts/recursion)
+5. [Currying and Composition](/concepts/currying-composition)
+
+### Web Development
+
+1. [DOM](/concepts/dom)
+2. [HTTP and Fetch](/concepts/http-fetch)
+3. [Web Workers](/concepts/web-workers)
+4. [ES Modules](/concepts/es-modules)
+
+---
+
+## Start Learning
+
+<CardGroup cols={2}>
+  <Card title="Primitive Types" icon="play" href="/concepts/primitive-types">
+    Begin with the first concept
+  </Card>
+  <Card title="All Concepts" icon="list" href="/getting-started/about">
+    See the full list of 33 concepts
+  </Card>
+</CardGroup>

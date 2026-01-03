@@ -1,0 +1,1351 @@
+---
+title: "Currying & Composition: Functional Patterns in JavaScript"
+sidebarTitle: "Currying & Composition: Functional Patterns"
+description: "Learn currying and function composition in JavaScript. Build reusable functions from simple pieces using curry, compose, and pipe for cleaner, modular code."
+---
+
+How does `add(1)(2)(3)` even work? Why do libraries like [Lodash](https://lodash.com/) and [Ramda](https://ramdajs.com/) let you call functions in multiple ways? And what if you could build complex data transformations by snapping together tiny, single-purpose functions like LEGO blocks?
+
+```javascript
+// Currying: one argument at a time
+const add = a => b => c => a + b + c
+add(1)(2)(3)  // 6
+
+// Composition: chain functions together
+const process = pipe(
+  getName,
+  trim,
+  capitalize
+)
+process({ name: "  alice  " })  // "Alice"
+```
+
+These two techniques, **currying** and **function composition**, are core to functional programming. They let you write smaller, more reusable functions and combine them into powerful pipelines. Once you understand them, you'll see opportunities to simplify your code everywhere.
+
+<Info>
+**What you'll learn in this guide:**
+- What currying is and how `add(1)(2)(3)` actually works
+- The difference between currying and partial application (they're not the same!)
+- How to implement your own `curry()` helper function
+- What function composition is and why it matters
+- How to build `compose()` and `pipe()` from scratch
+- Why currying and composition work so well together
+- When to use libraries like Lodash vs vanilla JavaScript
+- Real-world patterns used in production codebases
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [closures](/concepts/scope-and-closures) and [higher-order functions](/concepts/higher-order-functions). Currying depends entirely on closures to work, and both currying and composition involve functions that return functions.
+</Warning>
+
+---
+
+## What is Currying?
+
+**Currying** is a transformation that converts a function with multiple arguments into a sequence of functions, each taking a single argument. It's named after mathematician Haskell Curry.
+
+Instead of calling `add(1, 2, 3)` with all arguments at once, a curried version lets you call `add(1)(2)(3)`, providing one argument at a time. Each call returns a new function waiting for the next argument.
+
+```javascript
+// Regular function: takes all arguments at once
+function add(a, b, c) {
+  return a + b + c
+}
+add(1, 2, 3)  // 6
+
+// Curried function: takes one argument at a time
+function curriedAdd(a) {
+  return function(b) {
+    return function(c) {
+      return a + b + c
+    }
+  }
+}
+curriedAdd(1)(2)(3)  // 6
+```
+
+With arrow functions, curried functions become beautifully concise:
+
+```javascript
+const add = a => b => c => a + b + c
+add(1)(2)(3)  // 6
+```
+
+<Tip>
+**Key insight:** Currying doesn't call the function. It transforms it. The original logic only runs when ALL arguments have been provided.
+</Tip>
+
+---
+
+## The Pizza Restaurant Analogy
+
+Imagine you're at a build-your-own pizza restaurant. Instead of shouting your entire order at once ("Large thin-crust pepperoni pizza!"), you go through a series of stations:
+
+1. **Size station:** "What size?" → "Large" → You get a ticket for a large pizza
+2. **Crust station:** "What crust?" → "Thin" → Your ticket now says large thin-crust
+3. **Toppings station:** "What toppings?" → "Pepperoni" → Your pizza is made!
+
+Each station remembers your previous choices and waits for just one more piece of information.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE PIZZA RESTAURANT ANALOGY                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   orderPizza(size)(crust)(toppings)                                      │
+│                                                                          │
+│   ┌───────────────┐     ┌───────────────┐     ┌───────────────┐          │
+│   │  SIZE STATION │     │ CRUST STATION │     │TOPPING STATION│          │
+│   │               │     │               │     │               │          │
+│   │ "What size?"  │ ──► │ "What crust?" │ ──► │  "Toppings?"  │ ──► 🍕   │
+│   │   "Large"     │     │    "Thin"     │     │  "Pepperoni"  │          │
+│   │               │     │               │     │               │          │
+│   └───────────────┘     └───────────────┘     └───────────────┘          │
+│          │                     │                     │                   │
+│          ▼                     ▼                     ▼                   │
+│   Returns function       Returns function      Returns the               │
+│   that remembers         that remembers        final pizza!              │
+│   size="Large"           size + crust                                    │
+│                                                                          │
+│   Each station REMEMBERS your previous choices using closures!           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Here's that pizza order in code:
+
+```javascript
+const orderPizza = size => crust => topping => {
+  return `${size} ${crust}-crust ${topping} pizza`
+}
+
+// Full order at once
+orderPizza("Large")("Thin")("Pepperoni")
+// "Large Thin-crust Pepperoni pizza"
+
+// Or step by step
+const largeOrder = orderPizza("Large")           // Remembers size
+const largeThinOrder = largeOrder("Thin")        // Remembers size + crust
+const myPizza = largeThinOrder("Pepperoni")      // Final pizza!
+// "Large Thin-crust Pepperoni pizza"
+
+// Create reusable "order templates"
+const orderLarge = orderPizza("Large")
+const orderLargeThin = orderLarge("Thin")
+
+orderLargeThin("Mushroom")   // "Large Thin-crust Mushroom pizza"
+orderLargeThin("Hawaiian")   // "Large Thin-crust Hawaiian pizza"
+```
+
+The magic is that each intermediate function "remembers" the arguments from previous calls. That's [closures](/concepts/scope-and-closures) at work!
+
+---
+
+## How Currying Works Step by Step
+
+Let's trace through exactly what happens when you call a curried function:
+
+```javascript
+const add = a => b => c => a + b + c
+
+// Step 1: Call add(1)
+const step1 = add(1)
+// Returns: b => c => 1 + b + c
+// The value 1 is "closed over" - remembered by the returned function
+
+// Step 2: Call step1(2)  
+const step2 = step1(2)
+// Returns: c => 1 + 2 + c
+// Now both 1 and 2 are remembered
+
+// Step 3: Call step2(3)
+const result = step2(3)
+// Returns: 1 + 2 + 3 = 6
+// All arguments collected, computation happens!
+
+console.log(result)  // 6
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     HOW CURRYING EXECUTES                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   add(1)(2)(3)                                                           │
+│                                                                          │
+│   ┌─────────────────────────────────────────────────────────────────┐    │
+│   │ add(1)                                                          │    │
+│   │   a = 1                                                         │    │
+│   │   Returns: b => c => 1 + b + c                                  │    │
+│   └──────────────────────────────┬──────────────────────────────────┘    │
+│                                  │                                       │
+│                                  ▼                                       │
+│   ┌─────────────────────────────────────────────────────────────────┐    │
+│   │ (2)  ← called on returned function                              │    │
+│   │   b = 2, a = 1 (from closure)                                   │    │
+│   │   Returns: c => 1 + 2 + c                                       │    │
+│   └──────────────────────────────┬──────────────────────────────────┘    │
+│                                  │                                       │
+│                                  ▼                                       │
+│   ┌─────────────────────────────────────────────────────────────────┐    │
+│   │ (3)  ← called on returned function                              │    │
+│   │   c = 3, b = 2, a = 1 (all from closures)                       │    │
+│   │   Returns: 1 + 2 + 3 = 6                                        │    │
+│   └─────────────────────────────────────────────────────────────────┘    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### The Closure Connection
+
+Currying depends entirely on [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to work. Each nested function "closes over" the arguments from its parent function, keeping them alive even after the parent returns.
+
+```javascript
+const multiply = a => b => a * b
+
+const double = multiply(2)  // 'a' is now 2, locked in by closure
+const triple = multiply(3)  // Different closure, 'a' is 3
+
+double(5)   // 10 (2 * 5)
+triple(5)   // 15 (3 * 5)
+double(10)  // 20 (2 * 10)
+
+// 'double' and 'triple' each have their own closure
+// with their own remembered value of 'a'
+```
+
+---
+
+## Implementing a Curry Helper
+
+Writing curried functions manually works, but it's tedious for functions with many parameters. Let's build a `curry()` helper that transforms any function automatically.
+
+### Basic Curry (Two Arguments)
+
+```javascript
+function curry(fn) {
+  return function(a) {
+    return function(b) {
+      return fn(a, b)
+    }
+  }
+}
+
+// Usage
+const add = (a, b) => a + b
+const curriedAdd = curry(add)
+
+curriedAdd(1)(2)  // 3
+```
+
+### Advanced Curry (Any Number of Arguments)
+
+This version handles functions with any number of arguments and supports calling with multiple arguments at once. It uses [`fn.length`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/length) to know how many arguments the original function expects:
+
+```javascript
+function curry(fn) {
+  return function curried(...args) {
+    // If we have enough arguments, call the original function
+    if (args.length >= fn.length) {
+      return fn.apply(this, args)
+    }
+    
+    // Otherwise, return a function that collects more arguments
+    return function(...nextArgs) {
+      return curried.apply(this, args.concat(nextArgs))
+    }
+  }
+}
+```
+
+Let's break down how this works:
+
+```javascript
+function sum(a, b, c) {
+  return a + b + c
+}
+
+const curriedSum = curry(sum)
+
+// All these work:
+curriedSum(1, 2, 3)     // 6 - called normally
+curriedSum(1)(2)(3)     // 6 - fully curried
+curriedSum(1, 2)(3)     // 6 - mixed
+curriedSum(1)(2, 3)     // 6 - mixed
+```
+
+<Accordion title="Step-by-step trace of curry(sum)(1)(2)(3)">
+```javascript
+// Initial call: curry(sum)
+// fn = sum, fn.length = 3
+// Returns the 'curried' function
+
+// Call: curriedSum(1)
+// args = [1], args.length (1) < fn.length (3)
+// Returns a new function that remembers [1]
+
+// Call: (previousResult)(2)
+// args = [1, 2], args.length (2) < fn.length (3)  
+// Returns a new function that remembers [1, 2]
+
+// Call: (previousResult)(3)
+// args = [1, 2, 3], args.length (3) >= fn.length (3)
+// Calls sum(1, 2, 3) and returns 6
+```
+</Accordion>
+
+### ES6 Concise Version
+
+For those who love one-liners:
+
+```javascript
+const curry = fn => 
+  function curried(...args) {
+    return args.length >= fn.length
+      ? fn(...args)
+      : (...next) => curried(...args, ...next)
+  }
+```
+
+<Warning>
+**Limitation:** The `fn.length` property doesn't count [rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters) or parameters with [default values](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters):
+
+```javascript
+function withRest(...args) {}     // length is 0
+function withDefault(a, b = 2) {} // length is 1
+
+// Curry won't work correctly with these!
+// You'd need to specify arity manually:
+// curry(fn, expectedArgCount)
+```
+</Warning>
+
+---
+
+## Currying vs Partial Application
+
+These terms are often confused, but they're different techniques:
+
+| Aspect | Currying | Partial Application |
+|--------|----------|---------------------|
+| Arguments per call | Always **one** | Any number |
+| What it returns | Chain of unary functions | Single function with some args fixed |
+| Transformation | Structural (changes function shape) | Creates specialized version |
+
+### Currying Example
+
+Currying always produces functions that take exactly one argument:
+
+```javascript
+// Curried: each call takes ONE argument
+const add = a => b => c => a + b + c
+
+add(1)       // Returns: b => c => 1 + b + c
+add(1)(2)    // Returns: c => 1 + 2 + c  
+add(1)(2)(3) // Returns: 6
+```
+
+### Partial Application Example
+
+Partial application fixes some arguments upfront, and the resulting function takes all remaining arguments at once:
+
+```javascript
+// Partial application helper
+function partial(fn, ...presetArgs) {
+  return function(...laterArgs) {
+    return fn(...presetArgs, ...laterArgs)
+  }
+}
+
+function greet(greeting, punctuation, name) {
+  return `${greeting}, ${name}${punctuation}`
+}
+
+// Fix the first two arguments
+const greetExcitedly = partial(greet, "Hello", "!")
+
+greetExcitedly("Alice")  // "Hello, Alice!"
+greetExcitedly("Bob")    // "Hello, Bob!"
+
+// The returned function takes remaining args TOGETHER, not one at a time
+```
+
+### Visual Comparison
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│              CURRYING VS PARTIAL APPLICATION                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   Original: greet(greeting, punctuation, name)                           │
+│                                                                          │
+│   CURRYING:                                                              │
+│   ─────────                                                              │
+│   curriedGreet("Hello")("!")("Alice")                                    │
+│        │           │         │                                           │
+│        ▼           ▼         ▼                                           │
+│   [1 arg]  →  [1 arg]  →  [1 arg]  →  result                             │
+│                                                                          │
+│   PARTIAL APPLICATION:                                                   │
+│   ────────────────────                                                   │
+│   partial(greet, "Hello", "!")("Alice")                                  │
+│        │                         │                                       │
+│        ▼                         ▼                                       │
+│   [2 args fixed]       →    [1 arg]    →  result                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Tip>
+**When to use which?**
+- **Currying:** When you want maximum flexibility in how arguments are provided
+- **Partial Application:** When you want to create specialized versions of functions with some arguments preset
+</Tip>
+
+---
+
+## Real-World Currying Patterns
+
+Currying isn't just a theoretical concept. Here are patterns you'll see in production code:
+
+### 1. Configurable Logging
+
+```javascript
+// Curried logger factory
+const createLogger = level => timestamp => message => {
+  const time = timestamp ? new Date().toISOString() : ''
+  console.log(`[${level}]${time ? ' ' + time : ''} ${message}`)
+}
+
+// Create specialized loggers
+const info = createLogger('INFO')(true)
+const debug = createLogger('DEBUG')(true)
+const error = createLogger('ERROR')(true)
+
+// Use them
+info('Application started')     // [INFO] 2024-01-15T10:30:00.000Z Application started
+debug('Processing request')     // [DEBUG] 2024-01-15T10:30:00.000Z Processing request
+error('Connection failed')      // [ERROR] 2024-01-15T10:30:00.000Z Connection failed
+
+// Logger without timestamp for development
+const quickLog = createLogger('LOG')(false)
+quickLog('Quick debug message')  // [LOG] Quick debug message
+```
+
+### 2. API Client Factory
+
+```javascript
+const createApiClient = baseUrl => endpoint => options => {
+  return fetch(`${baseUrl}${endpoint}`, options)
+    .then(res => res.json())
+}
+
+// Create clients for different APIs
+const githubApi = createApiClient('https://api.github.com')
+const myApi = createApiClient('https://api.myapp.com')
+
+// Create endpoint-specific fetchers
+const getGithubUser = githubApi('/users')
+const getMyAppUsers = myApi('/users')
+
+// Use them
+getGithubUser({ method: 'GET' })
+  .then(users => console.log(users))
+```
+
+### 3. Event Handler Configuration
+
+```javascript
+const handleEvent = eventType => element => callback => {
+  element.addEventListener(eventType, callback)
+  
+  // Return cleanup function
+  return () => element.removeEventListener(eventType, callback)
+}
+
+// Create specialized handlers
+const onClick = handleEvent('click')
+const onHover = handleEvent('mouseenter')
+
+// Attach to elements
+const button = document.querySelector('#myButton')
+const removeClick = onClick(button)(() => console.log('Clicked!'))
+
+// Later: cleanup
+removeClick()
+```
+
+### 4. Validation Functions
+
+```javascript
+const isGreaterThan = min => value => value > min
+const isLessThan = max => value => value < max
+const hasLength = length => str => str.length === length
+
+// Create specific validators
+const isAdult = isGreaterThan(17)
+const isValidAge = isLessThan(120)
+const isValidZipCode = hasLength(5)
+
+// Use with array methods
+const ages = [15, 22, 45, 8, 67]
+const adults = ages.filter(isAdult)  // [22, 45, 67]
+
+const zipCodes = ['12345', '1234', '123456', '54321']
+const validZips = zipCodes.filter(isValidZipCode)  // ['12345', '54321']
+```
+
+### 5. Discount Calculator
+
+```javascript
+const applyDiscount = discountPercent => price => {
+  return price * (1 - discountPercent / 100)
+}
+
+const tenPercentOff = applyDiscount(10)
+const twentyPercentOff = applyDiscount(20)
+const blackFridayDeal = applyDiscount(50)
+
+tenPercentOff(100)      // 90
+twentyPercentOff(100)   // 80
+blackFridayDeal(100)    // 50
+
+// Apply to multiple items
+const prices = [100, 200, 50, 75]
+const discountedPrices = prices.map(tenPercentOff)  // [90, 180, 45, 67.5]
+```
+
+---
+
+## What is Function Composition?
+
+**Function composition** is the process of combining two or more functions to produce a new function. The output of one function becomes the input of the next.
+
+In mathematics, composition is written as `(f ∘ g)(x) = f(g(x))`. In code, we read this as "f after g" or "first apply g, then apply f to the result."
+
+```javascript
+// Individual functions
+const add10 = x => x + 10
+const multiply2 = x => x * 2
+const subtract5 = x => x - 5
+
+// Manual composition (nested calls)
+const result = subtract5(multiply2(add10(5)))
+// Step by step: 5 → 15 → 30 → 25
+
+// With a compose function
+const composed = compose(subtract5, multiply2, add10)
+composed(5)  // 25
+```
+
+Why compose instead of nesting? Because this:
+
+```javascript
+addGreeting(capitalize(trim(getName(user))))
+```
+
+Becomes this:
+
+```javascript
+const processUser = compose(
+  addGreeting,
+  capitalize,
+  trim,
+  getName
+)
+processUser(user)
+```
+
+Much easier to read, modify, and test!
+
+---
+
+## The Assembly Line Analogy
+
+Think of function composition like a factory assembly line. Raw materials enter one end, pass through a series of stations, and a finished product comes out the other end.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE ASSEMBLY LINE ANALOGY                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   RAW INPUT ──► [Station A] ──► [Station B] ──► [Station C] ──► OUTPUT   │
+│                                                                          │
+│   pipe(stationA, stationB, stationC)(rawInput)                           │
+│                                                                          │
+│   ─────────────────────────────────────────────────────────────────────  │
+│                                                                          │
+│   Example: Transform user data                                           │
+│                                                                          │
+│   { name: "  ALICE  " }                                                  │
+│         │                                                                │
+│         ▼                                                                │
+│   ┌─────────────┐                                                        │
+│   │  getName    │  →  "  ALICE  "                                        │
+│   └─────────────┘                                                        │
+│         │                                                                │
+│         ▼                                                                │
+│   ┌─────────────┐                                                        │
+│   │    trim     │  →  "ALICE"                                            │
+│   └─────────────┘                                                        │
+│         │                                                                │
+│         ▼                                                                │
+│   ┌─────────────┐                                                        │
+│   │ toLowerCase │  →  "alice"                                            │
+│   └─────────────┘                                                        │
+│         │                                                                │
+│         ▼                                                                │
+│   Final output: "alice"                                                  │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Each station:
+1. Takes input from the previous station
+2. Does ONE specific transformation
+3. Passes output to the next station
+
+This is exactly how composed functions work!
+
+---
+
+## compose() and pipe()
+
+There are two ways to compose functions, differing only in direction:
+
+| Function | Direction | Reads like... |
+|----------|-----------|---------------|
+| `compose(f, g, h)` | Right to left | Math: `f(g(h(x)))` |
+| `pipe(f, g, h)` | Left to right | A recipe: "first f, then g, then h" |
+
+### Implementing pipe()
+
+`pipe` flows left-to-right, which many developers find more intuitive. It uses [`reduce()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) to chain functions together:
+
+```javascript
+const pipe = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x)
+```
+
+Let's trace through it:
+
+```javascript
+const getName = obj => obj.name
+const toUpperCase = str => str.toUpperCase()
+const addExclaim = str => str + '!'
+
+const shout = pipe(getName, toUpperCase, addExclaim)
+
+shout({ name: 'alice' })
+
+// reduce trace:
+// Initial: x = { name: 'alice' }
+// Step 1: getName({ name: 'alice' }) → 'alice'
+// Step 2: toUpperCase('alice') → 'ALICE'
+// Step 3: addExclaim('ALICE') → 'ALICE!'
+// Result: 'ALICE!'
+```
+
+### Implementing compose()
+
+`compose` flows right-to-left, matching mathematical notation. It uses [`reduceRight()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight) instead:
+
+```javascript
+const compose = (...fns) => x => fns.reduceRight((acc, fn) => fn(acc), x)
+```
+
+```javascript
+// compose processes right-to-left
+const shout = compose(addExclaim, toUpperCase, getName)
+shout({ name: 'alice' })  // 'ALICE!'
+
+// This is equivalent to:
+addExclaim(toUpperCase(getName({ name: 'alice' })))
+```
+
+### Which Should You Use?
+
+```javascript
+// These produce the same result:
+pipe(a, b, c)(x)      // a first, then b, then c
+compose(c, b, a)(x)   // Same! c(b(a(x)))
+```
+
+Most developers prefer `pipe` because:
+1. It reads left-to-right like English
+2. Functions are listed in execution order
+3. It's easier to follow the data flow
+
+```javascript
+// pipe: reads in order of execution
+const processUser = pipe(
+  validateInput,    // First
+  sanitizeData,     // Second
+  saveToDatabase,   // Third
+  sendNotification  // Fourth
+)
+
+// compose: reads in reverse order
+const processUser = compose(
+  sendNotification, // Fourth (but listed first)
+  saveToDatabase,   // Third
+  sanitizeData,     // Second
+  validateInput     // First (but listed last)
+)
+```
+
+---
+
+## Building Data Pipelines
+
+Composition really shines when building data transformation pipelines:
+
+```javascript
+const pipe = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x)
+
+// Individual transformation functions
+const removeSpaces = str => str.trim()
+const toLowerCase = str => str.toLowerCase()
+const splitWords = str => str.split(' ')
+const capitalizeFirst = words => words.map((w, i) => 
+  i === 0 ? w : w[0].toUpperCase() + w.slice(1)
+)
+const joinWords = words => words.join('')
+
+// Compose them into a pipeline
+const toCamelCase = pipe(
+  removeSpaces,
+  toLowerCase,
+  splitWords,
+  capitalizeFirst,
+  joinWords
+)
+
+toCamelCase('  HELLO WORLD  ')  // 'helloWorld'
+toCamelCase('my variable name') // 'myVariableName'
+```
+
+### Real-World Pipeline: Processing API Data
+
+```javascript
+// Transform API response into display format
+const processApiResponse = pipe(
+  // Extract data from response
+  response => response.data,
+  
+  // Filter active users only
+  users => users.filter(u => u.isActive),
+  
+  // Sort by name
+  users => users.sort((a, b) => a.name.localeCompare(b.name)),
+  
+  // Transform to display format
+  users => users.map(u => ({
+    id: u.id,
+    displayName: `${u.firstName} ${u.lastName}`,
+    email: u.email
+  })),
+  
+  // Take first 10
+  users => users.slice(0, 10)
+)
+
+// Use it
+fetch('/api/users')
+  .then(res => res.json())
+  .then(processApiResponse)
+  .then(users => renderUserList(users))
+```
+
+---
+
+## Why Currying and Composition Work Together
+
+Currying and composition are natural partners. Here's why:
+
+### The Problem: Functions with Multiple Arguments
+
+Composition works best with functions that take a single argument and return a single value. But many useful functions need multiple arguments:
+
+```javascript
+const add = (a, b) => a + b
+const multiply = (a, b) => a * b
+
+// This doesn't work!
+const addThenMultiply = pipe(add, multiply)
+addThenMultiply(1, 2)  // NaN - multiply receives one value, not two
+```
+
+### The Solution: Currying
+
+Currying converts multi-argument functions into chains of single-argument functions, making them perfect for composition:
+
+```javascript
+// Curried versions
+const add = a => b => a + b
+const multiply = a => b => a * b
+
+// Now we can compose!
+const add5 = add(5)         // x => 5 + x
+const double = multiply(2)  // x => 2 * x
+
+const add5ThenDouble = pipe(add5, double)
+add5ThenDouble(10)  // (10 + 5) * 2 = 30
+```
+
+### Data-Last Parameter Order
+
+For composition to work smoothly, the **data** should be the **last** parameter. This is called "data-last" design:
+
+```javascript
+// ❌ Data-first (hard to compose)
+const map = (array, fn) => array.map(fn)
+const filter = (array, fn) => array.filter(fn)
+
+// ✓ Data-last (easy to compose)
+const map = fn => array => array.map(fn)
+const filter = fn => array => array.filter(fn)
+
+// Now they compose beautifully
+const double = x => x * 2
+const isEven = x => x % 2 === 0
+
+const doubleEvens = pipe(
+  filter(isEven),
+  map(double)
+)
+
+doubleEvens([1, 2, 3, 4, 5, 6])  // [4, 8, 12]
+```
+
+### Point-Free Style
+
+When currying and composition combine, you can write code without explicitly mentioning the data being processed. This is called **point-free** style:
+
+```javascript
+// With explicit data parameter (pointed style)
+const processNumbers = numbers => {
+  return numbers
+    .filter(x => x > 0)
+    .map(x => x * 2)
+    .reduce((sum, x) => sum + x, 0)
+}
+
+// Point-free style (no explicit 'numbers' parameter)
+const isPositive = x => x > 0
+const double = x => x * 2
+const sum = (a, b) => a + b
+
+const processNumbers = pipe(
+  filter(isPositive),
+  map(double),
+  reduce(sum, 0)
+)
+
+// Both do the same thing:
+processNumbers([1, -2, 3, -4, 5])  // 18
+```
+
+Point-free code focuses on the transformations, not the data. It's often more declarative and easier to reason about.
+
+---
+
+## Lodash, Ramda, and Vanilla JavaScript
+
+Libraries like [Lodash](https://lodash.com/) and [Ramda](https://ramdajs.com/) are popular because they provide battle-tested implementations of currying, composition, and many other utilities.
+
+### Why Use a Library?
+
+Libraries offer features our simple implementations lack:
+
+```javascript
+import _ from 'lodash'
+
+// 1. Placeholder support
+const greet = _.curry((greeting, name) => `${greeting}, ${name}!`)
+greet(_.__, 'Alice')('Hello')  // "Hello, Alice!"
+// The __ placeholder lets you skip arguments
+
+// 2. Works with variadic functions  
+const sum = _.curry((...nums) => nums.reduce((a, b) => a + b, 0), 3)
+sum(1)(2)(3)  // 6
+
+// 3. Auto-curried utility functions
+_.map(x => x * 2)([1, 2, 3])  // [2, 4, 6]
+// Lodash/fp provides auto-curried, data-last versions
+```
+
+### Ramda: Built for Composition
+
+[Ramda](https://ramdajs.com/) is designed from the ground up for functional programming:
+
+```javascript
+import * as R from 'ramda'
+
+// All functions are auto-curried
+R.add(1)(2)  // 3
+R.add(1, 2)  // 3
+
+// Data-last by default
+R.map(x => x * 2, [1, 2, 3])      // [2, 4, 6]
+R.map(x => x * 2)([1, 2, 3])      // [2, 4, 6]
+
+// Built-in compose and pipe
+const processUser = R.pipe(
+  R.prop('name'),
+  R.trim,
+  R.toLower
+)
+
+processUser({ name: '  ALICE  ' })  // 'alice'
+```
+
+### Lodash/fp: Functional Lodash
+
+Lodash provides a functional programming variant:
+
+```javascript
+import fp from 'lodash/fp'
+
+// Auto-curried, data-last
+const getAdultNames = fp.pipe(
+  fp.filter(user => user.age >= 18),
+  fp.map(fp.get('name')),
+  fp.sortBy(fp.identity)
+)
+
+const users = [
+  { name: 'Charlie', age: 25 },
+  { name: 'Alice', age: 17 },
+  { name: 'Bob', age: 30 }
+]
+
+getAdultNames(users)  // ['Bob', 'Charlie']
+```
+
+### Vanilla JavaScript Alternatives
+
+You don't always need a library. Here are vanilla implementations for common patterns:
+
+```javascript
+// Curry
+const curry = fn => {
+  return function curried(...args) {
+    return args.length >= fn.length
+      ? fn(...args)
+      : (...next) => curried(...args, ...next)
+  }
+}
+
+// Pipe and Compose
+const pipe = (...fns) => x => fns.reduce((acc, fn) => fn(acc), x)
+const compose = (...fns) => x => fns.reduceRight((acc, fn) => fn(acc), x)
+
+// Partial Application
+const partial = (fn, ...presetArgs) => (...laterArgs) => fn(...presetArgs, ...laterArgs)
+
+// Data-last map and filter
+const map = fn => arr => arr.map(fn)
+const filter = fn => arr => arr.filter(fn)
+const reduce = (fn, initial) => arr => arr.reduce(fn, initial)
+```
+
+### When to Use What?
+
+| Situation | Recommendation |
+|-----------|----------------|
+| Learning/small project | Vanilla JS implementations |
+| Already using Lodash | Use `lodash/fp` for functional code |
+| Heavy functional programming | Consider Ramda |
+| Bundle size matters | Vanilla JS or tree-shakeable imports |
+| Team familiarity | Match existing codebase patterns |
+
+---
+
+## Common Currying Mistakes
+
+### Mistake #1: Forgetting Curried Functions Return Functions
+
+```javascript
+const add = a => b => a + b
+
+// ❌ Wrong: Forgot the second call
+const result = add(1)
+console.log(result)  // [Function] - not a number!
+
+// ✓ Correct
+const result = add(1)(2)
+console.log(result)  // 3
+```
+
+### Mistake #2: Wrong Argument Order
+
+For composition to work, data should come last:
+
+```javascript
+// ❌ Data-first: hard to compose
+const multiply = (value, factor) => value * factor
+
+// ✓ Data-last: composes well
+const multiply = factor => value => value * factor
+
+const double = multiply(2)
+const triple = multiply(3)
+
+pipe(double, triple)(5)  // 30
+```
+
+### Mistake #3: Currying Functions with Rest Parameters
+
+```javascript
+function sum(...nums) {
+  return nums.reduce((a, b) => a + b, 0)
+}
+
+console.log(sum.length)  // 0 - rest parameters have length 0!
+
+// Our curry won't work correctly
+const curriedSum = curry(sum)
+curriedSum(1)(2)(3)  // Calls immediately with just 1!
+```
+
+**Solution:** Specify arity explicitly:
+
+```javascript
+const curryN = (fn, arity) => {
+  return function curried(...args) {
+    return args.length >= arity
+      ? fn(...args)
+      : (...next) => curried(...args, ...next)
+  }
+}
+
+const curriedSum = curryN(sum, 3)
+curriedSum(1)(2)(3)  // 6
+```
+
+---
+
+## Common Composition Mistakes
+
+### Mistake #1: Type Mismatches in Pipeline
+
+Each function's output must match the next function's expected input:
+
+```javascript
+const getName = obj => obj.name       // Returns string
+const getLength = arr => arr.length   // Expects array!
+
+// ❌ Broken pipeline
+const broken = pipe(getName, getLength)
+broken({ name: 'Alice' })  // 5 (works by accident - string has .length)
+
+// But what if getName returns something without .length?
+const getAge = obj => obj.age  // Returns number
+const getLength = arr => arr.length
+
+const reallyBroken = pipe(getAge, getLength)
+reallyBroken({ age: 25 })  // undefined - numbers don't have .length
+```
+
+### Mistake #2: Side Effects in Pipelines
+
+Composed functions should be [pure](/concepts/pure-functions). Side effects make pipelines unpredictable:
+
+```javascript
+// ❌ Side effect in pipeline
+let globalCounter = 0
+const addAndCount = x => {
+  globalCounter++  // Side effect!
+  return x + 1
+}
+
+// This is unpredictable - depends on global state
+const process = pipe(addAndCount, addAndCount)
+```
+
+### Mistake #3: Over-Composing
+
+Sometimes explicit code is clearer than a point-free pipeline:
+
+```javascript
+// ❌ Too clever - hard to understand
+const processUser = pipe(
+  prop('account'),
+  prop('settings'),
+  prop('preferences'),
+  prop('theme'),
+  defaultTo('light'),
+  eq('dark'),
+  ifElse(identity, always('🌙'), always('☀️'))
+)
+
+// ✓ Clearer
+function getThemeEmoji(user) {
+  const theme = user?.account?.settings?.preferences?.theme ?? 'light'
+  return theme === 'dark' ? '🌙' : '☀️'
+}
+```
+
+<Tip>
+**Rule of thumb:** Use composition when it makes code clearer, not just shorter. If a colleague would struggle to understand your pipeline, consider a more explicit approach.
+</Tip>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Currying transforms `f(a, b, c)` into `f(a)(b)(c)`** — each call takes one argument and returns a function waiting for the next
+
+2. **Currying depends on closures** — each nested function "closes over" arguments from parent functions, remembering them
+
+3. **Currying ≠ Partial Application** — currying always produces unary functions; partial application fixes some args and takes the rest together
+
+4. **Function composition combines simple functions into complex ones** — output of one becomes input of the next
+
+5. **`pipe()` flows left-to-right, `compose()` flows right-to-left** — most developers prefer pipe because it reads in execution order
+
+6. **Currying enables composition** — curried functions take one input and return one output, perfect for chaining
+
+7. **"Data-last" ordering is essential** — put the data parameter last so curried functions compose naturally
+
+8. **Point-free style focuses on transformations** — no explicit data parameters, just a chain of operations
+
+9. **Libraries like Lodash/Ramda add powerful features** — placeholders, auto-currying, and battle-tested utilities
+
+10. **Vanilla JS implementations work for most cases** — `curry`, `pipe`, and `compose` are just a few lines each
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between currying and partial application?">
+    **Answer:**
+    
+    **Currying** transforms a function so that it takes arguments one at a time, returning a new function after each argument until all are received.
+    
+    **Partial application** fixes some arguments upfront and returns a function that takes the remaining arguments together.
+    
+    ```javascript
+    // Currying: one argument at a time
+    const curriedAdd = a => b => c => a + b + c
+    curriedAdd(1)(2)(3)  // 6
+    
+    // Partial application: fix some args, take rest together
+    const add = (a, b, c) => a + b + c
+    const partial = (fn, ...preset) => (...rest) => fn(...preset, ...rest)
+    const add1 = partial(add, 1)
+    add1(2, 3)  // 6 - takes remaining args at once
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Implement a simple curry function">
+    **Answer:**
+    
+    ```javascript
+    function curry(fn) {
+      return function curried(...args) {
+        if (args.length >= fn.length) {
+          return fn(...args)
+        }
+        return (...nextArgs) => curried(...args, ...nextArgs)
+      }
+    }
+    
+    // Usage
+    const add = (a, b, c) => a + b + c
+    const curriedAdd = curry(add)
+    
+    curriedAdd(1)(2)(3)   // 6
+    curriedAdd(1, 2)(3)   // 6
+    curriedAdd(1)(2, 3)   // 6
+    curriedAdd(1, 2, 3)   // 6
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What's the difference between compose() and pipe()?">
+    **Answer:**
+    
+    Both combine functions, but in opposite directions:
+    
+    - **`pipe(f, g, h)(x)`** — Left to right: `h(g(f(x)))`
+    - **`compose(f, g, h)(x)`** — Right to left: `f(g(h(x)))`
+    
+    ```javascript
+    const add1 = x => x + 1
+    const double = x => x * 2
+    const square = x => x * x
+    
+    // pipe: add1 first, then double, then square
+    pipe(add1, double, square)(3)     // ((3+1)*2)² = 64
+    
+    // compose: square first, then double, then add1
+    compose(add1, double, square)(3)  // (3²*2)+1 = 19
+    ```
+    
+    Most developers prefer `pipe` because functions are listed in execution order.
+  </Accordion>
+  
+  <Accordion title="Question 4: Why do currying and composition work well together?">
+    **Answer:**
+    
+    Composition works best with functions that take one input and return one output. Currying transforms multi-argument functions into chains of single-argument functions, making them perfect for composition.
+    
+    ```javascript
+    // Without currying - can't compose
+    const add = (a, b) => a + b
+    const multiply = (a, b) => a * b
+    // How would you pipe these?
+    
+    // With currying - composes naturally
+    const add = a => b => a + b
+    const multiply = a => b => a * b
+    
+    const add5 = add(5)
+    const double = multiply(2)
+    
+    const add5ThenDouble = pipe(add5, double)
+    add5ThenDouble(10)  // 30
+    ```
+    
+    The key is "data-last" ordering: configure the function first, pass data last.
+  </Accordion>
+  
+  <Accordion title="Question 5: Implement sum(1)(2)(3)...(n)() that returns the total">
+    **Answer:**
+    
+    This is a classic interview question. The trick is to return a function that can be called with more arguments OR returns the sum when called with no arguments:
+    
+    ```javascript
+    function sum(a) {
+      return function next(b) {
+        if (b === undefined) {
+          return a  // No more arguments, return sum
+        }
+        return sum(a + b)  // More arguments, keep accumulating
+      }
+    }
+    
+    sum(1)(2)(3)()        // 6
+    sum(1)(2)(3)(4)(5)()  // 15
+    sum(10)()             // 10
+    ```
+    
+    Alternative using `valueOf` for implicit conversion:
+    
+    ```javascript
+    function sum(a) {
+      const fn = b => sum(a + b)
+      fn.valueOf = () => a
+      return fn
+    }
+    
+    +sum(1)(2)(3)  // 6 (unary + triggers valueOf)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: What is 'point-free' style?">
+    **Answer:**
+    
+    Point-free style (also called "tacit programming") is writing functions without explicitly mentioning their arguments. Instead of defining what to do with data, you compose operations.
+    
+    ```javascript
+    // Pointed style (explicit argument)
+    const getUpperName = user => user.name.toUpperCase()
+    
+    // Point-free style (no explicit argument)
+    const getUpperName = pipe(
+      prop('name'),
+      toUpperCase
+    )
+    
+    // Another example
+    // Pointed:
+    const doubleAll = numbers => numbers.map(x => x * 2)
+    
+    // Point-free:
+    const doubleAll = map(x => x * 2)
+    ```
+    
+    Point-free code focuses on the transformations rather than the data being transformed. It's often more declarative and can be easier to reason about, but can also be harder to read if overused.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
+    Currying depends on closures to remember arguments between calls
+  </Card>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    Functions that return functions are the foundation of currying
+  </Card>
+  <Card title="Pure Functions" icon="sparkles" href="/concepts/pure-functions">
+    Composed pipelines work best with pure, side-effect-free functions
+  </Card>
+  <Card title="Map, Reduce, Filter" icon="filter" href="/concepts/map-reduce-filter">
+    Array methods that compose beautifully when curried
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Functions — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Functions">
+    Complete guide to JavaScript functions, the building blocks of currying and composition
+  </Card>
+  <Card title="Closures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">
+    Understanding closures is essential for understanding how currying preserves arguments
+  </Card>
+  <Card title="Array.prototype.reduce() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce">
+    The reduce method powers our compose and pipe implementations
+  </Card>
+  <Card title="Array.prototype.reduceRight() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight">
+    Used in compose to process functions from right to left
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Currying — javascript.info" icon="newspaper" href="https://javascript.info/currying-partials">
+    The definitive tutorial on currying with clear examples and an advanced curry implementation. Includes a practical logging example that shows real-world benefits.
+  </Card>
+  <Card title="A Quick Introduction to pipe() and compose()" icon="newspaper" href="https://www.freecodecamp.org/news/pipe-and-compose-in-javascript-5b04004ac937/">
+    Step-by-step debugger walkthrough showing exactly how pipe and compose work internally. The visual traces make the concept click.
+  </Card>
+  <Card title="Curry and Function Composition — Eric Elliott" icon="newspaper" href="https://medium.com/javascript-scene/curry-and-function-composition-2c208d774983">
+    Part of the "Composing Software" series. Comprehensive coverage of how currying enables composition, with trace utilities for debugging pipelines.
+  </Card>
+  <Card title="Functional-Light JavaScript: Chapter 3 — Kyle Simpson" icon="newspaper" href="https://github.com/getify/Functional-Light-JS/blob/master/manuscript/ch3.md">
+    Free online chapter covering function inputs, currying, and partial application in depth. Kyle Simpson explains the nuances between currying and partial application better than almost anyone.
+  </Card>
+  <Card title="Composing Software: The Book — Eric Elliott" icon="newspaper" href="https://medium.com/javascript-scene/composing-software-the-book-f31c77fc3ddc">
+    Index to the complete "Composing Software" series covering functional programming, composition, functors, and more in JavaScript.
+  </Card>
+  <Card title="A Gentle Introduction to Functional JavaScript — James Sinclair" icon="newspaper" href="https://jrsinclair.com/articles/2016/gentle-introduction-to-functional-javascript-functions/">
+    Covers practical functional JavaScript patterns including currying and composition with approachable explanations.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Currying — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=iZLP4qOwY8I">
+    Mattias Petter Johansson's entertaining explanation of currying as part of his beloved functional programming series. Great for visual learners.
+  </Card>
+  <Card title="Compose and Pipe — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=yd2FZ1kP5wE">
+    Kyle Cook's clear, beginner-friendly walkthrough of compose and pipe with practical examples you can follow along with.
+  </Card>
+  <Card title="Learning Functional Programming with JavaScript — Anjana Vakil" icon="video" href="https://www.youtube.com/watch?v=e-5obm1G_FY">
+    A beloved JSUnconf talk that explains functional programming concepts with clarity and humor. Anjana's approachable style makes abstract concepts feel tangible.
+  </Card>
+</CardGroup>

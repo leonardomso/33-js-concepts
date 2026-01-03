@@ -1,7 +1,7 @@
 {
   "name": "33-js-concepts",
   "version": "1.0.0",
-  "description": "33 concepts every JavaScript developer should know.",
+  "description": "A curated collection of 33 essential JavaScript concepts every developer should master. Includes comprehensive learning resources, articles, videos, and interactive code examples covering everything from call stack and closures to async/await and design patterns.",
   "main": "index.js",
   "author": {
     "name": "Leonardo Maldonado",
@@ -9,28 +9,53 @@
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/leonardomso/33/issues"
+    "url": "https://github.com/leonardomso/33-js-concepts/issues"
   },
-  "homepage": "https://github.com/leonardomso/33#readme",
+  "homepage": "https://github.com/leonardomso/33-js-concepts#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "docs": "cd docs && npx mintlify dev",
+    "docs:build": "cd docs && npx mintlify build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/leonardomso/33.git"
+    "url": "git+https://github.com/leonardomso/33-js-concepts.git"
   },
   "keywords": [
-    "JavaScript",
     "javascript",
-    "JS",
-    "programming",
-    "web",
-    "web dev",
-    "front end",
-    "front-end",
+    "javascript-concepts",
+    "javascript-learning",
+    "javascript-tutorial",
+    "learn-javascript",
+    "closures",
+    "promises",
+    "async-await",
+    "event-loop",
+    "prototypes",
+    "scope",
+    "hoisting",
+    "coercion",
+    "this-keyword",
+    "call-stack",
+    "higher-order-functions",
+    "functional-programming",
+    "design-patterns",
+    "data-structures",
+    "algorithms",
+    "es6",
+    "ecmascript",
+    "web-development",
+    "frontend",
     "nodejs",
-    "Node.js",
-    "NodeJS",
-    "Node"
-  ]
+    "programming",
+    "developer-resources",
+    "interview-preparation"
+  ],
+  "devDependencies": {
+    "@vitest/coverage-v8": "^4.0.16",
+    "jsdom": "^27.4.0",
+    "vitest": "^4.0.16"
+  }
 }

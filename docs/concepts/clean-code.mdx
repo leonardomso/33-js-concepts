@@ -1,0 +1,900 @@
+---
+title: "Clean Code: Writing Readable JavaScript"
+sidebarTitle: "Clean Code: Writing Readable JavaScript"
+description: "Learn clean code principles for JavaScript. Covers meaningful naming, small functions, DRY, avoiding side effects, and best practices to write maintainable code."
+---
+
+Why do some codebases feel like a maze while others read like a well-written story? What makes code easy to change versus code that makes you want to rewrite everything from scratch?
+
+```javascript
+// Which would you rather debug at 2am?
+
+// Version A
+function p(a, b) {
+  let x = 0
+  for (let i = 0; i < a.length; i++) {
+    if (a[i].s === 1) x += a[i].p * b
+  }
+  return x
+}
+
+// Version B
+function calculateActiveProductsTotal(products, taxRate) {
+  let total = 0
+  for (const product of products) {
+    if (product.status === PRODUCT_STATUS.ACTIVE) {
+      total += product.price * taxRate
+    }
+  }
+  return total
+}
+```
+
+**Clean code** is code that's easy to read, easy to understand, and easy to change. The principles behind clean code were popularized by Robert C. Martin's book *[Clean Code: A Handbook of Agile Software Craftsmanship](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)*, and Ryan McDermott adapted these principles specifically for JavaScript in his [clean-code-javascript](https://github.com/ryanmcdermott/clean-code-javascript) repository (94k+ GitHub stars). Both are essential reading for any JavaScript developer.
+
+<Info>
+**What you'll learn in this guide:**
+- What makes code "clean" and why it matters
+- Naming conventions that make code self-documenting
+- How to write small, focused functions that do one thing
+- The DRY principle and when to apply it
+- How to avoid side effects and write predictable code
+- Using early returns to reduce nesting
+- When to write comments (and when not to)
+- SOLID principles applied to JavaScript
+</Info>
+
+---
+
+## The Newspaper Analogy
+
+Think of your code like a newspaper article. A reader should understand the gist from the headline, get more details from the first paragraph, and find supporting information as they read further. Your code should work the same way: high-level functions at the top, implementation details below.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     CODE LIKE A NEWSPAPER                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   // HEADLINE: What does this module do?                                 │
+│   export function processUserOrder(userId, orderId) {                    │
+│     const user = getUser(userId)                                         │
+│     const order = getOrder(orderId)                                      │
+│     validateOrder(user, order)                                           │
+│     return chargeAndShip(user, order)                                    │
+│   }                                                                      │
+│                                                                          │
+│   // DETAILS: How does it do it?                                         │
+│   function getUser(userId) { ... }                                       │
+│   function getOrder(orderId) { ... }                                     │
+│   function validateOrder(user, order) { ... }                            │
+│   function chargeAndShip(user, order) { ... }                            │
+│                                                                          │
+│   Read top-to-bottom. The "what" comes before the "how".                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Meaningful Naming
+
+Names are everywhere in code: variables, functions, classes, files. Good names make comments unnecessary. Bad names make simple code confusing.
+
+### Use Pronounceable, Searchable Names
+
+```javascript
+// ❌ What does this even mean?
+const yyyymmdstr = moment().format('YYYY/MM/DD')
+const d = new Date()
+const t = d.getTime()
+
+// ✓ Crystal clear
+const currentDate = moment().format('YYYY/MM/DD')
+const now = new Date()
+const timestamp = now.getTime()
+```
+
+### Use the Same Word for the Same Concept
+
+Pick one word per concept and stick with it. If you fetch users with `getUser()`, don't also have `fetchClient()` and `retrieveCustomer()`.
+
+```javascript
+// ❌ Inconsistent - which one do I use?
+getUserInfo()
+fetchClientData()
+retrieveCustomerRecord()
+
+// ✓ Consistent vocabulary
+getUser()
+getClient()
+getCustomer()
+```
+
+### Avoid Mental Mapping
+
+Single-letter variables force readers to remember what `a`, `x`, or `l` mean. Be explicit.
+
+```javascript
+// ❌ What is 'l'? A number? A location? A letter?
+locations.forEach(l => {
+  doStuff()
+  // ... 50 lines later
+  dispatch(l)  // Wait, what was 'l' again?
+})
+
+// ✓ No guessing required
+locations.forEach(location => {
+  doStuff()
+  dispatch(location)
+})
+```
+
+### Don't Add Unnecessary Context
+
+If your class is called `Car`, you don't need `carMake`, `carModel`, `carColor`. The context is already there.
+
+```javascript
+// ❌ Redundant prefixes
+const Car = {
+  carMake: 'Honda',
+  carModel: 'Accord',
+  carColor: 'Blue'
+}
+
+// ✓ Context is already clear
+const Car = {
+  make: 'Honda',
+  model: 'Accord',
+  color: 'Blue'
+}
+```
+
+---
+
+## Functions Should Do One Thing
+
+This is the single most important rule in clean code. When functions do one thing, they're easier to name, easier to test, and easier to reuse.
+
+### Keep Functions Small and Focused
+
+```javascript
+// ❌ This function does too many things
+function emailClients(clients) {
+  clients.forEach(client => {
+    const clientRecord = database.lookup(client)
+    if (clientRecord.isActive()) {
+      email(client)
+    }
+  })
+}
+
+// ✓ Each function has one job
+function emailActiveClients(clients) {
+  clients
+    .filter(isActiveClient)
+    .forEach(email)
+}
+
+function isActiveClient(client) {
+  const clientRecord = database.lookup(client)
+  return clientRecord.isActive()
+}
+```
+
+### Limit Function Parameters
+
+Two or fewer parameters is ideal. If you need more, use an object with destructuring. This also makes the call site self-documenting.
+
+```javascript
+// ❌ What do these arguments mean?
+createMenu('Settings', 'User preferences', 'Save', true)
+
+// ✓ Self-documenting with destructuring
+createMenu({
+  title: 'Settings',
+  body: 'User preferences',
+  buttonText: 'Save',
+  cancellable: true
+})
+
+function createMenu({ title, body, buttonText, cancellable = false }) {
+  // ...
+}
+```
+
+### Don't Use Boolean Flags
+
+A boolean parameter is a sign that the function does more than one thing. Split it into two functions instead.
+
+```javascript
+// ❌ Boolean flag = function does two things
+function createFile(name, isTemp) {
+  if (isTemp) {
+    fs.create(`./temp/${name}`)
+  } else {
+    fs.create(name)
+  }
+}
+
+// ✓ Two focused functions
+function createFile(name) {
+  fs.create(name)
+}
+
+function createTempFile(name) {
+  createFile(`./temp/${name}`)
+}
+```
+
+---
+
+## Avoid Magic Numbers and Strings
+
+Magic values are unexplained numbers or strings scattered through your code. They make code hard to understand and hard to change.
+
+```javascript
+// ❌ What is 86400000? Why 18?
+setTimeout(blastOff, 86400000)
+
+if (user.age > 18) {
+  allowAccess()
+}
+
+if (status === 1) {
+  // ...
+}
+
+// ✓ Named constants are searchable and self-documenting
+const MILLISECONDS_PER_DAY = 60 * 60 * 24 * 1000
+const MINIMUM_LEGAL_AGE = 18
+const STATUS = {
+  ACTIVE: 1,
+  INACTIVE: 0
+}
+
+setTimeout(blastOff, MILLISECONDS_PER_DAY)
+
+if (user.age > MINIMUM_LEGAL_AGE) {
+  allowAccess()
+}
+
+if (status === STATUS.ACTIVE) {
+  // ...
+}
+```
+
+<Tip>
+**Pro tip:** ESLint's `no-magic-numbers` rule can automatically flag magic numbers in your code.
+</Tip>
+
+---
+
+## DRY: Don't Repeat Yourself
+
+Duplicate code means multiple places to update when logic changes. But be careful: a bad abstraction is worse than duplication. Only abstract when you see a clear pattern.
+
+```javascript
+// ❌ Duplicate logic
+function showDeveloperList(developers) {
+  developers.forEach(dev => {
+    const salary = dev.calculateSalary()
+    const experience = dev.getExperience()
+    const githubLink = dev.getGithubLink()
+    render({ salary, experience, githubLink })
+  })
+}
+
+function showManagerList(managers) {
+  managers.forEach(mgr => {
+    const salary = mgr.calculateSalary()
+    const experience = mgr.getExperience()
+    const portfolio = mgr.getPortfolio()
+    render({ salary, experience, portfolio })
+  })
+}
+
+// ✓ Unified with type-specific handling
+function showEmployeeList(employees) {
+  employees.forEach(employee => {
+    const baseData = {
+      salary: employee.calculateSalary(),
+      experience: employee.getExperience()
+    }
+    
+    const extraData = employee.type === 'developer'
+      ? { githubLink: employee.getGithubLink() }
+      : { portfolio: employee.getPortfolio() }
+    
+    render({ ...baseData, ...extraData })
+  })
+}
+```
+
+---
+
+## Avoid Side Effects
+
+A function has a side effect when it does something other than take inputs and return outputs: modifying a global variable, writing to a file, or mutating an input parameter. Side effects make code unpredictable and hard to test. For a deeper dive, see our [Pure Functions](/concepts/pure-functions) guide.
+
+```javascript
+// ❌ Mutates the original array - side effect!
+function addItemToCart(cart, item) {
+  cart.push({ item, date: Date.now() })
+}
+
+// ✓ Returns a new array - no side effects
+function addItemToCart(cart, item) {
+  return [...cart, { item, date: Date.now() }]
+}
+```
+
+```javascript
+// ❌ Modifies global state
+let name = 'Ryan McDermott'
+
+function splitName() {
+  name = name.split(' ')  // Mutates global!
+}
+
+// ✓ Pure function - no globals modified
+function splitName(name) {
+  return name.split(' ')
+}
+
+const fullName = 'Ryan McDermott'
+const nameParts = splitName(fullName)
+```
+
+---
+
+## Early Returns and Guard Clauses
+
+Deeply nested code is hard to follow. Use early returns to handle edge cases first, then write the main logic without extra indentation.
+
+```javascript
+// ❌ Deeply nested - hard to follow
+function getPayAmount(employee) {
+  let result
+  if (employee.isSeparated) {
+    result = { amount: 0, reason: 'separated' }
+  } else {
+    if (employee.isRetired) {
+      result = { amount: 0, reason: 'retired' }
+    } else {
+      // ... complex salary calculation
+      result = { amount: salary, reason: 'employed' }
+    }
+  }
+  return result
+}
+
+// ✓ Guard clauses - flat and readable
+function getPayAmount(employee) {
+  if (employee.isSeparated) {
+    return { amount: 0, reason: 'separated' }
+  }
+  
+  if (employee.isRetired) {
+    return { amount: 0, reason: 'retired' }
+  }
+  
+  // Main logic at the top level
+  const salary = calculateSalary(employee)
+  return { amount: salary, reason: 'employed' }
+}
+```
+
+The same applies to loops. Use `continue` to skip iterations instead of nesting:
+
+```javascript
+// ❌ Unnecessary nesting
+for (const user of users) {
+  if (user.isActive) {
+    if (user.hasPermission) {
+      processUser(user)
+    }
+  }
+}
+
+// ✓ Flat and scannable
+for (const user of users) {
+  if (!user.isActive) continue
+  if (!user.hasPermission) continue
+  
+  processUser(user)
+}
+```
+
+---
+
+## Comments: Less is More
+
+Good code mostly documents itself. Comments should explain *why*, not *what*. If you need a comment to explain what code does, consider rewriting the code to be clearer.
+
+### Don't State the Obvious
+
+```javascript
+// ❌ These comments add nothing
+function hashIt(data) {
+  // The hash
+  let hash = 0
+  
+  // Length of string
+  const length = data.length
+  
+  // Loop through every character
+  for (let i = 0; i < length; i++) {
+    // Get character code
+    const char = data.charCodeAt(i)
+    // Make the hash
+    hash = (hash << 5) - hash + char
+    // Convert to 32-bit integer
+    hash &= hash
+  }
+  return hash
+}
+
+// ✓ Only comment what's not obvious
+function hashIt(data) {
+  let hash = 0
+  const length = data.length
+  
+  for (let i = 0; i < length; i++) {
+    const char = data.charCodeAt(i)
+    hash = (hash << 5) - hash + char
+    hash &= hash  // Convert to 32-bit integer
+  }
+  return hash
+}
+```
+
+### Don't Leave Commented-Out Code
+
+That's what version control is for. Delete it. If you need it later, check the git history.
+
+```javascript
+// ❌ Dead code cluttering the file
+doStuff()
+// doOtherStuff()
+// doSomeMoreStuff()
+// doSoMuchStuff()
+
+// ✓ Clean
+doStuff()
+```
+
+### Don't Write Journal Comments
+
+Git log exists for a reason.
+
+```javascript
+// ❌ This is what git history is for
+/**
+ * 2016-12-20: Removed monads (RM)
+ * 2016-10-01: Added special monads (JP)
+ * 2016-02-03: Removed type-checking (LI)
+ */
+function combine(a, b) {
+  return a + b
+}
+
+// ✓ Just the code
+function combine(a, b) {
+  return a + b
+}
+```
+
+---
+
+## SOLID Principles in JavaScript
+
+SOLID is a set of five principles that help you write maintainable, flexible code. Here's how they apply to JavaScript:
+
+<AccordionGroup>
+  <Accordion title="Single Responsibility Principle (SRP)">
+    A class or module should have only one reason to change.
+    
+    ```javascript
+    // ❌ UserSettings handles both settings AND authentication
+    class UserSettings {
+      constructor(user) {
+        this.user = user
+      }
+      
+      changeSettings(settings) {
+        if (this.verifyCredentials()) {
+          // update settings
+        }
+      }
+      
+      verifyCredentials() {
+        // authentication logic
+      }
+    }
+    
+    // ✓ Separate responsibilities
+    class UserAuth {
+      constructor(user) {
+        this.user = user
+      }
+      
+      verifyCredentials() {
+        // authentication logic
+      }
+    }
+    
+    class UserSettings {
+      constructor(user, auth) {
+        this.user = user
+        this.auth = auth
+      }
+      
+      changeSettings(settings) {
+        if (this.auth.verifyCredentials()) {
+          // update settings
+        }
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Open/Closed Principle (OCP)">
+    Code should be open for extension but closed for modification. Add new features by adding new code, not changing existing code.
+    
+    ```javascript
+    // ❌ Must modify this function for every new shape
+    function getArea(shape) {
+      if (shape.type === 'circle') {
+        return Math.PI * shape.radius ** 2
+      } else if (shape.type === 'rectangle') {
+        return shape.width * shape.height
+      }
+      // Add another if for every new shape...
+    }
+    
+    // ✓ Extend by adding new classes
+    class Shape {
+      getArea() {
+        throw new Error('getArea must be implemented')
+      }
+    }
+    
+    class Circle extends Shape {
+      constructor(radius) {
+        super()
+        this.radius = radius
+      }
+      
+      getArea() {
+        return Math.PI * this.radius ** 2
+      }
+    }
+    
+    class Rectangle extends Shape {
+      constructor(width, height) {
+        super()
+        this.width = width
+        this.height = height
+      }
+      
+      getArea() {
+        return this.width * this.height
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Liskov Substitution Principle (LSP)">
+    Child classes should be usable wherever parent classes are expected without breaking the code.
+    
+    ```javascript
+    // ❌ Square breaks when used where Rectangle is expected
+    class Rectangle {
+      constructor() {
+        this.width = 0
+        this.height = 0
+      }
+      
+      setWidth(width) {
+        this.width = width
+      }
+      
+      setHeight(height) {
+        this.height = height
+      }
+      
+      getArea() {
+        return this.width * this.height
+      }
+    }
+    
+    class Square extends Rectangle {
+      setWidth(width) {
+        this.width = width
+        this.height = width  // Breaks LSP!
+      }
+      
+      setHeight(height) {
+        this.width = height
+        this.height = height
+      }
+    }
+    
+    // This fails for Square - expects 20, gets 25
+    function calculateAreas(rectangles) {
+      rectangles.forEach(rect => {
+        rect.setWidth(4)
+        rect.setHeight(5)
+        console.log(rect.getArea())  // Square returns 25, not 20!
+      })
+    }
+    
+    // ✓ Better: separate classes, no inheritance relationship
+    class Rectangle {
+      constructor(width, height) {
+        this.width = width
+        this.height = height
+      }
+      
+      getArea() {
+        return this.width * this.height
+      }
+    }
+    
+    class Square {
+      constructor(side) {
+        this.side = side
+      }
+      
+      getArea() {
+        return this.side * this.side
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Interface Segregation Principle (ISP)">
+    Don't force clients to depend on methods they don't use. In JavaScript, use optional configuration objects instead of requiring many parameters.
+    
+    ```javascript
+    // ❌ Forcing clients to provide options they don't need
+    class DOMTraverser {
+      constructor(settings) {
+        this.settings = settings
+        this.rootNode = settings.rootNode
+        this.settings.animationModule.setup()  // Required even if not needed!
+      }
+    }
+    
+    const traverser = new DOMTraverser({
+      rootNode: document.body,
+      animationModule: { setup() {} }  // Must provide even if not animating
+    })
+    
+    // ✓ Make features optional
+    class DOMTraverser {
+      constructor(settings) {
+        this.settings = settings
+        this.rootNode = settings.rootNode
+        
+        if (settings.animationModule) {
+          settings.animationModule.setup()
+        }
+      }
+    }
+    
+    const traverser = new DOMTraverser({
+      rootNode: document.body
+      // animationModule is optional now
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Dependency Inversion Principle (DIP)">
+    Depend on abstractions, not concrete implementations. Inject dependencies rather than instantiating them inside your classes.
+    
+    ```javascript
+    // ❌ Tightly coupled to InventoryRequester
+    class InventoryTracker {
+      constructor(items) {
+        this.items = items
+        this.requester = new InventoryRequester()  // Hard dependency
+      }
+    }
+    
+    // ✓ Dependency injection
+    class InventoryTracker {
+      constructor(items, requester) {
+        this.items = items
+        this.requester = requester  // Injected - can be any requester
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Write Testable Code
+
+Functions that do one thing with no side effects are easy to test. If a function is hard to test, it's often a sign that it's doing too much or has hidden dependencies. Clean code and testable code go hand in hand.
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Names matter** — Use meaningful, pronounceable, searchable names. Good names eliminate the need for comments.
+
+2. **Functions should do one thing** — This is the most important rule. Small, focused functions are easier to name, test, and reuse.
+
+3. **Limit function parameters** — Two or fewer is ideal. Use object destructuring for more.
+
+4. **Eliminate magic numbers** — Use named constants that explain what values mean.
+
+5. **DRY, but don't over-abstract** — Remove duplication, but a bad abstraction is worse than duplication.
+
+6. **Avoid side effects** — Prefer pure functions that don't mutate inputs or global state.
+
+7. **Use early returns** — Guard clauses reduce nesting and make code easier to follow.
+
+8. **Comments explain why, not what** — If you need to explain what code does, rewrite the code.
+
+9. **Delete dead code** — Commented-out code and unused functions clutter your codebase. Git remembers.
+
+10. **Use tools** — ESLint catches issues, Prettier handles formatting. Don't argue about style.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's wrong with this function name?">
+    ```javascript
+    function process(data) {
+      // ...
+    }
+    ```
+    
+    **Answer:**
+    
+    The name `process` is too vague. It doesn't tell you what kind of processing happens or what kind of data is expected. Better names would be `validateUserInput`, `parseJsonResponse`, or `calculateOrderTotal`, depending on what the function actually does.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why is this function problematic?">
+    ```javascript
+    function createUser(name, email, age, isAdmin, sendWelcomeEmail) {
+      // ...
+    }
+    ```
+    
+    **Answer:**
+    
+    Too many parameters (5). It's hard to remember the order, and the boolean flags (`isAdmin`, `sendWelcomeEmail`) suggest the function might be doing multiple things. Refactor to use an options object:
+    
+    ```javascript
+    function createUser({ name, email, age, isAdmin = false }) {
+      // ...
+    }
+    
+    function sendWelcomeEmail(user) {
+      // Separate function for separate concern
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: When should you write a comment?">
+    **Answer:**
+    
+    Write comments when you need to explain *why* something is done a certain way, especially for:
+    - Business logic that isn't obvious from the code
+    - Workarounds for bugs or edge cases
+    - Legal or licensing requirements
+    - Complex algorithms where the approach isn't self-evident
+    
+    Don't write comments that explain *what* the code does. If the code needs explanation, rewrite it to be clearer.
+  </Accordion>
+  
+  <Accordion title="Question 4: What's a 'magic number' and why is it bad?">
+    **Answer:**
+    
+    A magic number is an unexplained numeric literal in code, like `86400000` or `18`. They're bad because:
+    - You can't search for what they mean
+    - They don't explain their purpose
+    - If the value needs to change, you have to find every occurrence
+    
+    Replace with named constants: `MILLISECONDS_PER_DAY` or `MINIMUM_LEGAL_AGE`.
+  </Accordion>
+  
+  <Accordion title="Question 5: How would you refactor this nested code?">
+    ```javascript
+    function processUser(user) {
+      if (user) {
+        if (user.isActive) {
+          if (user.hasPermission) {
+            return doSomething(user)
+          }
+        }
+      }
+      return null
+    }
+    ```
+    
+    **Answer:**
+    
+    Use guard clauses (early returns) to flatten the nesting:
+    
+    ```javascript
+    function processUser(user) {
+      if (!user) return null
+      if (!user.isActive) return null
+      if (!user.hasPermission) return null
+      
+      return doSomething(user)
+    }
+    ```
+    
+    Each guard clause handles one edge case, and the main logic sits at the top level without indentation.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Pure Functions" icon="flask" href="/concepts/pure-functions">
+    Deep dive into functions without side effects and why they make code predictable
+  </Card>
+  <Card title="Modern JS Syntax" icon="wand-magic-sparkles" href="/concepts/modern-js-syntax">
+    ES6+ features like destructuring and arrow functions that enable cleaner code
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation" href="/concepts/error-handling">
+    How to handle errors cleanly without swallowing exceptions or cluttering code
+  </Card>
+  <Card title="Design Patterns" icon="sitemap" href="/concepts/design-patterns">
+    Reusable solutions that embody clean code principles at a higher level
+  </Card>
+</CardGroup>
+
+---
+
+## Books
+
+<Card title="Clean Code: A Handbook of Agile Software Craftsmanship" icon="book" href="https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882">
+  The foundational text by Robert C. Martin that started the clean code movement. While examples are in Java, the principles apply to any language. A must-read for every developer.
+</Card>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Clean Code JavaScript" icon="newspaper" href="https://github.com/ryanmcdermott/clean-code-javascript">
+    The definitive JavaScript adaptation of Clean Code principles with 94k+ GitHub stars. Every example is practical and immediately applicable to your code.
+  </Card>
+  <Card title="Clean Coding for Beginners" icon="newspaper" href="https://www.freecodecamp.org/news/clean-coding-for-beginners/">
+    freeCodeCamp's beginner-friendly introduction covering the "why" behind each clean code principle. Great starting point if you're new to these concepts.
+  </Card>
+  <Card title="Coding Style" icon="newspaper" href="https://javascript.info/coding-style">
+    javascript.info's practical guide to syntax, formatting, and style. Includes a visual cheat sheet you can reference while coding.
+  </Card>
+  <Card title="Ninja Code" icon="newspaper" href="https://javascript.info/ninja-code">
+    A satirical guide showing what NOT to do. The humor makes the anti-patterns memorable, and you'll recognize some of these mistakes in real codebases.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Pro Tips - Code This, NOT That" icon="video" href="https://www.youtube.com/watch?v=Mus_vwhTCq0">
+    Fireship's fast-paced video showing modern patterns that replace outdated approaches. Great examples of before/after refactoring.
+  </Card>
+  <Card title="Clean Code Playlist" icon="video" href="https://www.youtube.com/watch?v=b9c5GmmS7ks&list=PLWKjhJtqVAbkK24EaPurzMq0-kw5U9pJh">
+    freeCodeCamp's multi-part series covering each clean code principle in depth with live coding. Perfect for visual learners.
+  </Card>
+  <Card title="Clean Code - Uncle Bob" icon="video" href="https://www.youtube.com/watch?v=7EmboKQH8lM">
+    Robert C. Martin himself explaining clean code fundamentals. Hearing it from the source gives you the philosophy behind the principles.
+  </Card>
+</CardGroup>

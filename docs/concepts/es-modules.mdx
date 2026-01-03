@@ -1,0 +1,1329 @@
+---
+title: "ES Modules: JavaScript's Native Module System"
+sidebarTitle: "ES Modules: Native Module System"
+description: "Learn ES Modules in JavaScript. Understand import/export syntax, why ESM beats CommonJS, live bindings, dynamic imports, top-level await, and how modules enable tree-shaking."
+---
+
+Why does Node.js have two different module systems? Why can bundlers remove unused code from ES Modules but not from CommonJS? And why do some imports need curly braces while others don't?
+
+ES Modules (ESM) is JavaScript's official module system, standardized in ES2015. It's the answer to years of competing module formats, and it's designed from the ground up to be statically analyzable, which unlocks optimizations that older systems simply can't match.
+
+```javascript
+// math.js - Exporting functionality
+export const PI = 3.14159
+export function square(x) {
+  return x * x
+}
+
+// app.js - Importing what you need
+import { PI, square } from './math.js'
+
+console.log(square(4))  // 16
+console.log(PI)         // 3.14159
+```
+
+This guide goes beyond the basics. You'll learn why ESM's design makes it better than CommonJS for tooling and optimization, how live bindings work, and the practical differences between browsers and Node.js.
+
+<Info>
+**What you'll learn in this guide:**
+- Why ES Modules exist and what problems they solve
+- The key differences between ESM and CommonJS (and when each applies)
+- How live bindings make ESM exports work differently than CommonJS
+- All the export and import syntax variations
+- Dynamic imports for code splitting and lazy loading
+- Top-level await and when to use it
+- Browser vs Node.js: how ESM works in each environment
+- Import maps for bare module specifiers in browsers
+- How ESM enables tree-shaking and smaller bundles
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you're familiar with basic module concepts. If terms like "named exports" or "default exports" are new to you, start with our [IIFE, Modules & Namespaces](/concepts/iife-modules) guide first.
+</Warning>
+
+---
+
+## Why ES Modules Matter
+
+For most of JavaScript's history, there was no built-in way to split code into reusable pieces. The language simply didn't have modules. Developers created workarounds: IIFEs to avoid polluting the global scope, the Module Pattern for encapsulation, and eventually third-party systems like CommonJS (for Node.js) and AMD (for browsers).
+
+These solutions worked, but they were all invented outside the language itself. Each had tradeoffs, and none could be fully optimized by JavaScript engines or build tools.
+
+ES Modules changed that. Introduced in ES2015 (ES6), ESM is part of the language specification. This means:
+
+- **Browsers can load modules natively** without bundlers (though bundlers still help with optimization)
+- **Tools can analyze your code statically** because imports and exports are declarative
+- **Unused code can be eliminated** (tree-shaking) because the module graph is known at build time
+- **The syntax is standardized** across all JavaScript environments
+
+Today, ESM is supported in all modern browsers and Node.js. It's the module system you should use for new projects.
+
+---
+
+## The Shipping Container Analogy
+
+Think of ES Modules like the standardized shipping container that revolutionized global trade.
+
+Before shipping containers, cargo was loaded piece by piece. Every ship, truck, and warehouse had different ways of handling goods. It was slow, error-prone, and impossible to optimize at scale.
+
+Shipping containers changed everything. A standard size meant cranes, ships, and trucks could all handle cargo the same way. You could plan logistics before the ship even arrived because you knew exactly what you were dealing with.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    COMMONJS vs ES MODULES                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  COMMONJS (Dynamic Loading)              ES MODULES (Static Analysis)    │
+│  ───────────────────────────             ────────────────────────────    │
+│                                                                          │
+│  ┌──────────────────────┐                ┌──────────────────────┐        │
+│  │  require('./math')   │                │  import { add }      │        │
+│  │                      │                │  from './math.js'    │        │
+│  │  Resolved at         │                │                      │        │
+│  │  RUNTIME             │                │  Known at            │        │
+│  │                      │                │  BUILD TIME          │        │
+│  │  Could be anything:  │                │                      │        │
+│  │  require(userInput)  │                │  Tools can:          │        │
+│  │  require(condition   │                │  • See all imports   │        │
+│  │    ? 'a' : 'b')      │                │  • Remove dead code  │        │
+│  │                      │                │  • Optimize bundles  │        │
+│  └──────────────────────┘                └──────────────────────┘        │
+│                                                                          │
+│  Like loose cargo:                       Like shipping containers:       │
+│  flexible but hard                       standardized and                │
+│  to optimize                             optimizable                     │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+ESM's static structure is like those shipping containers. Because imports and exports are declarative (not computed at runtime), tools can "see" your entire module graph before running any code. This visibility enables optimizations that are simply impossible with dynamic systems like CommonJS.
+
+---
+
+## ESM vs CommonJS: The Complete Comparison
+
+If you've worked with Node.js, you've used CommonJS. It's been Node's module system since the beginning. But ESM and CommonJS work differently at a core level.
+
+| Aspect | ES Modules | CommonJS |
+|--------|------------|----------|
+| **Syntax** | `import` / `export` | `require()` / `module.exports` |
+| **Loading** | Asynchronous | Synchronous |
+| **Analysis** | Static (build time) | Dynamic (runtime) |
+| **Exports** | Live bindings (references) | Value copies |
+| **Strict mode** | Always enabled | Optional |
+| **Top-level `this`** | `undefined` | `module.exports` |
+| **File extensions** | Required in browsers | Optional in Node |
+| **Tree-shaking** | Yes | No |
+
+### Syntax Side-by-Side
+
+```javascript
+// ─────────────────────────────────────────────
+// COMMONJS (Node.js traditional)
+// ─────────────────────────────────────────────
+
+// Exporting
+const PI = 3.14159
+function square(x) { return x * x }
+
+module.exports = { PI, square }
+// or: exports.PI = PI
+
+// Importing
+const { PI, square } = require('./math')
+const math = require('./math')  // whole module
+
+
+// ─────────────────────────────────────────────
+// ES MODULES (modern standard)
+// ─────────────────────────────────────────────
+
+// Exporting
+export const PI = 3.14159
+export function square(x) { return x * x }
+
+// Importing
+import { PI, square } from './math.js'
+import * as math from './math.js'  // namespace import
+```
+
+### Static vs Dynamic: Why It Matters
+
+CommonJS imports are function calls that happen at runtime. You can put them anywhere, compute the path dynamically, and even conditionally require different modules:
+
+```javascript
+// CommonJS - Dynamic (works but prevents optimization)
+const moduleName = condition ? 'moduleA' : 'moduleB'
+const mod = require(`./${moduleName}`)
+
+if (needsFeature) {
+  const feature = require('./heavy-feature')
+}
+```
+
+ESM imports must be at the top level with string literals. This seems restrictive, but it's a feature, not a bug:
+
+```javascript
+// ES Modules - Static (enables optimization)
+import { feature } from './heavy-feature.js'  // must be top-level
+import { helper } from './utils.js'           // path must be a string
+
+// ❌ These are syntax errors in ESM:
+// import { x } from condition ? 'a.js' : 'b.js'
+// if (condition) { import { y } from './module.js' }
+```
+
+Because ESM imports are static, bundlers can build a complete picture of your dependencies before running any code. This enables dead code elimination, bundle splitting, and other optimizations.
+
+<Tip>
+**Need dynamic loading in ESM?** Use `import()` for dynamic imports (covered later in this guide). You get the best of both worlds: static analysis for your main code, dynamic loading when you actually need it.
+</Tip>
+
+### Async vs Sync Loading
+
+CommonJS loads modules synchronously. When Node.js hits a `require()`, it blocks until the file is read and executed. This works fine on a server with fast disk access.
+
+ESM loads modules asynchronously. The browser fetches module files over the network, which can't block the main thread. This async nature is why:
+
+- ESM works natively in browsers
+- Top-level `await` is possible in ESM
+- The loading behavior is more predictable
+
+---
+
+## Live Bindings: Why ESM Exports Are Different
+
+Here's a difference that trips people up. When you import from a CommonJS module, you get a **copy** of the exported value. When you import from an ES Module, you get a **live binding**: a reference to the original variable.
+
+```javascript
+// ─────────────────────────────────────────────
+// counter.cjs (CommonJS)
+// ─────────────────────────────────────────────
+let count = 0
+function increment() { count++ }
+function getCount() { return count }
+
+module.exports = { count, increment, getCount }
+
+
+// ─────────────────────────────────────────────
+// main.cjs (CommonJS consumer)
+// ─────────────────────────────────────────────
+const { count, increment, getCount } = require('./counter.cjs')
+
+console.log(count)      // 0
+increment()
+console.log(count)      // 0 (still! it's a copy)
+console.log(getCount()) // 1 (function reads the real value)
+```
+
+```javascript
+// ─────────────────────────────────────────────
+// counter.mjs (ES Module)
+// ─────────────────────────────────────────────
+export let count = 0
+export function increment() { count++ }
+
+
+// ─────────────────────────────────────────────
+// main.mjs (ESM consumer)
+// ─────────────────────────────────────────────
+import { count, increment } from './counter.mjs'
+
+console.log(count)  // 0
+increment()
+console.log(count)  // 1 (live binding reflects the change!)
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         LIVE BINDINGS EXPLAINED                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  COMMONJS (Value Copy)                   ES MODULES (Live Binding)       │
+│  ─────────────────────                   ────────────────────────        │
+│                                                                          │
+│  counter.js:                             counter.js:                     │
+│  ┌─────────────┐                         ┌─────────────┐                 │
+│  │ count: 1    │                         │ count: 1    │ ◄───────┐       │
+│  └─────────────┘                         └─────────────┘         │       │
+│         │                                       ▲                │       │
+│         │ copy at                               │ reference      │       │
+│         │ require time                          │ always         │       │
+│         ▼                                       │ current        │       │
+│  main.js:                                main.js:                │       │
+│  ┌─────────────┐                         ┌─────────────┐         │       │
+│  │ count: 0    │ (stale!)                │ count ──────┼─────────┘       │
+│  └─────────────┘                         └─────────────┘                 │
+│                                                                          │
+│  The imported value is                   The import IS the               │
+│  frozen at require time                  original variable               │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Why Live Bindings Matter
+
+Live bindings have practical implications:
+
+1. **Singleton state works correctly** — If a module exports state, all importers see the same state
+2. **Circular dependencies are safer** — Because bindings are live, you can have modules that depend on each other (though you should still avoid this when possible)
+3. **You can't reassign imports** — `count = 5` throws an error because you don't own that binding
+
+```javascript
+import { count } from './counter.js'
+
+count = 10  // ❌ TypeError: imported bindings are read-only
+            // Even though 'count' is 'let' in the source, you can't reassign it here
+```
+
+<Note>
+Imported bindings are always read-only to the importer. Only the module that exports a variable can modify it. This prevents confusing "action at a distance" bugs.
+</Note>
+
+---
+
+## Export Syntax Deep Dive
+
+ES Modules give you several ways to export functionality. Here's the complete picture.
+
+### Named Exports
+
+The most common pattern. You can export inline or group exports at the bottom:
+
+```javascript
+// Inline named exports
+export const PI = 3.14159
+export function calculateArea(radius) {
+  return PI * radius * radius
+}
+export class Circle {
+  constructor(radius) {
+    this.radius = radius
+  }
+}
+
+// Or group them at the bottom (same result)
+const PI = 3.14159
+function calculateArea(radius) {
+  return PI * radius * radius
+}
+class Circle {
+  constructor(radius) {
+    this.radius = radius
+  }
+}
+
+export { PI, calculateArea, Circle }
+```
+
+### Renaming Exports
+
+Use `as` to export under a different name:
+
+```javascript
+function internalHelper() { /* ... */ }
+
+export { internalHelper as helper }
+// Consumers import as: import { helper } from './module.js'
+```
+
+### Default Exports
+
+Each module can have one default export. It represents the module's "main" thing:
+
+```javascript
+// A class as default export
+export default class Logger {
+  log(message) {
+    console.log(`[LOG] ${message}`)
+  }
+}
+
+// Or a function
+export default function formatDate(date) {
+  return date.toISOString()
+}
+
+// Or a value (note: no variable declaration with default)
+export default {
+  name: 'Config',
+  version: '1.0.0'
+}
+```
+
+### Mixing Named and Default Exports
+
+You can have both, though use this sparingly:
+
+```javascript
+// React does this: default for the main API, named for utilities
+export default function React() { /* ... */ }
+export function useState() { /* ... */ }
+export function useEffect() { /* ... */ }
+
+// Consumer can import both:
+import React, { useState, useEffect } from 'react'
+```
+
+### Re-Exporting (Barrel Files)
+
+Re-exports let you aggregate multiple modules into one entry point. This is common in libraries:
+
+```javascript
+// utils/index.js (barrel file)
+export { formatDate, parseDate } from './date.js'
+export { formatCurrency } from './currency.js'
+export { default as Logger } from './logger.js'
+
+// Re-export everything from a module
+export * from './math.js'
+
+// Re-export with rename
+export { helper as utilHelper } from './helpers.js'
+```
+
+Now consumers can import from one place:
+
+```javascript
+import { formatDate, formatCurrency, Logger } from './utils/index.js'
+```
+
+<Warning>
+**Barrel file gotcha:** Re-exporting everything with `export *` can hurt tree-shaking. The bundler may include code you don't use. Prefer explicit re-exports for better optimization.
+</Warning>
+
+---
+
+## Import Syntax Deep Dive
+
+Every export style has a corresponding import style.
+
+### Named Imports
+
+Import specific exports by name (must match exactly):
+
+```javascript
+import { PI, calculateArea } from './math.js'
+import { formatDate } from './date.js'
+```
+
+### Renaming Imports
+
+Use `as` when names conflict or you want something clearer:
+
+```javascript
+import { formatDate as formatDateISO } from './date.js'
+import { formatDate as formatDateUS } from './date-us.js'
+```
+
+### Default Imports
+
+No curly braces. You choose the name:
+
+```javascript
+// The module exports: export default class Logger { }
+import Logger from './logger.js'      // common convention: match the export
+import MyLogger from './logger.js'    // but any name works
+import L from './logger.js'           // even short names
+```
+
+### Namespace Imports
+
+Import everything as a single object:
+
+```javascript
+import * as math from './math.js'
+
+console.log(math.PI)              // 3.14159
+console.log(math.calculateArea(5)) // 78.54
+console.log(math.default)         // the default export, if any
+```
+
+### Combined Imports
+
+Mixing default and named in one statement:
+
+```javascript
+// Module exports both default and named
+import React, { useState, useEffect } from 'react'
+import lodash, { debounce, throttle } from 'lodash'
+```
+
+### Side-Effect Imports
+
+Import a module just for its side effects (no bindings):
+
+```javascript
+import './polyfills.js'       // runs the file, imports nothing
+import './analytics.js'       // sets up tracking
+import './styles.css'         // with bundler support
+```
+
+### Module Specifiers
+
+The string after `from` is called the module specifier:
+
+```javascript
+// Relative paths (start with ./ or ../)
+import { x } from './utils.js'
+import { y } from '../shared/helpers.js'
+
+// Absolute paths (less common)
+import { z } from '/lib/utils.js'
+
+// Bare specifiers (no path prefix)
+import { useState } from 'react'        // needs bundler or import map
+import lodash from 'lodash'
+```
+
+<Tip>
+**Bare specifiers** like `'react'` don't work in browsers by default — browsers don't know where to find `'react'`. You need either a bundler or an import map (covered later).
+</Tip>
+
+---
+
+## Module Characteristics
+
+ES Modules have built-in behaviors that differ from regular scripts.
+
+### Automatic Strict Mode
+
+Every ES Module runs in strict mode automatically. No `"use strict"` needed:
+
+```javascript
+// In a module, this throws an error:
+undeclaredVariable = 'oops'  // ReferenceError: undeclaredVariable is not defined
+
+// These also fail:
+delete Object.prototype      // TypeError
+function f(a, a) {}          // SyntaxError: duplicate parameter
+```
+
+### Module Scope
+
+Variables in a module are local to that module, not global:
+
+```javascript
+// module.js
+const privateValue = 'secret'  // not on window/global
+var alsoPrivate = 'hidden'     // var doesn't leak to global either
+
+// Only exports are accessible from outside
+export const publicValue = 'visible'
+```
+
+### Singleton Behavior
+
+A module's code runs exactly once, no matter how many times you import it:
+
+```javascript
+// counter.js
+console.log('Module initialized!')  // logs once
+export let count = 0
+
+// a.js
+import { count } from './counter.js'  // "Module initialized!"
+
+// b.js  
+import { count } from './counter.js'  // nothing logged (already ran)
+```
+
+This makes modules natural singletons. All importers share the same instance.
+
+### `this` is `undefined`
+
+At the top level of a module, `this` is `undefined` (not `window` or `global`):
+
+```javascript
+// script.js (regular script)
+console.log(this)  // window (in browser)
+
+// module.js (ES Module)
+console.log(this)  // undefined
+```
+
+### Import Hoisting
+
+Imports are hoisted to the top of the module. You can reference imported values before the import statement in code order (though you shouldn't):
+
+```javascript
+// This works (but don't write code like this)
+console.log(helper())  // imports are hoisted
+
+import { helper } from './utils.js'
+```
+
+### Deferred Execution in Browsers
+
+Module scripts are deferred by default. They don't block HTML parsing and execute after the document is parsed:
+
+```html
+<!-- Blocks parsing until loaded and executed -->
+<script src="blocking.js"></script>
+
+<!-- Deferred automatically (like adding defer attribute) -->
+<script type="module" src="module.js"></script>
+```
+
+---
+
+## Dynamic Imports
+
+Static imports must be at the top level, but sometimes you need to load modules dynamically. That's what `import()` is for.
+
+### The `import()` Expression
+
+[`import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) looks like a function call, but it's special syntax. It returns a Promise that resolves to the module's namespace object:
+
+```javascript
+// Load a module dynamically
+const module = await import('./math.js')
+console.log(module.PI)            // 3.14159
+console.log(module.default)       // the default export, if any
+
+// Or with .then()
+import('./math.js').then(module => {
+  console.log(module.PI)
+})
+```
+
+### Accessing Exports
+
+With dynamic imports, you get a module namespace object:
+
+```javascript
+// Named exports are properties
+const { formatDate, parseDate } = await import('./date.js')
+
+// Default export is on the 'default' property
+const { default: Logger } = await import('./logger.js')
+// or
+const loggerModule = await import('./logger.js')
+const Logger = loggerModule.default
+```
+
+### Real-World Use Cases
+
+**Route-based code splitting:**
+
+```javascript
+// Load page components only when navigating
+async function loadPage(pageName) {
+  const pages = {
+    home: () => import('./pages/Home.js'),
+    about: () => import('./pages/About.js'),
+    contact: () => import('./pages/Contact.js')
+  }
+  
+  const pageModule = await pages[pageName]()
+  return pageModule.default
+}
+```
+
+**Conditional feature loading:**
+
+```javascript
+// Only load heavy charting library if user needs it
+async function showChart(data) {
+  const { Chart } = await import('chart.js')
+  const chart = new Chart(canvas, { /* ... */ })
+}
+```
+
+**Lazy loading based on feature detection:**
+
+```javascript
+let crypto
+
+if (typeof window !== 'undefined' && window.crypto) {
+  crypto = window.crypto
+} else {
+  // Only load polyfill in environments that need it
+  const module = await import('crypto-polyfill')
+  crypto = module.default
+}
+```
+
+**Loading based on user preference:**
+
+```javascript
+async function loadTheme(themeName) {
+  // Path is computed at runtime - not possible with static imports
+  const theme = await import(`./themes/${themeName}.js`)
+  applyTheme(theme.default)
+}
+```
+
+<Note>
+`import()` works in regular scripts too, not just modules. This is useful for adding ESM libraries to legacy codebases.
+</Note>
+
+---
+
+## Top-Level Await
+
+ES Modules support `await` at the top level, outside of any function. This is useful for setup that requires async operations.
+
+```javascript
+// config.js
+const response = await fetch('/api/config')
+export const config = await response.json()
+
+// database.js
+import { MongoClient } from 'mongodb'
+const client = new MongoClient(uri)
+await client.connect()
+export const db = client.db('myapp')
+```
+
+### How It Affects Module Loading
+
+When a module uses top-level await, it blocks modules that depend on it:
+
+```javascript
+// slow.js
+await new Promise(r => setTimeout(r, 2000))  // 2 second delay
+export const value = 42
+
+// app.js
+import { value } from './slow.js'  // waits for slow.js to finish
+console.log(value)  // logs after 2 seconds
+```
+
+Modules that don't depend on `slow.js` can still load in parallel.
+
+### When to Use (and When Not To)
+
+**Good uses:**
+
+```javascript
+// Loading configuration at startup
+export const config = await loadConfig()
+
+// Database connection that's needed before anything else
+export const db = await connectToDatabase()
+
+// One-time initialization
+await initializeAnalytics()
+```
+
+**Avoid:**
+
+```javascript
+// ❌ Don't do slow operations that could be lazy
+const heavyData = await fetch('/api/huge-dataset')  // blocks everything
+
+// ✓ Better: export a function that fetches when needed
+export async function getHeavyData() {
+  return fetch('/api/huge-dataset')
+}
+```
+
+<Warning>
+Top-level await can create waterfall loading. If module A awaits and module B depends on A, then module C depends on B, everything loads sequentially. Use it judiciously.
+</Warning>
+
+---
+
+## Browser vs Node.js: ESM Differences
+
+ES Modules work in both browsers and Node.js, but there are differences in how you enable and use them.
+
+### Enabling ESM
+
+| Environment | How to Enable |
+|-------------|---------------|
+| **Browser** | `<script type="module" src="app.js"></script>` |
+| **Node.js** | Use `.mjs` extension, or set `"type": "module"` in package.json |
+
+**Browser:**
+
+```html
+<!-- The type="module" attribute enables ESM -->
+<script type="module" src="./app.js"></script>
+
+<!-- Inline module -->
+<script type="module">
+  import { greet } from './utils.js'
+  greet('World')
+</script>
+```
+
+**Node.js:**
+
+```javascript
+// Option 1: Use .mjs extension
+// math.mjs
+export const add = (a, b) => a + b
+
+// Option 2: Set type in package.json
+// package.json: { "type": "module" }
+// Then .js files are treated as ESM
+```
+
+### File Extensions
+
+| Environment | Extension Required? |
+|-------------|---------------------|
+| **Browser** | Yes — must include `.js` or full URL |
+| **Node.js** | Yes for ESM (can omit for CommonJS) |
+
+```javascript
+// Browser - extensions required
+import { helper } from './utils.js'       // ✓
+import { helper } from './utils'          // ❌ 404 error
+
+// Node.js ESM - extensions required
+import { helper } from './utils.js'       // ✓
+import { helper } from './utils'          // ❌ ERR_MODULE_NOT_FOUND
+```
+
+### Bare Specifiers
+
+```javascript
+import lodash from 'lodash'  // "bare specifier" - no path prefix
+```
+
+| Environment | Bare Specifier Support |
+|-------------|------------------------|
+| **Browser** | No (needs import map or bundler) |
+| **Node.js** | Yes (looks in node_modules) |
+
+### `import.meta`
+
+Both environments provide [`import.meta`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta), but with different properties:
+
+```javascript
+// Browser
+console.log(import.meta.url)  // "https://example.com/js/app.js"
+
+// Node.js
+console.log(import.meta.url)  // "file:///path/to/app.js"
+console.log(import.meta.dirname)  // "/path/to" (Node v20.11.0+)
+console.log(import.meta.filename) // "/path/to/app.js" (Node v20.11.0+)
+```
+
+### CORS in Browsers
+
+When loading modules from different origins, browsers enforce CORS:
+
+```html
+<!-- Same-origin: works fine -->
+<script type="module" src="/js/app.js"></script>
+
+<!-- Cross-origin: server must send CORS headers -->
+<script type="module" src="https://other-site.com/module.js"></script>
+<!-- Requires: Access-Control-Allow-Origin header -->
+```
+
+### Summary Table
+
+| Feature | Browser | Node.js |
+|---------|---------|---------|
+| Enable via | `type="module"` | `.mjs` or `"type": "module"` |
+| File extensions | Required | Required for ESM |
+| Bare specifiers | Import map needed | Works (node_modules) |
+| Top-level await | Yes | Yes |
+| `import.meta.url` | Full URL | `file://` path |
+| CORS | Enforced | N/A |
+| Runs in strict mode | Yes | Yes |
+
+---
+
+## Import Maps
+
+[Import maps](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap) solve a browser problem: how do you use bare specifiers like `'lodash'` without a bundler?
+
+### The Problem
+
+This works in Node.js because Node looks in `node_modules`:
+
+```javascript
+import confetti from 'canvas-confetti'  // Node: finds it in node_modules
+```
+
+In browsers, this fails — the browser doesn't know where `'canvas-confetti'` lives.
+
+### The Solution: Import Maps
+
+An import map tells the browser where to find modules:
+
+```html
+<script type="importmap">
+{
+  "imports": {
+    "canvas-confetti": "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.module.mjs",
+    "lodash": "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/lodash.js"
+  }
+}
+</script>
+
+<script type="module">
+  // Now bare specifiers work!
+  import confetti from 'canvas-confetti'
+  import { debounce } from 'lodash'
+  
+  confetti()
+</script>
+```
+
+### Path Prefixes
+
+Map entire package paths:
+
+```html
+<script type="importmap">
+{
+  "imports": {
+    "lodash/": "https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/"
+  }
+}
+</script>
+
+<script type="module">
+  // The trailing slash enables path mapping
+  import debounce from 'lodash/debounce.js'
+  import throttle from 'lodash/throttle.js'
+</script>
+```
+
+### Browser Support
+
+Import maps are supported in all modern browsers (Chrome 89+, Safari 16.4+, Firefox 108+). For older browsers, you'll need a polyfill or bundler.
+
+<Tip>
+Import maps are great for simple projects, demos, and learning. For production apps with many dependencies, bundlers like Vite still provide better optimization and developer experience.
+</Tip>
+
+---
+
+## Tree-Shaking and Bundlers
+
+One of ESM's biggest advantages is enabling tree-shaking, which bundlers use to eliminate dead code.
+
+### What is Tree-Shaking?
+
+Tree-shaking removes unused exports from your final bundle:
+
+```javascript
+// math.js
+export function add(a, b) { return a + b }
+export function subtract(a, b) { return a - b }
+export function multiply(a, b) { return a * b }
+export function divide(a, b) { return a / b }
+
+// app.js
+import { add } from './math.js'
+console.log(add(2, 3))
+```
+
+A tree-shaking bundler sees that only `add` is used, so `subtract`, `multiply`, and `divide` are removed from the bundle.
+
+### Why ESM Enables This
+
+CommonJS can't be reliably tree-shaken because imports are dynamic:
+
+```javascript
+// CommonJS - bundler can't know which exports are used
+const math = require('./math')
+const operation = userInput === 'add' ? math.add : math.subtract
+```
+
+ESM imports are static declarations, so the bundler knows exactly what's imported:
+
+```javascript
+// ESM - bundler knows only 'add' is used
+import { add } from './math.js'
+```
+
+### Modern Bundlers
+
+Even with native ESM support in browsers, bundlers remain valuable for:
+
+- **Tree-shaking** — Remove unused code
+- **Code splitting** — Break your app into smaller chunks
+- **Minification** — Shrink code for production
+- **Transpilation** — Support older browsers
+- **Asset handling** — Import CSS, images, JSON
+
+Popular options:
+- **Vite** — Fast development, Rollup-based production builds
+- **esbuild** — Extremely fast, great for libraries
+- **Rollup** — Best tree-shaking, ideal for libraries
+- **Webpack** — Most features, larger projects
+
+<Note>
+For small projects or learning, you can use native ESM in browsers without a bundler. For production apps, bundlers still provide significant benefits.
+</Note>
+
+---
+
+## Common Mistakes
+
+### Mistake #1: Named vs Default Import Confusion
+
+This is the most common ESM mistake. The syntax looks similar but means different things:
+
+```javascript
+// ─────────────────────────────────────────────
+// The module exports this:
+export default function Logger() {}
+export function format() {}
+
+// ─────────────────────────────────────────────
+
+// ❌ WRONG - trying to import default as named
+import { Logger } from './logger.js'
+// Error: The module doesn't have a named export called 'Logger'
+
+// ✓ CORRECT - no braces for default
+import Logger from './logger.js'
+
+// ✓ CORRECT - braces for named exports
+import { format } from './logger.js'
+
+// ✓ CORRECT - both together
+import Logger, { format } from './logger.js'
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE CURLY BRACE RULE                                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   export default X      →    import X from '...'      (no braces)       │
+│   export { Y }          →    import { Y } from '...'  (braces)          │
+│   export { Z as W }     →    import { W } from '...'  (braces)          │
+│                                                                          │
+│   Default = main thing, you name it                                      │
+│   Named = specific items, names must match                               │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Mistake #2: Circular Dependencies
+
+When module A imports module B, and module B imports module A, you can get `undefined` values:
+
+```javascript
+// a.js
+import { b } from './b.js'
+export const a = 'A'
+console.log('In a.js, b is:', b)
+
+// b.js
+import { a } from './a.js'
+export const b = 'B'
+console.log('In b.js, a is:', a)
+
+// Running a.js throws:
+// ReferenceError: Cannot access 'a' before initialization
+// (a.js hasn't finished executing when b.js tries to access 'a')
+```
+
+**Fix:** Restructure to avoid circular deps, or use functions that defer access until runtime:
+
+```javascript
+// Better: export functions that read values at call time
+export function getA() { return a }
+```
+
+### Mistake #3: Missing File Extensions in Browsers
+
+```javascript
+// ❌ WRONG in browsers
+import { helper } from './utils'  // 404 error
+
+// ✓ CORRECT
+import { helper } from './utils.js'
+```
+
+### Mistake #4: Mixing CommonJS and ESM in Node.js
+
+You can't use `require()` in an ESM file or `import` in a CommonJS file without extra steps:
+
+```javascript
+// ❌ In an ESM file (.mjs or type: module)
+const fs = require('fs')  // ReferenceError: require is not defined
+
+// ✓ CORRECT in ESM
+import fs from 'fs'
+import { readFile } from 'fs/promises'
+
+// ✓ If you really need require in ESM
+import { createRequire } from 'module'
+const require = createRequire(import.meta.url)
+const legacyModule = require('some-commonjs-package')
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **ESM is JavaScript's official module system** — It's standardized, works in browsers natively, and is the future of JavaScript modules.
+
+2. **Static structure enables optimization** — Because imports are declarations, not function calls, tools can analyze your code and remove unused exports (tree-shaking).
+
+3. **Live bindings, not copies** — ESM exports are references to the original variable. Changes in the source module are reflected in importers. CommonJS exports are value copies.
+
+4. **Use curly braces for named imports, no braces for default** — `import { named }` vs `import defaultExport`. Mixing these up is the #1 beginner mistake.
+
+5. **Dynamic imports for code splitting** — Use `import()` when you need to load modules conditionally or lazily. It returns a Promise.
+
+6. **ESM is always strict mode** — No need for `"use strict"`. Variables don't leak to global scope.
+
+7. **Modules execute once** — No matter how many files import a module, its top-level code runs exactly once. Modules are singletons.
+
+8. **File extensions are required** — In browsers and Node.js ESM, you must include `.js`. No automatic extension resolution.
+
+9. **Import maps solve bare specifiers in browsers** — Without a bundler, use import maps to tell browsers where to find packages like `'lodash'`.
+
+10. **Bundlers still matter** — Even with native ESM support, bundlers provide tree-shaking, minification, and code splitting that improve production performance.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What's the fundamental difference between ESM and CommonJS that enables tree-shaking?">
+    **Answer:**
+    
+    ESM imports are **static** — they must be at the top level with string literals. This means bundlers can analyze the entire dependency graph at build time without running any code.
+    
+    CommonJS uses **dynamic** `require()` calls that execute at runtime. The module path can be computed (`require(variable)`), used conditionally, or placed anywhere in code. Bundlers can't know what's actually imported until the code runs.
+    
+    ```javascript
+    // ESM - bundler sees exactly what's imported
+    import { add } from './math.js'  // static, analyzable
+    
+    // CommonJS - bundler can't be certain
+    const op = condition ? 'add' : 'subtract'
+    const math = require('./math')
+    math[op](1, 2)  // which function is used? Unknown until runtime
+    ```
+  </Accordion>
+  
+  <Accordion title="What are 'live bindings' and how do they differ from CommonJS exports?">
+    **Answer:**
+    
+    In ESM, imported bindings are **live references** to the exported variables. If the source module changes the value, importers see the new value.
+    
+    In CommonJS, `module.exports` provides **value copies** at the time of `require()`. Later changes in the source don't affect what was imported.
+    
+    ```javascript
+    // ESM: live binding
+    // counter.mjs
+    export let count = 0
+    export function increment() { count++ }
+    
+    // main.mjs
+    import { count, increment } from './counter.mjs'
+    console.log(count)  // 0
+    increment()
+    console.log(count)  // 1 (live!)
+    
+    // CommonJS: copy
+    // counter.cjs
+    let count = 0
+    module.exports = { count, increment: () => count++ }
+    
+    // main.cjs
+    const { count, increment } = require('./counter.cjs')
+    console.log(count)  // 0
+    increment()
+    console.log(count)  // 0 (still - it's a copy)
+    ```
+  </Accordion>
+  
+  <Accordion title="When would you use dynamic imports over static imports?">
+    **Answer:**
+    
+    Use `import()` when you need to:
+    
+    1. **Load modules conditionally** — Based on user action, feature flags, or environment
+    2. **Code split** — Load heavy components only when needed (route-based splitting)
+    3. **Compute the module path** — The path is determined at runtime
+    4. **Load modules in non-module scripts** — `import()` works even in regular scripts
+    
+    ```javascript
+    // Route-based code splitting
+    async function loadPage(route) {
+      const page = await import(`./pages/${route}.js`)
+      return page.default
+    }
+    
+    // Conditional loading
+    if (userWantsCharts) {
+      const { Chart } = await import('chart.js')
+    }
+    ```
+    
+    Static imports are better when you always need the module — they're faster to analyze and optimize.
+  </Accordion>
+  
+  <Accordion title="Why do browsers require file extensions in imports, but Node.js CommonJS doesn't?">
+    **Answer:**
+    
+    **Browsers** make HTTP requests for imports. Without an extension, the browser doesn't know what URL to request. It can't try multiple extensions (`.js`, `.mjs`, `/index.js`) because each would be a separate network request.
+    
+    **Node.js CommonJS** runs on the local file system where checking multiple file variations is fast. It tries: exact path → `.js` → `.json` → `.node` → `/index.js`, etc.
+    
+    **Node.js ESM** chose to require extensions for consistency with browsers and to avoid the ambiguity of the CommonJS resolution algorithm.
+    
+    ```javascript
+    // Browser - must include extension
+    import { x } from './utils.js'     // ✓
+    import { x } from './utils'        // ❌ 404
+    
+    // Node CommonJS - extension optional
+    const x = require('./utils')       // ✓ finds utils.js
+    
+    // Node ESM - extension required
+    import { x } from './utils.js'     // ✓
+    import { x } from './utils'        // ❌ ERR_MODULE_NOT_FOUND
+    ```
+  </Accordion>
+  
+  <Accordion title="What is an import map and when would you use one?">
+    **Answer:**
+    
+    An import map is a JSON object that tells browsers how to resolve bare module specifiers (like `'lodash'`). It maps package names to URLs.
+    
+    ```html
+    <script type="importmap">
+    {
+      "imports": {
+        "lodash": "https://cdn.jsdelivr.net/npm/lodash-es/lodash.js",
+        "lodash/": "https://cdn.jsdelivr.net/npm/lodash-es/"
+      }
+    }
+    </script>
+    
+    <script type="module">
+      import { debounce } from 'lodash'  // works now!
+    </script>
+    ```
+    
+    **Use import maps when:**
+    - Building simple apps without a bundler
+    - Creating demos or examples
+    - Learning/prototyping
+    - You want CDN-based dependencies
+    
+    For production apps with many dependencies, bundlers usually provide better optimization.
+  </Accordion>
+  
+  <Accordion title="What happens if two modules import each other (circular dependency)?">
+    **Answer:**
+    
+    ESM handles circular dependencies, but you can get errors for values that haven't been initialized yet.
+    
+    ```javascript
+    // a.js
+    import { b } from './b.js'
+    export const a = 'A'
+    console.log(b)  // 'B' (b.js already ran)
+    
+    // b.js
+    import { a } from './a.js'
+    export const b = 'B'
+    console.log(a)  // ReferenceError! (a.js hasn't finished)
+    ```
+    
+    When b.js runs, a.js is still in the middle of executing (it imported b.js), so accessing `a` throws a `ReferenceError: Cannot access 'a' before initialization` because `const` declarations have a temporal dead zone (TDZ).
+    
+    **Solutions:**
+    1. Restructure to avoid circular dependencies
+    2. Move shared code to a third module
+    3. Use functions that access values later (not at module load time)
+    
+    ```javascript
+    // Works: function accesses 'a' when called, not when defined
+    export function getA() { return a }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="IIFE, Modules & Namespaces" icon="box" href="/concepts/iife-modules">
+    The history of JavaScript modules and foundational patterns
+  </Card>
+  <Card title="async/await" icon="clock" href="/concepts/async-await">
+    Used with dynamic imports and top-level await
+  </Card>
+  <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
+    How module scope isolates variables
+  </Card>
+  <Card title="Design Patterns" icon="shapes" href="/concepts/design-patterns">
+    Module pattern and other encapsulation patterns
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Modules Guide — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">
+    Comprehensive guide to using modules in JavaScript
+  </Card>
+  <Card title="import statement — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import">
+    Complete reference for static import syntax
+  </Card>
+  <Card title="export statement — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export">
+    Complete reference for export syntax
+  </Card>
+  <Card title="import() operator — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import">
+    Dynamic import syntax and behavior
+  </Card>
+  <Card title="import.meta — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import.meta">
+    Module metadata including URL and Node.js properties
+  </Card>
+  <Card title="Import maps — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap">
+    Browser support for bare module specifiers
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="ES Modules: A Cartoon Deep-Dive" icon="newspaper" href="https://hacks.mozilla.org/2018/03/es-modules-a-cartoon-deep-dive/">
+    Lin Clark's illustrated guide explains how ES Modules work under the hood. The best visual explanation of module loading, linking, and evaluation you'll find.
+  </Card>
+  <Card title="JavaScript Modules" icon="newspaper" href="https://javascript.info/modules">
+    The javascript.info series covers modules comprehensively. Includes interactive examples and exercises to test your understanding.
+  </Card>
+  <Card title="Node.js ES Modules Documentation" icon="newspaper" href="https://nodejs.org/api/esm.html">
+    The official Node.js documentation for ES Modules. Covers enabling ESM, interoperability with CommonJS, import.meta, and the resolution algorithm.
+  </Card>
+  <Card title="ES6 Modules in Depth" icon="newspaper" href="https://ponyfoo.com/articles/es6-modules-in-depth">
+    Nicolás Bevacqua's deep dive into module syntax and semantics. Great for understanding the design decisions behind ESM.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript ES6 Modules" icon="video" href="https://www.youtube.com/watch?v=cRHQNNcYf6s">
+    Web Dev Simplified breaks down import/export syntax with clear examples. Perfect for solidifying your understanding of the basics.
+  </Card>
+  <Card title="ES Modules in 100 Seconds" icon="video" href="https://www.youtube.com/watch?v=qgRUr-YUk1Q">
+    Fireship's rapid-fire overview of ES Modules. Great for a quick refresher or introduction to the key concepts.
+  </Card>
+  <Card title="JavaScript Modules Past & Present" icon="video" href="https://www.youtube.com/watch?v=GQ96b_u7rGc">
+    Historical context on how JavaScript modules evolved from IIFEs to CommonJS to ESM. Helps you understand why ESM is designed the way it is.
+  </Card>
+</CardGroup>

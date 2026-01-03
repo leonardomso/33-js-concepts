@@ -1,0 +1,1122 @@
+---
+title: "Design Patterns: Reusable Solutions to Common Problems in JavaScript"
+sidebarTitle: "Design Patterns: Reusable Solutions"
+description: "Learn JavaScript design patterns like Module, Singleton, Observer, Factory, Proxy, and Decorator. Understand when to use each pattern and avoid common pitfalls."
+---
+
+Ever find yourself solving the same problem over and over? What if experienced developers already figured out the best solutions to these recurring challenges?
+
+```javascript
+// The Observer pattern — notify multiple listeners when something happens
+const newsletter = {
+  subscribers: [],
+  
+  subscribe(callback) {
+    this.subscribers.push(callback)
+  },
+  
+  publish(article) {
+    this.subscribers.forEach(callback => callback(article))
+  }
+}
+
+// Anyone can subscribe
+newsletter.subscribe(article => console.log(`New article: ${article}`))
+newsletter.subscribe(article => console.log(`Saving "${article}" for later`))
+
+// When we publish, all subscribers get notified
+newsletter.publish("Design Patterns in JavaScript")
+// "New article: Design Patterns in JavaScript"
+// "Saving "Design Patterns in JavaScript" for later"
+```
+
+**Design patterns** are proven solutions to common problems in software design. They're not code you copy-paste. They're templates, blueprints, or recipes that you adapt to solve specific problems in your own code. Learning patterns gives you a vocabulary to discuss solutions with other developers and helps you recognize when a well-known solution fits your problem.
+
+<Info>
+**What you'll learn in this guide:**
+- What design patterns are and why they matter
+- The Module pattern for organizing code with private state
+- The Singleton pattern (and why it's often unnecessary in JavaScript)
+- The Factory pattern for creating objects dynamically
+- The Observer pattern for event-driven programming
+- The Proxy pattern for controlling object access
+- The Decorator pattern for adding behavior without modification
+- How to choose the right pattern for your problem
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [Factories and Classes](/concepts/factories-classes) and [IIFE, Modules & Namespaces](/concepts/iife-modules). Design patterns build on these object-oriented and modular programming concepts.
+</Warning>
+
+---
+
+## The Toolkit Analogy
+
+Think of design patterns like specialized tools in a toolkit. A general-purpose hammer works for many tasks, but sometimes you need a specific tool: a Phillips screwdriver for certain screws, a wrench for bolts, or pliers for gripping.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     DESIGN PATTERNS TOOLKIT                              │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   CREATIONAL                 STRUCTURAL               BEHAVIORAL         │
+│   ───────────                ──────────               ──────────         │
+│   How objects               How objects              How objects         │
+│   are created               are composed             communicate         │
+│                                                                          │
+│   ┌─────────────┐           ┌─────────────┐         ┌─────────────┐     │
+│   │  Singleton  │           │   Proxy     │         │  Observer   │     │
+│   │  Factory    │           │  Decorator  │         │             │     │
+│   └─────────────┘           └─────────────┘         └─────────────┘     │
+│                                                                          │
+│   Use when you need         Use when you need       Use when objects    │
+│   to control object         to wrap or extend       need to react to    │
+│   creation                  objects                 changes in others   │
+│                                                                          │
+│   ┌─────────────────────────────────────────────────────────────────┐   │
+│   │  MODULE (JS-specific) — Encapsulates code with private state    │   │
+│   └─────────────────────────────────────────────────────────────────┘   │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+You don't use every tool for every job. Similarly, you don't use every pattern in every project. The skill is recognizing when a pattern fits your problem.
+
+---
+
+## What Are Design Patterns?
+
+Design patterns are typical solutions to commonly occurring problems in software design. The term was popularized by the "Gang of Four" (GoF) in their 1994 book *Design Patterns: Elements of Reusable Object-Oriented Software*. They catalogued 23 patterns that developers kept reinventing.
+
+### Why JavaScript Is Different
+
+The original GoF patterns were written for languages like C++ and Smalltalk. JavaScript is different:
+
+| Feature | Impact on Patterns |
+|---------|-------------------|
+| **First-class functions** | Many patterns simplify to just passing functions around |
+| **Prototypal inheritance** | No need for complex class hierarchies |
+| **ES Modules** | Built-in module system replaces manual Module pattern |
+| **Dynamic typing** | No need for interface abstractions |
+| **Closures** | Natural way to create private state |
+
+This means some classical patterns are overkill in JavaScript, while others become more elegant. We'll focus on the patterns that are genuinely useful in modern JavaScript.
+
+### The Three Categories
+
+The original GoF patterns are grouped into three categories:
+
+1. **Creational Patterns** — Control how objects are created
+   - Singleton, Factory Method, Abstract Factory, Builder, Prototype
+
+2. **Structural Patterns** — Control how objects are composed
+   - Proxy, Decorator, Adapter, Facade, Bridge, Composite, Flyweight
+
+3. **Behavioral Patterns** — Control how objects communicate
+   - Observer, Strategy, Command, Mediator, Iterator, State, and others
+
+<Note>
+**JavaScript-specific patterns:** The **Module pattern** isn't one of the original 23 GoF patterns. It's a JavaScript idiom that emerged to solve JavaScript-specific problems (like the lack of built-in modules before ES6). We include it here because it's essential for JavaScript developers.
+</Note>
+
+We'll cover six patterns that are particularly useful in JavaScript: **Module** (JS-specific), **Singleton**, **Factory**, **Observer**, **Proxy**, and **Decorator**.
+
+---
+
+## The Module Pattern
+
+The **Module pattern** encapsulates code into reusable units with private and public parts. Before ES6 modules existed, developers used IIFEs (Immediately Invoked Function Expressions) to create this pattern. Today, JavaScript has built-in [ES Modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) that provide this naturally.
+
+### ES6 Modules: The Modern Approach
+
+Each file is its own module. Variables are private unless you [`export`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/export) them:
+
+```javascript
+// counter.js — A module with private state
+let count = 0  // Private — not exported, not accessible outside
+
+export function increment() {
+  count++
+  return count
+}
+
+export function decrement() {
+  count--
+  return count
+}
+
+export function getCount() {
+  return count
+}
+
+// main.js — Using the module
+import { increment, getCount } from './counter.js'
+
+increment()
+increment()
+console.log(getCount())  // 2
+
+// Trying to access private state
+// console.log(count)  // ReferenceError: count is not defined
+```
+
+### The Classic IIFE Module Pattern
+
+Before ES6, developers used closures to create modules:
+
+```javascript
+// The revealing module pattern using IIFE
+const Counter = (function() {
+  // Private variables and functions
+  let count = 0
+  
+  function logChange(action) {
+    console.log(`Counter ${action}: ${count}`)
+  }
+  
+  // Public API — "revealed" by returning an object
+  return {
+    increment() {
+      count++
+      logChange('incremented')
+      return count
+    },
+    decrement() {
+      count--
+      logChange('decremented')
+      return count
+    },
+    getCount() {
+      return count
+    }
+  }
+})()
+
+Counter.increment()  // "Counter incremented: 1"
+Counter.increment()  // "Counter incremented: 2"
+console.log(Counter.getCount())  // 2
+
+// Private members are truly private
+console.log(Counter.count)       // undefined
+console.log(Counter.logChange)   // undefined
+```
+
+### When to Use the Module Pattern
+
+<AccordionGroup>
+  <Accordion title="Organizing related functionality">
+    Group related functions and data together. A `UserService` module might contain `login()`, `logout()`, `getCurrentUser()`, and private token storage.
+  </Accordion>
+  
+  <Accordion title="Hiding implementation details">
+    Expose only what consumers need. Internal helper functions, validation logic, and caching mechanisms stay private.
+  </Accordion>
+  
+  <Accordion title="Avoiding global namespace pollution">
+    Instead of 50 global functions, you have one module export. This prevents naming collisions with other code.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+**Modern JavaScript:** Use ES6 modules (`import`/`export`) for new projects. The IIFE pattern is mainly for legacy code or environments without module support. See [IIFE, Modules & Namespaces](/concepts/iife-modules) for a deeper dive.
+</Tip>
+
+---
+
+## The Singleton Pattern
+
+The **Singleton pattern** ensures a class has only one instance and provides a global access point to that instance. According to [Refactoring Guru](https://refactoring.guru/design-patterns/singleton), it solves two problems: guaranteeing a single instance and providing global access to it.
+
+### JavaScript Implementation
+
+```javascript
+// Singleton using Object.freeze — immutable configuration
+const Config = {
+  apiUrl: 'https://api.example.com',
+  timeout: 5000,
+  debug: false
+}
+
+Object.freeze(Config)  // Prevent all modifications
+
+// Usage anywhere in your app
+console.log(Config.apiUrl)  // "https://api.example.com"
+
+// Attempting to modify throws an error in strict mode (silently fails otherwise)
+Config.apiUrl = 'https://evil.com'
+console.log(Config.apiUrl)  // Still "https://api.example.com"
+
+Config.debug = true
+console.log(Config.debug)   // Still false — frozen objects are immutable
+```
+
+### Class-Based Singleton
+
+```javascript
+let instance = null
+
+class Database {
+  constructor() {
+    if (instance) {
+      return instance  // Return existing instance
+    }
+    
+    this.connection = null
+    instance = this
+  }
+  
+  connect(url) {
+    if (!this.connection) {
+      this.connection = `Connected to ${url}`
+      console.log(this.connection)
+    }
+    return this.connection
+  }
+}
+
+const db1 = new Database()
+const db2 = new Database()
+
+console.log(db1 === db2)  // true — Same instance!
+
+db1.connect('mongodb://localhost')  // "Connected to mongodb://localhost"
+db2.connect('mongodb://other')      // Returns same connection, doesn't reconnect
+```
+
+### Why Singleton Is Often an Anti-Pattern in JavaScript
+
+Here's the thing: **Singletons are often unnecessary in JavaScript**. Here's why:
+
+```javascript
+// ES Modules are already singletons!
+// config.js
+export const config = {
+  apiUrl: 'https://api.example.com',
+  timeout: 5000
+}
+
+// main.js
+import { config } from './config.js'
+
+// other.js
+import { config } from './config.js'
+
+// Both files get the SAME object — modules are cached!
+```
+
+<Warning>
+**Problems with Singletons:**
+
+1. **Testing difficulties** — Tests share the same instance, making isolation hard
+2. **Hidden dependencies** — Code that uses a Singleton has an implicit dependency
+3. **Tight coupling** — Components become coupled to a specific implementation
+4. **ES Modules already do this** — Module exports are cached; you get the same object every time
+
+**Better alternatives:** Dependency injection, React Context, or simply exporting an object from a module.
+</Warning>
+
+### When Singletons Make Sense
+
+Despite the caveats, Singletons can be appropriate for:
+- **Logging services** — One logger instance for the entire app
+- **Configuration objects** — App-wide settings that shouldn't change
+- **Connection pools** — Managing a single pool of database connections
+
+<CardGroup cols={2}>
+  <Card title="Singleton Pattern — Refactoring Guru" icon="book" href="https://refactoring.guru/design-patterns/singleton">
+    Detailed explanation with pros, cons, and implementation in multiple languages
+  </Card>
+</CardGroup>
+
+---
+
+## The Factory Pattern
+
+The **Factory pattern** creates objects without exposing the creation logic. Instead of using `new` directly, you call a factory function that returns the appropriate object. This centralizes object creation and makes it easy to change how objects are created without updating every call site.
+
+```javascript
+// Factory function — creates different user types
+function createUser(type, name) {
+  const baseUser = {
+    name,
+    createdAt: new Date(),
+    greet() {
+      return `Hi, I'm ${this.name}`
+    }
+  }
+  
+  switch (type) {
+    case 'admin':
+      return {
+        ...baseUser,
+        role: 'admin',
+        permissions: ['read', 'write', 'delete', 'manage-users'],
+        promote(user) {
+          console.log(`${this.name} promoted ${user.name}`)
+        }
+      }
+    
+    case 'editor':
+      return {
+        ...baseUser,
+        role: 'editor',
+        permissions: ['read', 'write']
+      }
+    
+    case 'viewer':
+    default:
+      return {
+        ...baseUser,
+        role: 'viewer',
+        permissions: ['read']
+      }
+  }
+}
+
+// Usage — no need to know the internal structure
+const admin = createUser('admin', 'Alice')
+const editor = createUser('editor', 'Bob')
+const viewer = createUser('viewer', 'Charlie')
+
+console.log(admin.permissions)   // ['read', 'write', 'delete', 'manage-users']
+console.log(editor.permissions)  // ['read', 'write']
+console.log(viewer.greet())      // "Hi, I'm Charlie"
+```
+
+### When to Use the Factory Pattern
+
+- **Creating objects with complex setup** — Encapsulate the complexity
+- **Creating different types based on input** — Switch logic in one place
+- **Decoupling creation from usage** — Callers don't need to know implementation details
+
+<Info>
+**Want to go deeper?** The Factory pattern is covered extensively in [Factories and Classes](/concepts/factories-classes), including factory functions vs classes, the `new` keyword, and when to use each approach.
+</Info>
+
+<CardGroup cols={2}>
+  <Card title="Factory Method — Refactoring Guru" icon="book" href="https://refactoring.guru/design-patterns/factory-method">
+    Complete guide to the Factory Method pattern with diagrams and examples
+  </Card>
+</CardGroup>
+
+---
+
+## The Observer Pattern
+
+The **Observer pattern** defines a subscription mechanism that notifies multiple objects about events. According to [Refactoring Guru](https://refactoring.guru/design-patterns/observer), it lets you "define a subscription mechanism to notify multiple objects about any events that happen to the object they're observing."
+
+This pattern is everywhere: DOM events, React state updates, Redux subscriptions, Node.js EventEmitter, and RxJS observables all use variations of Observer.
+
+### Building an Observable
+
+```javascript
+class Observable {
+  constructor() {
+    this.observers = []
+  }
+  
+  subscribe(fn) {
+    this.observers.push(fn)
+    // Return an unsubscribe function
+    return () => {
+      this.observers = this.observers.filter(observer => observer !== fn)
+    }
+  }
+  
+  notify(data) {
+    this.observers.forEach(observer => observer(data))
+  }
+}
+
+// Usage: A stock price tracker
+const stockPrice = new Observable()
+
+// Subscriber 1: Log to console
+const unsubscribeLogger = stockPrice.subscribe(price => {
+  console.log(`Stock price updated: $${price}`)
+})
+
+// Subscriber 2: Check for alerts
+stockPrice.subscribe(price => {
+  if (price > 150) {
+    console.log('ALERT: Price above $150!')
+  }
+})
+
+// Subscriber 3: Update UI (simulated)
+stockPrice.subscribe(price => {
+  console.log(`Updating chart with price: $${price}`)
+})
+
+// When price changes, all subscribers are notified
+stockPrice.notify(145)
+// "Stock price updated: $145"
+// "Updating chart with price: $145"
+
+stockPrice.notify(155)
+// "Stock price updated: $155"
+// "ALERT: Price above $150!"
+// "Updating chart with price: $155"
+
+// Unsubscribe the logger
+unsubscribeLogger()
+
+stockPrice.notify(160)
+// No log message, but alert and chart still update
+```
+
+### The Magazine Subscription Analogy
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     THE OBSERVER PATTERN                                 │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   PUBLISHER (Observable)              SUBSCRIBERS (Observers)            │
+│   ──────────────────────              ───────────────────────            │
+│                                                                          │
+│   ┌─────────────────────┐             ┌─────────────┐                   │
+│   │                     │ ──────────► │ Reader #1   │                   │
+│   │   Magazine          │             └─────────────┘                   │
+│   │   Publisher         │             ┌─────────────┐                   │
+│   │                     │ ──────────► │ Reader #2   │                   │
+│   │   • subscribers[]   │             └─────────────┘                   │
+│   │   • subscribe()     │             ┌─────────────┐                   │
+│   │   • unsubscribe()   │ ──────────► │ Reader #3   │                   │
+│   │   • notify()        │             └─────────────┘                   │
+│   │                     │                                               │
+│   └─────────────────────┘                                               │
+│                                                                          │
+│   When a new issue publishes, all subscribers receive it automatically.  │
+│   Readers can subscribe or unsubscribe at any time.                      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Real-World Example: Form Validation
+
+```javascript
+// Observable form field
+class FormField {
+  constructor(initialValue = '') {
+    this.value = initialValue
+    this.observers = []
+  }
+  
+  subscribe(fn) {
+    this.observers.push(fn)
+    return () => {
+      this.observers = this.observers.filter(o => o !== fn)
+    }
+  }
+  
+  setValue(newValue) {
+    this.value = newValue
+    this.observers.forEach(fn => fn(newValue))
+  }
+}
+
+// Usage
+const emailField = new FormField('')
+
+// Validator subscriber
+emailField.subscribe(value => {
+  const isValid = value.includes('@')
+  console.log(isValid ? 'Valid email' : 'Invalid email')
+})
+
+// Character counter subscriber
+emailField.subscribe(value => {
+  console.log(`Characters: ${value.length}`)
+})
+
+emailField.setValue('test')
+// "Invalid email"
+// "Characters: 4"
+
+emailField.setValue('test@example.com')
+// "Valid email"
+// "Characters: 16"
+```
+
+<CardGroup cols={2}>
+  <Card title="Observer Pattern — Refactoring Guru" icon="book" href="https://refactoring.guru/design-patterns/observer">
+    Complete explanation with UML diagrams and pseudocode
+  </Card>
+</CardGroup>
+
+---
+
+## The Proxy Pattern
+
+The **[Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy) pattern** provides a surrogate or placeholder for another object to control access to it. In JavaScript, the ES6 `Proxy` object lets you intercept and redefine fundamental operations like property access, assignment, and function calls.
+
+### Basic Proxy Example
+
+```javascript
+const user = {
+  name: 'Alice',
+  age: 25,
+  email: 'alice@example.com'
+}
+
+const userProxy = new Proxy(user, {
+  // Intercept property reads
+  get(target, property) {
+    console.log(`Accessing property: ${property}`)
+    return target[property]
+  },
+  
+  // Intercept property writes
+  set(target, property, value) {
+    console.log(`Setting ${property} to ${value}`)
+    
+    // Validation: age must be a non-negative number
+    if (property === 'age') {
+      if (typeof value !== 'number' || value < 0) {
+        throw new Error('Age must be a non-negative number')
+      }
+    }
+    
+    // Validation: email must contain @
+    if (property === 'email') {
+      if (!value.includes('@')) {
+        throw new Error('Invalid email format')
+      }
+    }
+    
+    target[property] = value
+    return true
+  }
+})
+
+// All access goes through the proxy
+console.log(userProxy.name)
+// "Accessing property: name"
+// "Alice"
+
+userProxy.age = 26
+// "Setting age to 26"
+
+userProxy.age = -5
+// Error: Age must be a non-negative number
+
+userProxy.email = 'invalid'
+// Error: Invalid email format
+```
+
+### Practical Use Case: Lazy Loading
+
+```javascript
+// Expensive object that we don't want to create until needed
+function createExpensiveResource() {
+  console.log('Creating expensive resource...')
+  return {
+    data: 'Loaded data from database',
+    process() {
+      return `Processing: ${this.data}`
+    }
+  }
+}
+
+// Proxy that delays creation until first use
+function createLazyResource() {
+  let resource = null
+  
+  return new Proxy({}, {
+    get(target, property) {
+      // Create resource on first access
+      if (!resource) {
+        resource = createExpensiveResource()
+      }
+      
+      const value = resource[property]
+      // If it's a method, bind it to the resource
+      return typeof value === 'function' ? value.bind(resource) : value
+    }
+  })
+}
+
+const lazyResource = createLazyResource()
+console.log('Proxy created, resource not loaded yet')
+
+// Resource is only created when we actually use it
+console.log(lazyResource.data)
+// "Creating expensive resource..."
+// "Loaded data from database"
+
+console.log(lazyResource.process())
+// "Processing: Loaded data from database"
+```
+
+### When to Use the Proxy Pattern
+
+| Use Case | Example |
+|----------|---------|
+| **Validation** | Validate data before setting properties |
+| **Logging/Debugging** | Log all property accesses for debugging |
+| **Lazy initialization** | Delay expensive object creation |
+| **Access control** | Restrict access to certain properties |
+| **Caching** | Cache expensive computations |
+
+<CardGroup cols={2}>
+  <Card title="Proxy — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">
+    Complete API reference for JavaScript's Proxy object
+  </Card>
+  <Card title="Proxy Pattern — Refactoring Guru" icon="book" href="https://refactoring.guru/design-patterns/proxy">
+    Pattern explanation with diagrams and use cases
+  </Card>
+</CardGroup>
+
+---
+
+## The Decorator Pattern
+
+The **Decorator pattern** attaches new behaviors to objects by wrapping them in objects that contain these behaviors. According to [Refactoring Guru](https://refactoring.guru/design-patterns/decorator), it lets you "attach new behaviors to objects by placing these objects inside special wrapper objects."
+
+In JavaScript, decorators are often implemented as functions that take an object and return an enhanced version.
+
+### Adding Abilities to Objects
+
+```javascript
+// Base object
+const createCharacter = (name) => ({
+  name,
+  health: 100,
+  describe() {
+    return `${this.name} (${this.health} HP)`
+  }
+})
+
+// Decorator: Add flying ability
+const withFlying = (character) => ({
+  ...character,
+  fly() {
+    return `${character.name} soars through the sky!`
+  },
+  describe() {
+    return `${character.describe()} [Can fly]`
+  }
+})
+
+// Decorator: Add swimming ability
+const withSwimming = (character) => ({
+  ...character,
+  swim() {
+    return `${character.name} dives into the water!`
+  },
+  describe() {
+    return `${character.describe()} [Can swim]`
+  }
+})
+
+// Decorator: Add armor
+const withArmor = (character, armorPoints) => ({
+  ...character,
+  armor: armorPoints,
+  takeDamage(amount) {
+    const reducedDamage = Math.max(0, amount - armorPoints)
+    character.health -= reducedDamage
+    return `${character.name} takes ${reducedDamage} damage (${armorPoints} blocked)`
+  },
+  describe() {
+    return `${character.describe()} [Armor: ${armorPoints}]`
+  }
+})
+
+// Compose decorators to build characters
+const duck = withSwimming(withFlying(createCharacter('Duck')))
+console.log(duck.describe())  // "Duck (100 HP) [Can fly] [Can swim]"
+console.log(duck.fly())       // "Duck soars through the sky!"
+console.log(duck.swim())      // "Duck dives into the water!"
+
+const knight = withArmor(createCharacter('Knight'), 20)
+console.log(knight.describe())     // "Knight (100 HP) [Armor: 20]"
+console.log(knight.takeDamage(50)) // "Knight takes 30 damage (20 blocked)"
+```
+
+### Function Decorators
+
+Decorators also work great with functions:
+
+```javascript
+// Decorator: Log function calls
+const withLogging = (fn, fnName) => {
+  return function(...args) {
+    console.log(`Calling ${fnName} with:`, args)
+    const result = fn.apply(this, args)
+    console.log(`${fnName} returned:`, result)
+    return result
+  }
+}
+
+// Decorator: Memoize (cache) results
+const withMemoization = (fn) => {
+  const cache = new Map()
+  
+  return function(...args) {
+    const key = JSON.stringify(args)
+    
+    if (cache.has(key)) {
+      console.log('Cache hit!')
+      return cache.get(key)
+    }
+    
+    const result = fn.apply(this, args)
+    cache.set(key, result)
+    return result
+  }
+}
+
+// Original function
+function fibonacci(n) {
+  if (n <= 1) return n
+  return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+// Decorated version with logging
+const loggedAdd = withLogging((a, b) => a + b, 'add')
+loggedAdd(2, 3)
+// "Calling add with: [2, 3]"
+// "add returned: 5"
+
+// Decorated fibonacci with memoization
+const memoizedFib = withMemoization(function fib(n) {
+  if (n <= 1) return n
+  return memoizedFib(n - 1) + memoizedFib(n - 2)
+})
+
+console.log(memoizedFib(10))  // 55
+console.log(memoizedFib(10))  // "Cache hit!" — 55
+```
+
+### When to Use the Decorator Pattern
+
+- **Adding features without modifying original code** — Open/Closed Principle
+- **Composing behaviors dynamically** — Mix and match capabilities
+- **Cross-cutting concerns** — Logging, caching, validation, timing
+
+<CardGroup cols={2}>
+  <Card title="Decorator Pattern — Refactoring Guru" icon="book" href="https://refactoring.guru/design-patterns/decorator">
+    Full explanation with structure diagrams and applicability guidelines
+  </Card>
+</CardGroup>
+
+---
+
+## Common Mistakes with Design Patterns
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    DESIGN PATTERN MISTAKES                               │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   MISTAKE #1: PATTERN OVERUSE                                            │
+│   ───────────────────────────                                            │
+│   Using patterns where simple code would work better.                    │
+│   A plain function is often better than a Factory class.                 │
+│                                                                          │
+│   MISTAKE #2: WRONG PATTERN CHOICE                                       │
+│   ─────────────────────────────                                          │
+│   Using Singleton when you just need a module export.                    │
+│   Using Observer when a simple callback would suffice.                   │
+│                                                                          │
+│   MISTAKE #3: IGNORING JAVASCRIPT IDIOMS                                 │
+│   ────────────────────────────────────                                   │
+│   JavaScript has closures, first-class functions, and ES modules.        │
+│   Many classical patterns simplify dramatically in JavaScript.           │
+│                                                                          │
+│   MISTAKE #4: PREMATURE ABSTRACTION                                      │
+│   ────────────────────────────────                                       │
+│   Adding patterns before you have a real problem to solve.               │
+│   "You Ain't Gonna Need It" (YAGNI) applies to patterns too.            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### The "Golden Hammer" Anti-Pattern
+
+When you learn a new pattern, resist the urge to use it everywhere:
+
+```javascript
+// ❌ OVERKILL: Factory for simple objects
+class UserFactory {
+  createUser(name) {
+    return new User(name)
+  }
+}
+const factory = new UserFactory()
+const user = factory.createUser('Alice')
+
+// ✓ SIMPLE: Just create the object
+const user = { name: 'Alice' }
+// or
+const user = new User('Alice')
+```
+
+<Warning>
+**Ask yourself these questions before using a pattern:**
+
+1. **Do I have a real problem?** Don't solve problems you don't have yet.
+2. **Is there a simpler solution?** A plain function or object might be enough.
+3. **Does JavaScript already solve this?** ES modules, Promises, and iterators are built-in patterns.
+4. **Will my team understand it?** Patterns only help if everyone knows them.
+</Warning>
+
+---
+
+## Choosing the Right Pattern
+
+| Problem | Pattern | Alternative |
+|---------|---------|-------------|
+| Need to organize code with private state | **Module** | ES6 module exports |
+| Need exactly one instance | **Singleton** | Just export an object from a module |
+| Need to create objects dynamically | **Factory** | Plain function returning objects |
+| Need to notify multiple listeners of changes | **Observer** | EventEmitter, callbacks, or a library |
+| Need to control or validate object access | **Proxy** | Getter/setter methods |
+| Need to add behavior without modification | **Decorator** | Higher-order functions, composition |
+
+<Tip>
+**Rule of Thumb:** Start with the simplest solution that works. Introduce patterns when you hit a real problem they solve, not before.
+</Tip>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Design patterns are templates, not code** — Adapt them to your specific problem; don't force-fit them
+
+2. **JavaScript simplifies many patterns** — First-class functions, closures, and ES modules reduce boilerplate
+
+3. **Module pattern organizes code** — Use ES modules for new projects; understand IIFE pattern for legacy code
+
+4. **Singleton is often unnecessary** — ES module exports are already cached; use sparingly if at all
+
+5. **Factory centralizes object creation** — Great for creating different types based on input
+
+6. **Observer enables event-driven code** — The foundation of DOM events, React state, and reactive programming
+
+7. **Proxy intercepts object operations** — Use for validation, logging, lazy loading, and access control
+
+8. **Decorator adds behavior through wrapping** — Compose features without modifying original code
+
+9. **Avoid pattern overuse** — Simple code beats clever patterns; apply the YAGNI principle
+
+10. **Learn to recognize patterns in the wild** — DOM events use Observer, Promises use a form of Observer, middleware uses Decorator
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the main purpose of the Module pattern?">
+    **Answer:**
+    
+    The Module pattern encapsulates code into reusable units with **private and public parts**. It allows you to:
+    - Hide implementation details (private variables and functions)
+    - Expose only a public API
+    - Avoid polluting the global namespace
+    
+    In modern JavaScript, ES6 modules (`import`/`export`) provide this naturally. Variables in a module are private unless exported.
+    
+    ```javascript
+    // privateHelper is not exported — it's private
+    function privateHelper() { /* ... */ }
+    
+    // Only publicFunction is accessible to importers
+    export function publicFunction() {
+      privateHelper()
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Why is Singleton often considered an anti-pattern in JavaScript?">
+    **Answer:**
+    
+    Singleton is often unnecessary in JavaScript because:
+    
+    1. **ES modules are already singletons** — When you export an object, all importers get the same instance
+    2. **Testing difficulties** — Tests share state, making isolation hard
+    3. **Hidden dependencies** — Code using Singletons has implicit dependencies
+    4. **JavaScript can create objects directly** — No need for the class-based workarounds other languages require
+    
+    ```javascript
+    // ES module — already a singleton!
+    export const config = { apiUrl: '...' }
+    
+    // Every import gets the same object
+    import { config } from './config.js'  // Same instance everywhere
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What are the three parts of an Observer pattern implementation?">
+    **Answer:**
+    
+    The Observer pattern has three key parts:
+    
+    1. **Subscriber list** — An array to store observer functions
+    2. **Subscribe method** — Adds a function to the list (often returns an unsubscribe function)
+    3. **Notify method** — Calls all subscribed functions with data
+    
+    ```javascript
+    class Observable {
+      constructor() {
+        this.observers = []                    // 1. Subscriber list
+      }
+      
+      subscribe(fn) {                          // 2. Subscribe method
+        this.observers.push(fn)
+        return () => {                         // Returns unsubscribe
+          this.observers = this.observers.filter(o => o !== fn)
+        }
+      }
+      
+      notify(data) {                           // 3. Notify method
+        this.observers.forEach(fn => fn(data))
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: How does the Proxy pattern differ from the Decorator pattern?">
+    **Answer:**
+    
+    Both wrap objects, but they have different purposes:
+    
+    **Proxy Pattern:**
+    - **Controls access** to an object
+    - Intercepts operations like get, set, delete
+    - The proxy typically has the same interface as the target
+    - Use for: validation, logging, lazy loading, access control
+    
+    **Decorator Pattern:**
+    - **Adds new behavior** to an object
+    - Wraps the object and extends its capabilities
+    - May add new methods or modify existing ones
+    - Use for: composing features, cross-cutting concerns
+    
+    ```javascript
+    // Proxy — same interface, controlled access
+    const proxy = new Proxy(obj, { get(t, p) { /* intercept */ } })
+    
+    // Decorator — enhanced interface, new behavior
+    const enhanced = withLogging(withCache(obj))
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: When should you use the Factory pattern?">
+    **Answer:**
+    
+    Use the Factory pattern when:
+    
+    1. **Object creation is complex** — Encapsulate setup logic in one place
+    2. **You need different types based on input** — Switch logic centralized in the factory
+    3. **You want to decouple creation from usage** — Callers don't need to know implementation
+    4. **You might change how objects are created** — Update the factory, not every call site
+    
+    ```javascript
+    // Factory — creation logic in one place
+    function createNotification(type, message) {
+      switch (type) {
+        case 'error': return { type, message, color: 'red' }
+        case 'success': return { type, message, color: 'green' }
+        default: return { type: 'info', message, color: 'blue' }
+      }
+    }
+    
+    // Easy to use — no need to know the structure
+    const notification = createNotification('error', 'Something went wrong')
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: What's the 'Golden Hammer' anti-pattern?">
+    **Answer:**
+    
+    The "Golden Hammer" anti-pattern is the tendency to use a familiar tool (or pattern) for every problem, even when it's not appropriate.
+    
+    **Signs you're doing this:**
+    - Using Singleton for everything that "should be global"
+    - Creating Factory classes for simple object literals
+    - Using Observer when a callback would suffice
+    - Adding patterns before you have a real problem
+    
+    **How to avoid it:**
+    - Start with the simplest solution
+    - Add patterns only when you hit a real problem they solve
+    - Ask: "Would a plain function/object work here?"
+    - Remember: Code clarity beats clever patterns
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Factories and Classes" icon="industry" href="/concepts/factories-classes">
+    Deep dive into object creation with factory functions and ES6 classes
+  </Card>
+  <Card title="IIFE, Modules & Namespaces" icon="box" href="/concepts/iife-modules">
+    How JavaScript evolved from IIFEs to modern ES modules
+  </Card>
+  <Card title="Higher-Order Functions" icon="function" href="/concepts/higher-order-functions">
+    Functions that work with functions — the foundation of many patterns
+  </Card>
+  <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
+    How closures enable private state in the Module pattern
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Proxy — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">
+    Complete API reference for JavaScript's built-in Proxy object
+  </Card>
+  <Card title="JavaScript Modules — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules">
+    Official guide to ES6 modules with import and export
+  </Card>
+  <Card title="Design Patterns Catalog — Refactoring Guru" icon="compass" href="https://refactoring.guru/design-patterns/catalog">
+    Complete catalog of classic design patterns with examples
+  </Card>
+  <Card title="Reflect — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect">
+    The Reflect object used with Proxy for default behavior
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Design Patterns — patterns.dev" icon="newspaper" href="https://www.patterns.dev/vanilla/module-pattern">
+    Lydia Hallie and Addy Osmani's modern guide with animated visualizations. Each pattern gets its own interactive explanation showing exactly how data flows.
+  </Card>
+  <Card title="JavaScript Design Patterns — freeCodeCamp" icon="newspaper" href="https://www.freecodecamp.org/news/javascript-design-patterns-explained/">
+    Beginner-friendly walkthrough of essential patterns with practical code examples. Great starting point if you're new to design patterns.
+  </Card>
+  <Card title="Learning JavaScript Design Patterns" icon="newspaper" href="https://www.patterns.dev/book/">
+    Addy Osmani's free online book, updated for modern JavaScript. The definitive resource covering patterns, anti-patterns, and real-world applications.
+  </Card>
+  <Card title="Mixins — javascript.info" icon="newspaper" href="https://javascript.info/mixins">
+    Authoritative guide on adding behaviors to classes without inheritance. Shows the EventMixin pattern that's used throughout JavaScript libraries.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="10 Design Patterns Explained in 10 Minutes" icon="video" href="https://www.youtube.com/watch?v=tv-_1er1mWI">
+    Fireship's fast-paced overview covering the essential patterns every developer should know. Perfect for a quick refresher or introduction.
+  </Card>
+  <Card title="JavaScript Design Patterns — Udacity" icon="video" href="https://www.udacity.com/course/javascript-design-patterns--ud989">
+    Free comprehensive course covering MVC, MVP, and organizing large JavaScript applications. Great for understanding patterns in context.
+  </Card>
+  <Card title="Factory Functions in JavaScript" icon="video" href="https://www.youtube.com/watch?v=ImwrezYhw4w">
+    Fun Fun Function's engaging explanation of factories vs classes. MPJ's conversational style makes complex concepts approachable.
+  </Card>
+</CardGroup>

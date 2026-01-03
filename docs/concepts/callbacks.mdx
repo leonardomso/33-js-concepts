@@ -1,0 +1,1439 @@
+---
+title: "Callbacks: The Foundation of Async JavaScript"
+sidebarTitle: "Callbacks: The Foundation of Async"
+description: "Learn JavaScript callbacks, functions passed to other functions to be called later. Understand sync vs async callbacks, error-first patterns, callback hell, and why Promises were invented."
+---
+
+Why doesn't JavaScript wait? When you set a timer, make a network request, or listen for a click, how does your code keep running instead of freezing until that operation completes?
+
+```javascript
+console.log('Before timer')
+
+setTimeout(function() {
+  console.log('Timer fired!')
+}, 1000)
+
+console.log('After timer')
+
+// Output:
+// Before timer
+// After timer
+// Timer fired! (1 second later)
+```
+
+The answer is **callbacks**: functions you pass to other functions, saying "call me back when you're done." Callbacks power everything async in JavaScript. Every event handler, every timer, every network request. They all rely on them.
+
+<Info>
+**What you'll learn in this guide:**
+- What callbacks are and why JavaScript uses them
+- The difference between synchronous and asynchronous callbacks
+- How callbacks connect to higher-order functions
+- Common callback patterns (event handlers, timers, array methods)
+- The error-first callback pattern (Node.js convention)
+- Callback hell and the "pyramid of doom"
+- How to escape callback hell
+- Why Promises were invented to solve callback problems
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes familiarity with [the Event Loop](/concepts/event-loop). It's the mechanism that makes async callbacks work! You should also understand [higher-order functions](/concepts/higher-order-functions), since callbacks are passed to higher-order functions.
+</Warning>
+
+---
+
+## What is a Callback?
+
+A **[callback](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function)** is a function passed as an argument to another function, that gets called later. The other function decides when (or if) to run it.
+
+```javascript
+// greet is a callback function
+function greet(name) {
+  console.log(`Hello, ${name}!`)
+}
+
+// processUserInput accepts a callback
+function processUserInput(callback) {
+  const name = 'Alice'
+  callback(name)  // "calling back" the function we received
+}
+
+processUserInput(greet)  // "Hello, Alice!"
+```
+
+The term "callback" comes from the idea of being **called back**. Think of it like getting a buzzer at a restaurant: "We'll buzz you when your table is ready."
+
+<Tip>
+**Here's the thing:** A callback is just a regular function. Nothing magical about it. What makes it a "callback" is *how it's used*: passed to another function to be executed later.
+</Tip>
+
+### Callbacks Can Be Anonymous
+
+You don't have to define callbacks as named functions. Anonymous functions (and arrow functions) work just as well:
+
+```javascript
+// Named function as callback
+function handleClick() {
+  console.log('Clicked!')
+}
+button.addEventListener('click', handleClick)
+
+// Anonymous function as callback
+button.addEventListener('click', function() {
+  console.log('Clicked!')
+})
+
+// Arrow function as callback
+button.addEventListener('click', () => {
+  console.log('Clicked!')
+})
+```
+
+All three do the same thing. Named functions are easier to debug though, and you can reuse them.
+
+---
+
+## The Restaurant Buzzer Analogy
+
+Callbacks work like the buzzer you get at a busy restaurant:
+
+1. **You place an order** — You call a function and pass it a callback
+2. **You get a buzzer** — The function registers your callback
+3. **You go sit down** — Your code continues running (non-blocking)
+4. **The buzzer goes off** — The async operation completes
+5. **You pick up your food** — Your callback is executed
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     THE RESTAURANT BUZZER ANALOGY                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  YOU (Your Code)              RESTAURANT (JavaScript Runtime)            │
+│                                                                          │
+│  ┌──────────────┐             ┌─────────────────────────────────┐        │
+│  │              │             │            KITCHEN               │        │
+│  │  "I'd like   │  ────────►  │         (Web APIs)               │        │
+│  │   a burger"  │   ORDER     │                                  │        │
+│  │              │             │    [setTimeout: 5 min]           │        │
+│  └──────────────┘             │    [fetch: waiting...]           │        │
+│         │                     │    [click: listening...]         │        │
+│         │                     └─────────────────────────────────┘        │
+│         │                                    │                           │
+│         │ You get a buzzer                   │ When ready...             │
+│         │ and go sit down                    ▼                           │
+│         │                     ┌─────────────────────────────────┐        │
+│         │                     │         PICKUP COUNTER          │        │
+│         ▼                     │        (Callback Queue)         │        │
+│  ┌──────────────┐             │                                  │        │
+│  │              │             │  [Your callback waiting here]    │        │
+│  │  📱 BUZZ!    │  ◄────────  │                                  │        │
+│  │              │   READY!    └─────────────────────────────────┘        │
+│  │  Time to     │                                                        │
+│  │  eat!        │             The Event Loop calls your callback         │
+│  └──────────────┘             when the kitchen (Web API) is done         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The key insight: **you don't wait at the counter**. You give them a way to reach you (the callback), and you go do other things. That's how JavaScript stays fast. It never sits around waiting.
+
+```javascript
+// You place your order (start async operation)
+setTimeout(function eatBurger() {
+  console.log('Eating my burger!')  // This is the callback
+}, 5000)
+
+// You go sit down (your code continues)
+console.log('Sitting down, checking my phone...')
+console.log('Chatting with friends...')
+console.log('Reading the menu...')
+
+// Output:
+// Sitting down, checking my phone...
+// Chatting with friends...
+// Reading the menu...
+// Eating my burger! (5 seconds later)
+```
+
+---
+
+## Callbacks and Higher-Order Functions
+
+Callbacks and [higher-order functions](/concepts/higher-order-functions) go hand in hand:
+
+- A **higher-order function** is a function that accepts functions as arguments or returns them
+- A **callback** is the function being passed to a higher-order function
+
+```javascript
+// forEach is a HIGHER-ORDER FUNCTION (it accepts a function)
+// The arrow function is the CALLBACK (it's being passed in)
+
+const numbers = [1, 2, 3]
+
+numbers.forEach((num) => {    // ← This is the callback
+  console.log(num * 2)
+})
+// 2, 4, 6
+```
+
+Every time you use `map`, `filter`, `forEach`, `reduce`, `sort`, or `find`, you're passing callbacks to higher-order functions:
+
+```javascript
+const users = [
+  { name: 'Alice', age: 25 },
+  { name: 'Bob', age: 17 },
+  { name: 'Charlie', age: 30 }
+]
+
+// filter accepts a callback that returns true/false
+const adults = users.filter(user => user.age >= 18)
+
+// map accepts a callback that transforms each element
+const names = users.map(user => user.name)
+
+// find accepts a callback that returns true when found
+const bob = users.find(user => user.name === 'Bob')
+
+// sort accepts a callback that compares two elements
+const byAge = users.sort((a, b) => a.age - b.age)
+```
+
+<Note>
+**The connection:** Understanding higher-order functions helps you understand callbacks. If you're comfortable with `map` and `filter`, you already understand callbacks! The only difference with async callbacks is *when* they execute.
+</Note>
+
+---
+
+## Synchronous vs Asynchronous Callbacks
+
+Some callbacks run right away. Others run later. Getting this wrong will bite you.
+
+### Synchronous Callbacks
+
+**Synchronous callbacks** are executed immediately, during the function call. They block until complete.
+
+```javascript
+const numbers = [1, 2, 3, 4, 5]
+
+console.log('Before map')
+
+const doubled = numbers.map(num => {
+  console.log(`Doubling ${num}`)
+  return num * 2
+})
+
+console.log('After map')
+console.log(doubled)
+
+// Output (all synchronous, in order):
+// Before map
+// Doubling 1
+// Doubling 2
+// Doubling 3
+// Doubling 4
+// Doubling 5
+// After map
+// [2, 4, 6, 8, 10]
+```
+
+The callback runs for each element **before** `map` returns. Nothing else happens until it's done.
+
+**Common synchronous callbacks:**
+- Array methods: `map`, `filter`, `forEach`, `reduce`, `find`, `sort`, `every`, `some`
+- String methods: `replace` (with function)
+- Object methods: `Object.keys().forEach()`
+
+### Asynchronous Callbacks
+
+**Asynchronous callbacks** are executed later, after the current code finishes. They don't block.
+
+```javascript
+console.log('Before setTimeout')
+
+setTimeout(() => {
+  console.log('Inside setTimeout')
+}, 0)  // Even with 0ms delay!
+
+console.log('After setTimeout')
+
+// Output:
+// Before setTimeout
+// After setTimeout
+// Inside setTimeout (runs AFTER all sync code)
+```
+
+Even with a 0ms delay, the callback runs **after** the synchronous code. This is because async callbacks go through the [event loop](/concepts/event-loop).
+
+**Common asynchronous callbacks:**
+- Timers: `setTimeout`, `setInterval`
+- Events: `addEventListener`, `onclick`
+- Network: `XMLHttpRequest.onload`, `fetch().then()`
+- Node.js I/O: `fs.readFile`, `http.get`
+
+### Comparison Table
+
+| Aspect | Synchronous Callbacks | Asynchronous Callbacks |
+|--------|----------------------|------------------------|
+| **When executed** | Immediately, during the function call | Later, via the event loop |
+| **Blocking** | Yes — code waits for completion | No — code continues immediately |
+| **Examples** | `map`, `filter`, `forEach`, `sort` | `setTimeout`, `addEventListener`, `fetch` |
+| **Use case** | Data transformation, iteration | I/O, user interaction, timers |
+| **Error handling** | Regular `try/catch` works | `try/catch` won't catch errors! |
+| **Return value** | Can return values | Return values usually ignored |
+
+### The Critical Difference: Error Handling
+
+This trips up almost everyone:
+
+```javascript
+// Synchronous callback - try/catch WORKS
+try {
+  [1, 2, 3].forEach(num => {
+    if (num === 2) throw new Error('Found 2!')
+  })
+} catch (error) {
+  console.log('Caught:', error.message)  // "Caught: Found 2!"
+}
+
+// Asynchronous callback - try/catch DOES NOT WORK!
+try {
+  setTimeout(() => {
+    throw new Error('Async error!')  // This error escapes!
+  }, 100)
+} catch (error) {
+  // This will NEVER run
+  console.log('Caught:', error.message)
+}
+// The error crashes your program!
+```
+
+Why? The `try/catch` runs immediately. By the time the async callback executes, the `try/catch` is long gone. The callback runs in a different "turn" of the event loop.
+
+---
+
+## How Callbacks Work with the Event Loop
+
+To understand async callbacks, you need to see how they work with the [event loop](/concepts/event-loop).
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     ASYNC CALLBACK LIFECYCLE                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  1. YOUR CODE RUNS                                                       │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  console.log('Start')                                            │    │
+│  │  setTimeout(callback, 1000)  // Register callback with Web API   │    │
+│  │  console.log('End')                                              │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                          │                                               │
+│                          ▼                                               │
+│  2. WEB API HANDLES THE ASYNC OPERATION                                  │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  Timer starts counting...                                        │    │
+│  │  (Your code continues running - it doesn't wait!)                │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                          │                                               │
+│                          ▼ (after 1000ms)                                │
+│  3. CALLBACK QUEUED                                                      │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  Timer done! Callback added to Task Queue                        │    │
+│  │  [callback] ← waiting here                                       │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                          │                                               │
+│                          ▼ (when call stack is empty)                    │
+│  4. EVENT LOOP EXECUTES CALLBACK                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐    │
+│  │  Event Loop: "Call stack empty? Let me grab that callback..."    │    │
+│  │  callback() runs!                                                │    │
+│  └─────────────────────────────────────────────────────────────────┘    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Let's trace through a real example:
+
+```javascript
+console.log('1: Script start')
+
+setTimeout(function first() {
+  console.log('2: First timeout')
+}, 0)
+
+setTimeout(function second() {
+  console.log('3: Second timeout')
+}, 0)
+
+console.log('4: Script end')
+```
+
+**Execution order:**
+
+1. `console.log('1: Script start')` — runs immediately → "1: Script start"
+2. `setTimeout(first, 0)` — registers `first` callback with Web APIs
+3. `setTimeout(second, 0)` — registers `second` callback with Web APIs
+4. `console.log('4: Script end')` — runs immediately → "4: Script end"
+5. Call stack is now empty
+6. Event Loop checks Task Queue — finds `first`
+7. `first()` runs → "2: First timeout"
+8. Event Loop checks Task Queue — finds `second`
+9. `second()` runs → "3: Second timeout"
+
+**Output:**
+```
+1: Script start
+4: Script end
+2: First timeout
+3: Second timeout
+```
+
+Even with a 0ms delay, the callbacks still run **after** all the synchronous code finishes.
+
+<Tip>
+**Read more:** Our [Event Loop guide](/concepts/event-loop) goes deep into tasks, microtasks, and rendering. If you want to understand *why* `Promise.then()` runs before `setTimeout(..., 0)`, check it out!
+</Tip>
+
+---
+
+## Common Callback Patterns
+
+Here are the most common ways you'll see callbacks in the wild.
+
+### Pattern 1: Event Handlers
+
+The most common use of callbacks in browser JavaScript:
+
+```javascript
+// DOM events
+const button = document.getElementById('myButton')
+
+button.addEventListener('click', function handleClick(event) {
+  console.log('Button clicked!')
+  console.log('Event type:', event.type)      // "click"
+  console.log('Target:', event.target)        // the button element
+})
+
+// The callback receives an Event object with details about what happened
+```
+
+You can also use named functions for reusability:
+
+```javascript
+function handleClick(event) {
+  console.log('Clicked:', event.target.id)
+}
+
+function handleMouseOver(event) {
+  event.target.style.backgroundColor = 'yellow'
+}
+
+button.addEventListener('click', handleClick)
+button.addEventListener('mouseover', handleMouseOver)
+
+// Later, you can remove them:
+button.removeEventListener('click', handleClick)
+```
+
+### Pattern 2: Timers
+
+`setTimeout` and `setInterval` both accept callbacks:
+
+```javascript
+// setTimeout - runs once after delay
+const timeoutId = setTimeout(function() {
+  console.log('This runs once after 2 seconds')
+}, 2000)
+
+// Cancel it before it runs
+clearTimeout(timeoutId)
+
+// setInterval - runs repeatedly
+let count = 0
+const intervalId = setInterval(function() {
+  count++
+  console.log(`Count: ${count}`)
+  
+  if (count >= 5) {
+    clearInterval(intervalId)  // Stop after 5 times
+    console.log('Done!')
+  }
+}, 1000)
+```
+
+**Passing arguments to timer callbacks:**
+
+```javascript
+// Method 1: Closure (most common)
+const name = 'Alice'
+setTimeout(function() {
+  console.log(`Hello, ${name}!`)
+}, 1000)
+
+// Method 2: setTimeout's extra arguments
+setTimeout(function(greeting, name) {
+  console.log(`${greeting}, ${name}!`)
+}, 1000, 'Hello', 'Bob')  // Extra args passed to callback
+
+// Method 3: Arrow function with closure
+const user = { name: 'Charlie' }
+setTimeout(() => console.log(`Hi, ${user.name}!`), 1000)
+```
+
+### Pattern 3: Array Iteration
+
+These are synchronous callbacks, but they're everywhere:
+
+```javascript
+const products = [
+  { name: 'Laptop', price: 999, inStock: true },
+  { name: 'Phone', price: 699, inStock: false },
+  { name: 'Tablet', price: 499, inStock: true }
+]
+
+// forEach - do something with each item
+products.forEach(product => {
+  console.log(`${product.name}: $${product.price}`)
+})
+
+// map - transform each item into something new
+const productNames = products.map(product => product.name)
+// ['Laptop', 'Phone', 'Tablet']
+
+// filter - keep only items that pass a test
+const available = products.filter(product => product.inStock)
+// [{ name: 'Laptop', ... }, { name: 'Tablet', ... }]
+
+// find - get the first item that passes a test
+const phone = products.find(product => product.name === 'Phone')
+// { name: 'Phone', price: 699, inStock: false }
+
+// reduce - combine all items into a single value
+const totalValue = products.reduce((sum, product) => sum + product.price, 0)
+// 2197
+```
+
+### Pattern 4: Custom Callbacks
+
+You can create your own functions that accept callbacks:
+
+```javascript
+// A function that does something and then calls you back
+function fetchUserData(userId, callback) {
+  // Simulate async operation
+  setTimeout(function() {
+    const user = { id: userId, name: 'Alice', email: 'alice@example.com' }
+    callback(user)
+  }, 1000)
+}
+
+// Using the function
+fetchUserData(123, function(user) {
+  console.log('Got user:', user.name)
+})
+console.log('Fetching user...')
+
+// Output:
+// Fetching user...
+// Got user: Alice (1 second later)
+```
+
+---
+
+## The Error-First Callback Pattern
+
+When Node.js came along, developers needed a standard way to handle errors in async callbacks. They landed on **error-first callbacks** (also called "Node-style callbacks" or "errbacks").
+
+### The Convention
+
+```javascript
+// Error-first callback signature
+function callback(error, result) {
+  // error: null/undefined if success, Error object if failure
+  // result: the data if success, usually undefined if failure
+}
+```
+
+The first parameter is **always** reserved for an error. If the operation succeeds, `error` is `null` or `undefined`. If it fails, `error` contains an Error object.
+
+### Reading a File (Node.js Example)
+
+```javascript
+const fs = require('fs')
+
+fs.readFile('config.json', 'utf8', function(error, data) {
+  // ALWAYS check for error first!
+  if (error) {
+    console.error('Failed to read file:', error.message)
+    return  // Important: stop execution!
+  }
+  
+  // If we get here, error is null/undefined
+  console.log('File contents:', data)
+  const config = JSON.parse(data)
+  console.log('Config loaded:', config)
+})
+```
+
+### Why Put Error First?
+
+1. **Consistency** — Every callback has the same signature
+2. **Can't be ignored** — The error is the first thing you see
+3. **Early return** — Check for error, return early, then handle success
+4. **No exceptions** — Async errors can't be caught with try/catch
+
+### Creating Your Own Error-First Functions
+
+```javascript
+function divideAsync(a, b, callback) {
+  // Simulate async operation
+  setTimeout(function() {
+    // Check for errors
+    if (typeof a !== 'number' || typeof b !== 'number') {
+      callback(new Error('Both arguments must be numbers'))
+      return
+    }
+    
+    if (b === 0) {
+      callback(new Error('Cannot divide by zero'))
+      return
+    }
+    
+    // Success! Error is null, result is the value
+    const result = a / b
+    callback(null, result)
+  }, 100)
+}
+
+// Using it
+divideAsync(10, 2, function(error, result) {
+  if (error) {
+    console.error('Division failed:', error.message)
+    return
+  }
+  console.log('Result:', result)  // Result: 5
+})
+
+divideAsync(10, 0, function(error, result) {
+  if (error) {
+    console.error('Division failed:', error.message)  // "Cannot divide by zero"
+    return
+  }
+  console.log('Result:', result)
+})
+```
+
+### Common Mistake: Forgetting to Return
+
+```javascript
+// ❌ WRONG - code continues after error callback!
+function processData(data, callback) {
+  if (!data) {
+    callback(new Error('No data provided'))
+    // Oops! Execution continues...
+  }
+  
+  // This runs even when there's an error!
+  const processed = transform(data)  // Crash! data is undefined
+  callback(null, processed)
+}
+
+// ✓ CORRECT - return after error callback
+function processData(data, callback) {
+  if (!data) {
+    return callback(new Error('No data provided'))
+    // Or: callback(new Error(...)); return;
+  }
+  
+  // This only runs if data exists
+  const processed = transform(data)
+  callback(null, processed)
+}
+```
+
+<Warning>
+**Always return after calling an error callback!** Otherwise, your code continues executing with invalid data.
+</Warning>
+
+---
+
+## Callback Hell: The Pyramid of Doom
+
+When you have multiple async operations that depend on each other, callbacks nest inside callbacks. This creates the infamous "callback hell" or "pyramid of doom."
+
+### The Problem
+
+Imagine a user authentication flow:
+
+1. Get user from database
+2. Verify password
+3. Get user's profile
+4. Get user's settings
+5. Render the dashboard
+
+With callbacks, this becomes:
+
+```javascript
+getUser(userId, function(error, user) {
+  if (error) {
+    handleError(error)
+    return
+  }
+  
+  verifyPassword(user, password, function(error, isValid) {
+    if (error) {
+      handleError(error)
+      return
+    }
+    
+    if (!isValid) {
+      handleError(new Error('Invalid password'))
+      return
+    }
+    
+    getProfile(user.id, function(error, profile) {
+      if (error) {
+        handleError(error)
+        return
+      }
+      
+      getSettings(user.id, function(error, settings) {
+        if (error) {
+          handleError(error)
+          return
+        }
+        
+        renderDashboard(user, profile, settings, function(error) {
+          if (error) {
+            handleError(error)
+            return
+          }
+          
+          console.log('Dashboard rendered!')
+        })
+      })
+    })
+  })
+})
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         CALLBACK HELL                                    │
+│                    (The Pyramid of Doom)                                 │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   getUser(id, function(err, user) {                                      │
+│     verifyPassword(user, pw, function(err, valid) {                      │
+│       getProfile(user.id, function(err, profile) {                       │
+│         getSettings(user.id, function(err, settings) {                   │
+│           renderDashboard(user, profile, settings, function(err) {       │
+│             // Finally! But look at this indentation...                  │
+│           })                                                             │
+│         })                                                               │
+│       })                                                                 │
+│     })                                                                   │
+│   })                                                                     │
+│                                                                          │
+│   Problems:                                                              │
+│   • Hard to read (horizontal scrolling)                                  │
+│   • Hard to debug (which callback failed?)                               │
+│   • Hard to maintain (adding a step means more nesting)                  │
+│   • Error handling repeated at every level                               │
+│   • Variables from outer callbacks hard to track                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Why This Hurts
+
+1. **Readability** — Code flows right instead of down, requiring horizontal scrolling
+2. **Error handling** — Must be duplicated at every level
+3. **Debugging** — Stack traces become confusing
+4. **Maintenance** — Adding or removing steps is painful
+5. **Variable scope** — Variables from outer callbacks are hard to track
+6. **Testing** — Nearly impossible to unit test individual steps
+
+
+
+---
+
+## Escaping Callback Hell
+
+Here's how to escape the pyramid of doom.
+
+### Strategy 1: Named Functions
+
+Extract anonymous callbacks into named functions:
+
+```javascript
+// Before: Anonymous callback hell
+getData(function(err, data) {
+  processData(data, function(err, processed) {
+    saveData(processed, function(err) {
+      console.log('Done!')
+    })
+  })
+})
+
+// After: Named functions
+function handleData(err, data) {
+  if (err) return handleError(err)
+  processData(data, handleProcessed)
+}
+
+function handleProcessed(err, processed) {
+  if (err) return handleError(err)
+  saveData(processed, handleSaved)
+}
+
+function handleSaved(err) {
+  if (err) return handleError(err)
+  console.log('Done!')
+}
+
+function handleError(err) {
+  console.error('Error:', err.message)
+}
+
+// Start the chain
+getData(handleData)
+```
+
+**Benefits:**
+- Code flows vertically (easier to read)
+- Functions can be reused
+- Easier to debug (named functions in stack traces)
+- Easier to test individually
+
+### Strategy 2: Early Returns and Guard Clauses
+
+Keep the happy path at the lowest indentation level:
+
+```javascript
+// Instead of nested if/else
+function processUser(user, callback) {
+  validateUser(user, function(err, isValid) {
+    if (err) {
+      callback(err)
+    } else {
+      if (isValid) {
+        saveUser(user, function(err, savedUser) {
+          if (err) {
+            callback(err)
+          } else {
+            callback(null, savedUser)
+          }
+        })
+      } else {
+        callback(new Error('Invalid user'))
+      }
+    }
+  })
+}
+
+// Use early returns
+function processUser(user, callback) {
+  validateUser(user, function(err, isValid) {
+    if (err) return callback(err)
+    if (!isValid) return callback(new Error('Invalid user'))
+    
+    saveUser(user, function(err, savedUser) {
+      if (err) return callback(err)
+      callback(null, savedUser)
+    })
+  })
+}
+```
+
+### Strategy 3: Modularization
+
+Split your code into smaller, focused modules:
+
+```javascript
+// auth.js
+function authenticateUser(credentials, callback) {
+  getUser(credentials.email, function(err, user) {
+    if (err) return callback(err)
+    
+    verifyPassword(user, credentials.password, function(err, isValid) {
+      if (err) return callback(err)
+      if (!isValid) return callback(new Error('Invalid password'))
+      callback(null, user)
+    })
+  })
+}
+
+// profile.js
+function loadUserProfile(userId, callback) {
+  getProfile(userId, function(err, profile) {
+    if (err) return callback(err)
+    
+    getSettings(userId, function(err, settings) {
+      if (err) return callback(err)
+      callback(null, { profile, settings })
+    })
+  })
+}
+
+// main.js
+authenticateUser(credentials, function(err, user) {
+  if (err) return handleError(err)
+  
+  loadUserProfile(user.id, function(err, data) {
+    if (err) return handleError(err)
+    renderDashboard(user, data.profile, data.settings)
+  })
+})
+```
+
+### Strategy 4: Control Flow Libraries (Historical)
+
+Before Promises, libraries like [async.js](https://caolan.github.io/async/) helped manage callback flow:
+
+```javascript
+// Using async.js waterfall (each step passes result to next)
+async.waterfall([
+  function(callback) {
+    getUser(userId, callback)
+  },
+  function(user, callback) {
+    verifyPassword(user, password, function(err, isValid) {
+      callback(err, user, isValid)
+    })
+  },
+  function(user, isValid, callback) {
+    if (!isValid) return callback(new Error('Invalid password'))
+    getProfile(user.id, function(err, profile) {
+      callback(err, user, profile)
+    })
+  },
+  function(user, profile, callback) {
+    getSettings(user.id, function(err, settings) {
+      callback(err, user, profile, settings)
+    })
+  }
+], function(err, user, profile, settings) {
+  if (err) return handleError(err)
+  renderDashboard(user, profile, settings)
+})
+```
+
+### Strategy 5: Promises (The Modern Solution)
+
+[Promises](/concepts/promises) were invented specifically to solve callback hell:
+
+```javascript
+// The same flow with Promises
+getUser(userId)
+  .then(user => verifyPassword(user, password))
+  .then(({ user, isValid }) => {
+    if (!isValid) throw new Error('Invalid password')
+    return getProfile(user.id).then(profile => ({ user, profile }))
+  })
+  .then(({ user, profile }) => {
+    return getSettings(user.id).then(settings => ({ user, profile, settings }))
+  })
+  .then(({ user, profile, settings }) => {
+    renderDashboard(user, profile, settings)
+  })
+  .catch(handleError)
+```
+
+<Note>
+This Promise chain is intentionally verbose to show how callbacks nest differently with Promises. For cleaner patterns and best practices, check out our [Promises guide](/concepts/promises).
+</Note>
+
+Or with [async/await](/concepts/async-await):
+
+```javascript
+// The same flow with async/await
+async function initDashboard(userId, password) {
+  try {
+    const user = await getUser(userId)
+    const isValid = await verifyPassword(user, password)
+    
+    if (!isValid) throw new Error('Invalid password')
+    
+    const profile = await getProfile(user.id)
+    const settings = await getSettings(user.id)
+    
+    renderDashboard(user, profile, settings)
+  } catch (error) {
+    handleError(error)
+  }
+}
+```
+
+<Tip>
+**Promises and async/await are built on callbacks.** They don't replace callbacks. They provide a cleaner abstraction over them. Under the hood, Promise `.then()` handlers are still callbacks!
+</Tip>
+
+---
+
+## Common Callback Mistakes
+
+### Mistake 1: Calling a Callback Multiple Times
+
+A callback should typically be called exactly once, either with an error or with a result:
+
+```javascript
+// ❌ WRONG - callback called multiple times!
+function fetchData(url, callback) {
+  fetch(url)
+    .then(response => {
+      callback(null, response)  // Called on success
+    })
+    .catch(error => {
+      callback(error)           // Called on error
+    })
+    .finally(() => {
+      callback(null, 'done')    // Called ALWAYS, even after success or error!
+    })
+}
+
+// ✓ CORRECT - callback called exactly once
+function fetchData(url, callback) {
+  fetch(url)
+    .then(response => callback(null, response))
+    .catch(error => callback(error))
+}
+```
+
+### Mistake 2: Synchronous and Asynchronous Mixing (Zalgo)
+
+A function should be consistently sync or async, never both. This inconsistency is nicknamed "releasing Zalgo," a reference to an internet meme about unleashing chaos. And chaos is exactly what you get when code behaves unpredictably:
+
+```javascript
+// ❌ WRONG - sometimes sync, sometimes async (Zalgo!)
+function getData(cache, callback) {
+  if (cache.has('data')) {
+    callback(null, cache.get('data'))  // Sync!
+    return
+  }
+  
+  fetchFromServer(function(err, data) {
+    callback(err, data)  // Async!
+  })
+}
+
+// This causes unpredictable behavior:
+let value = 'initial'
+getData(cache, function(err, data) {
+  value = data
+})
+console.log(value)  // "initial" or the data? Depends on cache!
+
+// ✓ CORRECT - always async
+function getData(cache, callback) {
+  if (cache.has('data')) {
+    // Use setTimeout to make it async (works in browsers and Node.js)
+    setTimeout(function() {
+      callback(null, cache.get('data'))
+    }, 0)
+    return
+  }
+  
+  fetchFromServer(function(err, data) {
+    callback(err, data)
+  })
+}
+```
+
+### Mistake 3: Losing `this` Context
+
+Regular functions lose their `this` binding when used as callbacks:
+
+```javascript
+// ❌ WRONG - this is undefined/global
+const user = {
+  name: 'Alice',
+  greetLater: function() {
+    setTimeout(function() {
+      console.log(`Hello, ${this.name}!`)  // this.name is undefined!
+    }, 1000)
+  }
+}
+user.greetLater()  // "Hello, undefined!"
+
+// ✓ CORRECT - Use arrow function (inherits this)
+const user = {
+  name: 'Alice',
+  greetLater: function() {
+    setTimeout(() => {
+      console.log(`Hello, ${this.name}!`)  // Arrow function keeps this
+    }, 1000)
+  }
+}
+user.greetLater()  // "Hello, Alice!"
+
+// ✓ CORRECT - Use bind
+const user = {
+  name: 'Alice',
+  greetLater: function() {
+    setTimeout(function() {
+      console.log(`Hello, ${this.name}!`)
+    }.bind(this), 1000)  // Explicitly bind this
+  }
+}
+user.greetLater()  // "Hello, Alice!"
+
+// ✓ CORRECT - Save reference to this
+const user = {
+  name: 'Alice',
+  greetLater: function() {
+    const self = this  // Save reference
+    setTimeout(function() {
+      console.log(`Hello, ${self.name}!`)
+    }, 1000)
+  }
+}
+user.greetLater()  // "Hello, Alice!"
+```
+
+### Mistake 4: Not Handling Errors
+
+Always handle errors in async callbacks. Unhandled errors can crash your application:
+
+```javascript
+// ❌ WRONG - error ignored
+fs.readFile('config.json', function(err, data) {
+  const config = JSON.parse(data)  // Crashes if err exists!
+  startApp(config)
+})
+
+// ✓ CORRECT - error handled
+fs.readFile('config.json', function(err, data) {
+  if (err) {
+    console.error('Could not read config:', err.message)
+    process.exit(1)
+    return
+  }
+  
+  try {
+    const config = JSON.parse(data)
+    startApp(config)
+  } catch (parseError) {
+    console.error('Invalid JSON in config:', parseError.message)
+    process.exit(1)
+  }
+})
+```
+
+---
+
+## Historical Context: Why JavaScript Uses Callbacks
+
+Understanding *why* JavaScript uses callbacks helps everything click into place.
+
+### The Birth of JavaScript (1995)
+
+JavaScript was created by Brendan Eich at Netscape in just 10 days. Its primary purpose was to make web pages interactive, responding to user clicks, form submissions, and other events.
+
+### The Single-Threaded Design
+
+JavaScript was designed to be **single-threaded**: one thing at a time. Why?
+
+1. **Simplicity** — No race conditions, deadlocks, or complex synchronization
+2. **DOM Safety** — Multiple threads modifying the DOM would cause chaos
+3. **Browser Reality** — Early browsers couldn't handle multi-threaded scripts
+
+But single-threaded means a problem: **you can't block waiting for things.**
+
+If JavaScript waited for a network request to complete, the entire page would freeze. Users couldn't click, scroll, or do anything. That's unacceptable for a UI language.
+
+### The Callback Solution
+
+Callbacks solved this problem neatly:
+
+1. **Register interest** — "When this happens, call this function"
+2. **Continue immediately** — Don't block, keep the UI responsive  
+3. **React later** — When the event occurs, the callback runs
+
+```javascript
+// This pattern was there from day one
+element.onclick = function() {
+  alert('Clicked!')
+}
+
+// The page doesn't freeze waiting for a click
+// JavaScript registers the callback and moves on
+// When clicked, the callback runs
+```
+
+### The Evolution
+
+| Year | Development |
+|------|-------------|
+| 1995 | JavaScript created with event callbacks |
+| 1999 | XMLHttpRequest (AJAX) — async HTTP with callbacks |
+| 2009 | Node.js — callbacks for server-side I/O |
+| 2012 | Callback hell becomes a recognized problem |
+| 2015 | ES6 Promises — official solution to callback hell |
+| 2017 | ES8 async/await — syntactic sugar for Promises |
+
+### Callbacks Are Still The Foundation
+
+Even with Promises and async/await, callbacks are everywhere:
+
+- **Event handlers** still use callbacks
+- **Array methods** still use callbacks
+- **Promises** use callbacks internally (`.then(callback)`)
+- **async/await** is syntactic sugar over Promise callbacks
+
+Callbacks aren't obsolete. They're the foundation that everything else builds upon.
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **A callback is a function passed to another function** to be executed later — nothing magical
+
+2. **Callbacks can be synchronous or asynchronous** — array methods are sync, timers and events are async
+
+3. **Higher-order functions and callbacks are two sides of the same coin** — one accepts, one is passed
+
+4. **Async callbacks go through the event loop** — they never run until all sync code finishes
+
+5. **Error-first callbacks: `callback(error, result)`** — always check error first, return after handling
+
+6. **You can't use try/catch for async callbacks** — the catch is gone by the time the callback runs
+
+7. **Callback hell is real** — deeply nested callbacks become unreadable and unmaintainable
+
+8. **Escape callback hell with:** named functions, modularization, early returns, or Promises
+
+9. **Promises were invented to solve callback problems** — but they still use callbacks under the hood
+
+10. **Callbacks are the foundation** — events, Promises, async/await all build on callbacks
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between synchronous and asynchronous callbacks?">
+    **Answer:**
+    
+    **Synchronous callbacks** execute immediately, during the function call. They block until complete. Examples: `map`, `filter`, `forEach`.
+    
+    ```javascript
+    [1, 2, 3].forEach(n => console.log(n))  // Runs immediately, blocks
+    console.log('Done')  // Runs after forEach completes
+    ```
+    
+    **Asynchronous callbacks** execute later, via the event loop. They don't block. Examples: `setTimeout`, `addEventListener`, `fs.readFile`.
+    
+    ```javascript
+    setTimeout(() => console.log('Timer'), 0)  // Registers, doesn't block
+    console.log('Done')  // Runs BEFORE the timer callback
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Why is error the first parameter in Node.js-style callbacks?">
+    **Answer:**
+    
+    The error-first convention exists because:
+    
+    1. **Consistency** — Every async callback has the same signature: `(error, result)`
+    2. **Can't be ignored** — The error is the first thing you must deal with
+    3. **Forces handling** — You naturally check for errors before using results
+    4. **No exceptions** — Async errors can't be caught with try/catch, so they must be passed
+    
+    ```javascript
+    fs.readFile('file.txt', (error, data) => {
+      if (error) {
+        // Handle error FIRST
+        console.error(error)
+        return
+      }
+      // Safe to use data
+      console.log(data)
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What's the output of this code?">
+    ```javascript
+    console.log('A')
+    
+    setTimeout(() => console.log('B'), 0)
+    
+    console.log('C')
+    
+    setTimeout(() => console.log('D'), 0)
+    
+    console.log('E')
+    ```
+    
+    **Answer:** `A`, `C`, `E`, `B`, `D`
+    
+    **Explanation:**
+    1. `console.log('A')` — sync, runs immediately → "A"
+    2. `setTimeout(..., 0)` — registers callback B, continues
+    3. `console.log('C')` — sync, runs immediately → "C"
+    4. `setTimeout(..., 0)` — registers callback D, continues
+    5. `console.log('E')` — sync, runs immediately → "E"
+    6. Call stack empty → event loop runs callback B → "B"
+    7. Event loop runs callback D → "D"
+    
+    Even with 0ms delay, setTimeout callbacks run after all sync code.
+  </Accordion>
+  
+  <Accordion title="Question 4: How can you preserve `this` context in a callback?">
+    **Answer:** Three common approaches:
+    
+    **1. Arrow functions** (recommended — they inherit `this` from enclosing scope):
+    ```javascript
+    const obj = {
+      name: 'Alice',
+      greet() {
+        setTimeout(() => {
+          console.log(this.name)  // "Alice"
+        }, 100)
+      }
+    }
+    ```
+    
+    **2. Using `bind()`**:
+    ```javascript
+    setTimeout(function() {
+      console.log(this.name)
+    }.bind(this), 100)
+    ```
+    
+    **3. Saving a reference**:
+    ```javascript
+    const self = this
+    setTimeout(function() {
+      console.log(self.name)
+    }, 100)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: Why can't you use try/catch with async callbacks?">
+    **Answer:**
+    
+    The `try/catch` block executes **synchronously**. By the time an async callback runs, the try/catch is long gone. It's on a different "turn" of the event loop.
+    
+    ```javascript
+    try {
+      setTimeout(() => {
+        throw new Error('Async error!')  // This escapes!
+      }, 100)
+    } catch (e) {
+      // This NEVER catches the error
+      console.log('Caught:', e)
+    }
+    
+    // The error crashes the program because:
+    // 1. try/catch runs immediately
+    // 2. setTimeout registers callback and returns
+    // 3. try/catch completes (nothing thrown yet!)
+    // 4. 100ms later, callback runs and throws
+    // 5. No try/catch exists at that point
+    ```
+    
+    This is why we use error-first callbacks or Promise `.catch()` for async error handling.
+  </Accordion>
+  
+  <Accordion title="Question 6: What are three ways to avoid callback hell?">
+    **Answer:**
+    
+    **1. Named functions** — Extract callbacks into named functions:
+    ```javascript
+    function handleUser(err, user) {
+      if (err) return handleError(err)
+      getProfile(user.id, handleProfile)
+    }
+    getUser(userId, handleUser)
+    ```
+    
+    **2. Modularization** — Split into separate modules/functions:
+    ```javascript
+    // auth.js exports authenticateUser()
+    // profile.js exports loadProfile()
+    // main.js composes them
+    ```
+    
+    **3. Promises/async-await** — Use modern async patterns:
+    ```javascript
+    const user = await getUser(userId)
+    const profile = await getProfile(user.id)
+    ```
+    
+    Other approaches: control flow libraries (async.js), early returns, keeping nesting shallow.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    How JavaScript schedules and executes async callbacks
+  </Card>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    Modern solution to callback hell
+  </Card>
+  <Card title="async/await" icon="hourglass" href="/concepts/async-await">
+    Cleaner syntax for Promise-based async code
+  </Card>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    Functions that accept or return other functions
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Callback function — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Callback_function">
+    Official MDN glossary definition of callback functions
+  </Card>
+  <Card title="setTimeout — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout">
+    Documentation for the setTimeout timer function
+  </Card>
+  <Card title="EventTarget.addEventListener — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener">
+    How to register event callbacks on DOM elements
+  </Card>
+  <Card title="Array.prototype.forEach — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach">
+    Synchronous callback pattern with array iteration
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Callbacks Explained" icon="newspaper" href="https://www.freecodecamp.org/news/javascript-callback-functions-what-are-callbacks-in-js-and-how-to-use-them/">
+    Starts with the "I'll call you back" phone analogy that makes callbacks click. Builds up from simple examples to async patterns step by step.
+  </Card>
+  <Card title="Callback Functions in JavaScript" icon="newspaper" href="https://javascript.info/callbacks">
+    Uses a script-loading example to show why callbacks exist and how they solve real problems. The "pyramid of doom" section shows exactly how callback hell develops.
+  </Card>
+
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Callbacks in JavaScript Explained!" icon="video" href="https://www.youtube.com/watch?v=cNjIUSDnb9k">
+    Mosh uses a movie database example that shows callbacks in a realistic context. Great production quality with on-screen code highlighting.
+  </Card>
+  <Card title="JavaScript Callbacks" icon="video" href="https://www.youtube.com/watch?v=QRq2zMHlBz4">
+    Kyle explains callbacks in under 8 minutes with zero fluff. Perfect if you want a quick refresher without sitting through a long tutorial.
+  </Card>
+  <Card title="Callback Functions" icon="video" href="https://www.youtube.com/watch?v=Nau-iEEgEoM">
+    MPJ's signature style makes this feel like a conversation, not a lecture. Explains the "why" behind callbacks, not just the "how."
+  </Card>
+  <Card title="Asynchronous JavaScript Tutorial" icon="video" href="https://www.youtube.com/watch?v=PoRJizFvM7s">
+    Covers the full async story: callbacks, then Promises, then async/await. Watch this one if you want to see how each pattern improves on the last.
+  </Card>
+  <Card title="JavaScript Callback Functions" icon="video" href="https://www.youtube.com/watch?v=pTbSfCT42_M">
+    Walks through callbacks with a setTimeout example, then shows how to create your own callback-accepting functions. Good for hands-on learners.
+  </Card>
+</CardGroup>

@@ -1,0 +1,660 @@
+---
+title: "Algorithms & Big O: Measuring Code Performance in JavaScript"
+sidebarTitle: "Algorithms & Big O: Measuring Code Performance"
+description: "Learn Big O notation and algorithms in JavaScript. Understand time complexity, implement searching and sorting algorithms, and recognize common interview patterns."
+---
+
+Why does one solution pass all tests instantly while another times out? Why do interviewers care so much about "time complexity"? Consider these two functions that both find if an array contains duplicates:
+
+```javascript
+// Approach A: Nested loops
+function hasDuplicatesA(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[i] === arr[j]) return true
+    }
+  }
+  return false
+}
+
+// Approach B: Using a Set
+function hasDuplicatesB(arr) {
+  return new Set(arr).size !== arr.length
+}
+```
+
+Both work correctly. But with 100,000 elements, Approach A takes several seconds while Approach B finishes in milliseconds. The difference? **[Big O notation](https://en.wikipedia.org/wiki/Big_O_notation)**, which tells us how code performance scales with input size.
+
+<Info>
+**What you'll learn in this guide:**
+- What Big O notation actually measures
+- The common complexities: O(1), O(log n), O(n), O(n log n), O(n²)
+- How to analyze your own code's complexity
+- JavaScript built-in methods and their complexity
+- Implementing binary search and merge sort
+- Common interview patterns: two pointers, sliding window, frequency counter
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you're familiar with [data structures](/concepts/data-structures) like arrays, objects, Maps, and Sets. You should also be comfortable with [recursion](/concepts/recursion) for the sorting algorithms section.
+</Warning>
+
+---
+
+## What is Big O Notation?
+
+**Big O notation** describes how an algorithm's runtime or space requirements grow as input size increases. It provides an upper bound on growth rate and ignores constants, giving us a way to compare algorithms regardless of hardware.
+
+### The Package Delivery Analogy
+
+Imagine you need to deliver packages to houses on a street:
+
+- **O(1)**: You have the exact address. Go directly there. Whether there are 10 or 10,000 houses, it takes the same time.
+- **O(n)**: You check each house until you find the right one. More houses = proportionally more time.
+- **O(n²)**: For each house, you compare it with every other house. 10 houses = 100 comparisons. 100 houses = 10,000 comparisons.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     HOW ALGORITHMS SCALE                                 │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Operations                                                              │
+│      ▲                                                                   │
+│      │                                              O(n²)                │
+│  1M  │                                           ••••                    │
+│      │                                        •••                        │
+│      │                                     •••                           │
+│      │                                  •••                              │
+│ 100K │                              ••••          O(n log n)             │
+│      │                           •••          ════════════               │
+│      │                       ••••        ═════                           │
+│      │                   ••••       ═════                                │
+│  10K │               •••••     ═════              O(n)                   │
+│      │           ••••     ═════            ──────────────                │
+│      │       ••••    ═════          ───────                              │
+│      │   ••••   ═════        ───────              O(log n)               │
+│   1K │•••• ═════       ──────                ............                │
+│      │═════     ───────               ........                           │
+│      │    ──────           ..........                   O(1)             │
+│  100 │────      ..........                        ══════════════         │
+│      └──────────────────────────────────────────────────────────►        │
+│          100      1K       10K      100K      1M       Input (n)         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## The Big O Complexity Scale
+
+Here are the most common complexities you'll encounter, from fastest to slowest:
+
+| Complexity | Name | Example | 1,000 items | 1,000,000 items |
+|------------|------|---------|-------------|-----------------|
+| O(1) | Constant | Array access | 1 op | 1 op |
+| O(log n) | Logarithmic | Binary search | ~10 ops | ~20 ops |
+| O(n) | Linear | Simple loop | 1,000 ops | 1,000,000 ops |
+| O(n log n) | Linearithmic | Merge sort | ~10,000 ops | ~20,000,000 ops |
+| O(n²) | Quadratic | Nested loops | 1,000,000 ops | 1,000,000,000,000 ops |
+
+<AccordionGroup>
+  <Accordion title="O(1) - Constant Time">
+    The operation takes the same time regardless of input size.
+    
+    ```javascript
+    // Array access by index
+    const arr = [1, 2, 3, 4, 5]
+    const element = arr[2]  // O(1) - instant, no matter array size
+
+    // Object/Map lookup
+    const user = { name: 'Alice', age: 30 }
+    const name = user.name  // O(1)
+
+    const map = new Map()
+    map.set('key', 'value')
+    map.get('key')  // O(1)
+
+    // Array push and pop (end operations)
+    arr.push(6)  // O(1)
+    arr.pop()    // O(1)
+    ```
+  </Accordion>
+  
+  <Accordion title="O(log n) - Logarithmic Time">
+    Time increases slowly as input grows. Each step eliminates half the remaining data. This is the "sweet spot" for searching sorted data.
+    
+    ```javascript
+    // Binary search - covered in detail below
+    // With 1,000,000 elements, only ~20 comparisons needed!
+    
+    // Think of it like a phone book:
+    // Open middle → wrong half eliminated → repeat
+    ```
+  </Accordion>
+  
+  <Accordion title="O(n) - Linear Time">
+    Time grows proportionally with input. If you double the input, you double the time.
+    
+    ```javascript
+    // Finding maximum value
+    function findMax(arr) {
+      let max = arr[0]
+      for (let i = 1; i < arr.length; i++) {  // Visits each element once
+        if (arr[i] > max) max = arr[i]
+      }
+      return max
+    }
+
+    // Most array methods are O(n)
+    arr.indexOf(5)      // O(n) - may check every element
+    arr.includes(5)     // O(n)
+    arr.find(x => x > 3)    // O(n)
+    arr.filter(x => x > 3)  // O(n)
+    arr.map(x => x * 2)     // O(n)
+    ```
+  </Accordion>
+  
+  <Accordion title="O(n log n) - Linearithmic Time">
+    Common for efficient sorting algorithms. Faster than O(n²), but slower than O(n).
+    
+    ```javascript
+    // JavaScript's built-in sort is O(n log n)
+    const sorted = [...arr].sort((a, b) => a - b)
+
+    // Merge sort and quick sort (average case) are also O(n log n)
+    ```
+  </Accordion>
+  
+  <Accordion title="O(n²) - Quadratic Time">
+    Time grows with the square of input. Nested loops over the same data are the typical culprit. **Avoid for large datasets.**
+    
+    ```javascript
+    // Checking all pairs
+    function findPairs(arr) {
+      const pairs = []
+      for (let i = 0; i < arr.length; i++) {        // O(n)
+        for (let j = i + 1; j < arr.length; j++) {  // O(n) for each i
+          pairs.push([arr[i], arr[j]])
+        }
+      }
+      return pairs  // Total: O(n) × O(n) = O(n²)
+    }
+
+    // Bubble sort - O(n²), mostly used for teaching
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## How to Analyze Your Code
+
+Follow these steps to determine your code's complexity:
+
+<Steps>
+  <Step title="Identify the input size">
+    What variable represents n? Usually it's array length or a number parameter.
+  </Step>
+  
+  <Step title="Count the loops">
+    - One loop over n elements = O(n)
+    - Nested loops = multiply: O(n) × O(n) = O(n²)
+    - Loop that halves each time = O(log n)
+  </Step>
+  
+  <Step title="Drop constants and lower terms">
+    - O(2n) → O(n)
+    - O(n² + n) → O(n²)
+    - O(500) → O(1)
+  </Step>
+</Steps>
+
+```javascript
+// Example analysis
+function example(arr) {
+  console.log(arr[0])                    // O(1)
+  
+  for (let i = 0; i < arr.length; i++) { // O(n)
+    console.log(arr[i])
+  }
+  
+  for (let i = 0; i < arr.length; i++) { // O(n)
+    for (let j = 0; j < arr.length; j++) { // × O(n)
+      console.log(arr[i], arr[j])
+    }
+  }
+}
+// Total: O(1) + O(n) + O(n²) = O(n²)
+// The n² dominates, so we say this function is O(n²)
+```
+
+---
+
+## JavaScript Built-in Methods Complexity
+
+Knowing these helps you make better decisions:
+
+### Array Methods
+
+| Method | Complexity | Why |
+|--------|------------|-----|
+| `push()`, `pop()` | O(1) | End operations, no shifting |
+| `shift()`, `unshift()` | O(n) | Must re-index all elements |
+| `splice()` | O(n) | May shift elements |
+| `slice()` | O(n) | Creates copy of portion |
+| `indexOf()`, `includes()` | O(n) | Linear search |
+| `find()`, `findIndex()` | O(n) | Linear search |
+| `map()`, `filter()`, `forEach()` | O(n) | Visits each element |
+| `sort()` | O(n log n) | Implementation varies by browser |
+
+### Object, Map, and Set
+
+| Operation | Object | Map | Set |
+|-----------|--------|-----|-----|
+| Get/Set/Has | O(1) | O(1) | O(1) |
+| Delete | O(1) | O(1) | O(1) |
+| Keys/Values | O(n) | O(n) | O(n) |
+
+<Tip>
+**Use Set.has() instead of Array.includes()** when checking membership repeatedly. Set lookups are O(1) while array searches are O(n).
+</Tip>
+
+---
+
+## Searching Algorithms
+
+### Linear Search - O(n)
+
+Check each element one by one. Simple but slow for large arrays.
+
+```javascript
+function linearSearch(arr, target) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === target) return i
+  }
+  return -1
+}
+
+linearSearch([3, 7, 1, 9, 4], 9)  // Returns 3
+```
+
+### Binary Search - O(log n)
+
+Divide and conquer on a **sorted** array. Eliminates half the remaining elements each step.
+
+```javascript
+function binarySearch(arr, target) {
+  let left = 0
+  let right = arr.length - 1
+  
+  while (left <= right) {
+    const mid = Math.floor((left + right) / 2)
+    
+    if (arr[mid] === target) return mid
+    if (arr[mid] < target) left = mid + 1
+    else right = mid - 1
+  }
+  
+  return -1
+}
+
+binarySearch([1, 3, 5, 7, 9, 11, 13], 9)  // Returns 4
+```
+
+<Warning>
+**Binary search requires a sorted array.** If your data isn't sorted, you'll need to sort it first O(n log n) or use linear search.
+</Warning>
+
+---
+
+## Sorting Algorithms
+
+### Quick Reference
+
+| Algorithm | Best | Average | Worst | Space | Use When |
+|-----------|------|---------|-------|-------|----------|
+| Bubble Sort | O(n)* | O(n²) | O(n²) | O(1) | Never in production |
+| Merge Sort | O(n log n) | O(n log n) | O(n log n) | O(n) | Need guaranteed performance |
+| Quick Sort | O(n log n) | O(n log n) | O(n²) | O(log n)** | General purpose |
+| JS `sort()` | O(n log n) | O(n log n) | O(n log n) | O(n) | Most cases |
+
+*Bubble sort achieves O(n) best case only with early termination optimization (when no swaps needed).
+**Quick sort space is O(log n) average case, O(n) worst case due to recursion stack depth.
+
+### Bubble Sort - O(n²)
+
+Repeatedly swaps adjacent elements if they're in wrong order. Educational, but too slow for real use.
+
+```javascript
+function bubbleSort(arr) {
+  const result = [...arr]
+  const n = result.length
+  
+  for (let i = 0; i < n; i++) {
+    let swapped = false
+    
+    for (let j = 0; j < n - i - 1; j++) {
+      if (result[j] > result[j + 1]) {
+        [result[j], result[j + 1]] = [result[j + 1], result[j]]
+        swapped = true
+      }
+    }
+    
+    // If no swaps occurred, array is sorted
+    if (!swapped) break
+  }
+  
+  return result
+}
+```
+
+### Merge Sort - O(n log n)
+
+Divide array in half, sort each half, merge them back. Consistent performance with guaranteed O(n log n).
+
+```javascript
+function mergeSort(arr) {
+  if (arr.length <= 1) return arr
+  
+  const mid = Math.floor(arr.length / 2)
+  const left = mergeSort(arr.slice(0, mid))
+  const right = mergeSort(arr.slice(mid))
+  
+  return merge(left, right)
+}
+
+function merge(left, right) {
+  const result = []
+  let i = 0
+  let j = 0
+  
+  while (i < left.length && j < right.length) {
+    if (left[i] <= right[j]) {
+      result.push(left[i])
+      i++
+    } else {
+      result.push(right[j])
+      j++
+    }
+  }
+  
+  return result.concat(left.slice(i)).concat(right.slice(j))
+}
+
+mergeSort([38, 27, 43, 3, 9, 82, 10])  // [3, 9, 10, 27, 38, 43, 82]
+```
+
+<Note>
+**In practice, use JavaScript's built-in `sort()`**. Modern browsers typically use Timsort (V8) or similar O(n log n) algorithms optimized for real-world data. Implement your own sorts for learning or when you have specific requirements.
+</Note>
+
+---
+
+## Common Interview Patterns
+
+These patterns solve many algorithm problems efficiently.
+
+### Two Pointers - O(n)
+
+Use two pointers moving toward each other or in the same direction. Great for sorted arrays and finding pairs.
+
+```javascript
+// Find pair that sums to target in sorted array
+function twoSum(arr, target) {
+  let left = 0
+  let right = arr.length - 1
+  
+  while (left < right) {
+    const sum = arr[left] + arr[right]
+    
+    if (sum === target) return [left, right]
+    if (sum < target) left++
+    else right--
+  }
+  
+  return null
+}
+
+twoSum([1, 3, 5, 7, 9], 12)  // [1, 4] (3 + 9 = 12)
+```
+
+### Sliding Window - O(n)
+
+Maintain a "window" that slides through the array. Perfect for subarray problems.
+
+```javascript
+// Maximum sum of k consecutive elements
+function maxSumSubarray(arr, k) {
+  if (arr.length < k) return null
+  
+  // Calculate first window
+  let windowSum = 0
+  for (let i = 0; i < k; i++) {
+    windowSum += arr[i]
+  }
+  
+  let maxSum = windowSum
+  
+  // Slide the window: remove left element, add right element
+  for (let i = k; i < arr.length; i++) {
+    windowSum = windowSum - arr[i - k] + arr[i]
+    maxSum = Math.max(maxSum, windowSum)
+  }
+  
+  return maxSum
+}
+
+maxSumSubarray([2, 1, 5, 1, 3, 2], 3)  // 9 (5 + 1 + 3)
+```
+
+### Frequency Counter - O(n)
+
+Use an object or Map to count occurrences. Avoids nested loops when comparing collections.
+
+```javascript
+// Check if two strings are anagrams
+function isAnagram(str1, str2) {
+  if (str1.length !== str2.length) return false
+  
+  const freq = {}
+  
+  // Count characters in first string
+  for (const char of str1) {
+    freq[char] = (freq[char] || 0) + 1
+  }
+  
+  // Subtract counts for second string
+  for (const char of str2) {
+    if (!freq[char]) return false
+    freq[char]--
+  }
+  
+  return true
+}
+
+isAnagram('listen', 'silent')  // true
+isAnagram('hello', 'world')    // false
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Big O measures scalability**, not absolute speed. It tells you how performance changes as input grows.
+
+2. **O(1) and O(log n) are fast**. O(n) is acceptable. O(n²) gets slow quickly. Avoid O(2^n) for any significant input.
+
+3. **Nested loops multiply complexity**. Two nested loops over n = O(n²). Three = O(n³).
+
+4. **Drop constants and lower terms**. O(2n + 100) simplifies to O(n).
+
+5. **Array end operations are O(1)**, beginning operations are O(n). Prefer `push`/`pop` over `shift`/`unshift`.
+
+6. **Use Set for O(1) lookups** instead of `Array.includes()` for repeated membership checks.
+
+7. **Binary search is O(log n)** but requires sorted data. Worth sorting first if you'll search multiple times.
+
+8. **JavaScript's sort() is O(n log n)** in all modern browsers. Use it unless you have specific requirements.
+
+9. **Learn the patterns**: Two pointers, sliding window, and frequency counter solve most interview problems.
+
+10. **Space complexity matters too**. Creating a new array of size n uses O(n) space.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the time complexity of this code?">
+    ```javascript
+    function mystery(arr) {
+      for (let i = 0; i < arr.length; i++) {
+        for (let j = 0; j < 10; j++) {
+          console.log(arr[i])
+        }
+      }
+    }
+    ```
+    
+    **Answer:** O(n)
+    
+    The outer loop runs n times, but the inner loop always runs exactly 10 times (constant). So it's O(n × 10) = O(10n) = O(n). The constant 10 is dropped.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why is binary search O(log n)?">
+    **Answer:** Because each comparison eliminates half the remaining elements.
+    
+    With 1,000 elements: 1000 → 500 → 250 → 125 → 62 → 31 → 15 → 7 → 3 → 1
+    
+    That's about 10 steps. log₂(1000) ≈ 10. With 1,000,000 elements, it only takes ~20 steps.
+  </Accordion>
+  
+  <Accordion title="Question 3: Array has 1 million elements. Which is faster: indexOf() once, or converting to Set then using has()?">
+    **Answer:** It depends on how many lookups you need.
+    
+    - **One lookup**: `indexOf()` is faster. O(n) vs O(n) for Set creation + O(1) for lookup.
+    - **Many lookups**: Convert to Set first. O(n) creation + O(1) per lookup beats O(n) per lookup.
+    
+    Rule of thumb: If you'll search more than once, use a Set.
+  </Accordion>
+  
+  <Accordion title="Question 4: What's wrong with using bubble sort?">
+    **Answer:** It's O(n²), making it impractical for large datasets.
+    
+    With 10,000 elements: ~100,000,000 operations. JavaScript's built-in sort() at O(n log n) would take ~130,000 operations for the same data.
+    
+    Bubble sort is useful for learning but should never be used in production code.
+  </Accordion>
+  
+  <Accordion title="Question 5: How would you find if an array has duplicates in O(n) time?">
+    **Answer:** Use a Set to track seen elements:
+    
+    ```javascript
+    function hasDuplicates(arr) {
+      const seen = new Set()
+      for (const item of arr) {
+        if (seen.has(item)) return true  // O(1) lookup
+        seen.add(item)                    // O(1) insert
+      }
+      return false
+    }
+    ```
+    
+    This is O(n) time and O(n) space. The naive nested loop approach would be O(n²) time but O(1) space.
+  </Accordion>
+  
+  <Accordion title="Question 6: What pattern would you use to find the longest substring without repeating characters?">
+    **Answer:** **Sliding window** with a Set or Map.
+    
+    ```javascript
+    function longestUniqueSubstring(s) {
+      const seen = new Set()
+      let maxLen = 0
+      let left = 0
+      
+      for (let right = 0; right < s.length; right++) {
+        while (seen.has(s[right])) {
+          seen.delete(s[left])
+          left++
+        }
+        seen.add(s[right])
+        maxLen = Math.max(maxLen, right - left + 1)
+      }
+      
+      return maxLen
+    }
+    ```
+    
+    Time: O(n), Space: O(min(n, alphabet size))
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Data Structures" icon="database" href="/concepts/data-structures">
+    Understanding arrays, objects, Maps, and Sets is essential for choosing the right tool
+  </Card>
+  <Card title="Recursion" icon="repeat" href="/concepts/recursion">
+    Many algorithms like merge sort and binary search can be implemented recursively
+  </Card>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    Map, filter, and reduce are built on these concepts
+  </Card>
+  <Card title="Map, Reduce, Filter" icon="filter" href="/concepts/map-reduce-filter">
+    Understanding the complexity of these common operations
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Array — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">
+    Complete reference for array methods and their behavior
+  </Card>
+  <Card title="Map — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">
+    Hash-based key-value storage with fast lookups
+  </Card>
+  <Card title="Set — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">
+    O(1) operations for membership testing
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Big O Cheat Sheet" icon="newspaper" href="https://www.bigocheatsheet.com/">
+    Visual reference for time and space complexity of common algorithms and data structures. Bookmark this one.
+  </Card>
+  <Card title="JavaScript Algorithms and Data Structures" icon="newspaper" href="https://github.com/trekhleb/javascript-algorithms">
+    Comprehensive GitHub repo with 190k+ stars. Every algorithm implemented in JavaScript with explanations.
+  </Card>
+  <Card title="Time Complexity of JavaScript Array Methods" icon="newspaper" href="https://dev.to/lukocastillo/time-complexity-big-0-for-javascript-array-methods-and-examples-mlg">
+    Detailed breakdown of every array method's complexity with examples and explanations.
+  </Card>
+  <Card title="Algorithms in Plain English" icon="newspaper" href="https://www.freecodecamp.org/news/time-is-complex-but-priceless-f0abd015063c/">
+    FreeCodeCamp's beginner-friendly guide to Big O with real-world analogies.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Big O Notation in 12 Minutes" icon="video" href="https://www.youtube.com/watch?v=itn09C2ZB9Y">
+    Web Dev Simplified's concise explanation. Perfect if you want the essentials without filler.
+  </Card>
+  <Card title="JavaScript Algorithms Playlist" icon="video" href="https://www.youtube.com/playlist?list=PLC3y8-rFHvwiRYB4-HHKHblh3_bQNJTMa">
+    Codevolution's complete series covering sorting, searching, and common patterns step by step.
+  </Card>
+  <Card title="Data Structures and Algorithms in JavaScript" icon="video" href="https://www.youtube.com/watch?v=Gj5qBheGOEo&list=PLWKjhJtqVAbkso-IbgiiP48n-O-JQA9PJ">
+    FreeCodeCamp's comprehensive 8-hour course. Great for deep learning when you have the time.
+  </Card>
+</CardGroup>

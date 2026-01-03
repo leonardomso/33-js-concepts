@@ -1,0 +1,1023 @@
+---
+title: "Type Coercion: How Values Convert Automatically in JavaScript"
+sidebarTitle: "Type Coercion: How Values Convert Automatically"
+description: "Learn JavaScript type coercion and implicit conversion. Understand how values convert to strings, numbers, and booleans, the 8 falsy values, and how to avoid common coercion bugs."
+---
+
+Why does `"5" + 3` give you `"53"` but `"5" - 3` gives you `2`? Why does `[] == ![]` return `true`? How does JavaScript decide what type a value should be?
+
+```javascript
+// JavaScript's "helpful" type conversion in action
+console.log("5" + 3);    // "53" (string concatenation!)
+console.log("5" - 3);    // 2 (numeric subtraction)
+console.log([] == ![]);  // true (wait, what?!)
+```
+
+This surprising behavior is **[type coercion](https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion)**. JavaScript automatically converts values from one type to another. Understanding these rules helps you avoid bugs and write more predictable code.
+
+<Info>
+**What you'll learn in this guide:**
+- The difference between implicit and explicit coercion
+- How JavaScript converts to strings, numbers, and booleans
+- The 8 falsy values every developer must memorize
+- How objects convert to primitives
+- The famous JavaScript "WAT" moments explained
+- Best practices for avoiding coercion bugs
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [Primitive Types](/concepts/primitive-types). If terms like string, number, boolean, null, and undefined are new to you, read that guide first!
+</Warning>
+
+---
+
+## What Is Type Coercion?
+
+**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work, sometimes helpfully, sometimes surprisingly. Understanding these conversion rules helps you write predictable, bug-free code.
+
+### The Shapeshifter Analogy
+
+Imagine JavaScript as an overly helpful translator. When you give it values of different types, it tries to "help" by converting them, sometimes correctly, sometimes... creatively.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     THE OVERLY HELPFUL TRANSLATOR                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  YOU: "Hey JavaScript, add 5 and '3' together"                           │
+│                                                                          │
+│  JAVASCRIPT (thinking): "Hmm, one's a number, one's a string...          │
+│                          I'll just convert the number to a string!       │
+│                          '5' + '3' = '53'. You're welcome!"              │
+│                                                                          │
+│  YOU: "That's... not what I meant."                                      │
+│                                                                          │
+│  JAVASCRIPT: "¯\_(ツ)_/¯"                                                │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+This "helpful" behavior is called **type coercion**. JavaScript automatically converts values from one type to another. Sometimes it's useful, sometimes it creates bugs that will haunt your dreams.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    TYPE COERCION: THE SHAPESHIFTER                       │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│        ┌─────────┐                    ┌─────────┐                        │
+│        │   "5"   │ ──── + 3 ────────► │  "53"   │  String won!           │
+│        │ string  │                    │ string  │                        │
+│        └─────────┘                    └─────────┘                        │
+│                                                                          │
+│        ┌─────────┐                    ┌─────────┐                        │
+│        │   "5"   │ ──── - 3 ────────► │    2    │  Number won!           │
+│        │ string  │                    │ number  │                        │
+│        └─────────┘                    └─────────┘                        │
+│                                                                          │
+│        Same values, different operators, different results!              │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Explicit vs Implicit Coercion
+
+There are two ways coercion happens:
+
+<Tabs>
+  <Tab title="Explicit Coercion">
+    **You** control the conversion using built-in functions. This is predictable and intentional.
+    
+    ```javascript
+    // YOU decide when and how to convert
+    Number("42")      // 42
+    String(42)        // "42"
+    Boolean(1)        // true
+    
+    parseInt("42px")  // 42
+    parseFloat("3.14") // 3.14
+    ```
+    
+    These functions — [`Number()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number), [`String()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String), [`Boolean()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean), [`parseInt()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseInt), and [`parseFloat()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/parseFloat) — give you full control.
+    
+    This is the **safe** way. You know exactly what's happening.
+  </Tab>
+  <Tab title="Implicit Coercion">
+    **JavaScript** automatically converts types when operators or functions expect a different type.
+    
+    ```javascript
+    // JavaScript "helps" without asking
+    "5" + 3           // "53" (number became string)
+    "5" - 3           // 2 (string became number)
+    
+    if ("hello") {}   // string became boolean (true)
+    
+    5 == "5"          // true (types were coerced)
+    ```
+    
+    This is where bugs hide. Learn the rules or suffer the consequences!
+  </Tab>
+</Tabs>
+
+### Why Does JavaScript Do This?
+
+JavaScript is a **dynamically typed** language. Variables don't have fixed types. This flexibility means JavaScript needs to figure out what to do when types don't match.
+
+```javascript
+// In JavaScript, variables can hold any type
+let x = 42;       // x is a number
+x = "hello";      // now x is a string
+x = true;         // now x is a boolean
+
+// So what happens here?
+let result = x + 10;  // JavaScript must decide how to handle this
+```
+
+Other languages would throw an error. JavaScript tries to make it work. Whether that's a feature or a bug... depends on who you ask!
+
+---
+
+## The Three Types of Conversion
+
+Here's the most important rule: **JavaScript can only convert to THREE [primitive types](/concepts/primitive-types):**
+
+| Target Type | Explicit Method | Common Implicit Triggers |
+|-------------|-----------------|--------------------------|
+| **String** | `String(value)` | `+` with a string, template literals |
+| **Number** | `Number(value)` | Math operators (`- * / %`), comparisons |
+| **Boolean** | `Boolean(value)` | `if`, `while`, `!`, `&&`, `\|\|`, `? :` |
+
+That's it. No matter how complex the coercion seems, the end result is always a string, number, or boolean.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE THREE CONVERSION DESTINATIONS                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│                      ┌──────────────────────┐                            │
+│                      │    ANY VALUE         │                            │
+│                      │  (string, number,    │                            │
+│                      │   object, array...)  │                            │
+│                      └──────────┬───────────┘                            │
+│                                 │                                        │
+│                ┌────────────────┼────────────────┐                       │
+│                ▼                ▼                ▼                       │
+│          ┌──────────┐    ┌──────────┐    ┌──────────┐                    │
+│          │  String  │    │  Number  │    │ Boolean  │                    │
+│          │   "42"   │    │    42    │    │   true   │                    │
+│          └──────────┘    └──────────┘    └──────────┘                    │
+│                                                                          │
+│          These are the ONLY three possible destinations!                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## String Conversion
+
+String conversion is the most straightforward. Almost anything can become a string.
+
+### When Does It Happen?
+
+```javascript
+// Explicit conversion
+String(123)           // "123"
+String(true)          // "true"
+(123).toString()      // "123"
+
+// Implicit conversion
+123 + ""              // "123" (concatenation with empty string)
+`Value: ${123}`       // "Value: 123" (template literal)
+"Hello " + 123        // "Hello 123" (+ with a string)
+```
+
+The [`toString()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/toString) method and [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals) are also common ways to convert values to strings.
+
+### String Conversion Rules
+
+| Value | Result | Notes |
+|-------|--------|-------|
+| `123` | `"123"` | Numbers become digit strings |
+| `-12.34` | `"-12.34"` | Decimals and negatives work too |
+| `true` | `"true"` | Booleans become their word |
+| `false` | `"false"` | |
+| `null` | `"null"` | |
+| `undefined` | `"undefined"` | |
+| `[1, 2, 3]` | `"1,2,3"` | Arrays join with commas |
+| `[]` | `""` | Empty array becomes empty string |
+| `{}` | `"[object Object]"` | Objects become this (usually useless) |
+| [`Symbol("id")`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) | Throws TypeError! | Symbols can't implicitly convert |
+
+### The + Operator's Split Personality
+
+The `+` operator is special: it does **both** addition and concatenation:
+
+```javascript
+// With two numbers: addition
+5 + 3               // 8
+
+// With any string involved: concatenation
+"5" + 3             // "53" (3 becomes "3")
+5 + "3"             // "53" (5 becomes "5")
+"Hello" + " World"  // "Hello World"
+
+// Order matters with multiple operands!
+1 + 2 + "3"         // "33" (1+2=3, then 3+"3"="33")
+"1" + 2 + 3         // "123" (all become strings left-to-right)
+```
+
+<Warning>
+**Common gotcha:** The `+` operator with strings catches many developers off guard. If you're doing math and get unexpected string concatenation, check if any value might be a string!
+
+```javascript
+// Dangerous: user input is always a string!
+const userInput = "5";
+const result = userInput + 10;  // "510", not 15!
+
+// Safe: convert first
+const result = Number(userInput) + 10;  // 15
+```
+</Warning>
+
+---
+
+## Number Conversion
+
+Number conversion has more triggers than string conversion, and more edge cases to memorize.
+
+### When Does It Happen?
+
+```javascript
+// Explicit conversion
+Number("42")          // 42
+parseInt("42px")      // 42 (stops at non-digit)
+parseFloat("3.14")    // 3.14
++"42"                 // 42 (unary plus trick)
+
+// Implicit conversion
+"6" - 2               // 4 (subtraction)
+"6" * 2               // 12 (multiplication)
+"6" / 2               // 3 (division)
+"6" % 4               // 2 (modulo)
+"10" > 5              // true (comparison)
++"42"                 // 42 (unary plus)
+```
+
+### Number Conversion Rules
+
+| Value | Result | Notes |
+|-------|--------|-------|
+| `"123"` | `123` | Numeric strings work |
+| `"  123  "` | `123` | Whitespace is trimmed |
+| `"123abc"` | [`NaN`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/NaN) | Any non-numeric char → NaN |
+| `""` | `0` | Empty string becomes 0 |
+| `"  "` | `0` | Whitespace-only becomes 0 |
+| `true` | `1` | |
+| `false` | `0` | |
+| `null` | `0` | null → 0 |
+| `undefined` | `NaN` | undefined → NaN (different!) |
+| `[]` | `0` | Empty array → "" → 0 |
+| `[1]` | `1` | Single element array |
+| `[1, 2]` | `NaN` | Multiple elements → NaN |
+| `{}` | `NaN` | Objects → NaN |
+
+<Warning>
+**null vs undefined:** Notice that `Number(null)` is `0` but `Number(undefined)` is `NaN`. This inconsistency trips up many developers!
+
+```javascript
+Number(null)       // 0
+Number(undefined)  // NaN
+
+null + 5           // 5
+undefined + 5      // NaN
+```
+</Warning>
+
+### Math Operators Always Convert to Numbers
+
+Unlike `+`, the other math operators (`-`, `*`, `/`, `%`) **only** do math. They always convert to numbers:
+
+```javascript
+"6" - "2"    // 4 (both become numbers)
+"6" * "2"    // 12
+"6" / "2"    // 3
+"10" % "3"   // 1
+
+// This is why - and + behave differently!
+"5" + 3      // "53" (concatenation)
+"5" - 3      // 2 (math)
+```
+
+### The Unary + Trick
+
+The unary `+` (plus sign before a value) is a quick way to convert to a number:
+
+```javascript
++"42"        // 42
++true        // 1
++false       // 0
++null        // 0
++undefined   // NaN
++"hello"     // NaN
++""          // 0
+```
+
+---
+
+## Boolean Conversion
+
+Boolean conversion is actually the simplest. Every value is either **truthy** or **falsy**.
+
+### When Does It Happen?
+
+```javascript
+// Explicit conversion
+Boolean(1)            // true
+Boolean(0)            // false
+!!value               // double negation trick
+
+// Implicit conversion
+if (value) { }        // condition check
+while (value) { }     // loop condition
+value ? "yes" : "no"  // ternary operator
+value && doSomething() // logical AND
+value || defaultValue  // logical OR
+!value                // logical NOT
+```
+
+### The 8 Falsy Values (Memorize These!)
+
+There are **8 common values** that convert to `false`. Everything else is `true`.
+
+```javascript
+// THE FALSY EIGHT
+Boolean(false)        // false (obviously)
+Boolean(0)            // false
+Boolean(-0)           // false (yes, -0 exists)
+Boolean(0n)           // false ([BigInt](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt) zero)
+Boolean("")           // false (empty string)
+Boolean(null)         // false
+Boolean(undefined)    // false
+Boolean(NaN)          // false
+```
+
+<Info>
+**Technical note:** There's actually a 9th falsy value: [`document.all`](https://developer.mozilla.org/en-US/docs/Web/API/Document/all). It's a legacy browser API that returns `false` in boolean context despite being an object. You'll rarely encounter it in modern code, but it exists for backwards compatibility with ancient websites.
+</Info>
+
+### Everything Else Is Truthy!
+
+This includes some surprises:
+
+```javascript
+// These are all TRUE!
+Boolean(true)         // true (obviously)
+Boolean(1)            // true
+Boolean(-1)           // true (negative numbers!)
+Boolean("hello")      // true
+Boolean("0")          // true (non-empty string!)
+Boolean("false")      // true (non-empty string!)
+Boolean([])           // true (empty array!)
+Boolean({})           // true (empty object!)
+Boolean(function(){}) // true
+Boolean(new Date())   // true
+Boolean(Infinity)     // true
+Boolean(-Infinity)    // true
+```
+
+<Warning>
+**Common gotchas:**
+
+```javascript
+// These catch people ALL the time:
+Boolean("0")          // true (it's a non-empty string!)
+Boolean("false")      // true (it's a non-empty string!)
+Boolean([])           // true (arrays are objects, objects are truthy)
+Boolean({})           // true (even empty objects)
+
+// If checking for empty array, do this:
+if (arr.length) { }   // checks if array has items
+if (arr.length === 0) { }  // checks if array is empty
+```
+</Warning>
+
+### Logical Operators Don't Return Booleans!
+
+A common misconception: `&&` and `||` don't necessarily return `true` or `false`. They return one of the **original values**:
+
+```javascript
+// || returns the FIRST truthy value (or the last value)
+"hello" || "world"    // "hello"
+"" || "world"         // "world"
+"" || 0 || null || "yes"  // "yes"
+
+// && returns the FIRST falsy value (or the last value)
+"hello" && "world"    // "world"
+"" && "world"         // ""
+1 && 2 && 3           // 3
+
+// This is useful for defaults!
+const name = userInput || "Anonymous";
+const display = user && user.name;
+```
+
+---
+
+## Object to Primitive Conversion
+
+When JavaScript needs to convert an [object to a primitive](/concepts/value-reference-types) (including arrays), it follows a specific algorithm.
+
+### The ToPrimitive Algorithm
+
+<Steps>
+  <Step title="Check if already primitive">
+    If the value is already a primitive (string, number, boolean, etc.), return it as-is.
+  </Step>
+  
+  <Step title="Determine the 'hint'">
+    JavaScript decides whether it wants a "string" or "number" based on context:
+    - **String hint:** `String()`, template literals, property keys
+    - **Number hint:** `Number()`, math operators, comparisons
+    - **Default hint:** `+` operator, `==` (usually treated as number)
+  </Step>
+  
+  <Step title="Try valueOf() or toString()">
+    - For **number** hint: try `valueOf()` first, then `toString()`
+    - For **string** hint: try `toString()` first, then `valueOf()`
+  </Step>
+  
+  <Step title="Return primitive or throw">
+    If a primitive is returned, use it. Otherwise, throw `TypeError`.
+  </Step>
+</Steps>
+
+### How Built-in Objects Convert
+
+```javascript
+// Arrays - toString() returns joined elements
+[1, 2, 3].toString()   // "1,2,3"
+[1, 2, 3] + ""         // "1,2,3"
+[1, 2, 3] - 0          // NaN (can't convert "1,2,3" to number)
+
+[].toString()          // ""
+[] + ""                // ""
+[] - 0                 // 0 (empty string → 0)
+
+[1].toString()         // "1"
+[1] - 0                // 1
+
+// Plain objects - toString() returns "[object Object]"
+({}).toString()        // "[object Object]"
+({}) + ""              // "[object Object]"
+
+// Dates - special case, prefers string for + operator
+const date = new Date(0);
+date.toString()        // "Thu Jan 01 1970 ..."
+date.valueOf()         // 0 (timestamp in ms)
+
+date + ""              // "Thu Jan 01 1970 ..." (uses toString)
+date - 0               // 0 (uses valueOf)
+```
+
+### Custom Conversion with valueOf and toString
+
+You can control how your objects convert:
+
+```javascript
+const price = {
+  amount: 99.99,
+  currency: "USD",
+  
+  valueOf() {
+    return this.amount;
+  },
+  
+  toString() {
+    return `${this.currency} ${this.amount}`;
+  }
+};
+
+// Number conversion uses valueOf()
+price - 0              // 99.99
+price * 2              // 199.98
++price                 // 99.99
+
+// String conversion uses toString()
+String(price)          // "USD 99.99"
+`Price: ${price}`      // "Price: USD 99.99"
+
+// + is ambiguous, uses valueOf() if it returns primitive
+price + ""             // "99.99" (valueOf returned number, then → string)
+```
+
+### ES6 Symbol.toPrimitive
+
+ES6 introduced a cleaner way to control conversion — [`Symbol.toPrimitive`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive):
+
+```javascript
+const obj = {
+  [Symbol.toPrimitive](hint) {
+    console.log(`Converting with hint: ${hint}`);
+    
+    if (hint === "number") {
+      return 42;
+    }
+    if (hint === "string") {
+      return "forty-two";
+    }
+    // hint === "default"
+    return "default value";
+  }
+};
+
++obj           // 42 (hint: "number")
+`${obj}`       // "forty-two" (hint: "string")
+obj + ""       // "default value" (hint: "default")
+```
+
+---
+
+## The == Algorithm Explained
+
+The loose equality operator `==` is where type coercion gets wild. For a deeper dive into all equality operators, see our [Equality Operators guide](/concepts/equality-operators). Here's how `==` actually works:
+
+### Simplified == Rules
+
+<Steps>
+  <Step title="Same type?">
+    Compare directly (like `===`).
+    ```javascript
+    5 == 5           // true
+    "hello" == "hello"  // true
+    ```
+  </Step>
+  
+  <Step title="null or undefined?">
+    `null == undefined` is `true`. Neither equals anything else.
+    ```javascript
+    null == undefined    // true
+    null == null         // true
+    null == 0            // false (special rule!)
+    null == ""           // false
+    ```
+  </Step>
+  
+  <Step title="Number vs String?">
+    Convert the string to a number.
+    ```javascript
+    5 == "5"
+    // becomes: 5 == 5
+    // result: true
+    ```
+  </Step>
+  
+  <Step title="Boolean involved?">
+    Convert the boolean to a number FIRST.
+    ```javascript
+    true == "1"
+    // step 1: 1 == "1" (true → 1)
+    // step 2: 1 == 1 (string → number)
+    // result: true
+    
+    true == "true"
+    // step 1: 1 == "true" (true → 1)
+    // step 2: 1 == NaN ("true" → NaN)
+    // result: false (surprise!)
+    ```
+  </Step>
+  
+  <Step title="Object vs Primitive?">
+    Convert the object to a primitive.
+    ```javascript
+    [1] == 1
+    // step 1: "1" == 1 (array → string "1")
+    // step 2: 1 == 1 (string → number)
+    // result: true
+    ```
+  </Step>
+</Steps>
+
+### Step-by-Step Examples
+
+```javascript
+// Example 1: "5" == 5
+"5" == 5
+// String vs Number → convert string to number
+// 5 == 5
+// Result: true
+
+// Example 2: true == "1"
+true == "1"
+// Boolean involved → convert boolean to number first
+// 1 == "1"
+// Number vs String → convert string to number
+// 1 == 1
+// Result: true
+
+// Example 3: [] == false
+[] == false
+// Boolean involved → convert boolean to number first
+// [] == 0
+// Object vs Number → convert object to primitive
+// "" == 0 (empty array → empty string)
+// String vs Number → convert string to number
+// 0 == 0
+// Result: true
+
+// Example 4: [] == ![]
+[] == ![]
+// First, evaluate ![] → false (arrays are truthy)
+// [] == false
+// Boolean involved → false becomes 0
+// [] == 0
+// Object vs Number → [] becomes ""
+// "" == 0
+// String vs Number → "" becomes 0
+// 0 == 0
+// Result: true (yes, really!)
+```
+
+<Tip>
+**Just use `===`!** The triple equals operator never coerces types. If the types are different, it returns `false` immediately. This is almost always what you want.
+
+```javascript
+5 === "5"     // false (different types)
+5 == "5"      // true (coerced)
+
+null === undefined  // false
+null == undefined   // true
+```
+</Tip>
+
+---
+
+## Operators & Coercion Cheat Sheet
+
+Quick reference for which operators trigger which coercion:
+
+| Operator | Coercion Type | Example | Result |
+|----------|---------------|---------|--------|
+| `+` (with string) | String | `"5" + 3` | `"53"` |
+| `+` (unary) | Number | `+"5"` | `5` |
+| `-` `*` `/` `%` | Number | `"5" - 3` | `2` |
+| `++` `--` | Number | `let x = "5"; x++` | `6` |
+| `>` `<` `>=` `<=` | Number | `"10" > 5` | `true` |
+| `==` `!=` | Complex | `"5" == 5` | `true` |
+| `===` `!==` | None | `"5" === 5` | `false` |
+| `&&` `\|\|` | Boolean (internal) | `"hi" \|\| "bye"` | `"hi"` |
+| `!` | Boolean | `!"hello"` | `false` |
+| `if` `while` `? :` | Boolean | `if ("hello")` | `true` |
+| `&` `\|` `^` `~` | Number (32-bit int) | `"5" \| 0` | `5` |
+
+---
+
+## JavaScript WAT Moments
+
+Let's explore the famous "weird parts" that make JavaScript... special.
+
+<AccordionGroup>
+  <Accordion title="1. The + Operator's Split Personality">
+    ```javascript
+    "5" + 3         // "53" (string concatenation)
+    "5" - 3         // 2 (math!)
+    
+    // Why? + does both addition AND concatenation
+    // If either operand is a string, it concatenates
+    // - only does subtraction, so it converts to numbers
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Empty Array Weirdness">
+    ```javascript
+    [] + []         // "" 
+    // Both arrays → "", then "" + "" = ""
+    
+    [] + {}         // "[object Object]"
+    // [] → "", {} → "[object Object]"
+    
+    {} + []         // 0 (in browser console!)
+    // {} is parsed as empty block, then +[] = 0
+    // Wrap in parens to fix: ({}) + [] = "[object Object]"
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Boolean Math">
+    ```javascript
+    true + true     // 2 (1 + 1)
+    true + false    // 1 (1 + 0)
+    true - true     // 0 (1 - 1)
+    
+    // Booleans convert to 1 (true) or 0 (false)
+    ```
+  </Accordion>
+  
+  <Accordion title="4. The Infamous [] == ![]">
+    ```javascript
+    [] == ![]       // true
+    
+    // Step by step:
+    // 1. ![] → false (arrays are truthy, negated = false)
+    // 2. [] == false
+    // 3. [] == 0 (boolean → number)
+    // 4. "" == 0 (array → string)
+    // 5. 0 == 0 (string → number)
+    // 6. true!
+    
+    // Meanwhile...
+    [] === ![]      // false (different types, no coercion)
+    ```
+  </Accordion>
+  
+  <Accordion title='5. "foo" + + "bar"'>
+    ```javascript
+    "foo" + + "bar"   // "fooNaN"
+    
+    // Step by step:
+    // 1. +"bar" is evaluated first (unary +)
+    // 2. +"bar" → NaN (can't convert "bar" to number)
+    // 3. "foo" + NaN → "fooNaN"
+    ```
+  </Accordion>
+  
+  <Accordion title="6. NaN is Not Equal to Itself">
+    ```javascript
+    NaN === NaN     // false
+    NaN == NaN      // false
+    
+    // NaN is the only value in JavaScript not equal to itself!
+    // This is by design (IEEE 754 spec)
+    
+    // How to check for NaN:
+    Number.isNaN(NaN)     // true (correct way)
+    isNaN(NaN)            // true
+    isNaN("hello")        // true (wrong! it converts first)
+    Number.isNaN("hello") // false (correct)
+    
+    ```
+    
+    Use [`Number.isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN) instead of the global [`isNaN()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/isNaN) for reliable NaN checking.
+  </Accordion>
+  
+  <Accordion title="7. typeof Quirks">
+    ```javascript
+    typeof NaN        // "number" (wat)
+    typeof null       // "object" (historical bug)
+    typeof []         // "object" (arrays are objects)
+    typeof function(){} // "function" (special case)
+    ```
+  </Accordion>
+  
+  <Accordion title="8. Adding Arrays">
+    ```javascript
+    [1, 2] + [3, 4]   // "1,23,4"
+    
+    // Arrays convert to strings:
+    // [1, 2] → "1,2"
+    // [3, 4] → "3,4"
+    // "1,2" + "3,4" → "1,23,4"
+    
+    // To actually combine arrays:
+    [...[1, 2], ...[3, 4]]  // [1, 2, 3, 4]
+    [1, 2].concat([3, 4])   // [1, 2, 3, 4]
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Best Practices
+
+<Tip>
+**How to avoid coercion bugs:**
+
+1. **Use `===` instead of `==`** — No surprises, no coercion
+2. **Be explicit** — Use `Number()`, `String()`, `Boolean()` when converting
+3. **Validate input** — Don't assume types, especially from user input
+4. **Use `Number.isNaN()`** — Not `isNaN()` or `=== NaN`
+5. **Be careful with `+`** — Remember it concatenates if any operand is a string
+</Tip>
+
+### When Implicit Coercion IS Useful
+
+Despite the gotchas, some implicit coercion patterns are actually helpful:
+
+```javascript
+// 1. Checking for null OR undefined in one shot
+if (value == null) {
+  // This catches BOTH null and undefined
+  // Much cleaner than: if (value === null || value === undefined)
+}
+
+// 2. Boolean context is natural and readable
+if (user) {
+  // Truthy check - totally fine
+}
+
+if (items.length) {
+  // Checking if array has items - totally fine
+}
+
+// 3. Quick string conversion
+const str = value + "";
+// or
+const str = String(value);
+// or
+const str = `${value}`;
+
+// 4. Quick number conversion
+const num = +value;
+// or
+const num = Number(value);
+```
+
+### Anti-Patterns to Avoid
+
+```javascript
+// BAD: Relying on == for type-unsafe comparisons
+if (x == true) { }  // Don't do this!
+if (x) { }          // Do this instead
+
+// BAD: Using == with 0 or ""
+if (x == 0) { }     // Matches "", but not null (null == 0 is false!)
+if (x === 0) { }    // Clear intent
+
+// BAD: Truthy check when you need specific type
+function process(count) {
+  if (!count) return;  // Fails for count = 0!
+  // ...
+}
+
+function process(count) {
+  if (typeof count !== "number") return;  // Better
+  // ...
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about Type Coercion:**
+
+1. **Three conversions only** — JavaScript converts to String, Number, or Boolean — nothing else
+
+2. **Implicit vs Explicit** — Know when JS converts automatically vs when you control it
+
+3. **The 8 common falsy values** — `false`, `0`, `-0`, `0n`, `""`, `null`, `undefined`, `NaN` — everything else is truthy (plus the rare `document.all`)
+
+4. **+ is special** — It prefers string concatenation if ANY operand is a string
+
+5. **- * / % are consistent** — They ALWAYS convert to numbers
+
+6. **== coerces, === doesn't** — Use `===` by default to avoid surprises
+
+7. **null == undefined** — This is true, but neither equals anything else with `==`
+
+8. **Objects convert via valueOf() and toString()** — Learn these methods to control conversion
+
+9. **When in doubt, be explicit** — Use `Number()`, `String()`, `Boolean()`
+
+10. **NaN is unique** — It's the only value not equal to itself; use `Number.isNaN()` to check
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title='Question 1: What does "5" + 3 return and why?'>
+    **Answer:** `"53"` (string)
+    
+    The `+` operator, when one operand is a string, performs string concatenation. The number `3` is converted to `"3"`, resulting in `"5" + "3" = "53"`.
+  </Accordion>
+  
+  <Accordion title="Question 2: What are the 8 common falsy values in JavaScript?">
+    **Answer:**
+    1. `false`
+    2. `0`
+    3. `-0`
+    4. `0n` (BigInt zero)
+    5. `""` (empty string)
+    6. `null`
+    7. `undefined`
+    8. `NaN`
+    
+    Everything else is truthy, including `[]`, `{}`, `"0"`, and `"false"`.
+    
+    **Bonus:** There's also a 9th falsy value — `document.all` — a legacy browser API you'll rarely encounter.
+  </Accordion>
+  
+  <Accordion title="Question 3: Why does [] == ![] return true?">
+    **Answer:** This is a multi-step coercion:
+    
+    1. `![]` evaluates first: arrays are truthy, so `![]` = `false`
+    2. Now we have `[] == false`
+    3. Boolean converts to number: `[] == 0`
+    4. Array converts to primitive: `"" == 0`
+    5. String converts to number: `0 == 0`
+    6. Result: `true`
+  </Accordion>
+  
+  <Accordion title="Question 4: What's the difference between == and === regarding coercion?">
+    **Answer:**
+    
+    - `===` (strict equality) **never** coerces. If types differ, it returns `false` immediately.
+    - `==` (loose equality) **coerces** values to the same type before comparing, following a complex algorithm.
+    
+    ```javascript
+    5 === "5"    // false (different types)
+    5 == "5"     // true (string coerced to number)
+    ```
+    
+    Best practice: Use `===` unless you specifically need coercion.
+  </Accordion>
+  
+  <Accordion title="Question 5: What does Number(null) vs Number(undefined) return?">
+    **Answer:**
+    
+    ```javascript
+    Number(null)       // 0
+    Number(undefined)  // NaN
+    ```
+    
+    This inconsistency is a common source of bugs. `null` converts to `0` (like "nothing" = zero), while `undefined` converts to `NaN` (like "no value" = not a number).
+  </Accordion>
+  
+  <Accordion title='Question 6: Predict the output: true + false + "hello"'>
+    **Answer:** `"1hello"`
+    
+    Step by step:
+    1. `true + false` = `1 + 0` = `1` (booleans → numbers)
+    2. `1 + "hello"` = `"1hello"` (number → string for concatenation)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Primitive Types" icon="atom" href="/concepts/primitive-types">
+    Understanding the basic data types that coercion converts between
+  </Card>
+  <Card title="Value Types vs Reference Types" icon="clone" href="/concepts/value-reference-types">
+    How primitives and objects behave differently during coercion
+  </Card>
+  <Card title="Equality Operators" icon="equals" href="/concepts/equality-operators">
+    Deep dive into ==, ===, and how coercion affects comparisons
+  </Card>
+  <Card title="JavaScript Engines" icon="gear" href="/concepts/javascript-engines">
+    How engines like V8 implement type coercion internally
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Type Coercion — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Type_coercion">
+    Official MDN glossary entry explaining type coercion fundamentals.
+  </Card>
+  <Card title="Equality Comparisons — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Equality_comparisons_and_sameness">
+    Comprehensive guide to ==, ===, Object.is() and the coercion rules behind each.
+  </Card>
+  <Card title="Type Conversion — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Type_Conversion">
+    The difference between type coercion (implicit) and type conversion (explicit).
+  </Card>
+  <Card title="Truthy and Falsy — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Falsy">
+    Complete list of falsy values and how boolean context works.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Type Coercion Explained" icon="newspaper" href="https://medium.freecodecamp.org/js-type-coercion-explained-27ba3d9a2839">
+    Comprehensive freeCodeCamp article by Alexey Samoshkin covering all coercion rules with tons of examples and quiz questions. One of the best resources available.
+  </Card>
+  <Card title="What you need to know about Javascript's Implicit Coercion" icon="newspaper" href="https://dev.to/promhize/what-you-need-to-know-about-javascripts-implicit-coercion-e23">
+    Practical guide by Promise Tochi covering implicit coercion patterns, valueOf/toString, and common gotchas with clear examples.
+  </Card>
+  <Card title="Object to Primitive Conversion" icon="newspaper" href="https://javascript.info/object-toprimitive">
+    Deep-dive from javascript.info into how objects convert to primitives using Symbol.toPrimitive, toString, and valueOf. Essential for advanced understanding.
+  </Card>
+  <Card title="You Don't Know JS: Types & Grammar, Ch. 4" icon="newspaper" href="https://github.com/getify/You-Dont-Know-JS/blob/2nd-ed/types-grammar/ch4.md">
+    Kyle Simpson's definitive deep-dive into JavaScript coercion. Explains abstract operations, ToString, ToNumber, ToBoolean, and the "why" behind every rule. Free to read online.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="== ? === ??? ...#@^% — JSConf EU" icon="video" href="https://www.youtube.com/watch?v=qGyqzN0bjhc">
+    Entertaining JSConf talk by Shirmung Bielefeld exploring the chaos of JavaScript equality operators with live examples and audience participation.
+  </Card>
+  <Card title="Coercion in Javascript — Hitesh Choudhary" icon="video" href="https://www.youtube.com/watch?v=b04Q_vyqEG8">
+    Hitesh walks through coercion step-by-step in the browser console, showing exactly what JavaScript does at each conversion. Good pace for beginners.
+  </Card>
+  <Card title="What is Coercion? — Steven Hancock" icon="video" href="https://www.youtube.com/watch?v=z4-8wMSPJyI">
+    Steven breaks down the three conversion types (string, number, boolean) with simple examples. Short video that covers the fundamentals quickly.
+  </Card>
+</CardGroup>

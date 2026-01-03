@@ -1,0 +1,1685 @@
+---
+title: "Event Loop: How Async Code Actually Runs in JavaScript"
+sidebarTitle: "Event Loop: How Async Code Actually Runs"
+description: "Learn how the JavaScript event loop handles async code. Understand the call stack, task queue, microtasks, and why Promises always run before setTimeout()."
+---
+
+How does JavaScript handle multiple things at once when it can only do one thing at a time? Why does this code print in a surprising order?
+
+```javascript
+console.log('Start');
+setTimeout(() => console.log('Timeout'), 0);
+Promise.resolve().then(() => console.log('Promise'));
+console.log('End');
+
+// Output:
+// Start
+// End
+// Promise
+// Timeout
+```
+
+Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model)**. It's JavaScript's mechanism for handling asynchronous operations while remaining single-threaded.
+
+<Info>
+**What you'll learn in this guide:**
+- Why JavaScript needs an event loop (and what "single-threaded" really means)
+- How setTimeout REALLY works (spoiler: the delay is NOT guaranteed!)
+- The difference between tasks and microtasks (and why it matters)
+- Why `Promise.then()` runs before `setTimeout(..., 0)`
+- How to use setTimeout, setInterval, and requestAnimationFrame effectively
+- Common interview questions explained step-by-step
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes familiarity with [the call stack](/concepts/call-stack) and [Promises](/concepts/promises). If those concepts are new to you, read them first!
+</Warning>
+
+---
+
+## What is the Event Loop?
+
+The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. It coordinates execution by checking callback queues when the call stack is empty, then pushing queued tasks to the stack for execution. This enables non-blocking behavior despite JavaScript being single-threaded.
+
+### The Restaurant Analogy
+
+Imagine a busy restaurant kitchen with a **single chef** who can only cook one dish at a time. Despite this limitation, the restaurant serves hundreds of customers because the kitchen has a clever system:
+
+```
+THE JAVASCRIPT KITCHEN
+
+                                         ┌─────────────────────────┐
+┌────────────────────────────────┐       │      KITCHEN TIMERS     │
+│         ORDER SPIKE            │       │      (Web APIs)         │
+│        (Call Stack)            │       │                         │
+│  ┌──────────────────────────┐  │       │  [Timer: 3 min - soup]  │
+│  │  Currently cooking:      │  │       │  [Timer: 10 min - roast]│
+│  │  "grilled cheese"        │  │       │  [Waiting: delivery]    │
+│  ├──────────────────────────┤  │       │                         │
+│  │  Next: "prep salad"      │  │       └───────────┬─────────────┘
+│  └──────────────────────────┘  │                   │
+└────────────────────────────────┘                   │ (timer done!)
+          ▲                                          ▼
+          │                          ┌──────────────────────────────┐
+          │                          │      "ORDER UP!" WINDOW      │
+    KITCHEN MANAGER                  │        (Task Queue)          │
+     (Event Loop)                    │                              │
+                                     │  [soup ready] [delivery here]│
+    "Chef free? ────────────────────►│                              │
+     Here's the next order!"         └──────────────────────────────┘
+          │                                          ▲
+          │                          ┌───────────────┴──────────────┐
+          │                          │       VIP RUSH ORDERS        │
+          └──────────────────────────│      (Microtask Queue)       │
+             (VIP orders first!)     │                              │
+                                     │  [plating] [garnish]         │
+                                     └──────────────────────────────┘
+```
+
+Here's how it maps to JavaScript:
+
+| Kitchen | JavaScript |
+|---------|------------|
+| **Single Chef** | JavaScript engine (single-threaded) |
+| **Order Spike** | Call Stack (current work, LIFO) |
+| **Kitchen Timers** | Web APIs (setTimeout, fetch, etc.) |
+| **"Order Up!" Window** | Task Queue (callbacks waiting) |
+| **VIP Rush Orders** | Microtask Queue (promises, high priority) |
+| **Kitchen Manager** | Event Loop (coordinator) |
+
+The chef (JavaScript) can only work on one dish (task) at a time. But kitchen timers (Web APIs) run independently! When a timer goes off, the dish goes to the "Order Up!" window (Task Queue). The kitchen manager (Event Loop) constantly checks: "Is the chef free? Here's the next order!"
+
+**VIP orders (Promises)** always get priority. They jump ahead of regular orders in the queue.
+
+<Note>
+**TL;DR:** JavaScript is single-threaded but achieves concurrency by delegating work to browser APIs, which run in the background. When they're done, callbacks go into queues. The Event Loop moves callbacks from queues to the call stack when it's empty.
+</Note>
+
+---
+
+## The Problem: JavaScript is Single-Threaded
+
+JavaScript can only do **one thing at a time**. There's one call stack, one thread of execution.
+
+```javascript
+// JavaScript executes these ONE AT A TIME, in order
+console.log('First');   // 1. This runs
+console.log('Second');  // 2. Then this
+console.log('Third');   // 3. Then this
+```
+
+### Why Is This a Problem?
+
+Imagine if every operation blocked the entire program. Consider the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API):
+
+```javascript
+// If fetch() was synchronous (blocking)...
+const data = fetch('https://api.example.com/data'); // Takes 2 seconds
+console.log(data);
+// NOTHING else can happen for 2 seconds!
+// - No clicking buttons
+// - No scrolling
+// - No animations
+// - Complete UI freeze!
+```
+
+A 30-second API call would freeze your entire webpage for 30 seconds. Users would think the browser crashed!
+
+### The Solution: Asynchronous JavaScript
+
+JavaScript solves this by **delegating** long-running tasks to the browser (or Node.js), which handles them in the background. Functions like [`setTimeout()`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout) don't block:
+
+```javascript
+console.log('Start');
+
+// This doesn't block! Browser handles the timer
+setTimeout(() => {
+  console.log('Timer done');
+}, 2000);
+
+console.log('End');
+
+// Output:
+// Start
+// End
+// Timer done (after 2 seconds)
+```
+
+The secret sauce that makes this work? **The Event Loop**.
+
+---
+
+## The JavaScript Runtime Environment
+
+To understand the Event Loop, you need to see the full picture:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        JAVASCRIPT RUNTIME                               │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │                      JAVASCRIPT ENGINE (V8, SpiderMonkey, etc.) │   │
+│  │  ┌───────────────────────┐    ┌───────────────────────────┐     │   │
+│  │  │      CALL STACK       │    │          HEAP             │     │   │
+│  │  │                       │    │                           │     │   │
+│  │  │  ┌─────────────────┐  │    │   { objects stored here } │     │   │
+│  │  │  │ processData()   │  │    │   [ arrays stored here ]  │     │   │
+│  │  │  ├─────────────────┤  │    │   function references     │     │   │
+│  │  │  │ fetchUser()     │  │    │                           │     │   │
+│  │  │  ├─────────────────┤  │    │                           │     │   │
+│  │  │  │ main()          │  │    │                           │     │   │
+│  │  │  └─────────────────┘  │    └───────────────────────────┘     │   │
+│  │  └───────────────────────┘                                      │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+│                                                                         │
+│  ┌─────────────────────────────────────────────────────────────────┐   │
+│  │                    BROWSER / NODE.js APIs                        │   │
+│  │                                                                  │   │
+│  │   setTimeout()    setInterval()    fetch()    DOM events         │   │
+│  │   requestAnimationFrame()    IndexedDB    WebSockets             │   │
+│  │                                                                  │   │
+│  │   (These are handled outside of JavaScript execution!)           │   │
+│  └─────────────────────────────────────────────────────────────────┘   │
+│                                    │                                    │
+│                                    │ callbacks                          │
+│                                    ▼                                    │
+│  ┌──────────────────────────────────────────────────────────────────┐  │
+│  │  MICROTASK QUEUE                    TASK QUEUE (Macrotask)       │  │
+│  │  ┌────────────────────────┐        ┌─────────────────────────┐   │  │
+│  │  │ Promise.then()         │        │ setTimeout callback     │   │  │
+│  │  │ queueMicrotask()       │        │ setInterval callback    │   │  │
+│  │  │ MutationObserver       │        │ I/O callbacks           │   │  │
+│  │  │ async/await (after)    │        │ UI event handlers       │   │  │
+│  │  └────────────────────────┘        │ Event handlers          │   │  │
+│  │         ▲                          └─────────────────────────┘   │  │
+│  │         │ HIGHER PRIORITY                    ▲                   │  │
+│  └─────────┼────────────────────────────────────┼───────────────────┘  │
+│            │                                    │                       │
+│            └──────────┬─────────────────────────┘                       │
+│                       │                                                 │
+│              ┌────────┴────────┐                                        │
+│              │   EVENT LOOP    │                                        │
+│              │                 │                                        │
+│              │  "Is the call   │                                        │
+│              │   stack empty?" ├──────────► Push next callback          │
+│              │                 │            to call stack               │
+│              └─────────────────┘                                        │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### The Components
+
+<AccordionGroup>
+  <Accordion title="Call Stack">
+    The **[Call Stack](/concepts/call-stack)** is where JavaScript keeps track of what function is currently running. It's a LIFO (Last In, First Out) structure, like a stack of plates.
+    
+    ```javascript
+    function multiply(a, b) {
+      return a * b;
+    }
+    
+    function square(n) {
+      return multiply(n, n);
+    }
+    
+    function printSquare(n) {
+      const result = square(n);
+      console.log(result);
+    }
+    
+    printSquare(4);
+    ```
+    
+    Call stack progression:
+    ```
+    1. [printSquare]
+    2. [square, printSquare]
+    3. [multiply, square, printSquare]
+    4. [square, printSquare]        // multiply returns
+    5. [printSquare]                 // square returns
+    6. [console.log, printSquare]
+    7. [printSquare]                 // console.log returns
+    8. []                            // printSquare returns
+    ```
+  </Accordion>
+  
+  <Accordion title="Heap">
+    The **Heap** is a large, mostly unstructured region of memory where objects, arrays, and functions are stored. When you create an object, it lives in the heap.
+    
+    ```javascript
+    const user = { name: 'Alice' };  // Object stored in heap
+    const numbers = [1, 2, 3];       // Array stored in heap
+    ```
+  </Accordion>
+  
+  <Accordion title="Web APIs (Browser) / C++ APIs (Node.js)">
+    These are **NOT** part of JavaScript itself! They're provided by the environment:
+    
+    **Browser APIs:**
+    - [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout), [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/setInterval)
+    - [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), `XMLHttpRequest`
+    - DOM events (click, scroll, etc.)
+    - [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame)
+    - Geolocation, WebSockets, IndexedDB
+    
+    **Node.js APIs:**
+    - File system operations
+    - Network requests
+    - Timers
+    - Child processes
+    
+    These are handled by the browser/Node.js runtime outside of JavaScript execution, allowing JavaScript to remain non-blocking.
+  </Accordion>
+  
+  <Accordion title="Task Queue (Macrotask Queue)">
+    The **Task Queue** holds callbacks from:
+    - `setTimeout` and `setInterval`
+    - I/O operations
+    - UI rendering tasks
+    - Event handlers (click, keypress, etc.)
+    - `setImmediate` (Node.js)
+    
+    Tasks are processed **one at a time**, with potential rendering between them.
+  </Accordion>
+  
+  <Accordion title="Microtask Queue">
+    The **Microtask Queue** holds high-priority callbacks from:
+    - `Promise.then()`, `.catch()`, `.finally()`
+    - [`queueMicrotask()`](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask)
+    - [`MutationObserver`](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)
+    - Code after `await` in [async functions](/concepts/async-await)
+    
+    **Microtasks ALWAYS run before the next task!** The entire microtask queue is drained before moving to the task queue.
+  </Accordion>
+  
+  <Accordion title="Event Loop">
+    The **Event Loop** is the orchestrator. Its job is simple but crucial:
+    
+    ```
+    FOREVER:
+      1. Execute all code in the Call Stack until empty
+      2. Execute ALL microtasks (until microtask queue is empty)
+      3. Render if needed (update the UI)
+      4. Take ONE task from the task queue
+      5. Go to step 1
+    ```
+    
+    The key insight: **Microtasks can starve the task queue!** If microtasks keep adding more microtasks, tasks (and rendering) never get a chance to run.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## How the Event Loop Works: Step-by-Step
+
+Let's trace through some examples to see the event loop in action.
+
+### Example 1: Basic setTimeout
+
+```javascript
+console.log('Start');
+
+setTimeout(() => {
+  console.log('Timeout');
+}, 0);
+
+console.log('End');
+```
+
+**Output:** `Start`, `End`, `Timeout`
+
+**Why?** Let's trace it step by step:
+
+<Steps>
+  <Step title="Execute console.log('Start')">
+    Call stack: `[console.log]` → prints "Start" → stack empty
+    
+    ```
+    Call Stack: [console.log('Start')]
+    Web APIs: []
+    Task Queue: []
+    Output: "Start"
+    ```
+  </Step>
+  
+  <Step title="Execute setTimeout()">
+    `setTimeout` is called → registers timer with Web APIs → immediately returns
+    
+    ```
+    Call Stack: []
+    Web APIs: [Timer: 0ms → callback]
+    Task Queue: []
+    ```
+    
+    The timer is handled by the browser, NOT JavaScript!
+  </Step>
+  
+  <Step title="Timer completes (0ms)">
+    Browser's timer finishes → callback moves to Task Queue
+    
+    ```
+    Call Stack: []
+    Web APIs: []
+    Task Queue: [callback]
+    ```
+  </Step>
+  
+  <Step title="Execute console.log('End')">
+    But wait! We're still running the main script!
+    
+    ```
+    Call Stack: [console.log('End')]
+    Task Queue: [callback]
+    Output: "Start", "End"
+    ```
+  </Step>
+  
+  <Step title="Main script complete, Event Loop checks queues">
+    Call stack is empty → Event Loop takes callback from Task Queue
+    
+    ```
+    Call Stack: [callback]
+    Task Queue: []
+    Output: "Start", "End", "Timeout"
+    ```
+  </Step>
+</Steps>
+
+<Warning>
+**Key insight:** Even with a 0ms delay, `setTimeout` callback NEVER runs immediately. It must wait for:
+1. The current script to finish
+2. All microtasks to complete
+3. Its turn in the task queue
+</Warning>
+
+### Example 2: Promises vs setTimeout
+
+```javascript
+console.log('1');
+
+setTimeout(() => console.log('2'), 0);
+
+Promise.resolve().then(() => console.log('3'));
+
+console.log('4');
+```
+
+**Output:** `1`, `4`, `3`, `2`
+
+**Why does `3` come before `2`?**
+
+<Steps>
+  <Step title="Synchronous code runs first">
+    `console.log('1')` → prints "1"
+    
+    `setTimeout` → registers callback in Web APIs → callback goes to **Task Queue**
+    
+    `Promise.resolve().then()` → callback goes to **Microtask Queue**
+    
+    `console.log('4')` → prints "4"
+    
+    ```
+    Output so far: "1", "4"
+    Microtask Queue: [Promise callback]
+    Task Queue: [setTimeout callback]
+    ```
+  </Step>
+  
+  <Step title="Microtasks run before tasks">
+    Call stack empty → Event Loop checks **Microtask Queue first**
+    
+    Promise callback runs → prints "3"
+    
+    ```
+    Output so far: "1", "4", "3"
+    Microtask Queue: []
+    Task Queue: [setTimeout callback]
+    ```
+  </Step>
+  
+  <Step title="Task Queue processed">
+    Microtask queue empty → Event Loop takes from Task Queue
+    
+    setTimeout callback runs → prints "2"
+    
+    ```
+    Final output: "1", "4", "3", "2"
+    ```
+  </Step>
+</Steps>
+
+<Tip>
+**The Golden Rule:** Microtasks (Promises) ALWAYS run before Macrotasks (setTimeout), regardless of which was scheduled first.
+</Tip>
+
+### Example 3: Nested Microtasks
+
+```javascript
+console.log('Start');
+
+Promise.resolve()
+  .then(() => {
+    console.log('Promise 1');
+    Promise.resolve().then(() => console.log('Promise 2'));
+  });
+
+setTimeout(() => console.log('Timeout'), 0);
+
+console.log('End');
+```
+
+**Output:** `Start`, `End`, `Promise 1`, `Promise 2`, `Timeout`
+
+Even though the second promise is created AFTER setTimeout was registered, it still runs first because the **entire microtask queue must be drained** before any task runs!
+
+---
+
+## Tasks vs Microtasks: The Complete Picture
+
+### What Creates Tasks (Macrotasks)?
+
+| Source | Description |
+|--------|-------------|
+| `setTimeout(fn, delay)` | Runs `fn` after at least `delay` ms |
+| `setInterval(fn, delay)` | Runs `fn` repeatedly every ~`delay` ms |
+| I/O callbacks | Network responses, file reads |
+| UI Events | click, scroll, keydown, mousemove |
+| `setImmediate(fn)` | Node.js only, runs after I/O |
+| [`MessageChannel`](https://developer.mozilla.org/en-US/docs/Web/API/MessageChannel) | `postMessage` callbacks |
+
+<Note>
+**What about requestAnimationFrame?** rAF is NOT a task. It runs during the rendering phase, after microtasks but before the browser paints. It's covered in detail in the [Timers section](#requestanimationframe-smooth-animations).
+</Note>
+
+### What Creates Microtasks?
+
+| Source | Description |
+|--------|-------------|
+| `Promise.then/catch/finally` | When promise settles |
+| `async/await` | Code after `await` |
+| `queueMicrotask(fn)` | Explicitly queue a microtask |
+| `MutationObserver` | When DOM changes |
+
+### The Event Loop Algorithm (Simplified)
+
+```javascript
+// Pseudocode for the Event Loop (per HTML specification)
+while (true) {
+  // 1. Process ONE task from the task queue (if available)
+  if (taskQueue.hasItems()) {
+    const task = taskQueue.dequeue();
+    execute(task);
+  }
+  
+  // 2. Process ALL microtasks (until queue is empty)
+  while (microtaskQueue.hasItems()) {
+    const microtask = microtaskQueue.dequeue();
+    execute(microtask);
+    // New microtasks added during execution are also processed!
+  }
+  
+  // 3. Render if needed (browser decides, typically ~60fps)
+  if (shouldRender()) {
+    // 3a. Run requestAnimationFrame callbacks
+    runAnimationFrameCallbacks();
+    // 3b. Perform style calculation, layout, and paint
+    render();
+  }
+  
+  // 4. Repeat (go back to step 1)
+}
+```
+
+<Warning>
+**Microtask Starvation:** If microtasks keep adding more microtasks, the task queue (and rendering!) will never get a chance to run:
+
+```javascript
+// DON'T DO THIS - infinite microtask loop!
+function forever() {
+  Promise.resolve().then(forever);
+}
+forever(); // Browser freezes!
+```
+</Warning>
+
+---
+
+## JavaScript Timers: setTimeout, setInterval, requestAnimationFrame
+
+Now that you understand the event loop, let's dive deep into JavaScript's timing functions.
+
+### setTimeout: One-Time Delayed Execution
+
+```javascript
+// Syntax
+const timerId = setTimeout(callback, delay, ...args);
+
+// Cancel before it runs
+clearTimeout(timerId);
+```
+
+**Basic usage:**
+
+```javascript
+// Run after 2 seconds
+setTimeout(() => {
+  console.log('Hello after 2 seconds!');
+}, 2000);
+
+// Pass arguments to the callback
+setTimeout((name, greeting) => {
+  console.log(`${greeting}, ${name}!`);
+}, 1000, 'Alice', 'Hello');
+// Output after 1s: "Hello, Alice!"
+```
+
+**Canceling a timeout:**
+
+```javascript
+const timerId = setTimeout(() => {
+  console.log('This will NOT run');
+}, 5000);
+
+// Cancel it before it fires
+clearTimeout(timerId);
+```
+
+#### The "Zero Delay" Myth
+
+`setTimeout(fn, 0)` does NOT run immediately!
+
+```javascript
+console.log('A');
+setTimeout(() => console.log('B'), 0);
+console.log('C');
+
+// Output: A, C, B (NOT A, B, C!)
+```
+
+Even with 0ms delay, the callback must wait for:
+1. Current script to complete
+2. All microtasks to drain
+3. Its turn in the task queue
+
+#### The Minimum Delay (4ms Rule)
+
+After 5 nested timeouts, browsers enforce a minimum 4ms delay:
+
+```javascript
+let start = Date.now();
+let times = [];
+
+setTimeout(function run() {
+  times.push(Date.now() - start);
+  if (times.length < 10) {
+    setTimeout(run, 0);
+  } else {
+    console.log(times);
+  }
+}, 0);
+
+// Typical output (varies by browser/system): [1, 1, 1, 1, 4, 9, 14, 19, 24, 29]
+// First 4-5 are fast, then 4ms minimum kicks in
+```
+
+<Warning>
+**setTimeout delay is a MINIMUM, not a guarantee!**
+
+```javascript
+const start = Date.now();
+
+setTimeout(() => {
+  console.log(`Actual delay: ${Date.now() - start}ms`);
+}, 100);
+
+// Heavy computation blocks the event loop
+for (let i = 0; i < 1000000000; i++) {}
+
+// Output might be: "Actual delay: 2547ms" (NOT 100ms!)
+```
+
+If the call stack is busy, the timeout callback must wait.
+</Warning>
+
+### setInterval: Repeated Execution
+
+```javascript
+// Syntax
+const intervalId = setInterval(callback, delay, ...args);
+
+// Stop the interval
+clearInterval(intervalId);
+```
+
+**Basic usage:**
+
+```javascript
+let count = 0;
+
+const intervalId = setInterval(() => {
+  count++;
+  console.log(`Count: ${count}`);
+  
+  if (count >= 5) {
+    clearInterval(intervalId);
+    console.log('Done!');
+  }
+}, 1000);
+
+// Output every second: Count: 1, Count: 2, ... Count: 5, Done!
+```
+
+#### The setInterval Drift Problem
+
+`setInterval` doesn't account for callback execution time:
+
+```javascript
+// Problem: If callback takes 300ms, and interval is 1000ms,
+// actual time between START of callbacks is 1000ms,
+// but time between END of one and START of next is only 700ms
+
+setInterval(() => {
+  // This takes 300ms to execute
+  heavyComputation();
+}, 1000);
+```
+
+```
+Time:     0ms    1000ms   2000ms   3000ms
+          │       │        │        │
+setInterval│───────│────────│────────│
+          │  300ms │  300ms │  300ms │
+          │callback│callback│callback│
+          │       │        │        │
+          
+The 1000ms is between STARTS, not between END and START
+```
+
+#### Solution: Nested setTimeout
+
+For more precise timing, use nested `setTimeout`:
+
+```javascript
+// Nested setTimeout guarantees delay BETWEEN executions
+function preciseInterval(callback, delay) {
+  function tick() {
+    callback();
+    setTimeout(tick, delay);  // Schedule next AFTER current completes
+  }
+  setTimeout(tick, delay);
+}
+
+// Now there's exactly `delay` ms between the END of one
+// callback and the START of the next
+```
+
+```
+Time:     0ms    1300ms   2600ms   3900ms
+          │       │        │        │
+Nested    │───────│────────│────────│
+setTimeout│  300ms│  300ms │  300ms │
+          │   +   │   +    │   +    │
+          │ 1000ms│ 1000ms │ 1000ms │
+          │ delay │ delay  │ delay  │
+```
+
+<Tip>
+**When to use which:**
+- **setInterval**: For simple UI updates that don't depend on previous execution
+- **Nested setTimeout**: For sequential operations, API polling, or when timing precision matters
+</Tip>
+
+### requestAnimationFrame: Smooth Animations
+
+`requestAnimationFrame` (rAF) is designed specifically for animations. It syncs with the browser's refresh rate (usually 60fps = ~16.67ms per frame).
+
+```javascript
+// Syntax
+const rafId = requestAnimationFrame(callback);
+
+// Cancel
+cancelAnimationFrame(rafId);
+```
+
+**Basic animation loop:**
+
+```javascript
+function animate(timestamp) {
+  // timestamp = time since page load in ms
+  
+  // Update animation state
+  element.style.left = (timestamp / 10) + 'px';
+  
+  // Request next frame
+  requestAnimationFrame(animate);
+}
+
+// Start the animation
+requestAnimationFrame(animate);
+```
+
+#### Why requestAnimationFrame is Better for Animations
+
+| Feature | setTimeout/setInterval | requestAnimationFrame |
+|---------|----------------------|----------------------|
+| **Sync with display** | No | Yes (matches refresh rate) |
+| **Battery efficient** | No | Yes (pauses in background tabs) |
+| **Smooth animations** | Can be janky | Optimized by browser |
+| **Timing accuracy** | Can drift | Consistent frame timing |
+| **CPU usage** | Runs even if tab hidden | Pauses when tab hidden |
+
+**Example: Animating with rAF**
+
+```javascript
+const box = document.getElementById('box');
+let position = 0;
+let lastTime = null;
+
+function animate(currentTime) {
+  // Handle first frame (no previous time yet)
+  if (lastTime === null) {
+    lastTime = currentTime;
+    requestAnimationFrame(animate);
+    return;
+  }
+  
+  // Calculate time since last frame
+  const deltaTime = currentTime - lastTime;
+  lastTime = currentTime;
+  
+  // Move 100 pixels per second, regardless of frame rate
+  const speed = 100; // pixels per second
+  position += speed * (deltaTime / 1000);
+  
+  box.style.transform = `translateX(${position}px)`;
+  
+  // Stop at 500px
+  if (position < 500) {
+    requestAnimationFrame(animate);
+  }
+}
+
+requestAnimationFrame(animate);
+```
+
+#### When requestAnimationFrame Runs
+
+```
+One Event Loop Iteration:
+┌─────────────────────────────────────────────────────────────────┐
+│ 1. Run task from Task Queue                                     │
+├─────────────────────────────────────────────────────────────────┤
+│ 2. Run ALL microtasks                                           │
+├─────────────────────────────────────────────────────────────────┤
+│ 3. If time to render:                                           │
+│    a. Run requestAnimationFrame callbacks  ← HERE!              │
+│    b. Render/paint the screen                                   │
+├─────────────────────────────────────────────────────────────────┤
+│ 4. If idle time remains before next frame:                      │
+│    Run requestIdleCallback callbacks (non-essential work)       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+### Timer Comparison Summary
+
+<Tabs>
+  <Tab title="setTimeout">
+    **Use for:** One-time delayed execution
+    
+    ```javascript
+    // Delay a function call
+    setTimeout(() => {
+      showNotification('Saved!');
+    }, 2000);
+    
+    // Debouncing
+    let timeoutId;
+    input.addEventListener('input', () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(search, 300);
+    });
+    ```
+    
+    **Gotchas:**
+    - Delay is minimum, not guaranteed
+    - 4ms minimum after 5 nested calls
+    - Blocked by long-running synchronous code
+  </Tab>
+  
+  <Tab title="setInterval">
+    **Use for:** Repeated execution at fixed intervals
+    
+    ```javascript
+    // Update clock every second
+    setInterval(() => {
+      clock.textContent = new Date().toLocaleTimeString();
+    }, 1000);
+    
+    // Poll server for updates
+    const pollId = setInterval(async () => {
+      const data = await fetchUpdates();
+      updateUI(data);
+    }, 5000);
+    ```
+    
+    **Gotchas:**
+    - Can drift if callbacks take long
+    - Multiple calls can queue up
+    - ALWAYS store the ID and call `clearInterval`
+    - Consider nested setTimeout for precision
+  </Tab>
+  
+  <Tab title="requestAnimationFrame">
+    **Use for:** Animations and visual updates
+    
+    ```javascript
+    // Smooth animation
+    function animate() {
+      updatePosition();
+      draw();
+      requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    
+    // Smooth scroll
+    function smoothScroll(target) {
+      const current = window.scrollY;
+      const distance = target - current;
+      
+      if (Math.abs(distance) > 1) {
+        window.scrollTo(0, current + distance * 0.1);
+        requestAnimationFrame(() => smoothScroll(target));
+      }
+    }
+    ```
+    
+    **Benefits:**
+    - Synced with display refresh (60fps)
+    - Pauses in background tabs (saves battery)
+    - Browser-optimized
+  </Tab>
+</Tabs>
+
+---
+
+## Classic Interview Questions
+
+### Question 1: Basic Output Order
+
+```javascript
+console.log('1');
+setTimeout(() => console.log('2'), 0);
+Promise.resolve().then(() => console.log('3'));
+console.log('4');
+```
+
+<Accordion title="Answer">
+**Output:** `1`, `4`, `3`, `2`
+
+**Explanation:**
+1. `console.log('1')` — synchronous, runs immediately → "1"
+2. `setTimeout` — callback goes to **Task Queue**
+3. `Promise.then` — callback goes to **Microtask Queue**
+4. `console.log('4')` — synchronous, runs immediately → "4"
+5. Call stack empty → drain Microtask Queue → "3"
+6. Microtask queue empty → process Task Queue → "2"
+</Accordion>
+
+### Question 2: Nested Promises and Timeouts
+
+```javascript
+setTimeout(() => console.log('timeout 1'), 0);
+
+Promise.resolve().then(() => {
+  console.log('promise 1');
+  Promise.resolve().then(() => console.log('promise 2'));
+});
+
+setTimeout(() => console.log('timeout 2'), 0);
+
+console.log('sync');
+```
+
+<Accordion title="Answer">
+**Output:** `sync`, `promise 1`, `promise 2`, `timeout 1`, `timeout 2`
+
+**Explanation:**
+1. First `setTimeout` → callback to Task Queue
+2. `Promise.then` → callback to Microtask Queue
+3. Second `setTimeout` → callback to Task Queue
+4. `console.log('sync')` → runs immediately → "sync"
+5. Drain Microtask Queue:
+   - Run first promise callback → "promise 1"
+   - This adds another promise to Microtask Queue
+   - Continue draining → "promise 2"
+6. Microtask Queue empty, process Task Queue:
+   - First timeout → "timeout 1"
+   - Second timeout → "timeout 2"
+</Accordion>
+
+### Question 3: async/await Ordering
+
+```javascript
+async function foo() {
+  console.log('foo start');
+  await Promise.resolve();
+  console.log('foo end');
+}
+
+console.log('script start');
+foo();
+console.log('script end');
+```
+
+<Accordion title="Answer">
+**Output:** `script start`, `foo start`, `script end`, `foo end`
+
+**Explanation:**
+1. `console.log('script start')` → "script start"
+2. Call `foo()`:
+   - `console.log('foo start')` → "foo start"
+   - `await Promise.resolve()` — pauses foo, schedules continuation as microtask
+3. `foo()` returns (suspended at await)
+4. `console.log('script end')` → "script end"
+5. Call stack empty → drain Microtask Queue → resume foo
+6. `console.log('foo end')` → "foo end"
+
+**Key insight:** `await` splits the function. Code before `await` runs synchronously. Code after `await` runs as a microtask.
+</Accordion>
+
+### Question 4: setTimeout in a Loop
+
+```javascript
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 0);
+}
+```
+
+<Accordion title="Answer">
+**Output:** `3`, `3`, `3`
+
+**Explanation:**
+- `var` is function-scoped, so there's only ONE `i` variable
+- The loop runs synchronously: i=0, i=1, i=2, i=3 (loop ends)
+- THEN the callbacks run, and they all see `i = 3`
+
+**Fix with let:**
+```javascript
+for (let i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 0);
+}
+// Output: 0, 1, 2
+```
+
+**Fix with closure (IIFE):**
+```javascript
+for (var i = 0; i < 3; i++) {
+  ((j) => {
+    setTimeout(() => console.log(j), 0);
+  })(i);
+}
+// Output: 0, 1, 2
+```
+
+**Fix with setTimeout's third parameter:**
+```javascript
+for (var i = 0; i < 3; i++) {
+  setTimeout((j) => console.log(j), 0, i);
+}
+// Output: 0, 1, 2
+```
+</Accordion>
+
+### Question 5: What's Wrong Here?
+
+```javascript
+const start = Date.now();
+setTimeout(() => {
+  console.log(`Elapsed: ${Date.now() - start}ms`);
+}, 1000);
+
+// Simulate heavy computation
+let sum = 0;
+for (let i = 0; i < 1000000000; i++) {
+  sum += i;
+}
+console.log('Heavy work done');
+```
+
+<Accordion title="Answer">
+**Problem:** The timeout will NOT fire after 1000ms!
+
+The heavy `for` loop blocks the call stack. Even though the timer finishes after 1000ms, the callback cannot run until the call stack is empty.
+
+**Typical output:**
+```
+Heavy work done
+Elapsed: 3245ms  // Much longer than 1000ms!
+```
+
+**Lesson:** Never do heavy synchronous work on the main thread. Use:
+- Web Workers for CPU-intensive tasks
+- Break work into chunks with setTimeout
+- Use `requestIdleCallback` for non-critical work
+</Accordion>
+
+### Question 6: Microtask Starvation
+
+```javascript
+function scheduleMicrotask() {
+  Promise.resolve().then(() => {
+    console.log('microtask');
+    scheduleMicrotask();
+  });
+}
+
+setTimeout(() => console.log('timeout'), 0);
+scheduleMicrotask();
+```
+
+<Accordion title="Answer">
+**Output:** `microtask`, `microtask`, `microtask`, ... (forever!)
+
+The timeout callback NEVER runs!
+
+**Explanation:**
+- Each microtask schedules another microtask
+- The Event Loop drains the entire microtask queue before moving to tasks
+- The microtask queue is never empty
+- The timeout callback starves
+
+**This is a browser freeze!** The page becomes unresponsive because rendering also waits for the microtask queue to drain.
+</Accordion>
+
+---
+
+## Common Misconceptions
+
+<AccordionGroup>
+  <Accordion title="Misconception 1: 'setTimeout(fn, 0) runs immediately'">
+    **Wrong!** Even with 0ms delay, the callback goes to the Task Queue and must wait for:
+    1. Current script to complete
+    2. All microtasks to drain
+    3. Its turn in the queue
+    
+    ```javascript
+    setTimeout(() => console.log('timeout'), 0);
+    Promise.resolve().then(() => console.log('promise'));
+    console.log('sync');
+    
+    // Output: sync, promise, timeout (NOT sync, timeout, promise)
+    ```
+  </Accordion>
+  
+  <Accordion title="Misconception 2: 'setTimeout delay is guaranteed'">
+    **Wrong!** The delay is a MINIMUM wait time, not a guarantee.
+    
+    If the call stack is busy or the Task Queue has items ahead, the actual delay will be longer.
+    
+    ```javascript
+    setTimeout(() => console.log('A'), 100);
+    setTimeout(() => console.log('B'), 100);
+    
+    // Heavy work takes 500ms
+    for (let i = 0; i < 1e9; i++) {}
+    
+    // Both A and B fire at ~500ms, not 100ms
+    ```
+  </Accordion>
+  
+  <Accordion title="Misconception 3: 'JavaScript is asynchronous'">
+    **Partially wrong!** JavaScript itself is single-threaded and synchronous.
+    
+    The asynchronous behavior comes from:
+    - The **runtime environment** (browser/Node.js)
+    - **Web APIs** that run in separate threads
+    - The **Event Loop** that coordinates callbacks
+    
+    JavaScript code runs synchronously, one line at a time. The magic is that it can delegate work to the environment.
+  </Accordion>
+  
+  <Accordion title="Misconception 4: 'The Event Loop is part of JavaScript'">
+    **Wrong!** The Event Loop is NOT defined in the ECMAScript specification.
+    
+    It's defined in the HTML specification (for browsers) and implemented by the runtime environment. Different environments (browsers, Node.js, Deno) have different implementations.
+  </Accordion>
+  
+  <Accordion title="Misconception 5: 'setInterval is accurate'">
+    **Wrong!** setInterval can drift, skip callbacks, or have inconsistent timing.
+    
+    - If a callback takes longer than the interval, callbacks queue up
+    - Browsers may throttle timers in background tabs
+    - Timer precision is limited (especially on mobile)
+    
+    For precise timing, use nested setTimeout or requestAnimationFrame.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Blocking the Event Loop
+
+### What Happens When You Block?
+
+When synchronous code runs for a long time, EVERYTHING stops:
+
+```javascript
+// This freezes the entire page!
+button.addEventListener('click', () => {
+  // Heavy synchronous work
+  for (let i = 0; i < 10000000000; i++) {
+    // ... computation
+  }
+});
+```
+
+**Consequences:**
+- UI freezes (can't click, scroll, or type)
+- Animations stop
+- setTimeout/setInterval callbacks delayed
+- Promises can't resolve
+- Page becomes unresponsive
+
+### Solutions
+
+<Tabs>
+  <Tab title="Web Workers">
+    Move heavy computation to a separate thread using [Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API):
+    
+    ```javascript
+    // main.js
+    const worker = new Worker('worker.js');
+    
+    worker.postMessage({ data: largeArray });
+    
+    worker.onmessage = (event) => {
+      console.log('Result:', event.data);
+    };
+    
+    // worker.js
+    self.onmessage = (event) => {
+      const result = heavyComputation(event.data);
+      self.postMessage(result);
+    };
+    ```
+  </Tab>
+  
+  <Tab title="Chunking with setTimeout">
+    Break work into smaller chunks:
+    
+    ```javascript
+    function processInChunks(items, process, chunkSize = 100) {
+      let index = 0;
+      
+      function doChunk() {
+        const end = Math.min(index + chunkSize, items.length);
+        
+        for (; index < end; index++) {
+          process(items[index]);
+        }
+        
+        if (index < items.length) {
+          setTimeout(doChunk, 0); // Yield to event loop
+        }
+      }
+      
+      doChunk();
+    }
+    
+    // Now UI stays responsive between chunks
+    processInChunks(hugeArray, item => compute(item));
+    ```
+  </Tab>
+  
+  <Tab title="requestIdleCallback">
+    Run code during browser idle time with [`requestIdleCallback`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestIdleCallback):
+    
+    ```javascript
+    function doNonCriticalWork(deadline) {
+      while (deadline.timeRemaining() > 0 && tasks.length > 0) {
+        const task = tasks.shift();
+        task();
+      }
+      
+      if (tasks.length > 0) {
+        requestIdleCallback(doNonCriticalWork);
+      }
+    }
+    
+    requestIdleCallback(doNonCriticalWork);
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Rendering and the Event Loop
+
+### Where Does Rendering Fit?
+
+The browser tries to render at 60fps (every ~16.67ms). Rendering happens **between tasks**, after microtasks:
+
+```
+┌─────────────────────────────────────────────────────┐
+│                 One Frame (~16.67ms)                │
+├─────────────────────────────────────────────────────┤
+│  1. Task (from Task Queue)                          │
+│  2. All Microtasks                                  │
+│  3. requestAnimationFrame callbacks                 │
+│  4. Style calculation                               │
+│  5. Layout                                          │
+│  6. Paint                                           │
+│  7. Composite                                       │
+└─────────────────────────────────────────────────────┘
+```
+
+### Why 60fps Matters
+
+| FPS | Frame Time | User Experience |
+|-----|------------|-----------------|
+| 60 | 16.67ms | Smooth, responsive |
+| 30 | 33.33ms | Noticeable lag |
+| 15 | 66.67ms | Very choppy |
+| < 10 | > 100ms | Unusable |
+
+If your JavaScript takes longer than ~16ms, you'll miss frames and the UI will feel janky.
+
+### Using requestAnimationFrame for Visual Updates
+
+Use rAF to avoid layout thrashing (reading and writing DOM in a way that forces multiple reflows):
+
+```javascript
+// Bad: Read-write-read pattern forces multiple layouts
+console.log(element.offsetWidth);     // Read (forces layout)
+element.style.width = '100px';        // Write
+console.log(element.offsetHeight);    // Read (forces layout AGAIN!)
+element.style.height = '200px';       // Write
+
+// Good: Batch reads together, then defer writes to rAF
+const width = element.offsetWidth;    // Read
+const height = element.offsetHeight;  // Read (same layout calculation)
+
+requestAnimationFrame(() => {
+  // Writes happen right before next paint
+  element.style.width = width + 100 + 'px';
+  element.style.height = height + 100 + 'px';
+});
+```
+
+---
+
+## Common Bugs and Pitfalls
+
+<AccordionGroup>
+  <Accordion title="1. Forgetting to clearInterval">
+    ```javascript
+    // BUG: Memory leak!
+    function startPolling() {
+      setInterval(() => {
+        fetchData();
+      }, 5000);
+    }
+    
+    // If called multiple times, intervals stack up!
+    startPolling();
+    startPolling(); // Now 2 intervals running!
+    
+    // FIX: Store and clear
+    let pollInterval;
+    
+    function startPolling() {
+      stopPolling(); // Clear any existing interval
+      pollInterval = setInterval(fetchData, 5000);
+    }
+    
+    function stopPolling() {
+      if (pollInterval) {
+        clearInterval(pollInterval);
+        pollInterval = null;
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Race Conditions with setTimeout">
+    ```javascript
+    // BUG: Responses may arrive out of order
+    let searchInput = document.getElementById('search');
+    
+    searchInput.addEventListener('input', () => {
+      setTimeout(() => {
+        fetch(`/search?q=${searchInput.value}`)
+          .then(res => displayResults(res));
+      }, 300);
+    });
+    
+    // FIX: Cancel previous timeout (debounce)
+    let timeoutId;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        fetch(`/search?q=${searchInput.value}`)
+          .then(res => displayResults(res));
+      }, 300);
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="3. this Binding in Timer Callbacks">
+    ```javascript
+    // BUG: 'this' is wrong
+    const obj = {
+      name: 'Alice',
+      greet() {
+        setTimeout(function() {
+          console.log(`Hello, ${this.name}`); // undefined!
+        }, 100);
+      }
+    };
+    
+    // FIX 1: Arrow function
+    const obj1 = {
+      name: 'Alice',
+      greet() {
+        setTimeout(() => {
+          console.log(`Hello, ${this.name}`); // "Alice"
+        }, 100);
+      }
+    };
+    
+    // FIX 2: bind
+    const obj2 = {
+      name: 'Alice',
+      greet() {
+        setTimeout(function() {
+          console.log(`Hello, ${this.name}`);
+        }.bind(this), 100);
+      }
+    };
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Closure Issues in Loops">
+    ```javascript
+    // BUG: All callbacks see final value
+    for (var i = 0; i < 3; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    // Output: 3, 3, 3
+    
+    // FIX 1: Use let
+    for (let i = 0; i < 3; i++) {
+      setTimeout(() => console.log(i), 100);
+    }
+    // Output: 0, 1, 2
+    
+    // FIX 2: Pass as argument
+    for (var i = 0; i < 3; i++) {
+      setTimeout((j) => console.log(j), 100, i);
+    }
+    // Output: 0, 1, 2
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Assuming Timer Precision">
+    ```javascript
+    // BUG: Assuming exact timing
+    function measureTime() {
+      const start = Date.now();
+      
+      setTimeout(() => {
+        const elapsed = Date.now() - start;
+        console.log(`Exactly 1000ms? ${elapsed === 1000}`);
+        // Almost always false!
+      }, 1000);
+    }
+    
+    // REALITY: Always allow for variance
+    function measureTime() {
+      const start = Date.now();
+      const expected = 1000;
+      const tolerance = 50; // Allow 50ms variance
+      
+      setTimeout(() => {
+        const elapsed = Date.now() - start;
+        const withinTolerance = Math.abs(elapsed - expected) <= tolerance;
+        console.log(`Within tolerance? ${withinTolerance}`);
+      }, expected);
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Interactive Visualization Tool
+
+The best way to truly understand the Event Loop is to **see it in action**.
+
+<Card title="Loupe - Event Loop Visualizer" icon="play" href="https://latentflip.com/loupe/">
+  Created by Philip Roberts (author of the famous "What the heck is the event loop anyway?" talk). This tool lets you write JavaScript code and watch how it moves through the call stack, Web APIs, and callback queue in real-time.
+</Card>
+
+**Try this code in Loupe:**
+
+```javascript
+console.log('Start');
+
+setTimeout(function timeout() {
+  console.log('Timeout');
+}, 2000);
+
+Promise.resolve().then(function promise() {
+  console.log('Promise');
+});
+
+console.log('End');
+```
+
+Watch how:
+1. Synchronous code runs first
+2. setTimeout goes to Web APIs
+3. Promise callback goes to microtask queue
+4. Microtasks run before the timeout callback
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **JavaScript is single-threaded** — only one thing runs at a time on the call stack
+
+2. **The Event Loop enables async** — it coordinates between the call stack and callback queues
+
+3. **Web APIs run in separate threads** — timers, network requests, and events are handled by the browser
+
+4. **Microtasks > Tasks** — Promise callbacks ALWAYS run before setTimeout callbacks
+
+5. **setTimeout delay is a minimum** — actual timing depends on call stack and queue state
+
+6. **setInterval can drift** — use nested setTimeout for precise timing
+
+7. **requestAnimationFrame for animations** — syncs with browser refresh rate, pauses in background
+
+8. **Never block the main thread** — long sync operations freeze the entire UI
+
+9. **Microtasks can starve tasks** — infinite microtask loops prevent rendering
+
+10. **The Event Loop isn't JavaScript** — it's part of the runtime environment (browser/Node.js)
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What is the Event Loop's main job?">
+    **Answer:** The Event Loop's job is to monitor the call stack and the callback queues. When the call stack is empty, it takes the first callback from the microtask queue (if any), or the task queue, and pushes it onto the call stack for execution.
+    
+    It enables JavaScript to be non-blocking despite being single-threaded.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why do Promises run before setTimeout?">
+    **Answer:** Promise callbacks go to the **Microtask Queue**, while setTimeout callbacks go to the **Task Queue** (macrotask queue).
+    
+    The Event Loop always drains the entire microtask queue before taking the next task from the task queue. So Promise callbacks always have priority.
+  </Accordion>
+  
+  <Accordion title="Question 3: What's the output of this code?">
+    ```javascript
+    setTimeout(() => console.log('A'), 0);
+    Promise.resolve().then(() => console.log('B'));
+    Promise.resolve().then(() => {
+      console.log('C');
+      setTimeout(() => console.log('D'), 0);
+    });
+    console.log('E');
+    ```
+    
+    **Answer:** `E`, `B`, `C`, `A`, `D`
+    
+    1. `E` — synchronous
+    2. `B` — first microtask
+    3. `C` — second microtask (also schedules timeout D)
+    4. `A` — first timeout
+    5. `D` — second timeout (scheduled during microtask C)
+  </Accordion>
+  
+  <Accordion title="Question 4: When should you use requestAnimationFrame?">
+    **Answer:** Use `requestAnimationFrame` for:
+    
+    - Visual animations
+    - DOM updates that need to be smooth
+    - Anything that should sync with the browser's refresh rate
+    
+    **Don't use** it for:
+    - Non-visual delayed execution (use setTimeout)
+    - Repeated non-visual tasks (use setInterval or setTimeout)
+    - Heavy computation (use Web Workers)
+  </Accordion>
+  
+  <Accordion title="Question 5: What's wrong with this code?">
+    ```javascript
+    setInterval(async () => {
+      const response = await fetch('/api/data');
+      const data = await response.json();
+      updateUI(data);
+    }, 1000);
+    ```
+    
+    **Answer:** If the fetch takes longer than 1 second, multiple requests will be in flight simultaneously, potentially causing race conditions and overwhelming the server.
+    
+    **Better approach:**
+    ```javascript
+    async function poll() {
+      const response = await fetch('/api/data');
+      const data = await response.json();
+      updateUI(data);
+      setTimeout(poll, 1000); // Schedule next AFTER completion
+    }
+    poll();
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: How can you yield to the Event Loop in a long-running task?">
+    **Answer:** Several approaches:
+    
+    ```javascript
+    // 1. setTimeout (schedules a task)
+    await new Promise(resolve => setTimeout(resolve, 0));
+    
+    // 2. queueMicrotask (schedules a microtask)
+    await new Promise(resolve => queueMicrotask(resolve));
+    
+    // 3. requestAnimationFrame (syncs with rendering)
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    
+    // 4. requestIdleCallback (runs during idle time)
+    await new Promise(resolve => requestIdleCallback(resolve));
+    ```
+    
+    Each has different timing and use cases. setTimeout is most common for yielding.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Call Stack" icon="layer-group" href="/concepts/call-stack">
+    Deep dive into how JavaScript tracks function execution
+  </Card>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    Understanding Promise-based asynchronous patterns
+  </Card>
+  <Card title="async/await" icon="clock" href="/concepts/async-await">
+    Modern syntax for working with Promises
+  </Card>
+  <Card title="JavaScript Engines" icon="gear" href="/concepts/javascript-engines">
+    How V8 and other engines execute your code
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Execution Model — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model">
+    Official MDN documentation on the JavaScript runtime, event loop, and execution contexts.
+  </Card>
+  <Card title="setTimeout — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout">
+    Complete reference for setTimeout including syntax, parameters, and the minimum delay behavior.
+  </Card>
+  <Card title="setInterval — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/setInterval">
+    Documentation for repeated timed callbacks with usage patterns and gotchas.
+  </Card>
+  <Card title="requestAnimationFrame — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">
+    Browser-optimized animation timing API that syncs with display refresh rate.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Visualized: Event Loop" icon="newspaper" href="https://dev.to/lydiahallie/javascript-visualized-event-loop-3dif">
+    Lydia Hallie's famous visual explanation with animated GIFs showing exactly how the event loop works.
+  </Card>
+  <Card title="Tasks, microtasks, queues and schedules" icon="newspaper" href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/">
+    Jake Archibald's definitive deep-dive with interactive examples. The go-to resource for understanding tasks vs microtasks.
+  </Card>
+  <Card title="The JavaScript Event Loop" icon="newspaper" href="https://flaviocopes.com/javascript-event-loop/">
+    Flavio Copes' clear explanation with excellent code examples showing Promise vs setTimeout behavior.
+  </Card>
+  <Card title="setTimeout and setInterval" icon="newspaper" href="https://javascript.info/settimeout-setinterval">
+    Comprehensive JavaScript.info guide covering timers, cancellation, nested setTimeout, and the 4ms minimum delay.
+  </Card>
+  <Card title="Using requestAnimationFrame" icon="newspaper" href="https://css-tricks.com/using-requestanimationframe/">
+    Chris Coyier's practical guide to smooth animations with requestAnimationFrame, including polyfills and examples.
+  </Card>
+  <Card title="Why not to use setInterval" icon="newspaper" href="https://dev.to/akanksha_9560/why-not-to-use-setinterval--2na9">
+    Deep dive into setInterval's problems with drift, async operations, and why nested setTimeout is often better.
+  </Card>
+</CardGroup>
+
+## Tools
+
+<Card title="Loupe - Event Loop Visualizer" icon="play" href="https://latentflip.com/loupe/">
+  Interactive tool by Philip Roberts to visualize how the call stack, Web APIs, and callback queue work together. Write code and watch it execute step by step.
+</Card>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="What the heck is the event loop anyway?" icon="video" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">
+    Philip Roberts' legendary JSConf EU talk that made the event loop accessible to everyone. A must-watch for JavaScript developers.
+  </Card>
+  <Card title="In The Loop" icon="video" href="https://www.youtube.com/watch?v=cCOL7MC4Pl0">
+    Jake Archibald's JSConf.Asia talk diving deeper into tasks, microtasks, and rendering. The perfect follow-up to Philip Roberts' talk.
+  </Card>
+  <Card title="TRUST ISSUES with setTimeout()" icon="video" href="https://youtu.be/nqsPmuicJJc">
+    Akshay Saini explains why you can't trust setTimeout's timing and how the event loop actually handles timers.
+  </Card>
+</CardGroup>

@@ -1,0 +1,1103 @@
+---
+title: "Fetch API: Making HTTP Requests the Modern Way in JavaScript"
+sidebarTitle: "Fetch API: Making HTTP Requests the Modern Way"
+description: "Learn how to make HTTP requests with the JavaScript Fetch API. Understand GET, POST, response handling, JSON parsing, error patterns, and AbortController for cancellation."
+---
+
+How does JavaScript get data from a server? How do you load user profiles, submit forms, or fetch the latest posts from an API? The answer is the **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**, JavaScript's modern way to make network requests.
+
+```javascript
+// This is how you fetch data in JavaScript
+const response = await fetch('https://api.example.com/users/1')
+const user = await response.json()
+console.log(user.name)  // "Alice"
+```
+
+But to understand Fetch, you need to understand what's happening underneath: **[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)**.
+
+<Info>
+**What you'll learn in this guide:**
+- How HTTP requests and responses work
+- The five main HTTP methods (GET, POST, PUT, PATCH, DELETE)
+- How to use the Fetch API to make requests
+- Reading and parsing JSON responses
+- The critical difference between network errors and HTTP errors
+- Modern patterns with async/await
+- How to cancel requests with AbortController
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [Promises](/concepts/promises) and [async/await](/concepts/async-await). Fetch is Promise-based, so you'll need those concepts. If you're not comfortable with Promises yet, read that guide first!
+</Warning>
+
+## What is HTTP?
+
+**[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)** (Hypertext Transfer Protocol) is the foundation of data communication on the web. It defines how messages are formatted and transmitted between clients (like web browsers) and servers. Every time you load a webpage, submit a form, or fetch data with JavaScript, HTTP is the protocol making that exchange possible.
+
+<Note>
+**HTTP is not JavaScript.** HTTP is a language-agnostic protocol. Python, Ruby, Go, Java, and every other language uses it too. We cover HTTP basics in this guide because understanding the protocol helps with using the Fetch API effectively. If you want to dive deeper into HTTP itself, check out the MDN resources below.
+</Note>
+
+<CardGroup cols={2}>
+  <Card title="HTTP — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/HTTP">
+    Comprehensive guide to the HTTP protocol
+  </Card>
+  <Card title="An Overview of HTTP — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview">
+    How HTTP works under the hood
+  </Card>
+</CardGroup>
+
+---
+
+## The Restaurant Analogy
+
+HTTP follows a simple pattern called **request-response**. To understand it, imagine you're at a restaurant:
+
+1. **You place an order** (the request) — "I'd like the pasta, please"
+2. **The waiter takes it to the kitchen** (the network) — your order travels to where the food is prepared
+3. **The kitchen prepares your meal** (the server) — they process your request and make your food
+4. **The waiter brings back your food** (the response) — you receive what you asked for (hopefully!)
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        THE REQUEST-RESPONSE CYCLE                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    YOU (Browser)                              KITCHEN (Server)           │
+│    ┌──────────┐                               ┌──────────────┐           │
+│    │          │  ──── "I'd like pasta" ────►  │              │           │
+│    │    :)    │         (REQUEST)             │    [chef]    │           │
+│    │          │                               │              │           │
+│    │          │  ◄──── Here you go! ────────  │              │           │
+│    │          │         (RESPONSE)            │              │           │
+│    └──────────┘                               └──────────────┘           │
+│                                                                          │
+│    The waiter (HTTP) is the protocol that makes this exchange work!      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Sometimes things go wrong:
+- **The kitchen is closed** (server is down) — You can't even place an order
+- **They're out of pasta** (404 Not Found) — The order was received, but they can't fulfill it
+- **Something's wrong in the kitchen** (500 Server Error) — They tried but something broke
+
+This request-response cycle is the core of how the web works. The **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** is JavaScript's modern way to participate in this cycle programmatically.
+
+---
+
+## How Does HTTP Work?
+
+Before diving into the Fetch API, let's understand the key concepts of HTTP itself.
+
+### The Request-Response Model
+
+Every HTTP interaction follows a simple pattern:
+
+<Steps>
+  <Step title="Client Sends Request">
+    Your browser (the client) sends an HTTP request to a server. The request includes what you want (the URL), how you want it (the method), and any additional info (headers, body).
+  </Step>
+  
+  <Step title="Server Processes Request">
+    The server receives the request, does whatever work is needed (database queries, calculations, etc.), and prepares a response.
+  </Step>
+  
+  <Step title="Server Sends Response">
+    The server sends back an HTTP response containing a status code (success/failure), headers (metadata), and usually a body (the actual data).
+  </Step>
+  
+  <Step title="Client Handles Response">
+    Your JavaScript code receives the response and does something with it: display data, show an error, redirect the user, etc.
+  </Step>
+</Steps>
+
+### HTTP Methods: What Do You Want to Do?
+
+HTTP methods tell the server what action you want to perform. Think of them as verbs:
+
+| Method | Purpose | Restaurant Analogy |
+|--------|---------|-------------------|
+| **GET** | Retrieve data | "Can I see the menu?" |
+| **POST** | Create new data | "I'd like to place an order" |
+| **PUT** | Update/replace data | "Actually, change my order to pizza" |
+| **PATCH** | Partially update data | "Add extra cheese to my order" |
+| **DELETE** | Remove data | "Cancel my order" |
+
+```javascript
+// GET - Retrieve a user
+fetch('/api/users/123')
+
+// POST - Create a new user
+fetch('/api/users', {
+  method: 'POST',
+  body: JSON.stringify({ name: 'Alice' })
+})
+
+// PUT - Replace a user
+fetch('/api/users/123', {
+  method: 'PUT',
+  body: JSON.stringify({ name: 'Alice Updated' })
+})
+
+// PATCH - Partially update a user
+fetch('/api/users/123', {
+  method: 'PATCH',
+  body: JSON.stringify({ name: 'New Name' })
+})
+
+// DELETE - Remove a user
+fetch('/api/users/123', {
+  method: 'DELETE'
+})
+```
+
+### HTTP Status Codes: What Happened?
+
+Status codes are three-digit numbers that tell you how the request went:
+
+<AccordionGroup>
+  <Accordion title="2xx - Success">
+    The request was received, understood, and accepted.
+    
+    - **200 OK** — Standard success response
+    - **201 Created** — New resource was created (common after POST)
+    - **204 No Content** — Success, but nothing to return (common after DELETE)
+    
+    ```javascript
+    // 200 OK example
+    const response = await fetch('/api/users/123')
+    console.log(response.status)  // 200
+    console.log(response.ok)      // true
+    ```
+  </Accordion>
+  
+  <Accordion title="3xx - Redirection">
+    The resource has moved somewhere else.
+    
+    - **301 Moved Permanently** — Resource has a new permanent URL
+    - **302 Found** — Temporary redirect
+    - **304 Not Modified** — Use your cached version
+    
+    Fetch follows redirects automatically by default.
+  </Accordion>
+  
+  <Accordion title="4xx - Client Errors">
+    Something is wrong with your request.
+    
+    - **400 Bad Request** — Malformed request syntax
+    - **401 Unauthorized** — Authentication required
+    - **403 Forbidden** — You don't have permission
+    - **404 Not Found** — Resource doesn't exist
+    - **422 Unprocessable Entity** — Validation failed
+    
+    ```javascript
+    // 404 Not Found example
+    const response = await fetch('/api/users/999999')
+    console.log(response.status)  // 404
+    console.log(response.ok)      // false
+    ```
+  </Accordion>
+  
+  <Accordion title="5xx - Server Errors">
+    Something went wrong on the server.
+    
+    - **500 Internal Server Error** — Generic server error
+    - **502 Bad Gateway** — Server got invalid response from upstream
+    - **503 Service Unavailable** — Server is overloaded or down for maintenance
+    
+    ```javascript
+    // 500 error example
+    const response = await fetch('/api/broken-endpoint')
+    console.log(response.status)  // 500
+    console.log(response.ok)      // false
+    ```
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+**Quick Rule of Thumb:**
+- **2xx** = "Here's what you asked for"
+- **3xx** = "Go look over there"
+- **4xx** = "You messed up"
+- **5xx** = "We messed up"
+</Tip>
+
+---
+
+## What is the Fetch API?
+
+The **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)** is JavaScript's modern interface for making HTTP requests. It provides a cleaner, Promise-based alternative to the older **[XMLHttpRequest](https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest)**, letting you send requests to servers and handle responses with simple, readable code. Every modern browser supports Fetch natively.
+
+```javascript
+// Fetch in its simplest form
+const response = await fetch('https://api.example.com/data')
+const data = await response.json()
+console.log(data)
+```
+
+### Before Fetch: The XMLHttpRequest Days
+
+Before Fetch existed, developers used XMLHttpRequest (XHR), a verbose, callback-based API that powered "AJAX" requests. Libraries like **[jQuery](https://jquery.com/)** became popular partly because they simplified this painful process. jQuery was revolutionary for JavaScript. For many years it was the go-to library that made DOM manipulation, animations, and AJAX requests much easier. It changed how developers wrote JavaScript and shaped the modern web.
+
+```javascript
+// The old way: XMLHttpRequest (verbose and callback-based)
+const xhr = new XMLHttpRequest()
+xhr.open('GET', 'https://api.example.com/data')
+xhr.onload = function() {
+  if (xhr.status === 200) {
+    const data = JSON.parse(xhr.responseText)
+    console.log(data)
+  }
+}
+xhr.onerror = function() {
+  console.error('Request failed')
+}
+xhr.send()
+
+// The modern way: Fetch (clean and Promise-based)
+const response = await fetch('https://api.example.com/data')
+const data = await response.json()
+console.log(data)
+```
+
+Unlike XMLHttpRequest, Fetch:
+- Returns **[Promises](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** instead of using callbacks
+- Uses **[Request](https://developer.mozilla.org/en-US/docs/Web/API/Request)** and **[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)** objects for cleaner APIs
+- Integrates naturally with **async/await** syntax
+- Supports streaming responses out of the box
+
+<Tip>
+**You no longer need jQuery for AJAX.** The Fetch API is built into every modern browser, making libraries unnecessary for basic HTTP requests.
+</Tip>
+
+---
+
+## How to Use the Fetch API
+
+Now that you understand what Fetch is and how it compares to older approaches, let's dive into the details of using it effectively.
+
+### How to Make a Fetch Request
+
+<Steps>
+  <Step title="Call fetch() with a URL">
+    The `fetch()` function takes a URL and returns a Promise that resolves to a Response object. By default, it makes a GET request.
+  </Step>
+  <Step title="Check if the response was successful">
+    Always verify `response.ok` before processing. Fetch doesn't throw errors for HTTP status codes like 404 or 500.
+  </Step>
+  <Step title="Parse the response body">
+    Use `response.json()` for JSON data or `response.text()` for plain text. These methods return another Promise.
+  </Step>
+  <Step title="Handle errors properly">
+    Wrap everything in try/catch to handle both network failures and HTTP error responses.
+  </Step>
+</Steps>
+
+Here's what this looks like in code. By default, `fetch()` uses the **GET** method, so you don't need to specify it. There are two ways to write this:
+
+<Tabs>
+  <Tab title="Promise .then()">
+    ```javascript
+    // Basic fetch - returns a Promise
+    fetch('https://api.example.com/users')
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error))
+    ```
+    
+    Let's break this down step by step:
+    
+    ```javascript
+    // Step 1: fetch() returns a Promise that resolves to a Response object
+    const responsePromise = fetch('https://api.example.com/users')
+
+    // Step 2: When the response arrives, we get a Response object
+    responsePromise.then(response => {
+      console.log(response.status)      // 200
+      console.log(response.ok)          // true
+      console.log(response.headers)     // Headers object
+      
+      // Step 3: The body is a stream, we need to parse it
+      // .json() returns ANOTHER Promise
+      return response.json()
+    })
+    .then(data => {
+      // Step 4: Now we have the actual data
+      console.log(data)  // { users: [...] }
+    })
+    ```
+  </Tab>
+  <Tab title="async/await">
+    ```javascript
+    // Using async/await - cleaner syntax
+    async function getUsers() {
+      try {
+        const response = await fetch('https://api.example.com/users')
+        const data = await response.json()
+        console.log(data)
+      } catch (error) {
+        console.error('Error:', error)
+      }
+    }
+    ```
+    
+    Let's break this down step by step:
+    
+    ```javascript
+    async function getUsers() {
+      // Step 1: await pauses until the Response arrives
+      const response = await fetch('https://api.example.com/users')
+      
+      console.log(response.status)      // 200
+      console.log(response.ok)          // true
+      console.log(response.headers)     // Headers object
+      
+      // Step 2: await again to read and parse the body
+      const data = await response.json()
+      
+      // Step 3: Now we have the actual data
+      console.log(data)  // { users: [...] }
+    }
+    ```
+  </Tab>
+</Tabs>
+
+<Tip>
+**Which should you use?** `async/await` is generally preferred for its cleaner, more readable syntax. Use `.then()` chains when you need to integrate with older codebases or when you specifically want to avoid async functions.
+</Tip>
+
+### Understanding the Response Object
+
+When `fetch()` resolves, you get a **[Response](https://developer.mozilla.org/en-US/docs/Web/API/Response)** object. This object contains everything about the server's reply: status codes, headers, and methods to read the body:
+
+```javascript
+const response = await fetch('https://api.example.com/users/1')
+
+// Status information
+response.status      // 200, 404, 500, etc.
+response.statusText  // "OK", "Not Found", "Internal Server Error"
+response.ok          // true if status is 200-299
+
+// Response metadata
+response.headers     // Headers object
+response.url         // Final URL (after redirects)
+response.type        // "basic", "cors", etc.
+response.redirected  // true if response came from a redirect
+
+// Body methods (each returns a Promise)
+response.json()        // Parse body as JSON
+response.text()        // Parse body as plain text
+response.blob()        // Parse body as binary Blob
+response.formData()    // Parse body as FormData
+response.arrayBuffer() // Parse body as ArrayBuffer
+response.bytes()       // Parse body as Uint8Array
+```
+
+<Warning>
+**Important:** The body can only be read once! If you call `response.json()`, you can't call `response.text()` afterward. If you need to read it multiple times, clone the response first with `response.clone()`.
+</Warning>
+
+### Reading JSON Data
+
+Most modern APIs return data in **[JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)** format. The Response object has a built-in `.json()` method that parses the body and returns a JavaScript object:
+
+```javascript
+async function getUser(id) {
+  const response = await fetch(`https://api.example.com/users/${id}`)
+  const user = await response.json()
+  
+  console.log(user.name)   // "Alice"
+  console.log(user.email)  // "alice@example.com"
+  
+  return user
+}
+```
+
+### Sending Data with POST
+
+So far we've only *retrieved* data. But what about *sending* data, like creating a user account or submitting a form?
+
+That's where **[POST](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST)** comes in. It's the HTTP method that tells the server "I'm sending you data to create something new." To make a POST request, you need to specify the method, set a `Content-Type` header, and include your data in the body:
+
+```javascript
+async function createUser(userData) {
+  const response = await fetch('https://api.example.com/users', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(userData)
+  })
+  
+  const newUser = await response.json()
+  return newUser
+}
+
+// Usage
+const user = await createUser({
+  name: 'Bob',
+  email: 'bob@example.com'
+})
+console.log(user.id)  // New user's ID from server
+```
+
+### Setting Headers
+
+**[HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers)** are metadata you send with your request: things like authentication tokens, content types, and caching instructions. You pass them as an object in the `headers` option:
+
+```javascript
+const response = await fetch('https://api.example.com/data', {
+  method: 'GET',
+  headers: {
+    // Tell server what format we want
+    'Accept': 'application/json',
+    
+    // Authentication token
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIs...',
+    
+    // Custom header
+    'X-Custom-Header': 'custom-value'
+  }
+})
+```
+
+Common headers you'll use:
+
+| Header | Purpose |
+|--------|---------|
+| `Content-Type` | Format of data you're sending (e.g., `application/json`) |
+| `Accept` | Format of data you want back |
+| `Authorization` | Authentication credentials |
+| `Cache-Control` | Caching instructions |
+
+### Building URLs with Query Parameters
+
+When fetching data, you often need to include query parameters (e.g., `/api/search?q=javascript&page=1`). Use the **[URL](https://developer.mozilla.org/en-US/docs/Web/API/URL)** and **[URLSearchParams](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)** APIs to build URLs safely:
+
+```javascript
+// Building a URL with query parameters
+const url = new URL('https://api.example.com/search')
+url.searchParams.set('q', 'javascript')
+url.searchParams.set('page', '1')
+url.searchParams.set('limit', '10')
+
+console.log(url.toString())
+// "https://api.example.com/search?q=javascript&page=1&limit=10"
+
+// Use with fetch
+const response = await fetch(url)
+```
+
+You can also use `URLSearchParams` directly:
+
+```javascript
+const params = new URLSearchParams({
+  q: 'javascript',
+  page: '1'
+})
+
+// Append to a URL string
+const response = await fetch(`/api/search?${params}`)
+```
+
+<Tip>
+**Why use URL/URLSearchParams instead of string concatenation?** These APIs automatically handle URL encoding for special characters. If a user searches for "C++ tutorial", it becomes `q=C%2B%2B+tutorial`. Something you'd have to handle manually with string concatenation.
+</Tip>
+
+---
+
+## The #1 Fetch Mistake
+
+Here's a mistake almost every developer makes when learning fetch:
+
+> "I wrapped my fetch in try/catch, so I'm handling all errors... right?"
+
+**Wrong.** The problem? `fetch()` only throws an error when the *network* fails, not when the server returns a 404 or 500. A "Page Not Found" response is still a successful network request from fetch's perspective!
+
+### Two Types of "Errors"
+
+When working with `fetch()`, there are two completely different types of failures:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         TWO TYPES OF FAILURES                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  1. NETWORK ERRORS                    2. HTTP ERROR RESPONSES            │
+│  ────────────────────                 ───────────────────────            │
+│                                                                          │
+│  • Server unreachable                 • Server responded with error      │
+│  • DNS lookup failed                  • 404 Not Found                    │
+│  • No internet connection             • 500 Internal Server Error        │
+│  • Request timed out                  • 401 Unauthorized                 │
+│  • CORS blocked                       • 403 Forbidden                    │
+│                                                                          │
+│  Promise REJECTS ❌                   Promise RESOLVES ✓                 │
+│  Goes to .catch()                     response.ok is false               │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Warning>
+**The Trap:** `fetch()` only rejects its Promise for network errors. An HTTP 404 or 500 response is still a "successful" fetch. The network request completed! You must check `response.ok` to detect HTTP errors.
+</Warning>
+
+### The Mistake: Only Catching Network Errors
+
+This code looks fine, but it has a subtle bug. HTTP errors like 404 or 500 slip right through the catch block:
+
+```javascript
+// ❌ WRONG - This misses HTTP errors!
+try {
+  const response = await fetch('/api/users/999')
+  const data = await response.json()
+  console.log(data)  // Might be an error object!
+} catch (error) {
+  // Only catches NETWORK errors
+  // A 404 response WON'T end up here!
+  console.error('Error:', error)
+}
+```
+
+### The Fix: Always Check response.ok
+
+The solution is simple: check `response.ok` before assuming success. This property is `true` for status codes 200-299 and `false` for everything else:
+
+```javascript
+// ✓ CORRECT - Check response.ok
+async function fetchUser(id) {
+  try {
+    const response = await fetch(`/api/users/${id}`)
+    
+    // Check if the HTTP response was successful
+    if (!response.ok) {
+      // HTTP error (4xx, 5xx) - throw to catch block
+      throw new Error(`HTTP error! Status: ${response.status}`)
+    }
+    
+    const data = await response.json()
+    return data
+    
+  } catch (error) {
+    // Now this catches BOTH network errors AND HTTP errors
+    console.error('Fetch failed:', error.message)
+    throw error
+  }
+}
+```
+
+### Building a Reusable Fetch Helper
+
+Here's a pattern you can use in real projects: a wrapper function that handles the `response.ok` check for you:
+
+```javascript
+async function fetchJSON(url, options = {}) {
+  const response = await fetch(url, {
+    headers: {
+      'Content-Type': 'application/json',
+      ...options.headers
+    },
+    ...options
+  })
+  
+  // Handle HTTP errors
+  if (!response.ok) {
+    const error = new Error(`HTTP ${response.status}: ${response.statusText}`)
+    error.status = response.status
+    error.response = response
+    throw error
+  }
+  
+  // Handle empty responses (like 204 No Content)
+  if (response.status === 204) {
+    return null
+  }
+  
+  return response.json()
+}
+
+// Usage
+try {
+  const user = await fetchJSON('/api/users/1')
+  console.log(user)
+} catch (error) {
+  if (error.status === 404) {
+    console.log('User not found')
+  } else if (error.status >= 500) {
+    console.log('Server error, try again later')
+  } else {
+    console.log('Request failed:', error.message)
+  }
+}
+```
+
+---
+
+## How to Use async/await with Fetch
+
+The examples above use `.then()` chains, but modern JavaScript has a cleaner syntax: `async/await`. If you're not familiar with it, check out our [async/await concept](/concepts/async-await) first. It'll make your fetch code much easier to read.
+
+### Basic async/await Pattern
+
+```javascript
+async function loadUserProfile(userId) {
+  try {
+    const response = await fetch(`/api/users/${userId}`)
+    
+    if (!response.ok) {
+      throw new Error(`Failed to load user: ${response.status}`)
+    }
+    
+    const user = await response.json()
+    return user
+    
+  } catch (error) {
+    console.error('Error loading profile:', error)
+    return null
+  }
+}
+
+// Usage
+const user = await loadUserProfile(123)
+if (user) {
+  console.log(`Welcome, ${user.name}!`)
+}
+```
+
+### Parallel Requests
+
+Need to fetch multiple resources? Don't await them one by one:
+
+```javascript
+// ❌ SLOW - Sequential requests (one after another)
+async function loadDashboardSlow() {
+  const user = await fetch('/api/user').then(r => r.json())
+  const posts = await fetch('/api/posts').then(r => r.json())
+  const notifications = await fetch('/api/notifications').then(r => r.json())
+  // Total time: user + posts + notifications
+  return { user, posts, notifications }
+}
+
+// ✓ FAST - Parallel requests (all at once)
+async function loadDashboardFast() {
+  const [user, posts, notifications] = await Promise.all([
+    fetch('/api/user').then(r => r.json()),
+    fetch('/api/posts').then(r => r.json()),
+    fetch('/api/notifications').then(r => r.json())
+  ])
+  // Total time: max(user, posts, notifications)
+  return { user, posts, notifications }
+}
+```
+
+### Loading States Pattern
+
+In real applications, you need to track loading and error states:
+
+```javascript
+async function fetchWithState(url) {
+  const state = {
+    data: null,
+    loading: true,
+    error: null
+  }
+  
+  try {
+    const response = await fetch(url)
+    
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`)
+    }
+    
+    state.data = await response.json()
+  } catch (error) {
+    state.error = error.message
+  } finally {
+    state.loading = false
+  }
+  
+  return state
+}
+
+// Usage
+const result = await fetchWithState('/api/users')
+
+if (result.loading) {
+  console.log('Loading...')
+} else if (result.error) {
+  console.log('Error:', result.error)
+} else {
+  console.log('Data:', result.data)
+}
+```
+
+---
+
+## How to Cancel Requests
+
+The **[AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController)** API lets you cancel in-flight fetch requests. This is useful for:
+
+- **Timeouts** — Cancel requests that take too long
+- **User navigation** — Cancel pending requests when user leaves a page
+- **Search inputs** — Cancel the previous search when user types new characters
+- **Component cleanup** — Cancel requests when a React/Vue component unmounts
+
+Without AbortController, abandoned requests continue running in the background, wasting bandwidth and potentially causing bugs when their responses arrive after you no longer need them.
+
+### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         ABORTCONTROLLER FLOW                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   1. Create controller         2. Pass signal to fetch                   │
+│   ┌─────────────────────┐      ┌─────────────────────────────────┐       │
+│   │ const controller =  │      │ fetch(url, {                    │       │
+│   │   new AbortController│ ───► │   signal: controller.signal    │       │
+│   └─────────────────────┘      │ })                              │       │
+│                                └─────────────────────────────────┘       │
+│                                                                          │
+│   3. Call abort() to cancel    4. Fetch rejects with AbortError          │
+│   ┌─────────────────────┐      ┌─────────────────────────────────┐       │
+│   │ controller.abort()  │ ───► │ catch (error) {                 │       │
+│   └─────────────────────┘      │   error.name === 'AbortError'   │       │
+│                                │ }                               │       │
+│                                └─────────────────────────────────┘       │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Basic AbortController Usage
+
+```javascript
+// Create a controller
+const controller = new AbortController()
+
+// Pass its signal to fetch
+fetch('/api/slow-endpoint', {
+  signal: controller.signal
+})
+  .then(response => response.json())
+  .then(data => console.log(data))
+  .catch(error => {
+    if (error.name === 'AbortError') {
+      console.log('Request was cancelled')
+    } else {
+      console.error('Request failed:', error)
+    }
+  })
+
+// Cancel the request after 5 seconds
+setTimeout(() => {
+  controller.abort()
+}, 5000)
+```
+
+### Timeout Pattern
+
+Create a reusable timeout wrapper:
+
+```javascript
+async function fetchWithTimeout(url, options = {}, timeout = 5000) {
+  const controller = new AbortController()
+  
+  // Set up timeout
+  const timeoutId = setTimeout(() => {
+    controller.abort()
+  }, timeout)
+  
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal
+    })
+    
+    clearTimeout(timeoutId)
+    return response
+    
+  } catch (error) {
+    clearTimeout(timeoutId)
+    
+    if (error.name === 'AbortError') {
+      throw new Error(`Request timed out after ${timeout}ms`)
+    }
+    
+    throw error
+  }
+}
+
+// Usage
+try {
+  const response = await fetchWithTimeout('/api/data', {}, 3000)
+  const data = await response.json()
+} catch (error) {
+  console.error(error.message)  // "Request timed out after 3000ms"
+}
+```
+
+### Search Input Pattern
+
+Cancel previous search when user types:
+
+```javascript
+let currentController = null
+
+async function searchUsers(query) {
+  // Cancel any in-flight request
+  if (currentController) {
+    currentController.abort()
+  }
+  
+  // Create new controller for this request
+  currentController = new AbortController()
+  
+  try {
+    const response = await fetch(`/api/search?q=${query}`, {
+      signal: currentController.signal
+    })
+    
+    if (!response.ok) throw new Error('Search failed')
+    
+    return await response.json()
+    
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      // Ignore - we cancelled this on purpose
+      return null
+    }
+    throw error
+  }
+}
+
+// As user types, only the last request matters
+searchInput.addEventListener('input', async (e) => {
+  const results = await searchUsers(e.target.value)
+  if (results) {
+    displayResults(results)
+  }
+})
+```
+
+<Note>
+This example uses browser DOM APIs (`addEventListener`, `searchInput`). In Node.js or server-side contexts, you would trigger the search function differently, but the AbortController pattern remains the same.
+</Note>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **HTTP is request-response** — Client sends a request, server sends a response
+
+2. **HTTP methods are verbs** — GET (read), POST (create), PUT (update), DELETE (remove)
+
+3. **Status codes tell you what happened** — 2xx (success), 4xx (your fault), 5xx (server's fault)
+
+4. **Fetch returns a Promise** — It resolves to a Response object, not directly to data
+
+5. **Response.json() is also a Promise** — You need to await it too
+
+6. **Fetch only rejects on network errors** — HTTP 404/500 still "succeeds" — check `response.ok`!
+
+7. **Always check response.ok** — This is the most common fetch mistake
+
+8. **Use async/await** — It's cleaner than Promise chains
+
+9. **Use Promise.all for parallel requests** — Don't await sequentially when you don't have to
+
+10. **AbortController cancels requests** — Useful for search inputs and cleanup
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between a network error and an HTTP error in fetch?">
+    **Answer:**
+    
+    - **Network errors** occur when the request can't be completed at all — server unreachable, DNS failure, no internet, CORS blocked, etc. These cause the fetch Promise to **reject**.
+    
+    - **HTTP errors** occur when the server responds with an error status code (4xx, 5xx). The request completed successfully (the network worked), so the Promise **resolves**. You must check `response.ok` to detect these.
+    
+    ```javascript
+    try {
+      const response = await fetch('/api/data')
+      
+      // This line runs even for 404, 500, etc.!
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      
+      const data = await response.json()
+    } catch (error) {
+      // Now catches both types
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Why does response.json() return a Promise?">
+    **Answer:** The response body is a readable stream that might still be downloading when `fetch()` resolves. The `response.json()` method reads the entire stream and parses it as JSON, which is an asynchronous operation.
+    
+    This is why you need to `await` it:
+    
+    ```javascript
+    const response = await fetch('/api/data')  // Response headers arrived
+    const data = await response.json()         // Body fully downloaded & parsed
+    ```
+    
+    The same applies to `response.text()`, `response.blob()`, etc.
+  </Accordion>
+  
+  <Accordion title="Question 3: How do you send JSON data in a POST request?">
+    **Answer:** You need to:
+    1. Set the method to 'POST'
+    2. Set the Content-Type header to 'application/json'
+    3. Stringify your data in the body
+    
+    ```javascript
+    const response = await fetch('/api/users', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        name: 'Alice',
+        email: 'alice@example.com'
+      })
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: What does response.ok mean?">
+    **Answer:** `response.ok` is a boolean that's `true` if the HTTP status code is in the 200-299 range (success), and `false` otherwise.
+    
+    It's a convenient shorthand for checking if the request succeeded:
+    
+    ```javascript
+    // These are equivalent:
+    if (response.ok) { ... }
+    if (response.status >= 200 && response.status < 300) { ... }
+    ```
+    
+    Common values:
+    - 200, 201, 204 → `ok` is `true`
+    - 400, 401, 404, 500 → `ok` is `false`
+  </Accordion>
+  
+  <Accordion title="Question 5: How do you cancel a fetch request?">
+    **Answer:** Use an `AbortController`:
+    
+    ```javascript
+    // 1. Create controller
+    const controller = new AbortController()
+    
+    // 2. Pass its signal to fetch
+    fetch('/api/data', { signal: controller.signal })
+      .then(r => r.json())
+      .catch(error => {
+        if (error.name === 'AbortError') {
+          console.log('Cancelled!')
+        }
+      })
+    
+    // 3. Call abort() to cancel
+    controller.abort()
+    ```
+    
+    Common use cases:
+    - Timeout implementation
+    - Cancelling when user navigates away
+    - Cancelling previous search when user types new input
+  </Accordion>
+  
+  <Accordion title="Question 6: How do you make multiple fetch requests in parallel?">
+    **Answer:** Use `Promise.all()` to run requests concurrently:
+    
+    ```javascript
+    // ✓ Parallel - fast
+    const [users, posts, comments] = await Promise.all([
+      fetch('/api/users').then(r => r.json()),
+      fetch('/api/posts').then(r => r.json()),
+      fetch('/api/comments').then(r => r.json())
+    ])
+    
+    // ❌ Sequential - slow (each waits for the previous)
+    const users = await fetch('/api/users').then(r => r.json())
+    const posts = await fetch('/api/posts').then(r => r.json())
+    const comments = await fetch('/api/comments').then(r => r.json())
+    ```
+    
+    Parallel requests complete in the time of the slowest request, not the sum of all requests.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    Fetch is Promise-based — you need to understand Promises first
+  </Card>
+  <Card title="async/await" icon="hourglass" href="/concepts/async-await">
+    Modern syntax for working with Promises and fetch
+  </Card>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    How JavaScript handles async operations like fetch
+  </Card>
+  <Card title="DOM" icon="sitemap" href="/concepts/dom">
+    Often you'll fetch data and update the DOM with it
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Fetch API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API">
+    Official MDN documentation for the Fetch API
+  </Card>
+  <Card title="Using Fetch — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch">
+    Comprehensive guide to using the Fetch API
+  </Card>
+  <Card title="Response — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Response">
+    Documentation for the Response object
+  </Card>
+  <Card title="AbortController — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/AbortController">
+    Documentation for cancelling fetch requests
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="How to Use Fetch with async/await" icon="newspaper" href="https://dmitripavlutin.com/javascript-fetch-async-await/">
+    Breaks down fetch into 5 simple recipes you can copy-paste. Great reference when you forget the exact syntax for POST requests or headers.
+  </Card>
+  <Card title="JavaScript Fetch API Ultimate Guide" icon="newspaper" href="https://blog.webdevsimplified.com/2022-01/js-fetch-api/">
+    Kyle Cook's written version of his popular YouTube tutorials. Covers GET, POST, error handling, and AbortController with the same clear teaching style.
+  </Card>
+  <Card title="Fetch API Error Handling" icon="newspaper" href="https://www.tjvantoll.com/2015/09/13/fetch-and-errors/">
+    The article that explains why fetch doesn't reject on 404/500. Short read that saves you hours of debugging the "#1 fetch mistake."
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Fetch API" icon="video" href="https://www.youtube.com/watch?v=cuEtnrL9-H0">
+    Brad builds a simple app while explaining fetch concepts. Good if you learn better by watching someone code than reading docs.
+  </Card>
+  <Card title="Learn Fetch API in 6 Minutes" icon="video" href="https://www.youtube.com/watch?v=37vxWr0WgQk">
+    The fastest way to learn fetch if you're short on time. Kyle covers the essentials without any filler.
+  </Card>
+  <Card title="Async JS Crash Course - Callbacks, Promises, Async/Await" icon="video" href="https://www.youtube.com/watch?v=PoRJizFvM7s">
+    Covers callbacks, Promises, and async/await before getting to fetch. Watch this if you want the full async picture, not just fetch.
+  </Card>
+</CardGroup>
