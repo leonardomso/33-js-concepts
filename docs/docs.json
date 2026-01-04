@@ -33,7 +33,7 @@
     }
   },
   "search": {
-    "prompt": "Search JavaScript concepts..."
+    "prompt": "Search concept..."
   },
   "metadata": {
     "timestamp": true
