@@ -1,0 +1,1137 @@
+---
+title: "Blob & File API: Working with Binary Data in JavaScript"
+sidebarTitle: "Blob & File API"
+description: "Learn JavaScript Blob and File APIs for binary data. Create, read, and manipulate files, handle uploads, generate downloads, and work with FileReader."
+---
+
+How do you let users upload images? How do you create a downloadable file from data generated in JavaScript? How can you read the contents of a file the user selected?
+
+The **[Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob)** and **[File](https://developer.mozilla.org/en-US/docs/Web/API/File)** APIs are JavaScript's tools for working with binary data. They power everything from profile picture uploads to CSV exports to image processing in the browser.
+
+```javascript
+// Create a text file and download it
+const content = 'Hello, World!'
+const blob = new Blob([content], { type: 'text/plain' })
+const url = URL.createObjectURL(blob)
+
+const link = document.createElement('a')
+link.href = url
+link.download = 'hello.txt'
+link.click()
+
+URL.revokeObjectURL(url)  // Clean up memory
+```
+
+Understanding these APIs unlocks powerful client-side file handling without needing a server.
+
+<Info>
+**What you'll learn in this guide:**
+- What Blobs are and how to create them from strings, arrays, and other data
+- How the File interface extends Blob for user-selected files
+- Reading file contents with FileReader (text, data URLs, ArrayBuffers)
+- Creating downloadable files with Blob URLs
+- Uploading files with FormData
+- Slicing large files for chunked uploads
+- Converting between Blobs, ArrayBuffers, and Data URLs
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [Promises](/concepts/promises) and [async/await](/concepts/async-await). If you're not familiar with those concepts, read those guides first. You should also be comfortable with basic DOM manipulation.
+</Warning>
+
+---
+
+## What is a Blob in JavaScript?
+
+A **[Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob)** (Binary Large Object) is an immutable, file-like object that represents raw binary data. Think of it as a container that can hold any kind of data: text, images, audio, video, or arbitrary bytes. Blobs are the foundation for file handling in JavaScript, as the File interface is built on top of Blob.
+
+Unlike regular JavaScript strings or arrays, Blobs are designed to efficiently handle large amounts of binary data. They're immutable, meaning once created, you can't change their contents. Instead, you create new Blobs from existing ones.
+
+```javascript
+// Creating Blobs from different data types
+const textBlob = new Blob(['Hello, World!'], { type: 'text/plain' })
+const jsonBlob = new Blob([JSON.stringify({ name: 'Alice' })], { type: 'application/json' })
+const htmlBlob = new Blob(['<h1>Title</h1>'], { type: 'text/html' })
+
+console.log(textBlob.size)  // 13 (bytes)
+console.log(textBlob.type)  // "text/plain"
+```
+
+---
+
+## The Filing Cabinet Analogy
+
+Imagine a filing cabinet in an office. The cabinet (Blob) holds documents, but you can't read them just by looking at the cabinet. You need to open it and take out the contents.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       BLOB: THE FILING CABINET                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   ┌────────────────┐                                                     │
+│   │                │   Blob Properties:                                  │
+│   │  ┌──────────┐  │   • size: how many bytes (papers) inside           │
+│   │  │ [data]   │  │   • type: what kind of content (MIME type)         │
+│   │  │ [data]   │  │                                                     │
+│   │  │ [data]   │  │   To read the contents, you need:                  │
+│   │  └──────────┘  │   • FileReader (opens and reads)                   │
+│   │                │   • blob.text() / blob.arrayBuffer() (async)       │
+│   │   📁 BLOB      │   • URL.createObjectURL() (creates a link)         │
+│   └────────────────┘                                                     │
+│                                                                          │
+│   You can't change papers inside, but you can:                           │
+│   • Create a new cabinet with different papers (new Blob)               │
+│   • Take a portion of papers (blob.slice())                             │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The key insight: **Blobs store data but don't expose it directly**. You need tools like [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader) or Blob methods to access the contents.
+
+---
+
+## Creating Blobs
+
+The [`Blob()` constructor](https://developer.mozilla.org/en-US/docs/Web/API/Blob/Blob) takes two arguments: an array of data parts and an options object.
+
+### Basic Blob Creation
+
+```javascript
+// Syntax: new Blob(blobParts, options)
+
+// From a string
+const textBlob = new Blob(['Hello, World!'], { type: 'text/plain' })
+
+// From multiple strings (they're concatenated)
+const multiBlob = new Blob(['Hello, ', 'World!'], { type: 'text/plain' })
+
+// From JSON data
+const user = { name: 'Alice', age: 30 }
+const jsonBlob = new Blob(
+  [JSON.stringify(user, null, 2)], 
+  { type: 'application/json' }
+)
+
+// From HTML
+const htmlBlob = new Blob(
+  ['<!DOCTYPE html><html><body><h1>Hello</h1></body></html>'],
+  { type: 'text/html' }
+)
+```
+
+### From Typed Arrays and ArrayBuffers
+
+Blobs can also be created from binary data like [Typed Arrays](/beyond/concepts/typed-arrays-arraybuffers):
+
+```javascript
+// From a Uint8Array
+const bytes = new Uint8Array([72, 101, 108, 108, 111])  // "Hello" in ASCII
+const binaryBlob = new Blob([bytes], { type: 'application/octet-stream' })
+
+// From an ArrayBuffer
+const buffer = new ArrayBuffer(8)
+const view = new DataView(buffer)
+view.setFloat64(0, Math.PI)
+const bufferBlob = new Blob([buffer])
+
+// Combining different data types
+const mixedBlob = new Blob([
+  'Header: ',
+  bytes,
+  '\nFooter'
+], { type: 'text/plain' })
+```
+
+### Blob Properties
+
+Every Blob has two read-only properties:
+
+| Property | Description | Example |
+|----------|-------------|---------|
+| `size` | Size in bytes | `blob.size` returns `13` for "Hello, World!" |
+| `type` | MIME type string | `blob.type` returns `"text/plain"` |
+
+```javascript
+const blob = new Blob(['Hello, World!'], { type: 'text/plain' })
+console.log(blob.size)  // 13
+console.log(blob.type)  // "text/plain"
+```
+
+---
+
+## The File Interface
+
+The **[File](https://developer.mozilla.org/en-US/docs/Web/API/File)** interface extends Blob, adding properties specific to files from the user's system. When users select files through `<input type="file">` or drag-and-drop, you get File objects.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                         FILE EXTENDS BLOB                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   ┌─────────────────────────────────────────────────────────────────┐   │
+│   │                           BLOB                                   │   │
+│   │   • size (bytes)                                                 │   │
+│   │   • type (MIME type)                                             │   │
+│   │   • slice(), text(), arrayBuffer(), stream()                     │   │
+│   │                                                                  │   │
+│   │   ┌─────────────────────────────────────────────────────────┐   │   │
+│   │   │                        FILE                              │   │   │
+│   │   │   + name (filename with extension)                       │   │   │
+│   │   │   + lastModified (timestamp)                             │   │   │
+│   │   │   + webkitRelativePath (for directory uploads)           │   │   │
+│   │   └─────────────────────────────────────────────────────────┘   │   │
+│   └─────────────────────────────────────────────────────────────────┘   │
+│                                                                          │
+│   File inherits everything from Blob, plus file-specific metadata.       │
+│   Any API that accepts Blob also accepts File.                           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Getting Files from User Input
+
+The most common way to get File objects is from an `<input type="file">` element:
+
+```javascript
+// HTML: <input type="file" id="fileInput" multiple>
+
+const fileInput = document.getElementById('fileInput')
+
+fileInput.addEventListener('change', (event) => {
+  const files = event.target.files  // FileList object
+  
+  for (const file of files) {
+    console.log('Name:', file.name)           // "photo.jpg"
+    console.log('Size:', file.size)           // 1024000 (bytes)
+    console.log('Type:', file.type)           // "image/jpeg"
+    console.log('Modified:', file.lastModified)  // 1704067200000 (timestamp)
+    console.log('Modified Date:', new Date(file.lastModified))
+  }
+})
+```
+
+### Creating File Objects Programmatically
+
+You can create File objects directly with the [`File()` constructor](https://developer.mozilla.org/en-US/docs/Web/API/File/File):
+
+```javascript
+// Syntax: new File(fileBits, fileName, options)
+
+const file = new File(
+  ['Hello, World!'],          // Content (same as Blob)
+  'greeting.txt',             // Filename
+  { 
+    type: 'text/plain',       // MIME type
+    lastModified: Date.now()  // Optional timestamp
+  }
+)
+
+console.log(file.name)  // "greeting.txt"
+console.log(file.size)  // 13
+console.log(file.type)  // "text/plain"
+```
+
+### Drag and Drop Files
+
+Files can also come from drag-and-drop operations:
+
+```javascript
+const dropZone = document.getElementById('dropZone')
+
+dropZone.addEventListener('dragover', (e) => {
+  e.preventDefault()  // Required to allow drop
+  dropZone.classList.add('drag-over')
+})
+
+dropZone.addEventListener('dragleave', () => {
+  dropZone.classList.remove('drag-over')
+})
+
+dropZone.addEventListener('drop', (e) => {
+  e.preventDefault()
+  dropZone.classList.remove('drag-over')
+  
+  const files = e.dataTransfer.files  // FileList
+  
+  for (const file of files) {
+    console.log('Dropped:', file.name, file.type)
+  }
+})
+```
+
+---
+
+## Reading Files with FileReader
+
+**[FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader)** is an asynchronous API for reading Blob and File contents. It provides different methods depending on how you want the data:
+
+| Method | Returns | Use Case |
+|--------|---------|----------|
+| `readAsText(blob)` | String | Text files, JSON, CSV |
+| `readAsDataURL(blob)` | Data URL string | Image previews, embedding |
+| `readAsArrayBuffer(blob)` | ArrayBuffer | Binary processing |
+| `readAsBinaryString(blob)` | Binary string | Legacy (deprecated) |
+
+### Reading Text Content
+
+```javascript
+function readTextFile(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = () => reject(reader.error)
+    
+    reader.readAsText(file)
+  })
+}
+
+// Usage with file input
+fileInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0]
+  
+  if (file.type === 'text/plain' || file.name.endsWith('.txt')) {
+    const content = await readTextFile(file)
+    console.log(content)
+  }
+})
+```
+
+### Reading as Data URL (for Image Previews)
+
+A [Data URL](https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URLs) is a string that contains the file data encoded as base64. It can be used directly as an `src` attribute for images:
+
+```javascript
+function readAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = () => reject(reader.error)
+    
+    reader.readAsDataURL(file)
+  })
+}
+
+// Image preview example
+const imageInput = document.getElementById('imageInput')
+const preview = document.getElementById('preview')
+
+imageInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0]
+  
+  if (file && file.type.startsWith('image/')) {
+    const dataUrl = await readAsDataURL(file)
+    preview.src = dataUrl  // Display the image
+    // dataUrl looks like: "data:image/jpeg;base64,/9j/4AAQSkZJRg..."
+  }
+})
+```
+
+### Reading as ArrayBuffer
+
+For binary processing, read the file as an [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer):
+
+```javascript
+function readAsArrayBuffer(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = () => reject(reader.error)
+    
+    reader.readAsArrayBuffer(file)
+  })
+}
+
+// Example: Check if a file is a PNG image by reading magic bytes
+async function isPNG(file) {
+  const buffer = await readAsArrayBuffer(file.slice(0, 8))
+  const bytes = new Uint8Array(buffer)
+  
+  // PNG magic number: 137 80 78 71 13 10 26 10
+  const pngSignature = [137, 80, 78, 71, 13, 10, 26, 10]
+  
+  return pngSignature.every((byte, i) => bytes[i] === byte)
+}
+```
+
+### FileReader Events
+
+FileReader provides several events for monitoring the reading process:
+
+```javascript
+const reader = new FileReader()
+
+reader.onloadstart = () => console.log('Started reading')
+reader.onprogress = (e) => {
+  if (e.lengthComputable) {
+    const percent = (e.loaded / e.total) * 100
+    console.log(`Progress: ${percent.toFixed(1)}%`)
+  }
+}
+reader.onload = () => console.log('Read complete:', reader.result)
+reader.onerror = () => console.error('Error:', reader.error)
+reader.onloadend = () => console.log('Finished (success or failure)')
+
+reader.readAsText(file)
+```
+
+---
+
+## Modern Blob Methods
+
+Modern browsers support Promise-based methods directly on Blob objects, which are often cleaner than FileReader:
+
+```javascript
+const blob = new Blob(['Hello, World!'], { type: 'text/plain' })
+
+// Read as text (Promise-based)
+const text = await blob.text()
+console.log(text)  // "Hello, World!"
+
+// Read as ArrayBuffer
+const buffer = await blob.arrayBuffer()
+console.log(new Uint8Array(buffer))  // Uint8Array [72, 101, ...]
+
+// Read as stream (for large files)
+const stream = blob.stream()
+const reader = stream.getReader()
+
+while (true) {
+  const { done, value } = await reader.read()
+  if (done) break
+  console.log('Chunk:', value)  // Uint8Array chunks
+}
+```
+
+<Tip>
+**When to use what:** For simple reads, use `blob.text()` or `blob.arrayBuffer()`. For large files where you want to process data as it streams, use `blob.stream()`. Use FileReader when you need progress events or Data URLs.
+</Tip>
+
+---
+
+## Creating Downloadable Files
+
+One of the most useful Blob applications is generating downloadable files in the browser. The key is [`URL.createObjectURL()`](https://developer.mozilla.org/en-US/docs/Web/API/URL/createObjectURL_static).
+
+### Basic Download
+
+```javascript
+function downloadBlob(blob, filename) {
+  // Create a URL pointing to the blob
+  const url = URL.createObjectURL(blob)
+  
+  // Create a temporary link element
+  const link = document.createElement('a')
+  link.href = url
+  link.download = filename  // Suggested filename
+  
+  // Trigger the download
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+  
+  // Clean up the URL (free memory)
+  URL.revokeObjectURL(url)
+}
+
+// Download a text file
+const textBlob = new Blob(['Hello, World!'], { type: 'text/plain' })
+downloadBlob(textBlob, 'greeting.txt')
+
+// Download JSON data
+const data = { users: [{ name: 'Alice' }, { name: 'Bob' }] }
+const jsonBlob = new Blob(
+  [JSON.stringify(data, null, 2)], 
+  { type: 'application/json' }
+)
+downloadBlob(jsonBlob, 'users.json')
+```
+
+### Export Table Data as CSV
+
+```javascript
+function tableToCSV(tableData, headers) {
+  const rows = [
+    headers.join(','),
+    ...tableData.map(row => 
+      row.map(cell => `"${cell}"`).join(',')
+    )
+  ]
+  
+  return rows.join('\n')
+}
+
+function downloadCSV(tableData, headers, filename) {
+  const csv = tableToCSV(tableData, headers)
+  const blob = new Blob([csv], { type: 'text/csv' })
+  downloadBlob(blob, filename)
+}
+
+// Usage
+const headers = ['Name', 'Email', 'Role']
+const data = [
+  ['Alice', 'alice@example.com', 'Admin'],
+  ['Bob', 'bob@example.com', 'User']
+]
+
+downloadCSV(data, headers, 'users.csv')
+```
+
+### Memory Management with Object URLs
+
+<Warning>
+**Memory Leak Risk:** Every `URL.createObjectURL()` call allocates memory that isn't automatically freed. Always call `URL.revokeObjectURL()` when you're done with the URL, or you'll leak memory.
+</Warning>
+
+```javascript
+// ❌ WRONG - Memory leak!
+function displayImage(blob) {
+  const url = URL.createObjectURL(blob)
+  img.src = url
+  // URL is never revoked, memory is leaked
+}
+
+// ✓ CORRECT - Clean up after use
+function displayImage(blob) {
+  const url = URL.createObjectURL(blob)
+  img.src = url
+  
+  img.onload = () => {
+    URL.revokeObjectURL(url)  // Free memory after image loads
+  }
+}
+
+// ✓ CORRECT - Clean up previous URL before creating new one
+let currentUrl = null
+
+function displayImage(blob) {
+  if (currentUrl) {
+    URL.revokeObjectURL(currentUrl)
+  }
+  
+  currentUrl = URL.createObjectURL(blob)
+  img.src = currentUrl
+}
+```
+
+---
+
+## Uploading Files
+
+### Using FormData
+
+The most common way to upload files is with [FormData](https://developer.mozilla.org/en-US/docs/Web/API/FormData):
+
+```javascript
+async function uploadFile(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  formData.append('description', 'My uploaded file')
+  
+  const response = await fetch('/api/upload', {
+    method: 'POST',
+    body: formData
+    // Don't set Content-Type header - browser sets it with boundary
+  })
+  
+  if (!response.ok) {
+    throw new Error(`Upload failed: ${response.status}`)
+  }
+  
+  return response.json()
+}
+
+// With file input
+fileInput.addEventListener('change', async (e) => {
+  const file = e.target.files[0]
+  
+  try {
+    const result = await uploadFile(file)
+    console.log('Uploaded:', result)
+  } catch (error) {
+    console.error('Upload error:', error)
+  }
+})
+```
+
+### Uploading Multiple Files
+
+```javascript
+async function uploadMultipleFiles(files) {
+  const formData = new FormData()
+  
+  for (const file of files) {
+    formData.append('files', file)  // Same key for multiple files
+  }
+  
+  const response = await fetch('/api/upload-multiple', {
+    method: 'POST',
+    body: formData
+  })
+  
+  return response.json()
+}
+```
+
+### Upload with Progress
+
+For large files, show upload progress:
+
+```javascript
+function uploadWithProgress(file, onProgress) {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest()
+    const formData = new FormData()
+    formData.append('file', file)
+    
+    xhr.upload.addEventListener('progress', (e) => {
+      if (e.lengthComputable) {
+        const percent = (e.loaded / e.total) * 100
+        onProgress(percent)
+      }
+    })
+    
+    xhr.addEventListener('load', () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(JSON.parse(xhr.responseText))
+      } else {
+        reject(new Error(`Upload failed: ${xhr.status}`))
+      }
+    })
+    
+    xhr.addEventListener('error', () => reject(new Error('Network error')))
+    
+    xhr.open('POST', '/api/upload')
+    xhr.send(formData)
+  })
+}
+
+// Usage
+uploadWithProgress(file, (percent) => {
+  progressBar.style.width = `${percent}%`
+  progressText.textContent = `${percent.toFixed(0)}%`
+})
+```
+
+---
+
+## Slicing Blobs
+
+The [`slice()`](https://developer.mozilla.org/en-US/docs/Web/API/Blob/slice) method creates a new Blob containing a portion of the original:
+
+```javascript
+const blob = new Blob(['Hello, World!'], { type: 'text/plain' })
+
+// Syntax: blob.slice(start, end, contentType)
+const firstFive = blob.slice(0, 5)           // "Hello"
+const lastSix = blob.slice(-6)               // "World!"
+const middle = blob.slice(7, 12)             // "World"
+const withNewType = blob.slice(0, 5, 'text/html')  // Change MIME type
+
+// Read the sliced content
+console.log(await firstFive.text())  // "Hello"
+```
+
+### Chunked File Upload
+
+For very large files, split them into chunks:
+
+```javascript
+async function uploadInChunks(file, chunkSize = 1024 * 1024) {  // 1MB chunks
+  const totalChunks = Math.ceil(file.size / chunkSize)
+  
+  for (let i = 0; i < totalChunks; i++) {
+    const start = i * chunkSize
+    const end = Math.min(start + chunkSize, file.size)
+    const chunk = file.slice(start, end)
+    
+    const formData = new FormData()
+    formData.append('chunk', chunk)
+    formData.append('chunkIndex', i)
+    formData.append('totalChunks', totalChunks)
+    formData.append('filename', file.name)
+    
+    await fetch('/api/upload-chunk', {
+      method: 'POST',
+      body: formData
+    })
+    
+    console.log(`Uploaded chunk ${i + 1}/${totalChunks}`)
+  }
+}
+```
+
+### Reading Large Files in Chunks
+
+For processing large files without loading everything into memory:
+
+```javascript
+async function processLargeFile(file, chunkSize = 1024 * 1024) {
+  let offset = 0
+  
+  while (offset < file.size) {
+    const chunk = file.slice(offset, offset + chunkSize)
+    const content = await chunk.text()
+    
+    // Process this chunk
+    processChunk(content)
+    
+    offset += chunkSize
+    console.log(`Processed ${Math.min(offset, file.size)} / ${file.size} bytes`)
+  }
+}
+```
+
+---
+
+## Converting Between Formats
+
+### Blob to Data URL
+
+```javascript
+// Using FileReader
+function blobToDataURL(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = reject
+    reader.readAsDataURL(blob)
+  })
+}
+
+// Usage
+const blob = new Blob(['Hello'], { type: 'text/plain' })
+const dataUrl = await blobToDataURL(blob)
+// "data:text/plain;base64,SGVsbG8="
+```
+
+### Data URL to Blob
+
+```javascript
+function dataURLtoBlob(dataUrl) {
+  const [header, base64Data] = dataUrl.split(',')
+  const mimeType = header.match(/:(.*?);/)[1]
+  const binaryString = atob(base64Data)
+  const bytes = new Uint8Array(binaryString.length)
+  
+  for (let i = 0; i < binaryString.length; i++) {
+    bytes[i] = binaryString.charCodeAt(i)
+  }
+  
+  return new Blob([bytes], { type: mimeType })
+}
+
+// Usage
+const dataUrl = 'data:text/plain;base64,SGVsbG8='
+const blob = dataURLtoBlob(dataUrl)
+console.log(await blob.text())  // "Hello"
+```
+
+### Blob to ArrayBuffer and Back
+
+```javascript
+// Blob to ArrayBuffer
+const blob = new Blob(['Hello'])
+const buffer = await blob.arrayBuffer()
+
+// ArrayBuffer to Blob
+const newBlob = new Blob([buffer])
+```
+
+### Canvas to Blob
+
+```javascript
+// Get a canvas element
+const canvas = document.getElementById('myCanvas')
+
+// Convert to Blob (async)
+canvas.toBlob((blob) => {
+  // blob is now a Blob with image data
+  downloadBlob(blob, 'canvas-image.png')
+}, 'image/png', 0.9)  // format, quality
+
+// Or with a Promise wrapper
+function canvasToBlob(canvas, type = 'image/png', quality = 0.9) {
+  return new Promise((resolve) => {
+    canvas.toBlob(resolve, type, quality)
+  })
+}
+```
+
+---
+
+## Common Mistakes
+
+### The #1 Blob Mistake: Forgetting to Revoke URLs
+
+```javascript
+// ❌ WRONG - Creates memory leak
+function previewImages(files) {
+  for (const file of files) {
+    const img = document.createElement('img')
+    img.src = URL.createObjectURL(file)  // Never revoked!
+    gallery.appendChild(img)
+  }
+}
+
+// ✓ CORRECT - Revoke after image loads
+function previewImages(files) {
+  for (const file of files) {
+    const img = document.createElement('img')
+    const url = URL.createObjectURL(file)
+    
+    img.onload = () => URL.revokeObjectURL(url)
+    img.src = url
+    gallery.appendChild(img)
+  }
+}
+```
+
+### Setting Content-Type with FormData
+
+```javascript
+// ❌ WRONG - Don't set Content-Type for FormData
+const formData = new FormData()
+formData.append('file', file)
+
+fetch('/api/upload', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'multipart/form-data'  // Wrong! Missing boundary
+  },
+  body: formData
+})
+
+// ✓ CORRECT - Let browser set Content-Type with boundary
+fetch('/api/upload', {
+  method: 'POST',
+  // No Content-Type header - browser handles it
+  body: formData
+})
+```
+
+### Not Validating File Types
+
+```javascript
+// ❌ WRONG - Trusting file extension
+if (file.name.endsWith('.jpg')) {
+  // User could rename any file to .jpg
+}
+
+// ✓ BETTER - Check MIME type
+if (file.type.startsWith('image/')) {
+  // More reliable, but can still be spoofed
+}
+
+// ✓ BEST - Validate magic bytes for critical applications
+async function isValidJPEG(file) {
+  const buffer = await file.slice(0, 3).arrayBuffer()
+  const bytes = new Uint8Array(buffer)
+  // JPEG magic number: FF D8 FF
+  return bytes[0] === 0xFF && bytes[1] === 0xD8 && bytes[2] === 0xFF
+}
+```
+
+---
+
+## Real-World Patterns
+
+### Image Compression Before Upload
+
+```javascript
+async function compressImage(file, maxWidth = 1200, quality = 0.8) {
+  // Create an image element
+  const img = new Image()
+  const url = URL.createObjectURL(file)
+  
+  await new Promise((resolve, reject) => {
+    img.onload = resolve
+    img.onerror = reject
+    img.src = url
+  })
+  
+  URL.revokeObjectURL(url)
+  
+  // Calculate new dimensions
+  let { width, height } = img
+  if (width > maxWidth) {
+    height = (height * maxWidth) / width
+    width = maxWidth
+  }
+  
+  // Draw to canvas
+  const canvas = document.createElement('canvas')
+  canvas.width = width
+  canvas.height = height
+  
+  const ctx = canvas.getContext('2d')
+  ctx.drawImage(img, 0, 0, width, height)
+  
+  // Convert back to blob
+  return new Promise((resolve) => {
+    canvas.toBlob(resolve, 'image/jpeg', quality)
+  })
+}
+
+// Usage
+const compressed = await compressImage(originalFile)
+console.log(`Original: ${originalFile.size}, Compressed: ${compressed.size}`)
+```
+
+### File Type Validation
+
+```javascript
+const ALLOWED_TYPES = {
+  'image/jpeg': [0xFF, 0xD8, 0xFF],
+  'image/png': [0x89, 0x50, 0x4E, 0x47],
+  'image/gif': [0x47, 0x49, 0x46],
+  'application/pdf': [0x25, 0x50, 0x44, 0x46]
+}
+
+async function validateFileType(file) {
+  const maxSignatureLength = Math.max(
+    ...Object.values(ALLOWED_TYPES).map(sig => sig.length)
+  )
+  
+  const buffer = await file.slice(0, maxSignatureLength).arrayBuffer()
+  const bytes = new Uint8Array(buffer)
+  
+  for (const [mimeType, signature] of Object.entries(ALLOWED_TYPES)) {
+    if (signature.every((byte, i) => bytes[i] === byte)) {
+      return { valid: true, detectedType: mimeType }
+    }
+  }
+  
+  return { valid: false, detectedType: null }
+}
+```
+
+### Copy/Paste Image Handling
+
+```javascript
+document.addEventListener('paste', async (e) => {
+  const items = e.clipboardData?.items
+  if (!items) return
+  
+  for (const item of items) {
+    if (item.type.startsWith('image/')) {
+      const file = item.getAsFile()
+      
+      // Preview the pasted image
+      const url = URL.createObjectURL(file)
+      const img = document.createElement('img')
+      img.onload = () => URL.revokeObjectURL(url)
+      img.src = url
+      pasteTarget.appendChild(img)
+    }
+  }
+})
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about Blob and File APIs:**
+
+1. **Blob is a container for binary data** — It stores raw bytes with a MIME type but doesn't expose contents directly. Use FileReader or Blob methods to read data.
+
+2. **File extends Blob** — File adds `name`, `lastModified`, and other metadata. Any API accepting Blob also accepts File.
+
+3. **FileReader is asynchronous** — Use `readAsText()`, `readAsDataURL()`, or `readAsArrayBuffer()` depending on your needs. Prefer `blob.text()` and `blob.arrayBuffer()` for simpler code.
+
+4. **Object URLs need cleanup** — Always call `URL.revokeObjectURL()` after using `URL.createObjectURL()` to avoid memory leaks.
+
+5. **Don't set Content-Type for FormData uploads** — The browser automatically sets the correct multipart boundary. Setting it manually breaks the upload.
+
+6. **Blobs are immutable** — You can't modify a Blob. Use `slice()` to create new Blobs from portions of existing ones.
+
+7. **Use slice() for large files** — Process files in chunks to avoid loading everything into memory at once.
+
+8. **Data URLs are synchronous but heavy** — They're convenient for small files but base64 encoding increases size by ~33%.
+
+9. **Validate files properly** — Don't trust file extensions or even MIME types. Check magic bytes for security-critical applications.
+
+10. **FormData handles multiple files** — Append files with the same key to upload multiple files in one request.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between Blob and File?">
+    **Answer:**
+    
+    File extends Blob, inheriting all its properties and methods while adding file-specific metadata:
+    
+    - `name`: The filename (e.g., "photo.jpg")
+    - `lastModified`: Timestamp when the file was last modified
+    - `webkitRelativePath`: Path for directory uploads
+    
+    Any API that accepts a Blob also accepts a File, since File is a subclass of Blob.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why must you call URL.revokeObjectURL()?">
+    **Answer:**
+    
+    `URL.createObjectURL()` creates a reference to the Blob in memory that persists until the page unloads or you explicitly revoke it. Each call allocates memory that won't be garbage collected automatically. 
+    
+    If you create many Object URLs without revoking them (like in an image gallery preview), you'll leak memory. Always revoke the URL when you're done using it.
+    
+    ```javascript
+    const url = URL.createObjectURL(blob)
+    img.src = url
+    img.onload = () => URL.revokeObjectURL(url)  // Clean up
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: How do you read a file as text?">
+    **Answer:**
+    
+    Two approaches:
+    
+    ```javascript
+    // Modern way (Promise-based)
+    const text = await file.text()
+    
+    // Traditional way (FileReader)
+    const reader = new FileReader()
+    reader.onload = () => console.log(reader.result)
+    reader.readAsText(file)
+    ```
+    
+    The modern `blob.text()` method is cleaner for simple reads. Use FileReader when you need progress events.
+  </Accordion>
+  
+  <Accordion title="Question 4: Why shouldn't you set Content-Type when uploading with FormData?">
+    **Answer:**
+    
+    When uploading files with FormData, the Content-Type must be `multipart/form-data` with a specific boundary string that separates the parts. The browser generates this boundary automatically.
+    
+    If you manually set `Content-Type: 'multipart/form-data'`, you won't include the boundary, and the server can't parse the request. Let the browser handle it:
+    
+    ```javascript
+    // Correct - no Content-Type header
+    fetch('/upload', { method: 'POST', body: formData })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: How do you process a large file without loading it all into memory?">
+    **Answer:**
+    
+    Use `blob.slice()` to read the file in chunks:
+    
+    ```javascript
+    async function processInChunks(file, chunkSize = 1024 * 1024) {
+      let offset = 0
+      
+      while (offset < file.size) {
+        const chunk = file.slice(offset, offset + chunkSize)
+        const content = await chunk.text()
+        processChunk(content)
+        offset += chunkSize
+      }
+    }
+    ```
+    
+    This processes the file piece by piece, never loading more than `chunkSize` bytes into memory at once.
+  </Accordion>
+  
+  <Accordion title="Question 6: When should you use Data URLs vs Object URLs?">
+    **Answer:**
+    
+    **Data URLs** (`data:...base64,...`):
+    - Self-contained (no external reference)
+    - Can be stored, serialized, sent via JSON
+    - 33% larger than original (base64 overhead)
+    - Synchronous creation with FileReader
+    
+    **Object URLs** (`blob:...`):
+    - Just a reference to the Blob in memory
+    - Must be revoked to free memory
+    - Same size as original data
+    - Only valid in the current document
+    
+    Use Data URLs for small files you need to persist. Use Object URLs for temporary previews and large files.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Typed Arrays & ArrayBuffers" icon="database" href="/beyond/concepts/typed-arrays-arraybuffers">
+    Low-level binary data handling that works with Blobs
+  </Card>
+  <Card title="HTTP & Fetch" icon="globe" href="/concepts/http-fetch">
+    How to upload files to servers using fetch()
+  </Card>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    Understanding async operations used by Blob methods
+  </Card>
+  <Card title="async/await" icon="clock" href="/concepts/async-await">
+    Modern syntax for working with FileReader and Blob APIs
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Blob — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Blob">
+    Official MDN documentation for the Blob interface with constructor, properties, and methods.
+  </Card>
+  <Card title="File — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/File">
+    MDN reference for the File interface that extends Blob with file-specific properties.
+  </Card>
+  <Card title="FileReader — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/FileReader">
+    Complete reference for reading file contents asynchronously with all methods and events.
+  </Card>
+  <Card title="Using files from web applications — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/File_API/Using_files_from_web_applications">
+    MDN guide covering file selection, drag-drop, and practical file handling patterns.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Blob — javascript.info" icon="newspaper" href="https://javascript.info/blob">
+    Comprehensive tutorial covering Blob creation, URLs, conversions, and image handling. Part of the excellent Binary Data section on javascript.info.
+  </Card>
+  <Card title="File and FileReader — javascript.info" icon="newspaper" href="https://javascript.info/file">
+    Detailed guide on File objects and FileReader with practical examples for reading different file formats.
+  </Card>
+  <Card title="How To Read and Process Files with FileReader — DigitalOcean" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/js-file-reader">
+    Step-by-step tutorial with complete code examples for text, image, and binary file reading.
+  </Card>
+  <Card title="Web File API deep dive — DEV Community" icon="newspaper" href="https://dev.to/tmrc/the-last-file-input-tutorial-youll-ever-need-2023-4ppd">
+    Modern take on File API covering everything from basic input handling to advanced validation patterns.
+  </Card>
+  <Card title="FileReader API — 12 Days of Web" icon="newspaper" href="https://12daysofweb.dev/2023/filereader-api/">
+    Concise introduction to FileReader with clear explanations of when and why to use each reading method.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="File Reader API in JavaScript — dcode" icon="video" href="https://www.youtube.com/watch?v=bnhE9lEBwLQ">
+    Clear 10-minute walkthrough of FileReader basics with a practical file preview example. Great starting point.
+  </Card>
+  <Card title="JavaScript File Upload Tutorial — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=e0_SAFC5jig">
+    Complete file upload implementation from frontend to backend, covering validation, progress, and error handling.
+  </Card>
+  <Card title="Drag and Drop File Upload — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=_F2Ek-DGsgg">
+    Practical tutorial building a drag-and-drop file upload zone with preview functionality.
+  </Card>
+</CardGroup>
