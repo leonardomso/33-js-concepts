@@ -62,8 +62,3 @@ typings/
 
 # webstore IDE created directory
 .idea
-
-# OpenCode local files (keep skills tracked)
-.opencode/node_modules/
-.opencode/bun.lock
-.opencode/package.json
