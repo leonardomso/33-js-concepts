@@ -1,0 +1,1034 @@
+---
+title: "JSON Deep Dive: Advanced Serialization in JavaScript"
+sidebarTitle: "JSON: Beyond Parse and Stringify"
+description: "Learn advanced JSON in JavaScript. Understand JSON.stringify() replacers, JSON.parse() revivers, circular reference handling, and custom toJSON methods."
+---
+
+How do you filter sensitive data when sending objects to an API? How do you revive Date objects from a JSON string? What happens when you try to stringify an object with circular references?
+
+```javascript
+// Filter sensitive data during serialization
+const user = { name: 'Alice', password: 'secret123', role: 'admin' }
+
+const safeJSON = JSON.stringify(user, (key, value) => {
+  if (key === 'password') return undefined  // Excluded from output
+  return value
+})
+
+console.log(safeJSON)  // '{"name":"Alice","role":"admin"}'
+```
+
+These are everyday challenges when working with **[JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON)** in JavaScript. While `JSON.parse()` and `JSON.stringify()` seem simple, they have powerful features most developers never discover.
+
+<Info>
+**What you'll learn in this guide:**
+- How replacer functions and arrays work in `JSON.stringify()`
+- How reviver functions transform data during `JSON.parse()`
+- The custom `toJSON()` method for controlling serialization
+- Why circular references throw errors and how to handle them
+- Strategies for serializing Dates, Maps, Sets, and BigInt
+- The `space` parameter for pretty-printing JSON
+- Common pitfalls and edge cases to avoid
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand basic JavaScript objects and functions. You should be comfortable with [Object Methods](/beyond/concepts/object-methods) and have used `JSON.parse()` and `JSON.stringify()` before.
+</Warning>
+
+---
+
+## What is JSON?
+
+**JSON** (JavaScript Object Notation) is a lightweight text format for storing and exchanging data. It's language-independent but derived from JavaScript syntax. JSON has become the standard format for APIs, configuration files, and data storage across the web.
+
+```javascript
+// JSON is just text that represents data
+const jsonString = '{"name":"Alice","age":30,"isAdmin":true}'
+
+// Parse converts JSON text → JavaScript value
+const user = JSON.parse(jsonString)
+console.log(user.name)  // "Alice"
+
+// Stringify converts JavaScript value → JSON text
+const backToJSON = JSON.stringify(user)
+console.log(backToJSON)  // '{"name":"Alice","age":30,"isAdmin":true}'
+```
+
+<Tip>
+**JSON vs JavaScript Objects:** JSON syntax is a subset of JavaScript. All JSON is valid JavaScript, but not all JavaScript objects can be represented as JSON. Functions, `undefined`, Symbols, and circular references don't have JSON equivalents.
+</Tip>
+
+---
+
+## The Post Office Analogy
+
+Think of `JSON.stringify()` and `JSON.parse()` like sending a package through the post office:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     JSON: THE DATA POST OFFICE                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   SENDING (stringify)                  RECEIVING (parse)                 │
+│   ──────────────────                   ─────────────────                 │
+│                                                                          │
+│   ┌──────────────┐                     ┌──────────────┐                  │
+│   │ JS Object    │                     │ JSON String  │                  │
+│   │ { name: ... }│ ───────────────────►│ '{"name":..}'│                  │
+│   └──────────────┘   JSON.stringify()  └──────────────┘                  │
+│                                                                          │
+│   • Package your data                  • Receive the package             │
+│   • Choose what to include (replacer)  • Transform contents (reviver)    │
+│   • Format it nicely (space)           • Unpack to JS objects            │
+│                                                                          │
+│   Some items can't be shipped:                                           │
+│   • Functions (no delivery)                                              │
+│   • undefined (vanishes)                                                 │
+│   • Circular references (rejected)                                       │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Just like a post office has rules about what you can ship, JSON has rules about what can be serialized. And just like you might want to inspect or modify packages, replacers and revivers let you transform data during the journey.
+
+---
+
+## JSON.stringify() in Depth
+
+The `JSON.stringify()` method has three parameters, but most developers only use the first:
+
+```javascript
+JSON.stringify(value)
+JSON.stringify(value, replacer)
+JSON.stringify(value, replacer, space)
+```
+
+Let's explore each parameter and unlock the full power of serialization.
+
+### Basic Serialization
+
+```javascript
+// Objects
+JSON.stringify({ a: 1, b: 2 })           // '{"a":1,"b":2}'
+
+// Arrays
+JSON.stringify([1, 2, 3])                 // '[1,2,3]'
+
+// Primitives
+JSON.stringify('hello')                   // '"hello"'
+JSON.stringify(42)                        // '42'
+JSON.stringify(true)                      // 'true'
+JSON.stringify(null)                      // 'null'
+```
+
+### What Gets Lost in Serialization
+
+Not everything survives the stringify process:
+
+```javascript
+const obj = {
+  name: 'Alice',
+  greet: function() { return 'Hi!' },  // Functions: OMITTED
+  age: undefined,                       // undefined: OMITTED
+  id: Symbol('id'),                     // Symbols: OMITTED
+  count: NaN,                           // NaN: becomes null
+  infinity: Infinity,                   // Infinity: becomes null
+  nothing: null                         // null: preserved
+}
+
+console.log(JSON.stringify(obj))
+// '{"name":"Alice","count":null,"infinity":null,"nothing":null}'
+```
+
+<Warning>
+**Lost in Translation:** Functions, `undefined`, and Symbol values are silently omitted from objects. In arrays, they become `null`. This can cause subtle bugs if you're not careful!
+</Warning>
+
+```javascript
+// In arrays, these values become null instead of being omitted
+const arr = [1, undefined, function() {}, Symbol('x'), 2]
+JSON.stringify(arr)  // '[1,null,null,null,2]'
+```
+
+---
+
+## The Replacer Parameter
+
+The second parameter to `JSON.stringify()` controls what gets included in the output. It can be either a function or an array.
+
+### Replacer as a Function
+
+A replacer function is called for every key-value pair in the object:
+
+```javascript
+function replacer(key, value) {
+  // 'this' is the object containing the current property
+  // 'key' is the property name (or index for arrays)
+  // 'value' is the property value
+  // Return the value to include, or undefined to exclude
+}
+```
+
+```javascript
+const data = {
+  name: 'Alice',
+  password: 'secret123',
+  email: 'alice@example.com',
+  age: 30
+}
+
+// Filter out sensitive data
+const safeJSON = JSON.stringify(data, (key, value) => {
+  if (key === 'password') return undefined  // Exclude
+  if (key === 'email') return '***hidden***' // Transform
+  return value  // Keep everything else
+})
+
+console.log(safeJSON)
+// '{"name":"Alice","email":"***hidden***","age":30}'
+```
+
+### The Initial Call
+
+The replacer is called first with an empty string key and the entire object as the value:
+
+```javascript
+JSON.stringify({ a: 1 }, (key, value) => {
+  console.log(`key: "${key}", value:`, value)
+  return value
+})
+
+// Output:
+// key: "", value: { a: 1 }     ← Initial call (root object)
+// key: "a", value: 1           ← Property 'a'
+```
+
+This lets you transform or replace the entire object:
+
+```javascript
+// Wrap the entire output
+JSON.stringify({ x: 1 }, (key, value) => {
+  if (key === '') {
+    return { wrapper: value, timestamp: Date.now() }
+  }
+  return value
+})
+// '{"wrapper":{"x":1},"timestamp":1704067200000}'
+```
+
+### Replacer as an Array
+
+Pass an array of strings to include only specific properties:
+
+```javascript
+const user = {
+  id: 1,
+  name: 'Alice',
+  email: 'alice@example.com',
+  password: 'secret',
+  role: 'admin',
+  createdAt: '2024-01-01'
+}
+
+// Only include these properties
+JSON.stringify(user, ['id', 'name', 'email'])
+// '{"id":1,"name":"Alice","email":"alice@example.com"}'
+```
+
+<Tip>
+**Array Replacer Limitation:** The array replacer only works for object properties, not nested objects. For deep filtering, use a replacer function.
+</Tip>
+
+---
+
+## The Space Parameter
+
+The third parameter adds whitespace for readability:
+
+```javascript
+const data = { name: 'Alice', address: { city: 'NYC', zip: '10001' } }
+
+// No formatting (default)
+JSON.stringify(data)
+// '{"name":"Alice","address":{"city":"NYC","zip":"10001"}}'
+
+// With 2-space indentation
+JSON.stringify(data, null, 2)
+/*
+{
+  "name": "Alice",
+  "address": {
+    "city": "NYC",
+    "zip": "10001"
+  }
+}
+*/
+
+// With tab indentation
+JSON.stringify(data, null, '\t')
+/*
+{
+	"name": "Alice",
+	"address": {
+		"city": "NYC",
+		"zip": "10001"
+	}
+}
+*/
+```
+
+The space parameter can be:
+- A number (0-10): Number of spaces for indentation
+- A string (max 10 chars): The string to use for indentation
+
+```javascript
+// Custom indentation string
+JSON.stringify({ a: 1, b: 2 }, null, '→ ')
+/*
+{
+→ "a": 1,
+→ "b": 2
+}
+*/
+```
+
+---
+
+## JSON.parse() in Depth
+
+The `JSON.parse()` method converts a JSON string back into a JavaScript value:
+
+```javascript
+JSON.parse(text)
+JSON.parse(text, reviver)
+```
+
+### Basic Parsing
+
+```javascript
+JSON.parse('{"name":"Alice","age":30}')  // { name: 'Alice', age: 30 }
+JSON.parse('[1, 2, 3]')                   // [1, 2, 3]
+JSON.parse('"hello"')                     // 'hello'
+JSON.parse('42')                          // 42
+JSON.parse('true')                        // true
+JSON.parse('null')                        // null
+```
+
+### Invalid JSON Throws Errors
+
+```javascript
+// Missing quotes around keys (valid JS, invalid JSON)
+JSON.parse('{name: "Alice"}')  // SyntaxError
+
+// Single quotes (valid JS, invalid JSON)
+JSON.parse("{'name': 'Alice'}")  // SyntaxError
+
+// Trailing comma (valid JS, invalid JSON)
+JSON.parse('{"a": 1,}')  // SyntaxError
+
+// Comments (not allowed in JSON)
+JSON.parse('{"a": 1 /* comment */}')  // SyntaxError
+```
+
+<Warning>
+**JSON is Strict:** Unlike JavaScript object literals, JSON requires double quotes around property names and string values. No trailing commas, no comments, no single quotes.
+</Warning>
+
+---
+
+## The Reviver Parameter
+
+The reviver function transforms values during parsing, working from the innermost values outward:
+
+```javascript
+function reviver(key, value) {
+  // 'this' is the object containing the current property
+  // 'key' is the property name
+  // 'value' is the already-parsed value
+  // Return the transformed value, or undefined to delete
+}
+```
+
+### Reviving Dates
+
+Dates are a classic use case for revivers. JSON has no Date type, so dates become strings:
+
+```javascript
+const json = '{"name":"Alice","createdAt":"2024-01-15T10:30:00.000Z"}'
+
+// Without reviver: date is just a string
+const obj1 = JSON.parse(json)
+console.log(obj1.createdAt)            // "2024-01-15T10:30:00.000Z" (string)
+console.log(obj1.createdAt.getTime())  // TypeError: not a function
+
+// With reviver: date is a Date object
+const obj2 = JSON.parse(json, (key, value) => {
+  // Check if value looks like an ISO date string
+  if (typeof value === 'string' && /^\d{4}-\d{2}-\d{2}T/.test(value)) {
+    return new Date(value)
+  }
+  return value
+})
+
+console.log(obj2.createdAt)            // Date object
+console.log(obj2.createdAt.getTime())  // 1705315800000
+```
+
+### Processing Order
+
+The reviver processes values from innermost to outermost:
+
+```javascript
+JSON.parse('{"a":{"b":1},"c":2}', (key, value) => {
+  console.log(`key: "${key}", value:`, value)
+  return value
+})
+
+// Output (note the order):
+// key: "b", value: 1        ← Innermost first
+// key: "a", value: { b: 1 } ← Then containing object
+// key: "c", value: 2        ← Sibling
+// key: "", value: {...}     ← Root object last
+```
+
+### Filtering During Parse
+
+Return `undefined` from a reviver to delete a property:
+
+```javascript
+const json = '{"name":"Alice","__internal":true,"id":1}'
+
+const cleaned = JSON.parse(json, (key, value) => {
+  // Remove any properties starting with __
+  if (key.startsWith('__')) return undefined
+  return value
+})
+
+console.log(cleaned)  // { name: 'Alice', id: 1 }
+```
+
+---
+
+## Custom toJSON() Methods
+
+When `JSON.stringify()` encounters an object with a `toJSON()` method, it calls that method and uses its return value instead:
+
+```javascript
+const user = {
+  name: 'Alice',
+  password: 'secret123',
+  toJSON() {
+    // Return what should be serialized
+    return { name: this.name }  // Password excluded
+  }
+}
+
+JSON.stringify(user)  // '{"name":"Alice"}'
+```
+
+### Built-in toJSON()
+
+Some built-in objects already have `toJSON()` methods:
+
+```javascript
+// Date has toJSON() that returns ISO string
+const date = new Date('2024-01-15T10:30:00Z')
+JSON.stringify(date)  // '"2024-01-15T10:30:00.000Z"'
+JSON.stringify({ created: date })  // '{"created":"2024-01-15T10:30:00.000Z"}'
+```
+
+### toJSON with Classes
+
+```javascript
+class User {
+  constructor(name, email, password) {
+    this.name = name
+    this.email = email
+    this.password = password
+    this.createdAt = new Date()
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      email: this.email,
+      // Exclude password
+      // Convert Date to ISO string explicitly
+      createdAt: this.createdAt.toISOString()
+    }
+  }
+}
+
+const user = new User('Alice', 'alice@example.com', 'secret')
+JSON.stringify(user)
+// '{"name":"Alice","email":"alice@example.com","createdAt":"2024-01-15T..."}'
+```
+
+### toJSON Receives the Key
+
+The `toJSON()` method receives the property key as an argument:
+
+```javascript
+const obj = {
+  toJSON(key) {
+    return key ? `Nested under "${key}"` : 'Root level'
+  }
+}
+
+JSON.stringify(obj)           // '"Root level"'
+JSON.stringify({ data: obj }) // '{"data":"Nested under \\"data\\""}'
+JSON.stringify([obj])         // '["Nested under \\"0\\""]'
+```
+
+---
+
+## Handling Circular References
+
+Circular references occur when an object references itself, directly or indirectly:
+
+```javascript
+const obj = { name: 'Alice' }
+obj.self = obj  // Circular reference!
+
+JSON.stringify(obj)  // TypeError: Converting circular structure to JSON
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        CIRCULAR REFERENCE                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    const obj = { name: 'Alice' }                                         │
+│    obj.self = obj                                                        │
+│                                                                          │
+│    ┌──────────────────┐                                                  │
+│    │ obj              │                                                  │
+│    │                  │                                                  │
+│    │  name: 'Alice'   │                                                  │
+│    │  self: ─────────────┐                                               │
+│    │                  │  │                                               │
+│    └──────────────────┘  │                                               │
+│           ▲              │                                               │
+│           └──────────────┘  (points back to itself)                      │
+│                                                                          │
+│    JSON can't represent this - it would be infinitely long!              │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Detecting Circular References
+
+Use a replacer function with a WeakSet to track seen objects:
+
+```javascript
+function safeStringify(obj) {
+  const seen = new WeakSet()
+  
+  return JSON.stringify(obj, (key, value) => {
+    // Only check objects (not primitives)
+    if (typeof value === 'object' && value !== null) {
+      if (seen.has(value)) {
+        return '[Circular Reference]'  // Or return undefined to omit
+      }
+      seen.add(value)
+    }
+    return value
+  })
+}
+
+const obj = { name: 'Alice' }
+obj.self = obj
+
+console.log(safeStringify(obj))
+// '{"name":"Alice","self":"[Circular Reference]"}'
+```
+
+### Real-World Example: DOM Nodes
+
+DOM elements often have circular references through parent/child relationships:
+
+```javascript
+// In a browser environment:
+// const div = document.createElement('div')
+// JSON.stringify(div)  // TypeError: circular structure
+
+// Solution: Extract only the data you need
+function serializeDOMNode(node) {
+  return JSON.stringify({
+    tagName: node.tagName,
+    id: node.id,
+    className: node.className,
+    childCount: node.children.length
+  })
+}
+```
+
+---
+
+## Serializing Special Types
+
+### Dates
+
+```javascript
+// Dates serialize as ISO strings automatically
+const event = { name: 'Meeting', date: new Date('2024-06-15') }
+const json = JSON.stringify(event)
+// '{"name":"Meeting","date":"2024-06-15T00:00:00.000Z"}'
+
+// Revive them back to Date objects
+const parsed = JSON.parse(json, (key, value) => {
+  if (key === 'date') return new Date(value)
+  return value
+})
+```
+
+### Maps and Sets
+
+Maps and Sets serialize as empty objects by default:
+
+```javascript
+const map = new Map([['a', 1], ['b', 2]])
+JSON.stringify(map)  // '{}'  - Not what we want!
+
+const set = new Set([1, 2, 3])
+JSON.stringify(set)  // '{}'  - Also empty!
+```
+
+**Solution:** Convert to arrays:
+
+```javascript
+// Custom replacer for Map and Set
+function replacer(key, value) {
+  if (value instanceof Map) {
+    return {
+      __type: 'Map',
+      entries: Array.from(value.entries())
+    }
+  }
+  if (value instanceof Set) {
+    return {
+      __type: 'Set',
+      values: Array.from(value)
+    }
+  }
+  return value
+}
+
+// Custom reviver
+function reviver(key, value) {
+  if (value && value.__type === 'Map') {
+    return new Map(value.entries)
+  }
+  if (value && value.__type === 'Set') {
+    return new Set(value.values)
+  }
+  return value
+}
+
+// Usage
+const data = {
+  users: new Map([['alice', { age: 30 }], ['bob', { age: 25 }]]),
+  tags: new Set(['javascript', 'tutorial'])
+}
+
+const json = JSON.stringify(data, replacer, 2)
+console.log(json)
+/*
+{
+  "users": {
+    "__type": "Map",
+    "entries": [["alice", {"age": 30}], ["bob", {"age": 25}]]
+  },
+  "tags": {
+    "__type": "Set",
+    "values": ["javascript", "tutorial"]
+  }
+}
+*/
+
+const restored = JSON.parse(json, reviver)
+console.log(restored.users instanceof Map)  // true
+console.log(restored.tags instanceof Set)   // true
+```
+
+### BigInt
+
+BigInt values throw an error by default:
+
+```javascript
+const data = { bigNumber: 12345678901234567890n }
+JSON.stringify(data)  // TypeError: Do not know how to serialize a BigInt
+```
+
+**Solution:** Use `toJSON()` on BigInt prototype (with caution) or a replacer:
+
+```javascript
+// Option 1: Replacer function
+function bigIntReplacer(key, value) {
+  if (typeof value === 'bigint') {
+    return { __type: 'BigInt', value: value.toString() }
+  }
+  return value
+}
+
+function bigIntReviver(key, value) {
+  if (value && value.__type === 'BigInt') {
+    return BigInt(value.value)
+  }
+  return value
+}
+
+const data = { id: 9007199254740993n }  // Too big for Number
+const json = JSON.stringify(data, bigIntReplacer)
+// '{"id":{"__type":"BigInt","value":"9007199254740993"}}'
+
+const restored = JSON.parse(json, bigIntReviver)
+console.log(restored.id)  // 9007199254740993n
+```
+
+---
+
+## Common Patterns and Use Cases
+
+### Deep Clone (Simple Objects)
+
+```javascript
+// Quick deep clone (only for JSON-safe objects)
+const original = { a: 1, b: { c: 2 } }
+const clone = JSON.parse(JSON.stringify(original))
+
+clone.b.c = 999
+console.log(original.b.c)  // 2 (unchanged)
+```
+
+<Warning>
+**Deep Clone Limitations:** This method loses functions, undefined values, Symbols, and prototype chains. For complex objects, use `structuredClone()` instead.
+</Warning>
+
+### Local Storage Wrapper
+
+```javascript
+const storage = {
+  set(key, value) {
+    localStorage.setItem(key, JSON.stringify(value))
+  },
+  
+  get(key, defaultValue = null) {
+    const item = localStorage.getItem(key)
+    if (item === null) return defaultValue
+    
+    try {
+      return JSON.parse(item)
+    } catch {
+      return defaultValue
+    }
+  },
+  
+  remove(key) {
+    localStorage.removeItem(key)
+  }
+}
+
+// Usage
+storage.set('user', { name: 'Alice', preferences: { theme: 'dark' } })
+const user = storage.get('user')
+```
+
+### API Response Transformation
+
+```javascript
+// Transform API response during parsing
+async function fetchUser(id) {
+  const response = await fetch(`/api/users/${id}`)
+  const text = await response.text()
+  
+  return JSON.parse(text, (key, value) => {
+    // Convert date strings to Date objects
+    if (key.endsWith('At') && typeof value === 'string') {
+      return new Date(value)
+    }
+    // Convert cent amounts to dollars
+    if (key.endsWith('Cents') && typeof value === 'number') {
+      return value / 100
+    }
+    return value
+  })
+}
+```
+
+### Logging with Redaction
+
+```javascript
+function safeLog(obj, sensitiveKeys = ['password', 'token', 'secret']) {
+  const redacted = JSON.stringify(obj, (key, value) => {
+    if (sensitiveKeys.includes(key.toLowerCase())) {
+      return '[REDACTED]'
+    }
+    return value
+  }, 2)
+  
+  console.log(redacted)
+}
+
+safeLog({
+  user: 'alice',
+  password: 'secret123',
+  data: { apiToken: 'abc123' }
+})
+/*
+{
+  "user": "alice",
+  "password": "[REDACTED]",
+  "data": {
+    "apiToken": "[REDACTED]"
+  }
+}
+*/
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **JSON.stringify() has 3 parameters:** value, replacer, and space. Most developers only use the first.
+
+2. **Replacer can be a function or array.** Functions transform each value; arrays whitelist properties.
+
+3. **Not everything survives stringify.** Functions, undefined, and Symbols are lost. NaN and Infinity become null.
+
+4. **JSON.parse() revivers work inside-out.** Innermost values are processed first, root object last.
+
+5. **Dates become strings.** Use a reviver to convert them back to Date objects.
+
+6. **Maps and Sets become empty objects.** You need custom replacer/reviver pairs to preserve them.
+
+7. **BigInt throws by default.** Use a replacer to convert to strings or marked objects.
+
+8. **Circular references throw errors.** Track seen objects with a WeakSet in your replacer.
+
+9. **toJSON() controls serialization.** Objects with this method return its result instead of themselves.
+
+10. **For deep cloning, consider structuredClone().** JSON round-tripping loses too much for complex objects.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What happens when you stringify an object with a function property?">
+    **Answer:**
+    
+    Function properties are silently omitted from the JSON output:
+    
+    ```javascript
+    const obj = {
+      name: 'Alice',
+      greet: function() { return 'Hi!' }
+    }
+    
+    JSON.stringify(obj)  // '{"name":"Alice"}'
+    // The 'greet' property is completely missing
+    ```
+    
+    The same applies to `undefined` values and Symbol keys. In arrays, these values become `null` instead of being omitted.
+  </Accordion>
+  
+  <Accordion title="How do you exclude specific properties during serialization?">
+    **Answer:**
+    
+    You have two options:
+    
+    **Option 1: Array replacer (simple whitelist)**
+    ```javascript
+    const user = { id: 1, name: 'Alice', password: 'secret' }
+    JSON.stringify(user, ['id', 'name'])  // '{"id":1,"name":"Alice"}'
+    ```
+    
+    **Option 2: Function replacer (more flexible)**
+    ```javascript
+    JSON.stringify(user, (key, value) => {
+      if (key === 'password') return undefined  // Exclude
+      return value
+    })
+    ```
+    
+    The function approach is more powerful because it can handle nested objects and conditional logic.
+  </Accordion>
+  
+  <Accordion title="Why does JSON.parse() of a date string not return a Date object?">
+    **Answer:**
+    
+    JSON has no native Date type. When you `stringify` a Date, it becomes an ISO 8601 string. When you `parse` that string, JavaScript has no way to know it was originally a Date:
+    
+    ```javascript
+    const original = { created: new Date() }
+    const json = JSON.stringify(original)
+    // '{"created":"2024-01-15T10:30:00.000Z"}'
+    
+    const parsed = JSON.parse(json)
+    console.log(typeof parsed.created)  // "string" (not Date!)
+    ```
+    
+    Use a reviver function to convert date strings back to Date objects:
+    
+    ```javascript
+    JSON.parse(json, (key, value) => {
+      if (key === 'created') return new Date(value)
+      return value
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="What's the difference between replacer and toJSON()?">
+    **Answer:**
+    
+    - **`toJSON()`** is defined on the object being serialized. It controls how that specific object is converted.
+    - **Replacer** is passed to `stringify()` and runs on every value in the entire object tree.
+    
+    ```javascript
+    // toJSON: Object controls its own serialization
+    const user = {
+      name: 'Alice',
+      password: 'secret',
+      toJSON() {
+        return { name: this.name }  // Hides password
+      }
+    }
+    
+    // Replacer: External control over all values
+    JSON.stringify(data, (key, value) => {
+      if (key === 'password') return undefined
+      return value
+    })
+    ```
+    
+    When both are present, `toJSON()` runs first, then the replacer processes its result.
+  </Accordion>
+  
+  <Accordion title="How do you handle circular references?">
+    **Answer:**
+    
+    Use a WeakSet to track objects you've already seen:
+    
+    ```javascript
+    function safeStringify(obj) {
+      const seen = new WeakSet()
+      
+      return JSON.stringify(obj, (key, value) => {
+        if (typeof value === 'object' && value !== null) {
+          if (seen.has(value)) {
+            return '[Circular]'
+          }
+          seen.add(value)
+        }
+        return value
+      })
+    }
+    
+    const obj = { name: 'test' }
+    obj.self = obj
+    
+    safeStringify(obj)  // '{"name":"test","self":"[Circular]"}'
+    ```
+    
+    WeakSet is ideal here because it doesn't prevent garbage collection and only stores objects.
+  </Accordion>
+  
+  <Accordion title="How do you pretty-print JSON with custom indentation?">
+    **Answer:**
+    
+    Use the third parameter (`space`) of `JSON.stringify()`:
+    
+    ```javascript
+    const data = { name: 'Alice', age: 30 }
+    
+    // 2-space indentation
+    JSON.stringify(data, null, 2)
+    
+    // 4-space indentation
+    JSON.stringify(data, null, 4)
+    
+    // Tab indentation
+    JSON.stringify(data, null, '\t')
+    
+    // Custom string (max 10 characters)
+    JSON.stringify(data, null, '>> ')
+    ```
+    
+    Numbers are clamped to 10, and strings are truncated to 10 characters.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Object Methods" icon="cube" href="/beyond/concepts/object-methods">
+    Built-in methods for working with objects, which JSON serialization relies on.
+  </Card>
+  <Card title="localStorage & sessionStorage" icon="database" href="/beyond/concepts/localstorage-sessionstorage">
+    Web Storage APIs that commonly use JSON for storing complex data.
+  </Card>
+  <Card title="Fetch API" icon="globe" href="/concepts/http-fetch">
+    Making HTTP requests where JSON is the standard data format.
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation" href="/concepts/error-handling">
+    Properly handling JSON.parse errors for invalid input.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="JSON — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON">
+    Complete reference for the JSON global object and its methods.
+  </Card>
+  <Card title="JSON.stringify() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+    Detailed documentation for the stringify method with all parameters.
+  </Card>
+  <Card title="JSON.parse() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse">
+    Documentation for parsing JSON strings with reviver functions.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="JSON methods, toJSON — javascript.info" icon="newspaper" href="https://javascript.info/json">
+    Comprehensive tutorial covering JSON.stringify, JSON.parse, toJSON, and practical examples. Great for learning the fundamentals with interactive exercises.
+  </Card>
+  <Card title="How to Use JSON.stringify() and JSON.parse() — freeCodeCamp" icon="newspaper" href="https://www.freecodecamp.org/news/json-stringify-example-how-to-parse-a-json-object-with-javascript/">
+    Detailed tutorial covering all aspects of JSON serialization including replacers, revivers, and practical examples for web developers.
+  </Card>
+  <Card title="Circular References in JavaScript — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Errors/Cyclic_object_value">
+    Official documentation explaining circular reference errors and strategies to handle them in JSON serialization.
+  </Card>
+  <Card title="Working with JSON — MDN Guide" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/JSON">
+    MDN's beginner-friendly guide to JSON, including fetching JSON data and working with APIs.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JSON Parse & Stringify — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=l3sCILAHmSw">
+    Clear explanation of JSON basics plus advanced topics like replacers and revivers. Kyle's teaching style makes complex concepts accessible.
+  </Card>
+  <Card title="JavaScript JSON Methods — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=wI1CWzNtE-M">
+    Practical walkthrough of JSON methods with real coding examples. Great for seeing how JSON is used in actual web development.
+  </Card>
+  <Card title="JSON in 100 Seconds — Fireship" icon="video" href="https://www.youtube.com/watch?v=iiADhChRriM">
+    Lightning-fast overview of JSON format and JavaScript methods. Perfect refresher if you already know the basics.
+  </Card>
+</CardGroup>
