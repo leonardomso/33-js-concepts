@@ -1,0 +1,783 @@
+---
+title: "Proxy and Reflect: Intercepting Object Operations in JavaScript"
+sidebarTitle: "Proxy & Reflect: Intercepting Object Operations"
+description: "Learn JavaScript Proxy and Reflect APIs. Understand how to intercept object operations, create reactive systems, implement validation, and build powerful metaprogramming patterns."
+---
+
+What if you could intercept every property access on an object? What if reading `user.name` could trigger a function, or setting `user.age = -5` could throw an error automatically?
+
+```javascript
+const user = { name: 'Alice', age: 30 }
+
+const proxy = new Proxy(user, {
+  get(target, prop) {
+    console.log(`Reading ${prop}`)
+    return target[prop]
+  },
+  set(target, prop, value) {
+    if (prop === 'age' && value < 0) {
+      throw new Error('Age cannot be negative')
+    }
+    target[prop] = value
+    return true
+  }
+})
+
+proxy.name       // Logs: "Reading name", returns "Alice"
+proxy.age = -5   // Error: Age cannot be negative
+```
+
+This is the power of **[Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)** and **[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)**. Proxies let you intercept and customize fundamental operations on objects, while Reflect provides the default behavior you can forward to. Together, they enable validation, logging, reactive data binding, and other metaprogramming patterns.
+
+<Info>
+**What you'll learn in this guide:**
+- What Proxy is and how it wraps objects to intercept operations
+- The 13 handler traps (get, set, has, deleteProperty, apply, construct, and more)
+- Why Reflect exists and how it complements Proxy
+- Practical patterns: validation, logging, reactive systems, access control
+- Revocable proxies for temporary access
+- Limitations and gotchas to avoid
+</Info>
+
+<Warning>
+**Prerequisites:** This guide builds on [Property Descriptors](/beyond/concepts/property-descriptors) and [Object Methods](/beyond/concepts/object-methods). Understanding how objects work at a lower level helps you see why Proxy is so powerful.
+</Warning>
+
+---
+
+## What is a Proxy?
+
+A **Proxy** is a wrapper around an object (called the "target") that intercepts operations like reading properties, writing properties, deleting properties, and more. You define custom behavior by providing a "handler" object with "trap" methods.
+
+Think of a Proxy as a security guard standing between you and an object. Every time you try to do something with the object, the guard can inspect, modify, or block the operation.
+
+```javascript
+const target = { message: 'hello' }
+
+const handler = {
+  get(target, prop) {
+    return prop in target ? target[prop] : 'Property not found'
+  }
+}
+
+const proxy = new Proxy(target, handler)
+
+console.log(proxy.message)  // "hello"
+console.log(proxy.missing)  // "Property not found"
+```
+
+Without a handler, a Proxy acts as a transparent pass-through:
+
+```javascript
+const target = { x: 10 }
+const proxy = new Proxy(target, {})  // Empty handler
+
+proxy.y = 20
+console.log(target.y)  // 20 - operation forwarded to target
+```
+
+---
+
+## The Security Guard Analogy
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       PROXY: THE SECURITY GUARD                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    YOUR CODE                    PROXY                     TARGET OBJECT  │
+│    ─────────                    ─────                     ─────────────  │
+│                                                                          │
+│    ┌────────┐               ┌──────────┐                 ┌──────────┐   │
+│    │        │   obj.name    │  GUARD   │   target.name   │  { name: │   │
+│    │  You   │  ──────────►  │          │  ─────────────► │   'Bob'  │   │
+│    │        │               │  • Check │                 │  }       │   │
+│    │        │  ◄──────────  │  • Log   │  ◄───────────── │          │   │
+│    │        │    "Bob"      │  • Modify│      "Bob"      │          │   │
+│    └────────┘               └──────────┘                 └──────────┘   │
+│                                                                          │
+│    The guard can:                                                        │
+│    • Let the operation through unchanged                                 │
+│    • Modify the result before returning it                              │
+│    • Block the operation entirely (throw an error)                      │
+│    • Log the operation for debugging                                    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## The 13 Proxy Traps
+
+A Proxy can intercept 13 different operations. Each trap corresponds to an internal JavaScript operation:
+
+| Trap | Intercepts | Example Operation |
+|------|-----------|-------------------|
+| `get` | Reading a property | `obj.prop`, `obj['prop']` |
+| `set` | Writing a property | `obj.prop = value` |
+| `has` | The `in` operator | `'prop' in obj` |
+| `deleteProperty` | The `delete` operator | `delete obj.prop` |
+| `apply` | Function calls | `func()`, `func.call()` |
+| `construct` | The `new` operator | `new Constructor()` |
+| `getPrototypeOf` | Getting prototype | `Object.getPrototypeOf(obj)` |
+| `setPrototypeOf` | Setting prototype | `Object.setPrototypeOf(obj, proto)` |
+| `isExtensible` | Checking extensibility | `Object.isExtensible(obj)` |
+| `preventExtensions` | Preventing extensions | `Object.preventExtensions(obj)` |
+| `getOwnPropertyDescriptor` | Getting descriptor | `Object.getOwnPropertyDescriptor(obj, prop)` |
+| `defineProperty` | Defining property | `Object.defineProperty(obj, prop, desc)` |
+| `ownKeys` | Listing own keys | `Object.keys(obj)`, `for...in` |
+
+Let's explore the most commonly used traps in detail.
+
+---
+
+## The `get` Trap: Intercepting Property Access
+
+The `get` trap fires whenever you read a property:
+
+```javascript
+const handler = {
+  get(target, prop, receiver) {
+    console.log(`Accessing: ${prop}`)
+    return target[prop]
+  }
+}
+
+const user = new Proxy({ name: 'Alice' }, handler)
+console.log(user.name)  // Logs: "Accessing: name", returns "Alice"
+```
+
+**Parameters:**
+- `target` - The original object
+- `prop` - The property name (string or Symbol)
+- `receiver` - The proxy itself (or an object inheriting from it)
+
+### Default Values Pattern
+
+Return a default value for missing properties:
+
+```javascript
+const defaults = new Proxy({}, {
+  get(target, prop) {
+    return prop in target ? target[prop] : 0
+  }
+})
+
+defaults.x = 10
+console.log(defaults.x)       // 10
+console.log(defaults.missing) // 0 (not undefined!)
+```
+
+### Negative Array Indices
+
+Access array elements from the end with negative indices:
+
+```javascript
+function createNegativeArray(arr) {
+  return new Proxy(arr, {
+    get(target, prop, receiver) {
+      const index = Number(prop)
+      if (index < 0) {
+        return target[target.length + index]
+      }
+      return Reflect.get(target, prop, receiver)
+    }
+  })
+}
+
+const arr = createNegativeArray([1, 2, 3, 4, 5])
+console.log(arr[-1])  // 5 (last element)
+console.log(arr[-2])  // 4 (second to last)
+```
+
+---
+
+## The `set` Trap: Intercepting Property Assignment
+
+The `set` trap fires when you assign a value to a property:
+
+```javascript
+const handler = {
+  set(target, prop, value, receiver) {
+    console.log(`Setting ${prop} to ${value}`)
+    target[prop] = value
+    return true  // Must return true for success
+  }
+}
+
+const obj = new Proxy({}, handler)
+obj.x = 10  // Logs: "Setting x to 10"
+```
+
+<Warning>
+The `set` trap **must return `true`** for successful writes. Returning `false` (or nothing) causes a `TypeError` in strict mode.
+</Warning>
+
+### Validation Pattern
+
+Validate data before allowing assignment:
+
+```javascript
+const validator = {
+  set(target, prop, value) {
+    if (prop === 'age') {
+      if (typeof value !== 'number') {
+        throw new TypeError('Age must be a number')
+      }
+      if (value < 0 || value > 150) {
+        throw new RangeError('Age must be between 0 and 150')
+      }
+    }
+    target[prop] = value
+    return true
+  }
+}
+
+const person = new Proxy({}, validator)
+
+person.name = 'Alice'  // Works fine
+person.age = 30        // Works fine
+person.age = -5        // RangeError: Age must be between 0 and 150
+person.age = 'thirty'  // TypeError: Age must be a number
+```
+
+---
+
+## The `has` Trap: Intercepting `in` Operator
+
+The `has` trap intercepts the `in` operator:
+
+```javascript
+const range = new Proxy({ start: 1, end: 10 }, {
+  has(target, prop) {
+    const num = Number(prop)
+    return num >= target.start && num <= target.end
+  }
+})
+
+console.log(5 in range)   // true
+console.log(15 in range)  // false
+console.log(1 in range)   // true
+```
+
+---
+
+## The `deleteProperty` Trap
+
+Intercept property deletion:
+
+```javascript
+const protected = new Proxy({ id: 1, name: 'Alice' }, {
+  deleteProperty(target, prop) {
+    if (prop === 'id') {
+      throw new Error('Cannot delete id property')
+    }
+    delete target[prop]
+    return true
+  }
+})
+
+delete protected.name  // Works
+delete protected.id    // Error: Cannot delete id property
+```
+
+---
+
+## The `apply` and `construct` Traps
+
+For function proxies, you can intercept calls and `new` invocations:
+
+```javascript
+function sum(a, b) {
+  return a + b
+}
+
+const loggedSum = new Proxy(sum, {
+  apply(target, thisArg, args) {
+    console.log(`Called with: ${args}`)
+    return target.apply(thisArg, args)
+  }
+})
+
+loggedSum(1, 2)  // Logs: "Called with: 1,2", returns 3
+```
+
+The `construct` trap intercepts `new`:
+
+```javascript
+class User {
+  constructor(name) {
+    this.name = name
+  }
+}
+
+const TrackedUser = new Proxy(User, {
+  construct(target, args) {
+    console.log(`Creating user: ${args[0]}`)
+    return new target(...args)
+  }
+})
+
+const user = new TrackedUser('Alice')  // Logs: "Creating user: Alice"
+```
+
+---
+
+## The `ownKeys` Trap: Filtering Properties
+
+The `ownKeys` trap intercepts operations that list object keys:
+
+```javascript
+const user = {
+  name: 'Alice',
+  age: 30,
+  _password: 'secret123'
+}
+
+const safeUser = new Proxy(user, {
+  ownKeys(target) {
+    return Object.keys(target).filter(key => !key.startsWith('_'))
+  }
+})
+
+console.log(Object.keys(safeUser))  // ["name", "age"] - _password hidden
+```
+
+---
+
+## Why Reflect Exists
+
+**[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)** is a built-in object with methods that mirror every Proxy trap. It provides the default behavior you'd otherwise have to implement manually.
+
+| Operation | Without Reflect | With Reflect |
+|-----------|-----------------|--------------|
+| Read property | `target[prop]` | `Reflect.get(target, prop, receiver)` |
+| Write property | `target[prop] = value` | `Reflect.set(target, prop, value, receiver)` |
+| Delete property | `delete target[prop]` | `Reflect.deleteProperty(target, prop)` |
+| Check property | `prop in target` | `Reflect.has(target, prop)` |
+
+### Why Use Reflect?
+
+1. **Proper return values**: `Reflect.set` returns `true`/`false` instead of the assigned value
+2. **Forwards the receiver**: Essential for getters/setters in inheritance
+3. **Cleaner syntax**: Consistent function-based API
+
+```javascript
+const handler = {
+  get(target, prop, receiver) {
+    console.log(`Reading ${prop}`)
+    return Reflect.get(target, prop, receiver)  // Proper forwarding
+  },
+  set(target, prop, value, receiver) {
+    console.log(`Writing ${prop}`)
+    return Reflect.set(target, prop, value, receiver)  // Returns boolean
+  }
+}
+```
+
+### The Receiver Matters
+
+The `receiver` parameter is crucial when the target has getters:
+
+```javascript
+const user = {
+  _name: 'Alice',
+  get name() {
+    return this._name
+  }
+}
+
+const proxy = new Proxy(user, {
+  get(target, prop, receiver) {
+    // ❌ WRONG - 'this' will be target, not proxy
+    // return target[prop]
+    
+    // ✓ CORRECT - 'this' will be receiver (the proxy)
+    return Reflect.get(target, prop, receiver)
+  }
+})
+```
+
+---
+
+## Practical Patterns
+
+### Observable Objects (Reactive Data)
+
+Create objects that notify you when they change. This is how frameworks like Vue.js implement reactivity:
+
+```javascript
+function observable(target, onChange) {
+  return new Proxy(target, {
+    set(target, prop, value, receiver) {
+      const oldValue = target[prop]
+      const result = Reflect.set(target, prop, value, receiver)
+      if (result && oldValue !== value) {
+        onChange(prop, oldValue, value)
+      }
+      return result
+    }
+  })
+}
+
+const state = observable({ count: 0 }, (prop, oldVal, newVal) => {
+  console.log(`${prop} changed from ${oldVal} to ${newVal}`)
+})
+
+state.count = 1  // Logs: "count changed from 0 to 1"
+state.count = 2  // Logs: "count changed from 1 to 2"
+```
+
+### Access Control
+
+Hide private properties (those starting with `_`):
+
+```javascript
+const privateHandler = {
+  get(target, prop) {
+    if (prop.startsWith('_')) {
+      throw new Error(`Access denied: ${prop} is private`)
+    }
+    return Reflect.get(...arguments)
+  },
+  set(target, prop, value) {
+    if (prop.startsWith('_')) {
+      throw new Error(`Access denied: ${prop} is private`)
+    }
+    return Reflect.set(...arguments)
+  },
+  ownKeys(target) {
+    return Object.keys(target).filter(key => !key.startsWith('_'))
+  }
+}
+
+const user = new Proxy({ name: 'Alice', _password: 'secret' }, privateHandler)
+
+console.log(user.name)           // "Alice"
+console.log(Object.keys(user))   // ["name"] - _password hidden
+console.log(user._password)      // Error: Access denied
+```
+
+### Logging/Debugging
+
+Log all operations on an object:
+
+```javascript
+function createLogged(target, name = 'Object') {
+  return new Proxy(target, {
+    get(target, prop, receiver) {
+      console.log(`[${name}] GET ${String(prop)}`)
+      return Reflect.get(target, prop, receiver)
+    },
+    set(target, prop, value, receiver) {
+      console.log(`[${name}] SET ${String(prop)} = ${value}`)
+      return Reflect.set(target, prop, value, receiver)
+    }
+  })
+}
+
+const user = createLogged({ name: 'Alice' }, 'User')
+user.name        // [User] GET name
+user.age = 30    // [User] SET age = 30
+```
+
+---
+
+## Revocable Proxies
+
+Sometimes you need to grant temporary access to an object. `Proxy.revocable()` creates a proxy that can be disabled:
+
+```javascript
+const target = { secret: 'classified info' }
+const { proxy, revoke } = Proxy.revocable(target, {})
+
+console.log(proxy.secret)  // "classified info"
+
+revoke()  // Disable the proxy
+
+console.log(proxy.secret)  // TypeError: Cannot perform 'get' on a proxy that has been revoked
+```
+
+This is useful for:
+- Temporary access tokens
+- Sandbox environments
+- Revoking permissions after a timeout
+
+---
+
+## Limitations and Gotchas
+
+### Built-in Objects with Internal Slots
+
+Some built-in objects like `Map`, `Set`, `Date`, and `Promise` use internal slots that Proxy can't intercept:
+
+```javascript
+const map = new Map()
+const proxy = new Proxy(map, {})
+
+proxy.set('key', 'value')  // TypeError: Method Map.prototype.set called on incompatible receiver
+```
+
+**Workaround:** Bind methods to the target:
+
+```javascript
+const map = new Map()
+const proxy = new Proxy(map, {
+  get(target, prop, receiver) {
+    const value = Reflect.get(target, prop, receiver)
+    return typeof value === 'function' ? value.bind(target) : value
+  }
+})
+
+proxy.set('key', 'value')  // Works!
+console.log(proxy.get('key'))  // "value"
+```
+
+### Private Class Fields
+
+Private fields (`#field`) also use internal slots and don't work through proxies:
+
+```javascript
+class Secret {
+  #hidden = 'secret'
+  reveal() {
+    return this.#hidden
+  }
+}
+
+const secret = new Secret()
+const proxy = new Proxy(secret, {})
+
+proxy.reveal()  // TypeError: Cannot read private member
+```
+
+### Proxy Identity
+
+A proxy is a different object from its target:
+
+```javascript
+const target = {}
+const proxy = new Proxy(target, {})
+
+console.log(proxy === target)  // false
+
+const set = new Set([target])
+console.log(set.has(proxy))    // false - they're different objects
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Proxy wraps objects** to intercept operations like property access, assignment, deletion, and function calls.
+
+2. **Handlers define traps** that are methods named after the operations they intercept (get, set, has, deleteProperty, etc.).
+
+3. **There are 13 traps** covering all fundamental object operations, from property access to prototype manipulation.
+
+4. **The `set` trap must return `true`** for successful writes, or you'll get a TypeError in strict mode.
+
+5. **Reflect provides default behavior** with the same method names as Proxy traps, making forwarding clean and correct.
+
+6. **Use `Reflect.get/set` with `receiver`** to properly handle getters/setters in inheritance chains.
+
+7. **Revocable proxies** can be disabled with `revoke()`, useful for temporary access patterns.
+
+8. **Built-in objects with internal slots** (Map, Set, Date) need the method-binding workaround.
+
+9. **Private class fields don't work** through proxies due to internal slot access.
+
+10. **Proxies enable powerful patterns** like validation, observable data, access control, and debugging.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What happens if a set trap returns false?">
+    **Answer:**
+    
+    In strict mode, returning `false` from a `set` trap causes a `TypeError`. In non-strict mode, the assignment silently fails.
+    
+    ```javascript
+    'use strict'
+    
+    const proxy = new Proxy({}, {
+      set() {
+        return false  // Or return nothing (undefined)
+      }
+    })
+    
+    proxy.x = 10  // TypeError: 'set' on proxy returned false
+    ```
+    
+    Always return `true` from `set` traps when the operation should succeed.
+  </Accordion>
+  
+  <Accordion title="Why use Reflect.get instead of target[prop]?">
+    **Answer:**
+    
+    `Reflect.get(target, prop, receiver)` properly forwards the `receiver`, which is essential when the target has getters that use `this`:
+    
+    ```javascript
+    const user = {
+      firstName: 'Alice',
+      lastName: 'Smith',
+      get fullName() {
+        return `${this.firstName} ${this.lastName}`
+      }
+    }
+    
+    const proxy = new Proxy(user, {
+      get(target, prop, receiver) {
+        // With target[prop], 'this' in the getter would be 'target'
+        // With Reflect.get, 'this' in the getter is 'receiver' (the proxy)
+        return Reflect.get(target, prop, receiver)
+      }
+    })
+    ```
+    
+    This matters when you proxy an object that inherits from another proxy.
+  </Accordion>
+  
+  <Accordion title="How can you make a proxy work with Map or Set?">
+    **Answer:**
+    
+    Built-in objects like Map and Set use internal slots that proxies can't access. The workaround is to bind methods to the original target:
+    
+    ```javascript
+    const map = new Map()
+    
+    const proxy = new Proxy(map, {
+      get(target, prop, receiver) {
+        const value = Reflect.get(target, prop, receiver)
+        // If it's a function, bind it to the target
+        return typeof value === 'function' ? value.bind(target) : value
+      }
+    })
+    
+    proxy.set('key', 'value')  // Works now!
+    ```
+  </Accordion>
+  
+  <Accordion title="What's the difference between Proxy and Object.defineProperty for validation?">
+    **Answer:**
+    
+    `Object.defineProperty` only validates a single, predefined property. Proxy intercepts all operations dynamically:
+    
+    ```javascript
+    // defineProperty: Must define each property in advance
+    const user = {}
+    Object.defineProperty(user, 'age', {
+      set(value) {
+        if (value < 0) throw new Error('Invalid age')
+        this._age = value
+      }
+    })
+    
+    // Proxy: Works for any property, including new ones
+    const user2 = new Proxy({}, {
+      set(target, prop, value) {
+        if (prop === 'age' && value < 0) {
+          throw new Error('Invalid age')
+        }
+        return Reflect.set(...arguments)
+      }
+    })
+    ```
+    
+    Proxy is more flexible for dynamic validation rules.
+  </Accordion>
+  
+  <Accordion title="How do you create a proxy that can be disabled later?">
+    **Answer:**
+    
+    Use `Proxy.revocable()` instead of `new Proxy()`:
+    
+    ```javascript
+    const { proxy, revoke } = Proxy.revocable({ data: 'sensitive' }, {})
+    
+    console.log(proxy.data)  // "sensitive"
+    
+    revoke()  // Disable the proxy permanently
+    
+    console.log(proxy.data)  // TypeError: proxy has been revoked
+    ```
+    
+    Once revoked, the proxy cannot be re-enabled. All operations on it throw TypeError.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Property Descriptors" icon="sliders" href="/beyond/concepts/property-descriptors">
+    Lower-level property control with writable, enumerable, and configurable flags.
+  </Card>
+  <Card title="Getters & Setters" icon="arrows-rotate" href="/beyond/concepts/getters-setters">
+    Computed properties and validation on individual object properties.
+  </Card>
+  <Card title="Object Methods" icon="cube" href="/beyond/concepts/object-methods">
+    Built-in methods for object inspection and manipulation.
+  </Card>
+  <Card title="Design Patterns" icon="sitemap" href="/concepts/design-patterns">
+    The Proxy pattern in the context of software design patterns.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Proxy — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy">
+    Complete reference for the Proxy object, including all 13 traps and their parameters.
+  </Card>
+  <Card title="Reflect — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect">
+    The Reflect namespace object and all its static methods.
+  </Card>
+  <Card title="Proxy Handler — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/Proxy">
+    Detailed documentation of all handler trap methods.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Proxy and Reflect — javascript.info" icon="newspaper" href="https://javascript.info/proxy">
+    The most comprehensive tutorial on Proxy and Reflect with exercises. Covers all traps with practical examples and common pitfalls.
+  </Card>
+  <Card title="ES6 Proxies in Depth — Ponyfoo" icon="newspaper" href="https://ponyfoo.com/articles/es6-proxies-in-depth">
+    Deep technical dive into Proxy internals and advanced patterns. Great for understanding the metaprogramming capabilities.
+  </Card>
+  <Card title="Understanding JavaScript Proxy — LogRocket" icon="newspaper" href="https://blog.logrocket.com/practical-use-cases-for-javascript-es6-proxies/">
+    Practical use cases including data validation, logging, and caching. Shows real-world applications in production code.
+  </Card>
+  <Card title="Metaprogramming with Proxies — 2ality" icon="newspaper" href="https://2ality.com/2014/12/es6-proxies.html">
+    Dr. Axel Rauschmayer's exploration of Proxy as a metaprogramming tool. Includes the theory behind invariants and traps.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Proxy in 100 Seconds — Fireship" icon="video" href="https://www.youtube.com/watch?v=KJ3uYyUp-yo">
+    Quick, entertaining overview of Proxy fundamentals. Perfect if you want to grasp the concept in minutes.
+  </Card>
+  <Card title="JavaScript Proxy Explained — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=3WYW3NLLnZ8">
+    Clear, beginner-friendly walkthrough of Proxy basics with practical examples. Great starting point for hands-on learning.
+  </Card>
+  <Card title="Proxies are Awesome — Brendan Eich" icon="video" href="https://www.youtube.com/watch?v=sClk6aB_CPk">
+    JSConf talk by JavaScript's creator on why Proxies were added to the language. Provides historical context and design rationale.
+  </Card>
+</CardGroup>
