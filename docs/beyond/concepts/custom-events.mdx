@@ -1,0 +1,909 @@
+---
+title: "Custom Events: Create Your Own Events in JavaScript"
+sidebarTitle: "Custom Events"
+description: "Learn JavaScript custom events. Create, dispatch, and listen for CustomEvent, pass data with the detail property, and build decoupled event-driven architectures."
+---
+
+What if you could create your own events, just like `click` or `submit`? What if a shopping cart could announce "item added!" and any part of your app could listen and respond? How do you build components that communicate without knowing about each other?
+
+```javascript
+// Create a custom event with data
+const event = new CustomEvent('userLoggedIn', {
+  detail: { username: 'alice', timestamp: Date.now() }
+})
+
+// Listen for the event anywhere in your app
+document.addEventListener('userLoggedIn', (e) => {
+  console.log(`Welcome, ${e.detail.username}!`)
+})
+
+// Dispatch the event
+document.dispatchEvent(event)  // "Welcome, alice!"
+```
+
+The answer is **custom events**. They let you create your own event types, attach any data you want, and build applications where components communicate through events instead of direct function calls.
+
+<Info>
+**What you'll learn in this guide:**
+- Creating events with the [`CustomEvent`](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent) constructor
+- Dispatching events with [`dispatchEvent()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent)
+- Passing data through the [`detail`](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/detail) property
+- Event options: `bubbles`, `cancelable`, and when to use them
+- Building decoupled component communication
+- Differences between custom events and native browser events
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you understand [Event Bubbling and Capturing](/beyond/concepts/event-bubbling-capturing). If you're not familiar with how events propagate through the DOM, read that guide first.
+</Warning>
+
+---
+
+## What is a Custom Event?
+
+A **[custom event](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent)** is a developer-defined event that you create, dispatch, and listen for in JavaScript. Unlike built-in events like `click` or `keydown` triggered by user actions, custom events are triggered programmatically using `dispatchEvent()`. The `CustomEvent` constructor extends the base `Event` interface, adding a `detail` property for passing data to listeners.
+
+<Note>
+Custom events work with any [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget), including DOM elements, the `document`, `window`, and even custom objects that extend `EventTarget`.
+</Note>
+
+---
+
+## The Radio Station Analogy
+
+Think of custom events like a radio broadcast:
+
+1. **The radio station (dispatcher)** broadcasts a message on a specific frequency
+2. **Anyone with a radio (listeners)** tuned to that frequency receives the message
+3. **The station doesn't know who's listening** - it just broadcasts
+4. **Listeners don't need to know where the station is** - they just tune in
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    CUSTOM EVENTS: THE RADIO ANALOGY                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   BROADCASTING (Dispatching)                                                 │
+│   ─────────────────────────                                                  │
+│                                                                              │
+│   ┌─────────────┐                                                            │
+│   │   STATION   │ ──── dispatchEvent() ────►  📻 "cart:updated"              │
+│   │  (Element)  │                              frequency (event type)        │
+│   └─────────────┘                                                            │
+│                                                                              │
+│   LISTENING (Subscribing)                                                    │
+│   ───────────────────────                                                    │
+│                                                                              │
+│              📻 "cart:updated"                                               │
+│                    │                                                         │
+│         ┌─────────┼─────────┐                                                │
+│         ▼         ▼         ▼                                                │
+│    ┌────────┐ ┌────────┐ ┌────────┐                                         │
+│    │ Header │ │ Badge  │ │ Total  │   All tuned to same frequency            │
+│    │Counter │ │ Icon   │ │Display │   All receive the broadcast              │
+│    └────────┘ └────────┘ └────────┘                                         │
+│                                                                              │
+│   The station doesn't know (or care) who's listening.                        │
+│   Listeners don't know (or care) where the broadcast comes from.             │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+This decoupling is the superpower of custom events. Components can communicate without importing each other or knowing each other exists.
+
+---
+
+## Creating Custom Events
+
+### The CustomEvent Constructor
+
+To create a custom event, use the [`CustomEvent`](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) constructor:
+
+```javascript
+const event = new CustomEvent('eventName', options)
+```
+
+The constructor takes two arguments:
+1. **`type`** (required) - A string for the event name (case-sensitive)
+2. **`options`** (optional) - An object with configuration
+
+```javascript
+// Simplest custom event - just a name
+const simpleEvent = new CustomEvent('hello')
+
+// Custom event with data
+const dataEvent = new CustomEvent('userAction', {
+  detail: { action: 'click', target: 'button' }
+})
+
+// Custom event with all options
+const fullEvent = new CustomEvent('formSubmit', {
+  detail: { formId: 'login', data: { user: 'alice' } },
+  bubbles: true,      // Event bubbles up the DOM
+  cancelable: true    // preventDefault() will work
+})
+```
+
+### Event Options Explained
+
+| Option | Default | Description |
+|--------|---------|-------------|
+| `detail` | `null` | Any data you want to pass to listeners |
+| `bubbles` | `false` | If `true`, event propagates up through ancestors |
+| `cancelable` | `false` | If `true`, `preventDefault()` can cancel the event |
+| `composed` | `false` | If `true`, event can cross shadow DOM boundaries |
+
+<Tip>
+**Naming convention:** Use lowercase with colons or hyphens for namespacing: `cart:updated`, `user:logged-in`, `modal-opened`. This prevents collision with future browser events and makes your events easy to identify.
+</Tip>
+
+---
+
+## Passing Data with detail
+
+The `detail` property is what makes `CustomEvent` special. It can hold any JavaScript value:
+
+```javascript
+// Primitive values
+new CustomEvent('count', { detail: 42 })
+new CustomEvent('message', { detail: 'Hello!' })
+
+// Objects (most common)
+new CustomEvent('userLoggedIn', {
+  detail: {
+    userId: 123,
+    username: 'alice',
+    timestamp: Date.now()
+  }
+})
+
+// Arrays
+new CustomEvent('itemsSelected', {
+  detail: ['item1', 'item2', 'item3']
+})
+
+// Even functions (though rarely needed)
+new CustomEvent('callback', {
+  detail: { getText: () => document.title }
+})
+```
+
+### Accessing detail in Listeners
+
+The `detail` property is read-only and accessed through the event object:
+
+```javascript
+document.addEventListener('userLoggedIn', (event) => {
+  // Access the detail property
+  console.log(event.detail.username)  // "alice"
+  console.log(event.detail.userId)    // 123
+  
+  // detail is read-only - this won't work
+  event.detail = { different: 'data' }  // Silently fails
+  
+  // But you CAN mutate the object's properties (not recommended)
+  event.detail.username = 'bob'  // Works, but avoid this
+})
+```
+
+<Warning>
+The `detail` property itself is read-only, but if it contains an object, that object's properties can be mutated. Avoid mutating `event.detail` in listeners as it can cause confusing bugs when multiple listeners handle the same event.
+</Warning>
+
+---
+
+## Dispatching Events
+
+### The dispatchEvent() Method
+
+To trigger a custom event, call [`dispatchEvent()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent) on any element:
+
+```javascript
+const button = document.querySelector('#myButton')
+
+// Create the event
+const event = new CustomEvent('customClick', {
+  detail: { clickCount: 5 }
+})
+
+// Dispatch it on the button
+button.dispatchEvent(event)
+```
+
+### Dispatching on Different Targets
+
+You can dispatch events on any `EventTarget`:
+
+```javascript
+// On a specific element
+document.querySelector('#cart').dispatchEvent(event)
+
+// On the document (global events)
+document.dispatchEvent(event)
+
+// On window (also global)
+window.dispatchEvent(event)
+
+// On any element
+someElement.dispatchEvent(event)
+```
+
+<Tabs>
+  <Tab title="Element-Level Events">
+    ```javascript
+    // Good for component-specific events
+    const cart = document.querySelector('#shopping-cart')
+    
+    cart.addEventListener('cart:updated', (e) => {
+      console.log('Cart changed:', e.detail.items)
+    })
+    
+    // Later, when cart changes...
+    cart.dispatchEvent(new CustomEvent('cart:updated', {
+      detail: { items: ['apple', 'banana'] }
+    }))
+    ```
+  </Tab>
+  <Tab title="Document-Level Events">
+    ```javascript
+    // Good for app-wide events
+    document.addEventListener('app:themeChanged', (e) => {
+      console.log('Theme is now:', e.detail.theme)
+    })
+    
+    // From anywhere in the app...
+    document.dispatchEvent(new CustomEvent('app:themeChanged', {
+      detail: { theme: 'dark' }
+    }))
+    ```
+  </Tab>
+</Tabs>
+
+### Important: dispatchEvent is Synchronous
+
+Unlike native browser events (which are processed asynchronously through the event loop), `dispatchEvent()` is **synchronous**. All listeners execute immediately before `dispatchEvent()` returns:
+
+```javascript
+console.log('1: Before dispatch')
+
+document.addEventListener('myEvent', () => {
+  console.log('2: Inside listener')
+})
+
+document.dispatchEvent(new CustomEvent('myEvent'))
+
+console.log('3: After dispatch')
+
+// Output:
+// 1: Before dispatch
+// 2: Inside listener  <-- Runs immediately!
+// 3: After dispatch
+```
+
+<Note>
+This synchronous behavior means you can use the return value of `dispatchEvent()` to check if any listener called `preventDefault()`.
+</Note>
+
+---
+
+## Listening for Custom Events
+
+Use [`addEventListener()`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener) to listen for custom events, just like native events:
+
+```javascript
+// Add a listener
+element.addEventListener('myCustomEvent', (event) => {
+  console.log('Received:', event.detail)
+})
+
+// You can add multiple listeners for the same event
+element.addEventListener('myCustomEvent', handler1)
+element.addEventListener('myCustomEvent', handler2)  // Both will fire
+
+// Remove a listener when no longer needed
+element.removeEventListener('myCustomEvent', handler1)
+```
+
+<Warning>
+**Don't use `on` properties for custom events!** Unlike built-in events, custom events don't have corresponding `onevent` properties. `element.onmyCustomEvent` won't work - you must use `addEventListener()`.
+
+```javascript
+// ✗ This doesn't work
+element.onmyCustomEvent = handler  // undefined, does nothing
+
+// ✓ This works
+element.addEventListener('myCustomEvent', handler)
+```
+</Warning>
+
+---
+
+## Event Bubbling with Custom Events
+
+By default, custom events **don't bubble**. Set `bubbles: true` if you want the event to propagate up through ancestor elements:
+
+```javascript
+// Without bubbles (default) - only direct listeners receive the event
+const nonBubblingEvent = new CustomEvent('test', {
+  detail: { value: 1 }
+})
+
+// With bubbles - ancestors can also listen
+const bubblingEvent = new CustomEvent('test', {
+  detail: { value: 2 },
+  bubbles: true
+})
+```
+
+### Bubbling Example
+
+```javascript
+// HTML: <div id="parent"><button id="child">Click</button></div>
+
+const parent = document.querySelector('#parent')
+const child = document.querySelector('#child')
+
+// Listen on parent
+parent.addEventListener('customClick', (e) => {
+  console.log('Parent heard:', e.detail.message)
+})
+
+// Dispatch from child WITHOUT bubbles
+child.dispatchEvent(new CustomEvent('customClick', {
+  detail: { message: 'no bubbles' }
+}))
+// Parent hears nothing!
+
+// Dispatch from child WITH bubbles
+child.dispatchEvent(new CustomEvent('customClick', {
+  detail: { message: 'with bubbles' },
+  bubbles: true
+}))
+// Parent logs: "Parent heard: with bubbles"
+```
+
+<Tip>
+Use `bubbles: true` when you want ancestor elements to be able to listen for events from their descendants. This is essential for [Event Delegation](/beyond/concepts/event-delegation) patterns.
+</Tip>
+
+---
+
+## Canceling Custom Events
+
+If you create an event with `cancelable: true`, listeners can call `preventDefault()` to signal that the default action should be canceled:
+
+```javascript
+const button = document.querySelector('#deleteButton')
+
+// Listener can prevent the action
+document.addEventListener('item:delete', (event) => {
+  if (!confirm('Are you sure you want to delete?')) {
+    event.preventDefault()  // Signal cancellation
+  }
+})
+
+// Dispatch and check if it was canceled
+function deleteItem(itemId) {
+  const event = new CustomEvent('item:delete', {
+    detail: { itemId },
+    cancelable: true  // Required for preventDefault to work!
+  })
+  
+  const wasAllowed = button.dispatchEvent(event)
+  
+  if (wasAllowed) {
+    // No listener called preventDefault
+    console.log('Deleting item:', itemId)
+  } else {
+    // A listener called preventDefault
+    console.log('Deletion was canceled')
+  }
+}
+```
+
+### Return Value of dispatchEvent
+
+`dispatchEvent()` returns:
+- `true` if no listener called `preventDefault()`
+- `false` if any listener called `preventDefault()` (and event was `cancelable`)
+
+```javascript
+const event = new CustomEvent('action', { cancelable: true })
+
+element.addEventListener('action', (e) => {
+  e.preventDefault()
+})
+
+const result = element.dispatchEvent(event)
+console.log(result)  // false - event was canceled
+```
+
+---
+
+## Component Communication Pattern
+
+Custom events shine when building decoupled components that need to communicate:
+
+```javascript
+// Shopping Cart Component
+class ShoppingCart {
+  constructor(element) {
+    this.element = element
+    this.items = []
+  }
+  
+  addItem(item) {
+    this.items.push(item)
+    
+    // Announce the change - anyone can listen!
+    this.element.dispatchEvent(new CustomEvent('cart:itemAdded', {
+      detail: { item, totalItems: this.items.length },
+      bubbles: true
+    }))
+  }
+  
+  removeItem(itemId) {
+    this.items = this.items.filter(i => i.id !== itemId)
+    
+    this.element.dispatchEvent(new CustomEvent('cart:itemRemoved', {
+      detail: { itemId, totalItems: this.items.length },
+      bubbles: true
+    }))
+  }
+}
+
+// Header Badge - listens for cart events
+class CartBadge {
+  constructor(element) {
+    this.element = element
+    
+    // Listen for ANY cart event that bubbles up
+    document.addEventListener('cart:itemAdded', (e) => {
+      this.update(e.detail.totalItems)
+    })
+    
+    document.addEventListener('cart:itemRemoved', (e) => {
+      this.update(e.detail.totalItems)
+    })
+  }
+  
+  update(count) {
+    this.element.textContent = count
+  }
+}
+
+// These components don't import each other - they communicate through events!
+```
+
+This pattern keeps components loosely coupled. The cart doesn't know the badge exists, and the badge doesn't know where cart events come from.
+
+---
+
+## Custom Events vs Native Events
+
+### The isTrusted Property
+
+One key difference: custom events have `event.isTrusted` set to `false`:
+
+```javascript
+// Native click from user
+button.addEventListener('click', (e) => {
+  console.log(e.isTrusted)  // true - real user action
+})
+
+// Custom event from code
+button.addEventListener('customClick', (e) => {
+  console.log(e.isTrusted)  // false - script-generated
+})
+
+button.dispatchEvent(new CustomEvent('customClick'))
+```
+
+### Key Differences Table
+
+| Feature | Native Events | Custom Events |
+|---------|--------------|---------------|
+| Triggered by | Browser/User | Your code |
+| `isTrusted` | `true` | `false` |
+| Processing | Asynchronous | Synchronous |
+| `on*` properties | Yes (`onclick`) | No |
+| `detail` property | No | Yes |
+| Default `bubbles` | Varies by event | `false` |
+
+---
+
+## Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="1. Forgetting bubbles: true">
+    The most common mistake is expecting events to bubble when they don't:
+    
+    ```javascript
+    // ✗ Won't bubble - parent won't hear it
+    child.dispatchEvent(new CustomEvent('notify', {
+      detail: { message: 'hello' }
+    }))
+    
+    // ✓ Will bubble up to ancestors
+    child.dispatchEvent(new CustomEvent('notify', {
+      detail: { message: 'hello' },
+      bubbles: true
+    }))
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Using onclick for custom events">
+    Custom events don't have corresponding `on*` properties:
+    
+    ```javascript
+    // ✗ Does nothing - onmyEvent doesn't exist
+    element.onmyEvent = () => console.log('fired')
+    
+    // ✓ Use addEventListener instead
+    element.addEventListener('myEvent', () => console.log('fired'))
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Dispatching on the wrong element">
+    Events only reach listeners on the target and (if bubbling) its ancestors:
+    
+    ```javascript
+    // Listener on #sidebar
+    sidebar.addEventListener('update', handler)
+    
+    // ✗ Dispatching on #header - sidebar won't hear it
+    header.dispatchEvent(new CustomEvent('update'))
+    
+    // ✓ Dispatch on document for truly global events
+    document.dispatchEvent(new CustomEvent('update'))
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Forgetting cancelable: true">
+    `preventDefault()` silently does nothing without `cancelable: true`:
+    
+    ```javascript
+    // ✗ preventDefault won't work
+    const event = new CustomEvent('submit')
+    element.addEventListener('submit', e => e.preventDefault())
+    element.dispatchEvent(event)  // Returns true even with preventDefault!
+    
+    // ✓ Add cancelable: true
+    const event = new CustomEvent('submit', { cancelable: true })
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Assuming asynchronous execution">
+    Unlike native events, `dispatchEvent()` is synchronous:
+    
+    ```javascript
+    let value = 'before'
+    
+    element.addEventListener('sync', () => {
+      value = 'inside'
+    })
+    
+    element.dispatchEvent(new CustomEvent('sync'))
+    
+    // value is 'inside' immediately - not 'before'!
+    console.log(value)  // "inside"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="1. Use namespaced event names">
+    Prefix event names to avoid collisions and improve clarity:
+    
+    ```javascript
+    // ✓ Good - clear namespace
+    new CustomEvent('cart:itemAdded')
+    new CustomEvent('modal:opened')
+    new CustomEvent('user:loggedIn')
+    
+    // ✗ Avoid - could conflict with future browser events
+    new CustomEvent('update')
+    new CustomEvent('change')
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Always include relevant data in detail">
+    Pass enough information for listeners to act without needing other context:
+    
+    ```javascript
+    // ✗ Not enough context
+    new CustomEvent('item:deleted', {
+      detail: { success: true }
+    })
+    
+    // ✓ Includes all relevant data
+    new CustomEvent('item:deleted', {
+      detail: {
+        itemId: 123,
+        itemName: 'Widget',
+        deletedAt: Date.now(),
+        remainingItems: 5
+      }
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Document your custom events">
+    Treat custom events like an API - document what they do and what data they carry:
+    
+    ```javascript
+    /**
+     * Fired when an item is added to the cart
+     * @event cart:itemAdded
+     * @type {CustomEvent}
+     * @property {Object} detail
+     * @property {string} detail.itemId - The ID of the added item
+     * @property {string} detail.itemName - The name of the item
+     * @property {number} detail.quantity - Quantity added
+     * @property {number} detail.totalItems - New total items in cart
+     */
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Clean up event listeners">
+    Remove listeners when components are destroyed to prevent memory leaks:
+    
+    ```javascript
+    class Component {
+      constructor() {
+        this.handleEvent = this.handleEvent.bind(this)
+        document.addEventListener('app:update', this.handleEvent)
+      }
+      
+      handleEvent(e) {
+        // Handle the event
+      }
+      
+      destroy() {
+        // Clean up!
+        document.removeEventListener('app:update', this.handleEvent)
+      }
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about Custom Events:**
+
+1. **Create with `new CustomEvent(type, options)`** - The constructor takes an event name and optional configuration object
+
+2. **Pass data with `detail`** - The `detail` property can hold any JavaScript value and is accessible in listeners via `event.detail`
+
+3. **Dispatch with `dispatchEvent()`** - Call this method on any element to fire the event; it executes synchronously
+
+4. **Set `bubbles: true` for propagation** - By default, custom events don't bubble; enable it explicitly if needed
+
+5. **Set `cancelable: true` for `preventDefault()`** - Without this option, `preventDefault()` silently does nothing
+
+6. **Use `addEventListener()`, not `on*`** - Custom events don't have corresponding `onclick`-style properties
+
+7. **Custom events have `isTrusted: false`** - This distinguishes them from real user-initiated events
+
+8. **Dispatch returns whether event was canceled** - `dispatchEvent()` returns `false` if any listener called `preventDefault()`
+
+9. **Use namespaced event names** - Prefix with component/feature name like `cart:updated` or `modal:closed`
+
+10. **Events enable loose coupling** - Components can communicate without importing or knowing about each other
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the output?">
+    ```javascript
+    const event = new CustomEvent('test', {
+      detail: { value: 42 }
+    })
+    
+    console.log(event.detail.value)
+    console.log(event.isTrusted)
+    ```
+    
+    **Answer:**
+    ```
+    42
+    false
+    ```
+    
+    The `detail.value` is `42` as set in the constructor. `isTrusted` is `false` because the event was created programmatically, not by a real user action.
+  </Accordion>
+  
+  <Accordion title="Question 2: Will the parent hear this event?">
+    ```javascript
+    // HTML: <div id="parent"><button id="child">Click</button></div>
+    
+    parent.addEventListener('notify', () => console.log('Parent heard it'))
+    
+    child.dispatchEvent(new CustomEvent('notify', {
+      detail: { message: 'hello' }
+    }))
+    ```
+    
+    **Answer:**
+    
+    No, the parent will not hear the event. Custom events have `bubbles: false` by default. To make it bubble up to the parent, add `bubbles: true`:
+    
+    ```javascript
+    child.dispatchEvent(new CustomEvent('notify', {
+      detail: { message: 'hello' },
+      bubbles: true
+    }))
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What does dispatchEvent return here?">
+    ```javascript
+    const event = new CustomEvent('action', { cancelable: true })
+    
+    element.addEventListener('action', (e) => {
+      e.preventDefault()
+    })
+    
+    const result = element.dispatchEvent(event)
+    console.log(result)
+    ```
+    
+    **Answer:**
+    
+    `false`
+    
+    `dispatchEvent()` returns `false` when any listener calls `preventDefault()` on a cancelable event. This is useful for checking if an action should proceed.
+  </Accordion>
+  
+  <Accordion title="Question 4: Why doesn't this work?">
+    ```javascript
+    element.oncustomEvent = () => console.log('Fired!')
+    element.dispatchEvent(new CustomEvent('customEvent'))
+    ```
+    
+    **Answer:**
+    
+    Custom events don't have corresponding `on*` properties like native events do. The `oncustomEvent` property doesn't exist and is just set to a function that's never called.
+    
+    Use `addEventListener()` instead:
+    
+    ```javascript
+    element.addEventListener('customEvent', () => console.log('Fired!'))
+    element.dispatchEvent(new CustomEvent('customEvent'))
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: What's the order of console logs?">
+    ```javascript
+    console.log('1')
+    
+    document.addEventListener('test', () => console.log('2'))
+    
+    document.dispatchEvent(new CustomEvent('test'))
+    
+    console.log('3')
+    ```
+    
+    **Answer:**
+    
+    ```
+    1
+    2
+    3
+    ```
+    
+    Unlike native browser events, `dispatchEvent()` is **synchronous**. The event handler runs immediately when `dispatchEvent()` is called, before the next line executes.
+  </Accordion>
+  
+  <Accordion title="Question 6: How do you check if a custom event was canceled?">
+    **Answer:**
+    
+    1. Create the event with `cancelable: true`
+    2. Check the return value of `dispatchEvent()`
+    
+    ```javascript
+    const event = new CustomEvent('beforeDelete', {
+      detail: { itemId: 123 },
+      cancelable: true
+    })
+    
+    element.addEventListener('beforeDelete', (e) => {
+      if (!userConfirmed) {
+        e.preventDefault()
+      }
+    })
+    
+    const shouldProceed = element.dispatchEvent(event)
+    
+    if (shouldProceed) {
+      deleteItem(123)
+    } else {
+      console.log('Deletion was canceled')
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Event Bubbling & Capturing" icon="arrow-up" href="/beyond/concepts/event-bubbling-capturing">
+    Understand how events propagate through the DOM tree
+  </Card>
+  <Card title="Event Delegation" icon="hand-pointer" href="/beyond/concepts/event-delegation">
+    Handle events efficiently using bubbling and a single listener
+  </Card>
+  <Card title="DOM Manipulation" icon="code" href="/concepts/dom">
+    Learn how to work with DOM elements and events
+  </Card>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    Functions that work with other functions - useful for event handlers
+  </Card>
+</CardGroup>
+
+---
+
+## References
+
+<CardGroup cols={2}>
+  <Card title="CustomEvent - MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent">
+    Official reference for the CustomEvent interface, constructor, and detail property
+  </Card>
+  <Card title="CustomEvent() Constructor - MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent">
+    Detailed syntax and parameters for creating CustomEvent instances
+  </Card>
+  <Card title="dispatchEvent() - MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent">
+    How to dispatch events on EventTarget objects with synchronous execution
+  </Card>
+  <Card title="Creating and Dispatching Events - MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events">
+    Comprehensive MDN guide covering event creation, bubbling, and registration
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Dispatching Custom Events - javascript.info" icon="newspaper" href="https://javascript.info/dispatch-events">
+    Comprehensive tutorial covering Event constructor, CustomEvent, bubbling, and synchronous dispatch behavior with interactive examples
+  </Card>
+  <Card title="Custom Events in JavaScript - LogRocket" icon="newspaper" href="https://blog.logrocket.com/custom-events-in-javascript-a-complete-guide/">
+    Complete guide to custom events covering creation, dispatching, and real-world component communication patterns
+  </Card>
+  <Card title="Custom Events - David Walsh Blog" icon="newspaper" href="https://davidwalsh.name/customevent">
+    Concise explanation of CustomEvent with clear code examples and browser compatibility notes
+  </Card>
+  <Card title="JavaScript Custom Events Tutorial" icon="newspaper" href="https://www.javascripttutorial.net/javascript-dom/javascript-custom-events/">
+    Step-by-step tutorial covering CustomEvent basics with practical examples for DOM interactions
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Custom Events in JavaScript - Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=DzZXRvk3EGg">
+    Clear 10-minute explanation of creating, dispatching, and listening for custom events with practical examples
+  </Card>
+  <Card title="JavaScript Custom Events - dcode" icon="video" href="https://www.youtube.com/watch?v=1onVnFfVxBI">
+    Hands-on tutorial showing how to build decoupled component communication using CustomEvent
+  </Card>
+  <Card title="Create Custom Events in JavaScript - Florin Pop" icon="video" href="https://www.youtube.com/watch?v=jK9O-CKUE60">
+    Quick beginner-friendly overview of the CustomEvent API with live coding demonstrations
+  </Card>
+</CardGroup>
