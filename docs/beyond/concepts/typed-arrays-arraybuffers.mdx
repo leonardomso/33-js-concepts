@@ -1,0 +1,770 @@
+---
+title: "Typed Arrays: Working with Binary Data in JavaScript"
+sidebarTitle: "Typed Arrays & ArrayBuffers"
+description: "Learn JavaScript Typed Arrays and ArrayBuffers. Understand binary data handling, DataView, working with WebGL, file processing, and network protocol implementation."
+---
+
+How do you process a PNG image pixel by pixel? How do you read binary data from a WebSocket? How does WebGL render millions of triangles efficiently?
+
+Regular JavaScript arrays can't handle these jobs. They're designed for flexibility, not raw performance. When you need to work with **binary data** — raw bytes, pixels, audio samples, network packets — you need **Typed Arrays** and **ArrayBuffers**.
+
+```javascript
+// Create a buffer of 16 bytes
+const buffer = new ArrayBuffer(16)
+
+// View the buffer as 4 32-bit integers
+const int32View = new Uint32Array(buffer)
+int32View[0] = 42
+int32View[1] = 1337
+
+console.log(int32View[0])  // 42
+console.log(int32View.length)  // 4 (4 integers × 4 bytes = 16 bytes)
+console.log(int32View.byteLength)  // 16
+```
+
+Typed Arrays provide a way to work with raw binary data in memory buffers, giving you the performance of low-level languages while staying in JavaScript.
+
+<Info>
+**What you'll learn in this guide:**
+- What ArrayBuffers and Typed Arrays are and when to use them
+- How to create and manipulate binary data with different views
+- The difference between Typed Arrays and regular arrays
+- How DataView works for mixed-format binary data
+- Real-world use cases: file handling, WebGL, audio processing
+- Common mistakes when working with binary data
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes basic JavaScript knowledge. Familiarity with [binary and hexadecimal numbers](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Numbers_and_dates) helps but isn't required.
+</Warning>
+
+---
+
+## The Filing Cabinet Analogy
+
+Think of an [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) like a filing cabinet with a fixed number of drawers (bytes). The cabinet itself doesn't know what's inside the drawers. It just reserves the space.
+
+A [Typed Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) is like a set of instructions for reading the cabinet. "Read drawers 1-4 as a single 32-bit integer" or "Read each drawer as a separate 8-bit value."
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                   ARRAYBUFFER: RAW MEMORY STORAGE                        │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ArrayBuffer (16 bytes of raw binary data)                             │
+│    ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
+│    │ 00 │ 01 │ 02 │ 03 │ 04 │ 05 │ 06 │ 07 │ 08 │ 09 │ 10 │ 11 │ 12 │ 13 │ 14 │ 15 │
+│    └────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
+│       ▲                                                                  │
+│       │ Cannot access directly! Need a "view"                            │
+│       │                                                                  │
+│    ───┴──────────────────────────────────────────────────────────────    │
+│                                                                          │
+│    Uint8Array view (16 × 8-bit values):                                  │
+│    ┌────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┬────┐
+│    │  0 │  1 │  2 │  3 │  4 │  5 │  6 │  7 │  8 │  9 │ 10 │ 11 │ 12 │ 13 │ 14 │ 15 │
+│    └────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┴────┘
+│                                                                          │
+│    Uint32Array view (4 × 32-bit values):                                 │
+│    ┌─────────────────┬─────────────────┬─────────────────┬─────────────────┐
+│    │        0        │        1        │        2        │        3        │
+│    └─────────────────┴─────────────────┴─────────────────┴─────────────────┘
+│                                                                          │
+│    Same data, different interpretations!                                 │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The key insight: **one buffer, many views**. The same bytes can be interpreted as 16 separate bytes, 8 16-bit numbers, 4 32-bit numbers, or 2 64-bit numbers. This is why typed arrays are so important for [memory-efficient programming](/beyond/concepts/memory-management).
+
+---
+
+## What is an ArrayBuffer?
+
+An **[ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)** is a fixed-length container of raw binary data. It's a contiguous block of memory, measured in bytes. You can't read or write to an ArrayBuffer directly. It just holds the raw bytes.
+
+```javascript
+// Create an ArrayBuffer with 16 bytes
+const buffer = new ArrayBuffer(16)
+
+console.log(buffer.byteLength)  // 16
+
+// You can't access bytes directly
+console.log(buffer[0])  // undefined - this doesn't work!
+```
+
+ArrayBuffers support a few key operations:
+
+- **Allocate**: Create a buffer of a specific size, initialized to zeros
+- **Slice**: Copy a portion of the buffer to a new ArrayBuffer
+- **Transfer**: Move ownership to a new buffer (advanced)
+- **Resize**: Change the size of a resizable buffer (advanced)
+
+```javascript
+// Create a buffer
+const original = new ArrayBuffer(16)
+
+// Slice creates a copy of bytes 4-8
+const sliced = original.slice(4, 8)
+console.log(sliced.byteLength)  // 4
+```
+
+To actually read or write data, you need a **view**.
+
+---
+
+## Typed Arrays: Views Into the Buffer
+
+A **Typed Array** is a view that interprets the bytes in an ArrayBuffer as numbers of a specific type. JavaScript provides several typed array classes, each handling different numeric formats.
+
+### Available Typed Array Types
+
+| Type | Bytes | Range | Description |
+|------|-------|-------|-------------|
+| `Int8Array` | 1 | -128 to 127 | Signed 8-bit integer |
+| `Uint8Array` | 1 | 0 to 255 | Unsigned 8-bit integer |
+| `Uint8ClampedArray` | 1 | 0 to 255 | Clamped unsigned 8-bit (for canvas) |
+| `Int16Array` | 2 | -32,768 to 32,767 | Signed 16-bit integer |
+| `Uint16Array` | 2 | 0 to 65,535 | Unsigned 16-bit integer |
+| `Int32Array` | 4 | -2³¹ to 2³¹-1 | Signed 32-bit integer |
+| `Uint32Array` | 4 | 0 to 2³²-1 | Unsigned 32-bit integer |
+| `Float32Array` | 4 | ±3.4×10³⁸ | 32-bit floating point |
+| `Float64Array` | 8 | ±1.8×10³⁰⁸ | 64-bit floating point (like JS numbers) |
+| `BigInt64Array` | 8 | -2⁶³ to 2⁶³-1 | Signed 64-bit BigInt |
+| `BigUint64Array` | 8 | 0 to 2⁶⁴-1 | Unsigned 64-bit BigInt |
+
+### Creating Typed Arrays
+
+There are several ways to create a typed array:
+
+<Tabs>
+  <Tab title="From Length">
+    ```javascript
+    // Create a typed array with 4 elements
+    // Automatically creates an ArrayBuffer
+    const uint8 = new Uint8Array(4)
+    
+    console.log(uint8.length)      // 4 elements
+    console.log(uint8.byteLength)  // 4 bytes
+    console.log(uint8[0])          // 0 (initialized to zero)
+    ```
+  </Tab>
+  <Tab title="From Array">
+    ```javascript
+    // Create from a regular array
+    const uint8 = new Uint8Array([10, 20, 30, 40])
+    
+    console.log(uint8[0])     // 10
+    console.log(uint8[1])     // 20
+    console.log(uint8.length) // 4
+    ```
+  </Tab>
+  <Tab title="From Buffer">
+    ```javascript
+    // Create a buffer first
+    const buffer = new ArrayBuffer(8)
+    
+    // Create a view over the entire buffer
+    const int32 = new Int32Array(buffer)
+    console.log(int32.length)  // 2 (8 bytes / 4 bytes per int32)
+    
+    // Create a view over part of the buffer
+    const int16 = new Int16Array(buffer, 4)  // Start at byte 4
+    console.log(int16.length)  // 2 (4 remaining bytes / 2 bytes per int16)
+    ```
+  </Tab>
+  <Tab title="From Another Typed Array">
+    ```javascript
+    // Create from another typed array (copies values)
+    const original = new Uint16Array([1000, 2000])
+    const copy = new Uint8Array(original)
+    
+    console.log(copy[0])  // 232 (1000 truncated to 8 bits)
+    console.log(copy[1])  // 208 (2000 truncated to 8 bits)
+    ```
+  </Tab>
+</Tabs>
+
+### Using Typed Arrays
+
+Typed arrays work like regular arrays for most operations:
+
+```javascript
+const numbers = new Float64Array([1.5, 2.5, 3.5, 4.5])
+
+// Access elements like regular arrays
+console.log(numbers[0])       // 1.5
+console.log(numbers.length)   // 4
+
+// Iterate with for...of
+for (const num of numbers) {
+  console.log(num)  // 1.5, 2.5, 3.5, 4.5
+}
+
+// Use map, filter, reduce, etc.
+const doubled = numbers.map(x => x * 2)
+console.log([...doubled])  // [3, 5, 7, 9]
+
+const sum = numbers.reduce((a, b) => a + b, 0)
+console.log(sum)  // 12
+```
+
+<Note>
+**Key difference from regular arrays:** Typed arrays have a **fixed length**. You can't use `push()`, `pop()`, `shift()`, `unshift()`, or `splice()` to change their size. They also don't have `concat()` or `flat()`.
+</Note>
+
+---
+
+## Multiple Views on the Same Buffer
+
+Here's where things get powerful. You can create multiple views on the same ArrayBuffer, interpreting the same bytes in different ways:
+
+```javascript
+const buffer = new ArrayBuffer(4)
+
+// View as 4 separate bytes
+const bytes = new Uint8Array(buffer)
+bytes[0] = 0x12
+bytes[1] = 0x34
+bytes[2] = 0x56
+bytes[3] = 0x78
+
+// View the same bytes as a single 32-bit integer
+const int32 = new Uint32Array(buffer)
+console.log(int32[0].toString(16))  // "78563412" (little-endian!)
+
+// View as two 16-bit integers
+const int16 = new Uint16Array(buffer)
+console.log(int16[0].toString(16))  // "3412"
+console.log(int16[1].toString(16))  // "7856"
+```
+
+<Warning>
+**Watch out for endianness!** Most systems are little-endian, meaning the least significant byte comes first in memory. This is why `0x12345678` stored byte-by-byte appears reversed when read as a 32-bit integer.
+</Warning>
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                   LITTLE-ENDIAN BYTE ORDER                               │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    Memory layout (bytes):   [0x12] [0x34] [0x56] [0x78]                  │
+│                              byte0  byte1  byte2  byte3                  │
+│                                                                          │
+│    Read as Uint32Array:     0x78563412                                   │
+│                             ▲                                            │
+│                             │ Least significant byte first!              │
+│                                                                          │
+│    Read as Uint16Array:     0x3412, 0x7856                               │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## DataView: Fine-Grained Control
+
+[DataView](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView) provides more flexible access to buffer data. Unlike typed arrays, DataView lets you read any type at any offset, and control byte order explicitly.
+
+```javascript
+const buffer = new ArrayBuffer(12)
+const view = new DataView(buffer)
+
+// Write different types at specific offsets
+view.setUint8(0, 255)           // 1 byte at offset 0
+view.setUint16(1, 1000, true)   // 2 bytes at offset 1 (little-endian)
+view.setFloat32(3, 3.14, true)  // 4 bytes at offset 3 (little-endian)
+view.setUint32(7, 42, true)     // 4 bytes at offset 7 (little-endian)
+
+// Read them back
+console.log(view.getUint8(0))          // 255
+console.log(view.getUint16(1, true))   // 1000
+console.log(view.getFloat32(3, true))  // 3.140000104904175 (float precision)
+console.log(view.getUint32(7, true))   // 42
+```
+
+### When to Use DataView vs Typed Arrays
+
+| Use Case | Best Choice | Why |
+|----------|-------------|-----|
+| Homogeneous data (all same type) | Typed Array | Faster, simpler syntax |
+| Mixed data types | DataView | Can read different types at any offset |
+| Network protocols | DataView | Often need explicit endianness control |
+| Image pixels (RGBA) | Uint8Array or Uint8ClampedArray | All bytes, same format |
+| Audio samples | Float32Array | All floats, same format |
+| Binary file parsing | DataView | Headers have mixed types |
+
+### DataView Methods
+
+DataView provides getter and setter methods for each type:
+
+```javascript
+const dv = new DataView(new ArrayBuffer(8))
+
+// Setters (offset, value, littleEndian?)
+dv.setInt8(0, -1)
+dv.setUint8(1, 255)
+dv.setInt16(2, -1000, true)    // true = little-endian
+dv.setUint16(4, 65000, true)
+dv.setFloat32(0, 3.14, true)
+dv.setFloat64(0, 3.14159265, true)
+
+// Getters (offset, littleEndian?)
+dv.getInt8(0)
+dv.getUint8(1)
+dv.getInt16(2, true)
+dv.getUint16(4, true)
+dv.getFloat32(0, true)
+dv.getFloat64(0, true)
+```
+
+---
+
+## Working with Binary Data: Real Examples
+
+### Reading a Binary File Header
+
+Many file formats start with a header containing metadata. Here's how to parse a simple binary header:
+
+```javascript
+async function parseBinaryHeader(file) {
+  // Read the file as an ArrayBuffer
+  const buffer = await file.arrayBuffer()
+  const view = new DataView(buffer)
+  
+  // Parse a hypothetical header:
+  // Bytes 0-3: Magic number (4 bytes)
+  // Bytes 4-7: Version (32-bit uint)
+  // Bytes 8-15: File size (64-bit uint)
+  // Bytes 16-19: Flags (32-bit uint)
+  
+  const header = {
+    magic: String.fromCharCode(
+      view.getUint8(0),
+      view.getUint8(1),
+      view.getUint8(2),
+      view.getUint8(3)
+    ),
+    version: view.getUint32(4, true),  // little-endian
+    fileSize: view.getBigUint64(8, true),
+    flags: view.getUint32(16, true)
+  }
+  
+  return header
+}
+```
+
+### Manipulating Image Pixels
+
+The Canvas API returns image data as a `Uint8ClampedArray`, where each pixel is 4 consecutive bytes (RGBA):
+
+```javascript
+const canvas = document.querySelector('canvas')
+const ctx = canvas.getContext('2d')
+
+// Get pixel data
+const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+const pixels = imageData.data  // Uint8ClampedArray
+
+// Invert colors
+for (let i = 0; i < pixels.length; i += 4) {
+  pixels[i]     = 255 - pixels[i]      // Red
+  pixels[i + 1] = 255 - pixels[i + 1]  // Green
+  pixels[i + 2] = 255 - pixels[i + 2]  // Blue
+  // pixels[i + 3] is Alpha (transparency) - leave unchanged
+}
+
+// Put the modified data back
+ctx.putImageData(imageData, 0, 0)
+```
+
+<Tip>
+**Why Uint8ClampedArray?** Unlike regular Uint8Array, values outside 0-255 are "clamped" rather than wrapped. Setting a value to 300 becomes 255, and -50 becomes 0. This prevents visual artifacts when doing color math.
+</Tip>
+
+### Creating Binary Data to Send
+
+When sending binary data over the network (like through the [Fetch API](/concepts/http-fetch) or WebSockets), you often need to build a specific format:
+
+```javascript
+function createBinaryMessage(messageType, payload) {
+  // Message format:
+  // Byte 0: Message type (1 byte)
+  // Bytes 1-4: Payload length (32-bit uint, big-endian)
+  // Bytes 5+: Payload data
+  
+  const payloadBytes = new TextEncoder().encode(payload)
+  const buffer = new ArrayBuffer(5 + payloadBytes.length)
+  const view = new DataView(buffer)
+  
+  // Write header
+  view.setUint8(0, messageType)
+  view.setUint32(1, payloadBytes.length, false)  // big-endian
+  
+  // Write payload
+  const uint8View = new Uint8Array(buffer, 5)
+  uint8View.set(payloadBytes)
+  
+  return buffer
+}
+
+// Usage
+const message = createBinaryMessage(1, "Hello, binary world!")
+// Can send via WebSocket: ws.send(message)
+```
+
+### Converting Between Text and Binary
+
+The [TextEncoder](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [TextDecoder](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) APIs convert between strings and typed arrays:
+
+```javascript
+// String to bytes (UTF-8)
+const encoder = new TextEncoder()
+const bytes = encoder.encode("Hello 世界")
+console.log(bytes)  // Uint8Array [72, 101, 108, 108, 111, 32, 228, 184, 150, 231, 149, 140]
+
+// Bytes to string
+const decoder = new TextDecoder('utf-8')
+const text = decoder.decode(bytes)
+console.log(text)  // "Hello 世界"
+
+// Can also decode a buffer directly
+const buffer = new ArrayBuffer(5)
+new Uint8Array(buffer).set([72, 101, 108, 108, 111])
+console.log(decoder.decode(buffer))  // "Hello"
+```
+
+---
+
+## Common Methods and Properties
+
+Typed arrays share most array methods but have some unique ones:
+
+### Properties
+
+```javascript
+const arr = new Int32Array([1, 2, 3, 4])
+
+arr.length         // 4 - number of elements
+arr.byteLength     // 16 - total bytes (4 elements × 4 bytes)
+arr.byteOffset     // 0 - offset into the buffer
+arr.buffer         // The underlying ArrayBuffer
+arr.BYTES_PER_ELEMENT  // 4 - bytes per element (static property)
+
+Int32Array.BYTES_PER_ELEMENT  // 4 - also accessible on the constructor
+```
+
+### Unique Methods
+
+```javascript
+const target = new Uint8Array(10)
+const source = new Uint8Array([1, 2, 3])
+
+// set() - copy values from another array
+target.set(source)        // Copy to start
+target.set(source, 5)     // Copy starting at index 5
+console.log([...target])  // [1, 2, 3, 0, 0, 1, 2, 3, 0, 0]
+
+// subarray() - create a view into a portion (shares the buffer!)
+const view = target.subarray(2, 6)
+console.log([...view])    // [3, 0, 0, 1]
+
+view[0] = 99
+console.log(target[2])    // 99 - original changed too!
+```
+
+<Warning>
+**subarray() vs slice():** `subarray()` creates a new view on the same buffer (changes affect the original). `slice()` copies the data to a new buffer (changes are independent).
+</Warning>
+
+---
+
+## The #1 Typed Array Mistake
+
+The most common mistake is forgetting that `subarray()` shares the underlying buffer:
+
+```javascript
+// ❌ WRONG - Modifying what you thought was a copy
+const original = new Uint8Array([1, 2, 3, 4, 5])
+const section = original.subarray(1, 4)
+
+section[0] = 99
+console.log(original[1])  // 99 - Oops! Original changed
+
+// ✓ CORRECT - Use slice() for an independent copy
+const original2 = new Uint8Array([1, 2, 3, 4, 5])
+const copy = original2.slice(1, 4)
+
+copy[0] = 99
+console.log(original2[1])  // 2 - Original unchanged
+```
+
+Another common mistake is overflow behavior:
+
+```javascript
+// Values wrap around in typed arrays (except Uint8ClampedArray)
+const bytes = new Uint8Array([250])
+bytes[0] += 10
+console.log(bytes[0])  // 4, not 260! (260 - 256 = 4)
+
+// Use Uint8ClampedArray for clamping behavior
+const clamped = new Uint8ClampedArray([250])
+clamped[0] += 10
+console.log(clamped[0])  // 255, clamped to max value
+```
+
+---
+
+## Web APIs Using Typed Arrays
+
+Many modern Web APIs work with typed arrays:
+
+| API | Typed Array Used | Purpose |
+|-----|------------------|---------|
+| [Canvas 2D](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/getImageData) | Uint8ClampedArray | Pixel manipulation |
+| [WebGL](https://developer.mozilla.org/en-US/docs/Web/API/WebGL_API) | Float32Array, Uint16Array | Vertex data, indices |
+| [Web Audio](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) | Float32Array | Audio samples |
+| [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Response/arrayBuffer) | ArrayBuffer | Binary response data |
+| [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) | ArrayBuffer | Binary messages |
+| [FileReader](https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsArrayBuffer) | ArrayBuffer | File contents |
+| [Crypto API](https://developer.mozilla.org/en-US/docs/Web/API/Crypto/getRandomValues) | Uint8Array, etc. | Random values, hashes |
+| [WebRTC](https://developer.mozilla.org/en-US/docs/Web/API/WebRTC_API) | ArrayBuffer | Media streaming |
+
+ArrayBuffers are also essential when using [Web Workers](/concepts/web-workers) — you can transfer ownership of buffers between threads using `postMessage()` with the `transfer` option, avoiding expensive copies.
+
+---
+
+## Converting to Regular Arrays
+
+Sometimes you need to convert between typed arrays and regular arrays:
+
+```javascript
+const typed = new Uint8Array([1, 2, 3, 4, 5])
+
+// Using Array.from()
+const array1 = Array.from(typed)
+console.log(array1)  // [1, 2, 3, 4, 5]
+
+// Using spread operator
+const array2 = [...typed]
+console.log(array2)  // [1, 2, 3, 4, 5]
+
+// Convert back to typed array
+const backToTyped = new Uint8Array(array2)
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **ArrayBuffer is raw memory** — A fixed-length container of bytes. You can't read/write directly; you need a view.
+
+2. **Typed Arrays are views** — They interpret buffer bytes as specific numeric types (Uint8, Int32, Float64, etc.).
+
+3. **One buffer, many views** — The same bytes can be read as different types. A 16-byte buffer could be 16 bytes, 4 integers, or 2 doubles.
+
+4. **Fixed length** — Unlike regular arrays, typed arrays can't grow or shrink. No push(), pop(), or splice().
+
+5. **subarray() shares the buffer** — Changes to a subarray affect the original. Use slice() for an independent copy.
+
+6. **DataView for mixed types** — When parsing binary formats with different types at specific offsets, use DataView.
+
+7. **Mind the endianness** — Most systems are little-endian. When parsing binary protocols, explicitly specify byte order with DataView.
+
+8. **Uint8ClampedArray for images** — It clamps values to 0-255 instead of wrapping, preventing visual artifacts.
+
+9. **TextEncoder/TextDecoder for strings** — Convert between strings and byte arrays using these APIs.
+
+10. **Many Web APIs use them** — Canvas, WebGL, Web Audio, Fetch, WebSockets, and Crypto all work with binary data.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between ArrayBuffer and Uint8Array?">
+    **Answer:**
+    
+    An `ArrayBuffer` is raw memory storage. It holds bytes but provides no way to access them directly. You can only check its `byteLength`.
+    
+    A `Uint8Array` is a **view** that interprets an ArrayBuffer's bytes as unsigned 8-bit integers (0-255). It provides array-like access to the data.
+    
+    ```javascript
+    const buffer = new ArrayBuffer(4)
+    console.log(buffer[0])  // undefined - can't access!
+    
+    const view = new Uint8Array(buffer)
+    console.log(view[0])    // 0 - now we can access
+    view[0] = 42
+    console.log(view[0])    // 42
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: How do you create a typed array that shares memory with another?">
+    **Answer:**
+    
+    Create a new typed array view on the same buffer:
+    
+    ```javascript
+    const uint8 = new Uint8Array([0x12, 0x34, 0x56, 0x78])
+    
+    // Create a different view on the same buffer
+    const uint32 = new Uint32Array(uint8.buffer)
+    
+    // Or use subarray() for a portion of the same type
+    const portion = uint8.subarray(1, 3)
+    
+    // Both share memory - changes affect each other
+    uint32[0] = 0
+    console.log(uint8[0])  // 0 - changed!
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What happens when you assign 300 to a Uint8Array element?">
+    **Answer:**
+    
+    It wraps around because 300 exceeds the 0-255 range. The value becomes `300 % 256 = 44`.
+    
+    ```javascript
+    const arr = new Uint8Array(1)
+    arr[0] = 300
+    console.log(arr[0])  // 44
+    
+    // For clamping behavior, use Uint8ClampedArray
+    const clamped = new Uint8ClampedArray(1)
+    clamped[0] = 300
+    console.log(clamped[0])  // 255 (clamped to max)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: When should you use DataView instead of a typed array?">
+    **Answer:**
+    
+    Use DataView when:
+    - Your data contains **mixed types** (e.g., a header with uint32, uint16, and float32 fields)
+    - You need to control **endianness** explicitly
+    - You're reading/writing at **arbitrary byte offsets**
+    
+    ```javascript
+    // Parsing a binary protocol with mixed types
+    const buffer = await response.arrayBuffer()
+    const view = new DataView(buffer)
+    
+    const header = {
+      version: view.getUint8(0),           // 1 byte
+      flags: view.getUint16(1, true),      // 2 bytes, little-endian
+      timestamp: view.getFloat64(3, true)  // 8 bytes, little-endian
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: What's the difference between slice() and subarray()?">
+    **Answer:**
+    
+    - `slice()` creates a **new buffer** with copied data. Changes don't affect the original.
+    - `subarray()` creates a **new view** on the same buffer. Changes affect the original.
+    
+    ```javascript
+    const original = new Uint8Array([1, 2, 3, 4])
+    
+    const sliced = original.slice(1, 3)
+    sliced[0] = 99
+    console.log(original[1])  // 2 - unchanged
+    
+    const sub = original.subarray(1, 3)
+    sub[0] = 99
+    console.log(original[1])  // 99 - changed!
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: How do you convert a string to bytes and back?">
+    **Answer:**
+    
+    Use `TextEncoder` and `TextDecoder`:
+    
+    ```javascript
+    // String to bytes (UTF-8)
+    const encoder = new TextEncoder()
+    const bytes = encoder.encode("Hello!")
+    console.log(bytes)  // Uint8Array [72, 101, 108, 108, 111, 33]
+    
+    // Bytes to string
+    const decoder = new TextDecoder('utf-8')
+    const text = decoder.decode(bytes)
+    console.log(text)  // "Hello!"
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Blob & File API" icon="file" href="/beyond/concepts/blob-file-api">
+    Work with binary data as files and blobs
+  </Card>
+  <Card title="Web Workers" icon="gears" href="/concepts/web-workers">
+    Transfer ArrayBuffers between threads
+  </Card>
+  <Card title="Memory Management" icon="memory" href="/beyond/concepts/memory-management">
+    How JavaScript manages memory allocation
+  </Card>
+  <Card title="Fetch API" icon="cloud-arrow-down" href="/concepts/http-fetch">
+    Fetch binary data from APIs
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Typed Arrays — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Typed_arrays">
+    The complete MDN guide to typed arrays, covering buffers, views, and all typed array types with detailed examples.
+  </Card>
+  <Card title="ArrayBuffer — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer">
+    Official reference for ArrayBuffer including constructor, properties, and methods like slice() and transfer().
+  </Card>
+  <Card title="DataView — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView">
+    DataView reference with all getter/setter methods for reading and writing different numeric types.
+  </Card>
+  <Card title="TypedArray — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray">
+    Reference for the TypedArray prototype methods shared by all typed array types.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="ArrayBuffer, binary arrays — JavaScript.info" icon="newspaper" href="https://javascript.info/arraybuffer-binary-arrays">
+    Excellent tutorial with clear visualizations of how buffers and views work together. Includes interactive examples and exercises to test your understanding.
+  </Card>
+  <Card title="Mastering JavaScript ArrayBuffer — DEV.to" icon="newspaper" href="https://dev.to/dharamgfx/mastering-javascript-arraybuffer-a-comprehensive-guide-1d5h">
+    Comprehensive guide covering ArrayBuffer creation, typed array operations, and practical use cases. Good for developers wanting a complete overview.
+  </Card>
+  <Card title="Binary Data in JavaScript — Medium" icon="newspaper" href="https://medium.com/@masterakbaridev/understanding-binary-data-in-javascript-exploring-arraybuffer-and-typed-arrays-42062362a473">
+    Clear explanations of when and why to use typed arrays, with focus on real-world applications like WebSockets and file handling.
+  </Card>
+  <Card title="Typed Arrays in JavaScript — HackerNoon" icon="newspaper" href="https://hackernoon.com/javascript-typed-arrays-beginners-guide-ld1x3136">
+    Beginner-friendly introduction covering the basics of typed arrays with simple examples. Great starting point for newcomers to binary data.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Typed Arrays & Array Buffers — Web Fusion" icon="video" href="https://www.youtube.com/watch?v=rL4AyCAl5_Y">
+    Step-by-step tutorial walking through ArrayBuffer and typed array fundamentals with live coding examples.
+  </Card>
+  <Card title="JavaScript Binary Data — Fireship" icon="video" href="https://www.youtube.com/watch?v=x2_bcCZg8vU">
+    Fast-paced overview of binary data handling in JavaScript, covering typed arrays, DataView, and common use cases in under 10 minutes.
+  </Card>
+  <Card title="Understanding ArrayBuffer — JSConf" icon="video" href="https://www.youtube.com/watch?v=UYkJaW3pl4A">
+    Conference talk exploring the internals of ArrayBuffer and how it enables high-performance binary operations in JavaScript.
+  </Card>
+</CardGroup>
