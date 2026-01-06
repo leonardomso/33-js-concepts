@@ -1,0 +1,888 @@
+---
+title: "Event Delegation: Handle Events Efficiently in JavaScript"
+sidebarTitle: "Event Delegation"
+description: "Learn event delegation in JavaScript. Handle events efficiently using bubbling, manage dynamic elements, reduce memory usage, and implement common patterns."
+---
+
+How do you handle click events on a list that could have 10, 100, or 1,000 items? What about elements that don't even exist yet — dynamically added after the page loads? If you're adding individual event listeners to each element, you're working too hard and using too much memory.
+
+```javascript
+// The problem: Adding listeners to every item doesn't scale
+// ❌ This approach has issues
+document.querySelectorAll('.todo-item').forEach(item => {
+  item.addEventListener('click', handleClick)
+})
+// What about items added later? They won't have listeners!
+
+// The solution: Event delegation
+// ✅ One listener handles all items, including future ones
+document.querySelector('.todo-list').addEventListener('click', (event) => {
+  if (event.target.matches('.todo-item')) {
+    handleClick(event)
+  }
+})
+```
+
+**Event delegation** is a technique that leverages [event bubbling](/beyond/concepts/event-bubbling-capturing) to handle events at a higher level in the DOM than the element where the event originated. Instead of attaching listeners to multiple child elements, you attach a single listener to a parent element and use `event.target` to determine which child triggered the event.
+
+<Info>
+**What you'll learn in this guide:**
+- What event delegation is and how it works
+- The difference between `event.target` and `event.currentTarget`
+- How to use `matches()` and `closest()` for element filtering
+- Handling events on dynamically added elements
+- Performance benefits of delegation
+- Common delegation patterns for lists, tables, and menus
+- When NOT to use event delegation
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [event bubbling and capturing](/beyond/concepts/event-bubbling-capturing). Event delegation relies on bubbling — the mechanism where events "bubble up" from child elements to their ancestors.
+</Warning>
+
+---
+
+## What is Event Delegation?
+
+**Event delegation** is a pattern where you attach a single event listener to a parent element to handle events on its child elements. When an event occurs on a child, it bubbles up to the parent, where the listener catches it and determines which specific child triggered the event. This approach reduces memory usage, simplifies code, and automatically handles dynamically added elements.
+
+Think of event delegation like a receptionist at an office building. Instead of giving every employee their own personal doorbell, visitors ring one doorbell at the reception desk. The receptionist then determines who the visitor wants to see and routes them appropriately. One point of contact handles all visitors efficiently.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                        EVENT DELEGATION FLOW                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   User clicks a <button> inside a <div>:                                     │
+│                                                                              │
+│   ┌──────────────────────────────────────────────────────────────────────┐  │
+│   │  <div class="container">  ← Event listener attached HERE             │  │
+│   │    │                                                                 │  │
+│   │    ├── <button>Save</button>     ← Click happens HERE                │  │
+│   │    │                             ↑                                   │  │
+│   │    ├── <button>Delete</button>   │ Event bubbles UP                  │  │
+│   │    │                             │                                   │  │
+│   │    └── <button>Edit</button>     │                                   │  │
+│   │                                  │                                   │  │
+│   └──────────────────────────────────┴───────────────────────────────────┘  │
+│                                                                              │
+│   1. User clicks "Save" button                                               │
+│   2. Event bubbles up to container                                           │
+│   3. Container's listener catches the event                                  │
+│   4. event.target identifies which button was clicked                        │
+│   5. Handler takes appropriate action                                        │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## The Key Players: target, currentTarget, matches, and closest
+
+Before diving into delegation patterns, you need to understand four essential tools:
+
+### event.target vs event.currentTarget
+
+These two properties are often confused but serve different purposes:
+
+```javascript
+// HTML: <ul id="menu"><li><button>Click</button></li></ul>
+
+document.getElementById('menu').addEventListener('click', (event) => {
+  console.log('target:', event.target.tagName)        // BUTTON (what was clicked)
+  console.log('currentTarget:', event.currentTarget.tagName) // UL (where listener is)
+})
+```
+
+| Property | Returns | Use Case |
+|----------|---------|----------|
+| `event.target` | The element that **triggered** the event | Finding what was actually clicked |
+| `event.currentTarget` | The element that **has the listener** | Referencing the delegating parent |
+
+```javascript
+// Visual example: Click on the inner span
+// <div id="outer">
+//   <p>
+//     <span>Click me</span>
+//   </p>
+// </div>
+
+document.getElementById('outer').addEventListener('click', (event) => {
+  // If user clicks the <span>:
+  console.log(event.target)        // <span>Click me</span>
+  console.log(event.currentTarget) // <div id="outer">
+  
+  // target changes based on what's clicked
+  // currentTarget is always the element with the listener
+})
+```
+
+### Element.matches() — Checking Element Identity
+
+The [`matches()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/matches) method tests whether an element matches a CSS selector. It's essential for filtering which elements should trigger your handler:
+
+```javascript
+document.querySelector('.container').addEventListener('click', (event) => {
+  // Check if clicked element is a button
+  if (event.target.matches('button')) {
+    console.log('Button clicked!')
+  }
+  
+  // Check for specific class
+  if (event.target.matches('.delete-btn')) {
+    console.log('Delete button clicked!')
+  }
+  
+  // Check for data attribute
+  if (event.target.matches('[data-action]')) {
+    const action = event.target.dataset.action
+    console.log('Action:', action)
+  }
+  
+  // Complex selectors work too
+  if (event.target.matches('button.primary:not(:disabled)')) {
+    console.log('Enabled primary button clicked!')
+  }
+})
+```
+
+### Element.closest() — Finding Ancestor Elements
+
+The [`closest()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) method traverses up the DOM tree to find the nearest ancestor (or the element itself) that matches a selector. This is crucial when the actual click target is a nested element:
+
+```javascript
+// Problem: User might click the icon inside the button
+// <button class="action-btn">
+//   <svg class="icon">...</svg>
+//   <span>Delete</span>
+// </button>
+
+document.querySelector('.container').addEventListener('click', (event) => {
+  // event.target might be the <svg> or <span>, not the <button>!
+  
+  // Solution: Use closest() to find the button ancestor
+  const button = event.target.closest('.action-btn')
+  
+  if (button) {
+    console.log('Action button clicked!')
+    // button is the <button> element, regardless of what was clicked inside
+  }
+})
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    closest() TRAVERSAL EXAMPLE                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Click on <svg> inside button:                                              │
+│                                                                              │
+│   event.target = <svg>                                                       │
+│                    │                                                         │
+│                    ▼                                                         │
+│   event.target.closest('.action-btn')                                        │
+│                    │                                                         │
+│       ┌────────────┴────────────┐                                            │
+│       │ Check: Does <svg>       │                                            │
+│       │ match '.action-btn'?    │  NO                                        │
+│       └────────────┬────────────┘                                            │
+│                    │ Move UP to parent                                       │
+│                    ▼                                                         │
+│       ┌────────────────────────────┐                                         │
+│       │ Check: Does <button>       │                                         │
+│       │ match '.action-btn'?       │  YES ──► Returns <button>               │
+│       └────────────────────────────┘                                         │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Basic Event Delegation Pattern
+
+Here's the fundamental pattern for event delegation:
+
+```javascript
+// Step 1: Attach listener to parent container
+document.querySelector('.parent-container').addEventListener('click', (event) => {
+  
+  // Step 2: Identify the target element
+  const target = event.target
+  
+  // Step 3: Check if target matches what we're looking for
+  if (target.matches('.child-element')) {
+    // Step 4: Handle the event
+    handleChildClick(target)
+  }
+})
+```
+
+### Example: Clickable List Items
+
+```javascript
+// HTML:
+// <ul id="todo-list">
+//   <li data-id="1">Buy groceries</li>
+//   <li data-id="2">Walk the dog</li>
+//   <li data-id="3">Finish report</li>
+// </ul>
+
+const todoList = document.getElementById('todo-list')
+
+todoList.addEventListener('click', (event) => {
+  // Check if an <li> was clicked
+  const item = event.target.closest('li')
+  
+  if (item) {
+    const id = item.dataset.id
+    console.log(`Clicked todo item with id: ${id}`)
+    item.classList.toggle('completed')
+  }
+})
+
+// This handles all existing items AND any items added later!
+```
+
+---
+
+## Handling Dynamic Elements
+
+One of the biggest advantages of event delegation is handling elements that are added to the DOM after the page loads:
+
+```javascript
+// Without delegation: New items don't work!
+function addTodoWithoutDelegation(text) {
+  const li = document.createElement('li')
+  li.textContent = text
+  
+  // You'd have to manually add a listener to each new element
+  li.addEventListener('click', handleClick)  // Tedious and error-prone!
+  
+  document.getElementById('todo-list').appendChild(li)
+}
+
+// With delegation: New items automatically work!
+function addTodoWithDelegation(text) {
+  const li = document.createElement('li')
+  li.textContent = text
+  
+  // No need to add individual listeners
+  // The parent's delegated listener handles it automatically
+  
+  document.getElementById('todo-list').appendChild(li)
+}
+
+// The delegated listener on the parent handles all items
+document.getElementById('todo-list').addEventListener('click', (event) => {
+  if (event.target.matches('li')) {
+    event.target.classList.toggle('completed')
+  }
+})
+```
+
+### Real-World Example: Dynamic Table
+
+```javascript
+// Imagine a table that gets rows from an API
+const tableBody = document.querySelector('#users-table tbody')
+
+// One listener handles all row actions
+tableBody.addEventListener('click', (event) => {
+  const button = event.target.closest('button')
+  if (!button) return
+  
+  const row = button.closest('tr')
+  const userId = row.dataset.userId
+  
+  if (button.matches('.edit-btn')) {
+    editUser(userId)
+  } else if (button.matches('.delete-btn')) {
+    deleteUser(userId)
+    row.remove()
+  } else if (button.matches('.view-btn')) {
+    viewUser(userId)
+  }
+})
+
+// Later, when new data arrives:
+async function loadUsers() {
+  const users = await fetch('/api/users').then(r => r.json())
+  
+  users.forEach(user => {
+    const row = document.createElement('tr')
+    row.dataset.userId = user.id
+    row.innerHTML = `
+      <td>${user.name}</td>
+      <td>${user.email}</td>
+      <td>
+        <button class="view-btn">View</button>
+        <button class="edit-btn">Edit</button>
+        <button class="delete-btn">Delete</button>
+      </td>
+    `
+    tableBody.appendChild(row)
+  })
+  // All buttons automatically work without adding individual listeners!
+}
+```
+
+---
+
+## Common Delegation Patterns
+
+### Pattern 1: Action Buttons with data-action
+
+Use `data-action` attributes to specify what each element should do:
+
+```javascript
+// HTML:
+// <div id="toolbar">
+//   <button data-action="save">Save</button>
+//   <button data-action="load">Load</button>
+//   <button data-action="delete">Delete</button>
+// </div>
+
+const actions = {
+  save() {
+    console.log('Saving...')
+  },
+  load() {
+    console.log('Loading...')
+  },
+  delete() {
+    console.log('Deleting...')
+  }
+}
+
+document.getElementById('toolbar').addEventListener('click', (event) => {
+  const action = event.target.dataset.action
+  
+  if (action && actions[action]) {
+    actions[action]()
+  }
+})
+```
+
+### Pattern 2: Tab Interface
+
+```javascript
+// HTML:
+// <div class="tabs">
+//   <button class="tab" data-tab="home">Home</button>
+//   <button class="tab" data-tab="profile">Profile</button>
+//   <button class="tab" data-tab="settings">Settings</button>
+// </div>
+// <div class="tab-content" id="home">Home content</div>
+// <div class="tab-content" id="profile">Profile content</div>
+// <div class="tab-content" id="settings">Settings content</div>
+
+document.querySelector('.tabs').addEventListener('click', (event) => {
+  const tab = event.target.closest('.tab')
+  if (!tab) return
+  
+  // Remove active class from all tabs
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'))
+  tab.classList.add('active')
+  
+  // Hide all content, show selected
+  const tabId = tab.dataset.tab
+  document.querySelectorAll('.tab-content').forEach(content => {
+    content.hidden = content.id !== tabId
+  })
+})
+```
+
+### Pattern 3: Expandable/Collapsible Sections
+
+```javascript
+// HTML:
+// <div class="accordion">
+//   <div class="accordion-item">
+//     <button class="accordion-header">Section 1</button>
+//     <div class="accordion-content">Content 1...</div>
+//   </div>
+//   <div class="accordion-item">
+//     <button class="accordion-header">Section 2</button>
+//     <div class="accordion-content">Content 2...</div>
+//   </div>
+// </div>
+
+document.querySelector('.accordion').addEventListener('click', (event) => {
+  const header = event.target.closest('.accordion-header')
+  if (!header) return
+  
+  const item = header.closest('.accordion-item')
+  const content = item.querySelector('.accordion-content')
+  const isExpanded = item.classList.contains('expanded')
+  
+  // Toggle this section
+  item.classList.toggle('expanded')
+  content.hidden = isExpanded
+  
+  // Optional: Close other sections (for exclusive accordion)
+  // document.querySelectorAll('.accordion-item').forEach(otherItem => {
+  //   if (otherItem !== item) {
+  //     otherItem.classList.remove('expanded')
+  //     otherItem.querySelector('.accordion-content').hidden = true
+  //   }
+  // })
+})
+```
+
+### Pattern 4: Form Validation
+
+```javascript
+// Delegate input validation to the form
+document.querySelector('#signup-form').addEventListener('input', (event) => {
+  const input = event.target
+  
+  if (input.matches('[data-validate]')) {
+    validateInput(input)
+  }
+})
+
+function validateInput(input) {
+  const type = input.dataset.validate
+  let isValid = true
+  let message = ''
+  
+  switch (type) {
+    case 'email':
+      isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)
+      message = isValid ? '' : 'Please enter a valid email'
+      break
+    case 'required':
+      isValid = input.value.trim().length > 0
+      message = isValid ? '' : 'This field is required'
+      break
+    case 'minlength':
+      const min = parseInt(input.dataset.minlength, 10)
+      isValid = input.value.length >= min
+      message = isValid ? '' : `Minimum ${min} characters required`
+      break
+  }
+  
+  input.classList.toggle('invalid', !isValid)
+  input.nextElementSibling.textContent = message
+}
+```
+
+---
+
+## Performance Benefits
+
+Event delegation significantly reduces memory usage when dealing with many elements:
+
+```javascript
+// Without delegation: 1000 listeners
+const items = document.querySelectorAll('.item')  // 1000 items
+items.forEach(item => {
+  item.addEventListener('click', handleClick)     // 1000 listeners created!
+})
+
+// With delegation: 1 listener
+document.querySelector('.container').addEventListener('click', (event) => {
+  if (event.target.matches('.item')) {
+    handleClick(event)
+  }
+})
+// Only 1 listener, handles all 1000+ items!
+```
+
+| Approach | Listeners | Memory Impact | Dynamic Elements |
+|----------|-----------|---------------|------------------|
+| Individual listeners on 1,000 items | 1,000 | High | Must add manually |
+| Event delegation | 1 | Low | Automatic |
+
+---
+
+## Limitations and Edge Cases
+
+### Events That Don't Bubble
+
+Some events don't bubble and can't be delegated in the traditional way:
+
+```javascript
+// These events DON'T bubble:
+// - focus / blur
+// - mouseenter / mouseleave
+// - load / unload / scroll (on elements)
+
+// Solution 1: Use capturing phase
+document.addEventListener('focus', (event) => {
+  if (event.target.matches('input')) {
+    console.log('Input focused')
+  }
+}, true)  // true = capture phase
+
+// Solution 2: Use bubbling alternatives
+// Instead of focus/blur, use focusin/focusout (they bubble!)
+document.querySelector('.form').addEventListener('focusin', (event) => {
+  if (event.target.matches('input')) {
+    event.target.classList.add('focused')
+  }
+})
+
+document.querySelector('.form').addEventListener('focusout', (event) => {
+  if (event.target.matches('input')) {
+    event.target.classList.remove('focused')
+  }
+})
+```
+
+### stopPropagation Interference
+
+If child elements stop propagation, delegation won't work:
+
+```javascript
+// This child listener prevents delegation
+childElement.addEventListener('click', (event) => {
+  event.stopPropagation()  // Parent never receives the event!
+  // Do something...
+})
+
+// Avoid using stopPropagation unless absolutely necessary
+// Consider using event.stopImmediatePropagation() only for specific cases
+```
+
+### Verifying the Element is Within Your Container
+
+With nested tables or complex structures, ensure the target is actually within your container:
+
+```javascript
+// Problem with nested structures
+document.querySelector('#outer-table').addEventListener('click', (event) => {
+  const td = event.target.closest('td')
+  
+  // td might be from a nested table, not our table!
+  if (td && event.currentTarget.contains(td)) {
+    // Now we're sure td belongs to our table
+    handleCellClick(td)
+  }
+})
+```
+
+---
+
+## When NOT to Use Event Delegation
+
+Event delegation isn't always the best choice:
+
+```javascript
+// ❌ DON'T delegate when:
+
+// 1. You have only one element
+const singleButton = document.querySelector('#submit-btn')
+singleButton.addEventListener('click', handleSubmit)  // Direct is fine
+
+// 2. You need to prevent default behavior immediately
+// (delegation adds slight delay due to bubbling)
+
+// 3. The event doesn't bubble (without capture workaround)
+
+// 4. Performance-critical scenarios where event.target checks add overhead
+// (extremely rare in practice)
+
+// ✅ DO use delegation when:
+// - Handling many similar elements
+// - Elements are added/removed dynamically
+// - You want cleaner, more maintainable code
+// - Memory efficiency is important
+```
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Forgetting closest() for Nested Elements
+
+```javascript
+// ❌ WRONG: Only works if you click exactly on the button, not its children
+container.addEventListener('click', (event) => {
+  if (event.target.matches('.btn')) {
+    // Fails if user clicks on <span> inside button!
+  }
+})
+
+// ✅ CORRECT: Works regardless of where inside the button you click
+container.addEventListener('click', (event) => {
+  const btn = event.target.closest('.btn')
+  if (btn) {
+    // Works for button and all its children
+  }
+})
+```
+
+### Mistake 2: Not Checking Container Boundaries
+
+```javascript
+// ❌ WRONG: Might catch elements from nested structures
+table.addEventListener('click', (event) => {
+  const row = event.target.closest('tr')
+  if (row) {
+    // Could be a row from a nested table!
+  }
+})
+
+// ✅ CORRECT: Verify the element is within our container
+table.addEventListener('click', (event) => {
+  const row = event.target.closest('tr')
+  if (row && table.contains(row)) {
+    // Definitely our row
+  }
+})
+```
+
+### Mistake 3: Over-delegating
+
+```javascript
+// ❌ WRONG: Delegating at document level for everything
+document.addEventListener('click', (event) => {
+  // This catches EVERY click on the page!
+  if (event.target.matches('.my-button')) {
+    // ...
+  }
+})
+
+// ✅ CORRECT: Delegate at the appropriate container level
+document.querySelector('.my-component').addEventListener('click', (event) => {
+  if (event.target.matches('.my-button')) {
+    // Scoped to just this component
+  }
+})
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Event delegation uses bubbling** — Attach one listener to a parent instead of many listeners to children. Events bubble up from the clicked element to the parent.
+
+2. **event.target vs event.currentTarget** — `target` is what was clicked; `currentTarget` is where the listener is attached. Use `target` to identify which child triggered the event.
+
+3. **matches() filters elements** — Use `event.target.matches(selector)` to check if the clicked element matches your criteria.
+
+4. **closest() handles nested elements** — When buttons contain icons or spans, use `event.target.closest(selector)` to find the actual clickable element.
+
+5. **Dynamic elements work automatically** — Elements added after page load are handled without adding new listeners.
+
+6. **Memory efficient** — One listener instead of hundreds or thousands reduces memory usage significantly.
+
+7. **Not all events bubble** — `focus`, `blur`, `mouseenter`, and `mouseleave` don't bubble. Use `focusin`/`focusout` or capture phase instead.
+
+8. **Scope appropriately** — Delegate at the nearest common ancestor, not always at `document` level.
+
+9. **Verify container boundaries** — With nested structures, use `container.contains(element)` to ensure the target is within your container.
+
+10. **Keep handlers organized** — Use `data-action` attributes and action objects to keep delegation logic clean and maintainable.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What is the main benefit of event delegation?">
+    **Answer:**
+    
+    Event delegation provides several key benefits:
+    
+    1. **Memory efficiency** — One listener handles many elements instead of attaching individual listeners to each
+    2. **Dynamic element handling** — Elements added after page load automatically work without adding new listeners
+    3. **Cleaner code** — Centralized event handling logic instead of scattered listeners
+    4. **Easier maintenance** — Changes only need to be made in one place
+    
+    ```javascript
+    // One listener handles all current and future list items
+    list.addEventListener('click', (event) => {
+      if (event.target.matches('li')) {
+        handleItemClick(event.target)
+      }
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: When should you use closest() instead of matches()?">
+    **Answer:**
+    
+    Use `closest()` when the actual click target might be a nested element inside the element you care about:
+    
+    ```javascript
+    // Button structure: <button class="btn"><svg>...</svg><span>Click</span></button>
+    
+    // ❌ matches() fails if user clicks the <svg> or <span>
+    if (event.target.matches('.btn')) { }  // false when clicking icon!
+    
+    // ✅ closest() finds the button even when clicking nested elements
+    const btn = event.target.closest('.btn')  // finds parent button
+    if (btn) { }  // works!
+    ```
+    
+    Use `closest()` when:
+    - Elements contain icons, images, or nested markup
+    - You need to find a specific ancestor element
+    - You want to handle clicks anywhere within a complex element
+  </Accordion>
+  
+  <Accordion title="Question 3: Why do focus and blur events require special handling?">
+    **Answer:**
+    
+    The `focus` and `blur` events **don't bubble** by default, so they can't be caught by a parent using standard delegation:
+    
+    ```javascript
+    // ❌ This won't work - focus doesn't bubble
+    form.addEventListener('focus', handler)
+    
+    // ✅ Solution 1: Use capture phase
+    form.addEventListener('focus', handler, true)
+    
+    // ✅ Solution 2: Use focusin/focusout (they bubble!)
+    form.addEventListener('focusin', handler)   // bubbling equivalent of focus
+    form.addEventListener('focusout', handler)  // bubbling equivalent of blur
+    ```
+    
+    Other non-bubbling events include: `mouseenter`, `mouseleave`, `load`, `unload`, and `scroll` (on elements).
+  </Accordion>
+  
+  <Accordion title="Question 4: How do you handle multiple action types with delegation?">
+    **Answer:**
+    
+    Use `data-action` attributes to specify actions, and map them to handler functions:
+    
+    ```javascript
+    // HTML
+    // <button data-action="save">Save</button>
+    // <button data-action="delete">Delete</button>
+    
+    // JavaScript
+    const actions = {
+      save() { console.log('Saving...') },
+      delete() { console.log('Deleting...') }
+    }
+    
+    container.addEventListener('click', (event) => {
+      const action = event.target.dataset.action
+      if (action && actions[action]) {
+        actions[action]()
+      }
+    })
+    ```
+    
+    This pattern is clean, extensible, and keeps your delegation logic organized.
+  </Accordion>
+  
+  <Accordion title="Question 5: What's the difference between event.target and event.currentTarget?">
+    **Answer:**
+    
+    | Property | Returns | When to use |
+    |----------|---------|-------------|
+    | `event.target` | Element that **triggered** the event | Identifying which child was clicked |
+    | `event.currentTarget` | Element that **has the listener** | Referencing the delegating parent |
+    
+    ```javascript
+    // <ul id="list"><li><button>Click</button></li></ul>
+    
+    document.getElementById('list').addEventListener('click', (event) => {
+      console.log(event.target)        // <button> (what was clicked)
+      console.log(event.currentTarget) // <ul> (where listener is attached)
+    })
+    ```
+    
+    `target` changes based on what's clicked; `currentTarget` is always the element with the listener.
+  </Accordion>
+  
+  <Accordion title="Question 6: How do you verify an element is within your container with nested structures?">
+    **Answer:**
+    
+    Use `container.contains(element)` to verify the target element is actually within your container:
+    
+    ```javascript
+    // Problem: With nested tables, closest('tr') might find a row 
+    // from an inner table, not your table
+    
+    table.addEventListener('click', (event) => {
+      const row = event.target.closest('tr')
+      
+      // ❌ Wrong: row might be from nested table
+      if (row) { handleRow(row) }
+      
+      // ✅ Correct: verify row is within our table
+      if (row && table.contains(row)) { handleRow(row) }
+    })
+    ```
+    
+    This is especially important with complex layouts, nested components, or when working with third-party widgets that might be inserted into your container.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Event Bubbling & Capturing" icon="arrow-up" href="/beyond/concepts/event-bubbling-capturing">
+    Understand the event propagation mechanism that makes delegation possible
+  </Card>
+  <Card title="Custom Events" icon="bolt" href="/beyond/concepts/custom-events">
+    Learn to create and dispatch your own events that work with delegation
+  </Card>
+  <Card title="DOM Manipulation" icon="code" href="/concepts/dom">
+    Master the Document Object Model and element selection methods
+  </Card>
+  <Card title="Callbacks" icon="phone" href="/concepts/callbacks">
+    Understand callback functions used as event handlers
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Event.target — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Event/target">
+    Official documentation for the target property that identifies the event origin
+  </Card>
+  <Card title="Event.currentTarget — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Event/currentTarget">
+    Documentation for currentTarget, which identifies where the listener is attached
+  </Card>
+  <Card title="Element.closest() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/closest">
+    Reference for the closest() method used to find ancestor elements
+  </Card>
+  <Card title="Element.matches() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Element/matches">
+    Documentation for testing if an element matches a CSS selector
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Event Delegation — JavaScript.info" icon="newspaper" href="https://javascript.info/event-delegation">
+    Comprehensive tutorial with interactive examples covering delegation patterns, the behavior pattern, and practical exercises
+  </Card>
+  <Card title="Event Bubbling — MDN Learn" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling">
+    MDN's guide to event bubbling with clear explanations of target vs currentTarget and delegation examples
+  </Card>
+  <Card title="How JavaScript Event Delegation Works — David Walsh" icon="newspaper" href="https://davidwalsh.name/event-delegate">
+    Classic article explaining event delegation fundamentals with practical code examples
+  </Card>
+  <Card title="DOM Events Guide — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Events">
+    Comprehensive MDN guide to working with events in the DOM, including propagation and delegation
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Event Delegation — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=XF1_MlZ5l6M">
+    Clear explanation of event delegation with visual examples showing how bubbling enables this pattern
+  </Card>
+  <Card title="JavaScript Event Delegation — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=3KJI1WZGDrg">
+    Practical walkthrough building a dynamic list with delegated event handling
+  </Card>
+  <Card title="Event Bubbling and Delegation — The Net Ninja" icon="video" href="https://www.youtube.com/watch?v=aVeQ4shbNls">
+    Part of a comprehensive JavaScript DOM series covering bubbling and delegation together
+  </Card>
+</CardGroup>
