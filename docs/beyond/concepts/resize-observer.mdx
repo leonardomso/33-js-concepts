@@ -1,0 +1,903 @@
+---
+title: "ResizeObserver: Detect Element Size Changes in JavaScript"
+sidebarTitle: "ResizeObserver"
+description: "Learn the ResizeObserver API in JavaScript. Detect element size changes, build responsive components, and replace inefficient window resize listeners."
+---
+
+How do you know when an element's size changes? Maybe a sidebar collapses, a container stretches to fit new content, or a user resizes a text area. How can JavaScript respond to these changes without constantly polling the DOM?
+
+```javascript
+// Detect when an element's size changes
+const observer = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    console.log('Element resized:', entry.target);
+    console.log('New width:', entry.contentRect.width);
+    console.log('New height:', entry.contentRect.height);
+  }
+});
+
+observer.observe(document.querySelector('.resizable-box'));
+```
+
+The **[ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver)** lets you watch elements for size changes and react accordingly. Unlike the `window.resize` event that only fires when the viewport changes, ResizeObserver detects size changes on individual elements, no matter what caused them.
+
+<Info>
+**What you'll learn in this guide:**
+- What ResizeObserver is and why it replaces window resize listeners
+- How to create and use a ResizeObserver
+- Understanding contentRect vs borderBoxSize vs contentBoxSize
+- Building responsive components with element queries
+- Common use cases: responsive typography, canvas resizing, layout adjustments
+- Performance considerations and best practices
+- How to avoid infinite loops and observation errors
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes familiarity with the [DOM](/concepts/dom). If you're new to DOM manipulation, read that guide first!
+</Warning>
+
+---
+
+## What is ResizeObserver?
+
+The **ResizeObserver** interface reports changes to the dimensions of an element's content box or border box. It provides an efficient way to monitor element size without resorting to continuous polling or listening to every possible event that might cause a resize.
+
+Before ResizeObserver, detecting element size changes was painful:
+
+```javascript
+// The old way: Listen to window resize and hope for the best
+window.addEventListener('resize', () => {
+  const width = element.offsetWidth;
+  // But this ONLY fires when the viewport resizes!
+  // It misses: content changes, CSS animations, sibling resizes...
+});
+
+// Even worse: Polling with setInterval
+setInterval(() => {
+  const currentWidth = element.offsetWidth;
+  if (currentWidth !== lastWidth) {
+    handleResize();
+    lastWidth = currentWidth;
+  }
+}, 100);  // Wasteful! Runs even when nothing changes
+```
+
+ResizeObserver solves all of this. It fires exactly when an observed element's size changes, regardless of the cause.
+
+---
+
+## The Tailor Shop Analogy
+
+Think of ResizeObserver like a tailor who constantly monitors your measurements, ready to adjust your clothes the moment your size changes.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        THE TAILOR SHOP                                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    THE OLD WAY: Check Everyone When the Door Opens                       │
+│    ─────────────────────────────────────────────────                     │
+│                                                                          │
+│    Door opens       →    Measure EVERYONE       →    Most unchanged!     │
+│    (window resize)       (check all elements)       (wasted effort)      │
+│                                                                          │
+│    ────────────────────────────────────────────────────────────────      │
+│                                                                          │
+│    THE RESIZEOBSERVER WAY: Personal Tailors for Each Customer            │
+│    ─────────────────────────────────────────────────────────────         │
+│                                                                          │
+│    Customer            Personal Tailor          Instant Adjustment       │
+│    (element)           (observer callback)      (only when needed)       │
+│                                                                          │
+│    "I gained weight"  →  "I noticed!"  →  "Let me adjust your suit"     │
+│    (size changes)        (callback fires)    (your resize handler)      │
+│                                                                          │
+│    Other customers?   →  Still relaxing   →  No wasted work!            │
+│    (unchanged elements)  (no callback)                                   │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+ResizeObserver assigns a "personal tailor" to each element you want to watch. The tailor only springs into action when that specific element's measurements change.
+
+---
+
+## How to Create a ResizeObserver
+
+Creating a ResizeObserver follows the same pattern as other observer APIs like [IntersectionObserver](/beyond/concepts/intersection-observer) and [MutationObserver](/beyond/concepts/mutation-observer).
+
+### Basic Syntax
+
+```javascript
+// Step 1: Create the observer with a callback function
+const resizeObserver = new ResizeObserver((entries, observer) => {
+  // This callback fires whenever observed elements resize
+  for (const entry of entries) {
+    console.log('Element:', entry.target);
+    console.log('Size:', entry.contentRect.width, 'x', entry.contentRect.height);
+  }
+});
+
+// Step 2: Start observing elements
+const box = document.querySelector('.box');
+resizeObserver.observe(box);
+
+// Step 3: Stop observing when done
+resizeObserver.unobserve(box);      // Stop watching one element
+resizeObserver.disconnect();         // Stop watching all elements
+```
+
+### The Callback Parameters
+
+The callback receives two arguments:
+
+| Parameter | Description |
+|-----------|-------------|
+| `entries` | An array of [ResizeObserverEntry](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry) objects, one per observed element that changed |
+| `observer` | A reference to the ResizeObserver itself (useful for disconnecting from within the callback) |
+
+### The ResizeObserverEntry Object
+
+Each entry provides information about the resized element:
+
+```javascript
+const observer = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    // The element that was resized
+    console.log(entry.target);
+    
+    // Legacy way: contentRect (DOMRectReadOnly)
+    console.log(entry.contentRect.width);   // Content width
+    console.log(entry.contentRect.height);  // Content height
+    console.log(entry.contentRect.top);     // Padding-top value
+    console.log(entry.contentRect.left);    // Padding-left value
+    
+    // Modern way: More detailed size information
+    console.log(entry.contentBoxSize);      // Content box dimensions
+    console.log(entry.borderBoxSize);       // Border box dimensions
+    console.log(entry.devicePixelContentBoxSize);  // Device pixel dimensions
+  }
+});
+```
+
+---
+
+## Understanding Box Models in ResizeObserver
+
+ResizeObserver can report sizes using different CSS box models. Understanding the difference is crucial for accurate measurements.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        CSS BOX MODEL                                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ┌─────────────────────────────────────────────────────────┐          │
+│    │                      MARGIN                              │          │
+│    │    ┌─────────────────────────────────────────────┐      │          │
+│    │    │                 BORDER                       │      │          │
+│    │    │    ┌───────────────────────────────────┐    │      │          │
+│    │    │    │            PADDING                 │    │      │          │
+│    │    │    │    ┌─────────────────────────┐    │    │      │          │
+│    │    │    │    │                         │    │    │      │          │
+│    │    │    │    │     CONTENT BOX         │    │    │      │          │
+│    │    │    │    │   (contentRect)         │    │    │      │          │
+│    │    │    │    │                         │    │    │      │          │
+│    │    │    │    └─────────────────────────┘    │    │      │          │
+│    │    │    │            ↑ contentBoxSize       │    │      │          │
+│    │    │    └───────────────────────────────────┘    │      │          │
+│    │    │                 ↑ borderBoxSize             │      │          │
+│    │    └─────────────────────────────────────────────┘      │          │
+│    └─────────────────────────────────────────────────────────┘          │
+│                                                                          │
+│    contentRect      = Content width/height only                          │
+│    contentBoxSize   = Content width/height (modern, includes writing     │
+│                       mode support)                                      │
+│    borderBoxSize    = Content + padding + border                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Choosing Which Box to Observe
+
+The `observe()` method accepts an options object:
+
+```javascript
+// Observe the content box (default)
+observer.observe(element);
+observer.observe(element, { box: 'content-box' });
+
+// Observe the border box (includes padding and border)
+observer.observe(element, { box: 'border-box' });
+
+// Observe device pixels (useful for canvas)
+observer.observe(element, { box: 'device-pixel-content-box' });
+```
+
+### Modern Size Properties
+
+The newer `contentBoxSize` and `borderBoxSize` properties return arrays of [ResizeObserverSize](https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverSize) objects with `inlineSize` and `blockSize`:
+
+```javascript
+const observer = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    // Modern approach (handles writing modes correctly)
+    if (entry.contentBoxSize) {
+      // It's an array (for multi-fragment elements in the future)
+      const contentBoxSize = entry.contentBoxSize[0];
+      
+      console.log('Inline size:', contentBoxSize.inlineSize);  // Width in horizontal writing mode
+      console.log('Block size:', contentBoxSize.blockSize);    // Height in horizontal writing mode
+    }
+    
+    // Legacy approach (simpler but less accurate with writing modes)
+    console.log('Width:', entry.contentRect.width);
+    console.log('Height:', entry.contentRect.height);
+  }
+});
+```
+
+<Tip>
+**When to use which:** Use `contentRect` for simple cases where you just need width and height. Use `contentBoxSize` or `borderBoxSize` when you need to handle different writing modes (like vertical text) or when you need border-box measurements.
+</Tip>
+
+---
+
+## Practical Use Cases
+
+### 1. Responsive Typography
+
+Adjust font size based on container width without media queries:
+
+```javascript
+function createResponsiveText(element) {
+  const observer = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const width = entry.contentRect.width;
+      
+      // Scale font size based on container width
+      const fontSize = Math.max(16, Math.min(48, width / 20));
+      entry.target.style.fontSize = `${fontSize}px`;
+    }
+  });
+  
+  observer.observe(element);
+  return observer;
+}
+
+// Usage
+const headline = document.querySelector('.headline');
+const observer = createResponsiveText(headline);
+```
+
+### 2. Canvas Resizing
+
+Keep a canvas sharp at any size by matching its internal resolution:
+
+```javascript
+function setupResponsiveCanvas(canvas) {
+  const ctx = canvas.getContext('2d');
+  
+  const observer = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      // Get the device pixel ratio for sharp rendering
+      const dpr = window.devicePixelRatio || 1;
+      
+      // Get the CSS size
+      const width = entry.contentRect.width;
+      const height = entry.contentRect.height;
+      
+      // Set the canvas internal size to match device pixels
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      
+      // Scale the context to use CSS pixels
+      ctx.scale(dpr, dpr);
+      
+      // Redraw your canvas content
+      redrawCanvas(ctx, width, height);
+    }
+  });
+  
+  observer.observe(canvas);
+  return observer;
+}
+
+function redrawCanvas(ctx, width, height) {
+  ctx.fillStyle = '#3498db';
+  ctx.fillRect(0, 0, width, height);
+  ctx.fillStyle = 'white';
+  ctx.font = '24px Arial';
+  ctx.fillText(`${width} x ${height}`, 20, 40);
+}
+```
+
+### 3. Element Queries (Container Queries Alternative)
+
+Before CSS Container Queries had wide support, ResizeObserver was the go-to solution:
+
+```javascript
+function applyElementQuery(element, breakpoints) {
+  const observer = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const width = entry.contentRect.width;
+      
+      // Remove all breakpoint classes
+      Object.keys(breakpoints).forEach(bp => {
+        entry.target.classList.remove(breakpoints[bp]);
+      });
+      
+      // Add the appropriate class based on width
+      if (width < 300) {
+        entry.target.classList.add(breakpoints.small);
+      } else if (width < 600) {
+        entry.target.classList.add(breakpoints.medium);
+      } else {
+        entry.target.classList.add(breakpoints.large);
+      }
+    }
+  });
+  
+  observer.observe(element);
+  return observer;
+}
+
+// Usage
+const card = document.querySelector('.card');
+applyElementQuery(card, {
+  small: 'card--compact',
+  medium: 'card--standard',
+  large: 'card--expanded'
+});
+```
+
+### 4. Auto-Scrolling Chat Window
+
+Keep a chat window scrolled to the bottom when new messages arrive:
+
+```javascript
+function setupAutoScroll(container) {
+  let shouldAutoScroll = true;
+  
+  // Track if user has scrolled up
+  container.addEventListener('scroll', () => {
+    const { scrollTop, scrollHeight, clientHeight } = container;
+    shouldAutoScroll = scrollTop + clientHeight >= scrollHeight - 10;
+  });
+  
+  // When content changes size, scroll to bottom if appropriate
+  const observer = new ResizeObserver(() => {
+    if (shouldAutoScroll) {
+      container.scrollTop = container.scrollHeight;
+    }
+  });
+  
+  observer.observe(container);
+  return observer;
+}
+
+// Usage
+const chatMessages = document.querySelector('.chat-messages');
+setupAutoScroll(chatMessages);
+```
+
+### 5. Dynamic Aspect Ratio
+
+Maintain aspect ratio for responsive video or image containers:
+
+```javascript
+function maintainAspectRatio(element, ratio = 16 / 9) {
+  const observer = new ResizeObserver((entries) => {
+    for (const entry of entries) {
+      const width = entry.contentRect.width;
+      const height = width / ratio;
+      
+      entry.target.style.height = `${height}px`;
+    }
+  });
+  
+  observer.observe(element);
+  return observer;
+}
+
+// Usage: 16:9 video container
+const videoWrapper = document.querySelector('.video-wrapper');
+maintainAspectRatio(videoWrapper, 16 / 9);
+```
+
+---
+
+## The #1 ResizeObserver Mistake: Infinite Loops
+
+The most dangerous mistake with ResizeObserver is creating an infinite loop by changing the observed element's size inside the callback.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        THE INFINITE LOOP TRAP                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  WRONG:                                                                  │
+│                                                                          │
+│    ┌─────────┐    fires     ┌──────────────┐    changes     ┌─────────┐ │
+│    │ Element │ ──────────► │   Callback    │ ─────────────► │ Element │ │
+│    │ resizes │             │ runs          │                │ size!   │ │
+│    └─────────┘             └──────────────┘                └────┬────┘ │
+│         ▲                                                       │      │
+│         │                                                       │      │
+│         └───────────────────────────────────────────────────────┘      │
+│                              INFINITE LOOP!                             │
+│                                                                          │
+│  CORRECT:                                                                │
+│                                                                          │
+│    • Track expected sizes and skip if already at target                  │
+│    • Use requestAnimationFrame to defer changes                          │
+│    • Change OTHER elements, not the observed one                         │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### The Problem
+
+```javascript
+// ❌ WRONG - Creates an infinite loop!
+const observer = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    // This changes the element's size, which triggers another callback!
+    entry.target.style.width = (entry.contentRect.width + 10) + 'px';
+  }
+});
+
+observer.observe(element);  // Browser will eventually throw an error
+```
+
+The browser protects against complete lockup by only processing elements deeper in the DOM tree on each iteration. Elements that don't meet this condition are deferred to the next frame, and an error is fired:
+
+```
+ResizeObserver loop completed with undelivered notifications.
+```
+
+### The Solutions
+
+**Solution 1: Track expected size and skip**
+
+```javascript
+// ✓ CORRECT - Track expected size
+const expectedSizes = new WeakMap();
+
+const observer = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    const expectedSize = expectedSizes.get(entry.target);
+    const currentWidth = entry.contentRect.width;
+    
+    // Skip if we're already at the expected size
+    if (currentWidth === expectedSize) {
+      continue;
+    }
+    
+    const newWidth = calculateNewWidth(currentWidth);
+    entry.target.style.width = `${newWidth}px`;
+    expectedSizes.set(entry.target, newWidth);
+  }
+});
+```
+
+**Solution 2: Use requestAnimationFrame**
+
+```javascript
+// ✓ CORRECT - Defer to next frame
+const observer = new ResizeObserver((entries) => {
+  requestAnimationFrame(() => {
+    for (const entry of entries) {
+      // Changes happen after the current ResizeObserver cycle
+      entry.target.style.width = (entry.contentRect.width + 10) + 'px';
+    }
+  });
+});
+```
+
+**Solution 3: Modify other elements**
+
+```javascript
+// ✓ CORRECT - Change a different element
+const observer = new ResizeObserver((entries) => {
+  for (const entry of entries) {
+    // Change a sibling or child, not the observed element itself
+    const label = entry.target.querySelector('.size-label');
+    label.textContent = `${entry.contentRect.width} x ${entry.contentRect.height}`;
+  }
+});
+```
+
+<Warning>
+**The Trap:** ResizeObserver callbacks that resize their observed elements will cause the error "ResizeObserver loop completed with undelivered notifications." While the browser prevents a complete freeze, you'll see errors in the console and potentially janky rendering.
+</Warning>
+
+---
+
+## Performance Considerations
+
+ResizeObserver is efficient, but there are still best practices to follow.
+
+### Do's and Don'ts
+
+```javascript
+// ✓ DO: Reuse observers when possible
+const sharedObserver = new ResizeObserver(handleResize);
+elements.forEach(el => sharedObserver.observe(el));
+
+// ❌ DON'T: Create a new observer for each element
+elements.forEach(el => {
+  const observer = new ResizeObserver(handleResize);
+  observer.observe(el);  // Wasteful!
+});
+```
+
+```javascript
+// ✓ DO: Disconnect when elements are removed
+function cleanup() {
+  observer.unobserve(element);
+  element.remove();
+}
+
+// ❌ DON'T: Leave orphaned observers
+element.remove();  // Observer still running with no target!
+```
+
+```javascript
+// ✓ DO: Debounce expensive operations
+let timeout;
+const observer = new ResizeObserver((entries) => {
+  clearTimeout(timeout);
+  timeout = setTimeout(() => {
+    // Expensive operation here
+    recalculateLayout(entries);
+  }, 100);
+});
+
+// ❌ DON'T: Run expensive operations on every callback
+const observer = new ResizeObserver((entries) => {
+  // This runs on EVERY resize, even during drag!
+  expensiveLayoutCalculation();
+});
+```
+
+### Memory Management
+
+Always clean up observers when you're done:
+
+```javascript
+class ResizableComponent {
+  constructor(element) {
+    this.element = element;
+    this.observer = new ResizeObserver(this.handleResize.bind(this));
+    this.observer.observe(element);
+  }
+  
+  handleResize(entries) {
+    // Handle resize
+  }
+  
+  destroy() {
+    // Clean up to prevent memory leaks
+    this.observer.disconnect();
+    this.observer = null;
+  }
+}
+```
+
+---
+
+## Browser Support and Polyfills
+
+ResizeObserver has excellent browser support, available in all modern browsers since July 2020.
+
+| Browser | Support Since |
+|---------|---------------|
+| Chrome | 64 (January 2018) |
+| Firefox | 69 (September 2019) |
+| Safari | 13.1 (March 2020) |
+| Edge | 79 (January 2020) |
+
+For older browsers, you can use a polyfill:
+
+```javascript
+// Check if ResizeObserver is available
+if ('ResizeObserver' in window) {
+  // Native support
+  const observer = new ResizeObserver(callback);
+} else {
+  // Load polyfill or use fallback
+  console.warn('ResizeObserver not supported');
+}
+```
+
+---
+
+## ResizeObserver vs Other Approaches
+
+| Approach | When It Fires | Efficiency | Use Case |
+|----------|---------------|------------|----------|
+| `window.resize` event | Viewport resize only | Good | Global layout changes |
+| `ResizeObserver` | Any element size change | Excellent | Per-element responsive behavior |
+| `MutationObserver` | DOM mutations | Good | Watching for added/removed elements |
+| Polling with `setInterval` | On interval | Poor | Avoid if possible |
+| CSS Container Queries | Element size change | Excellent | Pure CSS responsive components |
+
+<Tip>
+**Modern recommendation:** Use CSS Container Queries for purely visual adaptations, and ResizeObserver when you need JavaScript logic to respond to size changes (canvas rendering, complex calculations, non-CSS updates).
+</Tip>
+
+---
+
+## Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="Mistake 1: Forgetting to disconnect observers">
+    ```javascript
+    // ❌ WRONG - Memory leak!
+    function attachObserver(element) {
+      const observer = new ResizeObserver(callback);
+      observer.observe(element);
+      // Observer lives forever, even if element is removed
+    }
+    
+    // ✓ CORRECT - Return observer for cleanup
+    function attachObserver(element) {
+      const observer = new ResizeObserver(callback);
+      observer.observe(element);
+      return observer;  // Caller can disconnect when done
+    }
+    
+    const observer = attachObserver(myElement);
+    // Later...
+    observer.disconnect();
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 2: Accessing contentBoxSize incorrectly">
+    ```javascript
+    // ❌ WRONG - contentBoxSize is an array!
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0].contentBoxSize.inlineSize;  // Error!
+    });
+    
+    // ✓ CORRECT - Access the first element of the array
+    const observer = new ResizeObserver((entries) => {
+      const width = entries[0].contentBoxSize[0].inlineSize;
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 3: Not handling initial callback">
+    ```javascript
+    // Note: ResizeObserver fires immediately when you start observing!
+    const observer = new ResizeObserver((entries) => {
+      console.log('Resize detected');  // Fires right away!
+    });
+    
+    observer.observe(element);  // Triggers callback immediately
+    
+    // If you want to skip the initial call:
+    let isFirstCall = true;
+    const observer = new ResizeObserver((entries) => {
+      if (isFirstCall) {
+        isFirstCall = false;
+        return;  // Skip initial measurement
+      }
+      handleResize(entries);
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 4: Creating observers inside loops without cleanup">
+    ```javascript
+    // ❌ WRONG - Creates new observer on each scroll!
+    window.addEventListener('scroll', () => {
+      const observer = new ResizeObserver(callback);  // Memory leak!
+      observer.observe(element);
+    });
+    
+    // ✓ CORRECT - Create once, reuse
+    const observer = new ResizeObserver(callback);
+    observer.observe(element);  // Set up once
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **ResizeObserver watches individual elements** for size changes, unlike `window.resize` which only detects viewport changes
+
+2. **The callback receives entries** with `target`, `contentRect`, `contentBoxSize`, and `borderBoxSize` properties
+
+3. **Use the `box` option** to observe content-box, border-box, or device-pixel-content-box
+
+4. **Avoid infinite loops** by not changing the observed element's size directly in the callback
+
+5. **Clean up with `disconnect()` or `unobserve()`** to prevent memory leaks
+
+6. **ResizeObserver fires immediately** when you start observing, not just on subsequent changes
+
+7. **Reuse observers** across multiple elements instead of creating one per element
+
+8. **Debounce expensive operations** because callbacks fire frequently during drag/resize interactions
+
+9. **contentBoxSize is an array** even though it usually contains just one element
+
+10. **Consider CSS Container Queries** for purely visual adaptations that don't need JavaScript
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between contentRect and contentBoxSize?">
+    **Answer:**
+    
+    `contentRect` is a `DOMRectReadOnly` object with `width`, `height`, `top`, `left`, `right`, `bottom`, `x`, and `y` properties. It represents the content box in terms of the document's coordinate system.
+    
+    `contentBoxSize` is an array of `ResizeObserverSize` objects with `inlineSize` and `blockSize` properties. These handle writing modes correctly (inline is width in horizontal mode, but height in vertical mode).
+    
+    ```javascript
+    // contentRect approach (simpler)
+    const width = entry.contentRect.width;
+    
+    // contentBoxSize approach (handles writing modes)
+    const inlineSize = entry.contentBoxSize[0].inlineSize;
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: When does ResizeObserver fire its callback?">
+    **Answer:**
+    
+    ResizeObserver fires:
+    1. **Immediately when you call `observe()`** on an element (initial measurement)
+    2. **Whenever the observed element's size changes** for any reason (CSS changes, content changes, window resize, sibling changes, etc.)
+    
+    It processes resize events **before paint** but **after layout**, making it the ideal place to make layout adjustments.
+  </Accordion>
+  
+  <Accordion title="Question 3: How do you avoid the 'ResizeObserver loop' error?">
+    **Answer:**
+    
+    The error occurs when your callback changes the observed element's size, triggering another callback. Solutions:
+    
+    ```javascript
+    // Solution 1: Track expected sizes
+    const expectedSize = new WeakMap();
+    const observer = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        if (entry.contentRect.width === expectedSize.get(entry.target)) return;
+        // ... make changes
+        expectedSize.set(entry.target, newWidth);
+      }
+    });
+    
+    // Solution 2: Use requestAnimationFrame
+    const observer = new ResizeObserver((entries) => {
+      requestAnimationFrame(() => {
+        // Changes deferred to next frame
+      });
+    });
+    
+    // Solution 3: Change other elements, not the observed one
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: How do you observe the border-box instead of content-box?">
+    **Answer:**
+    
+    Pass an options object to `observe()`:
+    
+    ```javascript
+    // Observe border-box (content + padding + border)
+    observer.observe(element, { box: 'border-box' });
+    
+    // Access border box size in callback
+    const borderWidth = entry.borderBoxSize[0].inlineSize;
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: What's the best way to clean up a ResizeObserver?">
+    **Answer:**
+    
+    ```javascript
+    // Stop observing a specific element
+    observer.unobserve(element);
+    
+    // Stop observing ALL elements and disable the observer
+    observer.disconnect();
+    ```
+    
+    Always disconnect observers when:
+    - The observed element is removed from the DOM
+    - Your component/module is destroyed
+    - You no longer need to watch for size changes
+    
+    Failure to clean up causes memory leaks.
+  </Accordion>
+  
+  <Accordion title="Question 6: Why is contentBoxSize an array?">
+    **Answer:**
+    
+    `contentBoxSize` and `borderBoxSize` are arrays to support future features where elements might have multiple fragments (like in multi-column layouts where an element might be split across columns).
+    
+    For now, these arrays always contain exactly one element, so you access it with `[0]`:
+    
+    ```javascript
+    const width = entry.contentBoxSize[0].inlineSize;
+    const height = entry.contentBoxSize[0].blockSize;
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Intersection Observer" icon="eye" href="/beyond/concepts/intersection-observer">
+    Detect when elements enter or leave the viewport
+  </Card>
+  <Card title="Mutation Observer" icon="code-branch" href="/beyond/concepts/mutation-observer">
+    Watch for changes to the DOM tree structure
+  </Card>
+  <Card title="DOM" icon="sitemap" href="/concepts/dom">
+    Understanding the Document Object Model
+  </Card>
+  <Card title="Performance Observer" icon="gauge-high" href="/beyond/concepts/performance-observer">
+    Monitor performance metrics in your application
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="ResizeObserver - MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver">
+    Official MDN documentation for the ResizeObserver API including constructor, methods, and browser compatibility.
+  </Card>
+  <Card title="ResizeObserverEntry - MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserverEntry">
+    Documentation for the entry objects passed to the ResizeObserver callback with all available properties.
+  </Card>
+  <Card title="Resize Observer API - MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Resize_Observer_API">
+    Overview guide for the Resize Observer API with concepts and usage patterns.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="ResizeObserver: It's Like document.onresize for Elements - web.dev" icon="newspaper" href="https://web.dev/articles/resize-observer">
+    Google's official guide covering the API design, gotchas with infinite loops, and practical applications. Includes details on Interaction to Next Paint considerations.
+  </Card>
+  <Card title="ResizeObserver API Tutorial with Examples - LogRocket" icon="newspaper" href="https://blog.logrocket.com/how-to-use-the-resizeobserver-api-a-tutorial-with-examples/">
+    Comprehensive tutorial with real-world examples including responsive components, canvas resizing, and performance optimization patterns.
+  </Card>
+  <Card title="A Practical Guide to ResizeObserver - Medium" icon="newspaper" href="https://mehul-kothari.medium.com/resizeobserver-a-comprehensive-guide-4afa012ccaad">
+    Step-by-step walkthrough of ResizeObserver fundamentals with clear code examples for common use cases.
+  </Card>
+  <Card title="JavaScript ResizeObserver Interface - GeeksforGeeks" icon="newspaper" href="https://www.geeksforgeeks.org/javascript/javascript-resizeobserver-interface/">
+    Beginner-friendly introduction to ResizeObserver with simple examples and explanations of the callback parameters.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="ResizeObserver - It's Like document.onresize for Elements - Google Chrome Developers" icon="video" href="https://www.youtube.com/watch?v=z8iFyJxFYKA">
+    Official Chrome team explanation of ResizeObserver with live demos showing how to build responsive components without viewport-based media queries.
+  </Card>
+  <Card title="The Resize Observer API in JavaScript - Steve Griffith" icon="video" href="https://www.youtube.com/watch?v=9lkZ77m9-HY">
+    Clear, methodical walkthrough of ResizeObserver covering the API surface, practical examples, and common pitfalls to avoid.
+  </Card>
+  <Card title="JavaScript Resize Observer Explained - dcode" icon="video" href="https://www.youtube.com/watch?v=M2c37drnnOA">
+    Quick tutorial covering ResizeObserver basics with hands-on coding examples for responsive layouts and element-level queries.
+  </Card>
+</CardGroup>
