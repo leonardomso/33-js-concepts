@@ -1,0 +1,985 @@
+---
+title: "WeakMap & WeakSet: Weak References in JavaScript"
+sidebarTitle: "WeakMap & WeakSet"
+description: "Learn JavaScript WeakMap and WeakSet. Understand weak references, automatic garbage collection, private data patterns, and when to use them over Map and Set."
+---
+
+Why does storing objects in a Map sometimes cause memory leaks? How can you attach metadata to objects without preventing them from being garbage collected? What's the difference between "strong" and "weak" references?
+
+```javascript
+// The memory leak problem with Map
+const cache = new Map()
+
+function processUser(user) {
+  // User object stays in memory forever, even after it's no longer needed!
+  cache.set(user, { processed: true, timestamp: Date.now() })
+}
+
+// With WeakMap, the cached data is automatically cleaned up
+const smartCache = new WeakMap()
+
+function smartProcessUser(user) {
+  // When 'user' is garbage collected, this entry disappears too!
+  smartCache.set(user, { processed: true, timestamp: Date.now() })
+}
+```
+
+The answer lies in **[WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap)** and **[WeakSet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet)**. These are special collections that hold "weak" references to objects, allowing JavaScript's garbage collector to clean them up when they're no longer needed elsewhere.
+
+<Info>
+**What you'll learn in this guide:**
+- What "weak" references mean and how they differ from strong references
+- WeakMap API and its four methods
+- WeakSet API and its three methods
+- Private data patterns using WeakMap
+- Object metadata and caching without memory leaks
+- Tracking objects without preventing garbage collection
+- Limitations: why you can't iterate or get the size
+- Symbol keys in WeakMap (ES2023+)
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [Data Structures](/concepts/data-structures) including Map and Set. If you're not familiar with those, read that guide first.
+</Warning>
+
+---
+
+## What is a Weak Reference?
+
+A **weak reference** is a reference to an object that doesn't prevent the object from being garbage collected. When no strong references to an object remain, the JavaScript engine can reclaim its memory, even if weak references still point to it. WeakMap and WeakSet use weak references for their keys and values respectively, enabling automatic memory cleanup.
+
+To understand this, you need to know how JavaScript handles memory. When you create an object and store it in a variable, that variable holds a **strong reference**:
+
+```javascript
+let user = { name: 'Alice' }  // Strong reference to the object
+
+// The object stays in memory as long as 'user' points to it
+```
+
+When you remove all strong references, the garbage collector can clean up:
+
+```javascript
+let user = { name: 'Alice' }
+user = null  // No more strong references — object can be garbage collected
+```
+
+The problem with regular Map and Set is they create **strong references** to their keys and values:
+
+```javascript
+const map = new Map()
+let user = { name: 'Alice' }
+
+map.set(user, 'some data')
+
+user = null  // You might think the object will be cleaned up...
+// But NO! The Map still holds a strong reference to the key object
+// It stays in memory forever until you manually delete it from the Map
+```
+
+---
+
+## The Rope Bridge Analogy
+
+Think of object references like ropes holding up a platform over a canyon:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    STRONG vs WEAK REFERENCES                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   STRONG REFERENCE (Map/Set)           WEAK REFERENCE (WeakMap/WeakSet)  │
+│   ──────────────────────────           ─────────────────────────────────  │
+│                                                                          │
+│        ═══════╦═══════                       ═══════╦═══════             │
+│               ║ steel                              ║ thread              │
+│               ║ cable                              ║                     │
+│        ┌──────╨──────┐                      ┌──────╨──────┐              │
+│        │   OBJECT    │                      │   OBJECT    │              │
+│        │  { user }   │                      │  { user }   │              │
+│        └─────────────┘                      └─────────────┘              │
+│                                                                          │
+│   The steel cable PREVENTS                 The thread ALLOWS the         │
+│   the object from falling                  object to fall (be garbage    │
+│   (being garbage collected)                collected) when no steel      │
+│   even if nothing else holds it.           cables remain.                │
+│                                                                          │
+│   Map keeps objects alive!                 WeakMap lets objects go!      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+- **Strong references** (regular variables, Map keys, Set values) = steel cables that keep objects from falling
+- **Weak references** (WeakMap keys, WeakSet values) = threads that let objects fall when no steel cables remain
+
+---
+
+## WeakMap: The Basics
+
+A [WeakMap](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) is like a Map, but with three key differences:
+
+1. **Keys must be objects** (or non-registered [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) in ES2023+)
+2. **Keys are held weakly** — they don't prevent garbage collection
+3. **No iteration** — you can't loop through a WeakMap or get its size
+
+### WeakMap API
+
+WeakMap has just four methods:
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `set(key, value)` | Add or update an entry | The WeakMap (for chaining) |
+| `get(key)` | Get the value for a key | The value, or `undefined` |
+| `has(key)` | Check if a key exists | `true` or `false` |
+| `delete(key)` | Remove an entry | `true` if removed, `false` if not found |
+
+```javascript
+const weakMap = new WeakMap()
+
+const obj1 = { id: 1 }
+const obj2 = { id: 2 }
+
+// Set entries
+weakMap.set(obj1, 'first')
+weakMap.set(obj2, 'second')
+
+// Get values
+console.log(weakMap.get(obj1))  // "first"
+console.log(weakMap.get(obj2))  // "second"
+
+// Check existence
+console.log(weakMap.has(obj1))  // true
+console.log(weakMap.has({ id: 3 }))  // false (different object reference)
+
+// Delete entries
+weakMap.delete(obj1)
+console.log(weakMap.has(obj1))  // false
+```
+
+### Keys Must Be Objects
+
+WeakMap keys **must** be objects. Primitives like strings or numbers will throw a [TypeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError):
+
+```javascript
+const weakMap = new WeakMap()
+
+// ✓ These work - objects as keys
+weakMap.set({}, 'empty object')
+weakMap.set([], 'array')
+weakMap.set(function() {}, 'function')
+weakMap.set(new Date(), 'date')
+
+// ❌ These throw TypeError - primitives as keys
+weakMap.set('string', 'value')     // TypeError!
+weakMap.set(123, 'value')          // TypeError!
+weakMap.set(true, 'value')         // TypeError!
+weakMap.set(null, 'value')         // TypeError!
+weakMap.set(undefined, 'value')    // TypeError!
+```
+
+<Note>
+**Why only objects?** Primitives don't have a stable identity. The number `42` is always the same `42` everywhere in your program. Objects, however, are unique by reference. Two `{}` are different objects, even if they look identical. This identity is what makes weak references meaningful.
+</Note>
+
+### Values Can Be Anything
+
+While keys must be objects, values can be any type:
+
+```javascript
+const weakMap = new WeakMap()
+const key = { id: 1 }
+
+weakMap.set(key, 'string value')
+weakMap.set(key, 42)
+weakMap.set(key, null)
+weakMap.set(key, undefined)
+weakMap.set(key, { nested: 'object' })
+weakMap.set(key, [1, 2, 3])
+```
+
+---
+
+## WeakMap Use Cases
+
+### 1. Private Data Pattern
+
+One of the most powerful uses of WeakMap is storing truly private data for class instances:
+
+```javascript
+// Private data storage
+const privateData = new WeakMap()
+
+class User {
+  constructor(name, password) {
+    this.name = name  // Public property
+    
+    // Store private data with 'this' as the key
+    privateData.set(this, {
+      password,
+      loginAttempts: 0
+    })
+  }
+  
+  checkPassword(input) {
+    const data = privateData.get(this)
+    
+    if (data.password === input) {
+      data.loginAttempts = 0
+      return true
+    }
+    
+    data.loginAttempts++
+    return false
+  }
+  
+  getLoginAttempts() {
+    return privateData.get(this).loginAttempts
+  }
+}
+
+const user = new User('Alice', 'secret123')
+
+// Public data is accessible
+console.log(user.name)      // "Alice"
+
+// Private data is NOT accessible
+console.log(user.password)  // undefined
+
+// But methods can use it
+console.log(user.checkPassword('wrong'))   // false
+console.log(user.checkPassword('secret123'))  // true
+console.log(user.getLoginAttempts())       // 0
+
+// When 'user' is garbage collected, private data is too!
+```
+
+<Tip>
+**Modern Alternative:** ES2022 introduced [private class fields](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes/Private_class_fields) with the `#` syntax. For new code, prefer `#password` over WeakMap for simpler private data. However, WeakMap is still useful when you need to attach private data to objects you don't control.
+</Tip>
+
+### 2. DOM Element Metadata
+
+Store metadata for DOM elements without modifying them or causing memory leaks:
+
+```javascript
+const elementData = new WeakMap()
+
+function trackElement(element) {
+  elementData.set(element, {
+    clickCount: 0,
+    lastClicked: null,
+    customId: Math.random().toString(36).substr(2, 9)
+  })
+}
+
+function handleClick(element) {
+  const data = elementData.get(element)
+  if (data) {
+    data.clickCount++
+    data.lastClicked = new Date()
+  }
+}
+
+// Usage
+const button = document.querySelector('#myButton')
+trackElement(button)
+
+button.addEventListener('click', () => {
+  handleClick(button)
+  console.log(elementData.get(button))
+  // { clickCount: 1, lastClicked: Date, customId: 'abc123def' }
+})
+
+// When the button is removed from the DOM and no references remain,
+// both the element AND its metadata are garbage collected!
+```
+
+### 3. Object Caching
+
+Cache computed results for objects without memory leaks:
+
+```javascript
+const cache = new WeakMap()
+
+function expensiveOperation(obj) {
+  // Check cache first
+  if (cache.has(obj)) {
+    console.log('Cache hit!')
+    return cache.get(obj)
+  }
+  
+  // Simulate expensive computation
+  console.log('Computing...')
+  const result = Object.keys(obj)
+    .map(key => `${key}: ${obj[key]}`)
+    .join(', ')
+  
+  // Cache the result
+  cache.set(obj, result)
+  return result
+}
+
+const user = { name: 'Alice', age: 30 }
+
+console.log(expensiveOperation(user))  // "Computing..." then "name: Alice, age: 30"
+console.log(expensiveOperation(user))  // "Cache hit!" then "name: Alice, age: 30"
+
+// When 'user' goes out of scope, the cached result is cleaned up automatically
+```
+
+### 4. Object-Level Memoization
+
+Memoize functions based on object arguments:
+
+```javascript
+function memoizeForObjects(fn) {
+  const cache = new WeakMap()
+  
+  return function(obj) {
+    if (cache.has(obj)) {
+      return cache.get(obj)
+    }
+    
+    const result = fn(obj)
+    cache.set(obj, result)
+    return result
+  }
+}
+
+// Usage
+const getFullName = memoizeForObjects(user => {
+  console.log('Computing full name...')
+  return `${user.firstName} ${user.lastName}`
+})
+
+const person = { firstName: 'John', lastName: 'Doe' }
+
+console.log(getFullName(person))  // "Computing full name..." -> "John Doe"
+console.log(getFullName(person))  // "John Doe" (cached)
+```
+
+---
+
+## WeakSet: The Basics
+
+A [WeakSet](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) is like a Set, but:
+
+1. **Values must be objects** (or non-registered Symbols in ES2023+)
+2. **Values are held weakly** — they don't prevent garbage collection
+3. **No iteration** — you can't loop through a WeakSet or get its size
+
+### WeakSet API
+
+WeakSet has just three methods:
+
+| Method | Description | Returns |
+|--------|-------------|---------|
+| `add(value)` | Add an object to the set | The WeakSet (for chaining) |
+| `has(value)` | Check if an object is in the set | `true` or `false` |
+| `delete(value)` | Remove an object from the set | `true` if removed, `false` if not found |
+
+```javascript
+const weakSet = new WeakSet()
+
+const obj1 = { id: 1 }
+const obj2 = { id: 2 }
+
+// Add objects
+weakSet.add(obj1)
+weakSet.add(obj2)
+
+// Check membership
+console.log(weakSet.has(obj1))  // true
+console.log(weakSet.has({ id: 1 }))  // false (different object)
+
+// Remove objects
+weakSet.delete(obj1)
+console.log(weakSet.has(obj1))  // false
+```
+
+---
+
+## WeakSet Use Cases
+
+### 1. Tracking Processed Objects
+
+Prevent processing the same object twice without memory leaks:
+
+```javascript
+const processed = new WeakSet()
+
+function processOnce(obj) {
+  if (processed.has(obj)) {
+    console.log('Already processed, skipping...')
+    return null
+  }
+  
+  processed.add(obj)
+  console.log('Processing:', obj)
+  
+  // Do expensive operation
+  return { ...obj, processed: true }
+}
+
+const user = { name: 'Alice' }
+
+processOnce(user)  // "Processing: { name: 'Alice' }"
+processOnce(user)  // "Already processed, skipping..."
+processOnce(user)  // "Already processed, skipping..."
+
+// When 'user' is garbage collected, it's automatically removed from 'processed'
+```
+
+### 2. Circular Reference Detection
+
+Detect circular references when cloning or serializing objects:
+
+```javascript
+function deepClone(obj, seen = new WeakSet()) {
+  // Handle primitives
+  if (obj === null || typeof obj !== 'object') {
+    return obj
+  }
+  
+  // Detect circular references
+  if (seen.has(obj)) {
+    throw new Error('Circular reference detected!')
+  }
+  
+  seen.add(obj)
+  
+  // Clone arrays
+  if (Array.isArray(obj)) {
+    return obj.map(item => deepClone(item, seen))
+  }
+  
+  // Clone objects
+  const clone = {}
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      clone[key] = deepClone(obj[key], seen)
+    }
+  }
+  
+  return clone
+}
+
+// Test with circular reference
+const obj = { name: 'Alice' }
+obj.self = obj  // Circular reference!
+
+try {
+  deepClone(obj)
+} catch (e) {
+  console.log(e.message)  // "Circular reference detected!"
+}
+
+// Normal objects work fine
+const normal = { a: 1, b: { c: 2 } }
+console.log(deepClone(normal))  // { a: 1, b: { c: 2 } }
+```
+
+### 3. Marking "Visited" Objects
+
+Track visited nodes in graph traversal:
+
+```javascript
+function traverseGraph(node, visitor, visited = new WeakSet()) {
+  if (!node || visited.has(node)) {
+    return
+  }
+  
+  visited.add(node)
+  visitor(node)
+  
+  // Visit connected nodes
+  if (node.children) {
+    for (const child of node.children) {
+      traverseGraph(child, visitor, visited)
+    }
+  }
+}
+
+// Graph with potential cycles
+const nodeA = { value: 'A', children: [] }
+const nodeB = { value: 'B', children: [] }
+const nodeC = { value: 'C', children: [] }
+
+nodeA.children = [nodeB, nodeC]
+nodeB.children = [nodeC, nodeA]  // Cycle back to A!
+nodeC.children = [nodeA]          // Cycle back to A!
+
+// Traverse without infinite loop
+traverseGraph(nodeA, node => console.log(node.value))
+// Output: "A", "B", "C" (each visited only once)
+```
+
+### 4. Brand Checking
+
+Verify that an object was created by a specific constructor:
+
+```javascript
+const validUsers = new WeakSet()
+
+class User {
+  constructor(name) {
+    this.name = name
+    validUsers.add(this)  // Mark as valid
+  }
+  
+  static isValid(obj) {
+    return validUsers.has(obj)
+  }
+}
+
+const realUser = new User('Alice')
+const fakeUser = { name: 'Bob' }  // Looks like a User but isn't
+
+console.log(User.isValid(realUser))  // true
+console.log(User.isValid(fakeUser))  // false
+```
+
+---
+
+## Map vs WeakMap Comparison
+
+| Feature | Map | WeakMap |
+|---------|-----|---------|
+| Key types | Any value | Objects only (+ non-registered Symbols) |
+| Reference type | Strong | Weak |
+| Prevents GC | Yes | No |
+| `size` property | Yes | No |
+| Iterable | Yes (`for...of`, `.keys()`, `.values()`, `.entries()`) | No |
+| `clear()` method | Yes | No |
+| Use case | General key-value storage | Object metadata, private data |
+
+### When to Use Each
+
+<Tabs>
+  <Tab title="Use Map When...">
+    ```javascript
+    // You need to iterate over entries
+    const scores = new Map()
+    scores.set('Alice', 95)
+    scores.set('Bob', 87)
+    
+    for (const [name, score] of scores) {
+      console.log(`${name}: ${score}`)
+    }
+    
+    // You need primitives as keys
+    const config = new Map()
+    config.set('apiUrl', 'https://api.example.com')
+    config.set('timeout', 5000)
+    
+    // You need to know the size
+    console.log(scores.size)  // 2
+    ```
+  </Tab>
+  <Tab title="Use WeakMap When...">
+    ```javascript
+    // Storing metadata for objects you don't control
+    const domData = new WeakMap()
+    const element = document.querySelector('#myElement')
+    domData.set(element, { clicks: 0 })
+    
+    // Private data for class instances
+    const privateFields = new WeakMap()
+    class MyClass {
+      constructor() {
+        privateFields.set(this, { secret: 'data' })
+      }
+    }
+    
+    // Caching computed results for objects
+    const cache = new WeakMap()
+    function compute(obj) {
+      if (!cache.has(obj)) {
+        cache.set(obj, expensiveOperation(obj))
+      }
+      return cache.get(obj)
+    }
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## Set vs WeakSet Comparison
+
+| Feature | Set | WeakSet |
+|---------|-----|---------|
+| Value types | Any value | Objects only (+ non-registered Symbols) |
+| Reference type | Strong | Weak |
+| Prevents GC | Yes | No |
+| `size` property | Yes | No |
+| Iterable | Yes | No |
+| `clear()` method | Yes | No |
+| Use case | Unique value collections | Tracking object state |
+
+---
+
+## Why No Iteration?
+
+You can't iterate over WeakMap or WeakSet, and there's no `size` property. This isn't a limitation — it's by design.
+
+```javascript
+const weakMap = new WeakMap()
+const weakSet = new WeakSet()
+
+// None of these exist:
+// weakMap.size
+// weakMap.keys()
+// weakMap.values()
+// weakMap.entries()
+// weakMap.forEach()
+// for (const [k, v] of weakMap) { }
+
+// weakSet.size
+// weakSet.keys()
+// weakSet.values()
+// weakSet.forEach()
+// for (const v of weakSet) { }
+```
+
+**Why?** Because garbage collection is non-deterministic. The JavaScript engine decides when to clean up objects, and it varies based on memory pressure, timing, and implementation. If you could iterate over a WeakMap, the results would depend on when garbage collection happened — that's unpredictable behavior you can't rely on.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    WHY NO ITERATION?                                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   WeakMap / WeakSet contents depend on garbage collection timing:        │
+│                                                                          │
+│   Time 0:  weakMap = { obj1 → 'a', obj2 → 'b', obj3 → 'c' }             │
+│                                                                          │
+│   Time 1:  obj2 loses all strong references                              │
+│                                                                          │
+│   Time 2:  GC might run... or might not                                  │
+│            weakMap = { obj1 → 'a', obj2 → 'b'(?), obj3 → 'c' }          │
+│                       ↑                  ↑                               │
+│            Still there!      Maybe there, maybe not!                     │
+│                                                                          │
+│   If iteration were allowed, the same code could produce                 │
+│   different results depending on when GC runs. That's bad!               │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Note>
+**The tradeoff:** WeakMap and WeakSet sacrifice enumeration for automatic memory management. If you need to list all keys/values, use regular Map/Set and manage cleanup yourself.
+</Note>
+
+---
+
+## Symbol Keys (ES2023+)
+
+As of ES2023, WeakMap and WeakSet can also hold non-registered [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol):
+
+```javascript
+const weakMap = new WeakMap()
+
+// ✓ Non-registered symbols work
+const mySymbol = Symbol('myKey')
+weakMap.set(mySymbol, 'value')
+console.log(weakMap.get(mySymbol))  // "value"
+
+// ❌ Registered symbols (Symbol.for) don't work
+const registeredSymbol = Symbol.for('registered')
+weakMap.set(registeredSymbol, 'value')  // TypeError!
+
+// Why? Symbol.for() symbols are global and can be recreated,
+// defeating the purpose of weak references
+```
+
+<Warning>
+**Registered vs Non-Registered Symbols:** `Symbol('key')` creates a unique, non-registered symbol. `Symbol.for('key')` creates or retrieves a global, registered symbol. Only non-registered symbols can be WeakMap/WeakSet keys because registered symbols are never garbage collected.
+</Warning>
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Expecting Immediate Cleanup
+
+Garbage collection timing is unpredictable:
+
+```javascript
+const weakMap = new WeakMap()
+
+let obj = { data: 'important' }
+weakMap.set(obj, 'metadata')
+
+obj = null  // Strong reference removed
+
+// The metadata might still be there!
+// GC runs when the engine decides, not immediately
+console.log(weakMap.has(obj))  // false (obj is null)
+// But internally, the entry might not be cleaned up yet
+```
+
+### Mistake 2: Using Primitives as Keys
+
+```javascript
+const weakMap = new WeakMap()
+
+// ❌ These all throw TypeError
+weakMap.set('key', 'value')
+weakMap.set(123, 'value')
+weakMap.set(Symbol.for('key'), 'value')  // Registered symbol!
+
+// ✓ Use objects or non-registered symbols
+weakMap.set({ key: true }, 'value')
+weakMap.set(Symbol('key'), 'value')
+```
+
+### Mistake 3: Trying to Iterate
+
+```javascript
+const weakMap = new WeakMap()
+weakMap.set({}, 'a')
+weakMap.set({}, 'b')
+
+// ❌ None of these work
+console.log(weakMap.size)  // undefined
+for (const entry of weakMap) {}  // TypeError: weakMap is not iterable
+weakMap.forEach(v => console.log(v))  // TypeError: forEach is not a function
+```
+
+### Mistake 4: Using WeakMap When You Need Iteration
+
+```javascript
+// ❌ BAD: Using WeakMap when you need to list all cached items
+const cache = new WeakMap()
+
+function getCachedItems() {
+  // Can't do this!
+  return [...cache.entries()]
+}
+
+// ✓ GOOD: Use Map if you need iteration
+const cache = new Map()
+
+function getCachedItems() {
+  return [...cache.entries()]
+}
+
+// But remember to clean up manually!
+function clearOldEntries() {
+  for (const [key, value] of cache) {
+    if (isExpired(value)) {
+      cache.delete(key)
+    }
+  }
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about WeakMap & WeakSet:**
+
+1. **Weak references don't prevent garbage collection** — When no strong references to an object remain, it can be cleaned up even if it's in a WeakMap/WeakSet
+
+2. **Keys/values must be objects** — No primitives allowed (except non-registered Symbols in ES2023+)
+
+3. **No iteration or size** — You can't loop through or count entries; this is by design due to non-deterministic GC
+
+4. **WeakMap is perfect for private data** — Store private data keyed by `this` to create truly hidden instance data
+
+5. **WeakMap prevents metadata memory leaks** — Attach data to DOM elements or other objects without keeping them alive
+
+6. **WeakSet tracks object state** — Mark objects as "visited" or "processed" without memory leaks
+
+7. **Use WeakMap for object caching** — Cache computed results that automatically clean up when objects are gone
+
+8. **Use regular Map/Set when you need iteration** — WeakMap/WeakSet trade enumeration for automatic cleanup
+
+9. **GC timing is unpredictable** — Don't write code that depends on when exactly entries are removed
+
+10. **Symbol.for() symbols aren't allowed** — Only non-registered symbols can be keys because registered ones never get garbage collected
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: Why can't you use a string as a WeakMap key?">
+    **Answer:**
+    
+    WeakMap keys must be objects because weak references only make sense for values with identity. Primitives like strings are immutable and interned — the string `'hello'` is always the same `'hello'` everywhere. There's no object to garbage collect.
+    
+    ```javascript
+    const weakMap = new WeakMap()
+    
+    // ❌ TypeError: Invalid value used as weak map key
+    weakMap.set('hello', 'world')
+    
+    // ✓ Objects have identity and can be garbage collected
+    weakMap.set({ greeting: 'hello' }, 'world')
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: What happens to WeakMap entries when their key is garbage collected?">
+    **Answer:**
+    
+    The entry is automatically removed from the WeakMap. You don't need to manually delete it. This happens at some point after the key loses all strong references, though the exact timing depends on when the garbage collector runs.
+    
+    ```javascript
+    const weakMap = new WeakMap()
+    let obj = { data: 'test' }
+    
+    weakMap.set(obj, 'metadata')
+    console.log(weakMap.has(obj))  // true
+    
+    obj = null  // Remove strong reference
+    // At some point, the entry will be cleaned up automatically
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: Why doesn't WeakMap have a size property?">
+    **Answer:**
+    
+    Because garbage collection is non-deterministic. The size would change unpredictably based on when GC runs, making it unreliable. The same code could produce different `size` values at different times, which would be confusing and bug-prone.
+    
+    ```javascript
+    const weakMap = new WeakMap()
+    
+    // This doesn't exist:
+    // console.log(weakMap.size)  // undefined
+    
+    // If it did exist, it would be unpredictable:
+    // weakMap.size  // 5? 3? 0? Depends on GC timing!
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: When should you use WeakMap instead of Map?">
+    **Answer:**
+    
+    Use WeakMap when:
+    1. You're storing metadata or private data keyed by objects
+    2. You don't need to iterate over the entries
+    3. You want automatic cleanup when the objects are no longer needed
+    
+    Use regular Map when:
+    1. You need primitive keys (strings, numbers)
+    2. You need to iterate over entries
+    3. You need to know the size
+    4. You want to explicitly control when entries are removed
+  </Accordion>
+  
+  <Accordion title="Question 5: How does WeakSet help prevent memory leaks?">
+    **Answer:**
+    
+    WeakSet allows you to track objects (e.g., "has this been processed?") without keeping them alive. With a regular Set, adding an object creates a strong reference that prevents garbage collection even if the object is no longer used elsewhere.
+    
+    ```javascript
+    // ❌ Memory leak with regular Set
+    const processedSet = new Set()
+    function process(obj) {
+      if (processedSet.has(obj)) return
+      processedSet.add(obj)  // Strong reference keeps obj alive forever!
+      // ...
+    }
+    
+    // ✓ No memory leak with WeakSet
+    const processedWeakSet = new WeakSet()
+    function process(obj) {
+      if (processedWeakSet.has(obj)) return
+      processedWeakSet.add(obj)  // Weak reference allows cleanup
+      // ...
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: Can you use Symbol.for('key') as a WeakMap key?">
+    **Answer:**
+    
+    No! `Symbol.for()` creates registered symbols in the global symbol registry. These symbols are never garbage collected because they can be retrieved again from anywhere using `Symbol.for()`. Only non-registered symbols (created with `Symbol()`) can be WeakMap keys.
+    
+    ```javascript
+    const weakMap = new WeakMap()
+    
+    // ❌ TypeError: Registered symbols can't be WeakMap keys
+    weakMap.set(Symbol.for('key'), 'value')
+    
+    // ✓ Non-registered symbols work (ES2023+)
+    weakMap.set(Symbol('key'), 'value')
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Data Structures" icon="sitemap" href="/concepts/data-structures">
+    Map, Set, and other JavaScript data structures
+  </Card>
+  <Card title="Memory Management" icon="memory" href="/beyond/concepts/memory-management">
+    How JavaScript manages memory and garbage collection
+  </Card>
+  <Card title="Garbage Collection" icon="trash" href="/beyond/concepts/garbage-collection">
+    Deep dive into JavaScript's garbage collector
+  </Card>
+  <Card title="Memoization" icon="bolt" href="/beyond/concepts/memoization">
+    Caching function results for performance
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="WeakMap — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">
+    Complete WeakMap reference with all methods, examples, and browser compatibility tables.
+  </Card>
+  <Card title="WeakSet — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet">
+    Complete WeakSet reference with all methods, examples, and browser compatibility tables.
+  </Card>
+  <Card title="Keyed Collections — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections">
+    MDN guide covering Map, Set, WeakMap, and WeakSet together with comparison and use cases.
+  </Card>
+  <Card title="Memory Management — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Memory_management">
+    How JavaScript handles memory allocation and garbage collection under the hood.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="WeakMap and WeakSet — javascript.info" icon="newspaper" href="https://javascript.info/weakmap-weakset">
+    Clear explanation with practical examples of additional data storage and caching. Includes exercises to test your understanding.
+  </Card>
+  <Card title="ES6 Collections: Map, Set, WeakMap, WeakSet — 2ality" icon="newspaper" href="https://2ality.com/2015/01/es6-maps-sets.html">
+    Dr. Axel Rauschmayer's deep dive into all ES6 keyed collections. Covers the spec-level details, use cases, and edge cases for WeakMap and WeakSet.
+  </Card>
+  <Card title="Understanding Weak References in JavaScript — LogRocket" icon="newspaper" href="https://blog.logrocket.com/weakmap-weakset-understanding-javascript-weak-references/">
+    Practical guide covering WeakMap and WeakSet with real-world examples of caching and private data patterns.
+  </Card>
+  <Card title="JavaScript WeakMap — GeeksforGeeks" icon="newspaper" href="https://www.geeksforgeeks.org/javascript-weakmap/">
+    Comprehensive tutorial covering WeakMap methods and use cases with code examples. Good reference for the API and basic usage patterns.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="WeakMap and WeakSet — Namaste JavaScript" icon="video" href="https://www.youtube.com/watch?v=gwlQ_p3Mvns">
+    Akshay Saini's detailed walkthrough with visualizations of how weak references work. Great for visual learners who want to see memory behavior.
+  </Card>
+  <Card title="Map, Set, WeakMap, WeakSet — Codevolution" icon="video" href="https://www.youtube.com/watch?v=ycohYSx5aYk">
+    Clear comparison of all four collection types with practical code examples. Perfect for understanding when to use each one.
+  </Card>
+  <Card title="JavaScript WeakMap — Steve Griffith" icon="video" href="https://www.youtube.com/watch?v=XSkEMUuNPUU">
+    Focused tutorial on WeakMap specifically, covering the private data pattern in depth with real-world examples.
+  </Card>
+</CardGroup>
