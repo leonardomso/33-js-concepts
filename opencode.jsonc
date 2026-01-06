@@ -31,6 +31,9 @@
       "write-concept": "allow",
       "fact-check": "allow",
       "seo-review": "allow",
+      "test-writer": "allow",
+      "resource-curator": "allow",
+      "concept-workflow": "allow",
       // Default behavior for other skills
       "*": "ask"
     }

@@ -22,12 +22,18 @@ The project was recognized by GitHub as one of the **top open source projects of
 │   └── skills/             # Custom skills for content creation
 │       ├── write-concept/  # Skill for writing concept documentation
 │       ├── fact-check/     # Skill for verifying technical accuracy
-│       └── seo-review/     # Skill for SEO audits
+│       ├── seo-review/     # Skill for SEO audits
+│       ├── test-writer/    # Skill for generating Vitest tests
+│       ├── resource-curator/ # Skill for curating external resources
+│       └── concept-workflow/ # Skill for end-to-end concept creation
 ├── .opencode/               # OpenCode configuration
 │   └── skill/              # Custom skills (mirrored from .claude/skills)
 │       ├── write-concept/  # Skill for writing concept documentation
 │       ├── fact-check/     # Skill for verifying technical accuracy
-│       └── seo-review/     # Skill for SEO audits
+│       ├── seo-review/     # Skill for SEO audits
+│       ├── test-writer/    # Skill for generating Vitest tests
+│       ├── resource-curator/ # Skill for curating external resources
+│       └── concept-workflow/ # Skill for end-to-end concept creation
 ├── docs/                    # Mintlify documentation site
 │   ├── docs.json           # Mintlify configuration
 │   ├── index.mdx           # Homepage
@@ -52,7 +58,7 @@ The project was recognized by GitHub as one of the **top open source projects of
 ├── CODE_OF_CONDUCT.md      # Community standards
 ├── LICENSE                 # MIT License
 ├── package.json            # Project metadata
-├── opencode.json           # OpenCode AI assistant configuration
+├── opencode.jsonc          # OpenCode AI assistant configuration
 └── github-image.png        # Project banner image
 ```
 
@@ -465,6 +471,108 @@ Use the `/seo-review` skill when auditing concept pages for search engine optimi
 - Below 55% (<15): Significant work required
 
 **Location:** `.claude/skills/seo-review/SKILL.md`
+
+### test-writer Skill
+
+Use the `/test-writer` skill when generating Vitest tests for code examples in concept documentation. This skill provides comprehensive methodology for:
+
+- **Code Extraction**: Identify and categorize all code examples (testable, DOM, error, conceptual)
+- **Test Patterns**: 16 patterns for converting different types of code examples to tests
+- **DOM Testing**: Separate file structure with jsdom environment for browser-specific code
+- **Source References**: Line number references linking tests to documentation
+- **Project Conventions**: File naming, describe block organization, assertion patterns
+- **Report Template**: Test coverage report documenting what was tested and skipped
+
+**When to invoke:**
+- After writing a new concept page
+- When adding new code examples to existing pages
+- When updating existing code examples
+- To verify documentation accuracy through automated tests
+
+**Test Categories:**
+- Basic value assertions (`console.log` → `expect`)
+- Error testing (`toThrow` patterns)
+- Async testing (Promises, async/await)
+- DOM testing (jsdom environment, events)
+- Floating point (toBeCloseTo)
+- Object/Array comparisons (toEqual)
+
+**File Structure:**
+```
+tests/{category}/{concept-name}/{concept-name}.test.js
+tests/{category}/{concept-name}/{concept-name}.dom.test.js  (if DOM examples)
+```
+
+**Location:** `.claude/skills/test-writer/SKILL.md`
+
+### resource-curator Skill
+
+Use the `/resource-curator` skill when finding, evaluating, or maintaining external resources (articles, videos, courses) for concept pages. This skill provides:
+
+- **Audit Process**: Check existing links for accessibility, accuracy, and relevance
+- **Trusted Sources**: Prioritized lists of reputable article, video, and course sources
+- **Quality Criteria**: Must-have, should-have, and red flag checklists
+- **Description Writing**: Formula and examples for specific, valuable descriptions
+- **Publication Guidelines**: Date thresholds for different topic categories
+- **Report Template**: Audit report for documenting broken, outdated, and missing resources
+
+**When to invoke:**
+- Adding resources to a new concept page
+- Refreshing resources on existing pages
+- Auditing for broken or outdated links
+- Reviewing community-contributed resources
+- Periodic link maintenance
+
+**Resource Targets:**
+- Reference: 2-4 MDN links
+- Articles: 4-6 quality articles
+- Videos: 3-4 quality videos
+- Courses: 1-3 (optional)
+
+**Trusted Sources Include:**
+- Articles: javascript.info, MDN Guides, freeCodeCamp, 2ality, CSS-Tricks, dev.to
+- Videos: Fireship, Web Dev Simplified, Fun Fun Function, Traversy Media, JSConf
+- Courses: javascript.info, Piccalilli, freeCodeCamp, Frontend Masters
+
+**Location:** `.claude/skills/resource-curator/SKILL.md`
+
+### concept-workflow Skill
+
+Use the `/concept-workflow` skill for end-to-end creation of a complete concept page. This orchestrator skill coordinates all five specialized skills in optimal order:
+
+```
+Phase 1: resource-curator  →  Find quality external resources
+Phase 2: write-concept     →  Write the documentation page
+Phase 3: test-writer       →  Generate tests for code examples
+Phase 4: fact-check        →  Verify technical accuracy
+Phase 5: seo-review        →  Optimize for search visibility
+```
+
+**When to invoke:**
+- Creating a brand new concept page from scratch
+- Completely rewriting an existing concept page
+- When you want the full end-to-end workflow with all quality checks
+
+**What it orchestrates:**
+- Resource curation (2-4 MDN refs, 4-6 articles, 3-4 videos)
+- Complete concept page writing (1,500+ words)
+- Comprehensive test generation for all code examples
+- Technical accuracy verification with test execution
+- SEO audit targeting 90%+ score (24+/27)
+
+**Deliverables:**
+- `/docs/concepts/{concept-name}.mdx` — Complete documentation page
+- `/tests/{category}/{concept-name}/{concept-name}.test.js` — Test file
+- Updated `docs.json` navigation (if new concept)
+- Fact-check report
+- SEO audit report (score 24+/27)
+
+**Estimated Time:** 2-5 hours depending on concept complexity
+
+**Example prompt:**
+> "Create a complete concept page for 'hoisting' using the concept-workflow skill"
+
+**Location:** `.claude/skills/concept-workflow/SKILL.md`
 
 ## Maintainer
 
