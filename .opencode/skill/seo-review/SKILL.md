@@ -485,9 +485,70 @@ the [event loop](/concepts/event-loop).
 
 ---
 
+### Technical SEO Checklist (3 points)
+
+| # | Check | Points | How to Verify |
+|---|-------|--------|---------------|
+| 1 | Single H1 per page | 1 | Only one `#` heading (the title) |
+| 2 | URL slug contains keyword | 1 | `/concepts/closures` not `/concepts/topic-1` |
+| 3 | No orphan pages | 1 | Page is linked from at least one other page |
+
+**H1 Rule:**
+
+Every page should have exactly ONE H1 (your main title). This is critical for SEO:
+- The H1 tells Google what the page is about
+- Multiple H1s confuse search engines about page hierarchy
+- All other headings should be H2 (`##`) and below
+- The H1 should contain your primary keyword
+
+```markdown
+# Closures in JavaScript     ← This is your H1 (only one!)
+
+## What is a Closure?        ← H2 for sections
+### Lexical Scope            ← H3 for subsections
+## How Closures Work         ← Another H2
+```
+
+**URL/Slug Best Practices:**
+
+| ✅ Good | ❌ Bad |
+|---------|--------|
+| `/concepts/closures` | `/concepts/c1` |
+| `/concepts/event-loop` | `/concepts/topic-7` |
+| `/concepts/type-coercion` | `/concepts/abc123` |
+| `/concepts/async-await` | `/concepts/async_await` |
+
+Rules for slugs:
+- **Include primary keyword** — The concept name should be in the URL
+- **Use hyphens, not underscores** — `event-loop` not `event_loop`
+- **Keep slugs short and readable** — Under 50 characters
+- **No UUIDs, database IDs, or random strings**
+- **Lowercase only** — `/concepts/Event-Loop` should be `/concepts/event-loop`
+
+**Orphan Page Detection:**
+
+An orphan page has no internal links pointing to it from other pages. This hurts SEO because:
+- Google may not discover or crawl it frequently
+- It signals the page isn't important to your site structure
+- Users can't navigate to it naturally
+- Link equity doesn't flow to the page
+
+**How to check for orphan pages:**
+1. Search the codebase for links to this concept: `grep -r "/concepts/[slug]" docs/`
+2. Verify it appears in at least one other concept's "Related Concepts" section
+3. Check that pages listing it as a prerequisite link back appropriately
+4. Ensure it's included in the navigation (`docs.json`)
+
+**Fixing orphan pages:**
+- Add the concept to related pages' "Related Concepts" CardGroup
+- Link to it naturally in body content of related concepts
+- Ensure bidirectional linking (if A links to B, B should link back to A where relevant)
+
+---
+
 ## Scoring System
 
-### Total Points Available: 27
+### Total Points Available: 30
 
 | Category | Max Points |
 |----------|------------|
@@ -497,16 +558,17 @@ the [event loop](/concepts/event-loop).
 | Content Structure | 6 |
 | Featured Snippets | 4 |
 | Internal Linking | 4 |
-| **Total** | **27** |
+| Technical SEO | 3 |
+| **Total** | **30** |
 
 ### Score Interpretation
 
 | Score | Percentage | Status | Action |
 |-------|------------|--------|--------|
-| 24-27 | 90-100% | ✅ Excellent | Ready to publish |
-| 20-23 | 75-89% | ⚠️ Good | Minor optimizations needed |
-| 15-19 | 55-74% | ⚠️ Fair | Several improvements needed |
-| 0-14 | <55% | ❌ Poor | Significant work required |
+| 27-30 | 90-100% | ✅ Excellent | Ready to publish |
+| 23-26 | 75-89% | ⚠️ Good | Minor optimizations needed |
+| 17-22 | 55-74% | ⚠️ Fair | Several improvements needed |
+| 0-16 | <55% | ❌ Poor | Significant work required |
 
 ---
 
@@ -562,6 +624,17 @@ the [event loop](/concepts/event-loop).
 | No prerequisites | Add `<Warning>` with prerequisite links |
 | Empty Related Concepts | Add 4 Cards linking to related topics |
 
+### Technical SEO Issues
+
+| Issue | Fix |
+|-------|-----|
+| Multiple H1 tags | Keep only one `#` heading (the title), use `##` for all sections |
+| Slug missing keyword | Rename file to include concept name (e.g., `closures.mdx`) |
+| Orphan page | Add links from related concept pages' body or Related Concepts section |
+| Underscore in slug | Use hyphens: `event-loop.mdx` not `event_loop.mdx` |
+| Uppercase in slug | Use lowercase only: `async-await.mdx` not `Async-Await.mdx` |
+| Slug too long | Shorten to primary keyword: `closures.mdx` not `understanding-javascript-closures-and-scope.mdx` |
+
 ---
 
 ## SEO Audit Report Template
@@ -574,7 +647,7 @@ Use this template to document your findings.
 **File:** `/docs/concepts/[slug].mdx`
 **Date:** YYYY-MM-DD
 **Auditor:** [Name/Claude]
-**Overall Score:** XX/27 (XX%)
+**Overall Score:** XX/30 (XX%)
 **Status:** ✅ Excellent | ⚠️ Needs Work | ❌ Poor
 
 ---
@@ -589,7 +662,8 @@ Use this template to document your findings.
 | Content Structure | X/6 | ✅/⚠️/❌ |
 | Featured Snippets | X/4 | ✅/⚠️/❌ |
 | Internal Linking | X/4 | ✅/⚠️/❌ |
-| **Total** | **X/27** | **STATUS** |
+| Technical SEO | X/3 | ✅/⚠️/❌ |
+| **Total** | **X/30** | **STATUS** |
 
 ---
 
@@ -725,6 +799,35 @@ Use this template to document your findings.
 
 ---
 
+## Technical SEO Analysis
+
+**Score:** X/3
+
+| Check | Status | Notes |
+|-------|--------|-------|
+| Single H1 per page | ✅/❌ | [Found X H1 tags] |
+| URL slug contains keyword | ✅/❌ | Current: `/concepts/[slug]` |
+| Not an orphan page | ✅/❌ | Linked from X other pages |
+
+**H1 Tags Found:**
+- Line XX: `# [H1 text]` ← Should be the only one
+- [List any additional H1s that need to be changed to H2]
+
+**Slug Analysis:**
+- Current slug: `[slug].mdx`
+- Contains keyword: ✅/❌
+- Format correct: ✅/❌ (lowercase, hyphens, no special chars)
+
+**Incoming Links Found:**
+1. `/concepts/[other-concept]` → Links to this page in [section]
+2. `/concepts/[other-concept]` → Links in Related Concepts
+
+**If orphan page, add links from:**
+- [Suggested concept page] in [section]
+- [Suggested concept page] in Related Concepts
+
+---
+
 ## Priority Fixes
 
 ### High Priority (Do First)
@@ -789,6 +892,9 @@ After making fixes, verify:
 - [ ] 3-5 internal links with descriptive anchor text
 - [ ] Prerequisites in Warning box (if applicable)
 - [ ] Related Concepts section has 4 cards
+- [ ] Single H1 per page (title only)
+- [ ] URL slug contains primary keyword
+- [ ] Page linked from at least one other concept page
 - [ ] All fixes implemented and verified
 
 ---

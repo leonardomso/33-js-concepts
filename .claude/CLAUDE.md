@@ -456,19 +456,20 @@ Use the `/seo-review` skill when auditing concept pages for search engine optimi
 - Periodic content audits
 - After major content updates
 
-**Scoring Categories (27 points total):**
+**Scoring Categories (30 points total):**
 - Title Tag (4 points)
 - Meta Description (4 points)
 - Keyword Placement (5 points)
 - Content Structure (6 points)
 - Featured Snippets (4 points)
 - Internal Linking (4 points)
+- Technical SEO (3 points) — Single H1, keyword in slug, no orphan pages
 
 **Score Interpretation:**
-- 90-100% (24-27): Ready to publish
-- 75-89% (20-23): Minor optimizations needed
-- 55-74% (15-19): Several improvements needed
-- Below 55% (<15): Significant work required
+- 90-100% (27-30): Ready to publish
+- 75-89% (23-26): Minor optimizations needed
+- 55-74% (17-22): Several improvements needed
+- Below 55% (<17): Significant work required
 
 **Location:** `.claude/skills/seo-review/SKILL.md`
 
