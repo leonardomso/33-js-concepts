@@ -1,0 +1,906 @@
+---
+title: "Property Descriptors: Hidden Property Flags in JavaScript"
+sidebarTitle: "Property Descriptors: Hidden Property Flags"
+description: "Learn JavaScript property descriptors. Understand writable, enumerable, configurable flags, Object.defineProperty(), and how to create immutable properties."
+---
+
+Why can you delete most object properties but not `Math.PI`? Why do some properties show up in `for...in` loops while others don't? And how do you create a property that can never be changed?
+
+```javascript
+// You can't modify Math.PI
+Math.PI = 3  // Silently fails (or throws in strict mode)
+console.log(Math.PI)  // 3.141592653589793 - unchanged!
+
+// You can't delete it either
+delete Math.PI  // false
+console.log(Math.PI)  // 3.141592653589793 - still there!
+```
+
+The answer is **property descriptors**. Every property in JavaScript has hidden attributes that control how it behaves. Understanding these unlocks powerful patterns for creating robust, secure objects.
+
+```javascript
+// Check Math.PI's hidden attributes
+const descriptor = Object.getOwnPropertyDescriptor(Math, 'PI')
+console.log(descriptor)
+// {
+//   value: 3.141592653589793,
+//   writable: false,      ← Can't change the value
+//   enumerable: false,    ← Won't show in for...in
+//   configurable: false   ← Can't delete or reconfigure
+// }
+```
+
+<Info>
+**What you'll learn in this guide:**
+- What property descriptors are and why they matter
+- The three property flags: `writable`, `enumerable`, `configurable`
+- How to use [`Object.defineProperty()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) to create controlled properties
+- Data descriptors vs accessor descriptors (getters/setters)
+- How to inspect properties with [`Object.getOwnPropertyDescriptor()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor)
+- Object-level protections: `freeze`, `seal`, and `preventExtensions`
+- Real-world use cases for property descriptors
+</Info>
+
+<Warning>
+**Prerequisite:** This guide references [Strict Mode](/beyond/concepts/strict-mode) for error behavior. Property descriptor errors are silent in non-strict mode but throw in strict mode.
+</Warning>
+
+---
+
+## What are Property Descriptors?
+
+**Property descriptors** are metadata objects that describe the characteristics of an object property. Every property in JavaScript has a descriptor that controls whether the property can be changed, deleted, or enumerated. When you create a property the "normal" way (with assignment), JavaScript sets all flags to permissive defaults.
+
+```javascript
+const user = { name: "Alice" }
+
+// Check the descriptor for 'name'
+console.log(Object.getOwnPropertyDescriptor(user, 'name'))
+// {
+//   value: "Alice",
+//   writable: true,       ← Can change the value
+//   enumerable: true,     ← Shows in for...in
+//   configurable: true    ← Can delete or reconfigure
+// }
+```
+
+Think of property descriptors as the "permissions" for each property. Just like file permissions on your computer control who can read, write, or execute a file, property descriptors control what you can do with a property.
+
+---
+
+## The File Permissions Analogy
+
+If you've used a computer, you've encountered file permissions. Property descriptors work the same way for object properties.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                 PROPERTY DESCRIPTORS: FILE PERMISSIONS                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   FILE PERMISSIONS (Computer)          PROPERTY DESCRIPTORS (JS)         │
+│   ────────────────────────────          ─────────────────────────        │
+│                                                                          │
+│   ┌──────────────────────────┐         ┌──────────────────────────┐     │
+│   │  Read    [✓]             │         │  enumerable    [✓]       │     │
+│   │  Write   [✓]             │   →     │  writable      [✓]       │     │
+│   │  Delete  [✓]             │         │  configurable  [✓]       │     │
+│   └──────────────────────────┘         └──────────────────────────┘     │
+│        Normal file                          Normal property              │
+│                                                                          │
+│   ┌──────────────────────────┐         ┌──────────────────────────┐     │
+│   │  Read    [✓]             │         │  enumerable    [✓]       │     │
+│   │  Write   [✗]             │   →     │  writable      [✗]       │     │
+│   │  Delete  [✗]             │         │  configurable  [✗]       │     │
+│   └──────────────────────────┘         └──────────────────────────┘     │
+│        Read-only file                       Constant property            │
+│                                                                          │
+│   Just like you can protect files, you can protect object properties.   │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## The Three Property Flags
+
+Every data property has three flags that control its behavior. Let's explore each one.
+
+### `writable`: Can the Value Be Changed?
+
+When `writable` is `false`, the property becomes read-only. Assignment attempts silently fail in non-strict mode or throw a `TypeError` in [strict mode](/beyond/concepts/strict-mode).
+
+```javascript
+"use strict"
+
+const config = {}
+
+Object.defineProperty(config, 'apiVersion', {
+  value: 'v2',
+  writable: false,    // Read-only
+  enumerable: true,
+  configurable: true
+})
+
+console.log(config.apiVersion)  // "v2"
+
+config.apiVersion = 'v3'  // TypeError: Cannot assign to read-only property
+```
+
+<Note>
+Without `"use strict"`, the assignment would silently fail. The value would remain `"v2"` with no error message. This is why strict mode is recommended.
+</Note>
+
+### `enumerable`: Does It Show in Loops?
+
+When `enumerable` is `false`, the property is hidden from iteration methods like `for...in`, [`Object.keys()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys), and the [spread operator](/concepts/modern-js-syntax).
+
+```javascript
+const user = { name: "Alice" }
+
+// Add a hidden metadata property
+Object.defineProperty(user, '_id', {
+  value: 12345,
+  writable: true,
+  enumerable: false,  // Hidden from iteration
+  configurable: true
+})
+
+// The property exists and works
+console.log(user._id)  // 12345
+
+// But it's invisible to iteration
+console.log(Object.keys(user))  // ["name"] - no _id!
+
+for (const key in user) {
+  console.log(key)  // Only logs "name"
+}
+
+// Spread also ignores it
+const copy = { ...user }
+console.log(copy)  // { name: "Alice" } - no _id!
+```
+
+This is how JavaScript hides internal properties. For example, the `length` property of arrays is non-enumerable:
+
+```javascript
+const arr = [1, 2, 3]
+console.log(arr.length)  // 3
+
+// But it doesn't show up in keys
+console.log(Object.keys(arr))  // ["0", "1", "2"] - no "length"
+```
+
+### `configurable`: Can It Be Deleted or Reconfigured?
+
+When `configurable` is `false`, you cannot:
+- Delete the property
+- Change any flag (except `writable`: you can still change `true` → `false`)
+- Change between data and accessor descriptor types
+
+```javascript
+"use strict"
+
+const settings = {}
+
+Object.defineProperty(settings, 'debug', {
+  value: true,
+  writable: true,
+  enumerable: true,
+  configurable: false  // Locked configuration
+})
+
+// Can still change the value (writable is true)
+settings.debug = false
+console.log(settings.debug)  // false
+
+// But can't delete it
+delete settings.debug  // TypeError: Cannot delete property 'debug'
+
+// Can't make it enumerable: false
+Object.defineProperty(settings, 'debug', {
+  enumerable: false
+})  // TypeError: Cannot redefine property: debug
+```
+
+<Warning>
+**`configurable: false` is a one-way door.** Once you set it, you cannot undo it. Think carefully before making a property non-configurable.
+</Warning>
+
+---
+
+## Using `Object.defineProperty()`
+
+The [`Object.defineProperty()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) method is how you create or modify properties with specific descriptors.
+
+### Basic Syntax
+
+```javascript
+Object.defineProperty(obj, propertyName, descriptor)
+```
+
+- `obj`: The object to modify
+- `propertyName`: A string or Symbol for the property name
+- `descriptor`: An object with the property settings
+
+### Creating a New Property
+
+```javascript
+const product = {}
+
+Object.defineProperty(product, 'price', {
+  value: 99.99,
+  writable: true,
+  enumerable: true,
+  configurable: true
+})
+
+console.log(product.price)  // 99.99
+```
+
+### Default Values Are Restrictive
+
+When using `Object.defineProperty()`, any flag you don't specify defaults to `false`. This is the opposite of normal assignment!
+
+```javascript
+const obj = {}
+
+// Normal assignment - all flags default to TRUE
+obj.a = 1
+console.log(Object.getOwnPropertyDescriptor(obj, 'a'))
+// { value: 1, writable: true, enumerable: true, configurable: true }
+
+// defineProperty - unspecified flags default to FALSE
+Object.defineProperty(obj, 'b', { value: 2 })
+console.log(Object.getOwnPropertyDescriptor(obj, 'b'))
+// { value: 2, writable: false, enumerable: false, configurable: false }
+```
+
+<Tip>
+**Rule of thumb:** Always explicitly set all the flags you care about when using `Object.defineProperty()`. Don't rely on defaults.
+</Tip>
+
+### Modifying Existing Properties
+
+You can use `defineProperty` to change flags on existing properties:
+
+```javascript
+const user = { name: "Alice" }
+
+// Make name read-only
+Object.defineProperty(user, 'name', {
+  writable: false
+})
+
+// Now it can't be changed
+user.name = "Bob"  // Silently fails (throws in strict mode)
+console.log(user.name)  // "Alice"
+```
+
+---
+
+## Defining Multiple Properties at Once
+
+[`Object.defineProperties()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties) lets you define multiple properties in one call:
+
+```javascript
+const config = {}
+
+Object.defineProperties(config, {
+  apiUrl: {
+    value: 'https://api.example.com',
+    writable: false,
+    enumerable: true,
+    configurable: false
+  },
+  timeout: {
+    value: 5000,
+    writable: true,
+    enumerable: true,
+    configurable: true
+  },
+  _internal: {
+    value: 'secret',
+    writable: false,
+    enumerable: false,  // Hidden
+    configurable: false
+  }
+})
+
+console.log(Object.keys(config))  // ["apiUrl", "timeout"] - no _internal
+```
+
+---
+
+## Inspecting Property Descriptors
+
+### Single Property: `Object.getOwnPropertyDescriptor()`
+
+```javascript
+const user = { name: "Alice", age: 30 }
+
+const nameDescriptor = Object.getOwnPropertyDescriptor(user, 'name')
+console.log(nameDescriptor)
+// {
+//   value: "Alice",
+//   writable: true,
+//   enumerable: true,
+//   configurable: true
+// }
+```
+
+### All Properties: `Object.getOwnPropertyDescriptors()`
+
+[`Object.getOwnPropertyDescriptors()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors) returns descriptors for all own properties:
+
+```javascript
+const user = { name: "Alice", age: 30 }
+
+console.log(Object.getOwnPropertyDescriptors(user))
+// {
+//   name: { value: "Alice", writable: true, enumerable: true, configurable: true },
+//   age: { value: 30, writable: true, enumerable: true, configurable: true }
+// }
+```
+
+### Cloning Objects with Descriptors
+
+The spread operator and `Object.assign()` don't preserve property descriptors. Use `Object.getOwnPropertyDescriptors()` for a true clone:
+
+```javascript
+const original = {}
+Object.defineProperty(original, 'id', {
+  value: 1,
+  writable: false,
+  enumerable: true,
+  configurable: false
+})
+
+// ❌ WRONG - spread loses the descriptor settings
+const badClone = { ...original }
+badClone.id = 999  // Works! Not read-only anymore
+console.log(badClone.id)  // 999
+
+// ✓ CORRECT - preserves all descriptors
+const goodClone = Object.defineProperties(
+  {},
+  Object.getOwnPropertyDescriptors(original)
+)
+goodClone.id = 999  // Silently fails (throws in strict mode)
+console.log(goodClone.id)  // 1 - still protected!
+```
+
+---
+
+## Data Descriptors vs Accessor Descriptors
+
+There are two types of property descriptors:
+
+### Data Descriptors
+
+A **data descriptor** has a `value` and optionally `writable`. This is what we've been using:
+
+```javascript
+{
+  value: "something",
+  writable: true,
+  enumerable: true,
+  configurable: true
+}
+```
+
+### Accessor Descriptors
+
+An **accessor descriptor** has `get` and/or `set` functions instead of `value` and `writable`. See [Getters & Setters](/beyond/concepts/getters-setters) for a deeper dive into accessor properties.
+
+```javascript
+const user = {
+  firstName: "Alice",
+  lastName: "Smith"
+}
+
+Object.defineProperty(user, 'fullName', {
+  get() {
+    return `${this.firstName} ${this.lastName}`
+  },
+  set(value) {
+    const parts = value.split(' ')
+    this.firstName = parts[0]
+    this.lastName = parts[1]
+  },
+  enumerable: true,
+  configurable: true
+})
+
+console.log(user.fullName)  // "Alice Smith"
+
+user.fullName = "Bob Jones"
+console.log(user.firstName)  // "Bob"
+console.log(user.lastName)   // "Jones"
+```
+
+<Warning>
+**You can't mix both.** A descriptor with both `value` and `get` (or `writable` and `set`) throws a `TypeError`. It must be one type or the other.
+</Warning>
+
+```javascript
+// ❌ This throws an error
+Object.defineProperty({}, 'broken', {
+  value: 42,
+  get() { return 42 }  // TypeError: Invalid property descriptor
+})
+```
+
+### Getter-Only Properties
+
+If you only define a `get` without `set`, the property becomes read-only:
+
+```javascript
+"use strict"
+
+const circle = { radius: 5 }
+
+Object.defineProperty(circle, 'area', {
+  get() {
+    return Math.PI * this.radius ** 2
+  },
+  enumerable: true,
+  configurable: true
+})
+
+console.log(circle.area)  // 78.53981633974483
+
+circle.area = 100  // TypeError: Cannot set property 'area' which has only a getter
+```
+
+---
+
+## Object-Level Protections
+
+Property descriptors control individual properties. JavaScript also provides methods to protect entire objects.
+
+### `Object.preventExtensions()`: No New Properties
+
+```javascript
+const user = { name: "Alice" }
+
+Object.preventExtensions(user)
+
+// Can still modify existing properties
+user.name = "Bob"
+console.log(user.name)  // "Bob"
+
+// But can't add new ones
+user.age = 30  // Silently fails (throws in strict mode)
+console.log(user.age)  // undefined
+
+// Check if extensible
+console.log(Object.isExtensible(user))  // false
+```
+
+### `Object.seal()`: No Add/Delete, Can Still Modify
+
+[`Object.seal()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal) prevents adding or deleting properties by setting `configurable: false` on all existing properties:
+
+```javascript
+const config = { debug: true, version: 1 }
+
+Object.seal(config)
+
+// Can modify values
+config.debug = false
+console.log(config.debug)  // false
+
+// Can't add properties
+config.newProp = "test"  // Silently fails
+console.log(config.newProp)  // undefined
+
+// Can't delete properties
+delete config.version  // Silently fails
+console.log(config.version)  // 1
+
+console.log(Object.isSealed(config))  // true
+```
+
+### `Object.freeze()`: Complete Immutability
+
+[`Object.freeze()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze) makes an object completely immutable by setting `writable: false` and `configurable: false` on all properties:
+
+```javascript
+const CONSTANTS = {
+  PI: 3.14159,
+  E: 2.71828,
+  GOLDEN_RATIO: 1.61803
+}
+
+Object.freeze(CONSTANTS)
+
+// Can't modify
+CONSTANTS.PI = 3  // Silently fails
+console.log(CONSTANTS.PI)  // 3.14159
+
+// Can't add
+CONSTANTS.NEW = 1  // Silently fails
+
+// Can't delete
+delete CONSTANTS.E  // Silently fails
+
+console.log(Object.isFrozen(CONSTANTS))  // true
+```
+
+<Warning>
+**Freeze is shallow!** Nested objects are not frozen:
+
+```javascript
+const user = {
+  name: "Alice",
+  address: { city: "NYC" }
+}
+
+Object.freeze(user)
+
+user.name = "Bob"  // Fails - frozen
+user.address.city = "LA"  // Works! Nested object isn't frozen
+
+console.log(user.address.city)  // "LA"
+```
+
+For deep freeze, you need a recursive function or a library.
+</Warning>
+
+### Comparison Table
+
+| Method | Add | Delete | Modify Values | Modify Descriptors |
+|--------|-----|--------|---------------|-------------------|
+| Normal object | ✅ | ✅ | ✅ | ✅ |
+| `preventExtensions()` | ❌ | ✅ | ✅ | ✅ |
+| `seal()` | ❌ | ❌ | ✅ | ❌ |
+| `freeze()` | ❌ | ❌ | ❌ | ❌ |
+
+---
+
+## Real-World Use Cases
+
+### Creating Constants
+
+```javascript
+const AppConfig = {}
+
+Object.defineProperties(AppConfig, {
+  API_URL: {
+    value: 'https://api.myapp.com',
+    writable: false,
+    enumerable: true,
+    configurable: false
+  },
+  MAX_RETRIES: {
+    value: 3,
+    writable: false,
+    enumerable: true,
+    configurable: false
+  }
+})
+
+// Works like constants
+console.log(AppConfig.API_URL)  // "https://api.myapp.com"
+AppConfig.API_URL = "hacked"    // Fails silently
+console.log(AppConfig.API_URL)  // "https://api.myapp.com" - unchanged
+```
+
+### Hidden Internal Properties
+
+This pattern is similar to how you might use [closures](/concepts/scope-and-closures) to hide data, but works directly on object properties:
+
+```javascript
+function createUser(name, password) {
+  const user = { name }
+  
+  // Store password hash as non-enumerable
+  Object.defineProperty(user, '_passwordHash', {
+    value: hashPassword(password),
+    writable: false,
+    enumerable: false,  // Won't show up in JSON.stringify or Object.keys
+    configurable: false
+  })
+  
+  return user
+}
+
+const user = createUser("Alice", "secret123")
+
+console.log(JSON.stringify(user))  // {"name":"Alice"} - no password!
+console.log(Object.keys(user))      // ["name"] - no _passwordHash!
+```
+
+### Computed Properties That Look Like Regular Properties
+
+```javascript
+const rectangle = {
+  width: 10,
+  height: 5
+}
+
+Object.defineProperty(rectangle, 'area', {
+  get() {
+    return this.width * this.height
+  },
+  enumerable: true,
+  configurable: true
+})
+
+console.log(rectangle.area)  // 50
+
+rectangle.width = 20
+console.log(rectangle.area)  // 100 - automatically updates!
+```
+
+### Validation on Assignment
+
+This pattern is especially useful in [factory functions and classes](/concepts/factories-classes) where you want to enforce data integrity:
+
+```javascript
+const person = { _age: 0 }
+
+Object.defineProperty(person, 'age', {
+  get() {
+    return this._age
+  },
+  set(value) {
+    if (typeof value !== 'number' || value < 0) {
+      throw new TypeError('Age must be a positive number')
+    }
+    this._age = value
+  },
+  enumerable: true,
+  configurable: true
+})
+
+person.age = 25
+console.log(person.age)  // 25
+
+person.age = -5   // TypeError: Age must be a positive number
+person.age = "old"  // TypeError: Age must be a positive number
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Every property has a descriptor.** It controls whether the property is writable, enumerable, and configurable.
+
+2. **Normal assignment sets all flags to `true`.** Properties created with `=` are fully permissive by default.
+
+3. **`defineProperty` defaults flags to `false`.** Always explicitly set the flags you want when using this method.
+
+4. **`writable: false` makes a property read-only.** Assignment silently fails in non-strict mode, throws in strict mode.
+
+5. **`enumerable: false` hides the property.** It won't appear in `for...in`, `Object.keys()`, `JSON.stringify()`, or spread.
+
+6. **`configurable: false` is permanent.** You can never undo it. The property can't be deleted or reconfigured.
+
+7. **Data descriptors have `value` and `writable`.** Accessor descriptors have `get` and `set`. You can't mix them.
+
+8. **`Object.freeze()` is shallow.** Nested objects remain unfrozen. Use recursion for deep freeze.
+
+9. **Use `getOwnPropertyDescriptors()` for true cloning.** Spread and `Object.assign()` don't preserve descriptors.
+
+10. **Property descriptors power JavaScript's built-ins.** This is how `Math.PI` and array `.length` have special behavior.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What's the difference between assigning a property normally vs using defineProperty?">
+    **Answer:**
+    
+    When you assign a property normally (with `=`), all descriptor flags default to `true`:
+    
+    ```javascript
+    const obj = {}
+    obj.name = "Alice"
+    // { value: "Alice", writable: true, enumerable: true, configurable: true }
+    ```
+    
+    When you use `Object.defineProperty()`, unspecified flags default to `false`:
+    
+    ```javascript
+    Object.defineProperty(obj, 'id', { value: 1 })
+    // { value: 1, writable: false, enumerable: false, configurable: false }
+    ```
+    
+    This means properties created with `defineProperty` are restrictive by default.
+  </Accordion>
+  
+  <Accordion title="Why would you make a property non-enumerable?">
+    **Answer:**
+    
+    Non-enumerable properties are hidden from iteration. This is useful for:
+    
+    1. **Internal/metadata properties** that shouldn't be serialized:
+    ```javascript
+    Object.defineProperty(user, '_internalId', {
+      value: 'xyz123',
+      enumerable: false
+    })
+    JSON.stringify(user)  // Won't include _internalId
+    ```
+    
+    2. **Methods on objects** that shouldn't appear in `for...in` loops
+    
+    3. **Matching built-in behavior** like `Array.prototype.length`
+  </Accordion>
+  
+  <Accordion title="What happens if you try to mix value and get in a descriptor?">
+    **Answer:**
+    
+    You get a `TypeError`. A descriptor must be either a data descriptor (with `value` and optionally `writable`) or an accessor descriptor (with `get` and/or `set`). You cannot combine both:
+    
+    ```javascript
+    Object.defineProperty({}, 'prop', {
+      value: 42,
+      get() { return 42 }
+    })
+    // TypeError: Invalid property descriptor. Cannot both specify accessors
+    // and a value or writable attribute
+    ```
+  </Accordion>
+  
+  <Accordion title="How do you create a truly immutable constant in JavaScript?">
+    **Answer:**
+    
+    Use `Object.defineProperty()` with `writable: false` and `configurable: false`:
+    
+    ```javascript
+    const CONFIG = {}
+    
+    Object.defineProperty(CONFIG, 'MAX_SIZE', {
+      value: 1024,
+      writable: false,      // Can't change the value
+      enumerable: true,     // Visible in iteration
+      configurable: false   // Can't delete or reconfigure
+    })
+    
+    CONFIG.MAX_SIZE = 9999  // Silently fails
+    delete CONFIG.MAX_SIZE  // Returns false
+    console.log(CONFIG.MAX_SIZE)  // 1024 - unchanged
+    ```
+    
+    For an entire object, use `Object.freeze()`. But remember it's shallow.
+  </Accordion>
+  
+  <Accordion title="Why doesn't Object.freeze() freeze nested objects?">
+    **Answer:**
+    
+    `Object.freeze()` only affects the direct properties of the object, not nested objects. This is called "shallow" freezing:
+    
+    ```javascript
+    const data = {
+      user: { name: "Alice" }
+    }
+    
+    Object.freeze(data)
+    
+    data.user = {}  // Fails - data is frozen
+    data.user.name = "Bob"  // Works! user object isn't frozen
+    ```
+    
+    For deep freezing, you need a recursive function:
+    
+    ```javascript
+    function deepFreeze(obj) {
+      Object.freeze(obj)
+      for (const key of Object.keys(obj)) {
+        if (typeof obj[key] === 'object' && obj[key] !== null) {
+          deepFreeze(obj[key])
+        }
+      }
+      return obj
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="How do you clone an object while preserving its property descriptors?">
+    **Answer:**
+    
+    Use `Object.defineProperties()` with `Object.getOwnPropertyDescriptors()`:
+    
+    ```javascript
+    const original = {}
+    Object.defineProperty(original, 'id', {
+      value: 1,
+      writable: false,
+      enumerable: true,
+      configurable: false
+    })
+    
+    // ❌ Spread loses descriptors
+    const badClone = { ...original }
+    
+    // ✓ This preserves descriptors
+    const goodClone = Object.defineProperties(
+      {},
+      Object.getOwnPropertyDescriptors(original)
+    )
+    
+    console.log(Object.getOwnPropertyDescriptor(goodClone, 'id'))
+    // { value: 1, writable: false, enumerable: true, configurable: false }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Getters & Setters" icon="arrows-rotate" href="/beyond/concepts/getters-setters">
+    Learn more about accessor properties and computed values.
+  </Card>
+  <Card title="Proxy & Reflect" icon="shield" href="/beyond/concepts/proxy-reflect">
+    More powerful object interception beyond property descriptors.
+  </Card>
+  <Card title="Object Methods" icon="cube" href="/beyond/concepts/object-methods">
+    Explore all the methods available on Object for inspection and manipulation.
+  </Card>
+  <Card title="Strict Mode" icon="lock" href="/beyond/concepts/strict-mode">
+    Why property descriptor errors are silent without strict mode.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Object.defineProperty() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">
+    Complete reference for defining properties with descriptors.
+  </Card>
+  <Card title="Object.getOwnPropertyDescriptor() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor">
+    How to inspect property descriptors.
+  </Card>
+  <Card title="Object.freeze() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">
+    Making objects completely immutable.
+  </Card>
+  <Card title="Enumerability — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Enumerability_and_ownership_of_properties">
+    Deep dive into enumerable properties and ownership.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Property flags and descriptors" icon="newspaper" href="https://javascript.info/property-descriptors">
+    The essential javascript.info guide covering all property flags with clear examples. Includes exercises to test understanding.
+  </Card>
+  <Card title="Properties in JavaScript: Definition vs Assignment" icon="newspaper" href="https://2ality.com/2012/08/property-definition-assignment.html">
+    Dr. Axel Rauschmayer's deep technical analysis of how property definition differs from assignment.
+  </Card>
+  <Card title="JavaScript Object Property Descriptors Explained" icon="newspaper" href="https://blog.bitsrc.io/an-introduction-to-object-property-descriptors-in-javascript-3e7d7e4b13f6">
+    Bit.dev's visual guide with diagrams explaining each flag and when to use them.
+  </Card>
+  <Card title="JavaScript Object.defineProperty()" icon="newspaper" href="https://www.programiz.com/javascript/library/object/defineProperty">
+    Programiz tutorial covering defineProperty() syntax, parameters, and practical examples.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Property Descriptors Explained" icon="video" href="https://www.youtube.com/watch?v=LD1tQEWsjz4">
+    Clear walkthrough of property descriptors with live coding examples. Good for understanding the basics.
+  </Card>
+  <Card title="Object.defineProperty() in JavaScript" icon="video" href="https://www.youtube.com/watch?v=2vHHZZdBDig">
+    Focused tutorial on defineProperty() covering all flags and real-world applications.
+  </Card>
+  <Card title="JavaScript Object Methods: freeze, seal, preventExtensions" icon="video" href="https://www.youtube.com/watch?v=KIQ-h4xYnKY">
+    Comprehensive comparison of object-level protection methods with practical examples.
+  </Card>
+</CardGroup>
