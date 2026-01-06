@@ -18,10 +18,16 @@ The project was recognized by GitHub as one of the **top open source projects of
 ```
 33-js-concepts/
 ├── .claude/                 # Claude configuration
-│   └── CLAUDE.md           # Project context and guidelines
+│   ├── CLAUDE.md           # Project context and guidelines
+│   └── skills/             # Custom skills for content creation
+│       ├── write-concept/  # Skill for writing concept documentation
+│       ├── fact-check/     # Skill for verifying technical accuracy
+│       └── seo-review/     # Skill for SEO audits
 ├── .opencode/               # OpenCode configuration
-│   └── skill/              # Custom skills for content creation
-│       └── write-concept/  # Skill for writing concept documentation
+│   └── skill/              # Custom skills (mirrored from .claude/skills)
+│       ├── write-concept/  # Skill for writing concept documentation
+│       ├── fact-check/     # Skill for verifying technical accuracy
+│       └── seo-review/     # Skill for SEO audits
 ├── docs/                    # Mintlify documentation site
 │   ├── docs.json           # Mintlify configuration
 │   ├── index.mdx           # Homepage
@@ -398,7 +404,67 @@ Use the `/write-concept` skill when writing or improving concept documentation p
 
 The skill includes detailed guidance on title optimization (50-60 chars), meta descriptions (150-160 chars), keyword placement, and featured snippet optimization.
 
-**Location:** `.opencode/skill/write-concept/SKILL.md`
+**Location:** `.claude/skills/write-concept/SKILL.md`
+
+### fact-check Skill
+
+Use the `/fact-check` skill when verifying the technical accuracy of concept documentation. This skill provides comprehensive methodology for:
+
+- **Code Verification**: Verify all code examples produce stated outputs, run project tests
+- **MDN/Spec Compliance**: Check claims against official MDN documentation and ECMAScript specification
+- **External Resource Checks**: Verify all links work and descriptions accurately represent content
+- **Misconception Detection**: Common JavaScript misconceptions to watch for (type coercion, async behavior, etc.)
+- **Test Integration**: Instructions for running `npm test` to verify code examples
+- **Report Template**: Structured format for documenting findings with severity levels
+
+**When to invoke:**
+- Before publishing a new concept page
+- After significant edits to existing pages
+- When reviewing community contributions
+- Periodic accuracy audits of existing content
+
+**What gets checked:**
+- Every code example for correct output
+- All MDN links for validity (not 404)
+- API descriptions match current MDN documentation
+- External resources (articles, videos) are accessible and accurate
+- Technical claims are correct and properly nuanced
+- No common JavaScript misconceptions stated as fact
+
+**Location:** `.claude/skills/fact-check/SKILL.md`
+
+### seo-review Skill
+
+Use the `/seo-review` skill when auditing concept pages for search engine optimization. This skill provides a focused audit checklist:
+
+- **27-Point Scoring System**: Systematic audit across 6 categories
+- **Title & Meta Optimization**: Character counts, keyword placement, compelling hooks
+- **Keyword Strategy**: Pre-built keyword clusters for all JavaScript concepts
+- **Featured Snippet Optimization**: Patterns for winning position zero in search results
+- **Internal Linking**: Audit of concept interconnections and anchor text quality
+- **Report Template**: Structured SEO audit report with prioritized fixes
+
+**When to invoke:**
+- Before publishing a new concept page
+- When optimizing underperforming pages
+- Periodic content audits
+- After major content updates
+
+**Scoring Categories (27 points total):**
+- Title Tag (4 points)
+- Meta Description (4 points)
+- Keyword Placement (5 points)
+- Content Structure (6 points)
+- Featured Snippets (4 points)
+- Internal Linking (4 points)
+
+**Score Interpretation:**
+- 90-100% (24-27): Ready to publish
+- 75-89% (20-23): Minor optimizations needed
+- 55-74% (15-19): Several improvements needed
+- Below 55% (<15): Significant work required
+
+**Location:** `.claude/skills/seo-review/SKILL.md`
 
 ## Maintainer
 
