@@ -1,0 +1,785 @@
+---
+title: "Object Methods: Inspecting and Transforming Objects in JavaScript"
+sidebarTitle: "Object Methods: Inspect & Transform"
+description: "Learn JavaScript Object methods. Master Object.keys(), values(), entries(), assign(), structuredClone(), hasOwn(), and groupBy() for object manipulation."
+---
+
+How do you loop through an object's properties? How do you transform an object's keys? Or create a true copy of an object without unexpected side effects?
+
+JavaScript's `Object` constructor comes with a powerful toolkit of static methods that let you inspect, iterate, transform, and clone objects. Once you know them, you'll reach for them constantly.
+
+```javascript
+const user = { name: 'Alice', age: 30, city: 'NYC' }
+
+// Get all keys, values, or key-value pairs
+Object.keys(user)     // ['name', 'age', 'city']
+Object.values(user)   // ['Alice', 30, 'NYC']
+Object.entries(user)  // [['name', 'Alice'], ['age', 30], ['city', 'NYC']]
+
+// Transform and rebuild
+const upperKeys = Object.fromEntries(
+  Object.entries(user).map(([key, value]) => [key.toUpperCase(), value])
+)
+// { NAME: 'Alice', AGE: 30, CITY: 'NYC' }
+```
+
+<Info>
+**What you'll learn in this guide:**
+- How to iterate objects with [`Object.keys()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys), [`Object.values()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values), and [`Object.entries()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries)
+- How to transform objects using [`Object.fromEntries()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries)
+- Shallow vs deep cloning with [`Object.assign()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) and [`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone)
+- Safe property checking with [`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn)
+- Precise equality with [`Object.is()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)
+- Grouping data with [`Object.groupBy()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) (ES2024)
+- When to use each method in real-world scenarios
+</Info>
+
+---
+
+## What are Object Methods?
+
+**Object methods** are static functions on JavaScript's built-in `Object` constructor that let you inspect, manipulate, and transform objects. Unlike instance methods you call on the object itself (like `toString()`), these are called on `Object` directly with the target object passed as an argument.
+
+```javascript
+const product = { name: 'Laptop', price: 999 }
+
+// Static method: called on Object
+Object.keys(product)  // ['name', 'price']
+
+// Instance method: called on the object
+product.toString()    // '[object Object]'
+```
+
+Think of `Object` as a toolbox sitting next to your workbench. You don't modify the toolbox itself. You reach into it, grab a tool, and use it on whatever object you're working with.
+
+---
+
+## The Toolbox Analogy
+
+Imagine you have a filing cabinet (your object) and a set of tools for working with it:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        THE OBJECT TOOLBOX                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   YOUR OBJECT (Filing Cabinet)          THE TOOLS (Object.*)             │
+│   ┌─────────────────────┐               ┌────────────────────────────┐   │
+│   │ name: "Alice"       │               │ keys()     → list labels   │   │
+│   │ age: 30             │    ────►      │ values()   → list contents │   │
+│   │ city: "NYC"         │               │ entries()  → list both     │   │
+│   └─────────────────────┘               │ assign()   → copy/merge    │   │
+│                                         │ hasOwn()   → check exists  │   │
+│                                         │ groupBy()  → organize      │   │
+│                                         └────────────────────────────┘   │
+│                                                                          │
+│   You don't modify the toolbox. You use the tools ON your object.        │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Iteration Methods: keys, values, entries
+
+These three methods convert an object into an array you can loop over or transform.
+
+### Object.keys()
+
+Returns an array of the object's own enumerable property **names** (keys).
+
+```javascript
+const user = { name: 'Alice', age: 30, city: 'NYC' }
+
+const keys = Object.keys(user)
+console.log(keys)  // ['name', 'age', 'city']
+
+// Loop through keys
+for (const key of Object.keys(user)) {
+  console.log(key)  // 'name', 'age', 'city'
+}
+```
+
+### Object.values()
+
+Returns an array of the object's own enumerable property **values**.
+
+```javascript
+const user = { name: 'Alice', age: 30, city: 'NYC' }
+
+const values = Object.values(user)
+console.log(values)  // ['Alice', 30, 'NYC']
+
+// Sum all numeric values
+const scores = { math: 95, science: 88, history: 92 }
+const total = Object.values(scores).reduce((sum, score) => sum + score, 0)
+console.log(total)  // 275
+```
+
+### Object.entries()
+
+Returns an array of `[key, value]` pairs. This is the most versatile of the three.
+
+```javascript
+const user = { name: 'Alice', age: 30, city: 'NYC' }
+
+const entries = Object.entries(user)
+console.log(entries)
+// [['name', 'Alice'], ['age', 30], ['city', 'NYC']]
+
+// Destructure in a loop
+for (const [key, value] of Object.entries(user)) {
+  console.log(`${key}: ${value}`)
+}
+// name: Alice
+// age: 30
+// city: NYC
+```
+
+### Quick Comparison
+
+| Method | Returns | Use When |
+|--------|---------|----------|
+| `Object.keys(obj)` | `['key1', 'key2', ...]` | You only need the property names |
+| `Object.values(obj)` | `[value1, value2, ...]` | You only need the values |
+| `Object.entries(obj)` | `[['key1', value1], ...]` | You need both keys and values |
+
+<Note>
+All three methods only return **own** enumerable properties. They skip inherited properties from the prototype chain and non-enumerable properties. See [Property Descriptors](/beyond/concepts/property-descriptors) for more on enumerability.
+</Note>
+
+---
+
+## Transforming Objects with fromEntries()
+
+[`Object.fromEntries()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries) is the inverse of `Object.entries()`. It takes an iterable of `[key, value]` pairs and builds an object.
+
+```javascript
+const entries = [['name', 'Alice'], ['age', 30]]
+const user = Object.fromEntries(entries)
+console.log(user)  // { name: 'Alice', age: 30 }
+```
+
+The real power comes from combining `entries()` and `fromEntries()` with array methods like `map()` and `filter()`.
+
+### Transform Object Keys
+
+```javascript
+const user = { name: 'Alice', age: 30, city: 'NYC' }
+
+// Convert all keys to uppercase
+const upperCased = Object.fromEntries(
+  Object.entries(user).map(([key, value]) => [key.toUpperCase(), value])
+)
+console.log(upperCased)  // { NAME: 'Alice', AGE: 30, CITY: 'NYC' }
+```
+
+### Filter Object Properties
+
+```javascript
+const product = { name: 'Laptop', price: 999, inStock: true, sku: 'LP001' }
+
+// Keep only string values
+const stringsOnly = Object.fromEntries(
+  Object.entries(product).filter(([key, value]) => typeof value === 'string')
+)
+console.log(stringsOnly)  // { name: 'Laptop', sku: 'LP001' }
+```
+
+### Convert a Map to an Object
+
+```javascript
+const map = new Map([
+  ['name', 'Alice'],
+  ['role', 'Admin']
+])
+
+const obj = Object.fromEntries(map)
+console.log(obj)  // { name: 'Alice', role: 'Admin' }
+```
+
+<Tip>
+**The Transform Pipeline:** `Object.entries()` → array methods → `Object.fromEntries()` is a powerful pattern. It's like `map()` for objects.
+</Tip>
+
+---
+
+## Cloning and Merging Objects
+
+JavaScript objects are assigned by reference. When you need a separate copy, you have several options.
+
+### Object.assign() — Shallow Copy and Merge
+
+[`Object.assign()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign) copies all enumerable own properties from source objects to a target object.
+
+```javascript
+const target = { a: 1 }
+const source = { b: 2 }
+
+Object.assign(target, source)
+console.log(target)  // { a: 1, b: 2 }
+```
+
+For cloning, use an empty object as the target:
+
+```javascript
+const original = { name: 'Alice', age: 30 }
+const clone = Object.assign({}, original)
+
+clone.name = 'Bob'
+console.log(original.name)  // 'Alice' — original unchanged
+```
+
+**Merge multiple objects:**
+
+```javascript
+const defaults = { theme: 'light', fontSize: 14 }
+const userPrefs = { theme: 'dark' }
+
+const settings = Object.assign({}, defaults, userPrefs)
+console.log(settings)  // { theme: 'dark', fontSize: 14 }
+```
+
+<Warning>
+**Shallow copy only!** Nested objects are still shared by reference:
+
+```javascript
+const original = { 
+  name: 'Alice', 
+  address: { city: 'NYC' } 
+}
+
+const clone = Object.assign({}, original)
+clone.address.city = 'LA'
+
+console.log(original.address.city)  // 'LA' — both changed!
+```
+</Warning>
+
+### structuredClone() — Deep Copy
+
+[`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) creates a true deep copy, including nested objects. It was added to browsers and Node.js in 2022.
+
+```javascript
+const original = { 
+  name: 'Alice', 
+  address: { city: 'NYC' } 
+}
+
+const clone = structuredClone(original)
+clone.address.city = 'LA'
+
+console.log(original.address.city)  // 'NYC' — original unchanged!
+```
+
+**It also handles:**
+- Circular references
+- Most built-in types (Date, Map, Set, ArrayBuffer, etc.)
+
+```javascript
+const data = {
+  date: new Date('2024-01-01'),
+  items: new Set([1, 2, 3])
+}
+
+const clone = structuredClone(data)
+console.log(clone.date instanceof Date)  // true
+console.log(clone.items instanceof Set)  // true
+```
+
+<Warning>
+**structuredClone() cannot clone:**
+- Functions
+- DOM nodes
+- Property descriptors (getters/setters become plain values)
+- Prototype chain (you get plain objects)
+
+```javascript
+const obj = { 
+  greet: () => 'Hello'  // Function
+}
+
+structuredClone(obj)  // Throws: DataCloneError
+```
+</Warning>
+
+### Shallow vs Deep: When to Use Each
+
+| Method | Depth | Speed | Use When |
+|--------|-------|-------|----------|
+| `Object.assign()` | Shallow | Fast | Merging objects, no nested objects |
+| Spread `{...obj}` | Shallow | Fast | Quick clone, no nested objects |
+| `structuredClone()` | Deep | Slower | Nested objects that must be independent |
+
+---
+
+## Object.hasOwn() — Safe Property Checking
+
+[`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) checks if an object has a property as its own (not inherited). It's the modern replacement for `hasOwnProperty()`.
+
+```javascript
+const user = { name: 'Alice', age: 30 }
+
+console.log(Object.hasOwn(user, 'name'))      // true
+console.log(Object.hasOwn(user, 'toString'))  // false (inherited)
+console.log(Object.hasOwn(user, 'email'))     // false (doesn't exist)
+```
+
+### Why Not Just Use hasOwnProperty()?
+
+`Object.hasOwn()` is safer in two situations:
+
+**1. Objects with null prototype:**
+
+```javascript
+const nullProto = Object.create(null)
+nullProto.id = 1
+
+// hasOwnProperty doesn't exist on null-prototype objects!
+nullProto.hasOwnProperty('id')  // TypeError!
+
+// Object.hasOwn works fine
+Object.hasOwn(nullProto, 'id')  // true
+```
+
+**2. Objects that override hasOwnProperty:**
+
+```javascript
+const sneaky = {
+  hasOwnProperty: () => false  // Someone overrode it!
+}
+
+sneaky.hasOwnProperty('hasOwnProperty')  // false (wrong!)
+Object.hasOwn(sneaky, 'hasOwnProperty')  // true (correct!)
+```
+
+<Tip>
+**Modern best practice:** Use `Object.hasOwn()` instead of `obj.hasOwnProperty()`. It's more robust and reads more clearly.
+</Tip>
+
+---
+
+## Object.is() — Precise Equality
+
+[`Object.is()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) compares two values for same-value equality. It's like `===` but handles two edge cases differently.
+
+```javascript
+// Same as ===
+Object.is(5, 5)           // true
+Object.is('hello', 'hello')  // true
+Object.is({}, {})         // false (different references)
+
+// Different from ===
+Object.is(NaN, NaN)       // true  (=== returns false!)
+Object.is(0, -0)          // false (=== returns true!)
+```
+
+### When to Use Object.is()
+
+You rarely need it, but it's essential when:
+
+- Detecting `NaN` values (though `Number.isNaN()` is usually clearer)
+- Distinguishing `+0` from `-0` (rare mathematical scenarios)
+- Implementing equality checks in libraries
+
+```javascript
+// NaN comparison
+const value = NaN
+
+value === NaN           // false (always!)
+Object.is(value, NaN)   // true
+Number.isNaN(value)     // true (preferred for this case)
+
+// Zero comparison
+const positiveZero = 0
+const negativeZero = -0
+
+positiveZero === negativeZero      // true
+Object.is(positiveZero, negativeZero)  // false
+```
+
+---
+
+## Object.groupBy() — Grouping Data (ES2024)
+
+[`Object.groupBy()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy) groups array elements by the result of a callback function. It's brand new in ES2024.
+
+```javascript
+const inventory = [
+  { name: 'apples', type: 'fruit', quantity: 5 },
+  { name: 'bananas', type: 'fruit', quantity: 3 },
+  { name: 'carrots', type: 'vegetable', quantity: 10 },
+  { name: 'broccoli', type: 'vegetable', quantity: 7 }
+]
+
+const byType = Object.groupBy(inventory, item => item.type)
+
+console.log(byType)
+// {
+//   fruit: [
+//     { name: 'apples', type: 'fruit', quantity: 5 },
+//     { name: 'bananas', type: 'fruit', quantity: 3 }
+//   ],
+//   vegetable: [
+//     { name: 'carrots', type: 'vegetable', quantity: 10 },
+//     { name: 'broccoli', type: 'vegetable', quantity: 7 }
+//   ]
+// }
+```
+
+### Custom Grouping Logic
+
+The callback can return any string to use as the group key:
+
+```javascript
+const products = [
+  { name: 'Laptop', price: 999 },
+  { name: 'Mouse', price: 29 },
+  { name: 'Monitor', price: 399 },
+  { name: 'Keyboard', price: 89 }
+]
+
+const byPriceRange = Object.groupBy(products, product => {
+  if (product.price < 50) return 'budget'
+  if (product.price < 200) return 'mid-range'
+  return 'premium'
+})
+
+console.log(byPriceRange)
+// {
+//   premium: [{ name: 'Laptop', price: 999 }, { name: 'Monitor', price: 399 }],
+//   budget: [{ name: 'Mouse', price: 29 }],
+//   'mid-range': [{ name: 'Keyboard', price: 89 }]
+// }
+```
+
+<Warning>
+**Browser compatibility:** `Object.groupBy()` is new (March 2024). Check [Can I Use](https://caniuse.com/mdn-javascript_builtins_object_groupby) before using in production. For older environments, use a polyfill or Lodash's `groupBy()`.
+</Warning>
+
+---
+
+## Inspection Methods
+
+These methods reveal more details about an object's properties.
+
+### Object.getOwnPropertyNames()
+
+Returns all own property names, **including non-enumerable ones**:
+
+```javascript
+const arr = [1, 2, 3]
+
+Object.keys(arr)                  // ['0', '1', '2']
+Object.getOwnPropertyNames(arr)   // ['0', '1', '2', 'length']
+```
+
+### Object.getOwnPropertySymbols()
+
+Returns all own Symbol-keyed properties:
+
+```javascript
+const id = Symbol('id')
+const obj = { 
+  name: 'Alice',
+  [id]: 12345 
+}
+
+Object.keys(obj)                   // ['name']
+Object.getOwnPropertySymbols(obj)  // [Symbol(id)]
+```
+
+---
+
+## Object Protection Methods
+
+For controlling what can be done to an object, see [Property Descriptors](/beyond/concepts/property-descriptors). Here's a quick reference:
+
+| Method | Add Properties | Delete Properties | Modify Values |
+|--------|---------------|-------------------|---------------|
+| Normal object | Yes | Yes | Yes |
+| `Object.preventExtensions()` | No | Yes | Yes |
+| `Object.seal()` | No | No | Yes |
+| `Object.freeze()` | No | No | No |
+
+```javascript
+const config = { apiUrl: 'https://api.example.com' }
+
+Object.freeze(config)
+config.apiUrl = 'https://evil.com'  // Silently fails
+console.log(config.apiUrl)  // 'https://api.example.com'
+```
+
+---
+
+## Object.create() — Creating with a Prototype
+
+For creating objects with a specific prototype, see [Object Creation & Prototypes](/concepts/object-creation-prototypes). Brief example:
+
+```javascript
+const personProto = {
+  greet() { return `Hi, I'm ${this.name}` }
+}
+
+const alice = Object.create(personProto)
+alice.name = 'Alice'
+console.log(alice.greet())  // "Hi, I'm Alice"
+```
+
+---
+
+## Common Patterns and Where They're Used
+
+### Data Transformation Pipelines
+
+Common in React/Redux for transforming state:
+
+```javascript
+// Normalize an API response into a lookup object
+const users = [
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+]
+
+const usersById = Object.fromEntries(
+  users.map(user => [user.id, user])
+)
+// { 1: { id: 1, name: 'Alice' }, 2: { id: 2, name: 'Bob' } }
+```
+
+### Configuration Merging
+
+Common in libraries and frameworks:
+
+```javascript
+function createClient(userOptions = {}) {
+  const defaults = {
+    timeout: 5000,
+    retries: 3,
+    baseUrl: 'https://api.example.com'
+  }
+  
+  const options = Object.assign({}, defaults, userOptions)
+  // ... use options
+}
+```
+
+### Safe Property Access in APIs
+
+```javascript
+function processData(data) {
+  if (Object.hasOwn(data, 'userId')) {
+    // Safe to use data.userId
+  }
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **`Object.keys()`, `values()`, `entries()`** — Convert objects to arrays for iteration and transformation.
+
+2. **`Object.fromEntries()`** — Builds an object from key-value pairs. Combine with `entries()` for object transformations.
+
+3. **`Object.assign()` is shallow** — Only the top level is copied. Nested objects are still shared references.
+
+4. **`structuredClone()` is deep** — Creates a true independent copy, including nested objects.
+
+5. **`Object.hasOwn()` beats `hasOwnProperty()`** — Works on null-prototype objects and can't be overridden.
+
+6. **`Object.is()` handles NaN and -0** — Use it when strict equality (`===`) isn't enough.
+
+7. **`Object.groupBy()` is ES2024** — Check browser support before using without a polyfill.
+
+8. **These are static methods** — Called as `Object.method(obj)`, not `obj.method()`.
+
+9. **Only own enumerable properties** — `keys()`, `values()`, and `entries()` skip inherited and non-enumerable properties.
+
+10. **Spread `{...obj}` is just shallow** — Same as `Object.assign({}, obj)`.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What's the difference between Object.keys() and Object.getOwnPropertyNames()?">
+    **Answer:**
+    
+    `Object.keys()` returns only **enumerable** own properties.
+    `Object.getOwnPropertyNames()` returns **all** own properties, including non-enumerable ones.
+    
+    ```javascript
+    const arr = [1, 2, 3]
+    
+    Object.keys(arr)                  // ['0', '1', '2']
+    Object.getOwnPropertyNames(arr)   // ['0', '1', '2', 'length']
+    // 'length' is non-enumerable
+    ```
+  </Accordion>
+  
+  <Accordion title="How do you deep clone an object with nested objects?">
+    **Answer:**
+    
+    Use `structuredClone()` for a true deep copy:
+    
+    ```javascript
+    const original = { 
+      user: { name: 'Alice' } 
+    }
+    
+    const clone = structuredClone(original)
+    clone.user.name = 'Bob'
+    
+    console.log(original.user.name)  // 'Alice' — unchanged
+    ```
+    
+    Note: `structuredClone()` can't clone functions or DOM nodes.
+  </Accordion>
+  
+  <Accordion title="Why does Object.is(NaN, NaN) return true but NaN === NaN returns false?">
+    **Answer:**
+    
+    `===` follows IEEE 754 floating-point rules where NaN is not equal to anything, including itself. This is technically correct for numeric comparison but often counterintuitive.
+    
+    `Object.is()` uses "same-value equality" which treats NaN as equal to NaN, matching what most developers expect.
+    
+    ```javascript
+    NaN === NaN           // false (IEEE 754 rule)
+    Object.is(NaN, NaN)   // true (same-value equality)
+    ```
+  </Accordion>
+  
+  <Accordion title="Why should you use Object.hasOwn() instead of hasOwnProperty()?">
+    **Answer:**
+    
+    Two reasons:
+    
+    1. **Null-prototype objects** don't have `hasOwnProperty`:
+    ```javascript
+    const obj = Object.create(null)
+    obj.hasOwnProperty('key')  // TypeError!
+    Object.hasOwn(obj, 'key')  // Works fine
+    ```
+    
+    2. **Objects can override hasOwnProperty**:
+    ```javascript
+    const obj = { hasOwnProperty: () => false }
+    obj.hasOwnProperty('hasOwnProperty')  // false (wrong!)
+    Object.hasOwn(obj, 'hasOwnProperty')  // true (correct!)
+    ```
+  </Accordion>
+  
+  <Accordion title="How do you transform all keys of an object to uppercase?">
+    **Answer:**
+    
+    Use `Object.entries()`, `map()`, and `Object.fromEntries()`:
+    
+    ```javascript
+    const obj = { name: 'Alice', age: 30 }
+    
+    const upperKeys = Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [key.toUpperCase(), value])
+    )
+    
+    console.log(upperKeys)  // { NAME: 'Alice', AGE: 30 }
+    ```
+  </Accordion>
+  
+  <Accordion title="What does Object.groupBy() return and when was it added?">
+    **Answer:**
+    
+    `Object.groupBy()` returns a null-prototype object where each property is an array of elements that match that group key. It was added in ES2024 (March 2024).
+    
+    ```javascript
+    const items = [
+      { type: 'fruit', name: 'apple' },
+      { type: 'fruit', name: 'banana' },
+      { type: 'veggie', name: 'carrot' }
+    ]
+    
+    const grouped = Object.groupBy(items, item => item.type)
+    // {
+    //   fruit: [{ type: 'fruit', name: 'apple' }, { type: 'fruit', name: 'banana' }],
+    //   veggie: [{ type: 'veggie', name: 'carrot' }]
+    // }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Property Descriptors" icon="sliders" href="/beyond/concepts/property-descriptors">
+    Control property behavior with writable, enumerable, and configurable flags.
+  </Card>
+  <Card title="Getters & Setters" icon="arrows-rotate" href="/beyond/concepts/getters-setters">
+    Create computed properties that run code on access.
+  </Card>
+  <Card title="Proxy & Reflect" icon="shield" href="/beyond/concepts/proxy-reflect">
+    Intercept and customize fundamental object operations.
+  </Card>
+  <Card title="Object Creation & Prototypes" icon="sitemap" href="/concepts/object-creation-prototypes">
+    Different ways to create objects and how inheritance works.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Object — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">
+    Complete reference for the Object constructor and all its static methods.
+  </Card>
+  <Card title="Object.keys() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys">
+    Official documentation for extracting object keys as an array.
+  </Card>
+  <Card title="Object.groupBy() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/groupBy">
+    Reference for the new ES2024 grouping method with browser compatibility info.
+  </Card>
+  <Card title="structuredClone() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone">
+    Documentation for deep cloning with the structured clone algorithm.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Object.keys, values, entries — javascript.info" icon="newspaper" href="https://javascript.info/keys-values-entries">
+    Clear explanation of the iteration trio with practical exercises. Covers the difference between plain objects and Map/Set iteration methods.
+  </Card>
+  <Card title="Deep-copying in JavaScript using structuredClone — web.dev" icon="newspaper" href="https://web.dev/articles/structured-clone">
+    Explains why structuredClone() was added and how it compares to JSON.parse/stringify. Includes performance considerations and limitations.
+  </Card>
+  <Card title="Object.hasOwn() — Better than hasOwnProperty" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn">
+    MDN's explanation of why hasOwn() is preferred, with examples of edge cases where hasOwnProperty() fails.
+  </Card>
+  <Card title="Working with Objects — MDN Guide" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects">
+    Comprehensive MDN guide covering object fundamentals, methods, and common patterns.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Object Methods You Should Know — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=Jb3lsNAAXOE">
+    Quick overview of essential Object methods with clear examples. Great for visual learners who want a fast introduction.
+  </Card>
+  <Card title="Deep Clone vs Shallow Clone — Fireship" icon="video" href="https://www.youtube.com/watch?v=4Ej0LwjCDZQ">
+    Concise explanation of cloning strategies in JavaScript. Covers the gotchas of shallow copying and when you need structuredClone().
+  </Card>
+  <Card title="Object.groupBy() in JavaScript — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=mIivxRMXDMw">
+    Tutorial on the new ES2024 groupBy method with practical use cases for data organization.
+  </Card>
+</CardGroup>
