@@ -1,0 +1,1041 @@
+---
+title: "Intersection Observer in JavaScript"
+sidebarTitle: "Intersection Observer"
+description: "Learn the Intersection Observer API in JavaScript. Detect element visibility, implement lazy loading, infinite scroll, and scroll animations efficiently without scroll events."
+---
+
+How do you know when an element scrolls into view? How can you lazy-load images only when they're about to be seen? How do infinite-scroll feeds know when to load more content? And how can you trigger animations at just the right moment as users scroll through your page?
+
+```javascript
+// Lazy load images when they come into view
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      img.src = img.dataset.src;
+      observer.unobserve(img);
+    }
+  });
+});
+
+document.querySelectorAll('img[data-src]').forEach(img => observer.observe(img));
+```
+
+The **[Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)** provides a way to asynchronously observe changes in the intersection of a target element with an ancestor element or the viewport. It's the modern, performant solution for detecting element visibility, replacing expensive scroll event listeners with browser-optimized callbacks.
+
+<Info>
+**What you'll learn in this guide:**
+- What Intersection Observer is and why it's better than scroll events
+- How to create and configure observers with options
+- Understanding thresholds, root, and rootMargin
+- Implementing lazy loading for images and content
+- Building infinite scroll functionality
+- Creating scroll-triggered animations
+- Common mistakes and best practices
+</Info>
+
+---
+
+## What is Intersection Observer in JavaScript?
+
+The **[Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)** is a browser API that lets you detect when an element enters, exits, or crosses a certain visibility threshold within a viewport or container element. Instead of constantly checking element positions during scroll events, the browser efficiently notifies your code only when visibility actually changes. **In short: Intersection Observer tells you when elements become visible or hidden, without the performance cost of scroll listeners.**
+
+---
+
+## Why Not Just Use Scroll Events?
+
+Before Intersection Observer, developers used scroll event listeners with `getBoundingClientRect()` to detect element visibility:
+
+```javascript
+// The OLD way: scroll events (DON'T do this!)
+window.addEventListener('scroll', () => {
+  const elements = document.querySelectorAll('.lazy-image');
+  elements.forEach(el => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      // Element is visible - load it
+      el.src = el.dataset.src;
+    }
+  });
+});
+```
+
+**Problems with this approach:**
+
+| Issue | Why It's Bad |
+|-------|--------------|
+| **Main thread blocking** | Scroll fires 60+ times per second, blocking other JavaScript |
+| **Layout thrashing** | `getBoundingClientRect()` forces browser to recalculate layout |
+| **Battery drain** | Constant calculations drain mobile device batteries |
+| **No throttling built-in** | You must manually debounce/throttle |
+| **iframe limitations** | Can't detect visibility in cross-origin iframes |
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│              SCROLL EVENTS vs INTERSECTION OBSERVER                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  SCROLL EVENTS (Old Way)              INTERSECTION OBSERVER (Modern Way)    │
+│  ─────────────────────────            ─────────────────────────────────     │
+│                                                                              │
+│  User scrolls                         User scrolls                          │
+│       │                                    │                                │
+│       ▼                                    ▼                                │
+│  scroll event fires                   Browser calculates                    │
+│  (60+ times/sec)                      intersections internally              │
+│       │                                    │                                │
+│       ▼                                    ▼                                │
+│  YOUR CODE runs                       Callback fires ONLY when              │
+│  on EVERY scroll                      visibility ACTUALLY changes           │
+│       │                                    │                                │
+│       ▼                                    ▼                                │
+│  getBoundingClientRect()              Entry object with all                 │
+│  forces layout                        data pre-calculated                   │
+│       │                                    │                                │
+│       ▼                                    ▼                                │
+│  🐌 SLOW, janky scrolling             🚀 SMOOTH, 60fps scrolling           │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Intersection Observer runs off the main thread** and is optimized by the browser, making it dramatically more efficient.
+
+---
+
+## How to Create an Intersection Observer
+
+Creating an observer involves two steps: instantiate the observer with a callback, then tell it what elements to observe.
+
+### Basic Syntax
+
+```javascript
+// Step 1: Create the observer with a callback
+const observer = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    console.log(entry.target, 'isIntersecting:', entry.isIntersecting);
+  });
+});
+
+// Step 2: Tell it what to observe
+const element = document.querySelector('.my-element');
+observer.observe(element);
+```
+
+The **[`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver/IntersectionObserver)** constructor takes two arguments:
+
+1. **Callback function** — Called whenever observed elements cross visibility thresholds
+2. **Options object** (optional) — Configures when and how intersections are detected
+
+### The Callback Function
+
+The callback receives two parameters:
+
+```javascript
+const callback = (entries, observer) => {
+  // entries: Array of IntersectionObserverEntry objects
+  // observer: The IntersectionObserver instance (useful for unobserving)
+  
+  entries.forEach(entry => {
+    // entry.target — The observed element
+    // entry.isIntersecting — Is it currently visible?
+    // entry.intersectionRatio — How much is visible (0 to 1)
+    // entry.boundingClientRect — Element's size and position
+    // entry.intersectionRect — The visible portion's rectangle
+    // entry.rootBounds — The root element's rectangle
+    // entry.time — Timestamp when intersection was recorded
+  });
+};
+```
+
+<Note>
+**Important:** The callback fires once immediately when you call `observe()` on an element, reporting its current intersection state. This is intentional, so you know the initial visibility.
+</Note>
+
+### IntersectionObserverEntry Properties
+
+Each entry in the callback provides detailed intersection data:
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `target` | Element | The element being observed |
+| `isIntersecting` | boolean | `true` if element is currently intersecting root |
+| `intersectionRatio` | number | Percentage visible (0.0 to 1.0) |
+| `boundingClientRect` | DOMRect | Target element's bounding rectangle |
+| `intersectionRect` | DOMRect | The visible portion's rectangle |
+| `rootBounds` | DOMRect | Root element's bounding rectangle (or viewport) |
+| `time` | number | Timestamp when intersection change was recorded |
+
+```javascript
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    console.log('Element:', entry.target.id);
+    console.log('Is visible:', entry.isIntersecting);
+    console.log('Visibility %:', Math.round(entry.intersectionRatio * 100) + '%');
+    console.log('Position:', entry.boundingClientRect.top, 'px from top');
+  });
+});
+```
+
+---
+
+## Intersection Observer Options
+
+The options object customizes when the callback fires:
+
+```javascript
+const options = {
+  root: null,           // The viewport (or a specific container element)
+  rootMargin: '0px',    // Margin around the root
+  threshold: 0          // When to trigger (0 = any pixel, 1 = fully visible)
+};
+
+const observer = new IntersectionObserver(callback, options);
+```
+
+### The `root` Option
+
+The **root** defines the container used for checking visibility. It defaults to `null` (the browser viewport).
+
+```javascript
+// Observe visibility relative to the viewport (default)
+const observer1 = new IntersectionObserver(callback, { root: null });
+
+// Observe visibility relative to a scrollable container
+const scrollContainer = document.querySelector('.scroll-container');
+const observer2 = new IntersectionObserver(callback, { root: scrollContainer });
+```
+
+<Warning>
+When using a custom root, the observed elements **must be descendants** of that root element. Otherwise, the observer won't detect intersections.
+</Warning>
+
+### The `rootMargin` Option
+
+The **rootMargin** grows or shrinks the root's detection area. It works like CSS margins:
+
+```javascript
+// Start detecting 100px BEFORE element enters viewport (for preloading)
+const observer = new IntersectionObserver(callback, {
+  rootMargin: '100px 0px'  // top/bottom: 100px, left/right: 0px
+});
+
+// Shrink the detection area (element must be 50px inside viewport)
+const observer2 = new IntersectionObserver(callback, {
+  rootMargin: '-50px'  // All sides shrink by 50px
+});
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         rootMargin EXPLAINED                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  rootMargin: '100px 0px 100px 0px'                                          │
+│                                                                              │
+│            ┌──────────────────────┐                                          │
+│            │  +100px margin (top) │  ← Elements detected HERE               │
+│            ├──────────────────────┤                                          │
+│            │                      │                                          │
+│            │      VIEWPORT        │  ← Actual visible area                  │
+│            │                      │                                          │
+│            ├──────────────────────┤                                          │
+│            │ +100px margin (bottom)│  ← Elements detected HERE              │
+│            └──────────────────────┘                                          │
+│                                                                              │
+│  Use positive margins for PRELOADING (lazy load before visible)             │
+│  Use negative margins for DELAYING (wait until fully in view)               │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+**Common rootMargin patterns:**
+
+| Value | Use Case |
+|-------|----------|
+| `'100px'` | Preload images 100px before they enter viewport |
+| `'-50px'` | Wait until element is 50px inside viewport |
+| `'0px 0px -50%'` | Trigger when top half of element is visible |
+| `'200px 0px 200px 0px'` | Large buffer for slow networks |
+
+### The `threshold` Option
+
+The **threshold** determines at what visibility percentage the callback fires. It can be a single number or an array:
+
+```javascript
+// Fire when ANY pixel becomes visible (default)
+const observer1 = new IntersectionObserver(callback, { threshold: 0 });
+
+// Fire when element is 50% visible
+const observer2 = new IntersectionObserver(callback, { threshold: 0.5 });
+
+// Fire when element is FULLY visible
+const observer3 = new IntersectionObserver(callback, { threshold: 1.0 });
+
+// Fire at multiple points (0%, 25%, 50%, 75%, 100%)
+const observer4 = new IntersectionObserver(callback, { 
+  threshold: [0, 0.25, 0.5, 0.75, 1.0] 
+});
+```
+
+```javascript
+// Practical example: Track how much of an ad is viewed
+const adObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    const percentVisible = Math.round(entry.intersectionRatio * 100);
+    console.log(`Ad is ${percentVisible}% visible`);
+    
+    if (entry.intersectionRatio >= 0.5) {
+      trackAdImpression(entry.target);  // Count as "viewed" when 50%+ visible
+    }
+  });
+}, { threshold: [0, 0.25, 0.5, 0.75, 1.0] });
+```
+
+---
+
+## Observer Methods
+
+The **[`IntersectionObserver`](https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver)** instance has four methods:
+
+### observe(element)
+
+Start observing an element:
+
+```javascript
+const element = document.querySelector('.target');
+observer.observe(element);
+
+// Observe multiple elements
+document.querySelectorAll('.lazy-image').forEach(img => {
+  observer.observe(img);
+});
+```
+
+### unobserve(element)
+
+Stop observing a specific element (useful after lazy loading):
+
+```javascript
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      loadImage(entry.target);
+      observer.unobserve(entry.target);  // Stop watching after loading
+    }
+  });
+});
+```
+
+### disconnect()
+
+Stop observing ALL elements:
+
+```javascript
+// Stop everything
+observer.disconnect();
+
+// Common pattern: cleanup when component unmounts
+class LazyLoader {
+  constructor() {
+    this.observer = new IntersectionObserver(this.handleIntersect);
+  }
+  
+  destroy() {
+    this.observer.disconnect();
+  }
+}
+```
+
+### takeRecords()
+
+Get any pending intersection records without waiting for the callback:
+
+```javascript
+// Rarely needed, but useful for synchronous access
+const pendingEntries = observer.takeRecords();
+pendingEntries.forEach(entry => {
+  // Process immediately
+});
+```
+
+---
+
+## Implementing Lazy Loading Images
+
+Lazy loading is the most common use case for Intersection Observer. Here's a complete implementation:
+
+### HTML Setup
+
+```html
+<!-- Use data-src instead of src for lazy images -->
+<img class="lazy" data-src="hero-image.jpg" alt="Hero image">
+<img class="lazy" data-src="product-1.jpg" alt="Product 1">
+<img class="lazy" data-src="product-2.jpg" alt="Product 2">
+
+<!-- Optional: Add a placeholder or low-quality preview -->
+<img class="lazy" 
+     src="placeholder.svg" 
+     data-src="high-res-image.jpg" 
+     alt="High resolution image">
+```
+
+### JavaScript Implementation
+
+```javascript
+// Create the lazy loading observer
+const lazyImageObserver = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const img = entry.target;
+      
+      // Swap data-src to src
+      img.src = img.dataset.src;
+      
+      // Optional: Handle srcset for responsive images
+      if (img.dataset.srcset) {
+        img.srcset = img.dataset.srcset;
+      }
+      
+      // Remove lazy class (for CSS transitions)
+      img.classList.remove('lazy');
+      img.classList.add('loaded');
+      
+      // Stop observing this image
+      observer.unobserve(img);
+    }
+  });
+}, {
+  // Start loading 100px before image enters viewport
+  rootMargin: '100px 0px',
+  threshold: 0
+});
+
+// Observe all lazy images
+document.querySelectorAll('img.lazy').forEach(img => {
+  lazyImageObserver.observe(img);
+});
+```
+
+### CSS for Smooth Loading
+
+```css
+.lazy {
+  opacity: 0;
+  transition: opacity 0.3s ease-in;
+}
+
+.lazy.loaded {
+  opacity: 1;
+}
+
+/* Optional: Blur-up effect */
+.lazy {
+  filter: blur(10px);
+  transition: filter 0.3s ease-in, opacity 0.3s ease-in;
+}
+
+.lazy.loaded {
+  filter: blur(0);
+  opacity: 1;
+}
+```
+
+<Tip>
+**Native lazy loading:** Modern browsers support `<img loading="lazy">` which handles basic lazy loading automatically. Use Intersection Observer when you need more control (custom thresholds, animations, or loading indicators).
+</Tip>
+
+---
+
+## Building Infinite Scroll
+
+Infinite scroll loads more content as the user approaches the bottom of the page:
+
+```javascript
+// The sentinel element sits at the bottom of your content
+// <div id="sentinel"></div>
+
+const sentinel = document.querySelector('#sentinel');
+const contentContainer = document.querySelector('#content');
+
+let page = 1;
+let isLoading = false;
+
+const infiniteScrollObserver = new IntersectionObserver(async (entries) => {
+  const entry = entries[0];
+  
+  if (entry.isIntersecting && !isLoading) {
+    isLoading = true;
+    
+    try {
+      // Fetch more content
+      const response = await fetch(`/api/posts?page=${++page}`);
+      const posts = await response.json();
+      
+      if (posts.length === 0) {
+        // No more content - stop observing
+        infiniteScrollObserver.unobserve(sentinel);
+        sentinel.textContent = 'No more posts';
+        return;
+      }
+      
+      // Append new content
+      posts.forEach(post => {
+        const article = createPostElement(post);
+        contentContainer.appendChild(article);
+      });
+    } catch (error) {
+      console.error('Failed to load more posts:', error);
+    } finally {
+      isLoading = false;
+    }
+  }
+}, {
+  // Load more when sentinel is 200px from viewport
+  rootMargin: '200px'
+});
+
+infiniteScrollObserver.observe(sentinel);
+
+function createPostElement(post) {
+  const article = document.createElement('article');
+  article.innerHTML = `
+    <h2>${post.title}</h2>
+    <p>${post.excerpt}</p>
+  `;
+  return article;
+}
+```
+
+### Infinite Scroll HTML Structure
+
+```html
+<div id="content">
+  <!-- Initial posts loaded here -->
+  <article>...</article>
+  <article>...</article>
+</div>
+
+<!-- Sentinel must be AFTER all content -->
+<div id="sentinel">Loading more...</div>
+```
+
+---
+
+## Scroll-Triggered Animations
+
+Trigger animations when elements scroll into view:
+
+```javascript
+const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+const animationObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // Add animation class
+      entry.target.classList.add('animated');
+      
+      // Optional: Only animate once
+      animationObserver.unobserve(entry.target);
+    }
+  });
+}, {
+  threshold: 0.2,  // Trigger when 20% visible
+  rootMargin: '0px 0px -50px 0px'  // Trigger slightly before fully in view
+});
+
+animatedElements.forEach(el => animationObserver.observe(el));
+```
+
+### CSS Animations
+
+```css
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.animate-on-scroll.animated {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Staggered animations */
+.animate-on-scroll:nth-child(1) { transition-delay: 0.1s; }
+.animate-on-scroll:nth-child(2) { transition-delay: 0.2s; }
+.animate-on-scroll:nth-child(3) { transition-delay: 0.3s; }
+```
+
+### Reusable Animation Observer
+
+```javascript
+function createScrollAnimator(options = {}) {
+  const {
+    threshold = 0.2,
+    rootMargin = '0px',
+    animateOnce = true,
+    animatedClass = 'animated'
+  } = options;
+  
+  return new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add(animatedClass);
+        
+        if (animateOnce) {
+          observer.unobserve(entry.target);
+        }
+      } else if (!animateOnce) {
+        entry.target.classList.remove(animatedClass);
+      }
+    });
+  }, { threshold, rootMargin });
+}
+
+// Usage
+const animator = createScrollAnimator({ threshold: 0.3, animateOnce: false });
+document.querySelectorAll('[data-animate]').forEach(el => animator.observe(el));
+```
+
+---
+
+## Sticky Header Detection
+
+Detect when a header becomes sticky:
+
+```javascript
+// CSS: header { position: sticky; top: 0; }
+const header = document.querySelector('header');
+
+// Create a sentinel element just before the header
+const sentinel = document.createElement('div');
+sentinel.style.height = '1px';
+header.before(sentinel);
+
+const stickyObserver = new IntersectionObserver(([entry]) => {
+  // When sentinel is NOT intersecting, header is stuck
+  header.classList.toggle('is-stuck', !entry.isIntersecting);
+}, {
+  threshold: 0,
+  rootMargin: '-1px 0px 0px 0px'  // Trigger right at the top
+});
+
+stickyObserver.observe(sentinel);
+```
+
+```css
+header {
+  position: sticky;
+  top: 0;
+  background: white;
+  transition: box-shadow 0.3s ease;
+}
+
+header.is-stuck {
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+```
+
+---
+
+## Section-Based Navigation
+
+Highlight navigation links based on which section is visible:
+
+```javascript
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('nav a');
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      // Remove active from all links
+      navLinks.forEach(link => link.classList.remove('active'));
+      
+      // Add active to corresponding link
+      const activeLink = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+      }
+    }
+  });
+}, {
+  threshold: 0.5,  // Section is "active" when 50% visible
+  rootMargin: '-20% 0px -20% 0px'  // Focus on center of viewport
+});
+
+sections.forEach(section => sectionObserver.observe(section));
+```
+
+---
+
+## The #1 Intersection Observer Mistake: Not Cleaning Up
+
+The most common mistake is forgetting to disconnect observers, leading to memory leaks:
+
+```javascript
+// ❌ BAD: Observer keeps running forever
+function setupLazyLoading() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.src = entry.target.dataset.src;
+        // Forgot to unobserve!
+      }
+    });
+  });
+  
+  document.querySelectorAll('.lazy').forEach(img => observer.observe(img));
+}
+
+// ✅ GOOD: Unobserve after loading
+function setupLazyLoading() {
+  const observer = new IntersectionObserver((entries, obs) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.src = entry.target.dataset.src;
+        obs.unobserve(entry.target);  // Stop watching after load
+      }
+    });
+  });
+  
+  document.querySelectorAll('.lazy').forEach(img => observer.observe(img));
+  
+  // Return cleanup function for frameworks
+  return () => observer.disconnect();
+}
+```
+
+### Framework Cleanup Patterns
+
+```javascript
+// React
+useEffect(() => {
+  const observer = new IntersectionObserver(callback);
+  observer.observe(elementRef.current);
+  
+  return () => observer.disconnect();  // Cleanup on unmount
+}, []);
+
+// Vue 3 Composition API
+onMounted(() => {
+  observer = new IntersectionObserver(callback);
+  observer.observe(element.value);
+});
+
+onUnmounted(() => {
+  observer?.disconnect();
+});
+```
+
+---
+
+## Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="Mistake 1: Using scroll events for visibility detection">
+    ```javascript
+    // ❌ WRONG: Scroll events are expensive
+    window.addEventListener('scroll', () => {
+      const rect = element.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        loadContent();
+      }
+    });
+    
+    // ✅ RIGHT: Use Intersection Observer
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadContent();
+        observer.unobserve(entries[0].target);
+      }
+    });
+    observer.observe(element);
+    ```
+    
+    Scroll events fire constantly and block the main thread. Intersection Observer is optimized by the browser.
+  </Accordion>
+  
+  <Accordion title="Mistake 2: Creating multiple observers for the same options">
+    ```javascript
+    // ❌ WRONG: Creating a new observer for each element
+    images.forEach(img => {
+      const observer = new IntersectionObserver(callback);
+      observer.observe(img);
+    });
+    
+    // ✅ RIGHT: One observer can watch many elements
+    const observer = new IntersectionObserver(callback);
+    images.forEach(img => observer.observe(img));
+    ```
+    
+    A single observer can efficiently track many elements with the same options.
+  </Accordion>
+  
+  <Accordion title="Mistake 3: Forgetting the callback fires immediately">
+    ```javascript
+    // ❌ WRONG: Assuming callback only fires on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // This fires IMMEDIATELY for current state!
+        loadImage(entry.target);
+      });
+    });
+    
+    // ✅ RIGHT: Check isIntersecting before acting
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          loadImage(entry.target);
+        }
+      });
+    });
+    ```
+    
+    The callback fires once immediately when you call `observe()` to report current state.
+  </Accordion>
+  
+  <Accordion title="Mistake 4: Using threshold: 1 without accounting for partial visibility">
+    ```javascript
+    // ❌ WRONG: threshold: 1 may never trigger for tall elements
+    const observer = new IntersectionObserver(callback, {
+      threshold: 1.0  // Requires 100% visibility
+    });
+    
+    // If element is taller than viewport, it can NEVER be 100% visible!
+    
+    // ✅ RIGHT: Use appropriate threshold or check intersectionRatio
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        // Use intersectionRatio for flexible visibility checking
+        if (entry.intersectionRatio >= 0.8 || entry.isIntersecting) {
+          handleVisibility(entry.target);
+        }
+      });
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1.0] });
+    ```
+  </Accordion>
+  
+  <Accordion title="Mistake 5: Not handling the root element requirement">
+    ```javascript
+    // ❌ WRONG: Observed element must be a descendant of root
+    const container = document.querySelector('.sidebar');
+    const observer = new IntersectionObserver(callback, { root: container });
+    
+    // This element is NOT inside .sidebar - won't work!
+    observer.observe(document.querySelector('.main-content .item'));
+    
+    // ✅ RIGHT: Observe elements inside the root
+    observer.observe(container.querySelector('.sidebar-item'));
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Browser Support and Polyfill
+
+Intersection Observer has excellent browser support (available since March 2019 in all major browsers):
+
+```javascript
+// Feature detection
+if ('IntersectionObserver' in window) {
+  // Use Intersection Observer
+  const observer = new IntersectionObserver(callback);
+} else {
+  // Fallback for very old browsers
+  // Load polyfill or use scroll events
+}
+```
+
+For legacy browser support, use the [official polyfill](https://github.com/w3c/IntersectionObserver/tree/main/polyfill):
+
+```html
+<script src="https://polyfill.io/v3/polyfill.min.js?features=IntersectionObserver"></script>
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Intersection Observer replaces scroll events** — It's more performant and runs off the main thread
+
+2. **The callback fires immediately** — When you call `observe()`, it reports current visibility state
+
+3. **Use `isIntersecting` to check visibility** — Don't assume the callback means "now visible"
+
+4. **One observer, many elements** — A single observer can efficiently watch multiple targets
+
+5. **Clean up with `unobserve()` or `disconnect()`** — Prevent memory leaks, especially after lazy loading
+
+6. **`rootMargin` enables preloading** — Use positive margins to detect elements before they're visible
+
+7. **`threshold` controls precision** — Use arrays for fine-grained visibility tracking
+
+8. **Always handle the null root** — Defaults to viewport, but custom roots must contain observed elements
+
+9. **Combine with CSS for smooth animations** — Observer triggers classes, CSS handles transitions
+
+10. **Consider native `loading="lazy"`** — For simple image lazy loading, the native attribute may suffice
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: Why is Intersection Observer better than scroll events for visibility detection?">
+    **Answer:** Intersection Observer is better because:
+    
+    1. **Runs off the main thread** — Doesn't block JavaScript execution
+    2. **Browser-optimized** — Efficiently batches calculations
+    3. **No layout thrashing** — Doesn't force `getBoundingClientRect()` recalculations
+    4. **Built-in throttling** — Fires only when visibility actually changes
+    5. **Works with iframes** — Can detect visibility in cross-origin contexts
+    
+    Scroll events fire 60+ times per second and require manual throttling, while Intersection Observer only fires when relevant visibility changes occur.
+  </Accordion>
+  
+  <Accordion title="Question 2: What does rootMargin: '-50px' do?">
+    **Answer:** `rootMargin: '-50px'` shrinks the detection area by 50px on all sides.
+    
+    This means an element must be at least 50px inside the viewport before it's considered "intersecting." It's useful for:
+    
+    - Triggering animations when elements are fully in view
+    - Ensuring content is clearly visible before acting
+    - Avoiding edge-case flickering near viewport boundaries
+    
+    ```javascript
+    // Element must be 50px inside viewport to trigger
+    const observer = new IntersectionObserver(callback, {
+      rootMargin: '-50px'
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: When would you use threshold: [0, 0.25, 0.5, 0.75, 1]?">
+    **Answer:** Use multiple thresholds when you need to track progressive visibility, such as:
+    
+    - **Ad viewability tracking** — Count impressions at different visibility levels
+    - **Video playback** — Pause at 25% visible, play at 75% visible
+    - **Progress indicators** — Show how much of an article has been read
+    - **Parallax effects** — Adjust animations based on scroll position
+    
+    ```javascript
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const percent = Math.round(entry.intersectionRatio * 100);
+        updateProgressBar(percent);
+      });
+    }, { threshold: [0, 0.25, 0.5, 0.75, 1] });
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: Why should you call unobserve() after lazy loading an image?">
+    **Answer:** You should call `unobserve()` because:
+    
+    1. **Memory efficiency** — The observer no longer needs to track this element
+    2. **Performance** — Fewer elements to check means faster intersection calculations
+    3. **Prevents double-loading** — Without unobserving, the image could be "loaded" multiple times
+    4. **Clean architecture** — Once lazy loading is complete, the observer's job is done
+    
+    ```javascript
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.src = entry.target.dataset.src;
+          obs.unobserve(entry.target);  // Clean up!
+        }
+      });
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: What happens if you use a custom root that doesn't contain the observed element?">
+    **Answer:** The observer **won't detect any intersections**. The observed element must be a descendant of the root element.
+    
+    ```javascript
+    const sidebar = document.querySelector('.sidebar');
+    const observer = new IntersectionObserver(callback, { root: sidebar });
+    
+    // ❌ This won't work - element is outside sidebar
+    observer.observe(document.querySelector('.main .card'));
+    
+    // ✅ This works - element is inside sidebar
+    observer.observe(sidebar.querySelector('.sidebar-item'));
+    ```
+    
+    Always ensure observed elements are descendants of the root, or use `root: null` for viewport detection.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Mutation Observer" icon="eye" href="/beyond/concepts/mutation-observer">
+    Watch for DOM changes like added/removed elements and attribute modifications.
+  </Card>
+  <Card title="Resize Observer" icon="expand" href="/beyond/concepts/resize-observer">
+    Detect when elements change size without polling or resize events.
+  </Card>
+  <Card title="Performance Observer" icon="gauge" href="/beyond/concepts/performance-observer">
+    Monitor performance metrics like Long Tasks, layout shifts, and resource timing.
+  </Card>
+  <Card title="Event Loop" icon="arrows-rotate" href="/concepts/event-loop">
+    Understand how JavaScript handles async operations and when callbacks fire.
+  </Card>
+</CardGroup>
+
+---
+
+## Resources
+
+### Reference
+
+<CardGroup cols={2}>
+  <Card title="Intersection Observer API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API">
+    Complete API documentation covering all options, methods, and the IntersectionObserverEntry interface. The authoritative reference for browser behavior and edge cases.
+  </Card>
+  <Card title="IntersectionObserver Interface — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/IntersectionObserver">
+    Detailed reference for the IntersectionObserver constructor, properties (root, rootMargin, thresholds), and methods (observe, unobserve, disconnect, takeRecords).
+  </Card>
+</CardGroup>
+
+### Articles
+
+<CardGroup cols={2}>
+  <Card title="A Few Functional Uses for Intersection Observer — CSS-Tricks" icon="newspaper" href="https://css-tricks.com/a-few-functional-uses-for-intersection-observer-to-know-when-an-element-is-in-view/">
+    Practical walkthrough of real-world Intersection Observer use cases including lazy loading, content visibility tracking, and auto-pausing videos. Great code examples with detailed explanations.
+  </Card>
+  <Card title="Intersection Observer v2: Trust is good, observation is better — web.dev" icon="newspaper" href="https://web.dev/articles/intersectionobserver-v2">
+    Covers the advanced Intersection Observer v2 API for tracking actual visibility (not just intersection). Essential reading for ad viewability and fraud prevention use cases.
+  </Card>
+  <Card title="Scroll Animations with Intersection Observer — freeCodeCamp" icon="newspaper" href="https://www.freecodecamp.org/news/scroll-animations-with-javascript-intersection-observer-api/">
+    Step-by-step guide to implementing scroll-triggered animations. Covers reveal-on-scroll effects, CSS transitions, and best practices for performant animations.
+  </Card>
+  <Card title="The Complete Guide to Lazy Loading Images — CSS-Tricks" icon="newspaper" href="https://css-tricks.com/the-complete-guide-to-lazy-loading-images/">
+    Comprehensive guide covering all lazy loading approaches including Intersection Observer, native loading="lazy", and fallback strategies. Includes performance considerations.
+  </Card>
+</CardGroup>
+
+### Videos
+
+<CardGroup cols={2}>
+  <Card title="Learn Intersection Observer In 15 Minutes — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=2IbRtjez6ag">
+    Clear, beginner-friendly introduction covering observer basics, all configuration options, and a practical infinite scroll implementation. Perfect starting point.
+  </Card>
+  <Card title="Introduction to Intersection Observer — Kevin Powell" icon="video" href="https://www.youtube.com/watch?v=T8EYosX4NOo">
+    Explains why Intersection Observer is better than scroll events, with visual demonstrations of how intersection detection works. Great for understanding the fundamentals.
+  </Card>
+  <Card title="Lazy Load Images with Intersection Observer — Fireship" icon="video" href="https://www.youtube.com/watch?v=aUjBvuUdkhg">
+    Quick, practical tutorial showing how to implement lazy-loaded images. Covers data attributes, viewport detection, and unobserving after load.
+  </Card>
+  <Card title="How to Lazy Load Images — Kevin Powell" icon="video" href="https://www.youtube.com/watch?v=mC93zsEsSrg">
+    Detailed lazy loading implementation with rootMargin for pre-loading and practical tips for production use. Great follow-up after learning the basics.
+  </Card>
+</CardGroup>
