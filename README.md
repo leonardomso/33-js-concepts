@@ -145,6 +145,117 @@ This repository helps developers master core JavaScript concepts. Each concept i
 
 ---
 
+## Beyond 33: Extended Concepts
+
+Ready to go deeper? These advanced topics build on the fundamentals above.
+
+### Language Mechanics
+
+- **[Hoisting](https://33jsconcepts.com/concepts/hoisting)**  
+  Learn how JavaScript hoists variable and function declarations. Understand why `var` behaves differently from `let` and `const`, function hoisting order, and how to avoid common bugs.
+
+- **[Temporal Dead Zone](https://33jsconcepts.com/concepts/temporal-dead-zone)**  
+  Learn the Temporal Dead Zone (TDZ) in JavaScript. Understand why accessing `let` and `const` before declaration throws errors, and how TDZ differs from `var` hoisting.
+
+- **[Strict Mode](https://33jsconcepts.com/concepts/strict-mode)**  
+  Learn JavaScript strict mode and how `'use strict'` catches common mistakes. Understand silent errors it prevents, forbidden syntax, and when to use it.
+
+### Type System
+
+- **[JavaScript Type Nuances](https://33jsconcepts.com/concepts/javascript-type-nuances)**  
+  Learn advanced JavaScript type behavior. Understand null vs undefined, short-circuit evaluation, typeof quirks, instanceof and Symbol.hasInstance, Symbols, and BigInt for large numbers.
+
+### Objects & Properties
+
+- **[Property Descriptors](https://33jsconcepts.com/concepts/property-descriptors)**  
+  Learn JavaScript property descriptors. Understand writable, enumerable, and configurable attributes, Object.defineProperty(), and how to create immutable object properties.
+
+- **[Getters & Setters](https://33jsconcepts.com/concepts/getters-setters)**  
+  Learn JavaScript getters and setters. Understand how to define computed properties with `get` and `set`, validate data on assignment, and create reactive object behavior.
+
+- **[Object Methods](https://33jsconcepts.com/concepts/object-methods)**  
+  Learn essential JavaScript Object methods. Master Object.keys(), Object.values(), Object.entries(), Object.fromEntries(), Object.freeze(), Object.seal(), and object cloning patterns.
+
+- **[Proxy & Reflect](https://33jsconcepts.com/concepts/proxy-reflect)**  
+  Learn JavaScript Proxy and Reflect APIs. Understand how to intercept object operations, create reactive systems, implement validation, and build powerful metaprogramming patterns.
+
+- **[WeakMap & WeakSet](https://33jsconcepts.com/concepts/weakmap-weakset)**  
+  Learn JavaScript WeakMap and WeakSet. Understand weak references, automatic garbage collection, private data patterns, and when to use them over Map and Set.
+
+### Memory & Performance
+
+- **[Memory Management](https://33jsconcepts.com/concepts/memory-management)**  
+  Learn JavaScript memory management. Understand the memory lifecycle, stack vs heap allocation, memory leaks, and how to profile memory usage in DevTools.
+
+- **[Garbage Collection](https://33jsconcepts.com/concepts/garbage-collection)**  
+  Learn how JavaScript garbage collection works. Understand mark-and-sweep, reference counting, generational GC, and how to write memory-efficient code.
+
+- **[Debouncing & Throttling](https://33jsconcepts.com/concepts/debouncing-throttling)**  
+  Learn debouncing and throttling in JavaScript. Understand how to optimize event handlers, reduce API calls, improve scroll performance, and implement both patterns from scratch.
+
+- **[Memoization](https://33jsconcepts.com/concepts/memoization)**  
+  Learn memoization in JavaScript. Understand how to cache function results, optimize expensive computations, implement memoization patterns, and when caching hurts performance.
+
+### Modern Syntax & Operators
+
+- **[Tagged Template Literals](https://33jsconcepts.com/concepts/tagged-template-literals)**  
+  Learn JavaScript tagged template literals. Understand how to create custom string processing functions, build DSLs, sanitize HTML, and use popular libraries like styled-components.
+
+- **[Computed Property Names](https://33jsconcepts.com/concepts/computed-property-names)**  
+  Learn JavaScript computed property names. Understand how to use dynamic keys in object literals, create objects from variables, and leverage Symbol keys.
+
+### Browser Storage
+
+- **[localStorage & sessionStorage](https://33jsconcepts.com/concepts/localstorage-sessionstorage)**  
+  Learn Web Storage APIs in JavaScript. Understand localStorage vs sessionStorage, storage limits, JSON serialization, storage events, and security considerations.
+
+- **[IndexedDB](https://33jsconcepts.com/concepts/indexeddb)**  
+  Learn IndexedDB for client-side storage in JavaScript. Understand how to store large amounts of structured data, create indexes, perform transactions, and handle versioning.
+
+- **[Cookies](https://33jsconcepts.com/concepts/cookies)**  
+  Learn JavaScript cookies. Understand how to read, write, and delete cookies, cookie attributes like HttpOnly and SameSite, security best practices, and when to use cookies vs Web Storage.
+
+### Events
+
+- **[Event Bubbling & Capturing](https://33jsconcepts.com/concepts/event-bubbling-capturing)**  
+  Learn JavaScript event bubbling and capturing. Understand the three phases of event propagation, stopPropagation(), event flow direction, and when to use each phase.
+
+- **[Event Delegation](https://33jsconcepts.com/concepts/event-delegation)**  
+  Learn event delegation in JavaScript. Understand how to handle events efficiently using bubbling, manage dynamic elements, reduce memory usage, and implement common delegation patterns.
+
+- **[Custom Events](https://33jsconcepts.com/concepts/custom-events)**  
+  Learn JavaScript custom events. Understand how to create, dispatch, and listen for CustomEvent, pass data between components, and build decoupled event-driven architectures.
+
+### Observer APIs
+
+- **[Intersection Observer](https://33jsconcepts.com/concepts/intersection-observer)**  
+  Learn the Intersection Observer API. Understand how to detect element visibility, implement lazy loading, infinite scroll, and animate elements on scroll efficiently.
+
+- **[Mutation Observer](https://33jsconcepts.com/concepts/mutation-observer)**  
+  Learn the Mutation Observer API. Understand how to watch DOM changes, detect attribute modifications, observe child elements, and replace deprecated mutation events.
+
+- **[Resize Observer](https://33jsconcepts.com/concepts/resize-observer)**  
+  Learn the Resize Observer API. Understand how to respond to element size changes, build responsive components, and replace inefficient window resize listeners.
+
+- **[Performance Observer](https://33jsconcepts.com/concepts/performance-observer)**  
+  Learn the Performance Observer API. Understand how to measure page performance, track Long Tasks, monitor layout shifts, and collect Core Web Vitals metrics.
+
+### Data Handling
+
+- **[JSON Deep Dive](https://33jsconcepts.com/concepts/json-deep-dive)**  
+  Learn advanced JSON in JavaScript. Understand JSON.stringify() replacers, JSON.parse() revivers, handling circular references, BigInt serialization, and custom toJSON methods.
+
+- **[Typed Arrays & ArrayBuffers](https://33jsconcepts.com/concepts/typed-arrays-arraybuffers)**  
+  Learn JavaScript Typed Arrays and ArrayBuffers. Understand binary data handling, DataView, working with WebGL, file processing, and network protocol implementation.
+
+- **[Blob & File API](https://33jsconcepts.com/concepts/blob-file-api)**  
+  Learn JavaScript Blob and File APIs. Understand how to create, read, and manipulate binary data, handle file uploads, generate downloads, and work with FileReader.
+
+- **[requestAnimationFrame](https://33jsconcepts.com/concepts/requestanimationframe)**  
+  Learn requestAnimationFrame in JavaScript. Understand how to create smooth 60fps animations, sync with browser repaint cycles, and optimize animation performance.
+
+---
+
 ## Translations
 
 This project has been translated into 40+ languages by our amazing community!
