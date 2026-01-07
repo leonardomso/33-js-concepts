@@ -69,7 +69,7 @@
             "icon": "cube",
             "pages": [
               "concepts/primitive-types",
-              "concepts/value-reference-types",
+              "concepts/primitives-objects",
               "concepts/type-coercion",
               "concepts/equality-operators",
               "concepts/scope-and-closures",
@@ -258,6 +258,12 @@
       }
     ]
   },
+  "redirects": [
+    {
+      "source": "/concepts/value-reference-types",
+      "destination": "/concepts/primitives-objects"
+    }
+  ],
   "footer": {
     "socials": {
       "github": "https://github.com/leonardomso/33-js-concepts",
