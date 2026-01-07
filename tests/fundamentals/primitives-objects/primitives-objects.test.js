@@ -1,10 +1,22 @@
 import { describe, it, expect } from 'vitest'
 
-describe('Value Types and Reference Types', () => {
-  describe('Copying Primitives', () => {
+/**
+ * Tests for Primitives vs Objects concept
+ * Source: /docs/concepts/primitives-objects.mdx
+ * 
+ * Key concepts tested:
+ * - Primitives are immutable, objects are mutable
+ * - Call by sharing semantics (mutation works, reassignment doesn't)
+ * - Object identity vs value comparison
+ * - Shallow vs deep copying
+ */
+
+describe('Primitives and Objects', () => {
+  describe('Primitives: Immutable and Independent', () => {
+    // Source: lines 85-100 - Primitives behave independently
     it('should create independent copies when copying primitives', () => {
       let a = 10
-      let b = a // b gets a COPY of the value 10
+      let b = a // b gets an independent copy
 
       b = 20 // changing b has NO effect on a
 
@@ -12,11 +24,20 @@ describe('Value Types and Reference Types', () => {
       expect(b).toBe(20)
     })
 
-    it('should demonstrate string variables are independent copies', () => {
+    // Source: lines 101-108 - String immutability
+    it('should demonstrate string immutability - methods return new strings', () => {
+      let greeting = "hello"
+      let shout = greeting.toUpperCase()
+
+      expect(greeting).toBe("hello") // unchanged!
+      expect(shout).toBe("HELLO") // new string
+    })
+
+    it('should demonstrate primitive variables are independent', () => {
       let name = "Alice"
       let age = 25
-      let user = { name: "Alice" } // Reference on stack, object on heap
-      let scores = [95, 87, 92] // Reference on stack, array on heap
+      let user = { name: "Alice" } // Object reference
+      let scores = [95, 87, 92] // Array reference
 
       expect(name).toBe("Alice")
       expect(age).toBe(25)
@@ -25,25 +46,62 @@ describe('Value Types and Reference Types', () => {
     })
   })
 
-  describe('Copying Objects', () => {
+  describe('Objects: Mutable and Shared', () => {
     it('should share reference when copying objects', () => {
       let obj1 = { name: "Alice" }
-      let obj2 = obj1 // obj2 gets a COPY of the REFERENCE
+      let obj2 = obj1
 
-      obj2.name = "Bob" // modifies the SAME object!
+      obj2.name = "Bob"
 
-      expect(obj1.name).toBe("Bob") // changed!
+      expect(obj1.name).toBe("Bob")
       expect(obj2.name).toBe("Bob")
     })
 
     it('should share reference when copying arrays', () => {
       let arr1 = [1, 2, 3]
-      let arr2 = arr1 // arr2 points to the SAME array
+      let arr2 = arr1
 
-      arr2.push(4) // modifies the shared array
+      arr2.push(4)
 
-      expect(arr1).toEqual([1, 2, 3, 4]) // changed!
+      expect(arr1).toEqual([1, 2, 3, 4])
       expect(arr2).toEqual([1, 2, 3, 4])
+    })
+  })
+
+  describe('Call by Sharing Semantics', () => {
+    it('should allow mutation through function parameters', () => {
+      function rename(person) {
+        person.name = "Bob"
+      }
+
+      const user = { name: "Alice" }
+      rename(user)
+
+      expect(user.name).toBe("Bob")
+    })
+
+    it('should NOT allow reassignment through function parameters', () => {
+      function replace(person) {
+        person = { name: "Charlie" }
+      }
+
+      const user = { name: "Alice" }
+      replace(user)
+
+      expect(user.name).toBe("Alice")
+    })
+
+    it('should demonstrate call by sharing applies to primitives too', () => {
+      function double(num) {
+        num = num * 2
+        return num
+      }
+
+      let x = 10
+      let result = double(x)
+
+      expect(x).toBe(10)
+      expect(result).toBe(20)
     })
   })
 

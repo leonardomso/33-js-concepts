@@ -31,7 +31,7 @@ A pure function is simple, predictable, and trustworthy. Once you understand why
 </Info>
 
 <Warning>
-**Helpful background:** This guide references object and array mutations frequently. If you're not comfortable with how JavaScript handles [value vs reference types](/concepts/value-reference-types), read that guide first. It explains why `const arr = [1,2,3]; arr.push(4)` works but shouldn't surprise you.
+**Helpful background:** This guide references object and array mutations frequently. If you're not comfortable with how JavaScript handles [primitives vs objects](/concepts/primitives-objects), read that guide first. It explains why `const arr = [1,2,3]; arr.push(4)` works but shouldn't surprise you.
 </Warning>
 
 ---
@@ -337,7 +337,7 @@ console.log(user.address.city)  // 'NYC' — Original safe!
 </Note>
 
 <Warning>
-**The Trap:** Spread operator (`...`) only copies one level deep. If you have nested objects or arrays, mutations to the nested data will affect the original. Use `structuredClone()` for deep copies, or see our [Value vs Reference Types](/concepts/value-reference-types) guide for more patterns.
+**The Trap:** Spread operator (`...`) only copies one level deep. If you have nested objects or arrays, mutations to the nested data will affect the original. Use `structuredClone()` for deep copies, or see our [Primitives vs Objects](/concepts/primitives-objects) guide for more patterns.
 </Warning>
 
 ---
@@ -744,7 +744,7 @@ The pure functions (`formatUsername`, `isValidUsername`) are easy to test and re
 ## Related Concepts
 
 <CardGroup cols={2}>
-  <Card title="Value vs Reference Types" icon="diagram-project" href="/concepts/value-reference-types">
+  <Card title="Primitives vs Objects" icon="diagram-project" href="/concepts/primitives-objects">
     Understanding mutations, shallow vs deep copies, and why objects behave differently than primitives
   </Card>
   <Card title="Higher-Order Functions" icon="arrows-repeat" href="/concepts/higher-order-functions">

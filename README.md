@@ -35,8 +35,8 @@ This repository helps developers master core JavaScript concepts. Each concept i
 - **[Primitive Types](https://33jsconcepts.com/concepts/primitive-types)**  
   Learn JavaScript's 7 primitive types: string, number, bigint, boolean, undefined, null, and symbol. Understand immutability, typeof quirks, and autoboxing.
 
-- **[Value vs Reference Types](https://33jsconcepts.com/concepts/value-reference-types)**  
-  Learn how value types and reference types work in JavaScript. Understand how primitives and objects are stored, why copying objects shares references, and how to avoid mutation bugs.
+- **[Primitives vs Objects](https://33jsconcepts.com/concepts/primitives-objects)**  
+  Learn how JavaScript primitives and objects differ in behavior. Understand immutability, call-by-sharing semantics, why mutation works but reassignment doesn't, and how V8 actually stores values.
 
 - **[Type Coercion](https://33jsconcepts.com/concepts/type-coercion)**  
   Learn JavaScript type coercion and implicit conversion. Understand how values convert to strings, numbers, and booleans, the 8 falsy values, and how to avoid common coercion bugs.

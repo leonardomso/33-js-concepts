@@ -1,0 +1,977 @@
+---
+title: "Primitives vs Objects: How JavaScript Values Actually Work"
+sidebarTitle: "Primitives vs Objects: How Values Work"
+description: "Learn how JavaScript primitives and objects differ in behavior. Understand immutability, call-by-sharing semantics, why mutation works but reassignment doesn't, and how V8 actually stores values."
+---
+
+Have you ever wondered why changing one variable unexpectedly changes another? Why does this happen?
+
+```javascript
+const original = { name: "Alice" };
+const copy = original;
+copy.name = "Bob";
+
+console.log(original.name);  // "Bob" — Wait, what?!
+```
+
+The answer lies in how JavaScript **values behave** — not where they're stored. **Primitives** are immutable and behave independently, while **objects** are mutable and can be shared between variables.
+
+<Warning>
+**Myth vs Reality:** You may have heard that "primitives are stored on the stack" and "objects are stored on the heap," or that "primitives are passed by value" while "objects are passed by reference." These are simplifications that are technically incorrect. In this guide, we'll learn how JavaScript actually works.
+</Warning>
+
+<Info>
+**What you'll learn in this guide:**
+- The real difference between primitives and objects (it's about mutability, not storage)
+- Why JavaScript uses "call by sharing" — not "pass by value" or "pass by reference"
+- Why mutation works through function parameters but reassignment doesn't
+- Why `{} === {}` returns `false` (object identity)
+- How to properly clone objects (shallow vs deep copy)
+- Common bugs caused by shared references
+- **Bonus:** How V8 actually stores values in memory (the technical truth)
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [Primitive Types](/concepts/primitive-types). If you're not familiar with the 7 primitive types in JavaScript, read that guide first!
+</Warning>
+
+---
+
+## A Note on Terminology
+
+Before we dive in, let's clear up some widespread misconceptions that even experienced developers get wrong.
+
+<Info>
+**Myth vs Reality**
+
+| Common Myth | The Reality |
+|-------------|-------------|
+| "Value types" vs "reference types" | ECMAScript only defines **primitives** and **objects** |
+| "Primitives are stored on the stack" | Implementation-specific — not in the spec |
+| "Objects are stored on the heap" | Implementation-specific — not in the spec |
+| "Primitives are passed by value" | JavaScript uses **call by sharing** for ALL values |
+| "Objects are passed by reference" | Objects are passed by sharing (you can't reassign the original) |
+</Info>
+
+### What ECMAScript Actually Says
+
+The [ECMAScript specification](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values) (the official JavaScript standard) defines exactly two categories of values:
+
+| ECMAScript Term | What It Includes |
+|-----------------|------------------|
+| **Primitive values** | string, number, bigint, boolean, undefined, null, symbol |
+| **Objects** | Everything else (plain objects, arrays, functions, dates, maps, sets, etc.) |
+
+That's it. The spec never mentions "value types," "reference types," "stack," or "heap." These are implementation details that vary by JavaScript engine.
+
+### The Real Distinction: Mutability
+
+The fundamental difference between primitives and objects is **mutability**:
+
+- **Primitives are immutable** — you cannot change a primitive value, only replace it
+- **Objects are mutable** — you CAN change an object's contents
+
+This distinction explains ALL the behavioral differences you'll encounter.
+
+---
+
+## How Primitives and Objects Behave
+
+### Primitives: Immutable and Independent
+
+The 7 primitive types behave as if each variable has its own independent copy:
+
+| Type | Example | Key Behavior |
+|------|---------|--------------|
+| `string` | `"hello"` | Immutable — methods return NEW strings |
+| `number` | `42` | Immutable — arithmetic creates NEW numbers |
+| `bigint` | `9007199254740993n` | Immutable — operations create NEW BigInts |
+| `boolean` | `true` | Immutable |
+| `undefined` | `undefined` | Immutable |
+| `null` | `null` | Immutable |
+| [`symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) | `Symbol("id")` | Immutable AND has identity |
+
+**Key characteristics:**
+- **Immutable** — you can't change them, only replace them
+- **Behave independently** — copies don't affect each other
+- **Compared by value** — same value = equal (except Symbols)
+
+<Tip>
+**Why immutability matters:** When you write `str.toUpperCase()`, you get a NEW string. The original `str` is unchanged. This is true for ALL string methods — they never mutate the original string.
+</Tip>
+
+```javascript
+let greeting = "hello";
+let shout = greeting.toUpperCase();
+
+console.log(greeting);  // "hello" — unchanged!
+console.log(shout);     // "HELLO" — new string
+```
+
+### Objects: Mutable and Shared
+
+Everything that's not a primitive is an object:
+
+| Type | Example | Key Behavior |
+|------|---------|--------------|
+| Object | `{ name: "Alice" }` | Mutable — properties can change |
+| Array | `[1, 2, 3]` | Mutable — elements can change |
+| Function | `function() {}` | Mutable (has properties) |
+| [Date](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date) | `new Date()` | Mutable |
+| [Map](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) | `new Map()` | Mutable |
+| [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) | `new Set()` | Mutable |
+
+**Key characteristics:**
+- **Mutable** — you CAN change their contents
+- **Shared by default** — assignment copies the reference, not the object
+- **Compared by identity** — same object = equal (not same contents!)
+
+---
+
+## The House Key Analogy
+
+Think of objects like houses and variables like keys to those houses:
+
+**Primitives (like writing a note):** You write "42" on a sticky note and give a copy to your friend. You each have independent notes. If they change theirs to "100", your note still says "42".
+
+**Objects (like sharing house keys):** Instead of giving your friend the house itself, you give them a copy of your house key. You both have keys to the SAME house. If they rearrange the furniture, you'll see it too — because it's the same house!
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                 PRIMITIVES vs OBJECTS: THE KEY ANALOGY                   │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  PRIMITIVES (Independent Notes)        OBJECTS (Keys to Same House)      │
+│                                                                          │
+│  ┌─────────────┐                       ┌─────────────┐                   │
+│  │  a = "42"   │                       │  x = 🔑 ─────────────┐          │
+│  └─────────────┘                       └─────────────┘        │          │
+│                                                               ▼          │
+│  ┌─────────────┐                       ┌─────────────┐    ┌──────────┐   │
+│  │  b = "42"   │  (separate copy)      │  y = 🔑 ─────────►│  🏠     │   │
+│  └─────────────┘                       └─────────────┘    │ {name}   │   │
+│                                                           └──────────┘   │
+│  Change b to "100"?                    Change the house via y?           │
+│  a stays "42"!                         x sees the change too!            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The key insight: **it's not about where the key is stored, it's about what it points to.**
+
+---
+
+## Call by Sharing: How JavaScript Passes Arguments
+
+Here's where most tutorials get it wrong. JavaScript doesn't use "pass by value" OR "pass by reference." It uses a third strategy called **[call by sharing](https://en.wikipedia.org/wiki/Evaluation_strategy#Call_by_sharing)** (also known as "call by object sharing").
+
+<Info>
+**Call by sharing** was first described by Barbara Liskov for the CLU programming language in 1974. JavaScript, Python, Ruby, and Java all use this evaluation strategy.
+</Info>
+
+### What is Call by Sharing?
+
+When you pass an argument to a function, JavaScript:
+1. Creates a **copy of the reference** (the "key" to the object)
+2. The function parameter gets this copied reference
+3. Both the original variable AND the parameter point to the SAME object
+
+### The Golden Rule
+
+| Operation | Does it affect the original? |
+|-----------|------------------------------|
+| **Mutating properties** (`obj.name = "Bob"`) | ✅ Yes — same object |
+| **Reassigning the parameter** (`obj = newValue`) | ❌ No — only rebinds locally |
+
+### Mutation Works
+
+When you modify an object through a function parameter, the original object is affected:
+
+```javascript
+function rename(person) {
+  person.name = "Bob";  // Mutates the ORIGINAL object
+}
+
+const user = { name: "Alice" };
+rename(user);
+
+console.log(user.name);  // "Bob" — changed!
+```
+
+**What happens in memory:**
+
+```
+BEFORE rename(user):              INSIDE rename(user):
+
+┌────────────┐                    ┌────────────┐
+│user = 🔑 ──┼──► { name:         │user = 🔑 ──┼──► { name: "Bob" }
+└────────────┘    "Alice" }       ├────────────┤       ▲
+                                  │person= 🔑 ─┼───────┘
+                                  └────────────┘  (same house!)
+```
+
+### Reassignment Doesn't Work
+
+If you reassign the parameter to a new object, it only changes the local variable:
+
+```javascript
+function replace(person) {
+  person = { name: "Charlie" };  // Creates NEW local reference
+}
+
+const user = { name: "Alice" };
+replace(user);
+
+console.log(user.name);  // "Alice" — unchanged!
+```
+
+**What happens in memory:**
+
+```
+INSIDE replace(user):
+
+┌────────────┐    ┌─────────────────┐
+│user = 🔑 ──┼───►│ { name: "Alice" }│  ← Original, unchanged
+├────────────┤    └─────────────────┘
+│person= 🔑 ─┼───►┌───────────────────┐
+└────────────┘    │ { name: "Charlie" }│  ← New object, local only
+                  └───────────────────┘
+```
+
+<Warning>
+**Why this matters:** If JavaScript used true "pass by reference" (like C++ references), reassigning the parameter WOULD change the original. It doesn't in JavaScript — that's how you know it's "call by sharing," not "pass by reference."
+</Warning>
+
+### This Applies to Primitives Too!
+
+Here's the mind-bending part: **primitives are also passed by sharing**. You just can't observe it because primitives are immutable — there's no way to mutate them through the parameter.
+
+```javascript
+function double(num) {
+  num = num * 2;    // Reassigns the LOCAL variable
+  return num;
+}
+
+let x = 10;
+let result = double(x);
+
+console.log(x);       // 10 — unchanged (reassignment doesn't affect original)
+console.log(result);  // 20 — returned value
+```
+
+The same "reassignment doesn't work" rule applies to primitives. It's just that with primitives, there's no mutation to try anyway!
+
+---
+
+## Copying Behavior: The Critical Difference
+
+This is where bugs love to hide.
+
+### Copying Primitives: Independent Copies
+
+When you copy a primitive, they behave as completely independent values:
+
+```javascript
+let a = 10;
+let b = a;      // b gets an independent copy
+
+b = 20;         // changing b has NO effect on a
+
+console.log(a); // 10 (unchanged!)
+console.log(b); // 20
+```
+
+### Copying Objects: Shared References
+
+When you copy an object variable, you copy the *reference*. Both variables now point to the SAME object:
+
+```javascript
+let obj1 = { name: "Alice" };
+let obj2 = obj1;       // obj2 gets a copy of the REFERENCE
+
+obj2.name = "Bob";     // modifies the SAME object!
+
+console.log(obj1.name); // "Bob" (changed!)
+console.log(obj2.name); // "Bob"
+```
+
+### The Array Gotcha
+
+Arrays are objects too, so they behave the same way:
+
+```javascript
+let arr1 = [1, 2, 3];
+let arr2 = arr1;        // arr2 points to the SAME array
+
+arr2.push(4);           // modifies the shared array
+
+console.log(arr1);      // [1, 2, 3, 4] — Wait, what?!
+console.log(arr2);      // [1, 2, 3, 4]
+```
+
+<Warning>
+**This trips up EVERYONE at first!** When you write `let arr2 = arr1`, you're NOT creating a new array. You're creating a second variable that points to the same array. Any changes through either variable affect both.
+</Warning>
+
+---
+
+## Comparison Behavior
+
+### Primitives: Compared by Value
+
+Two primitives are equal if they have the same value:
+
+```javascript
+let a = "hello";
+let b = "hello";
+console.log(a === b);   // true — same value
+
+let x = 42;
+let y = 42;
+console.log(x === y);   // true — same value
+```
+
+### Objects: Compared by Identity
+
+Two objects are equal only if they are the SAME object (same reference):
+
+```javascript
+let obj1 = { name: "Alice" };
+let obj2 = { name: "Alice" };
+console.log(obj1 === obj2);  // false — different objects!
+
+let obj3 = obj1;
+console.log(obj1 === obj3);  // true — same reference
+```
+
+### The Empty Object/Array Trap
+
+```javascript
+console.log({} === {});     // false — two different empty objects
+console.log([] === []);     // false — two different empty arrays
+console.log([1,2] === [1,2]); // false — two different arrays
+```
+
+<Tip>
+**How to compare objects/arrays by content:**
+
+```javascript
+// Simple (but limited) approach
+JSON.stringify(obj1) === JSON.stringify(obj2)
+
+// For arrays of primitives
+arr1.length === arr2.length && arr1.every((v, i) => v === arr2[i])
+
+// For complex cases, use a library like Lodash
+_.isEqual(obj1, obj2)
+```
+
+**Caution with JSON.stringify:** Property order matters! `{a:1, b:2}` and `{b:2, a:1}` produce different strings. It also fails with `undefined`, functions, Symbols, circular references, `NaN`, and `Infinity`.
+</Tip>
+
+### Symbols: The Exception
+
+[Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) are primitives but have **identity** — two symbols with the same description are NOT equal:
+
+```javascript
+const sym1 = Symbol("id");
+const sym2 = Symbol("id");
+
+console.log(sym1 === sym2);  // false — different symbols!
+console.log(sym1 === sym1);  // true — same symbol
+```
+
+---
+
+## Mutation vs Reassignment
+
+Understanding this distinction is crucial for avoiding bugs.
+
+### Mutation: Changing the Contents
+
+Mutation modifies the existing object in place:
+
+```javascript
+const arr = [1, 2, 3];
+
+// These are all MUTATIONS:
+arr.push(4);         // [1, 2, 3, 4]
+arr[0] = 99;         // [99, 2, 3, 4]
+arr.pop();           // [99, 2, 3]
+arr.sort();          // modifies in place
+
+const obj = { name: "Alice" };
+
+// These are all MUTATIONS:
+obj.name = "Bob";        // changes property
+obj.age = 25;            // adds property
+delete obj.age;          // removes property
+```
+
+### Reassignment: Pointing to a New Value
+
+Reassignment makes the variable point to something else entirely:
+
+```javascript
+let arr = [1, 2, 3];
+arr = [4, 5, 6];      // REASSIGNMENT — new array
+
+let obj = { name: "Alice" };
+obj = { name: "Bob" }; // REASSIGNMENT — new object
+```
+
+### The `const` Trap
+
+`const` prevents **reassignment** but NOT **mutation**:
+
+```javascript
+const arr = [1, 2, 3];
+
+// ✅ Mutations are ALLOWED:
+arr.push(4);           // works!
+arr[0] = 99;           // works!
+
+// ❌ Reassignment is BLOCKED:
+arr = [4, 5, 6];       // TypeError: Assignment to constant variable
+
+const obj = { name: "Alice" };
+
+// ✅ Mutations are ALLOWED:
+obj.name = "Bob";      // works!
+obj.age = 25;          // works!
+
+// ❌ Reassignment is BLOCKED:
+obj = { name: "Eve" }; // TypeError: Assignment to constant variable
+```
+
+<Warning>
+**Common misconception:** Many developers think `const` creates an "immutable" variable. It doesn't! It only prevents reassignment. The contents of objects and arrays declared with `const` can still be changed.
+</Warning>
+
+---
+
+## True Immutability with [`Object.freeze()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze)
+
+If you need a truly immutable object, use `Object.freeze()`:
+
+```javascript
+const user = Object.freeze({ name: "Alice", age: 25 });
+
+user.name = "Bob";      // Silently fails (or throws in strict mode)
+user.email = "a@b.com"; // Can't add properties
+delete user.age;        // Can't delete properties
+
+console.log(user);      // { name: "Alice", age: 25 } — unchanged!
+```
+
+<Warning>
+**Object.freeze() is shallow!** It only freezes the top level. Nested objects can still be modified:
+
+```javascript
+const user = Object.freeze({
+  name: "Alice",
+  address: { city: "NYC" }
+});
+
+user.name = "Bob";           // Blocked
+user.address.city = "LA";    // Works! Nested object not frozen
+
+console.log(user.address.city); // "LA"
+```
+</Warning>
+
+For deep freezing, you need a recursive function or use `structuredClone()` to create a deep copy first.
+
+---
+
+## Shallow Copy vs Deep Copy
+
+When you need a truly independent copy of an object, you have two options.
+
+### Shallow Copy: One Level Deep
+
+A shallow copy creates a new object with copies of the top-level properties. But nested objects are still shared!
+
+```javascript
+const original = { 
+  name: "Alice",
+  address: { city: "NYC" }
+};
+
+// Shallow copy methods:
+const copy1 = { ...original };           // Spread operator
+const copy2 = Object.assign({}, original); // Object.assign
+
+// Top-level changes are independent:
+copy1.name = "Bob";
+console.log(original.name);  // "Alice" ✅
+
+// But nested objects are SHARED:
+copy1.address.city = "LA";
+console.log(original.address.city);  // "LA" 😱
+```
+
+### Deep Copy: All Levels
+
+A deep copy creates completely independent copies at every level.
+
+```javascript
+const original = { 
+  name: "Alice",
+  scores: [95, 87, 92],
+  address: { city: "NYC" }
+};
+
+// structuredClone() — the modern way (ES2022+)
+const deep = structuredClone(original);
+
+// Now everything is independent:
+deep.address.city = "LA";
+console.log(original.address.city);  // "NYC" ✅
+
+deep.scores.push(100);
+console.log(original.scores);  // [95, 87, 92] ✅
+```
+
+<Tip>
+**Which to use:**
+- **[`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)** — Use this for most cases (modern browsers)
+- **`JSON.parse(JSON.stringify())`** — Only for simple objects (loses functions, Dates, undefined)
+- **Lodash `_.cloneDeep()`** — When you need maximum compatibility
+</Tip>
+
+---
+
+## How Engines Actually Store Values
+
+<Info>
+**Why this section exists:** Many tutorials teach that "primitives go on the stack, objects go on the heap." This is a simplification that's often wrong. Here's what actually happens.
+</Info>
+
+### The ECMAScript Specification Doesn't Define Storage
+
+The ECMAScript specification defines **behavior**, not **implementation**. It never mentions "stack" or "heap." Different JavaScript engines can store values however they want, as long as the behavior matches the spec.
+
+### How V8 Actually Works
+
+V8 (Chrome, Node.js, Deno) uses a technique called **pointer tagging** to efficiently represent values.
+
+#### Smis (Small Integers): The Only "Direct" Values
+
+The ONLY values V8 stores "directly" (not on the heap) are **Smis** — Small Integers in the range approximately -2³¹ to 2³¹-1 (about -2 billion to 2 billion).
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      V8 POINTER TAGGING                                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Smi (Small Integer):                                                    │
+│  ┌────────────────────────────────────────────────────────────┬─────┐   │
+│  │                    Integer Value (31 bits)                  │  0  │   │
+│  └────────────────────────────────────────────────────────────┴─────┘   │
+│                                                              Tag bit     │
+│                                                                          │
+│  Heap Pointer (everything else):                                         │
+│  ┌────────────────────────────────────────────────────────────┬─────┐   │
+│  │                    Memory Address                           │  1  │   │
+│  └────────────────────────────────────────────────────────────┴─────┘   │
+│                                                              Tag bit     │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+#### Everything Else Lives on the Heap
+
+This includes values you might think are "simple":
+
+| Value Type | Where It's Stored | Why |
+|------------|-------------------|-----|
+| Small integers (-2³¹ to 2³¹-1) | Directly (as Smi) | Fixed size, fits in pointer |
+| Large numbers | Heap (HeapNumber) | Needs 64-bit float |
+| **Strings** | **Heap** | **Dynamically sized** |
+| **BigInts** | **Heap** | **Arbitrary precision** |
+| Objects, Arrays | Heap | Complex structures |
+
+<Warning>
+**The big misconception:** Strings are NOT fixed-size values stored on the stack. A string like `"hello"` and a string with a million characters are both stored on the heap. The variable just holds a pointer to that heap location.
+</Warning>
+
+### String Interning
+
+V8 optimizes identical strings by potentially sharing memory (string interning). Two variables with the value `"hello"` might point to the same memory location internally. But this is an optimization — strings still *behave* as independent values because they're immutable.
+
+### Why the Stack/Heap Model is Taught
+
+The simplified stack/heap model is useful for understanding **behavioral differences**:
+- Things that "behave like stack values" = act independently
+- Things that "behave like heap values" = can be shared
+
+Just know it's a **mental model for behavior**, not how JavaScript actually works internally.
+
+<Tip>
+**Want to go deeper?** Check out our [JavaScript Engines](/concepts/javascript-engines) guide for more on V8 internals, JIT compilation, and optimization.
+</Tip>
+
+---
+
+## Common Bugs and Pitfalls
+
+<AccordionGroup>
+  <Accordion title="1. Accidental Object/Array Mutation">
+    ```javascript
+    // BUG: Modifying function parameter
+    function processUsers(users) {
+      users.push({ name: "New User" });  // Mutates original!
+      return users;
+    }
+    
+    const myUsers = [{ name: "Alice" }];
+    processUsers(myUsers);
+    console.log(myUsers);  // [{ name: "Alice" }, { name: "New User" }]
+    
+    // FIX: Create a copy first
+    function processUsers(users) {
+      const copy = [...users];
+      copy.push({ name: "New User" });
+      return copy;
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Array Methods That Mutate">
+    ```javascript
+    // These MUTATE the original array:
+    arr.push()      arr.pop()
+    arr.shift()     arr.unshift()
+    arr.splice()    arr.sort()
+    arr.reverse()   arr.fill()
+    
+    // These RETURN a new array (safe):
+    arr.map()       arr.filter()
+    arr.slice()     arr.concat()
+    arr.flat()      arr.flatMap()
+    arr.toSorted()  arr.toReversed()  // ES2023
+    arr.toSpliced() // ES2023
+    
+    // GOTCHA: sort() mutates!
+    const nums = [3, 1, 2];
+    const sorted = nums.sort();  // nums is NOW [1, 2, 3]!
+    
+    // FIX: Copy first, or use toSorted()
+    const sorted = [...nums].sort();
+    const sorted = nums.toSorted();  // ES2023
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Comparing Objects/Arrays">
+    ```javascript
+    // BUG: This will NEVER work
+    if (user1 === user2) { }      // Compares identity
+    if (arr1 === arr2) { }        // Compares identity
+    
+    // Even these fail:
+    [] === []                      // false
+    {} === {}                      // false
+    [1, 2] === [1, 2]              // false
+    
+    // FIX: Compare contents
+    JSON.stringify(a) === JSON.stringify(b)  // Simple but limited
+    
+    // Or use a deep equality function/library
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Shallow Copy with Nested Objects">
+    ```javascript
+    // BUG: Shallow copy doesn't clone nested objects
+    const user = {
+      name: "Alice",
+      settings: { theme: "dark" }
+    };
+    
+    const copy = { ...user };
+    copy.settings.theme = "light";
+    
+    console.log(user.settings.theme);  // "light" — Original changed!
+    
+    // FIX: Use deep copy
+    const copy = structuredClone(user);
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Forgetting Arrays Are Objects">
+    ```javascript
+    // BUG: Thinking you have two arrays
+    const original = [1, 2, 3];
+    const backup = original;  // NOT a backup!
+    
+    original.push(4);
+    console.log(backup);  // [1, 2, 3, 4] — "backup" changed!
+    
+    // FIX: Actually copy the array
+    const backup = [...original];
+    const backup = original.slice();
+    ```
+  </Accordion>
+  
+  <Accordion title="6. Expecting Reassignment to Affect Original">
+    ```javascript
+    // BUG: Thinking reassignment passes through
+    function clearArray(arr) {
+      arr = [];  // Only reassigns local variable!
+    }
+    
+    const myArr = [1, 2, 3];
+    clearArray(myArr);
+    console.log(myArr);  // [1, 2, 3] — unchanged!
+    
+    // FIX: Mutate instead of reassign
+    function clearArray(arr) {
+      arr.length = 0;  // Mutates the original
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Best Practices
+
+<Tip>
+**Guidelines for working with objects:**
+
+1. **Treat objects as immutable when possible**
+   ```javascript
+   // Instead of mutating:
+   user.name = "Bob";
+   
+   // Create a new object:
+   const updatedUser = { ...user, name: "Bob" };
+   ```
+
+2. **Use `const` by default** — prevents accidental reassignment
+
+3. **Know which methods mutate**
+   - Mutating: `push`, `pop`, `sort`, `reverse`, `splice`
+   - Non-mutating: `map`, `filter`, `slice`, `concat`, `toSorted`
+
+4. **Use `structuredClone()` for deep copies**
+   ```javascript
+   const clone = structuredClone(original);
+   ```
+
+5. **Clone function parameters if you need to modify them**
+   ```javascript
+   function processData(data) {
+     const copy = structuredClone(data);
+     // Now safe to modify copy
+   }
+   ```
+
+6. **Be explicit about intent** — comment when mutating on purpose
+</Tip>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Primitives vs Objects** — the ECMAScript terms (not "value types" vs "reference types")
+
+2. **The real difference is mutability** — primitives are immutable, objects are mutable
+
+3. **Call by sharing** — JavaScript passes ALL values as copies of references; mutation works, reassignment doesn't
+
+4. **Object identity** — objects are compared by identity, not content (`{} === {}` is false)
+
+5. **`const` prevents reassignment, not mutation** — use `Object.freeze()` for true immutability
+
+6. **Shallow copy shares nested objects** — use `structuredClone()` for deep copies
+
+7. **Know your array methods** — `push/pop/sort` mutate; `map/filter/slice` don't
+
+8. **The stack/heap model is a simplification** — useful for understanding behavior, not technically accurate
+
+9. **In V8, only Smis are stored directly** — strings, BigInts, and objects all live on the heap
+
+10. **Symbols have identity** — two `Symbol("id")` are different, unlike other primitives
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between primitives and objects?">
+    **Answer:**
+    
+    - **Primitives are immutable** — you cannot change a primitive value, only replace it. Copies behave independently.
+    
+    - **Objects are mutable** — you CAN change an object's contents. Multiple variables can point to the same object.
+    
+    The distinction is about **mutability**, not storage location.
+  </Accordion>
+  
+  <Accordion title="Question 2: What does this code output?">
+    ```javascript
+    let a = { count: 1 };
+    let b = a;
+    b.count = 5;
+    console.log(a.count);
+    ```
+    
+    **Answer:** `5`
+    
+    Both `a` and `b` point to the same object. When you modify `b.count`, you're modifying the shared object, which `a` also sees. This is because **mutation affects the shared object**.
+  </Accordion>
+  
+  <Accordion title="Question 3: Why does {} === {} return false?">
+    **Answer:** Because `===` compares **identity** (same object), not contents.
+    
+    Each `{}` creates a NEW empty object in memory. Even though they have the same contents (both empty), they are different objects.
+    
+    ```javascript
+    {} === {}  // false (different objects)
+    
+    const a = {};
+    const b = a;
+    a === b    // true (same object)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: What's the difference between call by sharing and pass by reference?">
+    **Answer:**
+    
+    - **Call by sharing:** Function receives a copy of the reference. Mutation works, but reassignment only changes the local parameter.
+    
+    - **Pass by reference (C++ style):** Parameter is an alias for the argument. Reassignment WOULD change the original.
+    
+    JavaScript uses call by sharing. That's why this doesn't work:
+    
+    ```javascript
+    function replace(obj) {
+      obj = { new: "object" };  // Only changes local parameter
+    }
+    
+    let x = { old: "object" };
+    replace(x);
+    console.log(x);  // { old: "object" } — unchanged!
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: Does const prevent object mutation?">
+    **Answer:** No!
+    
+    `const` only prevents **reassignment** — you can't make the variable point to a different value. But you CAN still **mutate** the object's contents.
+    
+    ```javascript
+    const obj = { name: "Alice" };
+    
+    obj.name = "Bob";  // ✅ Allowed (mutation)
+    obj.age = 25;      // ✅ Allowed (mutation)
+    obj = {};          // ❌ Error (reassignment)
+    ```
+    
+    Use `Object.freeze()` for true immutability.
+  </Accordion>
+  
+  <Accordion title="Question 6: Are strings really stored on the stack?">
+    **Answer:** No! This is a common myth.
+    
+    In V8, **only Smis (small integers)** are stored directly. Strings are dynamically-sized and stored on the heap. The variable holds a pointer to the string's location in heap memory.
+    
+    The "stack vs heap" model is a **mental model for behavior**, not how JavaScript actually works.
+  </Accordion>
+  
+  <Accordion title="Question 7: What's the difference between shallow and deep copy?">
+    **Answer:**
+    
+    - **Shallow copy** creates a new object but shares nested objects
+    - **Deep copy** creates independent copies at ALL levels
+    
+    ```javascript
+    const original = { nested: { value: 1 } };
+    
+    // Shallow: nested is shared
+    const shallow = { ...original };
+    shallow.nested.value = 2;
+    console.log(original.nested.value); // 2 (affected!)
+    
+    // Deep: completely independent
+    const deep = structuredClone(original);
+    deep.nested.value = 3;
+    console.log(original.nested.value); // 2 (unchanged)
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Primitive Types" icon="atom" href="/concepts/primitive-types">
+    Deep dive into the 7 primitive types and their characteristics
+  </Card>
+  <Card title="JavaScript Engines" icon="microchip" href="/concepts/javascript-engines">
+    How V8 compiles and optimizes your code, including memory management
+  </Card>
+  <Card title="Type Coercion" icon="shuffle" href="/concepts/type-coercion">
+    How JavaScript converts between types automatically
+  </Card>
+  <Card title="Scope and Closures" icon="layer-group" href="/concepts/scope-and-closures">
+    How closures capture references to variables
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="ECMAScript Data Types — ECMA-262" icon="book" href="https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values">
+    The official specification defining primitive values and objects in JavaScript.
+  </Card>
+  <Card title="JavaScript Data Structures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures">
+    MDN's comprehensive guide to JavaScript's type system and data structures.
+  </Card>
+  <Card title="Object.freeze() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze">
+    Documentation on freezing objects for immutability.
+  </Card>
+  <Card title="structuredClone() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/structuredClone">
+    The modern way to create deep copies of objects.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Evaluation Strategy in ECMAScript — Dmitry Soshnikov" icon="newspaper" href="https://dmitrysoshnikov.com/ecmascript/chapter-8-evaluation-strategy/">
+    The definitive explanation of call-by-sharing in ECMAScript by a language theory expert. Includes comparison with true pass-by-reference and detailed examples.
+  </Card>
+  <Card title="Is JavaScript Pass by Reference? — Aleksandr Hovhannisyan" icon="newspaper" href="https://www.aleksandrhovhannisyan.com/blog/javascript-pass-by-reference/">
+    Excellent deep-dive debunking the "pass by reference" myth. Explains true references vs object references with C++ comparisons.
+  </Card>
+  <Card title="Mutability vs Immutability — freeCodeCamp" icon="newspaper" href="https://freecodecamp.org/news/mutability-vs-immutability-in-javascript">
+    Beginner-friendly guide focusing on the practical differences between mutable and immutable data in JavaScript.
+  </Card>
+  <Card title="JavaScript Primitive vs. Reference Values" icon="newspaper" href="https://www.javascripttutorial.net/javascript-primitive-vs-reference-values/">
+    Clear explanation with visual diagrams showing how primitives and objects behave differently.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Pass by Value vs Pass by Reference | Call by Sharing — The Code Dose" icon="video" href="https://www.youtube.com/watch?v=6xOCZdxfvFY">
+    Modern explanation using the correct "call by sharing" terminology. Part of an excellent Understanding JavaScript series.
+  </Card>
+  <Card title="JavaScript Pass by Value vs Pass by Reference — techsith" icon="video" href="https://www.youtube.com/watch?v=E-dAnFdq8k8">
+    Popular tutorial (37K+ views) with clear examples of how primitives and objects behave differently in functions.
+  </Card>
+  <Card title="Understanding Passing by Reference or Value — Steve Griffith" icon="video" href="https://www.youtube.com/watch?v=--Md6-8GAio">
+    Comprehensive walkthrough covering primitives vs objects, function parameters, and common misconceptions.
+  </Card>
+</CardGroup>
