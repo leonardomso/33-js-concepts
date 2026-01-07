@@ -1,0 +1,1025 @@
+---
+title: "Performance Observer: Monitor Web Performance in JavaScript"
+sidebarTitle: "Performance Observer"
+description: "Learn the Performance Observer API in JavaScript. Understand how to measure page performance, track Long Tasks, monitor layout shifts, and collect Core Web Vitals metrics for real user monitoring."
+---
+
+How do you know if your website is actually fast for real users? You might run Lighthouse once, but what about the thousands of visitors with different devices, network conditions, and usage patterns? Without real-time performance monitoring, you're flying blind.
+
+```javascript
+// Monitor every resource loaded on your page
+const observer = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    console.log(`${entry.name}: ${entry.duration.toFixed(2)}ms`)
+  })
+})
+
+observer.observe({ type: 'resource', buffered: true })
+
+// Output:
+// https://example.com/app.js: 245.30ms
+// https://example.com/styles.css: 89.50ms
+// https://example.com/hero.webp: 412.80ms
+```
+
+The **[Performance Observer API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver)** lets you monitor performance metrics as they happen in real-time. Instead of polling for data, you subscribe to specific performance events and get notified when they occur. This is the foundation of Real User Monitoring (RUM) and how tools like Google Analytics measure Core Web Vitals.
+
+<Info>
+**What you'll learn in this guide:**
+- What Performance Observer is and why it replaced older APIs
+- The different entry types you can observe (resource, paint, longtask, etc.)
+- How to measure Core Web Vitals (LCP, CLS, INP, FCP, TTFB)
+- Using the `buffered` option to capture historical entries
+- Building a simple Real User Monitoring (RUM) solution
+- Common patterns and best practices for production
+- The web-vitals library for simplified metrics collection
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes familiarity with [Callbacks](/concepts/callbacks) and the [Event Loop](/concepts/event-loop). Performance Observer uses callback-based subscriptions and interacts with the browser's timing mechanisms.
+</Warning>
+
+---
+
+## What is Performance Observer?
+
+**Performance Observer** is a browser API that asynchronously observes performance measurement events and notifies you when new performance entries are recorded in the browser's performance timeline. It provides a non-blocking way to collect performance metrics without impacting the user experience.
+
+Think of Performance Observer like a security camera system. Instead of constantly checking every room for activity (polling), cameras automatically record and alert you when motion is detected. Similarly, Performance Observer automatically notifies your code when performance events occur, without you having to repeatedly ask "did anything happen yet?"
+
+```javascript
+// Create an observer with a callback function
+const observer = new PerformanceObserver((list, observer) => {
+  // Called whenever new performance entries are recorded
+  const entries = list.getEntries()
+  
+  entries.forEach((entry) => {
+    console.log(`Entry type: ${entry.entryType}`)
+    console.log(`Name: ${entry.name}`)
+    console.log(`Start time: ${entry.startTime}`)
+    console.log(`Duration: ${entry.duration}`)
+  })
+})
+
+// Start observing specific entry types
+observer.observe({ entryTypes: ['resource', 'navigation'] })
+```
+
+### Why Performance Observer Exists
+
+Before Performance Observer, developers used three methods on the `performance` object:
+
+```javascript
+// ❌ OLD WAY: Polling-based approaches
+performance.getEntries()           // Get all entries
+performance.getEntriesByName(name) // Get entries by name
+performance.getEntriesByType(type) // Get entries by type
+
+// Problems:
+// 1. You have to keep calling these methods (polling)
+// 2. You might miss entries between polls
+// 3. No way to know when new entries are added
+// 4. Blocks the main thread while processing
+```
+
+Performance Observer solves these problems:
+
+```javascript
+// ✅ NEW WAY: Event-driven approach
+const observer = new PerformanceObserver((list) => {
+  // Automatically called when new entries are recorded
+  list.getEntries().forEach(processEntry)
+})
+
+observer.observe({ type: 'resource', buffered: true })
+
+// Benefits:
+// 1. Non-blocking - callbacks fire during idle time
+// 2. Never miss entries - you're notified automatically
+// 3. Better performance - no polling overhead
+// 4. Can capture entries that happened before observing
+```
+
+<CardGroup cols={2}>
+  <Card title="Performance Observer — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver">
+    Complete API reference with methods, properties, and browser compatibility
+  </Card>
+  <Card title="Performance API Overview — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Performance_API">
+    Understanding the broader Performance API ecosystem
+  </Card>
+</CardGroup>
+
+---
+
+## Performance Entry Types
+
+Performance Observer can observe many different types of entries. Each type captures specific performance data:
+
+```javascript
+// Check which entry types your browser supports
+console.log(PerformanceObserver.supportedEntryTypes)
+
+// Output (Chrome):
+// ['element', 'event', 'first-input', 'largest-contentful-paint',
+//  'layout-shift', 'longtask', 'mark', 'measure', 'navigation',
+//  'paint', 'resource', 'visibility-state']
+```
+
+### Entry Type Reference
+
+| Entry Type | Description | Use Case |
+|------------|-------------|----------|
+| `resource` | Network requests for scripts, styles, images, etc. | Track asset loading times |
+| `navigation` | Page navigation timing | Measure page load performance |
+| `paint` | First Paint and First Contentful Paint | Track rendering milestones |
+| `largest-contentful-paint` | LCP metric (Core Web Vital) | Measure loading performance |
+| `layout-shift` | Visual stability changes | Calculate CLS (Core Web Vital) |
+| `longtask` | Tasks blocking main thread >50ms | Identify performance bottlenecks |
+| `first-input` | First user interaction timing | Measure FID (deprecated, use INP) |
+| `event` | User interaction events | Calculate INP (Core Web Vital) |
+| `mark` | Custom performance marks | Create custom timing points |
+| `measure` | Custom performance measures | Measure custom code sections |
+
+### Observing Resource Timing
+
+Resource timing tells you exactly how long each network request takes:
+
+```javascript
+const resourceObserver = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    // Basic timing
+    console.log(`Resource: ${entry.name}`)
+    console.log(`Duration: ${entry.duration}ms`)
+    
+    // Detailed breakdown
+    const dns = entry.domainLookupEnd - entry.domainLookupStart
+    const tcp = entry.connectEnd - entry.connectStart
+    const ttfb = entry.responseStart - entry.requestStart
+    const download = entry.responseEnd - entry.responseStart
+    
+    console.log(`DNS lookup: ${dns}ms`)
+    console.log(`TCP connection: ${tcp}ms`)
+    console.log(`Time to First Byte: ${ttfb}ms`)
+    console.log(`Download: ${download}ms`)
+  })
+})
+
+resourceObserver.observe({ type: 'resource', buffered: true })
+```
+
+### Observing Navigation Timing
+
+Navigation timing captures the full page load lifecycle:
+
+```javascript
+const navObserver = new PerformanceObserver((list) => {
+  const entry = list.getEntries()[0] // Only one navigation entry per page
+  
+  // Key metrics
+  const dns = entry.domainLookupEnd - entry.domainLookupStart
+  const tcp = entry.connectEnd - entry.connectStart
+  const ttfb = entry.responseStart - entry.startTime
+  const domParsing = entry.domInteractive - entry.responseEnd
+  const domComplete = entry.domComplete - entry.startTime
+  const loadComplete = entry.loadEventEnd - entry.startTime
+  
+  console.log(`DNS: ${dns}ms`)
+  console.log(`TCP: ${tcp}ms`)
+  console.log(`TTFB: ${ttfb}ms`)
+  console.log(`DOM Parsing: ${domParsing}ms`)
+  console.log(`DOM Complete: ${domComplete}ms`)
+  console.log(`Full Load: ${loadComplete}ms`)
+})
+
+navObserver.observe({ type: 'navigation', buffered: true })
+```
+
+### Observing Paint Timing
+
+Paint timing tracks when the browser first renders content:
+
+```javascript
+const paintObserver = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    console.log(`${entry.name}: ${entry.startTime}ms`)
+  })
+})
+
+paintObserver.observe({ type: 'paint', buffered: true })
+
+// Output:
+// first-paint: 245.5ms
+// first-contentful-paint: 312.8ms
+```
+
+---
+
+## Measuring Core Web Vitals
+
+Core Web Vitals are Google's essential metrics for user experience. Performance Observer is how you measure them in the field.
+
+### Largest Contentful Paint (LCP)
+
+LCP measures loading performance — specifically, when the largest content element becomes visible.
+
+```javascript
+// Measure LCP (target: < 2.5 seconds)
+const lcpObserver = new PerformanceObserver((list) => {
+  const entries = list.getEntries()
+  // LCP can change until user interacts, so always use the latest
+  const lastEntry = entries[entries.length - 1]
+  
+  console.log(`LCP: ${lastEntry.startTime}ms`)
+  console.log(`Element:`, lastEntry.element)
+  console.log(`Size: ${lastEntry.size}`)
+  
+  // Rate the score
+  if (lastEntry.startTime <= 2500) {
+    console.log('Rating: Good')
+  } else if (lastEntry.startTime <= 4000) {
+    console.log('Rating: Needs Improvement')
+  } else {
+    console.log('Rating: Poor')
+  }
+})
+
+lcpObserver.observe({ type: 'largest-contentful-paint', buffered: true })
+```
+
+### Cumulative Layout Shift (CLS)
+
+CLS measures visual stability — how much the page layout shifts unexpectedly.
+
+```javascript
+// Measure CLS (target: < 0.1)
+let clsValue = 0
+
+const clsObserver = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    // Only count shifts without recent user input
+    if (!entry.hadRecentInput) {
+      clsValue += entry.value
+      console.log(`Layout shift: ${entry.value}`)
+      console.log(`Cumulative CLS: ${clsValue}`)
+    }
+  })
+})
+
+clsObserver.observe({ type: 'layout-shift', buffered: true })
+
+// Report final CLS when page is hidden
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    console.log(`Final CLS: ${clsValue}`)
+    // Send to analytics
+  }
+})
+```
+
+### Interaction to Next Paint (INP)
+
+INP measures responsiveness — the latency of user interactions.
+
+```javascript
+// Measure INP (target: < 200ms)
+let maxINP = 0
+
+const inpObserver = new PerformanceObserver((list) => {
+  list.getEntries().forEach((entry) => {
+    // Track the worst interaction
+    if (entry.duration > maxINP) {
+      maxINP = entry.duration
+      console.log(`New worst interaction: ${maxINP}ms`)
+      console.log(`Event type: ${entry.name}`)
+    }
+  })
+})
+
+// durationThreshold filters out fast interactions
+inpObserver.observe({ 
+  type: 'event', 
+  buffered: true,
+  durationThreshold: 40 // Only report interactions > 40ms
+})
+```
+
+### First Contentful Paint (FCP)
+
+FCP measures when the first content appears on screen.
+
+```javascript
+// Measure FCP (target: < 1.8 seconds)
+const fcpObserver = new PerformanceObserver((list) => {
+  const fcp = list.getEntries().find(entry => entry.name === 'first-contentful-paint')
+  
+  if (fcp) {
+    console.log(`FCP: ${fcp.startTime}ms`)
+    
+    if (fcp.startTime <= 1800) {
+      console.log('Rating: Good')
+    } else if (fcp.startTime <= 3000) {
+      console.log('Rating: Needs Improvement')
+    } else {
+      console.log('Rating: Poor')
+    }
+  }
+})
+
+fcpObserver.observe({ type: 'paint', buffered: true })
+```
+
+### Time to First Byte (TTFB)
+
+TTFB measures server response time.
+
+```javascript
+// Measure TTFB (target: < 800ms)
+const ttfbObserver = new PerformanceObserver((list) => {
+  const entry = list.getEntries()[0]
+  const ttfb = entry.responseStart - entry.startTime
+  
+  console.log(`TTFB: ${ttfb}ms`)
+  
+  // Breakdown
+  const dns = entry.domainLookupEnd - entry.domainLookupStart
+  const connection = entry.connectEnd - entry.connectStart
+  const waiting = entry.responseStart - entry.requestStart
+  
+  console.log(`DNS: ${dns}ms`)
+  console.log(`Connection: ${connection}ms`)
+  console.log(`Server wait: ${waiting}ms`)
+})
+
+ttfbObserver.observe({ type: 'navigation', buffered: true })
+```
+
+---
+
+## The Buffered Option
+
+The `buffered` option is crucial for capturing performance entries that occurred before your observer started listening.
+
+```javascript
+// Without buffered: Only see entries AFTER observe() is called
+observer.observe({ type: 'resource' })
+
+// With buffered: Also get entries that already happened
+observer.observe({ type: 'resource', buffered: true })
+```
+
+### Why Buffered Matters
+
+Consider this scenario:
+
+```javascript
+// Your performance script loads at 2000ms
+// But images loaded at 500ms, 800ms, and 1200ms
+
+// Without buffered: You miss all those image timings!
+// With buffered: You get all historical entries in the first callback
+```
+
+### How Buffered Works
+
+```javascript
+const observer = new PerformanceObserver((list, obs) => {
+  const entries = list.getEntries()
+  console.log(`Received ${entries.length} entries`)
+  
+  entries.forEach(entry => {
+    console.log(`${entry.name} at ${entry.startTime}ms`)
+  })
+})
+
+// First callback will include ALL resource entries since page load
+observer.observe({ type: 'resource', buffered: true })
+```
+
+<Warning>
+**Buffer Limits:** The browser only keeps a limited number of entries in the buffer. For high-volume entry types like `resource`, very old entries may be dropped. Always set up observers as early as possible.
+</Warning>
+
+---
+
+## Custom Performance Marks and Measures
+
+You can create your own timing points using marks and measures:
+
+```javascript
+// Create custom timing points
+performance.mark('api-call-start')
+
+await fetch('/api/users')
+
+performance.mark('api-call-end')
+
+// Measure the duration between marks
+performance.measure('api-call', 'api-call-start', 'api-call-end')
+
+// Observe custom measures
+const customObserver = new PerformanceObserver((list) => {
+  list.getEntries().forEach(entry => {
+    console.log(`${entry.name}: ${entry.duration}ms`)
+  })
+})
+
+customObserver.observe({ type: 'measure', buffered: true })
+
+// Output: api-call: 245.3ms
+```
+
+### Practical Custom Metrics
+
+```javascript
+// Measure component render time
+function measureRender(componentName, renderFn) {
+  performance.mark(`${componentName}-start`)
+  renderFn()
+  performance.mark(`${componentName}-end`)
+  performance.measure(componentName, `${componentName}-start`, `${componentName}-end`)
+}
+
+// Measure time to interactive for specific features
+performance.mark('search-ready')
+initSearchComponent()
+performance.mark('search-interactive')
+performance.measure('search-init', 'search-ready', 'search-interactive')
+
+// Measure user flows
+performance.mark('checkout-start')
+// ... user completes checkout ...
+performance.mark('checkout-complete')
+performance.measure('checkout-flow', 'checkout-start', 'checkout-complete')
+```
+
+---
+
+## Tracking Long Tasks
+
+Long Tasks are JavaScript tasks that block the main thread for more than 50ms. They directly impact responsiveness.
+
+```javascript
+// Detect tasks blocking the main thread
+const longTaskObserver = new PerformanceObserver((list) => {
+  list.getEntries().forEach(entry => {
+    console.warn(`Long task detected!`)
+    console.log(`Duration: ${entry.duration}ms`)
+    console.log(`Start time: ${entry.startTime}ms`)
+    
+    // Attribution shows what caused the long task
+    if (entry.attribution && entry.attribution.length > 0) {
+      const attribution = entry.attribution[0]
+      console.log(`Container: ${attribution.containerType}`)
+      console.log(`Source: ${attribution.containerSrc}`)
+    }
+  })
+})
+
+longTaskObserver.observe({ type: 'longtask', buffered: true })
+```
+
+### Why Long Tasks Matter
+
+```
+User clicks button
+    │
+    ▼
+┌─────────────────────────────────────────┐
+│         Long Task (150ms)               │
+│  ┌───────────────────────────────────┐  │
+│  │   Your heavy JavaScript code      │  │
+│  └───────────────────────────────────┘  │
+└─────────────────────────────────────────┘
+    │
+    ▼
+Browser finally responds (150ms later)
+```
+
+If a task takes 150ms, the user waits 150ms for any response. That feels slow!
+
+---
+
+## Building a Simple RUM Solution
+
+Here's how to build a basic Real User Monitoring solution using Performance Observer:
+
+```javascript
+// Simple RUM implementation
+class PerformanceMonitor {
+  constructor(endpoint = '/analytics') {
+    this.endpoint = endpoint
+    this.metrics = {}
+    this.observers = []
+    
+    this.init()
+  }
+  
+  init() {
+    // Observe LCP
+    this.observe('largest-contentful-paint', (entries) => {
+      const lastEntry = entries[entries.length - 1]
+      this.metrics.lcp = lastEntry.startTime
+    })
+    
+    // Observe CLS
+    this.metrics.cls = 0
+    this.observe('layout-shift', (entries) => {
+      entries.forEach(entry => {
+        if (!entry.hadRecentInput) {
+          this.metrics.cls += entry.value
+        }
+      })
+    })
+    
+    // Observe FCP
+    this.observe('paint', (entries) => {
+      const fcp = entries.find(e => e.name === 'first-contentful-paint')
+      if (fcp) {
+        this.metrics.fcp = fcp.startTime
+      }
+    })
+    
+    // Observe Navigation
+    this.observe('navigation', (entries) => {
+      const nav = entries[0]
+      this.metrics.ttfb = nav.responseStart - nav.startTime
+      this.metrics.domContentLoaded = nav.domContentLoadedEventEnd - nav.startTime
+      this.metrics.load = nav.loadEventEnd - nav.startTime
+    })
+    
+    // Report when page is hidden
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        this.report()
+      }
+    })
+  }
+  
+  observe(type, callback) {
+    try {
+      const observer = new PerformanceObserver((list) => {
+        callback(list.getEntries())
+      })
+      observer.observe({ type, buffered: true })
+      this.observers.push(observer)
+    } catch (e) {
+      console.warn(`${type} not supported`)
+    }
+  }
+  
+  report() {
+    const body = JSON.stringify({
+      url: window.location.href,
+      timestamp: Date.now(),
+      metrics: this.metrics
+    })
+    
+    // Use sendBeacon for reliable delivery
+    if (navigator.sendBeacon) {
+      navigator.sendBeacon(this.endpoint, body)
+    } else {
+      fetch(this.endpoint, { 
+        method: 'POST', 
+        body,
+        keepalive: true 
+      })
+    }
+  }
+  
+  disconnect() {
+    this.observers.forEach(obs => obs.disconnect())
+  }
+}
+
+// Usage
+const monitor = new PerformanceMonitor('/api/analytics')
+```
+
+---
+
+## Using the web-vitals Library
+
+For production use, Google's [web-vitals](https://github.com/GoogleChrome/web-vitals) library handles all the edge cases:
+
+```javascript
+import { onCLS, onINP, onLCP, onFCP, onTTFB } from 'web-vitals'
+
+function sendToAnalytics(metric) {
+  const body = JSON.stringify({
+    name: metric.name,
+    value: metric.value,
+    rating: metric.rating,  // 'good' | 'needs-improvement' | 'poor'
+    delta: metric.delta,
+    id: metric.id,
+    navigationType: metric.navigationType
+  })
+  
+  navigator.sendBeacon('/analytics', body)
+}
+
+// Measure all Core Web Vitals
+onCLS(sendToAnalytics)
+onINP(sendToAnalytics)
+onLCP(sendToAnalytics)
+onFCP(sendToAnalytics)
+onTTFB(sendToAnalytics)
+```
+
+### Why Use web-vitals?
+
+```javascript
+// web-vitals handles edge cases you'd forget:
+
+// 1. LCP can change until first user input
+// 2. CLS needs session windowing for accurate scores
+// 3. INP needs to track all interactions, not just first
+// 4. Proper handling of bfcache navigations
+// 5. Correct timing for prerendered pages
+// 6. Delta values for analytics deduplication
+```
+
+<CardGroup cols={2}>
+  <Card title="web-vitals Library" icon="github" href="https://github.com/GoogleChrome/web-vitals">
+    Production-ready library for measuring Core Web Vitals accurately
+  </Card>
+  <Card title="Web Vitals Thresholds — web.dev" icon="gauge" href="https://web.dev/articles/vitals">
+    Official thresholds and guidelines for LCP, CLS, and INP
+  </Card>
+</CardGroup>
+
+---
+
+## Observer Methods
+
+### observe()
+
+Start observing performance entries:
+
+```javascript
+// Observe single type (preferred)
+observer.observe({ type: 'resource', buffered: true })
+
+// Observe multiple types (legacy)
+observer.observe({ entryTypes: ['resource', 'navigation'] })
+```
+
+<Warning>
+**Note:** When using `entryTypes`, you cannot use `buffered` or `durationThreshold`. Use the single `type` option for more control.
+</Warning>
+
+### disconnect()
+
+Stop observing and clean up:
+
+```javascript
+// Stop all observation
+observer.disconnect()
+
+// Common pattern: disconnect after getting what you need
+const observer = new PerformanceObserver((list, obs) => {
+  const fcp = list.getEntries().find(e => e.name === 'first-contentful-paint')
+  if (fcp) {
+    console.log('FCP:', fcp.startTime)
+    obs.disconnect()  // No longer need to observe
+  }
+})
+
+observer.observe({ type: 'paint', buffered: true })
+```
+
+### takeRecords()
+
+Get pending entries and clear the buffer:
+
+```javascript
+const observer = new PerformanceObserver((list) => {
+  // Normal processing
+})
+
+observer.observe({ type: 'resource', buffered: true })
+
+// Later: Get any entries that haven't triggered callback yet
+const pendingEntries = observer.takeRecords()
+console.log('Pending entries:', pendingEntries)
+```
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Not Using Buffered
+
+```javascript
+// ❌ WRONG: Misses entries that occurred before observe()
+const observer = new PerformanceObserver((list) => {
+  // Might never receive LCP if it already happened!
+})
+observer.observe({ type: 'largest-contentful-paint' })
+
+// ✅ CORRECT: Capture historical entries
+observer.observe({ type: 'largest-contentful-paint', buffered: true })
+```
+
+### Mistake 2: Not Handling Page Visibility
+
+```javascript
+// ❌ WRONG: Never reports if user closes tab
+const observer = new PerformanceObserver((list) => {
+  // Data lost when page closes
+})
+
+// ✅ CORRECT: Report when page is hidden
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    sendMetricsToServer()
+  }
+})
+```
+
+### Mistake 3: Using Wrong Report Method
+
+```javascript
+// ❌ WRONG: fetch() might be cancelled when page unloads
+window.addEventListener('beforeunload', () => {
+  fetch('/analytics', { method: 'POST', body: data })
+})
+
+// ✅ CORRECT: sendBeacon() is designed for this
+window.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    navigator.sendBeacon('/analytics', data)
+  }
+})
+```
+
+### Mistake 4: Not Checking Browser Support
+
+```javascript
+// ❌ WRONG: Crashes in older browsers
+const observer = new PerformanceObserver(callback)
+
+// ✅ CORRECT: Check support first
+if ('PerformanceObserver' in window) {
+  const observer = new PerformanceObserver(callback)
+  
+  // Also check specific entry type support
+  if (PerformanceObserver.supportedEntryTypes.includes('largest-contentful-paint')) {
+    observer.observe({ type: 'largest-contentful-paint', buffered: true })
+  }
+}
+```
+
+### Mistake 5: Observing in Production Without Sampling
+
+```javascript
+// ❌ WRONG: Every user sends data = massive traffic
+const observer = new PerformanceObserver((list) => {
+  sendToAnalytics(list.getEntries())  // Called for every user
+})
+
+// ✅ CORRECT: Sample a percentage of users
+const shouldSample = Math.random() < 0.1  // 10% of users
+
+if (shouldSample) {
+  const observer = new PerformanceObserver((list) => {
+    sendToAnalytics(list.getEntries())
+  })
+  observer.observe({ type: 'resource', buffered: true })
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Performance Observer is event-driven** — It notifies you when performance entries are recorded, instead of requiring you to poll for data.
+
+2. **Always use `buffered: true`** — This captures entries that occurred before your observer started listening. Essential for metrics like LCP and FCP.
+
+3. **Core Web Vitals are measurable** — LCP (loading), CLS (visual stability), and INP (interactivity) can all be measured with Performance Observer.
+
+4. **Use `sendBeacon()` for reporting** — It's designed to reliably send data even when the page is closing. Always report on `visibilitychange`.
+
+5. **Check browser support** — Use `PerformanceObserver.supportedEntryTypes` to verify which entry types are available.
+
+6. **Use web-vitals in production** — Google's library handles edge cases like session windowing, bfcache, and prerendering that are easy to get wrong.
+
+7. **Long tasks hurt responsiveness** — Tasks blocking the main thread >50ms directly impact user experience. Monitor them!
+
+8. **Custom marks and measures** — Use `performance.mark()` and `performance.measure()` to track application-specific timings.
+
+9. **Sample in production** — Don't send analytics data for every user. Sample a percentage to manage traffic.
+
+10. **Clean up observers** — Call `disconnect()` when you no longer need to observe, especially in SPAs where components unmount.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the difference between using `type` vs `entryTypes` in observe()?">
+    **Answer:**
+    
+    - **`type`** (single string): Preferred modern approach. Lets you use additional options like `buffered` and `durationThreshold`.
+    
+    - **`entryTypes`** (array): Legacy approach for observing multiple types with one observer. Cannot use `buffered` or `durationThreshold`.
+    
+    ```javascript
+    // Modern (preferred)
+    observer.observe({ type: 'resource', buffered: true })
+    
+    // Legacy (limited options)
+    observer.observe({ entryTypes: ['resource', 'navigation'] })
+    ```
+    
+    For most use cases, create separate observers with `type` for better control.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why is the `buffered` option important?">
+    **Answer:**
+    
+    The `buffered` option tells the browser to include historical entries that were recorded before you called `observe()`. Without it, you only receive entries that occur after observation starts.
+    
+    This is crucial because:
+    - Your performance script might load after key events (like FCP or LCP)
+    - Resources might have already loaded by the time your code runs
+    - You want a complete picture, not just partial data
+    
+    ```javascript
+    // Script loads at 2000ms, but LCP happened at 1500ms
+    // Without buffered: You miss LCP entirely
+    // With buffered: First callback includes the LCP entry
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: How do you accurately measure CLS?">
+    **Answer:**
+    
+    CLS (Cumulative Layout Shift) requires special handling:
+    
+    1. **Only count unexpected shifts** — Ignore shifts that follow user input
+    2. **Accumulate over time** — CLS is cumulative, so add up all shifts
+    3. **Report at the right time** — Send the final value when the page is hidden
+    
+    ```javascript
+    let clsValue = 0
+    
+    const observer = new PerformanceObserver((list) => {
+      list.getEntries().forEach(entry => {
+        if (!entry.hadRecentInput) {
+          clsValue += entry.value
+        }
+      })
+    })
+    
+    observer.observe({ type: 'layout-shift', buffered: true })
+    
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        sendMetric('CLS', clsValue)
+      }
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: Why use `sendBeacon()` instead of `fetch()` for analytics?">
+    **Answer:**
+    
+    `sendBeacon()` is designed specifically for sending analytics data when the page is unloading:
+    
+    1. **Guaranteed delivery** — The browser ensures the request is sent even if the page closes
+    2. **Non-blocking** — Doesn't delay page navigation or closing
+    3. **Survives page unload** — Unlike `fetch()`, which may be cancelled
+    
+    ```javascript
+    // ❌ fetch() might be cancelled
+    window.addEventListener('beforeunload', () => {
+      fetch('/analytics', { method: 'POST', body: data })
+    })
+    
+    // ✅ sendBeacon() is reliable
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') {
+        navigator.sendBeacon('/analytics', data)
+      }
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: What are Long Tasks and why do they matter?">
+    **Answer:**
+    
+    Long Tasks are JavaScript tasks that block the main thread for more than 50ms. They matter because:
+    
+    1. **They block user interaction** — User can't click, scroll, or type while a long task runs
+    2. **They cause jank** — Animations and scrolling stutter
+    3. **They impact INP** — Long tasks directly worsen interaction responsiveness
+    
+    ```javascript
+    const observer = new PerformanceObserver((list) => {
+      list.getEntries().forEach(entry => {
+        console.warn(`Long task: ${entry.duration}ms`)
+        // Duration > 50ms is considered "long"
+      })
+    })
+    
+    observer.observe({ type: 'longtask', buffered: true })
+    ```
+    
+    If you see many long tasks, break up your JavaScript into smaller chunks or use Web Workers.
+  </Accordion>
+  
+  <Accordion title="Question 6: How does web-vitals library improve on raw Performance Observer?">
+    **Answer:**
+    
+    The web-vitals library handles many edge cases that are easy to get wrong:
+    
+    1. **LCP finalization** — Stops tracking when user interacts (correct behavior)
+    2. **CLS session windowing** — Uses proper 5-second windows with 1-second gaps
+    3. **INP calculation** — Correctly identifies the worst interaction, not just the first
+    4. **bfcache handling** — Properly handles back/forward cache navigations
+    5. **Prerender support** — Adjusts timings for prerendered pages
+    6. **Delta values** — Provides deltas for proper analytics deduplication
+    
+    ```javascript
+    import { onLCP } from 'web-vitals'
+    
+    onLCP((metric) => {
+      // All edge cases handled for you
+      console.log(metric.value)   // The LCP value
+      console.log(metric.rating)  // 'good', 'needs-improvement', or 'poor'
+      console.log(metric.delta)   // Change since last report
+    })
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    Understand how the browser schedules tasks and why long tasks block the main thread
+  </Card>
+  <Card title="Callbacks" icon="phone" href="/concepts/callbacks">
+    Performance Observer uses callbacks to notify you of new entries asynchronously
+  </Card>
+  <Card title="Web Workers" icon="gears" href="/concepts/web-workers">
+    Move heavy computation off the main thread to prevent long tasks
+  </Card>
+  <Card title="HTTP & Fetch" icon="globe" href="/concepts/http-fetch">
+    Understanding network requests helps interpret resource timing data
+  </Card>
+</CardGroup>
+
+---
+
+## Resources
+
+<CardGroup cols={2}>
+  <Card title="Performance Observer — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver">
+    Complete API reference including all methods, properties, and browser compatibility tables
+  </Card>
+  <Card title="Performance API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Performance_API">
+    Overview of the broader Performance API ecosystem and all related interfaces
+  </Card>
+  <Card title="PerformanceEntry Types — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/PerformanceEntry/entryType">
+    Reference for all performance entry types and their specific properties
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Web Vitals — web.dev" icon="newspaper" href="https://web.dev/articles/vitals">
+    Official guide to Core Web Vitals with thresholds, measurement tools, and optimization tips from Google
+  </Card>
+  <Card title="Custom Metrics — web.dev" icon="newspaper" href="https://web.dev/articles/custom-metrics">
+    Comprehensive guide to measuring custom performance metrics using Performance Observer APIs
+  </Card>
+  <Card title="Best Practices for Web Vitals — web.dev" icon="newspaper" href="https://web.dev/articles/vitals-field-measurement-best-practices">
+    Field measurement best practices for collecting accurate Core Web Vitals data in production
+  </Card>
+  <Card title="Long Tasks API — web.dev" icon="newspaper" href="https://web.dev/articles/optimize-long-tasks">
+    Deep dive into detecting and optimizing long tasks that block the main thread
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Core Web Vitals — Google Chrome Developers" icon="video" href="https://www.youtube.com/watch?v=AQqFZ5t8uNc">
+    Official introduction to Core Web Vitals metrics and why they matter for user experience
+  </Card>
+  <Card title="Performance Observer Explained" icon="video" href="https://www.youtube.com/watch?v=fr7VL7dXc6g">
+    Practical walkthrough of Performance Observer API with real-world examples
+  </Card>
+  <Card title="Measuring Web Performance — HTTP 203" icon="video" href="https://www.youtube.com/watch?v=NxhJmFQSFqE">
+    Jake Archibald and Surma discuss performance measurement techniques and common pitfalls
+  </Card>
+</CardGroup>

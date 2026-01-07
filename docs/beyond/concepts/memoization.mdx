@@ -1,0 +1,867 @@
+---
+title: "Memoization: Caching Function Results in JavaScript"
+sidebarTitle: "Memoization: Caching Function Results"
+description: "Learn memoization in JavaScript. Cache function results, optimize expensive computations, build your own memoize function, and know when caching helps vs hurts."
+---
+
+Why does a naive Fibonacci function take forever for large numbers while a memoized version finishes instantly? Why do some React components re-render unnecessarily while others stay perfectly optimized?
+
+The answer is **memoization** — an optimization technique that stores the results of expensive function calls and returns the cached result when the same inputs occur again.
+
+```javascript
+// Without memoization: recalculates every time
+function slowFib(n) {
+  if (n <= 1) return n
+  return slowFib(n - 1) + slowFib(n - 2)
+}
+
+slowFib(40)  // Takes several seconds!
+slowFib(40)  // Still takes several seconds...
+
+// With memoization: remembers previous results
+const fastFib = memoize(function(n) {
+  if (n <= 1) return n
+  return fastFib(n - 1) + fastFib(n - 2)
+})
+
+fastFib(40)  // Takes milliseconds
+fastFib(40)  // Instant — retrieved from cache!
+```
+
+Memoization is built on [closures](/concepts/scope-and-closures), uses data structures like [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) and [`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap), and is the foundation for performance optimizations in frameworks like React.
+
+<Info>
+**What you'll learn in this guide:**
+- What memoization is and how it works under the hood
+- How to build your own memoize function from scratch
+- Handling multiple arguments and complex cache keys
+- When memoization helps vs when it actually hurts performance
+- Using WeakMap for memory-safe object memoization
+- Common mistakes that break memoization
+</Info>
+
+<Warning>
+**Helpful background:** This guide uses closures extensively. If you're not comfortable with how functions can "remember" variables from their outer scope, read our [Scope and Closures](/concepts/scope-and-closures) guide first. Understanding [Pure Functions](/concepts/pure-functions) also helps since memoization only works reliably with pure functions.
+</Warning>
+
+---
+
+## What is Memoization?
+
+**Memoization** is an optimization technique that speeds up programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. The term comes from the Latin word "memorandum" (to be remembered), which is also the root of "memo."
+
+Think of memoization as giving your function a notepad. Before doing any calculation, the function checks its notes: "Have I solved this exact problem before?" If yes, it reads the answer from the notepad. If no, it calculates the result, writes it down, and then returns it.
+
+```javascript
+// A memoized function has three parts:
+// 1. A cache to store results
+// 2. A lookup to check if we've seen this input before
+// 3. The original calculation as a fallback
+
+function memoizedDouble(n) {
+  // Check the cache
+  if (memoizedDouble.cache[n] !== undefined) {
+    console.log(`Cache hit for ${n}`)
+    return memoizedDouble.cache[n]
+  }
+  
+  // Calculate and store
+  console.log(`Calculating ${n} * 2`)
+  const result = n * 2
+  memoizedDouble.cache[n] = result
+  return result
+}
+memoizedDouble.cache = {}
+
+memoizedDouble(5)  // "Calculating 5 * 2" → 10
+memoizedDouble(5)  // "Cache hit for 5" → 10 (no calculation!)
+memoizedDouble(7)  // "Calculating 7 * 2" → 14
+```
+
+<CardGroup cols={2}>
+  <Card title="Map — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">
+    The Map object is ideal for memoization caches since it preserves insertion order and allows any value as a key
+  </Card>
+  <Card title="WeakMap — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">
+    WeakMap allows garbage collection of keys, making it perfect for memoizing functions with object arguments
+  </Card>
+</CardGroup>
+
+---
+
+## The Library Book Analogy
+
+Imagine you're a librarian helping students with research questions. When a student asks "What year did JavaScript first release?", you have two options:
+
+1. **Without memoization:** Walk to the computer science section, find the right book, look up the answer, walk back, and tell the student "1995." Every single time someone asks this question, you repeat the entire trip.
+
+2. **With memoization:** The first time someone asks, you do the lookup. But then you write "JavaScript: 1995" on a sticky note at your desk. The next time someone asks, you just read from the sticky note. No walking required.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    MEMOIZATION: THE LIBRARIAN'S DESK                     │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  WITHOUT MEMOIZATION                    WITH MEMOIZATION                 │
+│  ────────────────────                   ──────────────────               │
+│                                                                          │
+│   Student: "When was JS released?"       Student: "When was JS released?"│
+│                                                                          │
+│   ┌──────────┐                          ┌──────────┐                     │
+│   │ Librarian│                          │ Librarian│                     │
+│   │    😓    │ ─────► Walk to shelf     │    😊    │ ─► Check desk      │
+│   └──────────┘        Find book         └──────────┘    ┌─────────────┐  │
+│        │              Look it up             │          │ Sticky Note │  │
+│        │              Walk back              │          │ JS: 1995    │  │
+│        ▼              Tell student           ▼          └─────────────┘  │
+│   "1995" (slow)                         "1995" (instant!)                │
+│                                                                          │
+│   Next student asks...                  Next student asks...             │
+│   ↑ Repeat everything!                  ↑ Just read the sticky note!     │
+│                                                                          │
+│  Time: O(n) every time                  Time: O(1) for repeat queries    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The "sticky notes" are your cache. The "walking to the shelf" is the expensive computation. Memoization trades memory (sticky notes) for speed (no walking).
+
+---
+
+## How to Build a Memoize Function
+
+Let's build a reusable `memoize` function step by step. This function will take any function and return a memoized version of it.
+
+### Step 1: Basic Structure
+
+```javascript
+function memoize(fn) {
+  const cache = new Map()  // Store results here
+  
+  return function(arg) {
+    // Check if we've seen this argument before
+    if (cache.has(arg)) {
+      return cache.get(arg)
+    }
+    
+    // Calculate, cache, and return
+    const result = fn(arg)
+    cache.set(arg, result)
+    return result
+  }
+}
+```
+
+The returned function uses a [closure](/concepts/scope-and-closures) to maintain access to `cache` even after `memoize` has finished executing. This is how the function "remembers" previous results.
+
+### Step 2: Handle Multiple Arguments
+
+The basic version only works with single arguments. For multiple arguments, we need to create a cache key:
+
+```javascript
+function memoize(fn) {
+  const cache = new Map()
+  
+  return function(...args) {
+    // Create a key from all arguments
+    const key = JSON.stringify(args)
+    
+    if (cache.has(key)) {
+      return cache.get(key)
+    }
+    
+    const result = fn.apply(this, args)
+    cache.set(key, result)
+    return result
+  }
+}
+
+// Now it works with multiple arguments
+const add = memoize((a, b) => {
+  console.log('Calculating...')
+  return a + b
+})
+
+add(2, 3)  // "Calculating..." → 5
+add(2, 3)  // → 5 (cached!)
+add(3, 2)  // "Calculating..." → 5 (different key: "[3,2]" vs "[2,3]")
+```
+
+### Step 3: Preserve `this` Context
+
+Using `fn.apply(this, args)` ensures the memoized function works correctly as a method:
+
+```javascript
+const calculator = {
+  multiplier: 10,
+  
+  calculate: memoize(function(n) {
+    console.log('Calculating...')
+    return n * this.multiplier  // 'this' refers to calculator
+  })
+}
+
+calculator.calculate(5)  // "Calculating..." → 50
+calculator.calculate(5)  // → 50 (cached, 'this' preserved)
+```
+
+### Complete Implementation
+
+Here's the full memoize function with all features:
+
+```javascript
+function memoize(fn) {
+  const cache = new Map()
+  
+  return function memoized(...args) {
+    const key = JSON.stringify(args)
+    
+    if (cache.has(key)) {
+      return cache.get(key)
+    }
+    
+    const result = fn.apply(this, args)
+    cache.set(key, result)
+    return result
+  }
+}
+```
+
+<Tip>
+**Quick test:** A well-implemented memoize function should pass this check: `memoize(fn)(1, 2) === memoize(fn)(1, 2)` should only call `fn` once (assuming `fn` is the same function reference stored in a variable).
+</Tip>
+
+---
+
+## Memoizing Recursive Functions
+
+Memoization shines brightest with recursive functions that have overlapping subproblems. The classic example is Fibonacci.
+
+### The Problem: Exponential Time Complexity
+
+```javascript
+function fibonacci(n) {
+  if (n <= 1) return n
+  return fibonacci(n - 1) + fibonacci(n - 2)
+}
+
+// fibonacci(5) creates this call tree:
+//                    fib(5)
+//                   /      \
+//              fib(4)      fib(3)
+//             /    \       /    \
+//         fib(3)  fib(2) fib(2) fib(1)
+//         /   \
+//     fib(2) fib(1)
+//
+// Notice: fib(3) is calculated TWICE
+//         fib(2) is calculated THREE times
+```
+
+For `fibonacci(40)`, the naive version makes over 300 million function calls because it recalculates the same values repeatedly.
+
+### The Solution: Memoized Fibonacci
+
+```javascript
+const fibonacci = memoize(function fib(n) {
+  if (n <= 1) return n
+  return fibonacci(n - 1) + fibonacci(n - 2)
+})
+
+// Now the call tree is linear:
+// fib(5) → fib(4) → fib(3) → fib(2) → fib(1) → fib(0)
+//                                      ↑        ↑
+//                            (cached)  └────────┘
+
+fibonacci(40)  // Returns instantly
+fibonacci(50)  // Still fast — reuses cached values from fib(40)!
+```
+
+<Note>
+**The key insight:** The recursive call `fibonacci(n - 1)` references the memoized version, not the inner function. Each computed value is stored, so `fib(3)` is only ever calculated once, no matter how many times it's needed.
+</Note>
+
+### Performance Comparison
+
+| Input | Naive Fibonacci | Memoized Fibonacci |
+|-------|-----------------|-------------------|
+| n = 10 | ~177 calls | 11 calls |
+| n = 20 | ~21,891 calls | 21 calls |
+| n = 30 | ~2.7 million calls | 31 calls |
+| n = 40 | ~331 million calls | 41 calls |
+
+The naive version has O(2^n) time complexity. The memoized version has O(n) time complexity.
+
+---
+
+## When Memoization Helps
+
+Memoization is most effective in specific scenarios. Here's when you should reach for it:
+
+<AccordionGroup>
+  <Accordion title="1. Expensive Computations">
+    Functions that perform heavy calculations benefit most from caching.
+    
+    ```javascript
+    // Good candidate: CPU-intensive calculation
+    const calculatePrimes = memoize(function(limit) {
+      const primes = []
+      for (let i = 2; i <= limit; i++) {
+        let isPrime = true
+        for (let j = 2; j <= Math.sqrt(i); j++) {
+          if (i % j === 0) {
+            isPrime = false
+            break
+          }
+        }
+        if (isPrime) primes.push(i)
+      }
+      return primes
+    })
+    
+    calculatePrimes(100000)  // Slow first time
+    calculatePrimes(100000)  // Instant!
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Recursive Functions with Overlapping Subproblems">
+    Dynamic programming problems where the same subproblem is solved multiple times.
+    
+    ```javascript
+    // Good candidate: Recursive with repeated subproblems
+    const climbStairs = memoize(function(n) {
+      if (n <= 2) return n
+      return climbStairs(n - 1) + climbStairs(n - 2)
+    })
+    
+    // Counts ways to climb n stairs taking 1 or 2 steps at a time
+    climbStairs(50)  // Would be impossibly slow without memoization
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Functions Called Repeatedly with Same Arguments">
+    When your application calls the same function with identical inputs many times.
+    
+    ```javascript
+    // Good candidate: Format function called in a loop
+    const formatCurrency = memoize(function(amount, currency) {
+      return new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: currency
+      }).format(amount)
+    })
+    
+    // In a table with 1000 rows, many might have the same price
+    prices.map(p => formatCurrency(p, 'USD'))  // Reuses cached formats
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Pure Functions Only">
+    Memoization only works correctly with pure functions. Same input must always produce same output.
+    
+    ```javascript
+    // ✓ GOOD: Pure function — safe to memoize
+    const square = memoize(n => n * n)
+    
+    // ❌ BAD: Impure function — DO NOT memoize
+    let multiplier = 2
+    const multiply = memoize(n => n * multiplier)  // Result depends on external state!
+    
+    multiply(5)  // 10
+    multiplier = 3
+    multiply(5)  // Still returns 10 from cache, but should be 15!
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## When Memoization Hurts
+
+Memoization isn't free. It trades memory for speed, and sometimes that trade isn't worth it.
+
+### 1. Fast Functions
+
+If a function executes quickly, the cache lookup overhead might exceed the computation time.
+
+```javascript
+// ❌ BAD: Don't memoize simple operations
+const add = memoize((a, b) => a + b)  // Overhead > benefit
+
+// The cache lookup (Map.has, Map.get) and key creation (JSON.stringify)
+// take longer than just adding two numbers!
+```
+
+### 2. Unique Inputs Every Time
+
+If inputs are rarely repeated, the cache just consumes memory without providing speed benefits.
+
+```javascript
+// ❌ BAD: Random inputs are never repeated
+const processRandom = memoize(function(data) {
+  return data.map(x => x * 2)
+})
+
+// Each call has unique data — cache grows forever, never provides a hit
+for (let i = 0; i < 1000; i++) {
+  processRandom([Math.random()])  // Cache now has 1000 useless entries
+}
+```
+
+### 3. Functions with Side Effects
+
+Memoization assumes the function only returns a value. If it has side effects, those won't happen on cache hits.
+
+```javascript
+// ❌ BAD: Side effects are skipped on cache hits
+const logAndDouble = memoize(function(n) {
+  console.log(`Doubling ${n}`)  // Side effect!
+  return n * 2
+})
+
+logAndDouble(5)  // Logs "Doubling 5" → 10
+logAndDouble(5)  // Returns 10, but NO LOG! Side effect was skipped.
+```
+
+### 4. Memory-Constrained Environments
+
+Each cached result consumes memory. For functions with large return values or many unique inputs, this can be problematic.
+
+```javascript
+// ⚠️ CAREFUL: Large return values eat memory fast
+const generateLargeArray = memoize(function(size) {
+  return new Array(size).fill(0).map((_, i) => i)
+})
+
+generateLargeArray(1000000)   // Cache now holds 1 million integers
+generateLargeArray(2000000)   // Cache now holds 3 million integers
+// Memory keeps growing with each unique input!
+```
+
+<Warning>
+**The memory trap:** Standard memoization caches grow forever. In long-running applications, this can cause memory leaks. Consider using cache eviction strategies (LRU cache) or `WeakMap` for object keys.
+</Warning>
+
+---
+
+## WeakMap for Object Arguments
+
+When memoizing functions that take objects as arguments, `JSON.stringify` has problems:
+
+```javascript
+// Problem 1: Objects with same content create different keys
+const obj1 = { a: 1 }
+const obj2 = { a: 1 }
+JSON.stringify(obj1) === JSON.stringify(obj2)  // true, but...
+
+// Problem 2: Object identity is lost
+const cache = new Map()
+cache.set(JSON.stringify(obj1), 'result')
+cache.has(JSON.stringify(obj2))  // true — but obj1 and obj2 are different objects!
+
+// Problem 3: Memory leak — objects can't be garbage collected
+// Even if obj1 is no longer used elsewhere, the stringified key keeps data alive
+```
+
+[`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) solves these problems:
+
+```javascript
+function memoizeWithWeakMap(fn) {
+  const cache = new WeakMap()
+  
+  return function(obj) {
+    if (cache.has(obj)) {
+      return cache.get(obj)
+    }
+    
+    const result = fn(obj)
+    cache.set(obj, result)
+    return result
+  }
+}
+
+const processUser = memoizeWithWeakMap(function(user) {
+  console.log('Processing...')
+  return { ...user, processed: true }
+})
+
+const user = { name: 'Alice' }
+processUser(user)  // "Processing..." → { name: 'Alice', processed: true }
+processUser(user)  // Cached! (same object reference)
+
+const sameData = { name: 'Alice' }
+processUser(sameData)  // "Processing..." (different object, not cached)
+```
+
+### WeakMap Benefits
+
+1. **Memory-safe:** When an object key is no longer referenced elsewhere, both the key and its cached value can be garbage collected
+2. **Object identity:** Caches based on object reference, not content
+3. **No serialization:** No need to stringify objects
+
+### WeakMap Limitations
+
+- Keys must be objects (no primitives)
+- Not iterable (can't list all cached entries)
+- No `size` property (can't check cache size)
+
+```javascript
+// Hybrid approach: Use both Map and WeakMap
+function memoizeHybrid(fn) {
+  const primitiveCache = new Map()
+  const objectCache = new WeakMap()
+  
+  return function(arg) {
+    const cache = typeof arg === 'object' && arg !== null 
+      ? objectCache 
+      : primitiveCache
+    
+    if (cache.has(arg)) {
+      return cache.get(arg)
+    }
+    
+    const result = fn(arg)
+    cache.set(arg, result)
+    return result
+  }
+}
+```
+
+---
+
+## Common Memoization Mistakes
+
+### Mistake 1: Memoizing Impure Functions
+
+```javascript
+// ❌ WRONG: Function depends on external state
+let taxRate = 0.08
+
+const calculateTax = memoize(function(price) {
+  return price * taxRate
+})
+
+calculateTax(100)  // 8
+taxRate = 0.10
+calculateTax(100)  // Still 8! Cache doesn't know taxRate changed.
+
+// ✓ CORRECT: Make the dependency an argument
+const calculateTax = memoize(function(price, rate) {
+  return price * rate
+})
+
+calculateTax(100, 0.08)  // 8
+calculateTax(100, 0.10)  // 10 (different arguments = different cache key)
+```
+
+### Mistake 2: Forgetting Argument Order Matters
+
+```javascript
+const add = memoize((a, b) => a + b)
+
+add(1, 2)  // Calculates: 3, cached as "[1,2]"
+add(2, 1)  // Calculates again: 3, cached as "[2,1]"
+
+// These are different cache keys even though the result is the same!
+// For commutative operations, consider normalizing arguments:
+
+function memoizeCommutative(fn) {
+  const cache = new Map()
+  
+  return function(...args) {
+    const key = JSON.stringify(args.slice().sort())  // Sort for consistent key
+    if (cache.has(key)) return cache.get(key)
+    const result = fn.apply(this, args)
+    cache.set(key, result)
+    return result
+  }
+}
+```
+
+### Mistake 3: Not Handling `this` Context
+
+```javascript
+// ❌ WRONG: Loses 'this' context
+function badMemoize(fn) {
+  const cache = new Map()
+  return function(...args) {
+    const key = JSON.stringify(args)
+    if (cache.has(key)) return cache.get(key)
+    const result = fn(...args)  // 'this' is lost!
+    cache.set(key, result)
+    return result
+  }
+}
+
+// ✓ CORRECT: Preserve 'this' with apply
+function goodMemoize(fn) {
+  const cache = new Map()
+  return function(...args) {
+    const key = JSON.stringify(args)
+    if (cache.has(key)) return cache.get(key)
+    const result = fn.apply(this, args)  // 'this' preserved
+    cache.set(key, result)
+    return result
+  }
+}
+```
+
+### Mistake 4: Recursive Function References Wrong Version
+
+```javascript
+// ❌ WRONG: Inner function calls itself, not the memoized version
+const factorial = memoize(function fact(n) {
+  if (n <= 1) return 1
+  return n * fact(n - 1)  // Calls 'fact', not 'factorial'!
+})
+
+// ✓ CORRECT: Reference the memoized variable
+const factorial = memoize(function(n) {
+  if (n <= 1) return 1
+  return n * factorial(n - 1)  // Calls 'factorial' — the memoized version
+})
+```
+
+---
+
+## Advanced: LRU Cache for Bounded Memory
+
+Standard memoization caches grow unbounded. For production use, consider a Least Recently Used (LRU) cache that evicts old entries:
+
+```javascript
+function memoizeLRU(fn, maxSize = 100) {
+  const cache = new Map()
+  
+  return function(...args) {
+    const key = JSON.stringify(args)
+    
+    if (cache.has(key)) {
+      // Move to end (most recently used)
+      const value = cache.get(key)
+      cache.delete(key)
+      cache.set(key, value)
+      return value
+    }
+    
+    const result = fn.apply(this, args)
+    
+    // Evict oldest entry if at capacity
+    if (cache.size >= maxSize) {
+      const oldestKey = cache.keys().next().value
+      cache.delete(oldestKey)
+    }
+    
+    cache.set(key, result)
+    return result
+  }
+}
+
+const fibonacci = memoizeLRU(function(n) {
+  if (n <= 1) return n
+  return fibonacci(n - 1) + fibonacci(n - 2)
+}, 50)  // Only keep 50 most recent results
+```
+
+This implementation leverages the fact that [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) maintains insertion order, so the first key is always the oldest.
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about memoization:**
+
+1. **Memoization caches function results** — it stores the output for given inputs and returns the cached value on subsequent calls with the same inputs
+
+2. **Only memoize pure functions** — the function must always return the same output for the same input, with no side effects
+
+3. **Trade memory for speed** — every cached result consumes memory, so memoization is a space-time tradeoff
+
+4. **Best for expensive, repeated computations** — recursive algorithms, CPU-intensive calculations, and functions called many times with the same arguments
+
+5. **Use `Map` for primitive arguments** — `Map` provides O(1) lookup and handles any value type as keys
+
+6. **Use `WeakMap` for object arguments** — prevents memory leaks by allowing garbage collection of unused keys
+
+7. **Create cache keys carefully** — `JSON.stringify(args)` works for primitives but has limitations with objects, functions, and undefined values
+
+8. **Recursive functions must reference the memoized version** — otherwise only the outer call benefits from caching
+
+9. **Don't memoize fast functions** — if computation is cheaper than cache lookup, memoization hurts performance
+
+10. **Consider bounded caches in production** — LRU caches prevent unbounded memory growth in long-running applications
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What is memoization?">
+    **Answer:**
+    
+    Memoization is an optimization technique that caches the results of function calls. When a memoized function is called with arguments it has seen before, it returns the cached result instead of recalculating.
+    
+    ```javascript
+    const memoizedFn = memoize(expensiveFunction)
+    
+    memoizedFn(5)  // Calculates and caches
+    memoizedFn(5)  // Returns cached result (no calculation)
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Why should you only memoize pure functions?">
+    **Answer:**
+    
+    Pure functions always return the same output for the same input and have no side effects. If you memoize an impure function:
+    
+    1. **Results may be wrong** — if the function depends on external state that changes, cached results become stale
+    2. **Side effects are skipped** — on cache hits, the function body doesn't execute, so side effects don't happen
+    
+    ```javascript
+    // ❌ Impure: depends on external state
+    let multiplier = 2
+    const multiply = memoize(n => n * multiplier)
+    
+    multiply(5)  // 10, cached
+    multiplier = 3
+    multiply(5)  // Still 10! Should be 15.
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: How does memoization improve Fibonacci performance?">
+    **Answer:**
+    
+    Naive recursive Fibonacci has O(2^n) time complexity because it recalculates the same values many times. For `fib(5)`, it calculates `fib(2)` three times.
+    
+    Memoized Fibonacci has O(n) time complexity because each value is calculated only once and then retrieved from cache.
+    
+    ```javascript
+    // Without memoization: fib(40) makes ~330 million calls
+    // With memoization: fib(40) makes 41 calls
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: When should you NOT use memoization?">
+    **Answer:**
+    
+    Don't memoize when:
+    
+    1. **Functions are fast** — cache lookup overhead exceeds computation time
+    2. **Inputs are always unique** — cache grows but never provides hits
+    3. **Functions have side effects** — side effects won't execute on cache hits
+    4. **Memory is constrained** — cache can grow unbounded
+    5. **Functions are impure** — cached results become invalid when external state changes
+  </Accordion>
+  
+  <Accordion title="Question 5: Why use WeakMap instead of Map for object arguments?">
+    **Answer:**
+    
+    `WeakMap` allows garbage collection of keys when they're no longer referenced elsewhere. With `Map`, object keys (or their stringified versions) prevent garbage collection, causing memory leaks.
+    
+    ```javascript
+    // Map: object stays in memory even after you're done with it
+    const map = new Map()
+    let obj = { data: 'large' }
+    map.set(obj, 'cached')
+    obj = null  // Object still referenced by map, can't be garbage collected!
+    
+    // WeakMap: object can be garbage collected
+    const weakMap = new WeakMap()
+    let obj = { data: 'large' }
+    weakMap.set(obj, 'cached')
+    obj = null  // Object can now be garbage collected
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: What's wrong with this memoized recursive function?">
+    ```javascript
+    const factorial = memoize(function fact(n) {
+      if (n <= 1) return 1
+      return n * fact(n - 1)
+    })
+    ```
+    
+    **Answer:**
+    
+    The recursive call `fact(n - 1)` references the inner function name `fact`, not the outer memoized variable `factorial`. This means only the initial call benefits from caching; recursive calls bypass the cache entirely.
+    
+    **Fix:** Reference the memoized variable:
+    
+    ```javascript
+    const factorial = memoize(function(n) {
+      if (n <= 1) return 1
+      return n * factorial(n - 1)  // References the memoized version
+    })
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Pure Functions" icon="flask" href="/concepts/pure-functions">
+    Memoization only works reliably with pure functions that have no side effects
+  </Card>
+  <Card title="Scope and Closures" icon="box" href="/concepts/scope-and-closures">
+    Memoize functions use closures to maintain access to the cache between calls
+  </Card>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    `memoize` is a higher-order function that takes a function and returns an enhanced version
+  </Card>
+  <Card title="WeakMap & WeakSet" icon="ghost" href="/beyond/concepts/weakmap-weakset">
+    WeakMap enables memory-safe memoization with object arguments
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Map — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map">
+    The Map object holds key-value pairs and remembers insertion order, making it ideal for memoization caches
+  </Card>
+  <Card title="WeakMap — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">
+    WeakMap holds weak references to object keys, allowing garbage collection and preventing memory leaks
+  </Card>
+  <Card title="Closures — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures">
+    Closures enable memoized functions to maintain access to their cache across multiple calls
+  </Card>
+  <Card title="JSON.stringify() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify">
+    Used to create cache keys from function arguments in basic memoization implementations
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="How to use Memoize to cache JavaScript function results" icon="newspaper" href="https://www.freecodecamp.org/news/understanding-memoize-in-javascript-51d07d19430e/">
+    Divyanshu Maithani's practical guide walks through building a memoize function from scratch. Includes the recursive Fibonacci example and explains why memoization works differently than general caching.
+  </Card>
+  <Card title="Understanding Memoization in JavaScript" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/understanding-memoization-in-javascript">
+    Philip Obosi's comprehensive tutorial covers the connection between memoization and closures. Includes JSPerf benchmarks showing the dramatic performance difference.
+  </Card>
+  <Card title="Closures: Using Memoization" icon="newspaper" href="https://dev.to/steelvoltage/closures-using-memoization-3597">
+    Brian Holt's Dev.to article connects memoization to closures with clear examples. Perfect for understanding how the cache persists between function calls.
+  </Card>
+  <Card title="JavaScript Function Memoization" icon="newspaper" href="https://blog.bitsrc.io/understanding-memoization-in-javascript-to-improve-performance-2c267c123ef3">
+    Bits and Pieces guide on memoization patterns with real-world use cases and performance considerations for production applications.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Memoization And Dynamic Programming Explained" icon="video" href="https://www.youtube.com/watch?v=WbwP4w6TpCk">
+    Web Dev Simplified demonstrates how memoization transforms exponential algorithms into linear ones. The Fibonacci visualization makes the optimization crystal clear.
+  </Card>
+  <Card title="What is Memoization? — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=lhNdUVh3qR8">
+    Mattias Petter Johansson explains memoization with his signature engaging style. Great for understanding the "why" behind the technique.
+  </Card>
+  <Card title="Memoization in JavaScript" icon="video" href="https://www.youtube.com/watch?v=vKodE_3eSLU">
+    Akshay Saini covers memoization in the context of JavaScript interviews, including common follow-up questions and gotchas.
+  </Card>
+</CardGroup>

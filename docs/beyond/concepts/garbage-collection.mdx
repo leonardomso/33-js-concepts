@@ -1,0 +1,838 @@
+---
+title: "Garbage Collection in JavaScript: How Memory is Freed Automatically"
+sidebarTitle: "Garbage Collection"
+description: "Learn how JavaScript garbage collection works. Understand mark-and-sweep, reachability, and how to write memory-efficient code that helps the engine."
+---
+
+What happens to objects after you stop using them? When you create a variable, assign it an object, and then reassign it to something else, where does that original object go? Does it just sit there forever, taking up space?
+
+```javascript
+let user = { name: 'Alice', age: 30 }
+user = null  // What happens to { name: 'Alice', age: 30 }?
+```
+
+The answer is **garbage collection**. JavaScript automatically finds objects you're no longer using and frees the memory they occupy. You don't have to manually allocate or deallocate memory like in C or C++. The JavaScript engine handles it for you, running a background process that cleans up unused objects.
+
+<Info>
+**What you'll learn in this guide:**
+- What garbage collection is and why JavaScript needs it
+- How the engine determines which objects are "garbage"
+- The mark-and-sweep algorithm used by all modern engines
+- Why reference counting failed and circular references aren't a problem
+- How generational garbage collection makes GC faster
+- Practical tips for writing GC-friendly code
+- Common memory leak patterns and how to avoid them
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand basic JavaScript objects and references. For a deep dive into how V8 implements garbage collection (generational GC, the Scavenger, Mark-Compact), see the [JavaScript Engines](/concepts/javascript-engines) guide.
+</Warning>
+
+---
+
+## What is Garbage Collection?
+
+**Garbage collection (GC)** is an automatic memory management process that identifies and reclaims memory occupied by objects that are no longer reachable by the program. The garbage collector periodically scans the heap, marks objects that are still in use, and frees memory from objects that can no longer be accessed.
+
+Think of garbage collection like a city sanitation service. You put trash on the curb (stop referencing objects), and the garbage truck comes by periodically to collect it. You don't have to drive to the dump yourself. The city handles it automatically. But there's a catch: you can't control exactly when the truck arrives, and if you accidentally leave something valuable on the curb (lose your only reference to an object you still need), it might get collected.
+
+---
+
+## How Does JavaScript Know What's Garbage?
+
+The key concept is **reachability**. An object is considered "alive" if it can be reached from a **root**. Roots are starting points that the engine knows are always accessible:
+
+- **Global variables** — Variables in the global scope
+- **The current call stack** — Local variables and parameters of currently executing functions
+- **Closures** — Variables captured by functions that are still reachable
+
+Any object reachable from a root, either directly or through a chain of references, is kept alive. Everything else is garbage.
+
+```javascript
+// 'user' is a root (global variable)
+let user = { name: 'Alice' }
+
+// The object { name: 'Alice' } is reachable through 'user'
+// So it stays in memory
+
+user = null
+
+// Now nothing references { name: 'Alice' }
+// It's unreachable and becomes garbage
+```
+
+### Tracing Reference Chains
+
+The garbage collector follows references like a detective following clues:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      REACHABILITY FROM ROOTS                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│   ROOTS                     REACHABLE OBJECTS                           │
+│                                                                         │
+│   ┌────────────┐           ┌──────────────┐     ┌──────────────┐       │
+│   │   global   │           │    user      │     │   address    │       │
+│   │  variables │ ────────► │ { name,      │ ──► │ { street,    │       │
+│   └────────────┘           │   address }  │     │   city }     │       │
+│                            └──────────────┘     └──────────────┘       │
+│   ┌────────────┐                                                        │
+│   │   call     │           ┌──────────────┐                             │
+│   │   stack    │ ────────► │ local vars   │  ✓ All reachable = ALIVE   │
+│   └────────────┘           └──────────────┘                             │
+│                                                                         │
+│                                                                         │
+│   UNREACHABLE (GARBAGE)                                                 │
+│                                                                         │
+│   ┌──────────────┐     ┌──────────────┐                                │
+│   │ { orphaned } │     │ { no refs }  │     ✗ No path from roots       │
+│   └──────────────┘     └──────────────┘       = GARBAGE                 │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Let's see this in action with a more complex example:
+
+```javascript
+function createFamily() {
+  let father = { name: 'John' }
+  let mother = { name: 'Jane' }
+  
+  // Create references between objects
+  father.spouse = mother
+  mother.spouse = father
+  
+  return { father, mother }
+}
+
+let family = createFamily()
+
+// Both father and mother are reachable through 'family'
+// family → father → mother (via spouse)
+// family → mother → father (via spouse)
+
+family = null
+
+// Now there's no path from any root to father or mother
+// Even though they reference each other, they're both garbage
+```
+
+This last point is crucial: **objects that only reference each other but aren't reachable from a root are still garbage**. The garbage collector doesn't care about internal references. It only cares about reachability from roots.
+
+---
+
+## The Mark-and-Sweep Algorithm
+
+All modern JavaScript engines use a **mark-and-sweep** algorithm (with various optimizations). Here's how it works:
+
+<Steps>
+  <Step title="Start from roots">
+    The garbage collector identifies all root objects: global variables, the call stack, and closures.
+  </Step>
+  
+  <Step title="Mark reachable objects">
+    Starting from each root, the collector follows every reference and "marks" each object it finds as alive. It recursively follows references from marked objects, marking everything reachable.
+    
+    ```
+    Root → Object A (mark) → Object B (mark) → Object C (mark)
+                          → Object D (mark)
+    ```
+  </Step>
+  
+  <Step title="Sweep unmarked objects">
+    After marking is complete, the collector goes through all objects in memory. Any object that isn't marked is unreachable and gets its memory reclaimed.
+  </Step>
+</Steps>
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     MARK-AND-SWEEP IN ACTION                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│   BEFORE GC                          MARKING PHASE                      │
+│                                                                         │
+│   root ──► [A] ──► [B]               root ──► [A]✓ ──► [B]✓            │
+│             │                                   │                       │
+│             ▼                                   ▼                       │
+│            [C]     [D]                        [C]✓     [D]              │
+│                     │                                   │               │
+│                     ▼                                   ▼               │
+│                    [E]                                 [E]              │
+│                                                                         │
+│                                                                         │
+│   SWEEP PHASE                        AFTER GC                           │
+│                                                                         │
+│   root ──► [A]✓ ──► [B]✓            root ──► [A] ──► [B]               │
+│             │                                  │                        │
+│             ▼                                  ▼                        │
+│            [C]✓     [D]  ← removed            [C]      (free memory)   │
+│                      │                                                  │
+│                      ▼                                                  │
+│                     [E]  ← removed                                      │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Why Mark-and-Sweep Handles Circular References
+
+Notice in our family example that `father` and `mother` reference each other. With mark-and-sweep, this isn't a problem:
+
+```javascript
+let family = { father: { name: 'John' }, mother: { name: 'Jane' } }
+family.father.spouse = family.mother
+family.mother.spouse = family.father
+
+// Circular reference: father ↔ mother
+
+family = null
+// Mark phase: start from roots, can't reach father or mother
+// Neither gets marked, both get swept
+// Circular reference doesn't matter!
+```
+
+The mark-and-sweep algorithm only cares about reachability from roots. Internal circular references don't keep objects alive.
+
+---
+
+## Reference Counting: A Failed Approach
+
+Before mark-and-sweep became standard, some engines used **reference counting**. Each object kept track of how many references pointed to it. When the count reached zero, the object was immediately freed.
+
+```javascript
+// Reference counting (conceptual, not real JS)
+let obj = { data: 'hello' }  // refcount: 1
+let ref = obj                 // refcount: 2
+ref = null                    // refcount: 1
+obj = null                    // refcount: 0 → freed immediately
+```
+
+This seems simpler, but it has a fatal flaw: **circular references cause memory leaks**.
+
+```javascript
+function createCycle() {
+  let objA = {}
+  let objB = {}
+  
+  objA.ref = objB  // objB refcount: 1
+  objB.ref = objA  // objA refcount: 1
+  
+  // When function returns:
+  // - objA loses its stack reference: refcount goes to 1 (not 0!)
+  // - objB loses its stack reference: refcount goes to 1 (not 0!)
+  // Both objects keep each other alive forever!
+}
+
+createCycle()
+// With reference counting: MEMORY LEAK
+// With mark-and-sweep: Both collected (unreachable from roots)
+```
+
+Old versions of Internet Explorer (IE6/7) used reference counting for DOM objects, which caused notorious memory leaks when JavaScript objects and DOM elements referenced each other. All modern engines use mark-and-sweep or variations of it.
+
+---
+
+## Generational Garbage Collection
+
+Modern engines like V8 don't just use basic mark-and-sweep. They use **generational garbage collection** based on an important observation: **most objects die young**.
+
+Think about it: temporary variables, intermediate calculation results, short-lived callbacks. They're created, used briefly, and become garbage quickly. Only some objects (app state, cached data) live for a long time.
+
+V8 exploits this by dividing memory into generations:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     GENERATIONAL HEAP LAYOUT                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                         │
+│   YOUNG GENERATION                    OLD GENERATION                    │
+│   (Most objects die here)             (Long-lived objects)              │
+│                                                                         │
+│   ┌───────────────────────┐          ┌───────────────────────┐         │
+│   │  New objects land     │          │  Objects that         │         │
+│   │  here first           │  ─────►  │  survived multiple    │         │
+│   │                       │ survives │  GC cycles            │         │
+│   │  Collected frequently │          │                       │         │
+│   │  (Minor GC)           │          │  Collected less often │         │
+│   │                       │          │  (Major GC)           │         │
+│   └───────────────────────┘          └───────────────────────┘         │
+│                                                                         │
+│   • Fast allocation                  • Contains app state               │
+│   • Quick collection                 • Caches, long-lived data          │
+│   • Most garbage found here          • More thorough collection         │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+**Minor GC (Scavenger):** Runs frequently on the young generation. Since most objects die young, this is very fast. Objects that survive get promoted to the old generation.
+
+**Major GC (Mark-Compact):** Runs less frequently on the entire heap. More thorough but slower. Includes compaction to reduce fragmentation.
+
+This generational approach means:
+- Short-lived objects are collected quickly with minimal overhead
+- Long-lived objects aren't constantly re-examined
+- Overall GC pauses are shorter and less frequent
+
+<Note>
+For a deep dive into V8's Scavenger, Mark-Compact, and concurrent/parallel GC techniques, see the [JavaScript Engines](/concepts/javascript-engines#how-does-garbage-collection-work) guide.
+</Note>
+
+---
+
+## When Does Garbage Collection Run?
+
+You might wonder: when exactly does the garbage collector run? The short answer is: **you don't know, and you can't control it**.
+
+Garbage collection is triggered automatically when:
+- The heap reaches a certain size threshold
+- The engine detects idle time (browser animation frames, Node.js event loop idle)
+- Memory pressure increases
+
+```javascript
+// You CANNOT force garbage collection in JavaScript
+// This doesn't exist in the language:
+// gc()  // Not a thing
+// System.gc()  // Not a thing
+
+// The engine decides when to run GC
+// You just write code and let it handle memory
+```
+
+Modern engines use sophisticated heuristics:
+- **Incremental GC:** Breaks work into small chunks to avoid long pauses
+- **Concurrent GC:** Runs some GC work in background threads while JavaScript executes
+- **Idle-time GC:** Schedules GC during browser idle periods
+
+<Warning>
+**Don't try to outsmart the garbage collector.** Setting variables to `null` everywhere "to help GC" usually doesn't help and makes code harder to read. The engine is very good at its job. Focus on writing clear, correct code.
+</Warning>
+
+---
+
+## Writing GC-Friendly Code
+
+While you can't control GC, you can write code that works well with it:
+
+### 1. Let Variables Go Out of Scope Naturally
+
+The simplest way to make objects eligible for GC is to let their references go out of scope:
+
+```javascript
+function processData() {
+  const largeArray = new Array(1000000).fill('data')
+  
+  // Process the array...
+  const result = largeArray.reduce((sum, item) => sum + item.length, 0)
+  
+  return result
+  // largeArray goes out of scope here
+  // It becomes eligible for GC automatically
+}
+
+const result = processData()
+// largeArray is already unreachable
+```
+
+### 2. Nullify References to Large Objects When Done Early
+
+If you're done with a large object but the function continues running, explicitly nullify it:
+
+```javascript
+function longRunningTask() {
+  let hugeData = fetchHugeDataset()  // 100MB of data
+  
+  const summary = processSummary(hugeData)
+  
+  hugeData = null  // Allow GC to reclaim 100MB now
+  
+  // ... lots more code that doesn't need hugeData ...
+  
+  return summary
+}
+```
+
+### 3. Avoid Accidental Global Variables
+
+Accidental globals stay alive forever:
+
+```javascript
+function oops() {
+  // Forgot 'let' or 'const' - creates global variable!
+  leaked = { huge: new Array(1000000) }
+}
+
+oops()
+// 'leaked' is now a global variable
+// It will never be garbage collected!
+
+// Fix: Always use let, const, or var
+function fixed() {
+  const notLeaked = { huge: new Array(1000000) }
+}
+```
+
+<Tip>
+Use strict mode (`'use strict'`) to catch accidental globals. Assignment to undeclared variables throws an error instead of creating a global.
+</Tip>
+
+### 4. Be Careful with Closures
+
+Closures capture variables from their outer scope. If a closure lives long, so do its captured variables:
+
+```javascript
+function createHandler() {
+  const hugeData = new Array(1000000).fill('x')
+  
+  return function handler() {
+    // This closure captures 'hugeData'
+    // Even if handler() never uses hugeData directly,
+    // some engines may keep it alive
+    console.log('Handler called')
+  }
+}
+
+const handler = createHandler()
+// 'hugeData' may be kept alive as long as 'handler' exists
+// Even though handler() doesn't use it!
+
+// Better: Don't capture what you don't need
+function createBetterHandler() {
+  const hugeData = new Array(1000000).fill('x')
+  const summary = hugeData.length  // Extract what you need
+  
+  return function handler() {
+    console.log('Data size was:', summary)
+  }
+  // hugeData goes out of scope, only 'summary' is captured
+}
+```
+
+### 5. Clean Up Event Listeners and Timers
+
+Forgotten event listeners and timers are common sources of memory leaks:
+
+```javascript
+// Memory leak: listener keeps element and handler alive
+function setupButton() {
+  const button = document.getElementById('myButton')
+  const data = { huge: new Array(1000000) }
+  
+  button.addEventListener('click', () => {
+    console.log(data.huge.length)
+  })
+  
+  // If you never remove this listener, 'data' stays alive forever
+}
+
+// Fix: Remove listeners when done
+function setupButtonCorrectly() {
+  const button = document.getElementById('myButton')
+  const data = { huge: new Array(1000000) }
+  
+  function handleClick() {
+    console.log(data.huge.length)
+  }
+  
+  button.addEventListener('click', handleClick)
+  
+  // Later, when cleaning up:
+  return function cleanup() {
+    button.removeEventListener('click', handleClick)
+    // Now 'data' can be garbage collected
+  }
+}
+```
+
+Same with timers:
+
+```javascript
+// Memory leak: interval runs forever
+const data = { huge: new Array(1000000) }
+setInterval(() => {
+  console.log(data.huge.length)
+}, 1000)
+// This interval keeps 'data' alive forever
+
+// Fix: Clear intervals when done
+const data = { huge: new Array(1000000) }
+const intervalId = setInterval(() => {
+  console.log(data.huge.length)
+}, 1000)
+
+// Later:
+clearInterval(intervalId)
+// Now 'data' can be garbage collected
+```
+
+---
+
+## WeakRef and FinalizationRegistry
+
+ES2021 introduced two features that let you interact more directly with garbage collection: `WeakRef` and `FinalizationRegistry`. These are advanced features for specific use cases.
+
+<Warning>
+**Avoid these unless you have a specific need.** GC timing is unpredictable, and relying on it leads to fragile code. See [WeakRef](/beyond/concepts/weakmap-weakset) and the MDN documentation for details.
+</Warning>
+
+```javascript
+// WeakRef: Hold a reference that doesn't prevent GC
+const weakRef = new WeakRef(someObject)
+
+// Later: object might have been collected
+const obj = weakRef.deref()
+if (obj) {
+  // Object still exists
+} else {
+  // Object was garbage collected
+}
+```
+
+For most applications, `WeakMap` and `WeakSet` are better choices. They allow objects to be garbage collected when no other references exist, without the complexity of `WeakRef`.
+
+---
+
+## Common Mistakes
+
+<AccordionGroup>
+  <Accordion title="Thinking 'delete' frees memory immediately">
+    The `delete` operator removes a property from an object. It doesn't immediately free memory or trigger garbage collection.
+    
+    ```javascript
+    const obj = { data: new Array(1000000) }
+    
+    delete obj.data  // Removes the property
+    // But memory isn't freed until GC runs
+    // AND only if nothing else references that array
+    
+    // This is also bad for performance (changes hidden class)
+    // Better: set to undefined or restructure your code
+    obj.data = undefined
+    ```
+  </Accordion>
+  
+  <Accordion title="Setting everything to null 'to help GC'">
+    Obsessively nullifying variables doesn't help and hurts readability:
+    
+    ```javascript
+    // Don't do this
+    function process() {
+      let a = getData()
+      let result = transform(a)
+      a = null  // Unnecessary!
+      let b = getMoreData()
+      let final = combine(result, b)
+      result = null  // Unnecessary!
+      b = null  // Unnecessary!
+      return final
+    }
+    
+    // Just let variables go out of scope naturally
+    function process() {
+      const a = getData()
+      const result = transform(a)
+      const b = getMoreData()
+      return combine(result, b)
+    }
+    ```
+    
+    Only nullify when: (1) you're done with a **large** object, (2) the function continues running for a while, and (3) you've measured that it helps.
+  </Accordion>
+  
+  <Accordion title="Storing references in long-lived caches">
+    Caches that grow without bounds cause memory leaks:
+    
+    ```javascript
+    // Memory leak: cache grows forever
+    const cache = {}
+    
+    function getCached(key) {
+      if (!cache[key]) {
+        cache[key] = expensiveComputation(key)
+      }
+      return cache[key]
+    }
+    
+    // Better: Use WeakMap (if keys are objects)
+    const cache = new WeakMap()
+    
+    function getCached(obj) {
+      if (!cache.has(obj)) {
+        cache.set(obj, expensiveComputation(obj))
+      }
+      return cache.get(obj)
+    }
+    // Cache entries are automatically removed when keys are GC'd
+    
+    // Or: Use an LRU cache with a maximum size
+    ```
+  </Accordion>
+  
+  <Accordion title="Forgetting to unsubscribe from observables/events">
+    Subscriptions keep callbacks (and their closures) alive:
+    
+    ```javascript
+    // Memory leak in React component (class-style)
+    class MyComponent extends React.Component {
+      componentDidMount() {
+        this.subscription = eventEmitter.subscribe(data => {
+          this.setState({ data })  // 'this' keeps component alive
+        })
+      }
+      
+      // Forgot componentWillUnmount!
+      // Component instance stays in memory forever
+      
+      // Fix:
+      componentWillUnmount() {
+        this.subscription.unsubscribe()
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Circular references between JS and DOM (old IE)">
+    This was a problem in old Internet Explorer but is not an issue in modern browsers:
+    
+    ```javascript
+    // Historical problem (IE6/7):
+    const div = document.createElement('div')
+    const obj = {}
+    
+    div.myObject = obj  // DOM → JS reference
+    obj.myElement = div // JS → DOM reference
+    
+    // In old IE with reference counting, this leaked
+    // In modern browsers with mark-and-sweep, this is fine
+    ```
+    
+    Modern browsers handle this correctly. Both objects become garbage when unreachable from roots.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **JavaScript has automatic garbage collection.** You don't manually allocate or free memory. The engine handles it.
+
+2. **Reachability determines what's garbage.** Objects reachable from roots (globals, stack, closures) are kept alive. Everything else is garbage.
+
+3. **Mark-and-sweep is the standard algorithm.** The collector marks reachable objects, then sweeps (frees) everything unmarked.
+
+4. **Circular references aren't a problem.** Mark-and-sweep handles them correctly. Objects that only reference each other (but aren't reachable from roots) get collected.
+
+5. **Generational GC makes collection fast.** Most objects die young, so engines collect the young generation frequently and cheaply.
+
+6. **You can't control when GC runs.** The engine decides based on memory pressure, idle time, and internal heuristics.
+
+7. **Don't over-optimize for GC.** Let variables go out of scope naturally. Only nullify large objects early if you've measured a benefit.
+
+8. **Watch for common leak patterns:** Forgotten event listeners, uncleaned timers, unbounded caches, and closures capturing large objects.
+
+9. **Use WeakMap/WeakSet for caches.** They allow keys to be garbage collected, preventing unbounded growth.
+
+10. **For deep V8 internals, see the JavaScript Engines guide.** Scavenger, Mark-Compact, concurrent marking, and other advanced topics are covered there.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: Will the object { name: 'Alice' } be garbage collected?">
+    ```javascript
+    let user = { name: 'Alice' }
+    let admin = user
+    user = null
+    ```
+    
+    **Answer:**
+    
+    No, the object will NOT be garbage collected. Even though `user` is set to `null`, `admin` still holds a reference to the object. The object is still reachable (through `admin`), so it stays alive.
+    
+    ```javascript
+    // To make it eligible for GC:
+    admin = null  // Now no references remain
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: Do circular references cause memory leaks in modern JavaScript?">
+    **Answer:**
+    
+    No. Modern JavaScript engines use mark-and-sweep garbage collection, which handles circular references correctly. Objects are collected based on **reachability from roots**, not reference counts.
+    
+    ```javascript
+    function createCycle() {
+      let a = {}
+      let b = {}
+      a.ref = b
+      b.ref = a
+    }
+    createCycle()
+    // Both objects are collected after the function returns
+    // The circular reference doesn't keep them alive
+    ```
+    
+    Circular references only caused leaks in old browsers (IE6/7) that used reference counting for DOM objects.
+  </Accordion>
+  
+  <Accordion title="Question 3: How can you force garbage collection in JavaScript?">
+    **Answer:**
+    
+    You cannot force garbage collection in JavaScript. There is no `gc()` function or equivalent in the language specification.
+    
+    The garbage collector runs automatically when the engine decides it's needed. You can only influence what becomes *eligible* for collection by removing references to objects.
+    
+    Some environments (like Node.js with `--expose-gc` flag) expose a `gc()` function for debugging, but this should never be used in production code.
+  </Accordion>
+  
+  <Accordion title="Question 4: What's wrong with this code?">
+    ```javascript
+    function setupClickHandler() {
+      const largeData = new Array(1000000).fill('x')
+      
+      document.getElementById('btn').addEventListener('click', () => {
+        console.log('clicked!')
+      })
+    }
+    ```
+    
+    **Answer:**
+    
+    There's a potential memory leak. Even though the click handler doesn't use `largeData`, the closure may capture the entire scope, keeping `largeData` alive as long as the event listener exists.
+    
+    Additionally, the event listener is never removed, so it (and potentially `largeData`) will stay in memory forever.
+    
+    **Fixes:**
+    1. Move `largeData` outside the function if it's needed, or extract only what you need
+    2. Provide a way to remove the event listener
+    
+    ```javascript
+    function setupClickHandler() {
+      const handler = () => console.log('clicked!')
+      document.getElementById('btn').addEventListener('click', handler)
+      
+      return () => {
+        document.getElementById('btn').removeEventListener('click', handler)
+      }
+    }
+    
+    const cleanup = setupClickHandler()
+    // Later: cleanup() to remove the listener
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: Why is generational garbage collection effective?">
+    **Answer:**
+    
+    Generational garbage collection is effective because of the **generational hypothesis**: most objects die young.
+    
+    Temporary variables, intermediate results, and short-lived objects are created and discarded quickly. Only a small percentage of objects (app state, caches) live long.
+    
+    By dividing memory into generations:
+    - The young generation is collected frequently and cheaply (most objects there are garbage)
+    - The old generation is collected less often (objects there are likely to survive)
+    
+    This approach minimizes the time spent on garbage collection while still reclaiming memory effectively.
+  </Accordion>
+  
+  <Accordion title="Question 6: What does mark-and-sweep mark?">
+    **Answer:**
+    
+    Mark-and-sweep marks **reachable objects**, not garbage.
+    
+    The algorithm:
+    1. Starts from roots (globals, stack, closures)
+    2. Follows all references, marking each object it can reach
+    3. After marking, sweeps through memory and frees all **unmarked** objects
+    
+    Unmarked objects are garbage because they couldn't be reached from any root.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Engines" icon="microchip" href="/concepts/javascript-engines">
+    Deep dive into V8's garbage collection: Scavenger, Mark-Compact, concurrent marking, and optimization techniques.
+  </Card>
+  <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
+    Understanding closures is key to understanding what keeps objects alive and why some memory leaks occur.
+  </Card>
+  <Card title="WeakMap & WeakSet" icon="link-slash" href="/beyond/concepts/weakmap-weakset">
+    Data structures with weak references that allow keys to be garbage collected when no other references exist.
+  </Card>
+  <Card title="Value vs Reference Types" icon="code-branch" href="/concepts/value-reference-types">
+    How JavaScript stores primitives vs objects, and why references matter for garbage collection.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Memory Management — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management">
+    Official MDN guide covering the memory lifecycle, garbage collection algorithms, and data structures that aid memory management.
+    The authoritative reference for understanding how JavaScript handles memory automatically.
+  </Card>
+  <Card title="WeakRef — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef">
+    API reference for creating weak references that don't prevent garbage collection.
+    Essential reading for advanced patterns involving GC-observable references (ES2021+).
+  </Card>
+  <Card title="FinalizationRegistry — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry">
+    API reference for registering cleanup callbacks when objects are garbage collected.
+    Covers use cases, limitations, and why you should avoid relying on cleanup timing.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Garbage Collection — javascript.info" icon="newspaper" href="https://javascript.info/garbage-collection">
+    Beginner-friendly explanation of reachability, the mark-and-sweep algorithm, and why circular references aren't a problem.
+    Excellent diagrams showing exactly how objects become garbage step-by-step.
+  </Card>
+  <Card title="Trash talk: the Orinoco garbage collector — V8 Blog" icon="newspaper" href="https://v8.dev/blog/trash-talk">
+    Deep dive into V8's Orinoco garbage collector covering parallel, incremental, and concurrent techniques.
+    The definitive resource for understanding how modern JavaScript engines minimize GC pause times.
+  </Card>
+  <Card title="A tour of V8: Garbage Collection — Jay Conrod" icon="newspaper" href="https://jayconrod.com/posts/55/a-tour-of-v8-garbage-collection">
+    Technical walkthrough of V8's generational garbage collector, including the Scavenger and Mark-Compact algorithms.
+    Great for developers who want to understand the engineering behind automatic memory management.
+  </Card>
+  <Card title="Visualizing memory management in V8 — Deepu K Sasidharan" icon="newspaper" href="https://deepu.tech/memory-management-in-v8/">
+    Colorful diagrams illustrating how V8 organizes the heap into generations and how objects move between them.
+    Perfect for visual learners who want to see GC in action.
+  </Card>
+  <Card title="Fixing Memory Leaks — web.dev" icon="newspaper" href="https://web.dev/articles/fixing-memory-leaks">
+    Practical guide to identifying and fixing the most common memory leak patterns in JavaScript applications.
+    Includes Chrome DevTools techniques for heap snapshot analysis.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Orinoco: The V8 Garbage Collector — Peter Marshall" icon="video" href="https://www.youtube.com/watch?v=Scxz6jVS4Ls">
+    Chrome Dev Summit talk by a V8 engineer explaining how Orinoco achieves low-latency garbage collection.
+    See the parallel and concurrent techniques that make modern GC nearly invisible.
+  </Card>
+  <Card title="JavaScript Memory Management Masterclass — Steve Kinney" icon="video" href="https://www.youtube.com/watch?v=LaxbdIyBkL0">
+    Frontend Masters preview covering memory leaks, profiling with DevTools, and GC-friendly coding patterns.
+    Practical advice for building memory-efficient applications.
+  </Card>
+  <Card title="Garbage Collection in 100 Seconds — Fireship" icon="video" href="https://www.youtube.com/watch?v=0m0EwbCQhQE">
+    Lightning-fast overview of garbage collection concepts across programming languages including JavaScript.
+    Perfect quick refresher on why automatic memory management exists.
+  </Card>
+  <Card title="What the heck is the event loop anyway? — Philip Roberts" icon="video" href="https://www.youtube.com/watch?v=8aGhZQkoFbQ">
+    The legendary JSConf talk that visualizes the call stack and event loop.
+    While focused on the event loop, it provides essential context for understanding memory and execution.
+  </Card>
+</CardGroup>

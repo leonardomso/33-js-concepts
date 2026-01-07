@@ -1,0 +1,1027 @@
+---
+title: "IndexedDB: Client-Side Database Storage in JavaScript"
+sidebarTitle: "IndexedDB: Client-Side Database Storage"
+description: "Learn IndexedDB for client-side storage in JavaScript. Store structured data, create indexes, perform transactions, and build offline-capable apps."
+---
+
+What happens when localStorage's 5MB limit isn't enough? How do you store thousands of records, search them efficiently, or keep an app working offline with real data?
+
+Meet **IndexedDB** — a full database built into every modern browser. Unlike localStorage's simple key-value pairs, IndexedDB lets you store massive amounts of structured data, create indexes for fast lookups, and run transactions that keep your data consistent.
+
+```javascript
+// Store and retrieve complex data with IndexedDB
+const request = indexedDB.open('MyApp', 1)
+
+request.onupgradeneeded = (event) => {
+  const db = event.target.result
+  const store = db.createObjectStore('users', { keyPath: 'id' })
+  store.createIndex('email', 'email', { unique: true })
+}
+
+request.onsuccess = (event) => {
+  const db = event.target.result
+  const tx = db.transaction('users', 'readwrite')
+  tx.objectStore('users').add({ id: 1, name: 'Alice', email: 'alice@example.com' })
+}
+```
+
+IndexedDB is the backbone of offline-first applications, Progressive Web Apps (PWAs), and any app that needs to work without a network connection. It's more complex than localStorage, but far more powerful.
+
+<Info>
+**What you'll learn in this guide:**
+- What IndexedDB is and when to use it instead of localStorage
+- How to open databases and handle versioning
+- Creating object stores and indexes for your data
+- Performing CRUD operations within transactions
+- Iterating over data with cursors
+- Using Promise wrappers for cleaner async code
+- Real-world patterns for offline-capable applications
+</Info>
+
+<Warning>
+**Prerequisite:** IndexedDB is heavily asynchronous. This guide assumes you're comfortable with [Promises](/concepts/promises) and [async/await](/concepts/async-await). If those concepts are fuzzy, read those guides first!
+</Warning>
+
+---
+
+## What is IndexedDB?
+
+**IndexedDB** is a low-level browser API for storing large amounts of structured data on the client side. It's a transactional, NoSQL database that uses object stores (similar to tables) to organize data, supports indexes for efficient queries, and can store almost any JavaScript value including objects, arrays, files, and blobs.
+
+Think of IndexedDB as a real database that lives in the browser. While [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) gives you a simple string-only key-value store with ~5MB limit, IndexedDB can store gigabytes of structured data with proper querying capabilities.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    BROWSER STORAGE COMPARISON                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   localStorage                      IndexedDB                            │
+│   ─────────────                     ─────────                            │
+│                                                                          │
+│   ┌─────────────────┐               ┌─────────────────────────────────┐  │
+│   │ key: "user"     │               │  Database: "MyApp"              │  │
+│   │ value: "{...}"  │               │  ┌───────────────────────────┐  │  │
+│   │                 │               │  │ Object Store: "users"     │  │  │
+│   │ key: "theme"    │               │  │  ├─ id: 1, name: "Alice"  │  │  │
+│   │ value: "dark"   │               │  │  ├─ id: 2, name: "Bob"    │  │  │
+│   └─────────────────┘               │  │  └─ (thousands more...)   │  │  │
+│                                     │  │                           │  │  │
+│   • ~5MB limit                      │  │  Indexes: email, role     │  │  │
+│   • Strings only                    │  └───────────────────────────┘  │  │
+│   • Synchronous                     │  ┌───────────────────────────┐  │  │
+│   • No querying                     │  │ Object Store: "posts"     │  │  │
+│                                     │  │  ├─ (structured data)     │  │  │
+│                                     │  └───────────────────────────┘  │  │
+│                                     └─────────────────────────────────┘  │
+│                                                                          │
+│                                     • Gigabytes of storage               │
+│                                     • Any JS value (objects, blobs)      │
+│                                     • Asynchronous                       │
+│                                     • Indexed queries                    │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<CardGroup cols={2}>
+  <Card title="IndexedDB API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">
+    The official MDN landing page covering all IndexedDB interfaces including IDBDatabase, IDBTransaction, and IDBObjectStore
+  </Card>
+  <Card title="Storage Quotas — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Storage_API/Storage_quotas_and_eviction_criteria">
+    How browsers allocate storage space and when data gets evicted
+  </Card>
+</CardGroup>
+
+---
+
+## The Filing Cabinet Analogy
+
+Imagine your browser has a filing cabinet for each website you visit.
+
+**localStorage** is like a single drawer with sticky notes — quick and simple, but limited. You can only store short text messages, and there's not much room.
+
+**IndexedDB** is like having an entire filing cabinet system with multiple drawers (object stores), folders within each drawer (indexes), and the ability to store complete documents, photos, or any type of file.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE FILING CABINET ANALOGY                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   DATABASE = Filing Cabinet                                              │
+│   ┌──────────────────────────────────────────────────────────────────┐   │
+│   │                                                                  │   │
+│   │   OBJECT STORE = Drawer         OBJECT STORE = Drawer            │   │
+│   │   ┌─────────────────────┐       ┌─────────────────────┐          │   │
+│   │   │   "users"           │       │   "products"        │          │   │
+│   │   │   ┌───────────────┐ │       │   ┌───────────────┐ │          │   │
+│   │   │   │ Record        │ │       │   │ Record        │ │          │   │
+│   │   │   │ id: 1         │ │       │   │ sku: "A001"   │ │          │   │
+│   │   │   │ name: "Alice" │ │       │   │ name: "Widget"│ │          │   │
+│   │   │   │ email: "..."  │ │       │   │ price: 29.99  │ │          │   │
+│   │   │   └───────────────┘ │       │   └───────────────┘ │          │   │
+│   │   │   ┌───────────────┐ │       │   ┌───────────────┐ │          │   │
+│   │   │   │ Record        │ │       │   │ Record        │ │          │   │
+│   │   │   │ id: 2         │ │       │   │ sku: "B002"   │ │          │   │
+│   │   │   │ name: "Bob"   │ │       │   │ ...           │ │          │   │
+│   │   │   └───────────────┘ │       │   └───────────────┘ │          │   │
+│   │   │                     │       │                     │          │   │
+│   │   │   INDEX: "email"    │       │   INDEX: "price"    │          │   │
+│   │   │   (sorted labels)   │       │   (sorted labels)   │          │   │
+│   │   └─────────────────────┘       └─────────────────────┘          │   │
+│   │                                                                  │   │
+│   └──────────────────────────────────────────────────────────────────┘   │
+│                                                                          │
+│   KEY = The label on each folder (how you find records)                  │
+│   INDEX = Alphabetical tabs that let you find folders by other fields   │
+│   TRANSACTION = Checking out folders (ensures nobody else modifies them) │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Just like a real filing system:
+- You open the **cabinet** (database) before accessing anything
+- You pull out a **drawer** (object store) to work with specific types of records
+- You use **labels** (keys) to identify individual folders
+- You use **alphabetical tabs** (indexes) to find folders by different criteria
+- You **check out** folders (transactions) so no one else modifies them while you're working
+
+---
+
+## Opening a Database
+
+Before you can store or retrieve data, you need to open a connection to a database. If the database doesn't exist, IndexedDB creates it for you.
+
+```javascript
+// Open (or create) a database named "MyApp" at version 1
+const request = indexedDB.open('MyApp', 1)
+
+// This fires if the database needs to be created or upgraded
+request.onupgradeneeded = (event) => {
+  const db = event.target.result
+  console.log('Database created or upgraded!')
+}
+
+// This fires when the database is ready to use
+request.onsuccess = (event) => {
+  const db = event.target.result
+  console.log('Database opened successfully!')
+}
+
+// This fires if something goes wrong
+request.onerror = (event) => {
+  console.error('Error opening database:', event.target.error)
+}
+```
+
+Notice that IndexedDB uses an **event-based pattern** rather than Promises. The [`indexedDB.open()`](https://developer.mozilla.org/en-US/docs/Web/API/IDBFactory/open) method returns a request object, and you attach event handlers to it.
+
+### Database Versioning
+
+The second argument to `open()` is the **version number**. This is how IndexedDB handles schema migrations:
+
+```javascript
+// First time: create the database at version 1
+const request = indexedDB.open('MyApp', 1)
+
+request.onupgradeneeded = (event) => {
+  const db = event.target.result
+  
+  // Create object stores only in onupgradeneeded
+  if (!db.objectStoreNames.contains('users')) {
+    db.createObjectStore('users', { keyPath: 'id' })
+  }
+}
+```
+
+When you need to change the schema (add a new store, add an index), you increment the version:
+
+```javascript
+// Later: upgrade to version 2
+const request = indexedDB.open('MyApp', 2)
+
+request.onupgradeneeded = (event) => {
+  const db = event.target.result
+  const oldVersion = event.oldVersion
+  
+  // Run migrations based on the old version
+  if (oldVersion < 1) {
+    db.createObjectStore('users', { keyPath: 'id' })
+  }
+  if (oldVersion < 2) {
+    db.createObjectStore('posts', { keyPath: 'id' })
+  }
+}
+```
+
+<Warning>
+**The Version Rule:** You can only create or modify object stores inside the `onupgradeneeded` event. Trying to create a store elsewhere throws an error. Always increment the version number when you need to change the database structure.
+</Warning>
+
+---
+
+## Object Stores and Keys
+
+An **object store** is like a table in a traditional database. It holds a collection of records, and each record must have a unique key.
+
+### Creating Object Stores
+
+You create object stores inside `onupgradeneeded`:
+
+```javascript
+request.onupgradeneeded = (event) => {
+  const db = event.target.result
+  
+  // Option 1: Use a property from the object as the key (keyPath)
+  const usersStore = db.createObjectStore('users', { keyPath: 'id' })
+  // Records must have an 'id' property: { id: 1, name: 'Alice' }
+  
+  // Option 2: Auto-generate keys
+  const logsStore = db.createObjectStore('logs', { autoIncrement: true })
+  // Keys are generated automatically: 1, 2, 3, ...
+  
+  // Option 3: Both - auto-increment and store the key in the object
+  const postsStore = db.createObjectStore('posts', { 
+    keyPath: 'id', 
+    autoIncrement: true 
+  })
+  // Key is auto-generated AND stored in the 'id' property
+}
+```
+
+### Creating Indexes
+
+**Indexes** let you query records by fields other than the primary key:
+
+```javascript
+request.onupgradeneeded = (event) => {
+  const db = event.target.result
+  const store = db.createObjectStore('users', { keyPath: 'id' })
+  
+  // Create an index on the 'email' field (must be unique)
+  store.createIndex('email', 'email', { unique: true })
+  
+  // Create an index on 'role' (not unique - many users can share a role)
+  store.createIndex('role', 'role', { unique: false })
+}
+```
+
+Later, you can query by these indexes:
+
+```javascript
+// Find a user by email (instead of by id)
+const index = store.index('email')
+const request = index.get('alice@example.com')
+```
+
+---
+
+## CRUD Operations
+
+All data operations in IndexedDB happen inside **transactions**. A transaction ensures that a group of operations either all succeed or all fail together.
+
+### Creating (Add)
+
+```javascript
+function addUser(db, user) {
+  // 1. Start a transaction in 'readwrite' mode
+  const tx = db.transaction('users', 'readwrite')
+  
+  // 2. Get the object store
+  const store = tx.objectStore('users')
+  
+  // 3. Add the data
+  const request = store.add(user)
+  
+  request.onsuccess = () => {
+    console.log('User added with id:', request.result)
+  }
+  
+  request.onerror = () => {
+    console.error('Error adding user:', request.error)
+  }
+}
+
+// Usage
+addUser(db, { id: 1, name: 'Alice', email: 'alice@example.com' })
+```
+
+<Tip>
+**add() vs put():** Use `add()` when inserting new records. It fails if a record with the same key already exists. Use `put()` when you want to insert OR update. It overwrites existing records.
+</Tip>
+
+### Reading (Get)
+
+```javascript
+function getUser(db, id) {
+  const tx = db.transaction('users', 'readonly')
+  const store = tx.objectStore('users')
+  const request = store.get(id)
+  
+  request.onsuccess = () => {
+    if (request.result) {
+      console.log('Found user:', request.result)
+    } else {
+      console.log('User not found')
+    }
+  }
+}
+
+// Get all records
+function getAllUsers(db) {
+  const tx = db.transaction('users', 'readonly')
+  const store = tx.objectStore('users')
+  const request = store.getAll()
+  
+  request.onsuccess = () => {
+    console.log('All users:', request.result)  // Array of all user objects
+  }
+}
+```
+
+### Updating (Put)
+
+```javascript
+function updateUser(db, user) {
+  const tx = db.transaction('users', 'readwrite')
+  const store = tx.objectStore('users')
+  
+  // put() updates if exists, inserts if not
+  const request = store.put(user)
+  
+  request.onsuccess = () => {
+    console.log('User updated')
+  }
+}
+
+// Usage - update Alice's email
+updateUser(db, { id: 1, name: 'Alice', email: 'alice.new@example.com' })
+```
+
+### Deleting
+
+```javascript
+function deleteUser(db, id) {
+  const tx = db.transaction('users', 'readwrite')
+  const store = tx.objectStore('users')
+  const request = store.delete(id)
+  
+  request.onsuccess = () => {
+    console.log('User deleted')
+  }
+}
+
+// Delete all records
+function clearAllUsers(db) {
+  const tx = db.transaction('users', 'readwrite')
+  const store = tx.objectStore('users')
+  store.clear()
+}
+```
+
+---
+
+## Understanding Transactions
+
+Transactions are a critical concept in IndexedDB. They ensure data integrity by grouping operations together.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                       TRANSACTION LIFECYCLE                              │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   1. CREATE                2. EXECUTE                3. COMPLETE         │
+│   ─────────                ─────────                 ─────────           │
+│                                                                          │
+│   const tx = db           store.add(...)            tx.oncomplete        │
+│     .transaction(         store.put(...)            All changes saved!   │
+│       'users',            store.delete(...)                              │
+│       'readwrite'         ↓                         tx.onerror           │
+│     )                     (all or nothing)          All changes rolled   │
+│                                                     back!                │
+│                                                                          │
+│   Transaction Modes:                                                     │
+│   ─────────────────                                                      │
+│   'readonly'   - Only reading data (faster, can run in parallel)         │
+│   'readwrite'  - Reading and writing (locks the store)                   │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Transaction Auto-Commit
+
+Transactions automatically commit when there are no more pending requests:
+
+```javascript
+const tx = db.transaction('users', 'readwrite')
+const store = tx.objectStore('users')
+
+store.add({ id: 1, name: 'Alice' })
+store.add({ id: 2, name: 'Bob' })
+
+// Transaction auto-commits after both adds complete
+tx.oncomplete = () => {
+  console.log('Both users saved!')
+}
+```
+
+### The Transaction Timing Trap
+
+Here's a common mistake. Transactions auto-commit quickly, so you can't do async work in the middle:
+
+```javascript
+// ❌ WRONG - Transaction will close before fetch completes
+const tx = db.transaction('users', 'readwrite')
+const store = tx.objectStore('users')
+
+const response = await fetch('/api/user')  // Network request
+const user = await response.json()
+store.add(user)  // ERROR: Transaction is no longer active!
+```
+
+```javascript
+// ✓ CORRECT - Fetch first, then use IndexedDB
+const response = await fetch('/api/user')
+const user = await response.json()
+
+const tx = db.transaction('users', 'readwrite')
+const store = tx.objectStore('users')
+store.add(user)  // Works!
+```
+
+<Warning>
+**The Auto-Commit Rule:** Transactions close automatically after the current JavaScript "tick" if there are no pending requests. Never put `await` calls to external APIs inside a transaction. Fetch your data first, then write to IndexedDB.
+</Warning>
+
+---
+
+## Iterating with Cursors
+
+When you need to process records one at a time (instead of loading everything into memory), use a **cursor**:
+
+```javascript
+function iterateUsers(db) {
+  const tx = db.transaction('users', 'readonly')
+  const store = tx.objectStore('users')
+  const request = store.openCursor()
+  
+  request.onsuccess = (event) => {
+    const cursor = event.target.result
+    
+    if (cursor) {
+      // Process the current record
+      console.log('Key:', cursor.key, 'Value:', cursor.value)
+      
+      // Move to the next record
+      cursor.continue()
+    } else {
+      // No more records
+      console.log('Done iterating')
+    }
+  }
+}
+```
+
+### Cursor with Key Ranges
+
+You can limit which records the cursor visits using [`IDBKeyRange`](https://developer.mozilla.org/en-US/docs/Web/API/IDBKeyRange):
+
+```javascript
+function getUsersInRange(db, minId, maxId) {
+  const tx = db.transaction('users', 'readonly')
+  const store = tx.objectStore('users')
+  
+  // Only iterate over keys between minId and maxId
+  const range = IDBKeyRange.bound(minId, maxId)
+  const request = store.openCursor(range)
+  
+  request.onsuccess = (event) => {
+    const cursor = event.target.result
+    if (cursor) {
+      console.log(cursor.value)
+      cursor.continue()
+    }
+  }
+}
+
+// Other key range options:
+IDBKeyRange.only(5)           // Only key === 5
+IDBKeyRange.lowerBound(5)     // key >= 5
+IDBKeyRange.upperBound(10)    // key <= 10
+IDBKeyRange.bound(5, 10)      // 5 <= key <= 10
+IDBKeyRange.bound(5, 10, true, false)  // 5 < key <= 10
+```
+
+---
+
+## Using Promise Wrappers
+
+The callback-based API can get messy. Most developers use a Promise wrapper library. The most popular is **idb** by Jake Archibald:
+
+```javascript
+// Using the idb library (https://github.com/jakearchibald/idb)
+import { openDB } from 'idb'
+
+async function demo() {
+  // Open database with Promises
+  const db = await openDB('MyApp', 1, {
+    upgrade(db) {
+      db.createObjectStore('users', { keyPath: 'id' })
+    }
+  })
+  
+  // Add a user
+  await db.add('users', { id: 1, name: 'Alice' })
+  
+  // Get a user
+  const user = await db.get('users', 1)
+  console.log(user)  // { id: 1, name: 'Alice' }
+  
+  // Get all users
+  const allUsers = await db.getAll('users')
+  
+  // Update
+  await db.put('users', { id: 1, name: 'Alice Updated' })
+  
+  // Delete
+  await db.delete('users', 1)
+}
+```
+
+<Tip>
+**The idb Advantage:** The idb library (~1.2kB) wraps IndexedDB's event-based API with Promises, making it work beautifully with async/await. It's the recommended way to use IndexedDB in modern applications.
+</Tip>
+
+### Building Your Own Wrapper
+
+If you prefer not to add a dependency, here's a simple helper pattern:
+
+```javascript
+// Promisify an IDBRequest
+function promisifyRequest(request) {
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result)
+    request.onerror = () => reject(request.error)
+  })
+}
+
+// Promisify opening a database
+function openDatabase(name, version, onUpgrade) {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open(name, version)
+    request.onupgradeneeded = (event) => onUpgrade(event.target.result)
+    request.onsuccess = () => resolve(request.result)
+    request.onerror = () => reject(request.error)
+  })
+}
+
+// Usage
+async function demo() {
+  const db = await openDatabase('MyApp', 1, (db) => {
+    db.createObjectStore('users', { keyPath: 'id' })
+  })
+  
+  const tx = db.transaction('users', 'readwrite')
+  const store = tx.objectStore('users')
+  
+  await promisifyRequest(store.add({ id: 1, name: 'Alice' }))
+  const user = await promisifyRequest(store.get(1))
+  console.log(user)
+}
+```
+
+---
+
+## IndexedDB vs Other Storage Options
+
+When should you use IndexedDB instead of other browser storage options?
+
+| Feature | localStorage | sessionStorage | IndexedDB | Cookies |
+|---------|-------------|----------------|-----------|---------|
+| **Storage Limit** | ~5MB | ~5MB | Gigabytes | ~4KB |
+| **Data Types** | Strings only | Strings only | Any JS value | Strings only |
+| **Async** | No (blocks UI) | No (blocks UI) | Yes | No |
+| **Queryable** | No | No | Yes (indexes) | No |
+| **Transactions** | No | No | Yes | No |
+| **Persists** | Until cleared | Until tab closes | Until cleared | Configurable |
+| **Accessible from Workers** | No | No | Yes | No |
+
+### When to Use IndexedDB
+
+<AccordionGroup>
+  <Accordion title="Offline-First Applications">
+    IndexedDB is the foundation of offline-capable apps. Store data locally so users can work without a network connection, then sync when they're back online.
+    
+    ```javascript
+    // Cache API responses for offline use
+    async function fetchWithCache(url) {
+      const db = await openDB('cache', 1)
+      
+      // Try to get from cache first
+      const cached = await db.get('responses', url)
+      if (cached && !isStale(cached)) {
+        return cached.data
+      }
+      
+      // Fetch from network
+      const response = await fetch(url)
+      const data = await response.json()
+      
+      // Store in cache for next time
+      await db.put('responses', { url, data, timestamp: Date.now() })
+      return data
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Large Datasets">
+    When you have thousands of records that would exceed localStorage's 5MB limit, IndexedDB can handle it.
+    
+    ```javascript
+    // Store a large product catalog locally
+    async function cacheProductCatalog(products) {
+      const db = await openDB('shop', 1)
+      const tx = db.transaction('products', 'readwrite')
+      
+      for (const product of products) {
+        await tx.store.put(product)
+      }
+      
+      await tx.done
+      console.log(`Cached ${products.length} products`)
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Complex Querying Needs">
+    When you need to search or filter data by multiple fields, indexes make this efficient.
+    
+    ```javascript
+    // Find all products under $50
+    async function getAffordableProducts(db) {
+      const tx = db.transaction('products', 'readonly')
+      const index = tx.store.index('price')
+      const range = IDBKeyRange.upperBound(50)
+      
+      return await index.getAll(range)
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Storing Files and Blobs">
+    Unlike localStorage, IndexedDB can store binary data like images, audio, and files.
+    
+    ```javascript
+    // Store an image blob
+    async function cacheImage(url) {
+      const response = await fetch(url)
+      const blob = await response.blob()
+      
+      const db = await openDB('images', 1)
+      await db.put('images', { url, blob, cached: Date.now() })
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Real-World Patterns
+
+### Pattern 1: Sync Queue for Offline Actions
+
+Store user actions while offline, then sync when back online:
+
+```javascript
+// Queue an action for later sync
+async function queueAction(action) {
+  const db = await openDB('app', 1)
+  await db.add('syncQueue', {
+    action,
+    timestamp: Date.now(),
+    status: 'pending'
+  })
+}
+
+// Sync all pending actions
+async function syncPendingActions() {
+  const db = await openDB('app', 1)
+  const pending = await db.getAllFromIndex('syncQueue', 'status', 'pending')
+  
+  for (const item of pending) {
+    try {
+      await fetch('/api/sync', {
+        method: 'POST',
+        body: JSON.stringify(item.action)
+      })
+      await db.delete('syncQueue', item.id)
+    } catch (error) {
+      console.log('Will retry later:', item.action)
+    }
+  }
+}
+
+// Sync when back online
+window.addEventListener('online', syncPendingActions)
+```
+
+### Pattern 2: Database Helper Class
+
+Encapsulate database logic in a reusable class:
+
+```javascript
+class UserDatabase {
+  constructor() {
+    this.dbPromise = openDB('users-db', 1, {
+      upgrade(db) {
+        const store = db.createObjectStore('users', { keyPath: 'id' })
+        store.createIndex('email', 'email', { unique: true })
+      }
+    })
+  }
+  
+  async add(user) {
+    const db = await this.dbPromise
+    return db.add('users', user)
+  }
+  
+  async get(id) {
+    const db = await this.dbPromise
+    return db.get('users', id)
+  }
+  
+  async getByEmail(email) {
+    const db = await this.dbPromise
+    return db.getFromIndex('users', 'email', email)
+  }
+  
+  async update(user) {
+    const db = await this.dbPromise
+    return db.put('users', user)
+  }
+  
+  async delete(id) {
+    const db = await this.dbPromise
+    return db.delete('users', id)
+  }
+  
+  async getAll() {
+    const db = await this.dbPromise
+    return db.getAll('users')
+  }
+}
+
+// Usage
+const users = new UserDatabase()
+await users.add({ id: 1, name: 'Alice', email: 'alice@example.com' })
+const alice = await users.getByEmail('alice@example.com')
+```
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Forgetting Transaction Mode
+
+```javascript
+// ❌ WRONG - Trying to write with readonly transaction
+const tx = db.transaction('users')  // defaults to 'readonly'
+tx.objectStore('users').add({ id: 1, name: 'Alice' })  // ERROR!
+
+// ✓ CORRECT - Specify 'readwrite' for write operations
+const tx = db.transaction('users', 'readwrite')
+tx.objectStore('users').add({ id: 1, name: 'Alice' })  // Works!
+```
+
+### Mistake 2: Creating Stores Outside onupgradeneeded
+
+```javascript
+// ❌ WRONG - Can't create stores in onsuccess
+request.onsuccess = (event) => {
+  const db = event.target.result
+  db.createObjectStore('users')  // ERROR: Not in version change transaction
+}
+
+// ✓ CORRECT - Create stores in onupgradeneeded
+request.onupgradeneeded = (event) => {
+  const db = event.target.result
+  db.createObjectStore('users', { keyPath: 'id' })  // Works!
+}
+```
+
+### Mistake 3: Assuming Sync Behavior
+
+```javascript
+// ❌ WRONG - Treating IndexedDB like it's synchronous
+const tx = db.transaction('users', 'readwrite')
+tx.objectStore('users').add({ id: 1, name: 'Alice' })
+console.log('User saved!')  // This runs before the add completes!
+
+// ✓ CORRECT - Wait for the operation to complete
+const tx = db.transaction('users', 'readwrite')
+const request = tx.objectStore('users').add({ id: 1, name: 'Alice' })
+request.onsuccess = () => {
+  console.log('User saved!')  // Now it's actually saved
+}
+```
+
+### Mistake 4: Not Handling Blocked Database Opens
+
+When a database is open in another tab with an older version:
+
+```javascript
+const request = indexedDB.open('MyApp', 2)
+
+// ✓ Handle the blocked event
+request.onblocked = () => {
+  alert('Please close other tabs with this app to allow the update.')
+}
+
+request.onupgradeneeded = (event) => {
+  // Upgrade logic
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about IndexedDB:**
+
+1. **IndexedDB is a full database in the browser** — it stores structured data with support for indexes, transactions, and complex queries, unlike localStorage's simple key-value pairs
+
+2. **Everything is asynchronous** — IndexedDB uses an event-based API (or Promises with a wrapper) and never blocks the main thread
+
+3. **Object stores are like tables** — each stores a collection of records identified by a unique key (either from the object's property or auto-generated)
+
+4. **Indexes enable efficient lookups** — create indexes on fields you want to query by, beyond just the primary key
+
+5. **All operations happen in transactions** — transactions ensure data integrity by grouping operations that either all succeed or all fail
+
+6. **Transactions auto-commit quickly** — never do async work (like fetch) inside a transaction; get your data first, then write to IndexedDB
+
+7. **Use `put()` for upserts, `add()` for inserts only** — `add()` fails if the key exists, `put()` inserts or updates
+
+8. **Schema changes require version increments** — only `onupgradeneeded` can create or modify object stores; increment the version number to trigger it
+
+9. **Consider using the idb library** — it wraps IndexedDB with Promises for cleaner async/await code
+
+10. **IndexedDB is perfect for offline-first apps** — store data locally, work offline, and sync when back online
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: When can you create object stores in IndexedDB?">
+    **Answer:**
+    
+    Object stores can only be created inside the `onupgradeneeded` event handler, which fires when you open a database with a higher version number than what exists. This is IndexedDB's way of handling schema migrations.
+    
+    ```javascript
+    const request = indexedDB.open('MyApp', 2)  // Bump version to trigger upgrade
+    
+    request.onupgradeneeded = (event) => {
+      const db = event.target.result
+      db.createObjectStore('newStore', { keyPath: 'id' })  // Only works here!
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: What's the difference between add() and put()?">
+    **Answer:**
+    
+    - `add()` inserts a new record. It **fails with an error** if a record with the same key already exists.
+    - `put()` inserts a new record OR updates an existing one. It **never fails** due to duplicate keys.
+    
+    Use `add()` when you expect the record to be new. Use `put()` when you want "insert or update" (upsert) behavior.
+  </Accordion>
+  
+  <Accordion title="Question 3: Why can't you use await fetch() inside a transaction?">
+    **Answer:**
+    
+    Transactions auto-commit when there are no pending requests and the JavaScript execution returns to the event loop. A `fetch()` call is an async operation that gives control back to the event loop, causing the transaction to commit before your network request completes.
+    
+    ```javascript
+    // ❌ Transaction closes during fetch
+    const tx = db.transaction('users', 'readwrite')
+    const data = await fetch('/api/user')  // Transaction closes here!
+    tx.objectStore('users').add(data)  // ERROR: Transaction inactive
+    
+    // ✓ Fetch first, then use IndexedDB
+    const data = await fetch('/api/user')
+    const tx = db.transaction('users', 'readwrite')
+    tx.objectStore('users').add(data)  // Works!
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: What are indexes used for?">
+    **Answer:**
+    
+    Indexes let you query records by fields other than the primary key. Without an index, you'd have to iterate through every record to find matches. With an index, lookups are fast.
+    
+    ```javascript
+    // Create an index on the 'email' field
+    store.createIndex('email', 'email', { unique: true })
+    
+    // Later, query by email instead of primary key
+    const index = store.index('email')
+    const user = await index.get('alice@example.com')
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: When should you use IndexedDB instead of localStorage?">
+    **Answer:**
+    
+    Use IndexedDB when you need:
+    - **More than 5MB** of storage
+    - **Structured data** with relationships
+    - **Querying capabilities** (search by different fields)
+    - **To store non-string data** (objects, arrays, blobs, files)
+    - **Offline-first functionality** with complex data
+    - **Access from Web Workers**
+    
+    Use localStorage for simple key-value pairs like user preferences or small settings.
+  </Accordion>
+  
+  <Accordion title="Question 6: What does 'readonly' vs 'readwrite' transaction mode do?">
+    **Answer:**
+    
+    - `readonly`: You can only read data. Multiple readonly transactions can run in parallel on the same store.
+    - `readwrite`: You can read and write. Only one readwrite transaction can access a store at a time (it "locks" the store).
+    
+    Always use `readonly` when you're just reading data. It's faster and doesn't block other transactions.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="localStorage & sessionStorage" icon="hard-drive" href="/beyond/concepts/localstorage-sessionstorage">
+    Simpler key-value storage for smaller data. Understand when to use each option.
+  </Card>
+  <Card title="Promises" icon="handshake" href="/concepts/promises">
+    IndexedDB's callback API is easier with Promises. Essential for using idb and other wrappers.
+  </Card>
+  <Card title="async/await" icon="clock" href="/concepts/async-await">
+    Write cleaner IndexedDB code with async/await syntax and Promise wrappers.
+  </Card>
+  <Card title="Web Workers" icon="gears" href="/concepts/web-workers">
+    IndexedDB works in Web Workers, enabling background data processing.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="IndexedDB API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API">
+    Official MDN documentation covering all IndexedDB interfaces including IDBDatabase, IDBTransaction, and IDBObjectStore
+  </Card>
+  <Card title="Using IndexedDB — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Using_IndexedDB">
+    Comprehensive step-by-step tutorial covering the full IndexedDB workflow from opening databases to transactions
+  </Card>
+  <Card title="IDBObjectStore — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/IDBObjectStore">
+    Detailed reference for the object store interface including all CRUD methods like add(), put(), get(), and delete()
+  </Card>
+  <Card title="Browser Compatibility — Can I Use" icon="browser" href="https://caniuse.com/indexeddb">
+    Real-time browser support data showing 96%+ global coverage for IndexedDB features
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="IndexedDB Tutorial — javascript.info" icon="newspaper" href="https://javascript.info/indexeddb">
+    The most thorough tutorial covering versioning, object stores, transactions, cursors, and promise wrappers. Includes a working demo app with complete source code.
+  </Card>
+  <Card title="Work with IndexedDB — web.dev" icon="newspaper" href="https://web.dev/articles/indexeddb">
+    Google's official guide using the idb library with modern async/await syntax. Perfect for developers who want to skip the callback-based native API.
+  </Card>
+  <Card title="idb: IndexedDB with Promises" icon="newspaper" href="https://github.com/jakearchibald/idb">
+    The definitive promise wrapper for IndexedDB (~1.2kB) created by Chrome engineer Jake Archibald. Makes IndexedDB feel like working with modern JavaScript.
+  </Card>
+  <Card title="IndexedDB Key Terminology — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Basic_Terminology">
+    Explains core concepts like key paths, key generators, transactions, and the structured clone algorithm. Required reading before diving into the API.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="IndexedDB Tutorial for Beginners — dcode" icon="video" href="https://www.youtube.com/watch?v=g4U5WRzHitM">
+    Clear step-by-step walkthrough of IndexedDB fundamentals including creating databases, stores, and performing CRUD operations. Great for visual learners.
+  </Card>
+  <Card title="IndexedDB Crash Course — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=vb7fkBeblcw">
+    Brad Traversy's practical tutorial building a complete app with IndexedDB. Covers transactions, cursors, and real-world patterns in under 30 minutes.
+  </Card>
+  <Card title="Client-Side Storage Explained — Fireship" icon="video" href="https://www.youtube.com/watch?v=JR9wsVYp8RQ">
+    Fast-paced comparison of localStorage, sessionStorage, IndexedDB, and cookies. Helps you understand when to use each storage option.
+  </Card>
+  <Card title="Building Offline-First Apps — Google Chrome Developers" icon="video" href="https://www.youtube.com/watch?v=cmGr0RszHc8">
+    Conference talk on using IndexedDB with Service Workers for offline-capable PWAs. Essential context for understanding IndexedDB's primary use case.
+  </Card>
+</CardGroup>

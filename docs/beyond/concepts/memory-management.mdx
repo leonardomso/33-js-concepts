@@ -1,0 +1,1021 @@
+---
+title: "Memory Management: How JavaScript Allocates and Frees Memory"
+sidebarTitle: "Memory Management"
+description: "Learn how JavaScript manages memory automatically. Understand the memory lifecycle, stack vs heap, common memory leaks, and how to profile memory with DevTools."
+---
+
+Why does your web app slow down over time? Why does that single-page application become sluggish after hours of use? The answer often lies in **memory management**, the invisible system that allocates and frees memory as your code runs.
+
+```javascript
+// Memory is allocated automatically when you create values
+const user = { name: 'Alice', age: 30 };  // Object stored in heap
+const numbers = [1, 2, 3, 4, 5];          // Array stored in heap
+let count = 42;                            // Primitive stored in stack
+
+// But what happens when these are no longer needed?
+// JavaScript handles cleanup automatically... most of the time
+```
+
+Unlike languages like C where you manually allocate and free memory, JavaScript handles this automatically. But "automatic" doesn't mean "worry-free." Understanding how memory management works helps you write faster, more efficient code and avoid the dreaded memory leaks that crash applications.
+
+<Info>
+**What you'll learn in this guide:**
+- What memory management is and why it matters for performance
+- The three phases of the memory lifecycle
+- How stack and heap memory differ and when each is used
+- Common memory leak patterns and how to prevent them
+- How to profile memory usage with Chrome DevTools
+- Best practices for writing memory-efficient JavaScript
+</Info>
+
+---
+
+## The Storage Unit Analogy: Understanding Memory
+
+Imagine you're running a storage facility. When customers (your code) need to store items (data), you:
+
+1. **Allocate** — Find an empty unit and assign it to them
+2. **Use** — They store and retrieve items as needed
+3. **Release** — When they're done, you reclaim the unit for other customers
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        MEMORY LIFECYCLE                                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ┌──────────────┐      ┌──────────────┐      ┌──────────────┐         │
+│    │   ALLOCATE   │ ───► │     USE      │ ───► │   RELEASE    │         │
+│    │              │      │              │      │              │         │
+│    │ Reserve      │      │ Read/Write   │      │ Free memory  │         │
+│    │ memory       │      │ data         │      │ when done    │         │
+│    └──────────────┘      └──────────────┘      └──────────────┘         │
+│                                                                          │
+│    JavaScript does       You do this         Garbage collector          │
+│    this automatically    explicitly          does this for you          │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The tricky part? JavaScript handles allocation and release automatically, which means you don't always know when memory is freed. This can lead to memory building up when you expect it to be cleaned.
+
+---
+
+## What is Memory Management?
+
+**[Memory management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)** is the process of allocating memory when your program needs it, using that memory, and releasing it when it's no longer needed. In JavaScript, this happens automatically through a system called garbage collection, which monitors objects and frees memory that's no longer reachable by your code.
+
+### The Memory Lifecycle
+
+Every piece of data in your program goes through three phases:
+
+<Steps>
+  <Step title="Allocation">
+    When you create a variable, object, or function, JavaScript automatically reserves memory to store it.
+    
+    ```javascript
+    // All of these trigger memory allocation
+    const name = "Alice";                    // String allocation
+    const user = { id: 1, name: "Alice" };   // Object allocation
+    const items = [1, 2, 3];                 // Array allocation
+    function greet() { return "Hello"; }     // Function allocation
+    ```
+  </Step>
+  
+  <Step title="Use">
+    Your code reads from and writes to allocated memory. This is the phase where you actually work with your data.
+    
+    ```javascript
+    // Using allocated memory
+    console.log(name);           // Read from memory
+    user.age = 30;               // Write to memory
+    items.push(4);               // Modify allocated array
+    const message = greet();     // Execute function, allocate result
+    ```
+  </Step>
+  
+  <Step title="Release">
+    When data is no longer needed, the garbage collector frees that memory so it can be reused. This happens automatically when values become **unreachable**.
+    
+    ```javascript
+    function processData() {
+      const tempData = { huge: new Array(1000000) };
+      // tempData is used here...
+      return tempData.huge.length;
+    }
+    // After processData() returns, tempData is unreachable
+    // The garbage collector will eventually free that memory
+    ```
+  </Step>
+</Steps>
+
+<Note>
+**The hard part:** Determining when memory is "no longer needed" is actually an undecidable problem in computer science. Garbage collectors use approximations (like checking if values are reachable) rather than truly knowing if you'll use something again.
+</Note>
+
+---
+
+## Stack vs Heap: Two Types of Memory
+
+JavaScript uses two memory regions with different characteristics. Understanding when each is used helps you write more efficient code.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    STACK vs HEAP MEMORY                                  │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│     STACK (Fast, Ordered)              HEAP (Flexible, Unordered)       │
+│    ┌─────────────────────┐            ┌─────────────────────────────┐   │
+│    │ let count = 42      │            │  ┌─────────────────────┐    │   │
+│    ├─────────────────────┤            │  │ { name: "Alice" }   │    │   │
+│    │ let active = true   │            │  └─────────────────────┘    │   │
+│    ├─────────────────────┤            │       ┌───────────┐         │   │
+│    │ let price = 19.99   │            │       │ [1, 2, 3] │         │   │
+│    ├─────────────────────┤            │       └───────────┘         │   │
+│    │ (reference to obj)──┼────────────┼──►┌─────────────────┐       │   │
+│    └─────────────────────┘            │   │ { id: 1 }       │       │   │
+│                                       │   └─────────────────┘       │   │
+│    Primitives stored directly         │                             │   │
+│    References point to heap           └─────────────────────────────┘   │
+│                                        Objects stored here              │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+### Stack Memory
+
+The **stack** is a fast, ordered region of memory used for:
+
+- **Primitive values** — numbers, strings, booleans, `null`, `undefined`, symbols, BigInt
+- **References** — pointers to objects in the heap
+- **Function call information** — local variables, arguments, return addresses
+
+```javascript
+function calculateTotal(price, quantity) {
+  // These primitives are stored on the stack
+  const tax = 0.08;
+  const subtotal = price * quantity;
+  const total = subtotal + (subtotal * tax);
+  return total;
+}
+// When the function returns, stack memory is immediately reclaimed
+```
+
+**Characteristics:**
+- Fixed size, very fast access
+- Automatically managed (LIFO - Last In, First Out)
+- Memory is freed immediately when functions return
+- Limited in size (causes stack overflow if exceeded)
+
+### Heap Memory
+
+The **heap** is a larger, unstructured region used for:
+
+- **Objects** — including arrays, functions, dates, etc.
+- **Dynamically sized data** — anything that can grow or shrink
+- **Data that outlives function calls**
+
+```javascript
+function createUser(name) {
+  // This object is allocated in the heap
+  const user = {
+    name: name,
+    createdAt: new Date(),
+    preferences: []
+  };
+  return user;  // Reference returned, object persists in heap
+}
+
+const alice = createUser("Alice");
+// The object still exists in heap memory, referenced by 'alice'
+```
+
+**Characteristics:**
+- Dynamic size, slower access than stack
+- Managed by garbage collector
+- Memory freed only when values become unreachable
+- No size limit (except available system memory)
+
+### How References Work
+
+When you assign an object to a variable, the variable holds a **reference** (like an address) pointing to the object in the heap:
+
+```javascript
+const original = { value: 1 };  // Object in heap, reference in stack
+const copy = original;           // Same reference, same object!
+
+copy.value = 2;
+console.log(original.value);  // 2 — both point to the same object
+
+// To create an independent copy:
+const independent = { ...original };
+independent.value = 3;
+console.log(original.value);  // Still 2 — different objects
+```
+
+---
+
+## How JavaScript Allocates Memory
+
+JavaScript automatically allocates memory when you create values. Here's what triggers allocation:
+
+### Automatic Allocation Examples
+
+```javascript
+// Primitive allocation
+const n = 123;                    // Allocates memory for a number
+const s = "hello";                // Allocates memory for a string
+const b = true;                   // Allocates memory for a boolean
+
+// Object allocation
+const obj = { a: 1, b: 2 };       // Allocates memory for object and values
+const arr = [1, 2, 3];            // Allocates memory for array and elements
+const fn = function() {};         // Allocates memory for function object
+
+// Allocation via operations
+const s2 = s.substring(0, 3);     // New string allocated
+const arr2 = arr.concat([4, 5]);  // New array allocated
+const obj2 = { ...obj, c: 3 };    // New object allocated
+```
+
+### Allocation via Constructor Calls
+
+```javascript
+const date = new Date();                    // Allocates Date object
+const regex = new RegExp("pattern");        // Allocates RegExp object
+const map = new Map();                      // Allocates Map object
+const set = new Set([1, 2, 3]);             // Allocates Set and stores values
+```
+
+### Allocation via DOM APIs
+
+```javascript
+// Each of these allocates new objects
+const div = document.createElement('div');   // Allocates DOM element
+const text = document.createTextNode('Hi');  // Allocates text node
+const fragment = document.createDocumentFragment();
+```
+
+---
+
+## Garbage Collection: Automatic Memory Release
+
+JavaScript uses **[garbage collection](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management#garbage_collection)** to automatically free memory that's no longer needed. The key concept is **reachability**.
+
+### What is "Reachable"?
+
+A value is **reachable** if it can be accessed somehow, starting from "root" values:
+
+**Roots include:**
+- Global variables
+- Currently executing function's local variables and parameters
+- Variables in the current chain of nested function calls
+
+```javascript
+// Global variable — always reachable
+let globalUser = { name: "Alice" };
+
+function example() {
+  // Local variable — reachable while function executes
+  const localData = { value: 42 };
+  
+  // Nested function can access outer variables
+  function inner() {
+    console.log(localData.value);  // localData is reachable here
+  }
+  
+  inner();
+}  // After example() returns, localData becomes unreachable
+```
+
+### The Mark-and-Sweep Algorithm
+
+Modern JavaScript engines use the **mark-and-sweep** algorithm:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                     MARK-AND-SWEEP ALGORITHM                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  Step 1: MARK                         Step 2: SWEEP                      │
+│  ─────────────                        ────────────                       │
+│  Start from roots,                    Remove all objects                 │
+│  mark all reachable objects           that weren't marked                │
+│                                                                          │
+│     [root]                               [root]                          │
+│        │                                    │                            │
+│        ▼                                    ▼                            │
+│     ┌─────┐      ┌─────┐               ┌─────┐                          │
+│     │  A  │ ───► │  B  │               │  A  │ ───► │  B  │             │
+│     │ ✓   │      │ ✓   │               │     │      │     │             │
+│     └─────┘      └─────┘               └─────┘      └─────┘             │
+│                                                                          │
+│     ┌─────┐      ┌─────┐               ╳─────╳      ╳─────╳             │
+│     │  C  │ ───► │  D  │               │ DEL │      │ DEL │             │
+│     │     │      │     │               ╳─────╳      ╳─────╳             │
+│     └─────┘      └─────┘               (Unreachable = deleted)          │
+│     (Not reachable from root)                                            │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+<Tabs>
+  <Tab title="Example: Object Becomes Unreachable">
+    ```javascript
+    let user = { name: "John" };  // Object is reachable via 'user'
+    
+    user = null;  // Now the object has no references
+    // The garbage collector will eventually free it
+    ```
+  </Tab>
+  <Tab title="Example: Multiple References">
+    ```javascript
+    let user = { name: "John" };
+    let admin = user;  // Two references to the same object
+    
+    user = null;       // Object still reachable via 'admin'
+    admin = null;      // Now the object is unreachable
+    // Garbage collector can free it
+    ```
+  </Tab>
+  <Tab title="Example: Interlinked Objects">
+    ```javascript
+    function marry(man, woman) {
+      man.wife = woman;
+      woman.husband = man;
+      return { father: man, mother: woman };
+    }
+    
+    let family = marry({ name: "John" }, { name: "Ann" });
+    
+    family = null;  // The entire structure becomes unreachable
+    // Even though John and Ann reference each other,
+    // they're unreachable from any root — so they're freed
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+**Important:** You cannot force or control when garbage collection runs. It happens automatically based on the JavaScript engine's internal heuristics. Don't write code that depends on specific GC timing.
+</Warning>
+
+---
+
+## Common Memory Leaks and How to Fix Them
+
+A **memory leak** occurs when your application retains memory that's no longer needed. Over time, this causes performance degradation and eventually crashes. Here are the most common causes:
+
+### 1. Accidental Global Variables
+
+```javascript
+// ❌ BAD: Creating global variables accidentally
+function processData() {
+  // Forgot 'const' — this creates a global variable!
+  leakedData = new Array(1000000);
+}
+
+// ✅ GOOD: Use proper variable declarations
+function processData() {
+  const localData = new Array(1000000);
+  // localData is freed when function returns
+}
+
+// ✅ BETTER: Use strict mode to catch this error
+"use strict";
+function processData() {
+  leakedData = [];  // ReferenceError: leakedData is not defined
+}
+```
+
+### 2. Forgotten Timers and Intervals
+
+```javascript
+// ❌ BAD: Interval never cleared
+function startPolling() {
+  const data = fetchHugeData();
+  
+  setInterval(() => {
+    // This closure keeps 'data' alive forever!
+    console.log(data.length);
+  }, 1000);
+}
+
+// ✅ GOOD: Store interval ID and clear when done
+function startPolling() {
+  const data = fetchHugeData();
+  
+  const intervalId = setInterval(() => {
+    console.log(data.length);
+  }, 1000);
+  
+  // Return cleanup function
+  return () => clearInterval(intervalId);
+}
+
+const stopPolling = startPolling();
+// Later, when done:
+stopPolling();
+```
+
+### 3. Detached DOM Elements
+
+```javascript
+// ❌ BAD: Keeping references to removed DOM elements
+const elements = [];
+
+function addElement() {
+  const div = document.createElement('div');
+  document.body.appendChild(div);
+  elements.push(div);  // Reference stored
+}
+
+function removeElement() {
+  const div = elements[0];
+  document.body.removeChild(div);  // Removed from DOM
+  // But still referenced in 'elements' array — memory leak!
+}
+
+// ✅ GOOD: Remove references when removing elements
+function removeElement() {
+  const div = elements.shift();  // Remove from array
+  document.body.removeChild(div);  // Remove from DOM
+  // Now the element can be garbage collected
+}
+```
+
+### 4. Closures Holding References
+
+```javascript
+// ❌ BAD: Closure keeps large data alive
+function createHandler() {
+  const hugeData = new Array(1000000).fill('x');
+  
+  return function handler() {
+    // Even if we only use hugeData.length,
+    // the entire array is kept in memory
+    console.log(hugeData.length);
+  };
+}
+
+const handler = createHandler();
+// hugeData cannot be garbage collected while handler exists
+
+// ✅ GOOD: Only capture what you need
+function createHandler() {
+  const hugeData = new Array(1000000).fill('x');
+  const length = hugeData.length;  // Extract needed value
+  
+  return function handler() {
+    console.log(length);  // Only captures 'length'
+  };
+}
+// hugeData can be garbage collected after createHandler returns
+```
+
+### 5. Event Listeners Not Removed
+
+```javascript
+// ❌ BAD: Event listeners keep elements and handlers in memory
+class Component {
+  constructor(element) {
+    this.element = element;
+    this.data = fetchLargeData();
+    
+    this.handleClick = () => {
+      console.log(this.data);
+    };
+    
+    element.addEventListener('click', this.handleClick);
+  }
+  
+  // No cleanup method!
+}
+
+// ✅ GOOD: Always provide cleanup
+class Component {
+  constructor(element) {
+    this.element = element;
+    this.data = fetchLargeData();
+    
+    this.handleClick = () => {
+      console.log(this.data);
+    };
+    
+    element.addEventListener('click', this.handleClick);
+  }
+  
+  destroy() {
+    this.element.removeEventListener('click', this.handleClick);
+    this.element = null;
+    this.data = null;
+  }
+}
+```
+
+### 6. Growing Collections (Caches Without Limits)
+
+```javascript
+// ❌ BAD: Unbounded cache
+const cache = {};
+
+function getData(key) {
+  if (!cache[key]) {
+    cache[key] = expensiveOperation(key);
+  }
+  return cache[key];
+}
+// Cache grows forever!
+
+// ✅ GOOD: Use WeakMap for object keys (auto-cleanup)
+const cache = new WeakMap();
+
+function getData(obj) {
+  if (!cache.has(obj)) {
+    cache.set(obj, expensiveOperation(obj));
+  }
+  return cache.get(obj);
+}
+// When obj is garbage collected, its cache entry is too
+
+// ✅ ALSO GOOD: Bounded LRU cache for string keys
+class LRUCache {
+  constructor(maxSize = 100) {
+    this.cache = new Map();
+    this.maxSize = maxSize;
+  }
+  
+  get(key) {
+    if (this.cache.has(key)) {
+      // Move to end (most recently used)
+      const value = this.cache.get(key);
+      this.cache.delete(key);
+      this.cache.set(key, value);
+      return value;
+    }
+    return undefined;
+  }
+  
+  set(key, value) {
+    if (this.cache.has(key)) {
+      this.cache.delete(key);
+    } else if (this.cache.size >= this.maxSize) {
+      // Delete oldest entry
+      const firstKey = this.cache.keys().next().value;
+      this.cache.delete(firstKey);
+    }
+    this.cache.set(key, value);
+  }
+}
+```
+
+---
+
+## Memory-Efficient Data Structures
+
+JavaScript provides special data structures designed for memory efficiency:
+
+### WeakMap and WeakSet
+
+[`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) hold "weak" references that don't prevent garbage collection:
+
+```javascript
+// WeakMap: Associate data with objects without preventing GC
+const metadata = new WeakMap();
+
+function processElement(element) {
+  metadata.set(element, {
+    processedAt: Date.now(),
+    clickCount: 0
+  });
+}
+
+// When 'element' is removed from DOM and dereferenced,
+// its WeakMap entry is automatically removed too
+
+// Regular Map would keep the element alive:
+const regularMap = new Map();
+regularMap.set(element, data);
+// Even after element is removed, regularMap keeps it in memory!
+```
+
+**When to use:**
+- Caching computed data for objects
+- Storing private data associated with objects
+- Tracking objects without preventing their cleanup
+
+### WeakRef (Advanced)
+
+[`WeakRef`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef) provides a weak reference to an object, allowing you to check if it still exists:
+
+```javascript
+// Use case: Cache that allows garbage collection
+const cache = new Map();
+
+function getCached(key, compute) {
+  if (cache.has(key)) {
+    const ref = cache.get(key);
+    const value = ref.deref();  // Get object if it still exists
+    if (value !== undefined) {
+      return value;
+    }
+  }
+  
+  const value = compute();
+  cache.set(key, new WeakRef(value));
+  return value;
+}
+```
+
+<Warning>
+**Use WeakRef sparingly.** The exact timing of garbage collection is unpredictable. Code that relies on specific GC behavior may work differently across JavaScript engines or even between runs. Use WeakRef only for optimization, not correctness.
+</Warning>
+
+---
+
+## Profiling Memory with Chrome DevTools
+
+Chrome DevTools provides powerful tools for finding memory issues.
+
+### Using the Memory Panel
+
+<Steps>
+  <Step title="Open DevTools">
+    Press `F12` or `Cmd+Option+I` (Mac) / `Ctrl+Shift+I` (Windows)
+  </Step>
+  
+  <Step title="Go to Memory Panel">
+    Click the **Memory** tab
+  </Step>
+  
+  <Step title="Choose a Profile Type">
+    - **Heap snapshot:** Capture current memory state
+    - **Allocation instrumentation on timeline:** Track allocations over time
+    - **Allocation sampling:** Statistical sampling (lower overhead)
+  </Step>
+  
+  <Step title="Take a Snapshot">
+    Click **Take snapshot** to capture the heap
+  </Step>
+  
+  <Step title="Analyze Results">
+    Look for:
+    - Objects with high **Retained Size** (memory they keep alive)
+    - Unexpected objects that should have been garbage collected
+    - Detached DOM nodes (search for "Detached")
+  </Step>
+</Steps>
+
+### Finding Detached DOM Nodes
+
+Detached DOM nodes are elements removed from the document but still referenced in JavaScript:
+
+```javascript
+// This creates a detached DOM tree
+let detachedNodes = [];
+
+function leakMemory() {
+  const div = document.createElement('div');
+  div.innerHTML = '<span>Lots of content...</span>'.repeat(1000);
+  detachedNodes.push(div);  // Never added to DOM, but kept in array
+}
+```
+
+**To find them in DevTools:**
+1. Take a heap snapshot
+2. In the filter box, type "Detached"
+3. Look for `Detached HTMLDivElement`, etc.
+4. Click to see what's retaining them
+
+### Comparing Snapshots
+
+To find memory leaks:
+
+1. Take a snapshot (baseline)
+2. Perform the action you suspect leaks memory
+3. Take another snapshot
+4. Select the second snapshot
+5. Change view to "Comparison" and select the first snapshot
+6. Look for objects that increased unexpectedly
+
+---
+
+## Best Practices for Memory-Efficient Code
+
+<AccordionGroup>
+  <Accordion title="1. Nullify References When Done">
+    Help the garbage collector by explicitly removing references to large objects when you're done with them.
+    
+    ```javascript
+    function processLargeData() {
+      let data = loadHugeDataset();
+      const result = analyze(data);
+      
+      data = null;  // Allow GC to free the dataset
+      
+      return result;
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Use Object Pools for Frequent Allocations">
+    Reuse objects instead of creating new ones in performance-critical code.
+    
+    ```javascript
+    class ParticlePool {
+      constructor(size) {
+        this.pool = Array.from({ length: size }, () => ({
+          x: 0, y: 0, vx: 0, vy: 0, active: false
+        }));
+      }
+      
+      acquire() {
+        const particle = this.pool.find(p => !p.active);
+        if (particle) particle.active = true;
+        return particle;
+      }
+      
+      release(particle) {
+        particle.active = false;
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Avoid Creating Functions in Loops">
+    Functions created in loops allocate new function objects each iteration.
+    
+    ```javascript
+    // ❌ BAD: Creates new function every iteration
+    items.forEach(item => {
+      element.addEventListener('click', () => handle(item));
+    });
+    
+    // ✅ GOOD: Create handler once
+    function createHandler(item) {
+      return () => handle(item);
+    }
+    // Or use a single delegated handler
+    container.addEventListener('click', (e) => {
+      const item = e.target.closest('[data-item]');
+      if (item) handle(item.dataset.item);
+    });
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Be Careful with String Concatenation">
+    Strings are immutable; concatenation creates new strings.
+    
+    ```javascript
+    // ❌ BAD: Creates many intermediate strings
+    let result = '';
+    for (let i = 0; i < 10000; i++) {
+      result += 'item ' + i + ', ';
+    }
+    
+    // ✅ GOOD: Build array, join once
+    const parts = [];
+    for (let i = 0; i < 10000; i++) {
+      parts.push(`item ${i}`);
+    }
+    const result = parts.join(', ');
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Clean Up in Lifecycle Methods">
+    In frameworks like React, Vue, or Angular, always clean up in the appropriate lifecycle method.
+    
+    ```javascript
+    // React example
+    useEffect(() => {
+      const subscription = dataSource.subscribe(handleData);
+      
+      return () => {
+        subscription.unsubscribe();  // Cleanup on unmount
+      };
+    }, []);
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about Memory Management:**
+
+1. **JavaScript manages memory automatically** — You don't allocate or free memory manually, but you must understand how it works to avoid leaks
+
+2. **Memory lifecycle has three phases** — Allocation (automatic), use (your code), and release (garbage collection)
+
+3. **Stack is for primitives, heap is for objects** — Primitives and references live on the stack; objects live on the heap
+
+4. **Reachability determines garbage collection** — Objects are freed when they can't be reached from roots (global variables, current function stack)
+
+5. **Mark-and-sweep is the algorithm** — The GC marks all reachable objects, then sweeps away the rest
+
+6. **Common leaks: globals, timers, DOM refs, closures, listeners** — These patterns keep objects reachable unintentionally
+
+7. **WeakMap and WeakSet prevent leaks** — They hold weak references that don't prevent garbage collection
+
+8. **DevTools Memory panel finds leaks** — Use heap snapshots and comparisons to identify retained objects
+
+9. **Explicitly null references to large objects** — Help the GC by breaking references when you're done
+
+10. **Clean up event listeners and timers** — Always remove listeners and clear intervals when components unmount
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What are the three phases of the memory lifecycle?">
+    **Answer:** The three phases are:
+    
+    1. **Allocation** — Memory is reserved when you create values (automatic in JavaScript)
+    2. **Use** — Your code reads and writes to allocated memory
+    3. **Release** — Memory is freed when no longer needed (handled by garbage collection)
+    
+    In JavaScript, phases 1 and 3 are automatic, while phase 2 is controlled by your code.
+  </Accordion>
+  
+  <Accordion title="Question 2: What's the difference between stack and heap memory?">
+    **Answer:**
+    
+    | Stack | Heap |
+    |-------|------|
+    | Stores primitives and references | Stores objects |
+    | Fixed size, fast access | Dynamic size, slower access |
+    | LIFO order, auto-managed | Managed by garbage collector |
+    | Freed when function returns | Freed when unreachable |
+    
+    ```javascript
+    function example() {
+      const num = 42;           // Stack (primitive)
+      const obj = { x: 1 };     // Heap (object)
+      const ref = obj;          // Stack (reference to heap object)
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: Why does this code cause a memory leak?">
+    ```javascript
+    const buttons = document.querySelectorAll('button');
+    const handlers = [];
+    
+    buttons.forEach(button => {
+      const handler = () => console.log('clicked');
+      button.addEventListener('click', handler);
+      handlers.push(handler);
+    });
+    ```
+    
+    **Answer:** This code causes a memory leak because:
+    
+    1. Event listeners are never removed
+    2. Handler functions are stored in the `handlers` array
+    3. Even if buttons are removed from the DOM, they can't be garbage collected because:
+       - The `handlers` array keeps references to the handler functions
+       - The handler functions are attached to the buttons
+       
+    **Fix:** Remove event listeners and clear the array when buttons are removed:
+    
+    ```javascript
+    function cleanup() {
+      buttons.forEach((button, i) => {
+        button.removeEventListener('click', handlers[i]);
+      });
+      handlers.length = 0;
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: When would you use WeakMap instead of Map?">
+    **Answer:** Use `WeakMap` when:
+    
+    1. **Keys are objects** that may be garbage collected
+    2. **You're associating metadata** with objects owned by other code
+    3. **You don't want your map to prevent garbage collection** of the keys
+    
+    ```javascript
+    // Storing computed data for DOM elements
+    const elementData = new WeakMap();
+    
+    function processElement(el) {
+      if (!elementData.has(el)) {
+        elementData.set(el, computeExpensiveData(el));
+      }
+      return elementData.get(el);
+    }
+    
+    // When el is removed from DOM and dereferenced,
+    // its entry in elementData is automatically cleaned up
+    ```
+    
+    Use regular `Map` when you need to iterate over entries or when keys are primitives.
+  </Accordion>
+  
+  <Accordion title="Question 5: What does 'Detached' mean in Chrome DevTools heap snapshots?">
+    **Answer:** "Detached" refers to DOM elements that have been removed from the document tree but are still retained in JavaScript memory because some code still holds a reference to them.
+    
+    Common causes:
+    - Storing DOM elements in arrays or objects
+    - Event handlers that reference removed elements via closures
+    - Caches that hold DOM element references
+    
+    To find them:
+    1. Take a heap snapshot in DevTools Memory panel
+    2. Filter for "Detached"
+    3. Examine what's retaining each detached element
+    4. Remove those references in your code
+  </Accordion>
+  
+  <Accordion title="Question 6: How does mark-and-sweep garbage collection work?">
+    **Answer:** Mark-and-sweep works in two phases:
+    
+    **Mark phase:**
+    1. Start from "roots" (global variables, current call stack)
+    2. Visit all objects reachable from roots
+    3. Mark each visited object as "alive"
+    4. Follow references to mark objects reachable from marked objects
+    5. Continue until all reachable objects are marked
+    
+    **Sweep phase:**
+    1. Scan through all objects in memory
+    2. Delete any object that wasn't marked
+    3. Reclaim that memory for future allocations
+    
+    This approach handles circular references correctly — if two objects reference each other but neither is reachable from a root, both are collected.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Garbage Collection" icon="recycle" href="/beyond/concepts/garbage-collection">
+    Deep dive into garbage collection algorithms and optimization
+  </Card>
+  <Card title="WeakMap & WeakSet" icon="key" href="/beyond/concepts/weakmap-weakset">
+    Memory-safe collections with weak references
+  </Card>
+  <Card title="Call Stack" icon="layer-group" href="/concepts/call-stack">
+    How stack memory is used during function execution
+  </Card>
+  <Card title="Scope & Closures" icon="lock" href="/concepts/scope-and-closures">
+    How closures affect memory retention
+  </Card>
+</CardGroup>
+
+---
+
+## References
+
+<CardGroup cols={2}>
+  <Card title="Memory Management — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management">
+    Official MDN documentation on JavaScript memory management and garbage collection
+  </Card>
+  <Card title="WeakMap — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">
+    Documentation for WeakMap, a memory-efficient key-value collection
+  </Card>
+  <Card title="WeakRef — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef">
+    Documentation for WeakRef, allowing weak references to objects
+  </Card>
+  <Card title="FinalizationRegistry — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry">
+    Register callbacks when objects are garbage collected
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Garbage Collection — JavaScript.info" icon="newspaper" href="https://javascript.info/garbage-collection">
+    Excellent illustrated guide to how garbage collection works with the mark-and-sweep algorithm. Clear diagrams showing reachability.
+  </Card>
+  <Card title="Fix Memory Problems — Chrome DevTools" icon="wrench" href="https://developer.chrome.com/docs/devtools/memory-problems">
+    Official Chrome guide to identifying memory leaks, using heap snapshots, and profiling allocation timelines.
+  </Card>
+  <Card title="Memory Management Masterclass — Auth0" icon="graduation-cap" href="https://auth0.com/blog/four-types-of-leaks-in-your-javascript-code-and-how-to-get-rid-of-them/">
+    Comprehensive walkthrough of the four most common JavaScript memory leak patterns with practical solutions.
+  </Card>
+  <Card title="A Tour of V8: Garbage Collection" icon="engine" href="https://jayconrod.com/posts/55/a-tour-of-v8-garbage-collection">
+    Deep dive into how V8's garbage collector works, including generational collection and incremental marking.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Memory Management Crash Course" icon="video" href="https://www.youtube.com/watch?v=LaxbdIyBkL0">
+    Traversy Media's beginner-friendly introduction to memory management, stack vs heap, and garbage collection basics.
+  </Card>
+  <Card title="Memory Leaks Demystified" icon="video" href="https://www.youtube.com/watch?v=slV0zdUEYJw">
+    Google Chrome Developers explain how to find and fix memory leaks using DevTools, with real-world examples.
+  </Card>
+  <Card title="V8 Memory Deep Dive" icon="video" href="https://www.youtube.com/watch?v=aQ9dRKqk1ks">
+    Advanced talk from BlinkOn covering V8's memory architecture, generational GC, and performance optimizations.
+  </Card>
+  <Card title="JavaScript Memory: Heap, Stack, and Garbage Collection" icon="video" href="https://www.youtube.com/watch?v=8Vwl4F3B60Y">
+    Visual explanation of how JavaScript allocates memory and the differences between stack and heap storage.
+  </Card>
+</CardGroup>

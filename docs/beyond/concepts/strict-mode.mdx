@@ -1,0 +1,689 @@
+---
+title: "Strict Mode: How to Catch Common Mistakes in JavaScript"
+sidebarTitle: "Strict Mode: Catching Common Mistakes"
+description: "Learn JavaScript strict mode and how 'use strict' catches common mistakes. Understand silent errors it prevents, how this changes, and when to use it."
+---
+
+Why doesn't JavaScript yell at you when you misspell a variable name? Why can you accidentally create global variables without any warning? And why do some errors just... silently disappear?
+
+```javascript
+// In regular JavaScript (sloppy mode)
+function calculateTotal(price) {
+  // Oops! Typo in variable name - no error, just creates a global
+  totall = price * 1.1
+  return total  // ReferenceError - but only here!
+}
+```
+
+The answer is that JavaScript was designed to be forgiving. Too forgiving. [**Strict mode**](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode) is an opt-in way to catch these mistakes early, turning silent failures into actual errors you can fix.
+
+```javascript
+"use strict"
+
+function calculateTotal(price) {
+  totall = price * 1.1  // ReferenceError: totall is not defined
+  return total          // Never reaches here - error caught immediately!
+}
+```
+
+<Info>
+**What you'll learn in this guide:**
+- How to enable strict mode (and when it's automatic)
+- The most common silent errors that strict mode catches
+- How `this` behaves differently in strict mode
+- Why `eval` and `arguments` have restrictions
+- Reserved words that strict mode protects for future JavaScript
+- When you don't need to add `"use strict"` anymore
+</Info>
+
+<Warning>
+**Prerequisite:** This guide references [Scope & Closures](/concepts/scope-and-closures) and [this, call, apply & bind](/concepts/this-call-apply-bind). If you're not comfortable with those yet, you can still follow along, but reading them first will make the examples clearer.
+</Warning>
+
+---
+
+## What is Strict Mode?
+
+**Strict mode** is an opt-in restricted variant of JavaScript, introduced in ECMAScript 5 (2009). It catches common mistakes by converting silent errors into thrown exceptions and disabling confusing features. Enable it by adding `"use strict"` at the beginning of a script or function.
+
+---
+
+## The Safety Net Analogy
+
+Think of strict mode like the safety net under a trapeze artist.
+
+Without the net, a small mistake might go unnoticed. The artist might develop bad habits, make minor errors in form, and never realize it until something goes seriously wrong.
+
+With the net in place, those small mistakes become obvious. When you slip, you notice immediately. You can correct your form before bad habits become permanent.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    SLOPPY MODE vs STRICT MODE                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│  SLOPPY MODE (Default)                  STRICT MODE ("use strict")       │
+│  ─────────────────────                  ─────────────────────────        │
+│                                                                          │
+│  ┌──────────────────────┐               ┌──────────────────────┐         │
+│  │  mistakeVar = 5      │               │  mistakeVar = 5      │         │
+│  │         ↓            │               │         ↓            │         │
+│  │   Creates global     │               │   ReferenceError!    │         │
+│  │   (silent failure)   │               │   (caught early)     │         │
+│  └──────────────────────┘               └──────────────────────┘         │
+│                                                                          │
+│  ┌──────────────────────┐               ┌──────────────────────┐         │
+│  │  NaN = 42            │               │  NaN = 42            │         │
+│  │         ↓            │               │         ↓            │         │
+│  │   Does nothing       │               │   TypeError!         │         │
+│  │   (no feedback)      │               │   (can't assign)     │         │
+│  └──────────────────────┘               └──────────────────────┘         │
+│                                                                          │
+│  "Forgiving" but dangerous              Strict but helpful               │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Strict mode doesn't make JavaScript a different language. It just adds guardrails that catch problems before they become bugs.
+
+---
+
+## How to Enable Strict Mode
+
+### Whole-Script Strict Mode
+
+Add `"use strict";` as the very first statement in your file:
+
+```javascript
+"use strict"
+
+// Everything in this file is now in strict mode
+let validVariable = 10
+invalidVariable = 20  // ReferenceError!
+```
+
+<Warning>
+**The directive must be first.** If anything other than comments appears before `"use strict"`, it becomes a regular string and does nothing:
+
+```javascript
+let x = 1
+"use strict"  // Too late! This is just a string now
+
+invalidVariable = 20  // No error - strict mode isn't active
+```
+</Warning>
+
+### Function-Level Strict Mode
+
+You can enable strict mode for just one function:
+
+```javascript
+function loose() {
+  badVariable = "oops"  // Creates global (sloppy mode)
+}
+
+function strict() {
+  "use strict"
+  badVariable = "oops"  // ReferenceError! (strict mode)
+}
+```
+
+This is useful when adding strict mode to legacy codebases gradually.
+
+### Automatic Strict Mode: Modules and Classes
+
+Here's the good news: **you probably don't need to write `"use strict"` anymore.**
+
+[ES Modules](/concepts/es-modules) are automatically in strict mode:
+
+```javascript
+// myModule.js (or any file loaded as type="module")
+// No "use strict" needed - it's automatic!
+
+export function greet(name) {
+  mesage = `Hello, ${name}`  // ReferenceError! (strict mode is on)
+  return message
+}
+```
+
+[Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes) are also automatically strict:
+
+```javascript
+class Calculator {
+  add(a, b) {
+    // This method runs in strict mode automatically
+    reslt = a + b  // ReferenceError!
+    return result
+  }
+}
+```
+
+<Tip>
+**Quick Rule:** If you're writing modern JavaScript with `import`/`export` or classes, strict mode is already on. You only need `"use strict"` for standalone scripts that don't use modules.
+</Tip>
+
+---
+
+## Silent Errors That Become Real Errors
+
+This is the biggest win of strict mode. JavaScript has many operations that silently fail in [sloppy mode](https://developer.mozilla.org/en-US/docs/Glossary/Sloppy_mode). Strict mode turns these into actual errors you can see and fix.
+
+### 1. Accidental Global Variables
+
+The most common JavaScript mistake. In sloppy mode, assigning to an undeclared variable creates a global:
+
+```javascript
+// ❌ SLOPPY MODE - silent bug
+function processUser(user) {
+  userName = user.name  // Typo! Creates window.userName
+  return userName.toUpperCase()
+}
+
+processUser({ name: "Alice" })
+console.log(window.userName)  // "Alice" - leaked to global!
+```
+
+```javascript
+// ✓ STRICT MODE - catches the bug
+"use strict"
+
+function processUser(user) {
+  userName = user.name  // ReferenceError: userName is not defined
+  return userName.toUpperCase()
+}
+```
+
+This single change catches countless typos and copy-paste errors. See [Scope & Closures](/concepts/scope-and-closures) for more on how variable declarations work.
+
+### 2. Assignments to Read-Only Properties
+
+Some properties can't be changed. In sloppy mode, trying to change them does nothing. In strict mode, you get an error:
+
+```javascript
+// ❌ SLOPPY MODE - silent failure
+NaN = 42         // Does nothing
+undefined = true // Does nothing
+Infinity = 0     // Does nothing
+
+const obj = {}
+Object.defineProperty(obj, "fixed", { value: 10, writable: false })
+obj.fixed = 20   // Does nothing - still 10
+```
+
+```javascript
+// ✓ STRICT MODE - actual errors
+"use strict"
+
+NaN = 42         // TypeError: Cannot assign to read-only property
+undefined = true // TypeError: Cannot assign to read-only property
+
+const obj = {}
+Object.defineProperty(obj, "fixed", { value: 10, writable: false })
+obj.fixed = 20   // TypeError: Cannot assign to read-only property 'fixed'
+```
+
+### 3. Assignments to Getter-Only Properties
+
+If a property only has a getter (no setter), assignment silently fails in sloppy mode:
+
+```javascript
+const user = {
+  get name() {
+    return "Alice"
+  }
+}
+
+// ❌ SLOPPY MODE
+user.name = "Bob"  // Silent failure
+console.log(user.name)  // Still "Alice"
+
+// ✓ STRICT MODE
+"use strict"
+user.name = "Bob"  // TypeError: Cannot set property 'name' which has only a getter
+```
+
+### 4. Deleting Undeletable Properties
+
+Built-in properties like `Object.prototype` can't be deleted:
+
+```javascript
+// ❌ SLOPPY MODE - silent failure
+delete Object.prototype  // Returns false, does nothing
+delete Math.PI           // Returns false, does nothing
+
+// ✓ STRICT MODE - actual errors
+"use strict"
+delete Object.prototype  // TypeError: Cannot delete property 'prototype'
+```
+
+### 5. Duplicate Parameter Names
+
+This catches copy-paste errors in function definitions:
+
+```javascript
+// ❌ SLOPPY MODE - silently uses last value
+function sum(a, a, b) {
+  return a + a + b  // First 'a' is lost!
+}
+sum(1, 2, 3)  // Returns 7 (2 + 2 + 3), not 6
+
+// ✓ STRICT MODE - syntax error
+"use strict"
+function sum(a, a, b) {  // SyntaxError: Duplicate parameter name
+  return a + a + b
+}
+```
+
+### 6. Octal Literal Confusion
+
+Leading zeros in numbers can cause unexpected behavior:
+
+```javascript
+// ❌ SLOPPY MODE - confusing octal interpretation
+const filePermissions = 0755  // This is 493 in decimal!
+console.log(filePermissions)  // 493
+
+// ✓ STRICT MODE - syntax error for legacy octal
+"use strict"
+const filePermissions = 0755  // SyntaxError: Octal literals are not allowed
+
+// Use the explicit 0o prefix instead:
+const correctPermissions = 0o755  // Clear: this is octal
+console.log(correctPermissions)   // 493
+```
+
+---
+
+## How `this` Changes in Strict Mode
+
+One of the most important strict mode changes affects the [`this`](/concepts/this-call-apply-bind) keyword.
+
+### The Problem: Accidental Global Access
+
+In sloppy mode, when you call a function without a context, `this` defaults to the global object (`window` in browsers, `global` in Node.js):
+
+```javascript
+// ❌ SLOPPY MODE - this = global object
+function showThis() {
+  console.log(this)
+}
+
+showThis()  // Window {...} or global object
+```
+
+This is dangerous because you might accidentally read or modify global properties:
+
+```javascript
+// ❌ SLOPPY MODE - accidental global modification
+function setName(name) {
+  this.name = name  // Sets window.name!
+}
+
+setName("Alice")
+console.log(window.name)  // "Alice" - leaked!
+```
+
+### The Solution: `this` is `undefined`
+
+In strict mode, `this` remains `undefined` when a function is called without a context:
+
+```javascript
+// ✓ STRICT MODE - this = undefined
+"use strict"
+
+function showThis() {
+  console.log(this)
+}
+
+showThis()  // undefined
+
+function setName(name) {
+  this.name = name  // TypeError: Cannot set property 'name' of undefined
+}
+```
+
+This makes bugs obvious instead of silently corrupting global state.
+
+<Note>
+**Arrow functions are different.** They inherit `this` from their surrounding scope regardless of strict mode. This behavior is consistent and not affected by the sloppy/strict distinction.
+</Note>
+
+---
+
+## Restrictions on `eval` and `arguments`
+
+Strict mode makes [`eval`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval) and [`arguments`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments) less magical (and less dangerous).
+
+### Can't Use as Variable Names
+
+```javascript
+// ❌ SLOPPY MODE - allowed but confusing
+var eval = 10
+var arguments = [1, 2, 3]
+
+// ✓ STRICT MODE - syntax error
+"use strict"
+let eval = 10       // SyntaxError: Unexpected eval or arguments in strict mode
+let arguments = []  // SyntaxError
+```
+
+### `eval` Doesn't Leak Variables
+
+In sloppy mode, `eval` can create variables in the surrounding scope:
+
+```javascript
+// ❌ SLOPPY MODE - eval leaks variables
+eval("var leaked = 'surprise!'")
+console.log(leaked)  // "surprise!" - it escaped!
+
+// ✓ STRICT MODE - eval is contained
+"use strict"
+eval("var contained = 'trapped'")
+console.log(contained)  // ReferenceError: contained is not defined
+```
+
+### `arguments` Doesn't Sync with Parameters
+
+In sloppy mode, `arguments` and named parameters are linked:
+
+```javascript
+// ❌ SLOPPY MODE - weird synchronization
+function weirdSync(a) {
+  arguments[0] = 99
+  return a  // Returns 99! Changed via arguments
+}
+weirdSync(1)  // 99
+
+// ✓ STRICT MODE - no synchronization
+"use strict"
+function noSync(a) {
+  arguments[0] = 99
+  return a  // Returns 1 - 'a' is independent
+}
+noSync(1)  // 1
+```
+
+---
+
+## Reserved Words for Future JavaScript
+
+Strict mode reserves words that might be used in future versions of JavaScript:
+
+```javascript
+"use strict"
+
+// These are reserved and cause SyntaxError if used as identifiers:
+let implements  // SyntaxError
+let interface   // SyntaxError
+let package     // SyntaxError
+let private     // SyntaxError
+let protected   // SyntaxError
+let public      // SyntaxError
+let static      // SyntaxError (except in class context)
+```
+
+This prevents your code from breaking when JavaScript adds new features using these keywords.
+
+---
+
+## The `with` Statement is Forbidden
+
+The [`with`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with) statement is completely banned in strict mode:
+
+```javascript
+// ❌ SLOPPY MODE - with is allowed but confusing
+const obj = { x: 10, y: 20 }
+with (obj) {
+  console.log(x + y)  // 30 - but where do x and y come from?
+}
+
+// ✓ STRICT MODE - with is forbidden
+"use strict"
+with (obj) {  // SyntaxError: Strict mode code may not include a with statement
+  console.log(x + y)
+}
+```
+
+The `with` statement makes code unpredictable and impossible to optimize. Use [destructuring](/concepts/modern-js-syntax) instead:
+
+```javascript
+// ✓ BETTER - clear and explicit
+const { x, y } = obj
+console.log(x + y)  // 30 - obviously from obj
+```
+
+---
+
+## Common Mistake: Adding `"use strict"` When It's Already On
+
+A frequent mistake is adding `"use strict"` to code that's already in strict mode:
+
+```javascript
+// myModule.js - ES Module (already strict!)
+"use strict"  // Unnecessary - modules are always strict
+
+export function greet() {
+  // ...
+}
+```
+
+```javascript
+class MyClass {
+  myMethod() {
+    "use strict"  // Unnecessary - class bodies are always strict
+  }
+}
+```
+
+This doesn't cause errors, but it's redundant. In modern JavaScript:
+
+| Context | Strict Mode | Need `"use strict"`? |
+|---------|-------------|---------------------|
+| ES Modules (`import`/`export`) | Automatic | No |
+| Class bodies | Automatic | No |
+| Code inside `eval()` in strict context | Automatic | No |
+| Regular `<script>` tags | Sloppy by default | Yes |
+| Node.js CommonJS files | Sloppy by default | Yes |
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Strict mode catches silent failures** — Operations that would silently fail (like assigning to read-only properties) now throw errors you can see and fix.
+
+2. **`"use strict"` must be first** — Place it at the very top of a file or function, before any other statements.
+
+3. **Modules and classes are automatically strict** — If you use `import`/`export` or classes, strict mode is already on. No need to add the directive.
+
+4. **Accidental globals become errors** — The most common bug it catches. Assigning to an undeclared variable throws `ReferenceError` instead of creating a global.
+
+5. **`this` is `undefined` in loose function calls** — Calling a function without a context gives `this = undefined` instead of the global object. This prevents accidental global pollution.
+
+6. **`eval` is contained** — Variables created inside `eval()` stay inside. They don't leak into the surrounding scope.
+
+7. **Duplicate parameters are forbidden** — `function f(a, a) {}` is a syntax error, catching copy-paste bugs.
+
+8. **The `with` statement is banned** — Use destructuring instead for cleaner, more predictable code.
+
+9. **Reserved words are protected** — Words like `private`, `public`, `interface` can't be used as variable names, preparing your code for future JavaScript features.
+
+10. **Use strict mode everywhere** — There's no downside. Modern tooling and ES modules make this automatic.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What happens when you assign to an undeclared variable in strict mode?">
+    **Answer:**
+    
+    You get a `ReferenceError`. In sloppy mode, this would silently create a global variable, which is almost never what you want.
+    
+    ```javascript
+    "use strict"
+    
+    function example() {
+      myVar = 10  // ReferenceError: myVar is not defined
+    }
+    ```
+    
+    This catches typos like `userName` vs `username` immediately instead of creating mysterious global variables.
+  </Accordion>
+  
+  <Accordion title="What is `this` inside a regular function call in strict mode?">
+    **Answer:**
+    
+    It's `undefined`. In sloppy mode, it would be the global object (`window` or `global`).
+    
+    ```javascript
+    "use strict"
+    
+    function showThis() {
+      console.log(this)  // undefined
+    }
+    
+    showThis()
+    ```
+    
+    This prevents accidental reads or writes to global properties through `this`.
+  </Accordion>
+  
+  <Accordion title="Do you need to add 'use strict' to ES Modules?">
+    **Answer:**
+    
+    No. ES Modules are automatically in strict mode. Adding `"use strict"` is harmless but unnecessary.
+    
+    ```javascript
+    // myModule.js
+    export function greet() {
+      // Already in strict mode - no directive needed
+      mistypedVar = "oops"  // ReferenceError (strict mode active)
+    }
+    ```
+    
+    The same applies to class bodies, which are also automatically strict.
+  </Accordion>
+  
+  <Accordion title="Why does strict mode forbid duplicate parameter names?">
+    **Answer:**
+    
+    To catch copy-paste errors. In sloppy mode, duplicate parameters silently shadow each other:
+    
+    ```javascript
+    // Sloppy mode - confusing behavior
+    function add(a, a) {
+      return a + a  // The first 'a' is lost, uses second value twice
+    }
+    add(1, 2)  // Returns 4, not 3!
+    
+    // Strict mode - error
+    "use strict"
+    function add(a, a) {  // SyntaxError: Duplicate parameter name
+      return a + a
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="What's wrong with the `with` statement that strict mode bans it?">
+    **Answer:**
+    
+    The `with` statement makes it impossible to know where variables come from at a glance:
+    
+    ```javascript
+    with (someObject) {
+      x = 10  // Is this someObject.x or a variable x? Depends on runtime!
+    }
+    ```
+    
+    This ambiguity prevents JavaScript engines from optimizing your code and makes bugs hard to track down. Use [destructuring](/concepts/modern-js-syntax) instead:
+    
+    ```javascript
+    const { x, y, z } = someObject  // Clear and explicit
+    ```
+  </Accordion>
+  
+  <Accordion title="Why can't you use words like 'private' or 'interface' as variable names in strict mode?">
+    **Answer:**
+    
+    These words are reserved for potential future JavaScript features. Strict mode protects them so your code won't break when new syntax is added.
+    
+    ```javascript
+    "use strict"
+    
+    let private = 10  // SyntaxError: Unexpected strict mode reserved word
+    let interface = {}  // SyntaxError
+    ```
+    
+    Some of these words (like `static`) are already used in class definitions. Others may be used in future versions.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="ES Modules" icon="box" href="/concepts/es-modules">
+    Modules are automatically in strict mode. Learn the modern way to organize JavaScript code.
+  </Card>
+  <Card title="this, call, apply & bind" icon="bullseye" href="/concepts/this-call-apply-bind">
+    Deep dive into how `this` works and why strict mode changes its default behavior.
+  </Card>
+  <Card title="Scope and Closures" icon="lock" href="/concepts/scope-and-closures">
+    Understand how strict mode's scope changes relate to JavaScript's scoping rules.
+  </Card>
+  <Card title="Temporal Dead Zone" icon="clock" href="/beyond/concepts/temporal-dead-zone">
+    Another language mechanic that catches variable access errors early.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Strict Mode — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">
+    The complete reference for all strict mode changes and behaviors.
+  </Card>
+  <Card title="Sloppy Mode — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Sloppy_mode">
+    MDN's glossary entry on the default non-strict mode.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="The Modern Mode, 'use strict'" icon="newspaper" href="https://javascript.info/strict-mode">
+    A concise overview from javascript.info covering when and why to use strict mode. Great for a quick refresher.
+  </Card>
+  <Card title="What is Strict Mode in JavaScript?" icon="newspaper" href="https://www.freecodecamp.org/news/what-is-strict-mode-in-javascript/">
+    freeCodeCamp's beginner-friendly explanation with practical examples of each strict mode restriction.
+  </Card>
+  <Card title="Strict Mode — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode">
+    The definitive reference covering every strict mode change. Includes detailed explanations of edge cases and browser compatibility notes.
+  </Card>
+  <Card title="Transitioning to Strict Mode" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode/Transitioning_to_strict_mode">
+    MDN's guide for migrating existing codebases to strict mode. Covers common issues you'll encounter and how to resolve them.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Strict Mode" icon="video" href="https://www.youtube.com/watch?v=uqUYNqZx0qY">
+    Web Dev Simplified explains strict mode with clear examples of the errors it catches and why you should use it.
+  </Card>
+  <Card title="Strict Mode in 100 Seconds" icon="video" href="https://www.youtube.com/watch?v=JEDub1lG8o0">
+    Fireship's rapid-fire overview covering the key strict mode changes. Perfect for a quick introduction.
+  </Card>
+  <Card title="JavaScript 'use strict'" icon="video" href="https://www.youtube.com/watch?v=G9QTBS2x8U4">
+    Dcode walks through practical examples of strict mode errors, showing exactly what breaks and why. Good for visual learners.
+  </Card>
+</CardGroup>

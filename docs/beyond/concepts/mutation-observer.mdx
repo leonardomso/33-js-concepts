@@ -1,0 +1,917 @@
+---
+title: "MutationObserver: Watching DOM Changes in JavaScript"
+sidebarTitle: "MutationObserver: Watching DOM Changes"
+description: "Learn the MutationObserver API in JavaScript. Understand how to watch DOM changes, detect attribute modifications, observe child elements, and build reactive UIs without polling."
+---
+
+How do you know when something changes in the DOM? What if you need to react when a third-party script adds elements, when user input modifies content, or when attributes change dynamically?
+
+```javascript
+// Watch for any changes to a DOM element
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    console.log('Something changed!', mutation.type)
+  }
+})
+
+observer.observe(document.body, {
+  childList: true,   // Watch for added/removed children
+  subtree: true      // Watch all descendants too
+})
+```
+
+The **[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)** API lets you watch the DOM for changes and react to them efficiently. It replaced the older, performance-killing Mutation Events and is now the standard way to detect DOM modifications.
+
+<Info>
+**What you'll learn in this guide:**
+- What MutationObserver is and why it replaced Mutation Events
+- How to configure exactly what changes to observe
+- Watching child nodes, attributes, and text content
+- Using the subtree option for deep observation
+- Processing MutationRecords to understand what changed
+- Disconnecting observers properly for cleanup
+- Real-world use cases and patterns
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you're comfortable with [DOM manipulation](/concepts/dom) and basic JavaScript. Understanding the [Event Loop](/concepts/event-loop) helps but isn't required.
+</Warning>
+
+---
+
+## What is MutationObserver?
+
+A **MutationObserver** is a built-in JavaScript object that watches a DOM element and fires a callback whenever specified changes occur. It provides an efficient, asynchronous way to react to DOM mutations without constantly polling or using deprecated event listeners.
+
+Think of it as setting up a security camera for your DOM. You tell it what to watch (an element), what changes you care about (children added, attributes changed, text modified), and what to do when something happens (your callback function).
+
+### Why Not Just Use Events?
+
+You might wonder: "Why not just listen for events?" The problem is that most DOM changes don't fire events you can listen to:
+
+```javascript
+// These changes happen silently - no events fired!
+element.setAttribute('data-active', 'true')
+element.textContent = 'New text'
+element.appendChild(newChild)
+
+// There's no "attributechange" or "childadded" event to listen for
+element.addEventListener('attributechange', handler)  // This doesn't exist!
+```
+
+Before MutationObserver, developers used **Mutation Events** (`DOMNodeInserted`, `DOMAttrModified`, etc.), but these had serious problems:
+
+| Problem | Impact |
+|---------|--------|
+| Fired synchronously | Blocked the main thread during DOM operations |
+| Fired too often | Every single change triggered an event |
+| Performance killer | Made complex DOM updates painfully slow |
+| Bubbled up the DOM | Caused cascade of unnecessary handlers |
+
+MutationObserver solves all of these by batching changes and delivering them asynchronously via microtasks.
+
+---
+
+## The Security Camera Analogy
+
+Imagine you're setting up security cameras in a building:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    THE SECURITY CAMERA ANALOGY                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   YOUR DOM                                MUTATIONOBSERVER               │
+│   ┌──────────────────────┐               ┌──────────────────┐           │
+│   │                      │               │                  │           │
+│   │  ┌────────────────┐  │    watches    │   📹 Camera      │           │
+│   │  │  <div>         │◄─┼───────────────┤                  │           │
+│   │  │    <p>Hi</p>   │  │               │   Config:        │           │
+│   │  │    <span/>     │  │               │   - children ✓   │           │
+│   │  │  </div>        │  │               │   - attributes ✓ │           │
+│   │  └────────────────┘  │               │   - text ✓       │           │
+│   │                      │               │                  │           │
+│   └──────────────────────┘               └────────┬─────────┘           │
+│                                                   │                      │
+│                                                   │ detects changes      │
+│                                                   ▼                      │
+│                                          ┌──────────────────┐           │
+│                                          │  YOUR CALLBACK   │           │
+│                                          │                  │           │
+│                                          │  "A child was    │           │
+│                                          │   added!"        │           │
+│                                          │  "Attribute      │           │
+│                                          │   changed!"      │           │
+│                                          └──────────────────┘           │
+│                                                                          │
+│   Just like a security camera:                                           │
+│   • You choose WHAT to watch (which element)                             │
+│   • You choose WHAT to detect (motion, faces, etc. = children, attrs)    │
+│   • You get NOTIFIED when something happens (callback with details)      │
+│   • You can STOP watching anytime (disconnect)                           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+The key insight: you're not constantly checking "did something change?" (polling). Instead, you set up the observer once, and it tells YOU when changes happen.
+
+---
+
+## Creating a MutationObserver
+
+Setting up a MutationObserver takes three steps:
+
+<Steps>
+  <Step title="Create the observer with a callback">
+    The callback receives an array of [MutationRecord](https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord) objects describing what changed.
+    
+    ```javascript
+    const observer = new MutationObserver((mutations, obs) => {
+      // mutations = array of MutationRecord objects
+      // obs = the observer itself (useful for disconnecting)
+      console.log(`${mutations.length} changes detected`)
+    })
+    ```
+  </Step>
+  
+  <Step title="Start observing with configuration">
+    Call `observe()` with the target element and an options object specifying what to watch.
+    
+    ```javascript
+    const targetElement = document.getElementById('app')
+    
+    observer.observe(targetElement, {
+      childList: true,    // Watch for added/removed children
+      attributes: true,   // Watch for attribute changes
+      characterData: true // Watch for text content changes
+    })
+    ```
+  </Step>
+  
+  <Step title="Handle the mutations in your callback">
+    Each [MutationRecord](https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord) tells you exactly what changed.
+    
+    ```javascript
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'childList') {
+          console.log('Children changed!')
+          console.log('Added:', mutation.addedNodes)
+          console.log('Removed:', mutation.removedNodes)
+        }
+        if (mutation.type === 'attributes') {
+          console.log(`Attribute "${mutation.attributeName}" changed`)
+        }
+      }
+    })
+    ```
+  </Step>
+</Steps>
+
+---
+
+## Configuration Options
+
+The second argument to `observe()` is a [MutationObserverInit](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe#options) object that controls what changes to watch. At least one of `childList`, `attributes`, or `characterData` must be `true`.
+
+### The Core Options
+
+| Option | Type | What It Watches |
+|--------|------|-----------------|
+| `childList` | boolean | Adding or removing child nodes |
+| `attributes` | boolean | Changes to element attributes |
+| `characterData` | boolean | Changes to text node content |
+| `subtree` | boolean | Apply options to ALL descendants, not just direct children |
+
+### Additional Options
+
+| Option | Type | What It Does |
+|--------|------|--------------|
+| `attributeOldValue` | boolean | Include the old attribute value in the MutationRecord |
+| `characterDataOldValue` | boolean | Include the old text content in the MutationRecord |
+| `attributeFilter` | string[] | Only watch specific attributes (e.g., `['class', 'data-id']`) |
+
+### Common Configuration Patterns
+
+<Tabs>
+  <Tab title="Watch Children Only">
+    ```javascript
+    // Detect when elements are added or removed
+    observer.observe(container, {
+      childList: true
+    })
+    
+    // Triggers when:
+    container.appendChild(newElement)     // ✓
+    container.removeChild(existingChild)  // ✓
+    container.innerHTML = '<p>New</p>'    // ✓
+    container.setAttribute('class', 'x')  // ✗ (not watching attributes)
+    ```
+  </Tab>
+  
+  <Tab title="Watch Attributes Only">
+    ```javascript
+    // Detect attribute changes
+    observer.observe(element, {
+      attributes: true,
+      attributeOldValue: true  // Optional: get the previous value
+    })
+    
+    // Triggers when:
+    element.setAttribute('data-active', 'true')  // ✓
+    element.classList.add('highlight')           // ✓
+    element.id = 'new-id'                        // ✓
+    element.textContent = 'New text'             // ✗ (not watching characterData)
+    ```
+  </Tab>
+  
+  <Tab title="Watch Specific Attributes">
+    ```javascript
+    // Only care about certain attributes
+    observer.observe(element, {
+      attributes: true,
+      attributeFilter: ['class', 'data-state', 'aria-expanded']
+    })
+    
+    // Triggers when:
+    element.classList.toggle('active')        // ✓ (class is in filter)
+    element.dataset.state = 'loading'         // ✓ (data-state is in filter)
+    element.setAttribute('title', 'Hello')    // ✗ (title not in filter)
+    ```
+  </Tab>
+  
+  <Tab title="Watch Everything Deeply">
+    ```javascript
+    // Watch the entire subtree for all changes
+    observer.observe(document.body, {
+      childList: true,
+      attributes: true,
+      characterData: true,
+      subtree: true,              // Watch ALL descendants
+      attributeOldValue: true,
+      characterDataOldValue: true
+    })
+    
+    // Triggers for ANY change anywhere in the body!
+    // Use with caution - can be expensive
+    ```
+  </Tab>
+</Tabs>
+
+<Warning>
+**Performance tip:** Be specific about what you watch. Observing `document.body` with `subtree: true` and all options enabled will fire for EVERY DOM change on the page. Only watch what you need.
+</Warning>
+
+---
+
+## Understanding MutationRecords
+
+When your callback fires, it receives an array of [MutationRecord](https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord) objects. Each record describes a single mutation.
+
+### MutationRecord Properties
+
+| Property | Description |
+|----------|-------------|
+| `type` | The type of mutation: `"childList"`, `"attributes"`, or `"characterData"` |
+| `target` | The element (or text node) that was mutated |
+| `addedNodes` | NodeList of added nodes (for `childList` mutations) |
+| `removedNodes` | NodeList of removed nodes (for `childList` mutations) |
+| `previousSibling` | Previous sibling of added/removed nodes |
+| `nextSibling` | Next sibling of added/removed nodes |
+| `attributeName` | Name of the changed attribute (for `attributes` mutations) |
+| `attributeNamespace` | Namespace of the changed attribute (for namespaced attributes) |
+| `oldValue` | Previous value (if `attributeOldValue` or `characterDataOldValue` was set) |
+
+### Processing Different Mutation Types
+
+```javascript
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    switch (mutation.type) {
+      case 'childList':
+        // Nodes were added or removed
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            console.log('Element added:', node.tagName)
+          }
+        })
+        mutation.removedNodes.forEach(node => {
+          if (node.nodeType === Node.ELEMENT_NODE) {
+            console.log('Element removed:', node.tagName)
+          }
+        })
+        break
+        
+      case 'attributes':
+        // An attribute changed
+        console.log(
+          `Attribute "${mutation.attributeName}" changed on`,
+          mutation.target,
+          `from "${mutation.oldValue}" to "${mutation.target.getAttribute(mutation.attributeName)}"`
+        )
+        break
+        
+      case 'characterData':
+        // Text content changed
+        console.log(
+          'Text changed from',
+          `"${mutation.oldValue}" to "${mutation.target.textContent}"`
+        )
+        break
+    }
+  }
+})
+
+observer.observe(element, {
+  childList: true,
+  attributes: true,
+  characterData: true,
+  subtree: true,
+  attributeOldValue: true,
+  characterDataOldValue: true
+})
+```
+
+<Tip>
+**Quick tip:** `addedNodes` and `removedNodes` include ALL node types, including text nodes and comments. Filter by `nodeType === Node.ELEMENT_NODE` if you only care about elements.
+</Tip>
+
+---
+
+## The Subtree Option
+
+By default, MutationObserver only watches the direct children of the target element. The `subtree: true` option extends observation to ALL descendants.
+
+```javascript
+// Without subtree - only watches direct children
+observer.observe(parent, { childList: true })
+
+// parent
+// ├── child1     ← Watched
+// │   └── grandchild1  ← NOT watched
+// └── child2     ← Watched
+//     └── grandchild2  ← NOT watched
+
+
+// With subtree - watches entire tree
+observer.observe(parent, { childList: true, subtree: true })
+
+// parent
+// ├── child1     ← Watched
+// │   └── grandchild1  ← Watched
+// └── child2     ← Watched
+//     └── grandchild2  ← Watched
+```
+
+### When to Use Subtree
+
+| Use Case | subtree? | Why |
+|----------|----------|-----|
+| Watch a specific container for new items | No | Only direct children matter |
+| Detect any DOM change in an app | Yes | Changes can happen anywhere |
+| Watch for specific elements appearing | Yes | They might be nested |
+| Track attribute changes on one element | No | Only the target matters |
+
+---
+
+## Disconnecting and Cleanup
+
+Always disconnect observers when you're done with them. This prevents memory leaks and unnecessary processing.
+
+### The disconnect() Method
+
+```javascript
+const observer = new MutationObserver(callback)
+observer.observe(element, { childList: true })
+
+// Later, when you're done watching
+observer.disconnect()
+
+// The callback will no longer fire for any changes
+```
+
+### The takeRecords() Method
+
+If you need to process pending mutations before disconnecting, use [takeRecords()](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/takeRecords):
+
+```javascript
+// Get any mutations that haven't been delivered to the callback yet
+const pendingMutations = observer.takeRecords()
+
+// Process them manually
+for (const mutation of pendingMutations) {
+  console.log('Pending mutation:', mutation.type)
+}
+
+// Now disconnect
+observer.disconnect()
+```
+
+### Cleanup Pattern for Components
+
+```javascript
+class MyComponent {
+  constructor(element) {
+    this.element = element
+    this.observer = new MutationObserver(this.handleMutations.bind(this))
+    this.observer.observe(element, { childList: true, subtree: true })
+  }
+  
+  handleMutations(mutations) {
+    // Process mutations
+  }
+  
+  destroy() {
+    // Always clean up!
+    this.observer.disconnect()
+    this.observer = null
+  }
+}
+```
+
+<Warning>
+**Memory leak alert:** Forgetting to disconnect observers on removed elements can cause memory leaks. Always disconnect when the observed element is removed from the DOM or when your component is destroyed.
+</Warning>
+
+---
+
+## When Callbacks Run: Microtasks
+
+MutationObserver callbacks are scheduled as **microtasks**, meaning they run after the current script but before the browser renders. This is the same queue as Promise callbacks.
+
+```javascript
+console.log('1. Script start')
+
+const observer = new MutationObserver(() => {
+  console.log('3. MutationObserver callback')
+})
+observer.observe(document.body, { childList: true })
+
+document.body.appendChild(document.createElement('div'))
+
+Promise.resolve().then(() => {
+  console.log('2. Promise callback')
+})
+
+console.log('4. Script end')
+
+// Output:
+// 1. Script start
+// 4. Script end
+// 2. Promise callback
+// 3. MutationObserver callback
+```
+
+This means:
+- Your callback runs AFTER the DOM changes are complete
+- Multiple rapid changes are batched into a single callback
+- The callback runs BEFORE the browser paints
+
+---
+
+## Real-World Use Cases
+
+### 1. Lazy Loading Images
+
+Watch for images entering the DOM and load them:
+
+```javascript
+const imageObserver = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    for (const node of mutation.addedNodes) {
+      if (node.nodeType !== Node.ELEMENT_NODE) continue
+      
+      // Check if the added node is an image with data-src
+      if (node.matches('img[data-src]')) {
+        loadImage(node)
+      }
+      
+      // Also check children of the added node
+      node.querySelectorAll('img[data-src]').forEach(loadImage)
+    }
+  }
+})
+
+function loadImage(img) {
+  img.src = img.dataset.src
+  img.removeAttribute('data-src')
+}
+
+imageObserver.observe(document.body, {
+  childList: true,
+  subtree: true
+})
+```
+
+### 2. Syntax Highlighting Dynamic Code
+
+Automatically highlight code blocks added to the page:
+
+```javascript
+const codeObserver = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    for (const node of mutation.addedNodes) {
+      if (node.nodeType !== Node.ELEMENT_NODE) continue
+      
+      // Find code blocks in the added content
+      const codeBlocks = node.matches('pre code') 
+        ? [node] 
+        : node.querySelectorAll('pre code')
+      
+      codeBlocks.forEach(block => {
+        if (!block.dataset.highlighted) {
+          Prism.highlightElement(block)
+          block.dataset.highlighted = 'true'
+        }
+      })
+    }
+  }
+})
+
+codeObserver.observe(document.getElementById('content'), {
+  childList: true,
+  subtree: true
+})
+```
+
+### 3. Removing Unwanted Elements
+
+Block ads or unwanted elements injected by third-party scripts:
+
+```javascript
+const adBlocker = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    for (const node of mutation.addedNodes) {
+      if (node.nodeType !== Node.ELEMENT_NODE) continue
+      
+      if (node.matches('.ad-banner, [data-ad], .sponsored')) {
+        node.remove()
+        console.log('Blocked unwanted element')
+      }
+    }
+  }
+})
+
+adBlocker.observe(document.body, {
+  childList: true,
+  subtree: true
+})
+```
+
+### 4. Auto-Saving Form Changes
+
+Detect when form content changes and trigger auto-save:
+
+```javascript
+const form = document.getElementById('editor-form')
+let saveTimeout
+
+const formObserver = new MutationObserver(() => {
+  // Debounce the save
+  clearTimeout(saveTimeout)
+  saveTimeout = setTimeout(() => {
+    saveFormData(form)
+  }, 1000)
+})
+
+formObserver.observe(form, {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  characterData: true
+})
+
+function saveFormData(form) {
+  const data = new FormData(form)
+  console.log('Auto-saving...', Object.fromEntries(data))
+  // Send to server
+}
+```
+
+### 5. Tracking Class Changes
+
+React to CSS class changes for animations or state:
+
+```javascript
+const element = document.getElementById('panel')
+
+const classObserver = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    if (mutation.attributeName === 'class') {
+      const currentClasses = mutation.target.classList
+      
+      if (currentClasses.contains('expanded')) {
+        console.log('Panel expanded!')
+        loadPanelContent()
+      } else {
+        console.log('Panel collapsed!')
+      }
+    }
+  }
+})
+
+classObserver.observe(element, {
+  attributes: true,
+  attributeFilter: ['class']
+})
+```
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Not Filtering Node Types
+
+```javascript
+// ❌ WRONG - processes text nodes and comments too
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    for (const node of mutation.addedNodes) {
+      console.log('Added:', node.tagName)  // undefined for text nodes!
+    }
+  }
+})
+
+// ✓ CORRECT - filter for elements only
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    for (const node of mutation.addedNodes) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        console.log('Added element:', node.tagName)
+      }
+    }
+  }
+})
+```
+
+### Mistake 2: Causing Infinite Loops
+
+```javascript
+// ❌ WRONG - modifying the DOM inside the callback that watches for modifications
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    // This causes another mutation, which fires the callback again!
+    mutation.target.setAttribute('data-processed', 'true')
+  }
+})
+
+observer.observe(element, { attributes: true })
+
+// ✓ CORRECT - guard against reprocessing
+const observer = new MutationObserver((mutations) => {
+  for (const mutation of mutations) {
+    if (mutation.target.dataset.processed) continue  // Skip already processed
+    mutation.target.dataset.processed = 'true'
+  }
+})
+
+// Or better - exclude the attribute you're setting
+observer.observe(element, {
+  attributes: true,
+  attributeFilter: ['class', 'data-state']  // Don't include 'data-processed'
+})
+```
+
+### Mistake 3: Forgetting to Disconnect
+
+```javascript
+// ❌ WRONG - observer keeps running after element is removed
+function setupWidget(container) {
+  const observer = new MutationObserver(handleChanges)
+  observer.observe(container, { childList: true })
+  
+  // Container gets removed later, but observer is never disconnected
+  // Memory leak!
+}
+
+// ✓ CORRECT - clean up when done
+function setupWidget(container) {
+  const observer = new MutationObserver(handleChanges)
+  observer.observe(container, { childList: true })
+  
+  // Return cleanup function
+  return () => observer.disconnect()
+}
+
+const cleanup = setupWidget(myContainer)
+// Later when removing the widget:
+cleanup()
+```
+
+### Mistake 4: Over-Observing
+
+```javascript
+// ❌ WRONG - watching everything everywhere
+observer.observe(document.body, {
+  childList: true,
+  attributes: true,
+  characterData: true,
+  subtree: true,
+  attributeOldValue: true,
+  characterDataOldValue: true
+})
+
+// ✓ CORRECT - be specific about what you need
+observer.observe(specificContainer, {
+  childList: true,
+  subtree: true
+  // Only watch what you actually need
+})
+```
+
+---
+
+## MutationObserver vs Other Approaches
+
+| Approach | When to Use | Drawbacks |
+|----------|-------------|-----------|
+| **MutationObserver** | Reacting to any DOM change | Slightly complex API |
+| **Event delegation** | Reacting to user events on dynamic content | Only works for events that bubble |
+| **Polling (setInterval)** | Never for DOM watching | Wasteful, misses changes between checks |
+| **Mutation Events** | Never (deprecated) | Performance killer, removed from standards |
+| **ResizeObserver** | Watching element size changes | Only for size, not other attributes |
+| **IntersectionObserver** | Watching element visibility | Only for visibility, not DOM changes |
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **MutationObserver watches DOM changes** — It fires a callback when elements are added/removed, attributes change, or text content changes.
+
+2. **It replaced Mutation Events** — The old API was synchronous and killed performance. MutationObserver is asynchronous and batches changes.
+
+3. **You must specify what to watch** — Use `childList`, `attributes`, and/or `characterData` in the config object.
+
+4. **subtree extends to descendants** — Without it, only direct children are watched.
+
+5. **Callbacks receive MutationRecords** — Each record tells you the mutation type, target, and what specifically changed.
+
+6. **Always disconnect when done** — Prevents memory leaks and unnecessary processing.
+
+7. **Callbacks run as microtasks** — After the current script, before rendering, batched together.
+
+8. **Filter addedNodes by nodeType** — The NodeList includes text nodes and comments, not just elements.
+
+9. **Be specific to avoid performance issues** — Don't watch everything on document.body unless you really need to.
+
+10. **Guard against infinite loops** — If your callback modifies the DOM, make sure it doesn't trigger itself.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What three types of mutations can MutationObserver detect?">
+    **Answer:** MutationObserver can detect three types of mutations:
+    
+    1. **childList** — Child nodes being added or removed
+    2. **attributes** — Attribute values changing
+    3. **characterData** — Text content changing in text nodes
+    
+    Each mutation type corresponds to a `type` property value in the MutationRecord.
+  </Accordion>
+  
+  <Accordion title="Question 2: What does the subtree option do?">
+    **Answer:** The `subtree: true` option extends observation to ALL descendants of the target element, not just direct children.
+    
+    Without `subtree`, only immediate children of the observed element trigger mutations. With `subtree`, changes anywhere in the element's entire tree trigger mutations.
+    
+    ```javascript
+    // Only direct children
+    observer.observe(parent, { childList: true })
+    
+    // All descendants
+    observer.observe(parent, { childList: true, subtree: true })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: When do MutationObserver callbacks run?">
+    **Answer:** MutationObserver callbacks run as **microtasks**. This means they execute:
+    
+    1. After the current synchronous script finishes
+    2. After all pending microtasks (like Promise callbacks)
+    3. Before the browser renders/paints
+    
+    Multiple DOM changes are batched and delivered in a single callback invocation.
+  </Accordion>
+  
+  <Accordion title="Question 4: How do you stop a MutationObserver from watching?">
+    **Answer:** Call the `disconnect()` method on the observer:
+    
+    ```javascript
+    const observer = new MutationObserver(callback)
+    observer.observe(element, { childList: true })
+    
+    // Stop watching
+    observer.disconnect()
+    ```
+    
+    If you need to process pending mutations before disconnecting, call `takeRecords()` first.
+  </Accordion>
+  
+  <Accordion title="Question 5: Why should you filter addedNodes by nodeType?">
+    **Answer:** The `addedNodes` and `removedNodes` NodeLists include ALL node types, not just elements. This includes:
+    
+    - Text nodes (nodeType 3)
+    - Comment nodes (nodeType 8)
+    - Element nodes (nodeType 1)
+    
+    If you only care about elements, filter by `node.nodeType === Node.ELEMENT_NODE`:
+    
+    ```javascript
+    for (const node of mutation.addedNodes) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        // This is an actual element
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: How can you cause an infinite loop with MutationObserver?">
+    **Answer:** If your callback modifies the DOM in a way that triggers another mutation, and you're watching for that type of mutation, you can create an infinite loop:
+    
+    ```javascript
+    // Infinite loop - setting an attribute inside a callback 
+    // that watches attributes!
+    const observer = new MutationObserver((mutations) => {
+      element.setAttribute('data-count', count++)  // Triggers another mutation!
+    })
+    observer.observe(element, { attributes: true })
+    ```
+    
+    **Solutions:**
+    - Use `attributeFilter` to exclude the attribute you're modifying
+    - Add a guard condition to skip already-processed elements
+    - Set a flag before modifying and check it in the callback
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="DOM" icon="sitemap" href="/concepts/dom">
+    Understanding the DOM tree that MutationObserver watches
+  </Card>
+  <Card title="Intersection Observer" icon="eye" href="/beyond/concepts/intersection-observer">
+    Another Observer API for detecting element visibility
+  </Card>
+  <Card title="Resize Observer" icon="arrows-left-right" href="/beyond/concepts/resize-observer">
+    Observer API for detecting element size changes
+  </Card>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    How microtasks (including MutationObserver callbacks) are scheduled
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="MutationObserver — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver">
+    Complete MDN reference for the MutationObserver interface, including constructor, methods, and browser compatibility.
+  </Card>
+  <Card title="MutationObserver.observe() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver/observe">
+    Detailed documentation of the observe() method and all configuration options in MutationObserverInit.
+  </Card>
+  <Card title="MutationRecord — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/MutationRecord">
+    Reference for the MutationRecord interface that describes individual DOM mutations.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Mutation Observer — javascript.info" icon="newspaper" href="https://javascript.info/mutation-observer">
+    Comprehensive tutorial covering syntax, configuration, and practical use cases like syntax highlighting. Includes interactive examples you can run in the browser.
+  </Card>
+  <Card title="Getting To Know The MutationObserver API — CSS-Tricks" icon="newspaper" href="https://css-tricks.com/getting-to-know-the-mutationobserver-api/">
+    Chris Coyier's practical introduction with real-world examples. Great for understanding when and why to use MutationObserver.
+  </Card>
+  <Card title="Tracking DOM Changes with MutationObserver — dev.to" icon="newspaper" href="https://dev.to/betelgeuseas/tracking-changes-in-the-dom-using-mutationobserver-i8h">
+    Practical guide covering use cases like notifying visitors of page changes, dynamic module loading, and implementing undo/redo in editors.
+  </Card>
+  <Card title="DOM MutationObserver — Mozilla Hacks" icon="newspaper" href="https://hacks.mozilla.org/2012/05/dom-mutationobserver-reacting-to-dom-changes-without-killing-browser-performance/">
+    The original Mozilla blog post introducing MutationObserver. Explains why it was created and how it improves on Mutation Events.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="MutationObserver is Unbelievably Powerful — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=Mi4EF9K87aM">
+    Clear explanation of MutationObserver covering attributes, text content, and subtree mutations. Perfect for visual learners who want to understand the core concepts quickly.
+  </Card>
+  <Card title="Dominate the DOM with MutationObserver — Net Ninja" icon="video" href="https://www.youtube.com/watch?v=_USLLDbkQI0">
+    Practical tutorial using a Webflow Slider example. Shows how to handle third-party components you don't control by watching for their DOM changes.
+  </Card>
+  <Card title="MutationObserver in JS is INCREDIBLY Powerful" icon="video" href="https://www.youtube.com/watch?v=S8AWt70JMhQ">
+    Advanced tutorial covering how frameworks like React and Angular use MutationObserver internally. Great for interview prep and deeper understanding.
+  </Card>
+</CardGroup>

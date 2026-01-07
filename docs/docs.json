@@ -138,8 +138,110 @@
             "concepts/design-patterns",
             "concepts/clean-code"
           ]
+        },
+        {
+          "group": "What's Next?",
+          "icon": "arrow-right",
+          "pages": [
+            "beyond/getting-started/overview"
+          ]
         }
       ]
+      },
+      {
+        "tab": "Beyond 33",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "beyond/getting-started/overview"
+            ]
+          },
+          {
+            "group": "Language Mechanics",
+            "icon": "gear",
+            "pages": [
+              "beyond/concepts/hoisting",
+              "beyond/concepts/temporal-dead-zone",
+              "beyond/concepts/strict-mode"
+            ]
+          },
+          {
+            "group": "Type System",
+            "icon": "code",
+            "pages": [
+              "beyond/concepts/javascript-type-nuances"
+            ]
+          },
+          {
+            "group": "Objects & Properties",
+            "icon": "cube",
+            "pages": [
+              "beyond/concepts/property-descriptors",
+              "beyond/concepts/getters-setters",
+              "beyond/concepts/object-methods",
+              "beyond/concepts/proxy-reflect",
+              "beyond/concepts/weakmap-weakset"
+            ]
+          },
+          {
+            "group": "Memory & Performance",
+            "icon": "bolt",
+            "pages": [
+              "beyond/concepts/memory-management",
+              "beyond/concepts/garbage-collection",
+              "beyond/concepts/debouncing-throttling",
+              "beyond/concepts/memoization"
+            ]
+          },
+          {
+            "group": "Modern Syntax & Operators",
+            "icon": "wand-magic-sparkles",
+            "pages": [
+              "beyond/concepts/tagged-template-literals",
+              "beyond/concepts/computed-property-names"
+            ]
+          },
+          {
+            "group": "Browser Storage",
+            "icon": "database",
+            "pages": [
+              "beyond/concepts/localstorage-sessionstorage",
+              "beyond/concepts/indexeddb",
+              "beyond/concepts/cookies"
+            ]
+          },
+          {
+            "group": "Events",
+            "icon": "bell",
+            "pages": [
+              "beyond/concepts/event-bubbling-capturing",
+              "beyond/concepts/event-delegation",
+              "beyond/concepts/custom-events"
+            ]
+          },
+          {
+            "group": "Observer APIs",
+            "icon": "eye",
+            "pages": [
+              "beyond/concepts/intersection-observer",
+              "beyond/concepts/mutation-observer",
+              "beyond/concepts/resize-observer",
+              "beyond/concepts/performance-observer"
+            ]
+          },
+          {
+            "group": "Data Handling",
+            "icon": "file-code",
+            "pages": [
+              "beyond/concepts/json-deep-dive",
+              "beyond/concepts/typed-arrays-arraybuffers",
+              "beyond/concepts/blob-file-api",
+              "beyond/concepts/requestanimationframe"
+            ]
+          }
+        ]
       },
       {
         "tab": "Community",

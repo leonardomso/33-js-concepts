@@ -1,0 +1,1054 @@
+---
+title: "Debouncing & Throttling: Control Event Frequency in JS"
+sidebarTitle: "Debouncing & Throttling: Control Event Frequency"
+description: "Learn debouncing and throttling in JavaScript. Optimize event handlers, reduce API calls, and implement both patterns from scratch with real-world examples."
+---
+
+What happens when a user types in a search box at 60 characters per minute? Or when they scroll through your page, triggering hundreds of events per second? Without proper handling, your application can grind to a halt, making unnecessary API calls or blocking the main thread with expensive computations.
+
+```javascript
+// Without debouncing: 60 API calls per minute while typing
+searchInput.addEventListener('input', (e) => {
+  fetchSearchResults(e.target.value)  // Called on EVERY keystroke!
+})
+
+// With debouncing: 1 API call after user stops typing
+searchInput.addEventListener('input', debounce((e) => {
+  fetchSearchResults(e.target.value)  // Called once, 300ms after last keystroke
+}, 300))
+```
+
+**[Debouncing](https://developer.mozilla.org/en-US/docs/Glossary/Debounce)** and **[throttling](https://developer.mozilla.org/en-US/docs/Glossary/Throttle)** are two techniques that control how often a function can execute. They're essential for handling high-frequency events like scrolling, resizing, typing, and mouse movement without destroying your app's performance.
+
+<Info>
+**What you'll learn in this guide:**
+- The difference between debouncing and throttling
+- When to use debounce vs throttle (with decision flowchart)
+- How to implement both patterns from scratch
+- Leading edge vs trailing edge execution
+- Real-world use cases: search, scroll, resize, button clicks
+- How to use Lodash for production-ready implementations
+- Common mistakes and how to avoid them
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand [Closures](/concepts/scope-and-closures) and [Higher-Order Functions](/concepts/higher-order-functions). Both debounce and throttle are higher-order functions that use closures to maintain state between calls.
+</Warning>
+
+---
+
+## What is Debouncing?
+
+**Debouncing** delays the execution of a function until a specified time has passed since the last call. If the function is called again before the delay expires, the timer resets. The function only executes when the calls stop coming for the specified duration. Under the hood, debounce uses `setTimeout` to schedule the [callback](/concepts/callbacks) after the delay.
+
+Think of debouncing like an elevator door. When someone approaches, the door stays open. If another person arrives, the timer resets and the door stays open longer. The door only closes after no one has approached for a few seconds. The elevator optimizes by waiting for all passengers before moving.
+
+```javascript
+function debounce(fn, delay) {
+  let timeoutId
+  
+  return function(...args) {
+    // Clear any existing timer
+    clearTimeout(timeoutId)
+    
+    // Set a new timer
+    timeoutId = setTimeout(() => {
+      fn.apply(this, args)
+    }, delay)
+  }
+}
+
+// Usage: Only search after user stops typing for 300ms
+const debouncedSearch = debounce((query) => {
+  console.log('Searching for:', query)
+  fetchSearchResults(query)
+}, 300)
+
+input.addEventListener('input', (e) => {
+  debouncedSearch(e.target.value)
+})
+```
+
+### How Debounce Works Step by Step
+
+Let's trace through what happens when a user types "hello" quickly:
+
+```
+User types:  h     e     l     l     o     [stops]
+             │     │     │     │     │         │
+Time (ms):   0    50   100   150   200       500
+             │     │     │     │     │         │
+Timer:     start  reset reset reset reset   FIRES!
+             │     │     │     │     │         │
+                                              └── fn('hello') executes
+```
+
+1. User types "h" — timer starts (300ms countdown)
+2. User types "e" (50ms later) — timer resets (new 300ms countdown)
+3. User types "l" (100ms later) — timer resets again
+4. User types another "l" (150ms later) — timer resets again
+5. User types "o" (200ms later) — timer resets again
+6. User stops typing — timer expires after 300ms
+7. **Function executes once** with "hello"
+
+<CardGroup cols={2}>
+  <Card title="Debounce — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Debounce">
+    Official MDN definition of debouncing with examples
+  </Card>
+  <Card title="setTimeout — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout">
+    The timer API that powers debounce implementations
+  </Card>
+</CardGroup>
+
+---
+
+## What is Throttling?
+
+**Throttling** ensures a function executes at most once within a specified time interval. Unlike debouncing, throttling guarantees regular execution during continuous events — it doesn't wait for events to stop.
+
+Think of throttling like a water faucet with a flow restrictor. No matter how much you turn the handle, water only flows at a maximum rate. The restrictor ensures consistent output regardless of input pressure.
+
+```javascript
+function throttle(fn, interval) {
+  let lastTime = 0
+  
+  return function(...args) {
+    const now = Date.now()
+    
+    // Only execute if enough time has passed
+    if (now - lastTime >= interval) {
+      lastTime = now
+      fn.apply(this, args)
+    }
+  }
+}
+
+// Usage: Update position at most every 100ms while scrolling
+const throttledScroll = throttle(() => {
+  console.log('Scroll position:', window.scrollY)
+  updateScrollIndicator()
+}, 100)
+
+window.addEventListener('scroll', throttledScroll)
+```
+
+### How Throttle Works Step by Step
+
+Let's trace through what happens during continuous scrolling:
+
+```
+Scroll events: ─●──●──●──●──●──●──●──●──●──●──●──●──●──●──●─►
+               │  │  │  │  │  │  │  │  │  │  │  │  │  │  │
+Time (ms):     0  10 20 30 40 50 60 70 80 90 100 110 120...
+               │                          │              │
+Executes:      ✓ (first call)             ✓ (100ms)      ✓ (200ms)
+               └──────────────────────────┴──────────────┴──►
+```
+
+1. First scroll event at 0ms — function executes immediately
+2. Events at 10ms, 20ms... 90ms — ignored (within 100ms window)
+3. Event at 100ms — function executes (100ms has passed)
+4. Events at 110ms, 120ms... 190ms — ignored
+5. Event at 200ms — function executes again
+
+**Key difference:** Throttle guarantees the function runs every X milliseconds during continuous activity. Debounce waits for activity to stop.
+
+<CardGroup cols={2}>
+  <Card title="Throttle — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Throttle">
+    Official MDN definition of throttling with examples
+  </Card>
+  <Card title="Date.now() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now">
+    The timestamp API used in throttle implementations
+  </Card>
+</CardGroup>
+
+---
+
+## Debounce vs Throttle: Visual Comparison
+
+Here's how they differ when handling the same stream of events:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    DEBOUNCE VS THROTTLE COMPARISON                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│  Raw Events (e.g., keystrokes, scroll):                                      │
+│  ─●─●─●─●─●─●─●─●─●─●─●─●─●─●─●─●───────────●─●─●─●─●────────►              │
+│   └─────────────────────────────┘           └─────────┘                      │
+│         Burst 1                               Burst 2                        │
+│                                                                              │
+│  ─────────────────────────────────────────────────────────────────────────── │
+│                                                                              │
+│  DEBOUNCE (300ms):                                                           │
+│  Waits for events to stop, then fires once                                   │
+│                                                                              │
+│  ────────────────────────────────────●────────────────────●────────►        │
+│                                      │                    │                  │
+│                                   Fires!               Fires!                │
+│                            (300ms after              (300ms after            │
+│                             last event)               last event)            │
+│                                                                              │
+│  ─────────────────────────────────────────────────────────────────────────── │
+│                                                                              │
+│  THROTTLE (100ms):                                                           │
+│  Fires at regular intervals during activity                                  │
+│                                                                              │
+│  ─●───────●───────●───────●───────●────────●───────●───────●────►           │
+│   │       │       │       │       │        │       │       │                 │
+│   0ms    100ms   200ms   300ms   400ms   ...ms    ...ms   ...ms             │
+│                                                                              │
+│  Guarantees execution every 100ms while events continue                      │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+| Aspect | Debounce | Throttle |
+|--------|----------|----------|
+| **Executes** | After events stop | During events, at intervals |
+| **Guarantees** | Single execution per burst | Regular execution rate |
+| **Best for** | Final value matters (search) | Continuous updates (scroll position) |
+| **During 1000ms of events** | 1 execution (at end) | ~10 executions (every 100ms) |
+
+---
+
+## When to Use Which: Decision Flowchart
+
+Use this flowchart to decide between debounce and throttle:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                       WHICH TECHNIQUE SHOULD I USE?                          │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│                    ┌─────────────────────────┐                               │
+│                    │  You have a function    │                               │
+│                    │  being called too often │                               │
+│                    └───────────┬─────────────┘                               │
+│                                │                                             │
+│                                ▼                                             │
+│           ┌────────────────────────────────────────┐                         │
+│           │  Do you need updates DURING activity?  │                         │
+│           └────────────────────┬───────────────────┘                         │
+│                    ┌───────────┴───────────┐                                 │
+│                    │                       │                                 │
+│                   YES                      NO                                │
+│                    │                       │                                 │
+│                    ▼                       ▼                                 │
+│          ┌─────────────────┐     ┌─────────────────────┐                     │
+│          │    THROTTLE     │     │  Do you only care   │                     │
+│          │                 │     │  about the FINAL    │                     │
+│          │  • Scroll       │     │  value?             │                     │
+│          │  • Resize       │     └──────────┬──────────┘                     │
+│          │  • Mouse move   │           ┌────┴────┐                           │
+│          │  • Game loops   │          YES       NO                           │
+│          │  • Progress     │           │         │                           │
+│          │                 │           ▼         ▼                           │
+│          └─────────────────┘  ┌────────────┐ ┌────────────┐                  │
+│                               │  DEBOUNCE  │ │  Consider  │                  │
+│                               │            │ │  both or   │                  │
+│                               │ • Search   │ │  leading   │                  │
+│                               │ • Auto-save│ │  debounce  │                  │
+│                               │ • Validate │ │            │                  │
+│                               │ • Resize   │ └────────────┘                  │
+│                               │   (final)  │                                 │
+│                               └────────────┘                                 │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Common Use Cases
+
+| Use Case | Technique | Why |
+|----------|-----------|-----|
+| **Search autocomplete** | Debounce | Only fetch after user stops typing |
+| **Form validation** | Debounce | Validate after user finishes input |
+| **Auto-save drafts** | Debounce | Save after user pauses editing |
+| **Window resize layout** | Debounce | Recalculate once at final size |
+| **Scroll position tracking** | Throttle | Need regular position updates |
+| **Infinite scroll** | Throttle | Check proximity to bottom regularly |
+| **Mouse move tooltips** | Throttle | Update position smoothly |
+| **Rate-limited API calls** | Throttle | Respect API rate limits |
+| **Button click (prevent double)** | Debounce (leading) | Execute first click, ignore rapid repeats |
+| **Live preview** | Throttle | Show changes without lag |
+
+---
+
+## Leading vs Trailing Edge
+
+Both debounce and throttle can execute on the **leading edge** (immediately on first call) or **trailing edge** (after delay/at end of interval). Some implementations support both.
+
+### Trailing Edge (Default)
+
+The function executes **after** the delay/interval. This is the default behavior shown above.
+
+```javascript
+// Trailing debounce: executes AFTER user stops typing
+const trailingDebounce = debounce(search, 300)
+
+// Timeline: type "hi" → wait 300ms → search("hi") executes
+```
+
+### Leading Edge
+
+The function executes **immediately** on the first call, then ignores subsequent calls until the delay expires.
+
+```javascript
+function debounceLeading(fn, delay) {
+  let timeoutId
+  
+  return function(...args) {
+    // Execute immediately if no pending timeout
+    if (!timeoutId) {
+      fn.apply(this, args)
+    }
+    
+    // Clear and reset the timeout
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+      timeoutId = null  // Allow next leading call
+    }, delay)
+  }
+}
+
+// Usage: Prevent double-click on submit button
+const handleSubmit = debounceLeading(() => {
+  console.log('Form submitted!')
+  submitForm()
+}, 1000)
+
+submitButton.addEventListener('click', handleSubmit)
+// First click: submits immediately
+// Rapid clicks: ignored for 1 second
+```
+
+### Leading Edge Throttle
+
+```javascript
+function throttleLeading(fn, interval) {
+  let lastTime = 0
+  
+  return function(...args) {
+    const now = Date.now()
+    
+    if (now - lastTime >= interval) {
+      lastTime = now
+      fn.apply(this, args)
+    }
+  }
+}
+
+// This is actually the same as our basic throttle!
+// Throttle naturally executes on leading edge
+```
+
+### Both Edges
+
+For maximum responsiveness, execute on both leading AND trailing edges:
+
+```javascript
+function debounceBothEdges(fn, delay) {
+  let timeoutId
+  let lastCallTime = 0
+  
+  return function(...args) {
+    const now = Date.now()
+    const timeSinceLastCall = now - lastCallTime
+    
+    // Leading edge: execute if enough time has passed
+    if (timeSinceLastCall >= delay) {
+      fn.apply(this, args)
+    }
+    
+    lastCallTime = now
+    
+    // Trailing edge: also execute after delay
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => {
+      fn.apply(this, args)
+      lastCallTime = Date.now()
+    }, delay)
+  }
+}
+```
+
+---
+
+## Production-Ready Implementations
+
+Here are more robust implementations with additional features:
+
+### Enhanced Debounce with Cancel
+
+```javascript
+function debounce(fn, delay, options = {}) {
+  let timeoutId
+  let lastArgs
+  let lastThis
+  
+  const { leading = false, trailing = true } = options
+  
+  function debounced(...args) {
+    lastArgs = args
+    lastThis = this
+    
+    const invokeLeading = leading && !timeoutId
+    
+    clearTimeout(timeoutId)
+    
+    timeoutId = setTimeout(() => {
+      timeoutId = null
+      if (trailing && lastArgs) {
+        fn.apply(lastThis, lastArgs)
+        lastArgs = null
+        lastThis = null
+      }
+    }, delay)
+    
+    if (invokeLeading) {
+      fn.apply(this, args)
+    }
+  }
+  
+  debounced.cancel = function() {
+    clearTimeout(timeoutId)
+    timeoutId = null
+    lastArgs = null
+    lastThis = null
+  }
+  
+  debounced.flush = function() {
+    if (timeoutId && lastArgs) {
+      fn.apply(lastThis, lastArgs)
+      debounced.cancel()
+    }
+  }
+  
+  return debounced
+}
+
+// Usage
+const debouncedSave = debounce(saveDocument, 1000, { leading: true, trailing: true })
+
+// Cancel pending execution
+debouncedSave.cancel()
+
+// Execute immediately
+debouncedSave.flush()
+```
+
+### Enhanced Throttle with Trailing Call
+
+```javascript
+function throttle(fn, interval, options = {}) {
+  let lastTime = 0
+  let timeoutId
+  let lastArgs
+  let lastThis
+  
+  const { leading = true, trailing = true } = options
+  
+  function throttled(...args) {
+    const now = Date.now()
+    const timeSinceLastCall = now - lastTime
+    
+    lastArgs = args
+    lastThis = this
+    
+    // Leading edge
+    if (timeSinceLastCall >= interval) {
+      if (leading) {
+        lastTime = now
+        fn.apply(this, args)
+      }
+    }
+    
+    // Schedule trailing edge
+    if (trailing) {
+      clearTimeout(timeoutId)
+      timeoutId = setTimeout(() => {
+        if (Date.now() - lastTime >= interval && lastArgs) {
+          lastTime = Date.now()
+          fn.apply(lastThis, lastArgs)
+          lastArgs = null
+          lastThis = null
+        }
+      }, interval - timeSinceLastCall)
+    }
+  }
+  
+  throttled.cancel = function() {
+    clearTimeout(timeoutId)
+    lastTime = 0
+    timeoutId = null
+    lastArgs = null
+    lastThis = null
+  }
+  
+  return throttled
+}
+```
+
+---
+
+## Using Lodash in Production
+
+For production applications, use battle-tested libraries like [Lodash](https://lodash.com/). They handle edge cases, provide TypeScript types, and are thoroughly tested.
+
+### Installation
+
+```bash
+# Full library
+npm install lodash
+
+# Or just the functions you need
+npm install lodash.debounce lodash.throttle
+```
+
+### Basic Usage
+
+```javascript
+import debounce from 'lodash/debounce'
+import throttle from 'lodash/throttle'
+
+// Debounce with options
+const debouncedSearch = debounce(search, 300, {
+  leading: false,   // Don't execute on first call
+  trailing: true,   // Execute after delay (default)
+  maxWait: 1000     // Maximum time to wait (forces execution)
+})
+
+// Throttle with options
+const throttledScroll = throttle(updateScrollPosition, 100, {
+  leading: true,    // Execute on first call (default)
+  trailing: true    // Also execute at end of interval (default)
+})
+
+// Cancel pending execution
+debouncedSearch.cancel()
+
+// Execute immediately
+debouncedSearch.flush()
+```
+
+### The maxWait Option
+
+Lodash's debounce has a powerful `maxWait` option that sets a maximum time the function can be delayed:
+
+```javascript
+import debounce from 'lodash/debounce'
+
+// Search after typing stops, BUT at least every 2 seconds
+const debouncedSearch = debounce(search, 300, {
+  maxWait: 2000  // Force execution after 2 seconds of continuous typing
+})
+```
+
+This is essentially debounce + throttle combined. Useful when you want responsiveness during long bursts of activity.
+
+<Tip>
+**Fun fact:** Lodash's `throttle` is actually implemented using `debounce` with the `maxWait` option set equal to the wait time. Check the [source code](https://github.com/lodash/lodash/blob/main/src/throttle.ts)!
+</Tip>
+
+---
+
+## Real-World Examples
+
+### Search Autocomplete
+
+```javascript
+import debounce from 'lodash/debounce'
+
+const searchInput = document.getElementById('search')
+const resultsContainer = document.getElementById('results')
+
+async function fetchResults(query) {
+  if (!query.trim()) {
+    resultsContainer.innerHTML = ''
+    return
+  }
+  
+  try {
+    const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`)
+    const results = await response.json()
+    renderResults(results)
+  } catch (error) {
+    console.error('Search failed:', error)
+  }
+}
+
+// Only search 300ms after user stops typing
+const debouncedFetch = debounce(fetchResults, 300)
+
+searchInput.addEventListener('input', (e) => {
+  debouncedFetch(e.target.value)
+})
+```
+
+### Infinite Scroll
+
+```javascript
+import throttle from 'lodash/throttle'
+
+function checkScrollPosition() {
+  const scrollPosition = window.scrollY + window.innerHeight
+  const documentHeight = document.documentElement.scrollHeight
+  
+  // Load more when within 200px of bottom
+  if (documentHeight - scrollPosition < 200) {
+    loadMoreContent()
+  }
+}
+
+// Check position every 100ms while scrolling
+const throttledCheck = throttle(checkScrollPosition, 100)
+
+window.addEventListener('scroll', throttledCheck)
+
+// Cleanup on unmount
+function cleanup() {
+  window.removeEventListener('scroll', throttledCheck)
+  throttledCheck.cancel()
+}
+```
+
+### Window Resize Handler
+
+```javascript
+import debounce from 'lodash/debounce'
+
+function recalculateLayout() {
+  const width = window.innerWidth
+  const height = window.innerHeight
+  
+  // Expensive layout calculations
+  updateGridColumns(width)
+  resizeCharts(width, height)
+  repositionElements()
+}
+
+// Only recalculate after user stops resizing
+const debouncedResize = debounce(recalculateLayout, 250)
+
+window.addEventListener('resize', debouncedResize)
+```
+
+### Prevent Double Submit
+
+```javascript
+import debounce from 'lodash/debounce'
+
+const form = document.getElementById('checkout-form')
+
+async function submitOrder(formData) {
+  const response = await fetch('/api/orders', {
+    method: 'POST',
+    body: formData
+  })
+  
+  if (response.ok) {
+    window.location.href = '/order-confirmation'
+  }
+}
+
+// Execute immediately, ignore clicks for 2 seconds
+const debouncedSubmit = debounce(submitOrder, 2000, {
+  leading: true,
+  trailing: false
+})
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault()
+  debouncedSubmit(new FormData(form))
+})
+```
+
+### Mouse Move Tooltip
+
+```javascript
+import throttle from 'lodash/throttle'
+
+const tooltip = document.getElementById('tooltip')
+
+function updateTooltipPosition(x, y) {
+  tooltip.style.left = `${x + 10}px`
+  tooltip.style.top = `${y + 10}px`
+}
+
+// Update tooltip position every 16ms (60fps)
+const throttledUpdate = throttle(updateTooltipPosition, 16)
+
+document.addEventListener('mousemove', (e) => {
+  throttledUpdate(e.clientX, e.clientY)
+})
+```
+
+---
+
+## requestAnimationFrame Alternative
+
+For visual updates tied to rendering (animations, scroll effects), [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) is often better than throttle. It syncs with the browser's repaint cycle (typically 60fps ≈ 16ms) and is scheduled by the [event loop](/concepts/event-loop) as a special render-related callback.
+
+```javascript
+function throttleWithRAF(fn) {
+  let ticking = false
+  let lastArgs
+  
+  return function(...args) {
+    lastArgs = args
+    
+    if (!ticking) {
+      ticking = true
+      
+      requestAnimationFrame(() => {
+        fn.apply(this, lastArgs)
+        ticking = false
+      })
+    }
+  }
+}
+
+// Usage: Smooth scroll-linked animations
+const updateScrollAnimation = throttleWithRAF(() => {
+  const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)
+  progressBar.style.width = `${scrollPercent * 100}%`
+  parallaxElement.style.transform = `translateY(${scrollPercent * 100}px)`
+})
+
+window.addEventListener('scroll', updateScrollAnimation)
+```
+
+**When to use rAF vs throttle:**
+
+| Use rAF when... | Use throttle when... |
+|-----------------|---------------------|
+| Animating DOM elements | Rate-limiting API calls |
+| Scroll-linked visual effects | Infinite scroll loading |
+| Canvas/WebGL rendering | Analytics event tracking |
+| Parallax effects | Form validation |
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Creating New Debounced Functions Each Time
+
+```javascript
+// ❌ WRONG: Creates a new debounced function on every call
+element.addEventListener('input', (e) => {
+  debounce(handleInput, 300)(e)  // This doesn't work!
+})
+
+// ✓ CORRECT: Create once, reuse
+const debouncedHandler = debounce(handleInput, 300)
+element.addEventListener('input', debouncedHandler)
+```
+
+### Mistake 2: Forgetting to Clean Up
+
+```javascript
+// ❌ WRONG: Memory leak in React/Vue/etc.
+useEffect(() => {
+  const handler = throttle(handleScroll, 100)
+  window.addEventListener('scroll', handler)
+}, [])
+
+// ✓ CORRECT: Clean up on unmount
+useEffect(() => {
+  const handler = throttle(handleScroll, 100)
+  window.addEventListener('scroll', handler)
+  
+  return () => {
+    window.removeEventListener('scroll', handler)
+    handler.cancel()  // Cancel any pending calls
+  }
+}, [])
+```
+
+### Mistake 3: Wrong Technique for the Job
+
+```javascript
+// ❌ WRONG: Debounce for scroll position tracking
+// User won't see smooth updates, only final position
+window.addEventListener('scroll', debounce(updatePosition, 100))
+
+// ✓ CORRECT: Throttle for continuous visual updates
+window.addEventListener('scroll', throttle(updatePosition, 100))
+
+// ❌ WRONG: Throttle for search autocomplete
+// Unnecessary API calls while user is still typing
+input.addEventListener('input', throttle(search, 300))
+
+// ✓ CORRECT: Debounce for search (only when typing stops)
+input.addEventListener('input', debounce(search, 300))
+```
+
+### Mistake 4: Losing `this` Context
+
+```javascript
+// ❌ WRONG: Arrow function preserves wrong `this`
+class SearchComponent {
+  constructor() {
+    this.query = ''
+  }
+  
+  handleInput = debounce(() => {
+    console.log(this.query)  // Works, but...
+  }, 300)
+}
+
+// ❌ WRONG: Method loses `this` when passed as callback
+class SearchComponent {
+  handleInput() {
+    console.log(this.query)  // `this` is undefined!
+  }
+}
+const component = new SearchComponent()
+input.addEventListener('input', debounce(component.handleInput, 300))
+
+// ✓ CORRECT: Bind the method
+input.addEventListener('input', debounce(component.handleInput.bind(component), 300))
+
+// ✓ ALSO CORRECT: Wrap in arrow function
+input.addEventListener('input', debounce((e) => component.handleInput(e), 300))
+```
+
+### Mistake 5: Choosing the Wrong Delay
+
+```javascript
+// ❌ TOO SHORT: Defeats the purpose
+debounce(search, 50)  // Still makes many API calls
+
+// ❌ TOO LONG: Feels unresponsive
+debounce(search, 1000)  // User waits 1 second for results
+
+// ✓ GOOD: Balance between responsiveness and efficiency
+debounce(search, 250)  // 250-400ms is typical for search
+throttle(scroll, 100)   // 100-150ms for scroll (smooth but efficient)
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Debounce waits for silence** — It delays execution until events stop coming for a specified duration. Use it when you only care about the final value.
+
+2. **Throttle maintains rhythm** — It ensures execution happens at most once per interval, even during continuous events. Use it when you need regular updates.
+
+3. **Leading vs trailing** — Leading executes immediately on first call; trailing executes after the delay. You can use both for maximum responsiveness.
+
+4. **Use Lodash in production** — Battle-tested implementations with TypeScript types, cancel methods, and edge case handling.
+
+5. **Create debounced/throttled functions once** — Don't create them inside event handlers or render functions.
+
+6. **Always clean up** — Cancel pending executions and remove event listeners when components unmount.
+
+7. **requestAnimationFrame for animations** — For visual updates, rAF syncs with the browser's repaint cycle for smoother results.
+
+8. **Choose the right delay** — 250-400ms for search/typing, 100-150ms for scroll/resize, 16ms for animations.
+
+9. **Closures make it work** — Both techniques use closures to maintain state (timers, timestamps) between function calls.
+
+10. **Test your implementation** — Verify the behavior matches your expectations, especially edge cases like rapid bursts and cleanup.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the key difference between debounce and throttle?">
+    **Answer:**
+    
+    - **Debounce** waits for a pause in events before executing. The function only runs once after events stop coming for the specified delay.
+    
+    - **Throttle** executes at regular intervals during continuous events. It guarantees the function runs at most once per specified interval, providing regular updates.
+    
+    **Example:** If events fire continuously for 1 second:
+    - Debounce (300ms): 1 execution (after events stop + 300ms)
+    - Throttle (100ms): ~10 executions (every 100ms)
+  </Accordion>
+  
+  <Accordion title="Question 2: When would you use leading edge debounce?">
+    **Answer:**
+    
+    Leading edge debounce executes immediately on the first call, then ignores subsequent calls until the delay expires. Use it when:
+    
+    1. **Preventing double-clicks** — Submit form on first click, ignore rapid additional clicks
+    2. **Immediate feedback** — Show something instantly, but don't repeat
+    3. **First interaction matters** — Track first button press, not every press
+    
+    ```javascript
+    const preventDoubleClick = debounce(submitForm, 1000, {
+      leading: true,
+      trailing: false
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: Why shouldn't you create debounced functions inside event handlers?">
+    **Answer:**
+    
+    Creating a debounced function inside an event handler creates a **new function every time the event fires**. Each new function has its own separate timer, so debouncing never actually works:
+    
+    ```javascript
+    // ❌ WRONG - new debounced function each time
+    input.addEventListener('input', (e) => {
+      debounce(search, 300)(e.target.value)
+      // Timer 1, Timer 2, Timer 3... none wait for each other
+    })
+    
+    // ✓ CORRECT - same debounced function reused
+    const debouncedSearch = debounce(search, 300)
+    input.addEventListener('input', (e) => {
+      debouncedSearch(e.target.value)
+      // Same timer gets reset each time
+    })
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: What is Lodash's maxWait option?">
+    **Answer:**
+    
+    The `maxWait` option sets a maximum time a debounced function can be delayed. Even if events keep coming, the function will execute after `maxWait` milliseconds.
+    
+    ```javascript
+    const debouncedSearch = debounce(search, 300, {
+      maxWait: 2000  // Force execution after 2 seconds
+    })
+    ```
+    
+    This is useful for long typing sessions — you still get the debounce behavior, but users see results at least every 2 seconds. It's essentially debounce + throttle combined.
+    
+    Fun fact: Lodash's `throttle` is implemented using `debounce` with `maxWait` equal to the wait time!
+  </Accordion>
+  
+  <Accordion title="Question 5: When should you use requestAnimationFrame instead of throttle?">
+    **Answer:**
+    
+    Use `requestAnimationFrame` when you're doing **visual updates** that need to sync with the browser's repaint cycle:
+    
+    - Scroll-linked animations
+    - Parallax effects
+    - Canvas/WebGL rendering
+    - DOM element transformations
+    
+    ```javascript
+    // rAF syncs with 60fps refresh rate
+    const throttledWithRAF = (fn) => {
+      let ticking = false
+      return (...args) => {
+        if (!ticking) {
+          requestAnimationFrame(() => {
+            fn(...args)
+            ticking = false
+          })
+          ticking = true
+        }
+      }
+    }
+    ```
+    
+    Use throttle for non-visual tasks: API calls, analytics tracking, loading content, validation.
+  </Accordion>
+  
+  <Accordion title="Question 6: How do closures enable debounce and throttle?">
+    **Answer:**
+    
+    Both debounce and throttle are **higher-order functions** that return a new function. The returned function uses **closures** to remember state between calls:
+    
+    ```javascript
+    function debounce(fn, delay) {
+      let timeoutId  // ← Closure variable, persists between calls
+      
+      return function(...args) {
+        clearTimeout(timeoutId)
+        timeoutId = setTimeout(() => fn.apply(this, args), delay)
+        // timeoutId is remembered from the previous call
+      }
+    }
+    ```
+    
+    The closure allows the returned function to:
+    - Remember the `timeoutId` from previous calls (to clear it)
+    - Track `lastTime` for throttle calculations
+    - Store pending `args` and `this` context
+    
+    Without closures, each call would have no memory of previous calls.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Scope & Closures" icon="lock" href="/concepts/scope-and-closures">
+    Understand how closures enable debounce and throttle to maintain state between calls
+  </Card>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    Learn about functions that return functions — the pattern both techniques use
+  </Card>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    Understand how setTimeout and browser events are scheduled and processed
+  </Card>
+  <Card title="Callbacks" icon="phone" href="/concepts/callbacks">
+    The foundation for understanding how debounce and throttle wrap other functions
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Debounce — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Debounce">
+    Official MDN definition with explanation of leading and trailing edges
+  </Card>
+  <Card title="Throttle — MDN Glossary" icon="book" href="https://developer.mozilla.org/en-US/docs/Glossary/Throttle">
+    Official MDN definition with scroll handler examples
+  </Card>
+  <Card title="setTimeout — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/setTimeout">
+    The timer API that powers debounce implementations
+  </Card>
+  <Card title="requestAnimationFrame — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame">
+    Browser API for syncing with the repaint cycle — an alternative to throttle for animations
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Debouncing and Throttling Explained" icon="newspaper" href="https://css-tricks.com/debouncing-throttling-explained-examples/">
+    CSS-Tricks' comprehensive guide with interactive CodePen demos. The visual examples make timing differences crystal clear.
+  </Card>
+  <Card title="Lodash Debounce Documentation" icon="newspaper" href="https://lodash.com/docs/#debounce">
+    Official Lodash docs for _.debounce with all options explained. Production-ready implementation details.
+  </Card>
+  <Card title="Lodash Throttle Documentation" icon="newspaper" href="https://lodash.com/docs/#throttle">
+    Official Lodash docs for _.throttle. Shows how throttle is built on top of debounce with maxWait.
+  </Card>
+  <Card title="JavaScript Debounce Function — David Walsh" icon="newspaper" href="https://davidwalsh.name/javascript-debounce-function">
+    Classic article with a simple debounce implementation. Good for understanding the core logic.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Debounce & Throttle — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=cjIswDCKgu0">
+    Kyle Cook explains both concepts with clear visualizations and practical examples. Great for visual learners.
+  </Card>
+  <Card title="JavaScript Debounce in 100 Seconds" icon="video" href="https://www.youtube.com/watch?v=cMq6z5SH8s0">
+    Fireship's ultra-concise explanation of debounce. Perfect quick refresher.
+  </Card>
+  <Card title="Debouncing and Throttling — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=UlCHvTt0XLs">
+    MPJ's entertaining deep dive with real-world examples and implementation from scratch.
+  </Card>
+  <Card title="React Debounce Tutorial" icon="video" href="https://www.youtube.com/watch?v=G9aOoZJvPDY">
+    Learn how to properly use debounce in React with hooks, including cleanup patterns.
+  </Card>
+</CardGroup>

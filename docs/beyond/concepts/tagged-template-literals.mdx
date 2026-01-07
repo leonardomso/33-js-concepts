@@ -1,0 +1,913 @@
+---
+title: "Tagged Template Literals: Custom String Processing in JavaScript"
+sidebarTitle: "Tagged Template Literals"
+description: "Learn JavaScript tagged template literals. Understand how tag functions work, access raw strings, build HTML sanitizers, create DSLs, and use String.raw for file paths."
+---
+
+How do libraries like GraphQL and Lit HTML let you write special syntax inside JavaScript template literals? How can a function intercept and transform template strings before they become a final value?
+
+```javascript
+// A tag function receives strings and values separately
+function highlight(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i] !== undefined ? `<mark>${values[i]}</mark>` : ''
+    return result + str + value
+  }, '')
+}
+
+const name = 'Alice'
+const age = 30
+
+console.log(highlight`User ${name} is ${age} years old`)
+// "User <mark>Alice</mark> is <mark>30</mark> years old"
+```
+
+The answer is **tagged template literals**. They let you define a function that processes the template's static strings and dynamic values separately, giving you complete control over the final result. This unlocks powerful patterns like HTML sanitization, internationalization, and domain-specific languages.
+
+<Info>
+**What you'll learn in this guide:**
+- What tagged template literals are and how they differ from regular template literals
+- The tag function signature: the strings array, values, and the `raw` property
+- How [`String.raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw) works as JavaScript's built-in tag
+- Building custom tag functions for HTML escaping and security
+- Creating reusable templates and domain-specific languages (DSLs)
+- Common mistakes and edge cases to watch out for
+- Brief mention of TypeScript template literal types
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes you understand basic [template literals](/concepts/modern-js-syntax#template-literals) (backticks, `${expression}` interpolation). If you're not comfortable with those, review that section first.
+</Warning>
+
+---
+
+## What are Tagged Template Literals?
+
+**Tagged template literals** are a way to call a function using a template literal. Instead of parentheses, you place the function name directly before the backtick. The function (called a "tag") receives the template's strings and interpolated values as separate arguments, allowing it to process them however it wants before returning a result.
+
+```javascript
+// Regular template literal - just produces a string
+const message = `Hello ${name}`
+
+// Tagged template literal - calls the function 'myTag'
+const result = myTag`Hello ${name}`
+```
+
+The key difference: a regular template literal automatically concatenates strings and values into one string. A tagged template literal passes everything to your function first, and your function decides what to return. It doesn't even have to return a string.
+
+---
+
+## The Mail Merge Analogy
+
+Think of tagged templates like a mail merge in a word processor.
+
+Imagine you're sending personalized letters. You have a template with placeholders: "Dear `{name}`, your order `{orderNumber}` has shipped." The mail merge system receives both the static template parts and the dynamic values separately, then combines them according to its rules.
+
+A tag function works the same way. It receives the static strings ("Dear ", ", your order ", " has shipped.") and the dynamic values ("Alice", "12345") separately. This separation is what makes tagged templates powerful. You can:
+
+- **Escape** the values to prevent security issues
+- **Transform** the values before inserting them
+- **Validate** the values match expected types
+- **Return** something other than a string entirely
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    HOW TAG FUNCTIONS WORK                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   myTag`Hello ${name}, you have ${count} messages`                       │
+│         │      │       │         │                                       │
+│         │      │       │         └──────────────────┐                    │
+│         │      │       └────────────────┐           │                    │
+│         │      └──────────┐             │           │                    │
+│         └────┐            │             │           │                    │
+│              │            │             │           │                    │
+│              ▼            ▼             ▼           ▼                    │
+│   ┌──────────────────────────────────────────────────────────┐          │
+│   │  myTag(strings, ...values)                               │          │
+│   │                                                          │          │
+│   │  strings = ["Hello ", ", you have ", " messages"]        │          │
+│   │  values  = [name, count]                                 │          │
+│   │                                                          │          │
+│   │  strings.length === values.length + 1  (always true!)    │          │
+│   └──────────────────────────────────────────────────────────┘          │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## How Tag Functions Work
+
+A tag function receives two types of arguments:
+
+1. **First argument:** An array of string literals (the static parts)
+2. **Remaining arguments:** The evaluated expressions (the dynamic values)
+
+### The Basic Signature
+
+```javascript
+function myTag(strings, ...values) {
+  console.log(strings)  // Array of static strings
+  console.log(values)   // Array of interpolated values
+  return 'whatever you want'
+}
+```
+
+Let's trace through an example:
+
+```javascript
+function inspect(strings, ...values) {
+  console.log('Strings:', strings)
+  console.log('Values:', values)
+  console.log('String count:', strings.length)
+  console.log('Value count:', values.length)
+}
+
+const fruit = 'apple'
+const count = 5
+
+inspect`I have ${count} ${fruit}s`
+// Strings: ["I have ", " ", "s"]
+// Values: [5, "apple"]
+// String count: 3
+// Value count: 2
+```
+
+### The Golden Rule
+
+There's always **one more string than there are values**. This is because:
+
+- A template starts with a string (possibly empty)
+- Each value is surrounded by strings
+- A template ends with a string (possibly empty)
+
+```javascript
+function countParts(strings, ...values) {
+  return `${strings.length} strings, ${values.length} values`
+}
+
+console.log(countParts`${1}`)           // "2 strings, 1 values"
+console.log(countParts`x${1}`)          // "2 strings, 1 values"
+console.log(countParts`${1}y`)          // "2 strings, 1 values"
+console.log(countParts`x${1}y`)         // "2 strings, 1 values"
+console.log(countParts`x${1}y${2}z`)    // "3 strings, 2 values"
+```
+
+This predictable structure makes it easy to interleave strings and values:
+
+```javascript
+function interleave(strings, ...values) {
+  let result = ''
+  for (let i = 0; i < values.length; i++) {
+    result += strings[i] + values[i]
+  }
+  result += strings[strings.length - 1]  // Don't forget the last string!
+  return result
+}
+
+const name = 'World'
+console.log(interleave`Hello, ${name}!`)  // "Hello, World!"
+```
+
+### A Cleaner Pattern with reduce
+
+The [`reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) method handles the interleaving elegantly:
+
+```javascript
+function simple(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i] !== undefined ? values[i] : ''
+    return result + str + value
+  }, '')
+}
+```
+
+---
+
+## The Raw Strings Property
+
+The first argument to a tag function isn't just an array. It has a special `raw` property containing the raw, unprocessed string literals.
+
+### Cooked vs Raw
+
+- **Cooked strings** (`strings`): Escape sequences are processed (`\n` becomes a newline)
+- **Raw strings** (`strings.raw`): Escape sequences are preserved as-is (`\n` stays as backslash-n)
+
+```javascript
+function showBoth(strings) {
+  console.log('Cooked:', strings[0])
+  console.log('Raw:', strings.raw[0])
+}
+
+showBoth`Line1\nLine2`
+// Cooked: "Line1
+// Line2"              (actual newline character)
+// Raw: "Line1\\nLine2" (the literal characters \ and n)
+```
+
+This distinction matters when you're building tools that need to preserve the original source text, like syntax highlighters or code formatters.
+
+### Invalid Escape Sequences
+
+In regular template literals, invalid escape sequences cause syntax errors:
+
+```javascript
+// SyntaxError in a normal template literal
+// const bad = `\unicode`  // Error: Invalid Unicode escape sequence
+```
+
+But in tagged templates, invalid escapes are allowed. The cooked value becomes `undefined`, but the raw value is preserved:
+
+```javascript
+function handleInvalid(strings) {
+  console.log('Cooked:', strings[0])
+  console.log('Raw:', strings.raw[0])
+}
+
+handleInvalid`\unicode`
+// Cooked: undefined
+// Raw: "\\unicode"
+```
+
+This lets tagged templates work with DSLs (like LaTeX or regex patterns) that use backslash syntax differently than JavaScript.
+
+---
+
+## String.raw: The Built-in Tag
+
+JavaScript includes one built-in tag function: [`String.raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw). It returns a string where escape sequences are not processed.
+
+### Basic Usage
+
+```javascript
+// Normal template literal - escape sequences are processed
+console.log(`Line1\nLine2`)
+// Line1
+// Line2
+
+// String.raw - escape sequences stay as literal characters
+console.log(String.raw`Line1\nLine2`)
+// "Line1\nLine2"
+```
+
+### Perfect for File Paths
+
+Windows file paths are much cleaner with `String.raw`:
+
+```javascript
+// Without String.raw - need to escape every backslash
+const path1 = 'C:\\Users\\Alice\\Documents\\file.txt'
+
+// With String.raw - write naturally
+const path2 = String.raw`C:\Users\Alice\Documents\file.txt`
+
+console.log(path1 === path2)  // true
+```
+
+### Perfect for Regular Expressions
+
+Regex patterns often contain backslashes. `String.raw` eliminates double-escaping:
+
+```javascript
+// Without String.raw - double escaping needed
+const pattern1 = new RegExp('\\d+\\.\\d+')
+
+// With String.raw - much cleaner
+const pattern2 = new RegExp(String.raw`\d+\.\d+`)
+
+console.log(pattern1.test('3.14'))  // true
+console.log(pattern2.test('3.14'))  // true
+```
+
+### How String.raw Works Under the Hood
+
+`String.raw` can also be called as a regular function with an object:
+
+```javascript
+// Called with a template literal
+console.log(String.raw`Hi\n${2 + 3}!`)  // "Hi\n5!"
+
+// Called as a function (same result)
+console.log(String.raw({ raw: ['Hi\\n', '!'] }, 5))  // "Hi\n5!"
+```
+
+---
+
+## Building Custom Tag Functions
+
+Now let's build some practical tag functions.
+
+### Example 1: HTML Escaping
+
+One of the most common uses for tagged templates is preventing XSS (Cross-Site Scripting) attacks by escaping user input:
+
+```javascript
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+function html(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i] !== undefined ? escapeHTML(String(values[i])) : ''
+    return result + str + value
+  }, '')
+}
+
+// Safe: user input is escaped
+const userInput = '<script>alert("XSS")</script>'
+const safe = html`<div>User said: ${userInput}</div>`
+console.log(safe)
+// "<div>User said: &lt;script&gt;alert("XSS")&lt;/script&gt;</div>"
+```
+
+The static parts (written by the developer) pass through unchanged, but dynamic values (potentially from users) are escaped.
+
+### Example 2: Highlighting Values
+
+Mark all interpolated values with a highlight:
+
+```javascript
+function highlight(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i] !== undefined ? `<mark>${values[i]}</mark>` : ''
+    return result + str + value
+  }, '')
+}
+
+const product = 'Widget'
+const price = 29.99
+
+const message = highlight`The ${product} costs $${price}`
+console.log(message)
+// "The <mark>Widget</mark> costs $<mark>29.99</mark>"
+```
+
+### Example 3: Currency Formatting
+
+Format numbers as currency automatically:
+
+```javascript
+function currency(strings, ...values) {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  })
+  
+  return strings.reduce((result, str, i) => {
+    let value = values[i]
+    if (typeof value === 'number') {
+      value = formatter.format(value)
+    }
+    return result + str + (value ?? '')
+  }, '')
+}
+
+const item = 'Coffee'
+const price = 4.5
+const tax = 0.36
+
+console.log(currency`${item}: ${price} + ${tax} tax`)
+// "Coffee: $4.50 + $0.36 tax"
+```
+
+### Example 4: Debug Logging
+
+Create a debug tag that shows types and values:
+
+```javascript
+function debug(strings, ...values) {
+  let output = ''
+  strings.forEach((str, i) => {
+    output += str
+    if (i < values.length) {
+      const type = typeof values[i]
+      const val = JSON.stringify(values[i])
+      output += `[${type}: ${val}]`
+    }
+  })
+  return output
+}
+
+const user = { name: 'Alice', age: 30 }
+const items = ['apple', 'banana']
+
+console.log(debug`User: ${user}, Items: ${items}`)
+// "User: [object: {"name":"Alice","age":30}], Items: [object: ["apple","banana"]]"
+```
+
+---
+
+## Advanced Patterns
+
+### Returning Non-Strings
+
+Tag functions don't have to return strings. They can return anything:
+
+```javascript
+// Return an array
+function toArray(strings, ...values) {
+  return values
+}
+
+console.log(toArray`${1} and ${2} and ${3}`)  // [1, 2, 3]
+
+// Return an object
+function toObject(strings, ...values) {
+  const keys = strings.slice(0, -1).map(s => s.trim().replace(':', ''))
+  const obj = {}
+  keys.forEach((key, i) => {
+    if (key) obj[key] = values[i]
+  })
+  return obj
+}
+
+const name = 'Alice'
+const age = 30
+console.log(toObject`name: ${name}, age: ${age},`)
+// { name: "Alice", age: 30 }
+```
+
+### Reusable Template Factories
+
+Return a function for reusable templates:
+
+```javascript
+function template(strings, ...keys) {
+  return function(data) {
+    return strings.reduce((result, str, i) => {
+      const key = keys[i]
+      const value = key !== undefined ? data[key] : ''
+      return result + str + value
+    }, '')
+  }
+}
+
+// Create a reusable template
+const greeting = template`Hello, ${'name'}! You have ${'count'} messages.`
+
+// Use it with different data
+console.log(greeting({ name: 'Alice', count: 5 }))
+// "Hello, Alice! You have 5 messages."
+
+console.log(greeting({ name: 'Bob', count: 0 }))
+// "Hello, Bob! You have 0 messages."
+```
+
+### Building an Identity Tag
+
+To create a tag that processes escapes normally (like an untagged template):
+
+```javascript
+// String.raw keeps escapes raw - not what we want for an identity tag
+console.log(String.raw`Line1\nLine2`)  // "Line1\nLine2" (literal backslash-n)
+
+// An identity tag that processes escapes normally
+function identity(strings, ...values) {
+  // Pass the "cooked" strings as if they were raw
+  return String.raw({ raw: strings }, ...values)
+}
+
+console.log(identity`Line1\nLine2`)
+// "Line1
+// Line2" (actual newline)
+```
+
+This pattern is useful when you want IDE syntax highlighting support for tagged templates but want the same output as an untagged template.
+
+---
+
+## Real-World Use Cases
+
+Tagged template literals power many popular libraries and patterns:
+
+### SQL Query Builders
+
+Safely parameterize SQL queries to prevent SQL injection:
+
+```javascript
+function sql(strings, ...values) {
+  // In a real implementation, this would use parameterized queries
+  const query = strings.reduce((result, str, i) => {
+    return result + str + (i < values.length ? `$${i + 1}` : '')
+  }, '')
+  
+  return {
+    text: query,
+    values: values
+  }
+}
+
+const userId = 123
+const status = 'active'
+
+const query = sql`
+  SELECT * FROM users 
+  WHERE id = ${userId} 
+  AND status = ${status}
+`
+
+console.log(query.text)
+// "SELECT * FROM users WHERE id = $1 AND status = $2"
+console.log(query.values)
+// [123, "active"]
+```
+
+### GraphQL Queries
+
+The `gql` tag in Apollo and other GraphQL clients parses query strings:
+
+```javascript
+// Conceptual example (actual implementation is more complex)
+function gql(strings, ...values) {
+  const query = strings.reduce((result, str, i) => {
+    return result + str + (values[i] ?? '')
+  }, '')
+  
+  return {
+    kind: 'Document',
+    query: query.trim()
+  }
+}
+
+const query = gql`
+  query GetUser($id: ID!) {
+    user(id: $id) {
+      name
+      email
+    }
+  }
+`
+```
+
+### CSS-in-JS Patterns
+
+Libraries like Lit use tagged templates for CSS:
+
+```javascript
+function css(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    return result + str + (values[i] ?? '')
+  }, '')
+}
+
+const primaryColor = '#007bff'
+const styles = css`
+  .button {
+    background-color: ${primaryColor};
+    padding: 10px 20px;
+    border: none;
+  }
+`
+```
+
+### Internationalization (i18n)
+
+Handle translations with placeholders:
+
+```javascript
+const translations = {
+  'en': { greeting: 'Hello, {0}! You have {1} messages.' },
+  'es': { greeting: '¡Hola, {0}! Tienes {1} mensajes.' }
+}
+
+function createI18n(locale) {
+  return function(strings, ...values) {
+    // In a real implementation, you'd look up translations by key
+    let result = strings.reduce((acc, str, i) => {
+      return acc + str + (values[i] !== undefined ? `{${i}}` : '')
+    }, '')
+    
+    // Replace placeholders with values
+    values.forEach((value, i) => {
+      result = result.replace(`{${i}}`, value)
+    })
+    
+    return result
+  }
+}
+
+const t = createI18n('en')
+console.log(t`Hello, ${'María'}! You have ${3} messages.`)
+// "Hello, María! You have 3 messages."
+```
+
+---
+
+## Common Mistakes
+
+### Forgetting the Last String
+
+The strings array always has one more element than values. Don't forget it:
+
+```javascript
+// ❌ WRONG - Loses the last string segment
+function broken(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    return result + str + values[i]  // values[last] is undefined!
+  }, '')
+}
+
+const name = 'Alice'
+console.log(broken`Hello ${name}!`)  // "Hello Aliceundefined"
+
+// ✓ CORRECT - Check for undefined
+function fixed(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i] !== undefined ? values[i] : ''
+    return result + str + value
+  }, '')
+}
+
+console.log(fixed`Hello ${name}!`)  // "Hello Alice!"
+```
+
+### Not Escaping User Input
+
+When building HTML, always escape interpolated values:
+
+```javascript
+function escapeHTML(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+}
+
+// ❌ DANGEROUS - XSS vulnerability
+function unsafeHtml(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    return result + str + (values[i] ?? '')
+  }, '')
+}
+
+// ✓ SAFE - Escape all values
+function safeHtml(strings, ...values) {
+  return strings.reduce((result, str, i) => {
+    const value = values[i] !== undefined ? escapeHTML(String(values[i])) : ''
+    return result + str + value
+  }, '')
+}
+```
+
+### Confusing Tagged and Untagged Behavior
+
+Remember that tagged templates call a function. Some syntax doesn't work:
+
+```javascript
+// ✓ Works - calling console.log as a tag
+console.log`Hello`  // ["Hello"]
+
+// ❌ SyntaxError - can't use optional chaining with tagged templates
+// console?.log`Hello`  // SyntaxError
+
+// ❌ TypeError - can't chain template literals without a tag
+// `Hello``World`  // TypeError: "Hello" is not a function
+```
+
+---
+
+## TypeScript Template Literal Types
+
+TypeScript 4.1+ introduced template literal types, which let you create string types from combinations:
+
+```typescript
+// Basic template literal type
+type Greeting = `Hello, ${string}!`
+
+const valid: Greeting = 'Hello, World!'  // OK
+// const invalid: Greeting = 'Hi there!'  // Error
+
+// Combining literal types
+type Color = 'red' | 'blue' | 'green'
+type Size = 'small' | 'large'
+type ColoredSize = `${Size}-${Color}`
+// "small-red" | "small-blue" | "small-green" | "large-red" | ...
+```
+
+This is a compile-time type system feature, separate from runtime tagged templates.
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about tagged template literals:**
+
+1. **Tag functions receive strings and values separately.** The first argument is an array of static strings; remaining arguments are interpolated values.
+
+2. **There's always one more string than values.** The template starts and ends with a string (which may be empty). `strings.length === values.length + 1`.
+
+3. **The strings array has a `raw` property.** `strings.raw` contains unprocessed strings where escape sequences are preserved as literal characters.
+
+4. **`String.raw` is the built-in tag.** Use it for file paths and regex patterns to avoid double-escaping backslashes.
+
+5. **Invalid escape sequences are allowed in tagged templates.** The cooked value becomes `undefined`, but `raw` preserves the original text.
+
+6. **Tag functions can return anything.** They don't have to return strings. They can return objects, arrays, functions, or anything else.
+
+7. **Always escape user input in HTML tags.** Tagged templates make it easy to sanitize values while leaving developer-written strings untouched.
+
+8. **Common patterns include HTML escaping, SQL parameterization, and DSLs.** Libraries like GraphQL clients and CSS-in-JS tools are built on tagged templates.
+
+9. **Don't confuse runtime tags with TypeScript template literal types.** TypeScript's feature is compile-time type checking, not runtime string processing.
+
+10. **Remember the syntax: no parentheses.** Call tags with `` tag`template` ``, not `` tag(`template`) ``.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What arguments does a tag function receive?">
+    **Answer:**
+    
+    A tag function receives:
+    1. An array of static string literals (the parts between expressions)
+    2. The evaluated expression values as separate arguments (usually collected with `...values`)
+    
+    ```javascript
+    function tag(strings, ...values) {
+      // strings = array of static string parts
+      // values = array of interpolated expression results
+    }
+    
+    const name = 'Alice'
+    const age = 30
+    tag`Hello ${name}, you are ${age} years old`
+    // strings: ["Hello ", ", you are ", " years old"]
+    // values: ["Alice", 30]
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 2: What's the relationship between strings.length and values.length?">
+    **Answer:**
+    
+    `strings.length` is always exactly `values.length + 1`. This is because:
+    - A template always starts with a string (possibly empty)
+    - Each value is surrounded by strings
+    - A template always ends with a string (possibly empty)
+    
+    ```javascript
+    function count(strings, ...values) {
+      return `${strings.length} strings, ${values.length} values`
+    }
+    
+    count`${1}`           // "2 strings, 1 values"
+    count`x${1}y${2}z`    // "3 strings, 2 values"
+    count`no values`      // "1 strings, 0 values"
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: What's the difference between strings and strings.raw?">
+    **Answer:**
+    
+    - `strings` contains "cooked" strings where escape sequences are processed (`\n` becomes a newline character)
+    - `strings.raw` contains raw strings where escape sequences are preserved (`\n` stays as backslash-n)
+    
+    ```javascript
+    function compare(strings) {
+      console.log('Cooked:', strings[0])      // Actual newline
+      console.log('Raw:', strings.raw[0])     // Literal "\n"
+    }
+    
+    compare`Line1\nLine2`
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 4: When would you use String.raw?">
+    **Answer:**
+    
+    Use `String.raw` when you want escape sequences to remain as literal characters:
+    
+    - **Windows file paths:** `String.raw\`C:\Users\Alice\file.txt\``
+    - **Regular expressions:** `new RegExp(String.raw\`\d+\.\d+\`)`
+    - **Any text with lots of backslashes** that you don't want interpreted
+    
+    ```javascript
+    // Much cleaner than escaping every backslash
+    const path = String.raw`C:\Users\Alice\Documents`
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: Can a tag function return something other than a string?">
+    **Answer:**
+    
+    Yes! Tag functions can return anything. This flexibility is what makes them so powerful:
+    
+    ```javascript
+    // Return an array
+    function values(strings, ...vals) {
+      return vals
+    }
+    values`${1}, ${2}, ${3}`  // [1, 2, 3]
+    
+    // Return an object
+    function sql(strings, ...vals) {
+      return { query: strings.join('?'), params: vals }
+    }
+    
+    // Return a function (template factory)
+    function template(strings, ...keys) {
+      return (data) => { /* process data */ }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 6: Why is escaping important in HTML tag functions?">
+    **Answer:**
+    
+    Without escaping, user input containing HTML or script tags could execute malicious code (XSS attack):
+    
+    ```javascript
+    // ❌ Dangerous - user input rendered as HTML
+    const userInput = '<script>stealCookies()</script>'
+    unsafeHtml`<div>${userInput}</div>`  // Script could execute!
+    
+    // ✓ Safe - HTML entities are escaped
+    function safeHtml(strings, ...values) {
+      return strings.reduce((result, str, i) => {
+        const value = values[i] !== undefined 
+          ? escapeHTML(String(values[i])) 
+          : ''
+        return result + str + value
+      }, '')
+    }
+    // Output: <div>&lt;script&gt;stealCookies()&lt;/script&gt;</div>
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Modern JS Syntax" icon="wand-magic-sparkles" href="/concepts/modern-js-syntax">
+    Template literal basics and other ES6+ features
+  </Card>
+  <Card title="Higher-Order Functions" icon="layer-group" href="/concepts/higher-order-functions">
+    Functions that return functions, like template factories
+  </Card>
+  <Card title="Regular Expressions" icon="code" href="/concepts/regular-expressions">
+    String.raw is especially useful for regex patterns
+  </Card>
+  <Card title="Error Handling" icon="shield" href="/concepts/error-handling">
+    Handling errors in tag functions and input validation
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="Template literals — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals">
+    Complete MDN reference covering template literals and tagged templates
+  </Card>
+  <Card title="String.raw() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw">
+    Documentation for JavaScript's built-in tag function
+  </Card>
+  <Card title="Lexical grammar — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Lexical_grammar#escape_sequences">
+    How escape sequences work in JavaScript strings
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Template Literals — CSS-Tricks" icon="newspaper" href="https://css-tricks.com/template-literals/">
+    Covers tagged templates with a practical reusable template factory example. Great for understanding how to build template systems from scratch.
+  </Card>
+  <Card title="ES6 Tagged Template Literals — freeCodeCamp" icon="newspaper" href="https://www.freecodecamp.org/news/es6-tagged-template-literals-48a70ef3ed4d/">
+    Explains how function expressions in interpolations enable powerful patterns. Clear examples of why tagged templates are more flexible than regular ones.
+  </Card>
+  <Card title="HTML Templating with ES6 Template Strings — 2ality" icon="newspaper" href="https://2ality.com/2015/01/template-strings-html.html">
+    Dr. Axel Rauschmayer demonstrates building an HTML template system with automatic escaping. Shows the convention for marking escaped values.
+  </Card>
+  <Card title="ES6 in Depth: Template strings — Mozilla Hacks" icon="newspaper" href="https://hacks.mozilla.org/2015/05/es6-in-depth-template-strings-2/">
+    Deep technical dive from Mozilla engineers who helped design the feature. Excellent for understanding the design decisions behind tagged templates.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="Tagged Template Literals Explained — Web Dev Simplified" icon="video" href="https://www.youtube.com/watch?v=DG4obitDvUA">
+    Clear beginner-friendly explanation of how tag functions receive their arguments. Perfect starting point if you're new to this feature.
+  </Card>
+  <Card title="Template Literals and Tagged Templates — Fun Fun Function" icon="video" href="https://www.youtube.com/watch?v=c9j0avG5L4c">
+    MPJ's entertaining deep-dive into tagged templates with practical examples. His explanation of the strings/values relationship is particularly clear.
+  </Card>
+  <Card title="JavaScript ES6 Template Literals — Traversy Media" icon="video" href="https://www.youtube.com/watch?v=kj8HU-_P2NU">
+    Comprehensive crash course covering both basic and tagged template literals with real-world examples and use cases.
+  </Card>
+</CardGroup>

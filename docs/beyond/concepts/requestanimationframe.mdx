@@ -1,0 +1,1032 @@
+---
+title: "requestAnimationFrame: Smooth Animations in JavaScript"
+sidebarTitle: "requestAnimationFrame: Smooth Animations"
+description: "Learn requestAnimationFrame in JavaScript for smooth 60fps animations. Understand how it syncs with browser repaint cycles, delta time, and animation loops."
+---
+
+Why do some JavaScript animations feel buttery smooth while others are janky and choppy? Why does your animation freeze when you switch browser tabs? And how do game developers create animations that run at consistent speeds regardless of frame rate?
+
+The answer is **[`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame)** — the browser API designed specifically for smooth, efficient animations.
+
+```javascript
+// Smooth animation that syncs with the browser's refresh rate
+function animate() {
+  // Update animation state
+  element.style.transform = `translateX(${position}px)`;
+  position += 2;
+  
+  // Request next frame
+  if (position < 500) {
+    requestAnimationFrame(animate);
+  }
+}
+
+requestAnimationFrame(animate);
+```
+
+Unlike [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval), `requestAnimationFrame` synchronizes with your monitor's refresh rate, pauses when the tab is hidden, and lets the browser optimize rendering for maximum performance.
+
+<Info>
+**What you'll learn in this guide:**
+- What requestAnimationFrame is and why it exists
+- How it syncs with the browser's repaint cycle
+- Creating smooth animation loops
+- Calculating delta time for consistent animation speed
+- Canceling animations with cancelAnimationFrame
+- When to use rAF vs CSS animations vs setInterval
+- Common animation patterns and performance tips
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes familiarity with the [event loop](/concepts/event-loop) and basic JavaScript functions. If you're new to how JavaScript handles timing, read the event loop guide first.
+</Warning>
+
+---
+
+## What is requestAnimationFrame?
+
+**`requestAnimationFrame`** (often abbreviated as "rAF") is a browser API that tells the browser you want to perform an animation. It requests a callback to be executed just before the browser performs its next repaint, typically at 60 frames per second (60fps) on most displays.
+
+Here's the key insight: instead of guessing when to update your animation with arbitrary timing like `setInterval(fn, 16)`, `requestAnimationFrame` lets the *browser* tell *you* when it's the optimal time to draw the next frame.
+
+```javascript
+// The browser calls this function when it's ready to paint
+function drawFrame(timestamp) {
+  // timestamp = milliseconds since page load
+  console.log(`Frame at ${timestamp}ms`);
+  
+  // Do your animation work here
+  updatePosition();
+  
+  // Request the next frame
+  requestAnimationFrame(drawFrame);
+}
+
+// Start the animation loop
+requestAnimationFrame(drawFrame);
+```
+
+The `timestamp` parameter is a [`DOMHighResTimeStamp`](https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp) representing the time when the frame started rendering. You'll use this for calculating animation progress and delta time.
+
+---
+
+## The Film Projector Analogy
+
+Think of how movies work. A film projector shows you 24 still images (frames) per second, and your brain perceives smooth motion. If frames come at irregular intervals, the motion looks jerky.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                        THE FILM PROJECTOR                                │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ┌─────────┐   ┌─────────┐   ┌─────────┐   ┌─────────┐                │
+│    │ Frame 1 │   │ Frame 2 │   │ Frame 3 │   │ Frame 4 │  ...           │
+│    │   ⚫   │   │   ⚫    │   │    ⚫   │   │     ⚫  │                │
+│    └─────────┘   └─────────┘   └─────────┘   └─────────┘                │
+│         │             │             │             │                      │
+│         ▼             ▼             ▼             ▼                      │
+│       16.67ms       16.67ms      16.67ms      16.67ms                   │
+│                                                                          │
+│    ════════════════════════════════════════════════════                 │
+│                       SMOOTH MOTION (60fps)                              │
+│    ════════════════════════════════════════════════════                 │
+│                                                                          │
+│    setInterval:     rAF tells the PROJECTOR when to advance              │
+│    YOU guess when   requestAnimationFrame:                               │
+│    to show frames   PROJECTOR tells YOU when it's ready                  │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+With `setInterval`, you're trying to guess when the projector will be ready. Sometimes you're early (frame waits), sometimes you're late (frame skipped). With `requestAnimationFrame`, the projector signals when it's ready for the next frame.
+
+---
+
+## Why Not Use setInterval?
+
+You might think `setInterval(fn, 1000/60)` would give you 60fps. Here's why it doesn't work well for animations:
+
+### Problem 1: Timing Drift
+
+`setInterval` isn't precise. The browser might be busy, and your callback could run 20ms or 30ms apart instead of exactly 16.67ms.
+
+```javascript
+// ❌ WRONG - setInterval for animations
+let position = 0;
+
+setInterval(() => {
+  position += 2;
+  element.style.left = position + 'px';
+}, 1000 / 60);  // Aims for ~16.67ms, often misses
+```
+
+### Problem 2: Wasted CPU in Background Tabs
+
+`setInterval` keeps running even when the tab is hidden. Your animation keeps computing frames that nobody sees, draining battery and CPU.
+
+### Problem 3: Not Synced with Browser Rendering
+
+The browser might repaint at different times than your interval fires. You could update the DOM twice between repaints (wasted work) or miss the repaint window entirely (dropped frame).
+
+```javascript
+// ✓ CORRECT - requestAnimationFrame for animations
+let position = 0;
+
+function animate() {
+  position += 2;
+  element.style.left = position + 'px';
+  
+  if (position < 500) {
+    requestAnimationFrame(animate);
+  }
+}
+
+requestAnimationFrame(animate);
+```
+
+### Comparison Table
+
+| Feature | setInterval | requestAnimationFrame |
+|---------|-------------|----------------------|
+| Synced with display | No | Yes (matches refresh rate) |
+| Background tabs | Keeps running | Pauses automatically |
+| Battery efficiency | Poor | Good |
+| Frame timing | Can drift, miss frames | Browser-optimized |
+| Animation smoothness | Can be janky | Consistently smooth |
+
+---
+
+## Basic Animation Loop
+
+Here's the fundamental pattern for `requestAnimationFrame`:
+
+```javascript
+// Basic animation loop pattern
+function animate() {
+  // 1. Update animation state
+  updateSomething();
+  
+  // 2. Draw/render
+  render();
+  
+  // 3. Request next frame (if animation should continue)
+  requestAnimationFrame(animate);
+}
+
+// Kick off the animation
+requestAnimationFrame(animate);
+```
+
+### Practical Example: Moving a Box
+
+```javascript
+const box = document.getElementById('box');
+let position = 0;
+
+function animate() {
+  // Update position
+  position += 2;
+  
+  // Apply to DOM
+  box.style.transform = `translateX(${position}px)`;
+  
+  // Continue until we reach 400px
+  if (position < 400) {
+    requestAnimationFrame(animate);
+  }
+}
+
+// Start
+requestAnimationFrame(animate);
+```
+
+<Tip>
+**Use `transform` instead of `left` or `top`** for animations. Transform changes don't trigger layout recalculation, making them much faster.
+</Tip>
+
+---
+
+## The Timestamp Parameter
+
+Every `requestAnimationFrame` callback receives a high-resolution timestamp. This is crucial for frame-rate independent animations.
+
+```javascript
+function animate(timestamp) {
+  // timestamp = milliseconds since the page loaded
+  console.log(`Current time: ${timestamp}ms`);
+  
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
+// Output (example):
+// Current time: 16.67ms
+// Current time: 33.34ms
+// Current time: 50.01ms
+// ...
+```
+
+The timestamp is the same as what you'd get from [`performance.now()`](https://developer.mozilla.org/en-US/docs/Web/API/Performance/now) at the start of the callback, but using the provided timestamp is more accurate for animation timing.
+
+---
+
+## Delta Time: Frame-Rate Independent Animation
+
+Here's a critical concept: **if you move an object 2 pixels per frame, it moves faster on a 144Hz monitor than a 60Hz monitor**. The 144Hz display renders more frames per second, so you get more 2-pixel jumps.
+
+The solution is **delta time** — the time elapsed since the last frame. Instead of moving by a fixed amount per frame, you move based on time elapsed.
+
+```javascript
+const box = document.getElementById('box');
+let position = 0;
+let lastTime = 0;
+const speed = 200; // pixels per SECOND (not per frame!)
+
+function animate(currentTime) {
+  // Calculate time since last frame
+  const deltaTime = (currentTime - lastTime) / 1000; // Convert to seconds
+  lastTime = currentTime;
+  
+  // Move based on time, not frames
+  // At 200px/sec, we move 200 * deltaTime pixels each frame
+  position += speed * deltaTime;
+  
+  box.style.transform = `translateX(${position}px)`;
+  
+  if (position < 500) {
+    requestAnimationFrame(animate);
+  }
+}
+
+// First frame needs special handling
+requestAnimationFrame((timestamp) => {
+  lastTime = timestamp;
+  requestAnimationFrame(animate);
+});
+```
+
+Now the box moves at 200 pixels per second regardless of whether the display runs at 30Hz, 60Hz, or 144Hz.
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      DELTA TIME VISUALIZATION                            │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│   WITHOUT DELTA TIME:                                                    │
+│   ────────────────────                                                   │
+│   60Hz Monitor:   ▶────▶────▶────▶────▶  (60 jumps/sec)                 │
+│   144Hz Monitor:  ▶─▶─▶─▶─▶─▶─▶─▶─▶─▶─  (144 jumps/sec) FASTER!        │
+│                                                                          │
+│   WITH DELTA TIME:                                                       │
+│   ────────────────                                                       │
+│   60Hz Monitor:   ▶────▶────▶────▶────▶  (200px/sec)                    │
+│   144Hz Monitor:  ▶─▶─▶─▶─▶─▶─▶─▶─▶─▶─  (200px/sec) SAME SPEED!        │
+│                   (smaller jumps, more frames, same total distance)      │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Canceling Animations
+
+`requestAnimationFrame` returns an ID that you can use with [`cancelAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/Window/cancelAnimationFrame) to stop the animation.
+
+```javascript
+let animationId;
+let position = 0;
+
+function animate() {
+  position += 2;
+  element.style.transform = `translateX(${position}px)`;
+  
+  // Store the ID so we can cancel later
+  animationId = requestAnimationFrame(animate);
+}
+
+// Start animation
+function startAnimation() {
+  animationId = requestAnimationFrame(animate);
+}
+
+// Stop animation
+function stopAnimation() {
+  cancelAnimationFrame(animationId);
+}
+
+// Usage
+document.getElementById('start').onclick = startAnimation;
+document.getElementById('stop').onclick = stopAnimation;
+```
+
+<Warning>
+**Always update the animation ID** inside your animate function. If you only save the initial ID, calling `cancelAnimationFrame` later won't cancel the most recent request.
+</Warning>
+
+### Preventing Multiple Animations
+
+A common bug is starting multiple animation loops by clicking a button repeatedly:
+
+```javascript
+// ❌ BUG: Clicking start multiple times creates multiple loops!
+let animationId;
+
+document.getElementById('start').onclick = () => {
+  function animate() {
+    // ...animation code...
+    animationId = requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+};
+
+// ✓ FIX: Cancel any existing animation before starting
+document.getElementById('start').onclick = () => {
+  cancelAnimationFrame(animationId); // Cancel previous animation
+  
+  function animate() {
+    // ...animation code...
+    animationId = requestAnimationFrame(animate);
+  }
+  requestAnimationFrame(animate);
+};
+```
+
+---
+
+## Animation Duration and Progress
+
+For animations that should last a specific duration, track progress as a value from 0 to 1:
+
+```javascript
+const duration = 2000; // 2 seconds
+let startTime = null;
+
+function animate(timestamp) {
+  if (!startTime) startTime = timestamp;
+  
+  // Calculate progress (0 to 1)
+  const elapsed = timestamp - startTime;
+  const progress = Math.min(elapsed / duration, 1);
+  
+  // Use progress to determine position
+  // Linear: 0 → 0px, 0.5 → 200px, 1 → 400px
+  const position = progress * 400;
+  element.style.transform = `translateX(${position}px)`;
+  
+  // Continue until complete
+  if (progress < 1) {
+    requestAnimationFrame(animate);
+  }
+}
+
+requestAnimationFrame(animate);
+```
+
+### Adding Easing Functions
+
+Linear animations feel robotic. Easing functions make motion feel natural:
+
+```javascript
+// Easing functions take progress (0-1) and return eased progress (0-1)
+const easing = {
+  // Starts slow, ends fast
+  easeIn: (t) => t * t,
+  
+  // Starts fast, ends slow  
+  easeOut: (t) => t * (2 - t),
+  
+  // Slow at both ends
+  easeInOut: (t) => t < 0.5 
+    ? 2 * t * t 
+    : -1 + (4 - 2 * t) * t,
+  
+  // Bouncy effect
+  easeOutBounce: (t) => {
+    if (t < 1 / 2.75) {
+      return 7.5625 * t * t;
+    } else if (t < 2 / 2.75) {
+      return 7.5625 * (t -= 1.5 / 2.75) * t + 0.75;
+    } else if (t < 2.5 / 2.75) {
+      return 7.5625 * (t -= 2.25 / 2.75) * t + 0.9375;
+    } else {
+      return 7.5625 * (t -= 2.625 / 2.75) * t + 0.984375;
+    }
+  }
+};
+
+function animate(timestamp) {
+  if (!startTime) startTime = timestamp;
+  
+  const elapsed = timestamp - startTime;
+  const linearProgress = Math.min(elapsed / duration, 1);
+  
+  // Apply easing
+  const easedProgress = easing.easeOut(linearProgress);
+  
+  const position = easedProgress * 400;
+  element.style.transform = `translateX(${position}px)`;
+  
+  if (linearProgress < 1) {
+    requestAnimationFrame(animate);
+  }
+}
+```
+
+---
+
+## When requestAnimationFrame Runs
+
+Understanding where `requestAnimationFrame` fits in the [event loop](/concepts/event-loop) helps you write better animations:
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│                    ONE EVENT LOOP ITERATION                              │
+├─────────────────────────────────────────────────────────────────────────┤
+│                                                                          │
+│    ┌─────────────────────────────────────────────────────────┐           │
+│    │  1. Process one task (setTimeout, events, etc.)         │           │
+│    └─────────────────────────────────────────────────────────┘           │
+│                              │                                           │
+│                              ▼                                           │
+│    ┌─────────────────────────────────────────────────────────┐           │
+│    │  2. Process ALL microtasks (Promises, queueMicrotask)   │           │
+│    └─────────────────────────────────────────────────────────┘           │
+│                              │                                           │
+│                              ▼                                           │
+│    ┌─────────────────────────────────────────────────────────┐           │
+│    │  3. If time to render (usually ~60x/sec):               │           │
+│    │                                                          │           │
+│    │     a. Run requestAnimationFrame callbacks  ◄── HERE!   │           │
+│    │     b. Calculate styles                                  │           │
+│    │     c. Calculate layout                                  │           │
+│    │     d. Paint to screen                                   │           │
+│    │                                                          │           │
+│    └─────────────────────────────────────────────────────────┘           │
+│                              │                                           │
+│                              ▼                                           │
+│    ┌─────────────────────────────────────────────────────────┐           │
+│    │  4. requestIdleCallback (if idle time remains)          │           │
+│    └─────────────────────────────────────────────────────────┘           │
+│                                                                          │
+└─────────────────────────────────────────────────────────────────────────┘
+```
+
+Key insight: `requestAnimationFrame` callbacks run **right before the browser paints**. This means your DOM changes are applied just in time to be rendered, with no wasted work.
+
+---
+
+## rAF vs CSS Animations vs setInterval
+
+Each animation approach has its place:
+
+<Tabs>
+  <Tab title="requestAnimationFrame">
+    **Best for:**
+    - Complex animations with custom logic
+    - Game loops
+    - Physics simulations
+    - Canvas/WebGL rendering
+    - Animations depending on user input
+    
+    ```javascript
+    function gameLoop(timestamp) {
+      handleInput();
+      updatePhysics();
+      checkCollisions();
+      render();
+      requestAnimationFrame(gameLoop);
+    }
+    ```
+    
+    **Pros:** Full control, frame-by-frame logic, works with canvas
+    
+    **Cons:** More code, you handle everything manually
+  </Tab>
+  
+  <Tab title="CSS Animations">
+    **Best for:**
+    - Simple state transitions
+    - Hover effects
+    - Loading spinners
+    - Entrance/exit animations
+    
+    ```css
+    .box {
+      transition: transform 0.3s ease-out;
+    }
+    .box:hover {
+      transform: scale(1.1);
+    }
+    
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    ```
+    
+    **Pros:** Hardware-accelerated, declarative, less code
+    
+    **Cons:** Limited control, can't do complex frame-by-frame logic
+  </Tab>
+  
+  <Tab title="Web Animations API">
+    **Best for:**
+    - Controlling CSS-like animations from JavaScript
+    - Coordinating multiple animations
+    - When you need JS control but CSS-level performance
+    
+    ```javascript
+    element.animate([
+      { transform: 'translateX(0)' },
+      { transform: 'translateX(400px)' }
+    ], {
+      duration: 1000,
+      easing: 'ease-out',
+      fill: 'forwards'
+    });
+    ```
+    
+    **Pros:** Best of both worlds, pause/reverse/scrub animations
+    
+    **Cons:** Less browser support for advanced features
+  </Tab>
+</Tabs>
+
+---
+
+## Common Patterns
+
+### Pattern 1: Reusable Animation Function
+
+```javascript
+function animate({ duration, timing, draw }) {
+  const start = performance.now();
+  
+  requestAnimationFrame(function tick(time) {
+    // Calculate progress (0 to 1)
+    let progress = (time - start) / duration;
+    if (progress > 1) progress = 1;
+    
+    // Apply easing
+    const easedProgress = timing(progress);
+    
+    // Draw current state
+    draw(easedProgress);
+    
+    // Continue if not complete
+    if (progress < 1) {
+      requestAnimationFrame(tick);
+    }
+  });
+}
+
+// Usage
+animate({
+  duration: 1000,
+  timing: t => t * (2 - t), // easeOut
+  draw: progress => {
+    element.style.transform = `translateX(${progress * 400}px)`;
+  }
+});
+```
+
+### Pattern 2: Animation with Promise
+
+```javascript
+function animateAsync({ duration, timing, draw }) {
+  return new Promise(resolve => {
+    const start = performance.now();
+    
+    requestAnimationFrame(function tick(time) {
+      let progress = (time - start) / duration;
+      if (progress > 1) progress = 1;
+      
+      draw(timing(progress));
+      
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        resolve(); // Animation complete
+      }
+    });
+  });
+}
+
+// Usage with async/await
+async function runAnimations() {
+  await animateAsync({ /* first animation */ });
+  await animateAsync({ /* second animation - starts after first */ });
+  console.log('All animations complete!');
+}
+```
+
+### Pattern 3: Pausable Animation
+
+```javascript
+class Animation {
+  constructor({ duration, timing, draw }) {
+    this.duration = duration;
+    this.timing = timing;
+    this.draw = draw;
+    this.elapsed = 0;
+    this.running = false;
+    this.animationId = null;
+  }
+  
+  start() {
+    if (this.running) return;
+    this.running = true;
+    this.lastTime = performance.now();
+    this.tick();
+  }
+  
+  pause() {
+    this.running = false;
+    cancelAnimationFrame(this.animationId);
+  }
+  
+  tick() {
+    if (!this.running) return;
+    
+    const now = performance.now();
+    this.elapsed += now - this.lastTime;
+    this.lastTime = now;
+    
+    let progress = this.elapsed / this.duration;
+    if (progress > 1) progress = 1;
+    
+    this.draw(this.timing(progress));
+    
+    if (progress < 1) {
+      this.animationId = requestAnimationFrame(() => this.tick());
+    } else {
+      this.running = false;
+    }
+  }
+}
+
+// Usage
+const anim = new Animation({
+  duration: 2000,
+  timing: t => t,
+  draw: p => element.style.opacity = p
+});
+
+startBtn.onclick = () => anim.start();
+pauseBtn.onclick = () => anim.pause();
+```
+
+---
+
+## Performance Tips
+
+<AccordionGroup>
+  <Accordion title="1. Animate transform and opacity only">
+    These properties don't trigger layout recalculation. Animating `left`, `top`, `width`, or `height` forces the browser to recalculate layout every frame.
+    
+    ```javascript
+    // ❌ SLOW - triggers layout
+    element.style.left = position + 'px';
+    element.style.width = size + 'px';
+    
+    // ✓ FAST - composited
+    element.style.transform = `translateX(${position}px)`;
+    element.style.opacity = alpha;
+    ```
+  </Accordion>
+  
+  <Accordion title="2. Use will-change for complex animations">
+    Hints to the browser that an element will be animated, allowing it to optimize ahead of time.
+    
+    ```css
+    .animated-element {
+      will-change: transform;
+    }
+    ```
+    
+    Don't overuse it though — it consumes memory.
+  </Accordion>
+  
+  <Accordion title="3. Debounce DOM reads and writes">
+    Reading layout properties (like `offsetWidth`) forces a synchronous layout. Batch your reads together, then batch your writes.
+    
+    ```javascript
+    // ❌ BAD - read/write/read/write causes multiple layouts
+    element1.style.width = element2.offsetWidth + 'px';
+    element3.style.width = element4.offsetWidth + 'px';
+    
+    // ✓ GOOD - batch reads, then batch writes
+    const width2 = element2.offsetWidth;
+    const width4 = element4.offsetWidth;
+    element1.style.width = width2 + 'px';
+    element3.style.width = width4 + 'px';
+    ```
+  </Accordion>
+  
+  <Accordion title="4. Keep work inside rAF minimal">
+    Heavy computation inside `requestAnimationFrame` causes frame drops. Move complex calculations outside or use Web Workers.
+    
+    ```javascript
+    // ❌ BAD - heavy work blocks rendering
+    function animate() {
+      const result = expensiveCalculation(); // 50ms of work!
+      render(result);
+      requestAnimationFrame(animate);
+    }
+    
+    // ✓ BETTER - compute in chunks or use worker
+    function animate() {
+      render(precomputedData[currentFrame]);
+      currentFrame++;
+      requestAnimationFrame(animate);
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Common Mistakes
+
+### Mistake 1: Forgetting to Request the Next Frame
+
+```javascript
+// ❌ WRONG - only runs once!
+function animate() {
+  element.style.left = position++ + 'px';
+  // Forgot to call requestAnimationFrame again!
+}
+requestAnimationFrame(animate);
+
+// ✓ CORRECT
+function animate() {
+  element.style.left = position++ + 'px';
+  requestAnimationFrame(animate);  // Request next frame
+}
+requestAnimationFrame(animate);
+```
+
+### Mistake 2: Animation Speed Varies by Frame Rate
+
+```javascript
+// ❌ WRONG - moves faster on high refresh rate displays
+function animate() {
+  position += 5;  // 5px per frame
+  element.style.transform = `translateX(${position}px)`;
+  requestAnimationFrame(animate);
+}
+
+// ✓ CORRECT - use delta time
+let lastTime = 0;
+const speed = 300; // pixels per second
+
+function animate(time) {
+  const delta = (time - lastTime) / 1000;
+  lastTime = time;
+  
+  position += speed * delta;  // Time-based movement
+  element.style.transform = `translateX(${position}px)`;
+  requestAnimationFrame(animate);
+}
+```
+
+### Mistake 3: Not Handling the First Frame
+
+```javascript
+// ❌ WRONG - first frame has huge deltaTime (since page load!)
+let lastTime = 0;
+
+function animate(time) {
+  const delta = time - lastTime;  // First call: delta = entire page lifetime!
+  lastTime = time;
+  // Animation jumps on first frame
+}
+
+// ✓ CORRECT - initialize lastTime properly
+let lastTime = null;
+
+function animate(time) {
+  if (lastTime === null) {
+    lastTime = time;
+    requestAnimationFrame(animate);
+    return;
+  }
+  
+  const delta = time - lastTime;
+  lastTime = time;
+  // First actual frame has reasonable delta
+}
+```
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **`requestAnimationFrame` syncs with display refresh** — it fires right before the browser paints, typically 60 times per second
+
+2. **Better than setInterval for animations** — smoother, pauses in background tabs, battery-efficient
+
+3. **One-shot by design** — you must call `requestAnimationFrame` inside your callback to keep animating
+
+4. **Use the timestamp parameter** — it's more reliable than `Date.now()` or `performance.now()` for animation timing
+
+5. **Delta time prevents speed variation** — multiply movement by time elapsed, not a fixed amount per frame
+
+6. **`cancelAnimationFrame(id)` stops animation** — store the ID and update it every frame
+
+7. **Runs before paint, after microtasks** — part of the rendering phase in the event loop
+
+8. **Animate transform and opacity** — these properties are GPU-accelerated and don't trigger layout
+
+9. **CSS animations for simple cases** — use rAF for complex logic, canvas, or game loops
+
+10. **Handle the first frame specially** — initialize `lastTime` to avoid a huge delta on the first call
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="Question 1: Why is requestAnimationFrame better than setInterval for animations?">
+    **Answer:**
+    
+    1. **Syncs with display refresh** — rAF fires at the optimal time before the browser paints
+    2. **Pauses in background tabs** — saves battery and CPU when the tab isn't visible
+    3. **Browser-optimized timing** — avoids dropped frames and visual jank
+    4. **More accurate timestamps** — provides high-resolution timestamps for smooth animations
+    
+    `setInterval` doesn't know about the browser's rendering cycle, may drift, and keeps running when the tab is hidden.
+  </Accordion>
+  
+  <Accordion title="Question 2: What is delta time and why is it important?">
+    **Answer:**
+    
+    Delta time is the time elapsed since the last frame. It's crucial for **frame-rate independent animations**.
+    
+    ```javascript
+    // Without delta time: 144Hz monitor runs animation 2.4x faster than 60Hz
+    position += 5; // 5 pixels per frame
+    
+    // With delta time: same speed on all monitors
+    const speed = 300; // pixels per second
+    position += speed * deltaTime;
+    ```
+    
+    Without delta time, animations run at different speeds depending on the monitor's refresh rate.
+  </Accordion>
+  
+  <Accordion title="Question 3: How do you stop an animation started with requestAnimationFrame?">
+    **Answer:**
+    
+    Use `cancelAnimationFrame(id)` with the ID returned from `requestAnimationFrame`:
+    
+    ```javascript
+    let animationId;
+    
+    function animate() {
+      // ... animation code ...
+      animationId = requestAnimationFrame(animate); // Update ID each frame
+    }
+    
+    // Start
+    animationId = requestAnimationFrame(animate);
+    
+    // Stop
+    cancelAnimationFrame(animationId);
+    ```
+    
+    Important: Update `animationId` inside the animate function, not just when starting.
+  </Accordion>
+  
+  <Accordion title="Question 4: When does the requestAnimationFrame callback actually run?">
+    **Answer:**
+    
+    It runs during the **rendering phase** of the event loop, specifically:
+    
+    1. After the current task completes
+    2. After all microtasks are drained
+    3. **Before the browser calculates styles, layout, and paints**
+    
+    This timing ensures your DOM changes are applied right before they're rendered to screen.
+  </Accordion>
+  
+  <Accordion title="Question 5: What CSS properties should you animate for best performance?">
+    **Answer:**
+    
+    Animate `transform` and `opacity` — these are compositor-only properties that don't trigger layout or paint:
+    
+    ```javascript
+    // ✓ Fast (compositor only)
+    element.style.transform = 'translateX(100px)';
+    element.style.transform = 'scale(1.2)';
+    element.style.transform = 'rotate(45deg)';
+    element.style.opacity = 0.5;
+    
+    // ❌ Slow (triggers layout)
+    element.style.left = '100px';
+    element.style.width = '200px';
+    element.style.margin = '10px';
+    ```
+    
+    Layout-triggering properties force the browser to recalculate positions of other elements every frame.
+  </Accordion>
+  
+  <Accordion title="Question 6: How do you handle the first frame to avoid animation jumping?">
+    **Answer:**
+    
+    Initialize `lastTime` to `null` and skip the first frame's animation:
+    
+    ```javascript
+    let lastTime = null;
+    
+    function animate(time) {
+      if (lastTime === null) {
+        lastTime = time;
+        requestAnimationFrame(animate);
+        return; // Skip first frame
+      }
+      
+      const delta = (time - lastTime) / 1000;
+      lastTime = time;
+      
+      // Now delta is reasonable (16.67ms at 60fps)
+      position += speed * delta;
+      
+      requestAnimationFrame(animate);
+    }
+    ```
+    
+    Without this, the first delta would be the time since page load, causing a huge jump.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Event Loop" icon="arrows-spin" href="/concepts/event-loop">
+    How JavaScript manages async operations and where rAF fits in the rendering cycle
+  </Card>
+  <Card title="DOM" icon="sitemap" href="/concepts/dom">
+    Understanding the Document Object Model that animations manipulate
+  </Card>
+  <Card title="Debouncing & Throttling" icon="gauge" href="/beyond/concepts/debouncing-throttling">
+    Rate-limiting techniques often combined with animations
+  </Card>
+  <Card title="Web Workers" icon="gears" href="/concepts/web-workers">
+    Offload heavy computation to keep animations smooth
+  </Card>
+</CardGroup>
+
+---
+
+## Reference
+
+<CardGroup cols={2}>
+  <Card title="requestAnimationFrame — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame">
+    Complete API reference including syntax, parameters, return value, and browser compatibility.
+  </Card>
+  <Card title="cancelAnimationFrame — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/Window/cancelAnimationFrame">
+    Documentation for canceling scheduled animation frame requests.
+  </Card>
+  <Card title="DOMHighResTimeStamp — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/API/DOMHighResTimeStamp">
+    Understanding the high-resolution timestamp passed to rAF callbacks.
+  </Card>
+</CardGroup>
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="JavaScript Animations — javascript.info" icon="newspaper" href="https://javascript.info/js-animation">
+    Comprehensive tutorial covering rAF, timing functions, and animation patterns. Includes interactive examples and exercises to practice.
+  </Card>
+  <Card title="Using requestAnimationFrame — CSS-Tricks" icon="newspaper" href="https://css-tricks.com/using-requestanimationframe/">
+    Chris Coyier's practical guide with code examples showing start/stop patterns and the polyfill for older browsers.
+  </Card>
+  <Card title="requestAnimationFrame for Smart Animating — Paul Irish" icon="newspaper" href="https://www.paulirish.com/2011/requestanimationframe-for-smart-animating/">
+    The original blog post that popularized rAF. Paul Irish explains why it's better than setInterval with great technical depth.
+  </Card>
+  <Card title="Optimize JavaScript Execution — web.dev" icon="newspaper" href="https://web.dev/articles/optimize-javascript-execution">
+    Google's guide to keeping JavaScript execution within frame budgets. Essential reading for avoiding animation jank.
+  </Card>
+</CardGroup>
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="In The Loop — Jake Archibald" icon="video" href="https://www.youtube.com/watch?v=cCOL7MC4Pl0">
+    Jake Archibald's JSConf.Asia talk diving deep into the event loop, tasks, microtasks, and where requestAnimationFrame fits. A must-watch.
+  </Card>
+  <Card title="requestAnimationFrame — The Coding Train" icon="video" href="https://www.youtube.com/watch?v=c6iN14aXPR0">
+    Visual and beginner-friendly explanation of animation loops using requestAnimationFrame. Great for those new to animation.
+  </Card>
+  <Card title="JavaScript Game Loop — Franks Laboratory" icon="video" href="https://www.youtube.com/watch?v=mJJmQRjxO5w">
+    Practical tutorial building a game loop with delta time. Shows real implementation of frame-rate independent animation.
+  </Card>
+</CardGroup>

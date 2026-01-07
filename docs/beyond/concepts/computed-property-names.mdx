@@ -1,0 +1,952 @@
+---
+title: "Computed Property Names: Dynamic Object Keys in JavaScript"
+sidebarTitle: "Computed Property Names"
+description: "Learn JavaScript computed property names. Create dynamic object keys with variables, expressions, Symbols, and computed methods for cleaner ES6+ code."
+---
+
+Have you ever needed to create an object where the property name comes from a variable? Before ES6, this required creating the object first, then adding the property in a separate step. Computed property names changed everything.
+
+```javascript
+// Before ES6 - two steps required
+const key = 'status';
+const obj = {};
+obj[key] = 'active';
+
+// ES6 computed property names - single expression
+const key2 = 'status';
+const obj2 = { [key2]: 'active' };
+
+console.log(obj2);  // { status: 'active' }
+```
+
+With **computed property names**, you can use any expression inside square brackets `[]` within an object literal, and JavaScript evaluates that expression to determine the property name. This seemingly small syntax addition enables powerful patterns for dynamic object creation.
+
+<Info>
+**What you'll learn in this guide:**
+- What computed property names are and their ES6 syntax
+- How JavaScript evaluates computed keys (order of evaluation)
+- Dynamic keys with variables and expressions
+- Using Symbol keys for unique, non-colliding properties
+- Computed method names, getters, and setters
+- Common patterns: form handling, state updates, internationalization
+- Edge cases: duplicate keys, type coercion, and the `__proto__` gotcha
+</Info>
+
+<Warning>
+**Prerequisite:** This guide assumes familiarity with [object basics](/concepts/primitive-types) and [bracket notation](/concepts/modern-js-syntax) for property access. Some examples use [Symbols](/beyond/concepts/javascript-type-nuances), which are covered in detail in the Symbol Keys section.
+</Warning>
+
+---
+
+## What are Computed Property Names?
+
+**Computed property names** are an ES6 feature that allows you to use an expression inside square brackets `[]` within an object literal to dynamically determine a property's name at runtime. The expression is evaluated, converted to a string (or kept as a Symbol), and used as the property key. This enables creating objects with dynamic keys in a single expression, eliminating the need for the two-step create-then-assign pattern required before ES6.
+
+```javascript
+const field = 'email';
+const value = 'alice@example.com';
+
+// The expression [field] is evaluated to get the key name
+const formData = {
+  [field]: value,
+  [`${field}_verified`]: true
+};
+
+console.log(formData);
+// { email: 'alice@example.com', email_verified: true }
+```
+
+Think of computed property names as **dynamic labels** for your object's filing cabinet. Instead of pre-printing labels (static keys), you're using a label maker (the expression) to print the label right when you create the file.
+
+---
+
+## The Dynamic Label Analogy
+
+Imagine you're organizing a filing cabinet. With traditional object literals, you must know all the label names in advance. With computed properties, you can generate labels on the fly.
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                    COMPUTED PROPERTY NAMES: DYNAMIC LABELS                   │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   STATIC KEYS (Traditional)              COMPUTED KEYS (ES6)                 │
+│   ─────────────────────────              ──────────────────────              │
+│                                                                              │
+│   Pre-printed labels:                    Label maker:                        │
+│   ┌──────────────────┐                   ┌──────────────────┐                │
+│   │  name: "Alice"   │                   │  [key]: "Alice"  │                │
+│   │  age: 30         │                   │  [prefix+id]: 30 │                │
+│   └──────────────────┘                   └──────────────────┘                │
+│                                                    │                         │
+│   You must know "name"                   key can be any                      │
+│   and "age" at write time                expression evaluated                │
+│                                          at runtime                          │
+│                                                                              │
+│   const obj = {                          const key = 'name';                 │
+│     name: "Alice",                       const obj = {                       │
+│     age: 30             ──────────────►    [key]: "Alice",                   │
+│   };                                       [`user_${key}`]: "Alice"          │
+│                                          };                                  │
+│                                                                              │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Basic Syntax
+
+The syntax is straightforward: wrap any expression in square brackets `[]` where you would normally write a property name.
+
+### Variable as Key
+
+The most common use case is using a variable's value as the property name:
+
+```javascript
+const propName = 'score';
+const player = {
+  name: 'Alice',
+  [propName]: 100
+};
+
+console.log(player);        // { name: 'Alice', score: 100 }
+console.log(player.score);  // 100
+```
+
+### Template Literal as Key
+
+Template literals let you build dynamic key names with string interpolation:
+
+```javascript
+const prefix = 'user';
+const id = 42;
+
+const data = {
+  [`${prefix}_${id}`]: 'Alice',
+  [`${prefix}_${id}_role`]: 'admin'
+};
+
+console.log(data);
+// { user_42: 'Alice', user_42_role: 'admin' }
+```
+
+### Expression as Key
+
+Any valid JavaScript expression works inside the brackets:
+
+```javascript
+const i = 0;
+
+const obj = {
+  ['prop' + (i + 1)]: 'first',
+  ['prop' + (i + 2)]: 'second',
+  [1 + 1]: 'number key'
+};
+
+console.log(obj);
+// { '2': 'number key', prop1: 'first', prop2: 'second' }
+```
+
+### Function Call as Key
+
+You can even call functions to generate key names:
+
+```javascript
+function getKey(type) {
+  return `data_${type}_${Date.now()}`;
+}
+
+const cache = {
+  [getKey('user')]: { name: 'Alice' }
+};
+
+console.log(Object.keys(cache)[0]);
+// Something like: 'data_user_1699123456789'
+```
+
+---
+
+## How the Engine Evaluates Computed Keys
+
+Understanding the evaluation order is crucial for avoiding subtle bugs.
+
+### Order of Evaluation: Key Before Value
+
+When JavaScript encounters a computed property, it evaluates the **key expression first**, then the **value expression**. Properties are processed left-to-right in source order.
+
+```javascript
+let counter = 0;
+
+const obj = {
+  [++counter]: counter,  // key: 1, value: 1
+  [++counter]: counter,  // key: 2, value: 2
+  [++counter]: counter   // key: 3, value: 3
+};
+
+console.log(obj);
+// { '1': 1, '2': 2, '3': 3 }
+```
+
+Each property's key expression (`++counter`) is evaluated before its value expression (`counter`), so the key and value end up with the same number.
+
+### Type Coercion: ToPropertyKey()
+
+Property keys can only be **strings** or **Symbols**. When you use any other type, JavaScript converts it using an internal operation called `ToPropertyKey()`:
+
+| Input Type | Conversion |
+|------------|------------|
+| String | Used as-is |
+| Symbol | Used as-is |
+| Number | Converted to string: `42` → `"42"` |
+| Boolean | `true` → `"true"`, `false` → `"false"` |
+| null | `"null"` |
+| undefined | `"undefined"` |
+| Object | Calls `toString()` → usually `"[object Object]"` |
+| Array | Calls `toString()` → `[1,2,3]` becomes `"1,2,3"` |
+
+```javascript
+const obj = {
+  [42]: 'number',
+  [true]: 'boolean',
+  [null]: 'null',
+  [[1, 2, 3]]: 'array'
+};
+
+console.log(obj);
+// { '42': 'number', 'true': 'boolean', 'null': 'null', '1,2,3': 'array' }
+
+// Number keys and string keys can collide!
+console.log(obj[42]);    // 'number'
+console.log(obj['42']);  // 'number' (same property!)
+```
+
+<Warning>
+**Common gotcha:** Number and string keys that convert to the same string refer to the same property. `obj[1]` and `obj['1']` access the same property.
+</Warning>
+
+---
+
+## Before ES6: The Two-Step Pattern
+
+Before computed property names, creating objects with dynamic keys required multiple steps:
+
+```javascript
+// ES5: Create object, then add dynamic property
+function createUser(role, name) {
+  var obj = {};
+  obj[role] = name;
+  return obj;
+}
+
+var admin = createUser('admin', 'Alice');
+console.log(admin);  // { admin: 'Alice' }
+```
+
+This was especially awkward in situations requiring single expressions:
+
+```javascript
+// ES5: IIFE pattern for single-expression dynamic keys
+var role = 'admin';
+var users = (function() {
+  var obj = {};
+  obj[role] = 'Alice';
+  return obj;
+})();
+
+// ES6: Clean single expression
+const role2 = 'admin';
+const users2 = { [role2]: 'Alice' };
+```
+
+The ES6 syntax shines in:
+- **Default function parameters** that need dynamic objects
+- **Arrow functions** with implicit returns
+- **Const declarations** requiring immediate initialization
+- **Array methods** like `map()` and `reduce()`
+
+```javascript
+// ES6 enables elegant patterns
+const fields = ['name', 'email', 'age'];
+const defaults = fields.reduce(
+  (acc, field) => ({ ...acc, [field]: '' }),
+  {}
+);
+
+console.log(defaults);
+// { name: '', email: '', age: '' }
+```
+
+---
+
+## Symbol Keys: The Primary Use Case
+
+Symbols are unique, immutable identifiers that can **only** be used as object keys via computed property syntax. This is one of the most important use cases for computed properties.
+
+### Why Symbols Need Computed Syntax
+
+You cannot use a Symbol with the shorthand or colon syntax:
+
+```javascript
+const mySymbol = Symbol('id');
+
+// This creates a string key "mySymbol", NOT a Symbol key!
+const wrong = { mySymbol: 'value' };
+console.log(Object.keys(wrong));  // ['mySymbol']
+
+// This uses the Symbol as the key
+const correct = { [mySymbol]: 'value' };
+console.log(Object.keys(correct));  // [] (Symbols don't appear in keys!)
+console.log(Object.getOwnPropertySymbols(correct));  // [Symbol(id)]
+```
+
+### Symbol Keys Are Hidden
+
+Symbol-keyed properties don't appear in most iteration methods:
+
+```javascript
+const secret = Symbol('secret');
+
+const user = {
+  name: 'Alice',
+  [secret]: 'classified information'
+};
+
+// Symbol keys are hidden from these:
+console.log(Object.keys(user));       // ['name']
+console.log(JSON.stringify(user));    // '{"name":"Alice"}'
+
+for (const key in user) {
+  console.log(key);  // Only logs 'name'
+}
+
+// But you can still access them:
+console.log(user[secret]);  // 'classified information'
+console.log(Object.getOwnPropertySymbols(user));  // [Symbol(secret)]
+```
+
+### Well-Known Symbols: Customizing Object Behavior
+
+JavaScript has built-in "well-known" Symbols that let you customize how objects behave. These must be used with computed property syntax.
+
+#### Symbol.iterator: Make Objects Iterable
+
+```javascript
+const range = {
+  start: 1,
+  end: 5,
+
+  [Symbol.iterator]() {
+    let current = this.start;
+    const end = this.end;
+
+    return {
+      next() {
+        if (current <= end) {
+          return { value: current++, done: false };
+        }
+        return { done: true };
+      }
+    };
+  }
+};
+
+console.log([...range]);  // [1, 2, 3, 4, 5]
+
+for (const num of range) {
+  console.log(num);  // 1, 2, 3, 4, 5
+}
+```
+
+#### Symbol.toStringTag: Custom Type String
+
+```javascript
+const myCollection = {
+  items: [],
+  [Symbol.toStringTag]: 'MyCollection'
+};
+
+console.log(Object.prototype.toString.call(myCollection));
+// '[object MyCollection]'
+
+// Compare to a plain object:
+console.log(Object.prototype.toString.call({}));
+// '[object Object]'
+```
+
+#### Symbol.toPrimitive: Custom Type Coercion
+
+```javascript
+const temperature = {
+  celsius: 20,
+
+  [Symbol.toPrimitive](hint) {
+    switch (hint) {
+      case 'number':
+        return this.celsius;
+      case 'string':
+        return `${this.celsius}°C`;
+      default:
+        return this.celsius;
+    }
+  }
+};
+
+console.log(+temperature);       // 20 (number hint)
+console.log(`${temperature}`);   // '20°C' (string hint)
+console.log(temperature + 10);   // 30 (default hint)
+```
+
+### Privacy Patterns with Symbols
+
+While not truly private, Symbol keys provide a level of encapsulation:
+
+```javascript
+// Module-scoped Symbol - not exported
+const _balance = Symbol('balance');
+
+class BankAccount {
+  constructor(initial) {
+    this[_balance] = initial;
+  }
+
+  deposit(amount) {
+    this[_balance] += amount;
+  }
+
+  getBalance() {
+    return this[_balance];
+  }
+}
+
+const account = new BankAccount(100);
+console.log(Object.keys(account));  // []
+console.log(JSON.stringify(account));  // '{}'
+console.log(account.getBalance());  // 100
+
+// Still accessible if you know about Symbols:
+const symbols = Object.getOwnPropertySymbols(account);
+console.log(account[symbols[0]]);  // 100
+```
+
+---
+
+## Computed Method Names
+
+Computed property syntax works with method shorthand for dynamically-named methods:
+
+### Basic Computed Methods
+
+```javascript
+const action = 'greet';
+
+const obj = {
+  [action]() {
+    return 'Hello!';
+  },
+  [`${action}Loudly`]() {
+    return 'HELLO!';
+  }
+};
+
+console.log(obj.greet());        // 'Hello!'
+console.log(obj.greetLoudly());  // 'HELLO!'
+```
+
+### Computed Generator Methods
+
+```javascript
+const iteratorName = 'values';
+
+const collection = {
+  items: [1, 2, 3],
+
+  *[iteratorName]() {
+    for (const item of this.items) {
+      yield item * 2;
+    }
+  }
+};
+
+console.log([...collection.values()]);  // [2, 4, 6]
+```
+
+### Computed Async Methods
+
+```javascript
+const fetchName = 'fetchData';
+
+const api = {
+  async [fetchName](url) {
+    const response = await fetch(url);
+    return response.json();
+  }
+};
+
+// api.fetchData('https://api.example.com/data')
+```
+
+---
+
+## Computed Getters and Setters
+
+You can combine computed property names with [getters and setters](/beyond/concepts/getters-setters):
+
+```javascript
+const prop = 'fullName';
+
+const person = {
+  firstName: 'Alice',
+  lastName: 'Smith',
+
+  get [prop]() {
+    return `${this.firstName} ${this.lastName}`;
+  },
+
+  set [prop](value) {
+    const parts = value.split(' ');
+    this.firstName = parts[0];
+    this.lastName = parts[1];
+  }
+};
+
+console.log(person.fullName);  // 'Alice Smith'
+
+person.fullName = 'Bob Jones';
+console.log(person.firstName);  // 'Bob'
+console.log(person.lastName);   // 'Jones'
+```
+
+### Symbol-Keyed Accessors
+
+```javascript
+const _value = Symbol('value');
+
+const validated = {
+  [_value]: 0,
+
+  get [Symbol.for('value')]() {
+    return this[_value];
+  },
+
+  set [Symbol.for('value')](v) {
+    if (typeof v !== 'number') {
+      throw new TypeError('Value must be a number');
+    }
+    this[_value] = v;
+  }
+};
+
+validated[Symbol.for('value')] = 42;
+console.log(validated[Symbol.for('value')]);  // 42
+```
+
+---
+
+## Real-World Use Cases
+
+### Form Field Handling
+
+React and Vue state updates commonly use computed properties:
+
+```javascript
+// React-style form handler
+function handleInputChange(fieldName, value) {
+  return {
+    [fieldName]: value,
+    [`${fieldName}Touched`]: true,
+    [`${fieldName}Error`]: null
+  };
+}
+
+const updates = handleInputChange('email', 'alice@example.com');
+console.log(updates);
+// {
+//   email: 'alice@example.com',
+//   emailTouched: true,
+//   emailError: null
+// }
+```
+
+### Redux-Style State Updates
+
+```javascript
+// Reducer pattern with computed properties
+function updateField(state, field, value) {
+  return {
+    ...state,
+    [field]: value,
+    lastModified: Date.now()
+  };
+}
+
+const state = { name: 'Alice', email: '' };
+const newState = updateField(state, 'email', 'alice@example.com');
+
+console.log(newState);
+// { name: 'Alice', email: 'alice@example.com', lastModified: 1699123456789 }
+```
+
+### Internationalization (i18n)
+
+```javascript
+function createTranslations(locale, translations) {
+  return {
+    [`messages_${locale}`]: translations,
+    [`${locale}_loaded`]: true,
+    [`${locale}_timestamp`]: Date.now()
+  };
+}
+
+const spanish = createTranslations('es', { hello: 'hola' });
+console.log(spanish);
+// {
+//   messages_es: { hello: 'hola' },
+//   es_loaded: true,
+//   es_timestamp: 1699123456789
+// }
+```
+
+### Dynamic API Response Mapping
+
+```javascript
+function normalizeResponse(entityType, items) {
+  return items.reduce((acc, item) => ({
+    ...acc,
+    [`${entityType}_${item.id}`]: item
+  }), {});
+}
+
+const users = [
+  { id: 1, name: 'Alice' },
+  { id: 2, name: 'Bob' }
+];
+
+const normalized = normalizeResponse('user', users);
+console.log(normalized);
+// {
+//   user_1: { id: 1, name: 'Alice' },
+//   user_2: { id: 2, name: 'Bob' }
+// }
+```
+
+---
+
+## Common Mistakes and Edge Cases
+
+### Duplicate Computed Keys: Last One Wins
+
+When multiple computed properties evaluate to the same key, the last one overwrites previous values:
+
+```javascript
+const key = 'same';
+
+const obj = {
+  [key]: 'first',
+  ['sa' + 'me']: 'second',
+  same: 'third'  // Static key, same string
+};
+
+console.log(obj);  // { same: 'third' }
+```
+
+### Keys That Throw Errors
+
+If the key expression throws, object creation is aborted entirely:
+
+```javascript
+function badKey() {
+  throw new Error('Key evaluation failed');
+}
+
+// This throws before the object is created
+try {
+  const obj = {
+    valid: 'ok',
+    [badKey()]: 'never reached'
+  };
+} catch (e) {
+  console.log(e.message);  // 'Key evaluation failed'
+}
+```
+
+### Object Keys: toString() Collisions
+
+Objects used as keys call `toString()`, which can cause unexpected collisions:
+
+```javascript
+const objA = { toString: () => 'key' };
+const objB = { toString: () => 'key' };
+
+const data = {
+  [objA]: 'first',
+  [objB]: 'second'  // Overwrites! Both → 'key'
+};
+
+console.log(data);  // { key: 'second' }
+```
+
+### The `__proto__` Special Case
+
+The `__proto__` key has special behavior depending on how it's written:
+
+```javascript
+// Non-computed: Sets the prototype!
+const obj1 = { __proto__: Array.prototype };
+console.log(obj1 instanceof Array);  // true
+console.log(Object.hasOwn(obj1, '__proto__'));  // false
+
+// Computed: Creates a normal property
+const obj2 = { ['__proto__']: Array.prototype };
+console.log(obj2 instanceof Array);  // false
+console.log(Object.hasOwn(obj2, '__proto__'));  // true
+
+// Shorthand: Also creates a normal property
+const __proto__ = 'just a string';
+const obj3 = { __proto__ };
+console.log(obj3.__proto__);  // 'just a string' (own property)
+```
+
+<Warning>
+**Important:** Only the non-computed colon syntax (`__proto__: value`) sets the prototype. Computed `['__proto__']` and shorthand `{ __proto__ }` create regular properties.
+</Warning>
+
+---
+
+## Key Takeaways
+
+<Info>
+**The key things to remember:**
+
+1. **Computed properties use `[expression]` syntax** in object literals to create dynamic key names at runtime.
+
+2. **The key expression is evaluated before the value expression.** Properties are processed left-to-right in source order.
+
+3. **Non-string/Symbol keys are coerced via ToPropertyKey().** Numbers become strings, objects call `toString()`.
+
+4. **Symbols can ONLY be used as keys via computed property syntax.** The syntax `{ mySymbol: value }` creates a string key `"mySymbol"`.
+
+5. **Well-known Symbols customize object behavior.** Use `[Symbol.iterator]` for iteration, `[Symbol.toStringTag]` for type strings.
+
+6. **Computed method syntax enables dynamic method names.** Works with regular methods, generators, and async methods.
+
+7. **Computed getters/setters enable dynamic accessor properties.** Combine `get [expr]()` and `set [expr](v)` for dynamic accessors.
+
+8. **Pre-ES6 required two steps; ES6 enables single-expression objects.** This is especially useful in `reduce()`, arrow functions, and default parameters.
+
+9. **Duplicate computed keys are allowed—last one wins.** No error is thrown; the later value simply overwrites.
+
+10. **The `__proto__` key behaves differently in computed vs non-computed form.** Only non-computed colon syntax sets the prototype.
+</Info>
+
+---
+
+## Test Your Knowledge
+
+<AccordionGroup>
+  <Accordion title="What's the difference between { key: value } and { [key]: value }?">
+    **Answer:**
+
+    - `{ key: value }` creates a property with the literal name `"key"` (a static string).
+    - `{ [key]: value }` evaluates the variable `key` and uses its **value** as the property name.
+
+    ```javascript
+    const key = 'dynamicName';
+
+    const static = { key: 'value' };
+    console.log(static);  // { key: 'value' }
+
+    const dynamic = { [key]: 'value' };
+    console.log(dynamic);  // { dynamicName: 'value' }
+    ```
+
+    The square brackets signal "evaluate this expression to get the key name."
+  </Accordion>
+
+  <Accordion title="In what order are key and value expressions evaluated?">
+    **Answer:**
+
+    The **key expression is evaluated first**, then the **value expression**. This happens for each property in left-to-right order.
+
+    ```javascript
+    let n = 0;
+    const obj = {
+      [++n]: n,  // key: 1, value: 1
+      [++n]: n   // key: 2, value: 2
+    };
+    // { '1': 1, '2': 2 }
+    ```
+
+    The `++n` in the key runs before `n` in the value is read, so they match.
+  </Accordion>
+
+  <Accordion title="What happens when you use an object as a computed key?">
+    **Answer:**
+
+    The object is converted to a string via its `toString()` method. By default, this returns `"[object Object]"`, which can cause unintended collisions:
+
+    ```javascript
+    const a = { id: 1 };
+    const b = { id: 2 };
+
+    const obj = {
+      [a]: 'first',
+      [b]: 'second'  // Overwrites! Both → "[object Object]"
+    };
+
+    console.log(obj);  // { '[object Object]': 'second' }
+    ```
+
+    Custom `toString()` methods can provide unique keys, but this pattern is error-prone. Use Symbols or string IDs instead.
+  </Accordion>
+
+  <Accordion title="Why must Symbol keys use computed property syntax?">
+    **Answer:**
+
+    The shorthand and colon syntax only accept identifiers or string literals as property names. Writing `{ mySymbol: value }` creates a property named `"mySymbol"` (a string), not a Symbol-keyed property.
+
+    ```javascript
+    const sym = Symbol('id');
+
+    const wrong = { sym: 'value' };
+    console.log(Object.keys(wrong));  // ['sym'] - string key!
+
+    const right = { [sym]: 'value' };
+    console.log(Object.keys(right));  // [] - Symbol key is hidden
+    console.log(Object.getOwnPropertySymbols(right));  // [Symbol(id)]
+    ```
+
+    The `[sym]` syntax tells JavaScript to evaluate the variable and use the Symbol itself as the key.
+  </Accordion>
+
+  <Accordion title="How do you create a dynamically-named method?">
+    **Answer:**
+
+    Use computed property syntax with method shorthand:
+
+    ```javascript
+    const action = 'processData';
+
+    const handler = {
+      [action](data) {
+        return data.map(x => x * 2);
+      },
+
+      // Generator method
+      *[`${action}Iterator`](data) {
+        for (const item of data) {
+          yield item * 2;
+        }
+      },
+
+      // Async method
+      async [`${action}Async`](url) {
+        const response = await fetch(url);
+        return response.json();
+      }
+    };
+
+    console.log(handler.processData([1, 2, 3]));  // [2, 4, 6]
+    ```
+
+    This works with regular methods, generators (`*[name]()`), and async methods (`async [name]()`).
+  </Accordion>
+
+  <Accordion title="What happens with duplicate computed keys?">
+    **Answer:**
+
+    Duplicate keys are allowed—the **last one wins** and overwrites previous values. No error is thrown:
+
+    ```javascript
+    const obj = {
+      ['x']: 1,
+      ['x']: 2,
+      x: 3
+    };
+
+    console.log(obj);  // { x: 3 }
+    ```
+
+    This applies whether the duplicate comes from computed properties, static properties, or a mix. The same rule applies to the rest of JavaScript—later assignments overwrite earlier ones.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Related Concepts
+
+<CardGroup cols={2}>
+  <Card title="Modern JS Syntax (ES6+)" icon="wand-magic-sparkles" href="/concepts/modern-js-syntax">
+    Overview of ES6+ features including destructuring, spread, arrow functions, and enhanced object literals.
+  </Card>
+  <Card title="JavaScript Type Nuances" icon="code" href="/beyond/concepts/javascript-type-nuances">
+    Deep dive into Symbols, a primary use case for computed property keys in JavaScript.
+  </Card>
+  <Card title="Getters & Setters" icon="arrows-rotate" href="/beyond/concepts/getters-setters">
+    Combine computed property names with get and set for dynamic accessor properties.
+  </Card>
+  <Card title="Property Descriptors" icon="sliders" href="/beyond/concepts/property-descriptors">
+    Control writable, enumerable, and configurable flags on your computed properties.
+  </Card>
+  <Card title="Object Methods" icon="cube" href="/beyond/concepts/object-methods">
+    Iterate and transform objects using Object.keys(), entries(), and fromEntries().
+  </Card>
+  <Card title="Tagged Template Literals" icon="wand-magic-sparkles" href="/beyond/concepts/tagged-template-literals">
+    Another ES6+ syntax feature for advanced string processing with template literals.
+  </Card>
+</CardGroup>
+
+---
+
+## References
+
+<CardGroup cols={2}>
+  <Card title="Object Initializer — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Object_initializer#computed_property_names">
+    Official MDN reference for object literals with a dedicated section on computed property names.
+  </Card>
+  <Card title="Property Accessors — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Property_accessors">
+    Understand bracket notation, the foundation for how computed property names work.
+  </Card>
+  <Card title="Symbol — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol">
+    Comprehensive reference on Symbols, commonly used with computed property syntax.
+  </Card>
+  <Card title="Working with Objects — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Working_with_objects">
+    Beginner guide covering object fundamentals and property access patterns.
+  </Card>
+</CardGroup>
+
+---
+
+## Articles
+
+<CardGroup cols={2}>
+  <Card title="Objects — javascript.info" icon="newspaper" href="https://javascript.info/object#computed-properties">
+    Excellent tutorial with a dedicated "Computed properties" section and interactive examples.
+  </Card>
+  <Card title="ES6 In Depth: Symbols" icon="newspaper" href="https://hacks.mozilla.org/2015/06/es6-in-depth-symbols/">
+    Mozilla Hacks article explaining Symbols and their use as computed property keys for iterables.
+  </Card>
+  <Card title="Exploring ES6: New OOP Features" icon="newspaper" href="https://exploringjs.com/es6/ch_oop-besides-classes.html">
+    Dr. Axel Rauschmayer's deep technical analysis of computed property keys and ES6 object enhancements.
+  </Card>
+  <Card title="Computed Property Names" icon="newspaper" href="https://ui.dev/computed-property-names">
+    Focused practical article with before/after ES6 comparisons and real-world examples.
+  </Card>
+</CardGroup>
+
+---
+
+## Videos
+
+<CardGroup cols={2}>
+  <Card title="ES6 JavaScript Tutorial" icon="video" href="https://www.youtube.com/@TraversyMedia">
+    Traversy Media's comprehensive ES6 coverage including enhanced object literals and computed properties.
+  </Card>
+  <Card title="Modern JavaScript Tutorial" icon="video" href="https://www.youtube.com/@NetNinja">
+    The Net Ninja's series on modern JavaScript features with clear explanations of ES6 syntax.
+  </Card>
+  <Card title="JavaScript ES6 Features" icon="video" href="https://www.youtube.com/@WebDevSimplified">
+    Web Dev Simplified tutorials explaining ES6 features including object shorthand and computed properties.
+  </Card>
+  <Card title="JavaScript Quick Tips" icon="video" href="https://www.youtube.com/@Fireship">
+    Fireship's fast-paced explainers covering JavaScript syntax features and best practices.
+  </Card>
+</CardGroup>
