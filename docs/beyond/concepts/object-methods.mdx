@@ -42,7 +42,7 @@ const upperKeys = Object.fromEntries(
 
 ## What are Object Methods?
 
-**Object methods** are static functions on JavaScript's built-in `Object` constructor that let you inspect, manipulate, and transform objects. Unlike instance methods you call on the object itself (like `toString()`), these are called on `Object` directly with the target object passed as an argument.
+**Object methods** are static functions on JavaScript's built-in `Object` constructor that let you inspect, manipulate, and transform objects. Unlike instance methods you call on the object itself (like `toString()`), these are called on `Object` directly with the target object passed as an argument. According to MDN, the `Object` constructor provides over 30 static methods, with new ones like `Object.groupBy()` added as recently as ES2024.
 
 ```javascript
 const product = { name: 'Laptop', price: 999 }
@@ -262,7 +262,7 @@ console.log(original.address.city)  // 'LA' — both changed!
 
 ### structuredClone() — Deep Copy
 
-[`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) creates a true deep copy, including nested objects. It was added to browsers and Node.js in 2022.
+[`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/structuredClone) creates a true deep copy, including nested objects. It was added to browsers and Node.js in 2022. As the web.dev team documented, `structuredClone()` replaced the common `JSON.parse(JSON.stringify(obj))` workaround that failed with `Date`, `Map`, `Set`, `RegExp`, and circular references.
 
 ```javascript
 const original = { 
@@ -319,7 +319,7 @@ structuredClone(obj)  // Throws: DataCloneError
 
 ## Object.hasOwn() — Safe Property Checking
 
-[`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) checks if an object has a property as its own (not inherited). It's the modern replacement for `hasOwnProperty()`.
+[`Object.hasOwn()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/hasOwn) checks if an object has a property as its own (not inherited). It's the modern replacement for `hasOwnProperty()`, introduced in ES2022. MDN recommends using `Object.hasOwn()` over `Object.prototype.hasOwnProperty()` in all new code because it works correctly with null-prototype objects and cannot be overridden.
 
 ```javascript
 const user = { name: 'Alice', age: 30 }
@@ -712,6 +712,32 @@ function processData(data) {
     //   veggie: [{ type: 'veggie', name: 'carrot' }]
     // }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between Object.keys() and Object.entries()?">
+    `Object.keys()` returns an array of property names (strings), while `Object.entries()` returns an array of `[key, value]` pairs. Use `Object.keys()` when you only need property names. Use `Object.entries()` when you need both keys and values, especially for transformations with `Object.fromEntries()`.
+  </Accordion>
+
+  <Accordion title="How do you deep clone an object in JavaScript?">
+    Use `structuredClone()`, which was added to all major browsers and Node.js in 2022. It creates a true deep copy that handles nested objects, circular references, `Date`, `Map`, and `Set` objects. The older `JSON.parse(JSON.stringify(obj))` workaround fails with these types and cannot handle functions.
+  </Accordion>
+
+  <Accordion title="What is Object.groupBy() and when was it introduced?">
+    `Object.groupBy()` groups array elements by a callback function's return value, creating an object where each key maps to an array of matching items. It was standardized in ES2024 (March 2024). According to MDN, check browser compatibility before using in production without a polyfill.
+  </Accordion>
+
+  <Accordion title="Why should I use Object.hasOwn() instead of hasOwnProperty()?">
+    `Object.hasOwn()` is safer in two cases: it works on null-prototype objects (where `hasOwnProperty` does not exist), and it cannot be overridden by a property of the same name on the object. MDN recommends it as the standard replacement for `hasOwnProperty()` in all modern JavaScript code.
+  </Accordion>
+
+  <Accordion title="Does Object.assign() create a deep copy of nested objects?">
+    No. `Object.assign()` performs a shallow copy — only the top-level properties are copied. Nested objects are still shared by reference, meaning changes to nested properties in the copy affect the original. For independent nested copies, use `structuredClone()` instead.
   </Accordion>
 </AccordionGroup>
 

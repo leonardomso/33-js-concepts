@@ -25,7 +25,7 @@ console.log(localStorage.length)  // 1
 console.log(sessionStorage.length)  // 1
 ```
 
-The answer is the **[Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)**. It's one of the most practical browser APIs you'll use daily, and understanding when to use `localStorage` vs `sessionStorage` will make your applications more user-friendly and performant.
+The answer is the **[Web Storage API](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)**. Supported by over 97% of browsers worldwide according to Can I Use, it's one of the most practical browser APIs you'll use daily, and understanding when to use `localStorage` vs `sessionStorage` will make your applications more user-friendly and performant.
 
 <Info>
 **What you'll learn in this guide:**
@@ -48,7 +48,7 @@ The answer is the **[Web Storage API](https://developer.mozilla.org/en-US/docs/W
 
 **[Web Storage](https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API)** is a browser API that allows JavaScript to store key-value pairs locally in the user's browser. Unlike cookies, stored data is never sent to the server with HTTP requests. Web Storage provides two mechanisms: `localStorage` for persistent storage that survives browser restarts, and `sessionStorage` for temporary storage that is cleared when the browser tab closes.
 
-Here's the key insight: Web Storage is synchronous, string-only, and scoped to the origin (protocol + domain + port). These constraints make it simple to use but require understanding for effective implementation.
+Here's the key insight: Web Storage is synchronous, string-only, and scoped to the origin (protocol + domain + port). As MDN documents, these constraints make it simple to use but require understanding for effective implementation — particularly the synchronous nature, which can block the main thread with large data operations.
 
 <Note>
 Web Storage has been available in all major browsers since July 2015. It's part of the HTML5 specification and is considered a "Baseline" feature—meaning you can rely on it working everywhere.
@@ -600,7 +600,7 @@ for (let i = 0; i < localStorage.length; i++) {
 4. **Sanitize all user input**: Never trust data from users
 5. **Consider encryption for semi-sensitive data**: Though this adds complexity
 
-For comprehensive security guidance, see the [OWASP HTML5 Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#local-storage).
+The OWASP Foundation explicitly recommends against storing sensitive data in Web Storage. For comprehensive security guidance, see the [OWASP HTML5 Security Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/HTML5_Security_Cheat_Sheet.html#local-storage).
 
 ---
 
@@ -907,6 +907,32 @@ function getRecentlyViewed() {
       // Safe to use
     }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between localStorage and sessionStorage?">
+    `localStorage` persists data until explicitly cleared — it survives browser restarts and remains across all tabs from the same origin. `sessionStorage` is isolated to a single tab and cleared when that tab closes. Both share the same API and a ~5MB storage limit per origin.
+  </Accordion>
+
+  <Accordion title="How much data can localStorage store?">
+    Most browsers provide approximately 5–10 MB per origin (protocol + domain + port). According to MDN, the exact limit varies by browser but is typically 5 MB. When you exceed this limit, `setItem()` throws a `QuotaExceededError` that you should handle with try-catch.
+  </Accordion>
+
+  <Accordion title="Is it safe to store sensitive data in localStorage?">
+    No. The OWASP Foundation explicitly warns against storing sensitive data in Web Storage. Any JavaScript running on the page — including malicious scripts injected through XSS attacks — can read localStorage. Authentication tokens should be stored in HTTP-only cookies, which are inaccessible to JavaScript.
+  </Accordion>
+
+  <Accordion title="Does localStorage work in incognito or private browsing mode?">
+    Behavior varies by browser. Safari may throw a `QuotaExceededError` on any write attempt in private mode. Chrome and Firefox allow localStorage but clear all data when the private window closes. Always use feature detection with try-catch before relying on localStorage.
+  </Accordion>
+
+  <Accordion title="How do I store objects in localStorage?">
+    Use `JSON.stringify()` when saving and `JSON.parse()` when retrieving. localStorage can only store strings — storing an object directly converts it to the useless string `"[object Object]"`. Be aware that `Date` objects, `undefined` values, and functions are not preserved through JSON serialization.
   </Accordion>
 </AccordionGroup>
 

@@ -26,7 +26,7 @@ observer.observe({ type: 'resource', buffered: true })
 // https://example.com/hero.webp: 412.80ms
 ```
 
-The **[Performance Observer API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver)** lets you monitor performance metrics as they happen in real-time. Instead of polling for data, you subscribe to specific performance events and get notified when they occur. This is the foundation of Real User Monitoring (RUM) and how tools like Google Analytics measure Core Web Vitals.
+The **[Performance Observer API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver)** lets you monitor performance metrics as they happen in real-time. Instead of polling for data, you subscribe to specific performance events and get notified when they occur. According to [web.dev](https://web.dev/articles/custom-metrics), this is the foundation of Real User Monitoring (RUM) and how tools like Google Analytics measure Core Web Vitals.
 
 <Info>
 **What you'll learn in this guide:**
@@ -220,7 +220,7 @@ paintObserver.observe({ type: 'paint', buffered: true })
 
 ## Measuring Core Web Vitals
 
-Core Web Vitals are Google's essential metrics for user experience. Performance Observer is how you measure them in the field.
+Core Web Vitals are Google's essential metrics for user experience. According to the [Chrome User Experience Report](https://developer.chrome.com/docs/crux/), sites meeting all three Core Web Vitals thresholds see 24% fewer page abandonment rates. Performance Observer is how you measure them in the field.
 
 ### Largest Contentful Paint (LCP)
 
@@ -959,6 +959,32 @@ if (shouldSample) {
       console.log(metric.delta)   // Change since last report
     })
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is PerformanceObserver in JavaScript?">
+    PerformanceObserver is a browser API that asynchronously observes performance measurement events — resource loading, paint timing, layout shifts, and more. It replaced the older polling-based `performance.getEntries()` approach with an event-driven callback model. MDN recommends it as the standard way to collect Real User Monitoring data.
+  </Accordion>
+
+  <Accordion title="What are Core Web Vitals and how do I measure them?">
+    Core Web Vitals are three metrics Google uses to evaluate user experience: LCP (Largest Contentful Paint, target under 2.5s), CLS (Cumulative Layout Shift, target under 0.1), and INP (Interaction to Next Paint, target under 200ms). All three can be measured using PerformanceObserver. For production use, Google recommends the `web-vitals` library.
+  </Accordion>
+
+  <Accordion title="What does the buffered option do in PerformanceObserver?">
+    The `buffered: true` option tells the browser to include performance entries recorded before you called `observe()`. Without it, you miss entries like FCP or LCP that occurred before your script loaded. Web.dev recommends always using `buffered: true` for metrics collection.
+  </Accordion>
+
+  <Accordion title="Why should I use sendBeacon instead of fetch for analytics?">
+    `navigator.sendBeacon()` is designed to reliably send data even when a page is unloading — unlike `fetch()`, which may be cancelled. MDN documents that `sendBeacon` uses a POST request that the browser guarantees to deliver, making it ideal for sending performance metrics on the `visibilitychange` event.
+  </Accordion>
+
+  <Accordion title="What is a Long Task and why does it matter?">
+    A Long Task is any JavaScript task that blocks the main thread for more than 50ms. During a Long Task, users cannot click, scroll, or type. According to web.dev, Long Tasks are the primary cause of poor INP scores. Monitor them with `observer.observe({ type: 'longtask' })` and break up heavy code into smaller chunks.
   </Accordion>
 </AccordionGroup>
 

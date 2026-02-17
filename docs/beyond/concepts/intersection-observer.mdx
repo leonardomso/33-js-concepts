@@ -42,7 +42,7 @@ The **[Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/A
 
 ## What is Intersection Observer in JavaScript?
 
-The **[Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)** is a browser API that lets you detect when an element enters, exits, or crosses a certain visibility threshold within a viewport or container element. Instead of constantly checking element positions during scroll events, the browser efficiently notifies your code only when visibility actually changes. **In short: Intersection Observer tells you when elements become visible or hidden, without the performance cost of scroll listeners.**
+The **[Intersection Observer API](https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API)** is a browser API that lets you detect when an element enters, exits, or crosses a certain visibility threshold within a viewport or container element. Instead of constantly checking element positions during scroll events, the browser efficiently notifies your code only when visibility actually changes. [Can I Use data](https://caniuse.com/intersectionobserver) shows the API is supported in over 97% of browsers globally. **In short: Intersection Observer tells you when elements become visible or hidden, without the performance cost of scroll listeners.**
 
 ---
 
@@ -102,7 +102,7 @@ window.addEventListener('scroll', () => {
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Intersection Observer runs off the main thread** and is optimized by the browser, making it dramatically more efficient.
+**Intersection Observer runs off the main thread** and is optimized by the browser, making it dramatically more efficient. According to [web.dev](https://web.dev/articles/intersectionobserver-v2), Google introduced the API specifically to address the performance problems of scroll-based visibility detection, which was a leading cause of jank on content-heavy pages.
 
 ---
 
@@ -973,6 +973,32 @@ For legacy browser support, use the [official polyfill](https://github.com/w3c/I
     ```
     
     Always ensure observed elements are descendants of the root, or use `root: null` for viewport detection.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is Intersection Observer used for in JavaScript?">
+    Intersection Observer detects when elements enter or leave the viewport (or a container element). Common use cases include lazy loading images, infinite scroll, scroll-triggered animations, and ad viewability tracking. According to web.dev, it replaces expensive scroll event listeners with browser-optimized callbacks.
+  </Accordion>
+
+  <Accordion title="Is Intersection Observer better than scroll events?">
+    Yes. Scroll events fire 60+ times per second and force layout recalculations via `getBoundingClientRect()`, causing jank and battery drain. Intersection Observer runs off the main thread, only fires when visibility actually changes, and is optimized by the browser. MDN recommends it as the modern replacement for scroll-based visibility detection.
+  </Accordion>
+
+  <Accordion title="What does rootMargin do in Intersection Observer?">
+    `rootMargin` grows or shrinks the detection area around the root element, using CSS margin syntax. Positive values (e.g., `'100px'`) trigger callbacks before elements reach the viewport — ideal for preloading images. Negative values delay detection until elements are fully inside the viewport.
+  </Accordion>
+
+  <Accordion title="Why does the Intersection Observer callback fire immediately?">
+    The callback fires once when you call `observe()` to report the element's current intersection state. This is intentional — as MDN documents, it lets you know the initial visibility without waiting for a scroll event. Always check `entry.isIntersecting` before acting.
+  </Accordion>
+
+  <Accordion title="How do I clean up an Intersection Observer?">
+    Call `observer.unobserve(element)` to stop watching a specific element (ideal after lazy loading), or `observer.disconnect()` to stop all observation. In React, return a cleanup function from `useEffect` that calls `disconnect()`. Failing to clean up causes memory leaks.
   </Accordion>
 </AccordionGroup>
 

@@ -47,9 +47,9 @@ Understanding these APIs unlocks powerful client-side file handling without need
 
 ## What is a Blob in JavaScript?
 
-A **[Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob)** (Binary Large Object) is an immutable, file-like object that represents raw binary data. Think of it as a container that can hold any kind of data: text, images, audio, video, or arbitrary bytes. Blobs are the foundation for file handling in JavaScript, as the File interface is built on top of Blob.
+A **[Blob](https://developer.mozilla.org/en-US/docs/Web/API/Blob)** (Binary Large Object) is an immutable, file-like object that represents raw binary data. According to the [W3C File API specification](https://www.w3.org/TR/FileAPI/#blob-section), a Blob is a container that can hold any kind of data: text, images, audio, video, or arbitrary bytes. Blobs are the foundation for file handling in JavaScript, as the File interface is built on top of Blob.
 
-Unlike regular JavaScript strings or arrays, Blobs are designed to efficiently handle large amounts of binary data. They're immutable, meaning once created, you can't change their contents. Instead, you create new Blobs from existing ones.
+Unlike regular JavaScript strings or arrays, Blobs are designed to efficiently handle large amounts of binary data. As [MDN documents](https://developer.mozilla.org/en-US/docs/Web/API/Blob), they're immutable — once created, you can't change their contents. Instead, you create new Blobs from existing ones.
 
 ```javascript
 // Creating Blobs from different data types
@@ -1061,6 +1061,32 @@ document.addEventListener('paste', async (e) => {
     - Only valid in the current document
     
     Use Data URLs for small files you need to persist. Use Object URLs for temporary previews and large files.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between Blob and File in JavaScript?">
+    `File` extends `Blob` with metadata properties: `name`, `lastModified`, and `webkitRelativePath`. A File is always a Blob, but a Blob is not a File. File objects come from user input (`<input type="file">`) or drag-and-drop, while Blobs are created programmatically. The W3C File API specification defines this inheritance.
+  </Accordion>
+
+  <Accordion title="How do I create a downloadable file in JavaScript?">
+    Create a Blob with your content, generate an Object URL with `URL.createObjectURL(blob)`, assign it to an anchor element's `href`, set the `download` attribute to a filename, and trigger a click. Always call `URL.revokeObjectURL()` afterward to free memory.
+  </Accordion>
+
+  <Accordion title="What is the difference between Object URLs and Data URLs?">
+    Object URLs (`blob:...`) are references to in-memory Blob data — they're fast to create but must be manually revoked. Data URLs (`data:...`) encode the full content as a Base64 string — they're larger (about 33% overhead) but self-contained and can be saved or embedded. MDN recommends Object URLs for large files and temporary previews.
+  </Accordion>
+
+  <Accordion title="How do I read the contents of a user-selected file?">
+    Use the `FileReader` API or the modern `file.text()`, `file.arrayBuffer()`, and `file.stream()` methods. `FileReader` uses callbacks while the modern methods return Promises. For text files, `await file.text()` is the simplest approach. For binary data, use `await file.arrayBuffer()`.
+  </Accordion>
+
+  <Accordion title="How do I upload large files in chunks?">
+    Use `blob.slice(start, end)` to split a file into chunks, then upload each chunk separately with `fetch()` and `FormData`. This enables progress tracking, resumable uploads, and avoids server timeout limits. The W3C File API defines `slice()` as a method for creating sub-Blobs from ranges of the original data.
   </Accordion>
 </AccordionGroup>
 

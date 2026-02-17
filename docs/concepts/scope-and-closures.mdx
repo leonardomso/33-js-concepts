@@ -424,7 +424,7 @@ This approach catches bugs at compile time and makes your intent clear.
 
 ## Lexical Scope
 
-**Lexical scope** (also called **static scope**) means that the scope of a variable is determined by its position in the source code, not by how functions are called at runtime.
+**Lexical scope** (also called **static scope**) means that the scope of a variable is determined by its position in the source code, not by how functions are called at runtime. As Kyle Simpson explains in *You Don't Know JS: Scope & Closures*, lexical scope is determined at "lex-time" — the time when the code is being parsed — which is why it is also called "static" scope.
 
 ```javascript
 const outer = "I'm outside!";
@@ -531,7 +531,7 @@ Shadowing can be confusing. While sometimes intentional, accidental shadowing is
 
 ## What is a Closure in JavaScript?
 
-A **[closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)** is the combination of a function bundled together with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to variables from an outer (enclosing) scope, even after that outer function has finished executing and returned. Every function in JavaScript creates a closure at creation time.
+A **[closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)** is the combination of a function bundled together with references to its surrounding state (the lexical environment). According to MDN, a closure gives a function access to variables from an outer (enclosing) scope, even after that outer function has finished executing and returned. Every function in JavaScript creates a closure at creation time.
 
 Remember our office building analogy? A closure is like someone who worked in the private office, left the building, but still remembers exactly where everything was, and can still use that knowledge!
 

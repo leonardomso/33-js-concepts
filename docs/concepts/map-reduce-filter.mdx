@@ -88,7 +88,7 @@ The beauty of this assembly line? You can connect the stations in any order. The
 
 ## What Are These Methods?
 
-These three methods are the workhorses of functional programming in JavaScript. They let you transform, filter, and aggregate data without writing explicit loops and without mutating your original data.
+These three methods are the workhorses of functional programming in JavaScript. They let you transform, filter, and aggregate data without writing explicit loops and without mutating your original data. According to the [State of JS 2023 survey](https://2023.stateofjs.com/), `map`, `filter`, and `reduce` are among the most commonly used array methods, with the vast majority of JavaScript developers using them regularly in production code.
 
 | Method | What It Does | Returns | Original Array |
 |--------|-------------|---------|----------------|
@@ -108,7 +108,7 @@ The **[map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/
 
 ### What is map() in JavaScript?
 
-The `map()` method is an array method that creates a new array by applying a callback function to each element of the original array. It returns an array of the same length with each element transformed according to the callback. The original array is never modified, making map a pure, non-mutating operation ideal for functional programming.
+The `map()` method is an array method that creates a new array by applying a callback function to each element of the original array. It returns an array of the same length with each element transformed according to the callback. The original array is never modified, making map a pure, non-mutating operation ideal for functional programming. As [MDN documents](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map), `map` was introduced in ECMAScript 5.1 (2011) and calls the provided function once for each element in order.
 
 ```javascript
 const numbers = [1, 2, 3, 4]
@@ -458,7 +458,7 @@ The **[reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Referen
 
 ### What is reduce() in JavaScript?
 
-The `reduce()` method is an array method that executes a reducer callback function on each element, accumulating the results into a single value. This value can be any type: a number, string, object, or even another array. The callback receives an accumulator (the running total) and the current element, returning the new accumulator value. Always provide an initial value to avoid crashes on empty arrays.
+The `reduce()` method is an array method that executes a reducer callback function on each element, accumulating the results into a single value. This value can be any type: a number, string, object, or even another array. The callback receives an accumulator (the running total) and the current element, returning the new accumulator value. Always provide an initial value to avoid crashes on empty arrays. The [ECMAScript specification](https://tc39.es/ecma262/#sec-array.prototype.reduce) notes that calling `reduce()` on an empty array without an initial value throws a `TypeError`.
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5]
@@ -1267,6 +1267,32 @@ console.log(evens2)  // [2, 4]
     1. `filter(n => n % 2 === 0)` keeps even numbers: `[2, 4]`
     2. `map(n => n * 3)` triples each: `[6, 12]`
     3. `reduce((sum, n) => sum + n, 0)` sums them: `0 + 6 + 12 = 18`
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between map() and forEach() in JavaScript?">
+    `map()` transforms each element and returns a new array. `forEach()` executes a function on each element but returns `undefined`. Use `map()` when you need the transformed result; use `forEach()` when you only need side effects like logging. As [MDN notes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach), `forEach()` always returns `undefined` and is not chainable.
+  </Accordion>
+
+  <Accordion title="Does map() mutate the original array?">
+    No. `map()`, `filter()`, and `reduce()` all return new values without modifying the original array. This non-mutating behavior makes them ideal for functional programming patterns. However, if your callback modifies objects within the array, those mutations will affect the originals since objects are passed by reference.
+  </Accordion>
+
+  <Accordion title="When should I use reduce() instead of a for loop?">
+    Use `reduce()` when you need to accumulate array elements into a single value — sums, counts, grouped objects, or flattened arrays. For simple aggregations, `reduce()` is more concise. For complex logic with multiple steps, a `for` loop can be more readable. The [MDN reduce documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) provides detailed examples for both simple and advanced use cases.
+  </Accordion>
+
+  <Accordion title="Can I chain map(), filter(), and reduce() together?">
+    Yes. Because `map()` and `filter()` return arrays, you can chain them: `arr.filter(...).map(...).reduce(...)`. Each method processes the result of the previous one. This chaining pattern creates readable data pipelines, though be mindful that each method creates an intermediate array.
+  </Accordion>
+
+  <Accordion title="What happens if I forget the initial value in reduce()?">
+    If the array has elements, `reduce()` uses the first element as the initial accumulator and starts iteration from the second element. If the array is empty, it throws a `TypeError`. The [ECMAScript specification](https://tc39.es/ecma262/#sec-array.prototype.reduce) requires this behavior. Always provide an initial value to avoid unexpected crashes.
   </Accordion>
 </AccordionGroup>
 

@@ -45,7 +45,7 @@ try {
 
 ## What is Error Handling in JavaScript?
 
-Errors happen. Users enter invalid data, network requests fail, APIs return unexpected responses, and sometimes we just make typos. **Error handling** is your strategy for detecting, responding to, and recovering from these problems gracefully. In JavaScript, you use the `try...catch` statement to catch errors, the `throw` statement to create them, and the `Error` object to describe what went wrong.
+Errors happen. Users enter invalid data, network requests fail, APIs return unexpected responses, and sometimes we just make typos. **Error handling** is your strategy for detecting, responding to, and recovering from these problems gracefully. In JavaScript, you use the `try...catch` statement to catch errors, the `throw` statement to create them, and the `Error` object to describe what went wrong. According to the [Stack Overflow 2023 Developer Survey](https://survey.stackoverflow.co/2023/), debugging and error handling remain among the most time-consuming aspects of development, making robust error handling patterns a critical skill.
 
 <CardGroup cols={2}>
   <Card title="Error — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error">
@@ -94,7 +94,7 @@ Think of error handling like a trapeze act at a circus. The acrobat (your code) 
 
 ## The try/catch/finally Statement
 
-The **[`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)** statement is JavaScript's primary tool for handling errors. Here's the full syntax:
+The **[`try...catch`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch)** statement is JavaScript's primary tool for handling errors. As [MDN documents](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/try...catch), this statement has been part of JavaScript since ECMAScript 3 (1999) and remains the standard mechanism for synchronous error handling. Here's the full syntax:
 
 ```javascript
 try {
@@ -246,7 +246,7 @@ The `stack` property is essential for debugging. It shows exactly where the erro
 
 ## Built-in Error Types
 
-JavaScript has several built-in error types. Knowing them helps you understand what went wrong and how to fix it.
+JavaScript has several built-in error types. Knowing them helps you understand what went wrong and how to fix it. The [ECMAScript specification](https://tc39.es/ecma262/#sec-native-error-types-used-in-this-specification) defines seven native error types, each representing a different category of runtime problem.
 
 | Error Type | When It Occurs | Common Cause |
 |------------|----------------|--------------|
@@ -933,6 +933,32 @@ async function loadUserPreferences(userId) {
     
     console.log(result)  // Works!
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between throw and return in JavaScript?">
+    `return` ends a function and passes a value to the caller. `throw` creates an error that unwinds the call stack until a `catch` block handles it. Use `throw` for exceptional conditions that the current function cannot resolve; use `return` for normal control flow, including returning error indicators like `null` or result objects.
+  </Accordion>
+
+  <Accordion title="Should I wrap every function in try/catch?">
+    No. Only use `try/catch` around code that can fail unpredictably — JSON parsing, network requests, file operations, or third-party library calls. Wrapping everything adds noise and hides bugs. As [MDN recommends](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Control_flow_and_error_handling), handle errors at the appropriate level where you have enough context to recover meaningfully.
+  </Accordion>
+
+  <Accordion title="What are the built-in Error types in JavaScript?">
+    The [ECMAScript specification](https://tc39.es/ecma262/#sec-native-error-types-used-in-this-specification) defines seven: `TypeError` (wrong type), `ReferenceError` (undefined variable), `SyntaxError` (invalid syntax), `RangeError` (value out of range), `URIError` (bad URI encoding), `EvalError` (eval-related), and `AggregateError` (multiple errors, ES2021). `TypeError` and `ReferenceError` are by far the most common in practice.
+  </Accordion>
+
+  <Accordion title="How do I handle errors in async/await code?">
+    Wrap `await` calls in `try/catch` blocks, just like synchronous code. Unhandled promise rejections can crash Node.js processes — since Node 15, unhandled rejections terminate the process by default. For multiple parallel promises, use `Promise.allSettled()` to capture both successes and failures without short-circuiting.
+  </Accordion>
+
+  <Accordion title="When should I create custom Error classes?">
+    Create custom Error classes when you need to distinguish between error categories in catch blocks. For example, `ValidationError`, `NotFoundError`, and `AuthenticationError` let callers handle each case differently. Extend the built-in `Error` class and set a descriptive `name` property so stack traces remain informative.
   </Accordion>
 </AccordionGroup>
 

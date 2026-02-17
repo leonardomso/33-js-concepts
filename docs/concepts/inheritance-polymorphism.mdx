@@ -42,7 +42,7 @@ console.log(hero.attack())    // "Aragorn swings a mighty sword!"
 console.log(wizard.attack())  // "Gandalf casts a fireball!"
 ```
 
-The answer lies in two powerful OOP principles: **[inheritance](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Classes_in_JavaScript#inheritance)** lets classes share code by extending other classes, and **polymorphism** lets different objects respond to the same method call in their own unique way.
+The answer lies in two powerful OOP principles: **[inheritance](https://developer.mozilla.org/en-US/docs/Learn/JavaScript/Objects/Classes_in_JavaScript#inheritance)** lets classes share code by extending other classes, and **polymorphism** lets different objects respond to the same method call in their own unique way. These concepts, formalized in the ECMAScript 2015 specification through the `class` and `extends` keywords, brought familiar OOP patterns to JavaScript's prototype-based model.
 
 <Info>
 **What you'll learn in this guide:**
@@ -113,7 +113,7 @@ console.log(conan.attack())      // "Conan attacks!" (inherited!)
 ```
 
 <Tip>
-**The DRY Principle:** Inheritance helps you "Don't Repeat Yourself". Write common code once in the parent class, and all children automatically benefit — including bug fixes and improvements!
+**The DRY Principle:** Inheritance helps you "Don't Repeat Yourself". Write common code once in the parent class, and all children automatically benefit — including bug fixes and improvements! As the Gang of Four noted in *Design Patterns*, favoring composition over deep inheritance hierarchies often leads to more maintainable code.
 </Tip>
 
 ---
@@ -1226,6 +1226,32 @@ class Stack {
     - **Fails:** "A Car IS-A Engine" ✗ (Car HAS-A Engine)
     
     If it fails the IS-A test, use composition instead. This prevents the Liskov Substitution Principle violations where child instances can't properly substitute for parent instances.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is inheritance in JavaScript?">
+    Inheritance lets a class (child) reuse code from another class (parent) using the `extends` keyword. The child class inherits all methods and properties from the parent and can add or override them. Under the hood, JavaScript implements this through the prototype chain — the child's prototype links to the parent's prototype, as defined in the ECMAScript specification.
+  </Accordion>
+
+  <Accordion title="What is polymorphism in JavaScript?">
+    Polymorphism means different objects can respond to the same method call in their own way. When a Warrior and a Mage both have an `attack()` method but each behaves differently, that is polymorphism. It lets you treat different object types through a common interface, making code flexible and extensible without type-checking.
+  </Accordion>
+
+  <Accordion title="What is the difference between inheritance and composition in JavaScript?">
+    Inheritance creates "IS-A" relationships where child classes extend parents. Composition creates "HAS-A" relationships by combining smaller, focused objects. The Gang of Four *Design Patterns* book recommends favoring composition over inheritance because it avoids deep hierarchies, is easier to change, and lets you mix behaviors freely.
+  </Accordion>
+
+  <Accordion title="How does the extends keyword work in JavaScript?">
+    The `extends` keyword sets up the prototype chain so the child class inherits from the parent. It does two things: sets the child's prototype to an object that delegates to the parent's prototype, and ensures `super()` is called in the constructor to initialize the parent's properties. Without `super()`, using `this` in the child constructor throws a ReferenceError.
+  </Accordion>
+
+  <Accordion title="What is the Gorilla-Banana problem?">
+    This term, coined by Joe Armstrong, describes a flaw of deep inheritance: you wanted a banana but got a gorilla holding the banana and the entire jungle. It means that inheriting from a class forces you to inherit everything, including dependencies you do not need. The solution is to favor composition and mixins over deep class hierarchies.
   </Accordion>
 </AccordionGroup>
 

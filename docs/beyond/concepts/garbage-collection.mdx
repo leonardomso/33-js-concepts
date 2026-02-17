@@ -15,7 +15,7 @@ let user = { name: 'Alice', age: 30 }
 user = null  // What happens to { name: 'Alice', age: 30 }?
 ```
 
-The answer is **garbage collection**. JavaScript automatically finds objects you're no longer using and frees the memory they occupy. You don't have to manually allocate or deallocate memory like in C or C++. The JavaScript engine handles it for you, running a background process that cleans up unused objects.
+The answer is **garbage collection**. JavaScript automatically finds objects you're no longer using and frees the memory they occupy. You don't have to manually allocate or deallocate memory like in C or C++. As MDN documents, the JavaScript engine handles it for you, running a background process that cleans up unused objects — a design choice made since the language's creation in 1995.
 
 <Info>
 **What you'll learn in this guide:**
@@ -232,13 +232,13 @@ createCycle()
 // With mark-and-sweep: Both collected (unreachable from roots)
 ```
 
-Old versions of Internet Explorer (IE6/7) used reference counting for DOM objects, which caused notorious memory leaks when JavaScript objects and DOM elements referenced each other. All modern engines use mark-and-sweep or variations of it.
+Old versions of Internet Explorer (IE6/7) used reference counting for DOM objects, which caused notorious memory leaks when JavaScript objects and DOM elements referenced each other. According to web.dev's guide on fixing memory leaks, all modern engines now use mark-and-sweep or variations of it, eliminating circular reference leaks entirely.
 
 ---
 
 ## Generational Garbage Collection
 
-Modern engines like V8 don't just use basic mark-and-sweep. They use **generational garbage collection** based on an important observation: **most objects die young**.
+Modern engines like V8 don't just use basic mark-and-sweep. They use **generational garbage collection** based on an important observation: **most objects die young**. According to the V8 blog, the Orinoco garbage collector processes the young generation in under 1 millisecond for most web applications, making GC pauses nearly invisible to users.
 
 Think about it: temporary variables, intermediate calculation results, short-lived callbacks. They're created, used briefly, and become garbage quickly. Only some objects (app state, cached data) live for a long time.
 
@@ -754,6 +754,32 @@ For most applications, `WeakMap` and `WeakSet` are better choices. They allow ob
     3. After marking, sweeps through memory and frees all **unmarked** objects
     
     Unmarked objects are garbage because they couldn't be reached from any root.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="How does garbage collection work in JavaScript?">
+    JavaScript uses the mark-and-sweep algorithm. The garbage collector starts from root references (global variables, the call stack, closures), marks all reachable objects as alive, then sweeps through memory and frees everything that wasn't marked. This process runs automatically — you cannot trigger it manually.
+  </Accordion>
+
+  <Accordion title="Can you force garbage collection in JavaScript?">
+    No. The ECMAScript specification provides no API for triggering garbage collection. The engine decides when to run GC based on memory pressure, idle time, and internal heuristics. Node.js exposes a `gc()` function with the `--expose-gc` flag for debugging, but this should never be used in production code.
+  </Accordion>
+
+  <Accordion title="Do circular references cause memory leaks in modern JavaScript?">
+    No. The mark-and-sweep algorithm handles circular references correctly because it determines reachability from roots, not reference counts. Two objects that reference each other but are unreachable from any root will both be collected. Circular reference leaks only affected old browsers like IE6/7 that used reference counting.
+  </Accordion>
+
+  <Accordion title="What is the difference between minor and major garbage collection?">
+    Minor GC (the Scavenger in V8) runs frequently on the young generation where most short-lived objects reside — it typically completes in under 1 millisecond. Major GC (Mark-Compact) runs less often on the entire heap and is more thorough but slower. According to the V8 blog, this generational approach minimizes pause times significantly.
+  </Accordion>
+
+  <Accordion title="How do WeakMap and WeakSet help with garbage collection?">
+    WeakMap and WeakSet hold "weak" references to their keys, meaning those keys can still be garbage collected when no other references exist. This makes them ideal for caches and metadata storage where you don't want your data structure to prevent cleanup of objects owned by other code.
   </Accordion>
 </AccordionGroup>
 

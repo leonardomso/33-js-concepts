@@ -29,7 +29,7 @@ request.onsuccess = (event) => {
 }
 ```
 
-IndexedDB is the backbone of offline-first applications, Progressive Web Apps (PWAs), and any app that needs to work without a network connection. It's more complex than localStorage, but far more powerful.
+IndexedDB is the backbone of offline-first applications, Progressive Web Apps (PWAs), and any app that needs to work without a network connection. According to Can I Use, IndexedDB has over 96% global browser support. It's more complex than localStorage, but far more powerful.
 
 <Info>
 **What you'll learn in this guide:**
@@ -50,7 +50,7 @@ IndexedDB is the backbone of offline-first applications, Progressive Web Apps (P
 
 ## What is IndexedDB?
 
-**IndexedDB** is a low-level browser API for storing large amounts of structured data on the client side. It's a transactional, NoSQL database that uses object stores (similar to tables) to organize data, supports indexes for efficient queries, and can store almost any JavaScript value including objects, arrays, files, and blobs.
+**IndexedDB** is a low-level browser API for storing large amounts of structured data on the client side. As MDN documents, it's a transactional, NoSQL database that uses object stores (similar to tables) to organize data, supports indexes for efficient queries, and can store almost any JavaScript value including objects, arrays, files, and blobs.
 
 Think of IndexedDB as a real database that lives in the browser. While [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) gives you a simple string-only key-value store with ~5MB limit, IndexedDB can store gigabytes of structured data with proper querying capabilities.
 
@@ -518,7 +518,7 @@ IDBKeyRange.bound(5, 10, true, false)  // 5 < key <= 10
 
 ## Using Promise Wrappers
 
-The callback-based API can get messy. Most developers use a Promise wrapper library. The most popular is **idb** by Jake Archibald:
+The callback-based API can get messy. Most developers use a Promise wrapper library. The most popular is **idb** by Jake Archibald, a Chrome engineer whose library weighs only ~1.2kB and has been recommended by Google's web.dev team:
 
 ```javascript
 // Using the idb library (https://github.com/jakearchibald/idb)
@@ -955,6 +955,32 @@ request.onupgradeneeded = (event) => {
     - `readwrite`: You can read and write. Only one readwrite transaction can access a store at a time (it "locks" the store).
     
     Always use `readonly` when you're just reading data. It's faster and doesn't block other transactions.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is IndexedDB used for?">
+    IndexedDB is used for storing large amounts of structured data in the browser — offline-first applications, caching API responses, storing files and blobs, and any scenario where localStorage's 5MB string-only limit is insufficient. It's the primary storage API for Progressive Web Apps (PWAs) that need to work without a network connection.
+  </Accordion>
+
+  <Accordion title="How much data can IndexedDB store?">
+    IndexedDB can store gigabytes of data, far exceeding localStorage's ~5MB limit. According to MDN's storage quotas documentation, browsers typically allow up to 50% of available disk space per origin. Chrome allocates up to 80% of total disk space across all origins, with individual origins limited to 60% of that.
+  </Accordion>
+
+  <Accordion title="Is IndexedDB synchronous or asynchronous?">
+    IndexedDB is fully asynchronous and never blocks the main thread. It uses an event-based API with callbacks (`onsuccess`, `onerror`), though most developers use Promise wrappers like the `idb` library for cleaner async/await code. This asynchronous design is a key advantage over localStorage, which is synchronous.
+  </Accordion>
+
+  <Accordion title="Why can't I use await fetch() inside an IndexedDB transaction?">
+    Transactions auto-commit when there are no pending requests and JavaScript returns to the event loop. A `fetch()` call yields to the event loop, causing the transaction to close before the network response arrives. Always fetch data first, then open a transaction and write to IndexedDB.
+  </Accordion>
+
+  <Accordion title="What is the difference between add() and put() in IndexedDB?">
+    `add()` inserts a new record and fails with an error if a record with the same key already exists. `put()` inserts or updates — it overwrites existing records silently. Use `add()` when you expect unique records and want errors on duplicates; use `put()` for upsert behavior.
   </Accordion>
 </AccordionGroup>
 

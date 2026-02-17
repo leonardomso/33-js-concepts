@@ -26,7 +26,7 @@ console.log(highlight`User ${name} is ${age} years old`)
 // "User <mark>Alice</mark> is <mark>30</mark> years old"
 ```
 
-The answer is **tagged template literals**. They let you define a function that processes the template's static strings and dynamic values separately, giving you complete control over the final result. This unlocks powerful patterns like HTML sanitization, internationalization, and domain-specific languages.
+The answer is **tagged template literals**. Introduced in the ECMAScript 2015 specification, they let you define a function that processes the template's static strings and dynamic values separately, giving you complete control over the final result. This unlocks powerful patterns like HTML sanitization, internationalization, and domain-specific languages.
 
 <Info>
 **What you'll learn in this guide:**
@@ -240,7 +240,7 @@ This lets tagged templates work with DSLs (like LaTeX or regex patterns) that us
 
 ## String.raw: The Built-in Tag
 
-JavaScript includes one built-in tag function: [`String.raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw). It returns a string where escape sequences are not processed.
+JavaScript includes one built-in tag function: [`String.raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/raw). As MDN documents, it returns a string where escape sequences are not processed — the only tag function provided by the standard library.
 
 ### Basic Usage
 
@@ -488,7 +488,7 @@ This pattern is useful when you want IDE syntax highlighting support for tagged 
 
 ## Real-World Use Cases
 
-Tagged template literals power many popular libraries and patterns:
+Tagged template literals power many popular libraries and patterns. Libraries like Apollo GraphQL (the `gql` tag), Lit (HTML templates), and styled-components (CSS-in-JS) all rely on tagged templates as their core API:
 
 ### SQL Query Builders
 
@@ -847,6 +847,32 @@ This is a compile-time type system feature, separate from runtime tagged templat
     }
     // Output: <div>&lt;script&gt;stealCookies()&lt;/script&gt;</div>
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are tagged template literals in JavaScript?">
+    Tagged template literals let you call a function using a template literal instead of parentheses. The tag function receives the static string parts and interpolated values as separate arguments, giving you complete control over how they are combined. They were introduced in ECMAScript 2015 and power libraries like GraphQL, Lit, and styled-components.
+  </Accordion>
+
+  <Accordion title="What is String.raw used for in JavaScript?">
+    `String.raw` is JavaScript's built-in tag function that returns a string without processing escape sequences. It is especially useful for Windows file paths (`String.raw\`C:\Users\Alice\`) and regular expressions (`new RegExp(String.raw\`\d+\.\d+\`)`), eliminating the need to double-escape backslashes.
+  </Accordion>
+
+  <Accordion title="Can a tag function return something other than a string?">
+    Yes. Tag functions can return any value — objects, arrays, functions, or even Promises. This flexibility is what makes them powerful for building DSLs. For example, GraphQL's `gql` tag returns a parsed document object, and template factory patterns return reusable functions.
+  </Accordion>
+
+  <Accordion title="How do tagged templates help prevent XSS attacks?">
+    Tag functions receive user-provided values separately from developer-written static strings. This separation lets you automatically escape all interpolated values (converting `<` to `&lt;`, etc.) while leaving static HTML untouched. MDN recommends this pattern as a clean approach to building safe HTML templates.
+  </Accordion>
+
+  <Accordion title="What is the relationship between strings.length and values.length in a tag function?">
+    There is always exactly one more string than there are values: `strings.length === values.length + 1`. A template always starts and ends with a string (which may be empty), and each interpolated value is surrounded by strings. This predictable structure makes interleaving straightforward.
   </Accordion>
 </AccordionGroup>
 

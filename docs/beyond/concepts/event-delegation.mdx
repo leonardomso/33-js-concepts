@@ -48,7 +48,7 @@ document.querySelector('.todo-list').addEventListener('click', (event) => {
 
 ## What is Event Delegation?
 
-**Event delegation** is a pattern where you attach a single event listener to a parent element to handle events on its child elements. When an event occurs on a child, it bubbles up to the parent, where the listener catches it and determines which specific child triggered the event. This approach reduces memory usage, simplifies code, and automatically handles dynamically added elements.
+**Event delegation** is a pattern where you attach a single event listener to a parent element to handle events on its child elements. When an event occurs on a child, it bubbles up to the parent, where the listener catches it and determines which specific child triggered the event. As documented by [javascript.info](https://javascript.info/event-delegation), this approach reduces memory usage, simplifies code, and automatically handles dynamically added elements.
 
 Think of event delegation like a receptionist at an office building. Instead of giving every employee their own personal doorbell, visitors ring one doorbell at the reception desk. The receptionist then determines who the visitor wants to see and routes them appropriately. One point of contact handles all visitors efficiently.
 
@@ -152,7 +152,7 @@ document.querySelector('.container').addEventListener('click', (event) => {
 
 ### Element.closest() — Finding Ancestor Elements
 
-The [`closest()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) method traverses up the DOM tree to find the nearest ancestor (or the element itself) that matches a selector. This is crucial when the actual click target is a nested element:
+The [`closest()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/closest) method traverses up the DOM tree to find the nearest ancestor (or the element itself) that matches a selector. [Can I Use data](https://caniuse.com/element-closest) shows `closest()` is supported in over 96% of browsers globally. This is crucial when the actual click target is a nested element:
 
 ```javascript
 // Problem: User might click the icon inside the button
@@ -475,7 +475,7 @@ function validateInput(input) {
 
 ## Performance Benefits
 
-Event delegation significantly reduces memory usage when dealing with many elements:
+Event delegation significantly reduces memory usage when dealing with many elements. According to [web.dev performance guidelines](https://web.dev/articles/dom-size-and-interactivity), minimizing the number of event listeners is a key strategy for improving Interaction to Next Paint (INP) scores:
 
 ```javascript
 // Without delegation: 1000 listeners
@@ -819,6 +819,32 @@ document.querySelector('.my-component').addEventListener('click', (event) => {
     ```
     
     This is especially important with complex layouts, nested components, or when working with third-party widgets that might be inserted into your container.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is event delegation in JavaScript?">
+    Event delegation is a technique where you attach a single event listener to a parent element instead of multiple listeners on individual child elements. It works because of event bubbling — when a child is clicked, the event travels up to the parent where your listener catches it. MDN recommends this pattern for handling events on dynamic content.
+  </Accordion>
+
+  <Accordion title="When should I use event delegation?">
+    Use delegation when you have many similar elements that need the same handler, when elements are added or removed dynamically, or when memory efficiency matters. According to web.dev, reducing the number of event listeners directly improves page interactivity and INP scores.
+  </Accordion>
+
+  <Accordion title="What is the difference between matches() and closest() for delegation?">
+    `matches()` checks if the exact `event.target` matches a CSS selector, while `closest()` traverses up the DOM to find the nearest matching ancestor. Use `closest()` when your clickable elements contain nested children like icons or spans, since `event.target` might be the inner element rather than the button itself.
+  </Accordion>
+
+  <Accordion title="Can all JavaScript events be delegated?">
+    No. Events that don't bubble — such as `focus`, `blur`, `mouseenter`, and `mouseleave` — cannot be delegated using the standard bubbling approach. The W3C UI Events spec defines `focusin` and `focusout` as bubbling alternatives for focus events, or you can use the capture phase as a workaround.
+  </Accordion>
+
+  <Accordion title="Does event delegation work with dynamically added elements?">
+    Yes — this is one of its biggest advantages. Since the listener is on the parent, any child elements added later are automatically handled without needing to attach new listeners. This makes delegation essential for SPAs and any UI that renders content dynamically.
   </Accordion>
 </AccordionGroup>
 
