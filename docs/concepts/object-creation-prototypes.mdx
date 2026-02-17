@@ -1061,23 +1061,23 @@ function Player(name) {
 ## Frequently Asked Questions
 
 <AccordionGroup>
-  <Accordion title="What is the prototype chain in JavaScript?">
+<Accordion title="When does understanding the prototype chain prevent hard-to-debug bugs?">
     The prototype chain is JavaScript's inheritance mechanism. Every object has an internal `[[Prototype]]` link to another object. When you access a property, JavaScript checks the object first, then follows the prototype chain until it finds the property or reaches `null`. This delegation model powers object inheritance in JavaScript.
   </Accordion>
 
-  <Accordion title="What is the difference between __proto__ and prototype?">
+<Accordion title="How do you avoid __proto__ vs prototype confusion during debugging?">
     `__proto__` is an accessor property on every object that points to its prototype (the object it inherits from). `.prototype` is a property on constructor functions that becomes the `__proto__` of objects created with `new`. `__proto__` is a legacy feature — use `Object.getPrototypeOf()` and `Object.setPrototypeOf()` instead.
   </Accordion>
 
-  <Accordion title="How does Object.create() work?">
+<Accordion title="When should you use Object.create() instead of new?">
     `Object.create(proto)` creates a new object with its `[[Prototype]]` set to the specified object. Unlike `new`, it does not call a constructor function. This gives you direct control over the prototype chain. It is the cleanest way to set up prototypal inheritance without the complexity of constructor functions.
   </Accordion>
 
-  <Accordion title="What does the new operator do in JavaScript?">
+<Accordion title="How do you debug constructor bugs caused by missing new?">
     The `new` operator performs four steps: creates an empty object, sets the object's `[[Prototype]]` to the constructor's `.prototype`, calls the constructor with `this` bound to the new object, and returns the object. If the constructor explicitly returns an object, that object is returned instead. This is how both constructor functions and classes create instances.
   </Accordion>
 
-  <Accordion title="What is prototypal inheritance and how is it different from classical inheritance?">
+<Accordion title="When does prototypal inheritance beat class-style inheritance in JavaScript?">
     In prototypal inheritance, objects inherit directly from other objects through the prototype chain. In classical inheritance (Java, C++), classes define blueprints and instances are created from those blueprints. JavaScript uses prototypal delegation, meaning an object delegates property lookups to its prototype. The `class` syntax in ES6 is syntactic sugar over this prototype-based model.
   </Accordion>
 </AccordionGroup>

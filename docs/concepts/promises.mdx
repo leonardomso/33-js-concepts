@@ -1664,23 +1664,23 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
 ## Frequently Asked Questions
 
 <AccordionGroup>
-  <Accordion title="What is a Promise in JavaScript?">
+<Accordion title="When should you use a Promise instead of callbacks?">
     A Promise is an object that represents the eventual completion or failure of an asynchronous operation. A Promise is in one of three states: pending, fulfilled, or rejected. Once settled (fulfilled or rejected), a Promise's state and value are immutable — it cannot change again.
   </Accordion>
 
-  <Accordion title="What are the three states of a Promise?">
+<Accordion title="How do Promise states help you debug async bugs?">
     Pending means the async operation has not completed yet. Fulfilled means it completed successfully with a result value. Rejected means it failed with a reason (usually an Error). A Promise transitions from pending to either fulfilled or rejected, never both and never more than once. This guarantee makes Promises more predictable than callbacks.
   </Accordion>
 
-  <Accordion title="What is the difference between Promise.all and Promise.allSettled?">
+<Accordion title="When should you choose Promise.all vs Promise.allSettled?">
     `Promise.all` resolves when all Promises fulfill and rejects immediately if any single Promise rejects. `Promise.allSettled` (added in ES2020) waits for all Promises to settle regardless of outcome and returns an array of result objects with `status` and `value` or `reason`. Use `allSettled` when you need results from every operation even if some fail.
   </Accordion>
 
-  <Accordion title="How do you handle errors in Promise chains?">
+<Accordion title="How do you prevent swallowed errors in Promise chains?">
     Attach a `.catch()` at the end of the chain to handle any rejection from any preceding `.then()`. Errors propagate down the chain until caught. You can also use `.then(onFulfilled, onRejected)`, but a single `.catch()` at the end is the recommended pattern. Always handle rejections — unhandled rejections are logged as warnings in modern runtimes.
   </Accordion>
 
-  <Accordion title="What is Promise chaining and why is it useful?">
+<Accordion title="Why does Promise chaining reduce production async bugs?">
     Promise chaining means calling `.then()` on the Promise returned by a previous `.then()`. Each `.then()` receives the return value of the previous one, creating a flat, readable sequence of async steps. This solves callback hell by replacing nested callbacks with a linear chain of operations.
   </Accordion>
 </AccordionGroup>

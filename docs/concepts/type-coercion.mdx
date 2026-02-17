@@ -962,11 +962,11 @@ function process(count) {
 ## Frequently Asked Questions
 
 <AccordionGroup>
-  <Accordion title="What is type coercion in JavaScript?">
+<Accordion title="When does type coercion cause production bugs most often?">
     Type coercion is JavaScript's automatic conversion of values from one type to another. All coercion ultimately converts to one of three primitive types: String, Number, or Boolean. It can be implicit (triggered by operators) or explicit (using functions like `Number()`, `String()`, or `Boolean()`).
   </Accordion>
 
-  <Accordion title="What are the falsy values in JavaScript?">
+<Accordion title="How do falsy values create subtle conditional bugs?">
     There are 8 common falsy values: `false`, `0`, `-0`, `0n` (BigInt zero), `""` (empty string), `null`, `undefined`, and `NaN`. Every other value in JavaScript is truthy — including empty arrays `[]`, empty objects `{}`, and the string `"0"`.
   </Accordion>
 
@@ -974,11 +974,11 @@ function process(count) {
     The `+` operator has a dual role: it performs both addition and string concatenation. When either operand is a string, `+` concatenates. The `-` operator only performs subtraction, so it always converts operands to numbers. This asymmetry is one of the most frequently asked JavaScript interview questions according to Stack Overflow surveys.
   </Accordion>
 
-  <Accordion title="What is the difference between implicit and explicit type coercion?">
+<Accordion title="When should you prefer explicit coercion over implicit coercion?">
     Explicit coercion is when you intentionally convert types using functions like `Number("42")` or `String(42)`. Implicit coercion happens automatically when JavaScript encounters mismatched types in operations — for example, `"5" - 3` implicitly converts `"5"` to the number `5`. Most style guides recommend explicit coercion for clarity.
   </Accordion>
 
-  <Accordion title="How do objects convert to primitives in JavaScript?">
+<Accordion title="How do you debug object-to-primitive conversion issues quickly?">
     JavaScript uses the ToPrimitive abstract operation, which checks for a `Symbol.toPrimitive` method first, then falls back to `valueOf()` and `toString()`. For number hints, `valueOf()` is tried first; for string hints, `toString()` is tried first. Arrays convert via `toString()`, which is why `[1,2,3] + ""` produces `"1,2,3"`.
   </Accordion>
 </AccordionGroup>

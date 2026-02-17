@@ -1612,23 +1612,23 @@ Watch how:
 ## Frequently Asked Questions
 
 <AccordionGroup>
-  <Accordion title="What is the event loop in JavaScript?">
+<Accordion title="When does understanding the event loop save you from real bugs?">
     The event loop is JavaScript's mechanism for handling asynchronous operations while remaining single-threaded. It continuously checks whether the call stack is empty and then dequeues tasks from the task queue or microtask queue for execution. This is what allows non-blocking I/O in both browsers and Node.js.
   </Accordion>
 
-  <Accordion title="What is the difference between microtasks and macrotasks?">
+<Accordion title="How do you debug microtask vs macrotask ordering issues?">
     Microtasks (Promise callbacks, queueMicrotask, MutationObserver) run after the current task completes but before the next macrotask. Macrotasks (setTimeout, setInterval, I/O) are queued in the task queue and processed one per event loop iteration. The key rule: the entire microtask queue is drained before the next macrotask runs.
   </Accordion>
 
-  <Accordion title="Why does Promise.then() run before setTimeout(0)?">
+<Accordion title="Why does Promise.then() run before setTimeout(0), and when does that break expectations?">
     Promise callbacks are scheduled as microtasks, while setTimeout callbacks are scheduled as macrotasks. The event loop processes all microtasks before it picks up the next macrotask. This is why `Promise.then()` always executes before `setTimeout(..., 0)` even though both are asynchronous.
   </Accordion>
 
-  <Accordion title="How does JavaScript handle async operations if it is single-threaded?">
+<Accordion title="How should you reason about async work if JavaScript is single-threaded?">
     JavaScript delegates long-running operations (network requests, timers, file I/O) to the browser's Web APIs or Node.js's libuv thread pool, which run on separate threads. When those operations complete, their callbacks are placed into the appropriate queue. The event loop then picks them up when the call stack is empty. This gives the illusion of parallelism while keeping JavaScript execution single-threaded.
   </Accordion>
 
-  <Accordion title="What is the difference between concurrency and parallelism in JavaScript?">
+<Accordion title="When do you need concurrency vs true parallelism in JavaScript?">
     Concurrency means managing multiple tasks by interleaving them on a single thread, which is what the event loop provides. Parallelism means executing multiple tasks simultaneously on different threads, which requires Web Workers. Async/await and Promises give you concurrency, while Web Workers give you true parallelism.
   </Accordion>
 </AccordionGroup>

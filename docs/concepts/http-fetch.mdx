@@ -1045,11 +1045,11 @@ This example uses browser DOM APIs (`addEventListener`, `searchInput`). In Node.
 ## Frequently Asked Questions
 
 <AccordionGroup>
-  <Accordion title="What is the Fetch API in JavaScript?">
+<Accordion title="When should you use Fetch directly vs a client library?">
     The Fetch API is JavaScript's modern interface for making HTTP requests. It returns Promises, supports streaming responses, and works with the Request and Response objects defined in the WHATWG Fetch Living Standard. It replaced the older XMLHttpRequest API and is now supported in all modern browsers and Node.js 18+.
   </Accordion>
 
-  <Accordion title="What is the difference between fetch and XMLHttpRequest?">
+<Accordion title="When should legacy code keep XMLHttpRequest instead of migrating immediately?">
 Fetch uses Promises instead of callbacks, has a cleaner API, supports streaming, and integrates with Service Workers. XMLHttpRequest (XHR) is callback-based and older but supports progress events natively. Fetch usage has surpassed XHR in modern web applications, though XHR remains in legacy codebases.
   </Accordion>
 
@@ -1057,11 +1057,11 @@ Fetch uses Promises instead of callbacks, has a cleaner API, supports streaming,
     Fetch only rejects its Promise on network failures (no internet, DNS errors, CORS blocked). An HTTP 404 or 500 is still a successful network response — the server replied. You must check `response.ok` or `response.status` manually to detect HTTP errors. This is the most common Fetch gotcha for beginners.
   </Accordion>
 
-  <Accordion title="How do you cancel a fetch request in JavaScript?">
+<Accordion title="How do you debug requests that should have been cancelled?">
     Use the AbortController API. Create an `AbortController`, pass its `signal` to `fetch()`, and call `controller.abort()` when you need to cancel. This throws an `AbortError` that you can catch. AbortController was added to the DOM specification and is supported in all modern browsers.
   </Accordion>
 
-  <Accordion title="What is the difference between GET and POST requests?">
+<Accordion title="When should you choose GET vs POST in real APIs?">
 GET requests retrieve data and should have no side effects — they are safe and idempotent. POST requests send data to create or modify resources. GET parameters go in the URL query string, while POST data goes in the request body. GET responses can be cached by browsers, but POST responses are not cached by default.
   </Accordion>
 </AccordionGroup>
