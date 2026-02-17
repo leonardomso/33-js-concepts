@@ -26,7 +26,7 @@ observer.observe({ type: 'resource', buffered: true })
 // https://example.com/hero.webp: 412.80ms
 ```
 
-The **[Performance Observer API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver)** lets you monitor performance metrics as they happen in real-time. Instead of polling for data, you subscribe to specific performance events and get notified when they occur. According to [web.dev](https://web.dev/articles/custom-metrics), this is the foundation of Real User Monitoring (RUM) and how tools like Google Analytics measure Core Web Vitals.
+The **[Performance Observer API](https://developer.mozilla.org/en-US/docs/Web/API/PerformanceObserver)** lets you monitor performance metrics as they happen in real-time. Instead of polling for data, you subscribe to specific performance events and get notified when they occur. This is the foundation of Real User Monitoring (RUM) and how tools like Google Analytics measure Core Web Vitals.
 
 <Info>
 **What you'll learn in this guide:**
@@ -220,7 +220,7 @@ paintObserver.observe({ type: 'paint', buffered: true })
 
 ## Measuring Core Web Vitals
 
-Core Web Vitals are Google's essential metrics for user experience. According to the [Chrome User Experience Report](https://developer.chrome.com/docs/crux/), sites meeting all three Core Web Vitals thresholds see 24% fewer page abandonment rates. Performance Observer is how you measure them in the field.
+Core Web Vitals are Google's essential metrics for user experience. Sites meeting all three Core Web Vitals thresholds see significantly fewer page abandonment rates. Performance Observer is how you measure them in the field.
 
 ### Largest Contentful Paint (LCP)
 
@@ -984,7 +984,7 @@ if (shouldSample) {
   </Accordion>
 
   <Accordion title="What is a Long Task and why does it matter?">
-    A Long Task is any JavaScript task that blocks the main thread for more than 50ms. During a Long Task, users cannot click, scroll, or type. According to web.dev, Long Tasks are the primary cause of poor INP scores. Monitor them with `observer.observe({ type: 'longtask' })` and break up heavy code into smaller chunks.
+    A Long Task is any JavaScript task that blocks the main thread for more than 50ms. During a Long Task, users cannot click, scroll, or type. Long Tasks are a primary cause of poor INP scores. Monitor them with `observer.observe({ type: 'longtask' })` and break up heavy code into smaller chunks.
   </Accordion>
 </AccordionGroup>
 

@@ -283,7 +283,7 @@ console.log(defaults);
 
 ## Symbol Keys: The Primary Use Case
 
-Symbols are unique, immutable identifiers that can **only** be used as object keys via computed property syntax. According to MDN, this is one of the most important use cases for computed properties and the reason Symbols were designed alongside this syntax in ES2015.
+Symbols are unique, immutable identifiers that can **only** be used as object keys via computed property syntax. This is one of the most important use cases for computed properties and the reason Symbols were designed alongside this syntax in ES2015.
 
 ### Why Symbols Need Computed Syntax
 
@@ -549,7 +549,7 @@ console.log(validated[Symbol.for('value')]);  // 42
 
 ### Form Field Handling
 
-React and Vue state updates commonly use computed properties. According to Stack Overflow's 2023 Developer Survey, React remains the most popular front-end framework, making this pattern one of the most widely used applications of computed property names:
+React and Vue state updates commonly use computed properties. This pattern is one of the most widely used real-world applications of computed property names:
 
 ```javascript
 // React-style form handler

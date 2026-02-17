@@ -22,7 +22,7 @@ searchInput.addEventListener('input', debounce((e) => {
 }, 300))
 ```
 
-**[Debouncing](https://developer.mozilla.org/en-US/docs/Glossary/Debounce)** and **[throttling](https://developer.mozilla.org/en-US/docs/Glossary/Throttle)** are two techniques that control how often a function can execute. According to MDN, both patterns are essential for handling high-frequency events like scrolling, resizing, typing, and mouse movement without destroying your app's performance. The scroll event alone can fire hundreds of times per second on modern browsers.
+**[Debouncing](https://developer.mozilla.org/en-US/docs/Glossary/Debounce)** and **[throttling](https://developer.mozilla.org/en-US/docs/Glossary/Throttle)** are two techniques that control how often a function can execute. Both patterns are essential for handling high-frequency events like scrolling, resizing, typing, and mouse movement without destroying your app's performance. The scroll event alone can fire hundreds of times per second on modern browsers.
 
 <Info>
 **What you'll learn in this guide:**
@@ -999,7 +999,7 @@ throttle(scroll, 100)   // 100-150ms for scroll (smooth but efficient)
   </Accordion>
 
   <Accordion title="How do I clean up debounced functions in React?">
-    Always cancel pending executions in a cleanup function. Return a cleanup from `useEffect` that calls `handler.cancel()` and removes event listeners. According to the React documentation, forgetting cleanup is one of the most common sources of memory leaks in React applications using debounce or throttle.
+Always cancel pending executions in a cleanup function. Return a cleanup from `useEffect` that calls `handler.cancel()` and removes event listeners. Forgetting cleanup is one of the most common sources of memory leaks in React applications using debounce or throttle.
   </Accordion>
 
   <Accordion title="Can I use requestAnimationFrame instead of throttle?">

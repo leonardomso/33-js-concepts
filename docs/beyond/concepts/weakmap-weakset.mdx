@@ -50,7 +50,7 @@ The answer lies in **[WeakMap](https://developer.mozilla.org/en-US/docs/Web/Java
 
 ## What is a Weak Reference?
 
-A **weak reference** is a reference to an object that doesn't prevent the object from being garbage collected. When no strong references to an object remain, the JavaScript engine can reclaim its memory, even if weak references still point to it. WeakMap and WeakSet use weak references for their keys and values respectively, enabling automatic memory cleanup. According to the [ECMAScript specification](https://tc39.es/ecma262/#sec-weakmap-objects), WeakMap entries must be removed from the collection when the key object is no longer reachable by any other means.
+A **weak reference** is a reference to an object that doesn't prevent the object from being garbage collected. When no strong references to an object remain, the JavaScript engine can reclaim its memory, even if weak references still point to it. WeakMap and WeakSet use weak references for their keys and values respectively, enabling automatic memory cleanup. WeakMap entries are removed from the collection when the key object is no longer reachable by any other means.
 
 To understand this, you need to know how JavaScript handles memory. When you create an object and store it in a variable, that variable holds a **strong reference**:
 
@@ -677,7 +677,7 @@ const weakSet = new WeakSet()
 
 ## Symbol Keys (ES2023+)
 
-As of ES2023, WeakMap and WeakSet can also hold non-registered [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol). According to the TC39 proposal, this change was made because non-registered Symbols have the same uniqueness and garbage-collectible properties as objects, making them natural candidates for weak references:
+As of ES2023, WeakMap and WeakSet can also hold non-registered [Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol). This change was made because non-registered Symbols have the same uniqueness and garbage-collectible properties as objects, making them natural candidates for weak references:
 
 ```javascript
 const weakMap = new WeakMap()
@@ -921,7 +921,7 @@ function clearOldEntries() {
 
 <AccordionGroup>
   <Accordion title="What is a WeakMap in JavaScript?">
-    A WeakMap is a collection of key-value pairs where keys must be objects and are held via weak references. When no other strong references to a key object remain, the entry is automatically removed by garbage collection. According to MDN, WeakMap is ideal for attaching metadata to objects without preventing their cleanup.
+    A WeakMap is a collection of key-value pairs where keys must be objects and are held via weak references. When no other strong references to a key object remain, the entry is automatically removed by garbage collection. WeakMap is ideal for attaching metadata to objects without preventing their cleanup.
   </Accordion>
 
   <Accordion title="Why can't you iterate over a WeakMap or WeakSet?">

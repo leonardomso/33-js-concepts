@@ -31,7 +31,7 @@ proxy.name       // Logs: "Reading name", returns "Alice"
 proxy.age = -5   // Error: Age cannot be negative
 ```
 
-This is the power of **[Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)** and **[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)**. Proxies let you intercept and customize fundamental operations on objects, while Reflect provides the default behavior you can forward to. Together, they enable validation, logging, reactive data binding, and other metaprogramming patterns. According to the ECMAScript specification, Proxy traps map directly to [internal methods](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots) that define how all JavaScript objects behave at the engine level.
+This is the power of **[Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)** and **[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)**. Proxies let you intercept and customize fundamental operations on objects, while Reflect provides the default behavior you can forward to. Together, they enable validation, logging, reactive data binding, and other metaprogramming patterns. Proxy traps map directly to [internal methods](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots) that define how all JavaScript objects behave at the engine level.
 
 <Info>
 **What you'll learn in this guide:**
@@ -408,7 +408,7 @@ const proxy = new Proxy(user, {
 
 ### Observable Objects (Reactive Data)
 
-Create objects that notify you when they change. This is how frameworks like Vue.js implement reactivity. According to the Vue.js documentation, Vue 3 replaced `Object.defineProperty()` (used in Vue 2) with `Proxy` for its reactivity system, enabling detection of property additions and deletions that were previously impossible:
+Create objects that notify you when they change. This is how frameworks like Vue.js implement reactivity. Vue 3 replaced `Object.defineProperty()` (used in Vue 2) with `Proxy` for its reactivity system, enabling detection of property additions and deletions that were previously impossible:
 
 ```javascript
 function observable(target, onChange) {
@@ -722,7 +722,7 @@ console.log(set.has(proxy))    // false - they're different objects
 
 <AccordionGroup>
   <Accordion title="What is a JavaScript Proxy?">
-    A Proxy is a wrapper around an object (the "target") that intercepts fundamental operations like property access, assignment, and deletion. You define custom behavior through "trap" methods in a handler object. According to the ECMAScript specification, Proxy traps correspond to 13 internal object methods, covering every way JavaScript interacts with objects.
+    A Proxy is a wrapper around an object (the "target") that intercepts fundamental operations like property access, assignment, and deletion. You define custom behavior through "trap" methods in a handler object. Proxy traps correspond to 13 internal object methods, covering every way JavaScript interacts with objects.
   </Accordion>
 
   <Accordion title="Why use Reflect with Proxy instead of direct property access?">

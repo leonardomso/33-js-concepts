@@ -102,7 +102,7 @@ window.addEventListener('scroll', () => {
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-**Intersection Observer runs off the main thread** and is optimized by the browser, making it dramatically more efficient. According to [web.dev](https://web.dev/articles/intersectionobserver-v2), Google introduced the API specifically to address the performance problems of scroll-based visibility detection, which was a leading cause of jank on content-heavy pages.
+**Intersection Observer runs off the main thread** and is optimized by the browser, making it dramatically more efficient. The API was introduced to address the performance problems of scroll-based visibility detection, which was a leading cause of jank on content-heavy pages.
 
 ---
 
@@ -982,7 +982,7 @@ For legacy browser support, use the [official polyfill](https://github.com/w3c/I
 
 <AccordionGroup>
   <Accordion title="What is Intersection Observer used for in JavaScript?">
-    Intersection Observer detects when elements enter or leave the viewport (or a container element). Common use cases include lazy loading images, infinite scroll, scroll-triggered animations, and ad viewability tracking. According to web.dev, it replaces expensive scroll event listeners with browser-optimized callbacks.
+    Intersection Observer detects when elements enter or leave the viewport (or a container element). Common use cases include lazy loading images, infinite scroll, scroll-triggered animations, and ad viewability tracking. It replaces expensive scroll event listeners with browser-optimized callbacks.
   </Accordion>
 
   <Accordion title="Is Intersection Observer better than scroll events?">

@@ -232,13 +232,13 @@ createCycle()
 // With mark-and-sweep: Both collected (unreachable from roots)
 ```
 
-Old versions of Internet Explorer (IE6/7) used reference counting for DOM objects, which caused notorious memory leaks when JavaScript objects and DOM elements referenced each other. According to web.dev's guide on fixing memory leaks, all modern engines now use mark-and-sweep or variations of it, eliminating circular reference leaks entirely.
+Old versions of Internet Explorer (IE6/7) used reference counting for DOM objects, which caused notorious memory leaks when JavaScript objects and DOM elements referenced each other. All modern engines now use mark-and-sweep or variations of it, eliminating circular reference leaks entirely.
 
 ---
 
 ## Generational Garbage Collection
 
-Modern engines like V8 don't just use basic mark-and-sweep. They use **generational garbage collection** based on an important observation: **most objects die young**. According to the V8 blog, the Orinoco garbage collector processes the young generation in under 1 millisecond for most web applications, making GC pauses nearly invisible to users.
+Modern engines like V8 don't just use basic mark-and-sweep. They use **generational garbage collection** based on an important observation: **most objects die young**. The Orinoco garbage collector processes the young generation in under 1 millisecond for most web applications, making GC pauses nearly invisible to users.
 
 Think about it: temporary variables, intermediate calculation results, short-lived callbacks. They're created, used briefly, and become garbage quickly. Only some objects (app state, cached data) live for a long time.
 
@@ -775,7 +775,7 @@ For most applications, `WeakMap` and `WeakSet` are better choices. They allow ob
   </Accordion>
 
   <Accordion title="What is the difference between minor and major garbage collection?">
-    Minor GC (the Scavenger in V8) runs frequently on the young generation where most short-lived objects reside — it typically completes in under 1 millisecond. Major GC (Mark-Compact) runs less often on the entire heap and is more thorough but slower. According to the V8 blog, this generational approach minimizes pause times significantly.
+    Minor GC (the Scavenger in V8) runs frequently on the young generation where most short-lived objects reside — it typically completes in under 1 millisecond. Major GC (Mark-Compact) runs less often on the entire heap and is more thorough but slower. This generational approach minimizes pause times significantly.
   </Accordion>
 
   <Accordion title="How do WeakMap and WeakSet help with garbage collection?">

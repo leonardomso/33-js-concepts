@@ -29,7 +29,7 @@ request.onsuccess = (event) => {
 }
 ```
 
-IndexedDB is the backbone of offline-first applications, Progressive Web Apps (PWAs), and any app that needs to work without a network connection. According to Can I Use, IndexedDB has over 96% global browser support. It's more complex than localStorage, but far more powerful.
+IndexedDB is the backbone of offline-first applications, Progressive Web Apps (PWAs), and any app that needs to work without a network connection. IndexedDB has broad browser support across modern engines. It's more complex than localStorage, but far more powerful.
 
 <Info>
 **What you'll learn in this guide:**
@@ -968,7 +968,7 @@ request.onupgradeneeded = (event) => {
   </Accordion>
 
   <Accordion title="How much data can IndexedDB store?">
-    IndexedDB can store gigabytes of data, far exceeding localStorage's ~5MB limit. According to MDN's storage quotas documentation, browsers typically allow up to 50% of available disk space per origin. Chrome allocates up to 80% of total disk space across all origins, with individual origins limited to 60% of that.
+    IndexedDB can store gigabytes of data, far exceeding localStorage's ~5MB limit. Browsers typically allow a large percentage of available disk space per origin, with vendor-specific limits and heuristics.
   </Accordion>
 
   <Accordion title="Is IndexedDB synchronous or asynchronous?">

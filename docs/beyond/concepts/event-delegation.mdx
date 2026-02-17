@@ -48,7 +48,7 @@ document.querySelector('.todo-list').addEventListener('click', (event) => {
 
 ## What is Event Delegation?
 
-**Event delegation** is a pattern where you attach a single event listener to a parent element to handle events on its child elements. When an event occurs on a child, it bubbles up to the parent, where the listener catches it and determines which specific child triggered the event. As documented by [javascript.info](https://javascript.info/event-delegation), this approach reduces memory usage, simplifies code, and automatically handles dynamically added elements.
+**Event delegation** is a pattern where you attach a single event listener to a parent element to handle events on its child elements. When an event occurs on a child, it bubbles up to the parent, where the listener catches it and determines which specific child triggered the event. This approach reduces memory usage, simplifies code, and automatically handles dynamically added elements.
 
 Think of event delegation like a receptionist at an office building. Instead of giving every employee their own personal doorbell, visitors ring one doorbell at the reception desk. The receptionist then determines who the visitor wants to see and routes them appropriately. One point of contact handles all visitors efficiently.
 
@@ -475,7 +475,7 @@ function validateInput(input) {
 
 ## Performance Benefits
 
-Event delegation significantly reduces memory usage when dealing with many elements. According to [web.dev performance guidelines](https://web.dev/articles/dom-size-and-interactivity), minimizing the number of event listeners is a key strategy for improving Interaction to Next Paint (INP) scores:
+Event delegation significantly reduces memory usage when dealing with many elements. Minimizing the number of event listeners is a key strategy for improving Interaction to Next Paint (INP) scores:
 
 ```javascript
 // Without delegation: 1000 listeners
@@ -832,7 +832,7 @@ document.querySelector('.my-component').addEventListener('click', (event) => {
   </Accordion>
 
   <Accordion title="When should I use event delegation?">
-    Use delegation when you have many similar elements that need the same handler, when elements are added or removed dynamically, or when memory efficiency matters. According to web.dev, reducing the number of event listeners directly improves page interactivity and INP scores.
+    Use delegation when you have many similar elements that need the same handler, when elements are added or removed dynamically, or when memory efficiency matters. Reducing the number of event listeners directly improves page interactivity and INP scores.
   </Accordion>
 
   <Accordion title="What is the difference between matches() and closest() for delegation?">

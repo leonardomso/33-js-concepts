@@ -48,7 +48,7 @@ The answer is **hoisting**. It's one of JavaScript's most misunderstood behavior
 
 ## What is Hoisting in JavaScript?
 
-**[Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)** is JavaScript's behavior of moving declarations to the top of their scope during the compilation phase, before any code is executed. When JavaScript prepares to run your code, it first scans for all variable and function declarations and "hoists" them to the top of their containing scope. Only the declarations are hoisted, not the initializations. According to the [ECMAScript specification](https://tc39.es/ecma262/#sec-variable-statement), variable declarations are instantiated when their containing environment record is created, which is why they appear to "move" to the top.
+**[Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)** is JavaScript's behavior of moving declarations to the top of their scope during the compilation phase, before any code is executed. When JavaScript prepares to run your code, it first scans for all variable and function declarations and "hoists" them to the top of their containing scope. Only the declarations are hoisted, not the initializations. Variable declarations are instantiated when their containing environment record is created, which is why they appear to "move" to the top.
 
 Here's the key insight: hoisting isn't actually moving your code around. It's about when JavaScript becomes *aware* of your variables and functions during its two-phase execution process.
 
@@ -766,7 +766,7 @@ This two-phase approach is why hoisting exists. It's a natural consequence of ho
 
 <AccordionGroup>
   <Accordion title="What is hoisting in JavaScript?">
-    Hoisting is JavaScript's default behavior of moving variable and function declarations to the top of their scope during the compilation phase. Only the declarations are hoisted, not the initializations. According to MDN, this means variables can appear to be used before they are declared.
+    Hoisting is JavaScript's default behavior of moving variable and function declarations to the top of their scope during the compilation phase. Only the declarations are hoisted, not the initializations. This means variables can appear to be used before they are declared.
   </Accordion>
 
   <Accordion title="Are let and const hoisted in JavaScript?">

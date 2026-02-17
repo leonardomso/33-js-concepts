@@ -50,7 +50,7 @@ This happens because of **event bubbling** — one of the three phases every DOM
 
 **Event propagation** is the process by which an event travels through the DOM tree when triggered on an element. Instead of the event only affecting the element you clicked, it travels through the element's ancestors in a specific order, giving each one a chance to respond.
 
-According to the [W3C UI Events specification](https://www.w3.org/TR/uievents/#event-flow), every DOM event goes through **three phases**:
+Every DOM event goes through **three phases**:
 
 1. **Capturing phase** — The event travels DOWN from `window` to the target element
 2. **Target phase** — The event arrives at the element that triggered it
@@ -683,7 +683,7 @@ form.addEventListener('click', (e) => {
 
 <AccordionGroup>
   <Accordion title="What is event bubbling in JavaScript?">
-    Event bubbling is the process where an event triggered on a child element propagates upward through its ancestor elements in the DOM tree. According to the W3C DOM specification, bubbling is Phase 3 of event propagation and is the default phase in which `addEventListener` handlers fire.
+    Event bubbling is the process where an event triggered on a child element propagates upward through its ancestor elements in the DOM tree. Bubbling is Phase 3 of event propagation and is the default phase in which `addEventListener` handlers fire.
   </Accordion>
 
   <Accordion title="What is the difference between event bubbling and event capturing?">
