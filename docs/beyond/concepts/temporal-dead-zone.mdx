@@ -43,7 +43,7 @@ The difference is the **Temporal Dead Zone (TDZ)**. It's a behavior that makes [
 
 ## What is the Temporal Dead Zone?
 
-The **Temporal Dead Zone (TDZ)** in JavaScript is the period between entering a scope and the line where a `let`, `const`, or `class` variable is initialized. During this zone, the variable exists but cannot be accessed—any attempt throws a [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError). The TDZ prevents bugs by catching accidental use of uninitialized variables. As defined in the [ECMAScript specification](https://tc39.es/ecma262/#sec-let-and-const-declarations), `let` and `const` bindings are created when their containing environment record is instantiated but remain uninitialized until their declaration is evaluated.
+The **Temporal Dead Zone (TDZ)** in JavaScript is the period between entering a scope and the line where a `let`, `const`, or `class` variable is initialized. During this zone, the variable exists but cannot be accessed—any attempt throws a [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError). The TDZ prevents bugs by catching accidental use of uninitialized variables. `let` and `const` bindings are created when their containing environment record is instantiated but remain uninitialized until their declaration is evaluated.
 
 ```javascript
 {
@@ -581,7 +581,7 @@ function fixed() {
 
 ## Why Does TDZ Exist?
 
-TDZ might seem like an annoyance, but it exists for good reasons. According to the TC39 committee notes on ES6 development, the TDZ was introduced specifically to make `let` and `const` safer alternatives to `var` by catching common programming mistakes at the point of error rather than letting them propagate silently:
+TDZ might seem like an annoyance, but it exists for good reasons. It was introduced to make `let` and `const` safer alternatives to `var` by catching common programming mistakes at the point of error rather than letting them propagate silently:
 
 ### 1. Catches Bugs Early
 
@@ -819,7 +819,7 @@ let data = fetchData()
   </Accordion>
 
   <Accordion title="Can you avoid the Temporal Dead Zone?">
-    The simplest way to avoid TDZ issues is to always declare variables at the top of their scope before using them. The TDZ is a feature, not a bug — the 2023 Stack Overflow Developer Survey shows that over 87% of JavaScript developers prefer `let` and `const` over `var`, accepting the TDZ trade-off for safer code.
+    The simplest way to avoid TDZ issues is to always declare variables at the top of their scope before using them. The TDZ is a feature, not a bug — it trades early errors for safer code and fewer hidden bugs.
   </Accordion>
 </AccordionGroup>
 

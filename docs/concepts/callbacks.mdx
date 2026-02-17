@@ -25,7 +25,7 @@ console.log('After timer')
 // Timer fired! (1 second later)
 ```
 
-The answer is **callbacks**: functions you pass to other functions, saying "call me back when you're done." As defined on MDN, a callback function is passed into another function as an argument and is then invoked inside the outer function. Callbacks power everything async in JavaScript. Every event handler, every timer, every network request. They all rely on them.
+The answer is **callbacks**: functions you pass to other functions, saying "call me back when you're done." A callback function is passed into another function as an argument and is then invoked inside the outer function. Callbacks power everything async in JavaScript. Every event handler, every timer, every network request. They all rely on them.
 
 <Info>
 **What you'll learn in this guide:**
@@ -138,7 +138,7 @@ Callbacks work like the buzzer you get at a busy restaurant:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-The key insight: **you don't wait at the counter**. You give them a way to reach you (the callback), and you go do other things. That's how JavaScript stays fast — it never sits around waiting. According to the 2023 State of JS survey, while most developers now prefer Promises and async/await for new code, callbacks remain foundational and are still used extensively in event handling and Node.js APIs.
+The key insight: **you don't wait at the counter**. You give them a way to reach you (the callback), and you go do other things. That's how JavaScript stays fast — it never sits around waiting. While most developers now prefer Promises and async/await for new code, callbacks remain foundational and are still used extensively in event handling and Node.js APIs.
 
 ```javascript
 // You place your order (start async operation)
@@ -1378,7 +1378,7 @@ Callbacks aren't obsolete. They're the foundation that everything else builds up
 
 <AccordionGroup>
   <Accordion title="What is a callback function in JavaScript?">
-    A callback is a function passed as an argument to another function, which calls it later. As documented on MDN, callbacks are the fundamental mechanism for asynchronous programming in JavaScript. Every event handler, timer, and array method like `forEach` and `map` uses callbacks to execute code at the right time.
+    A callback is a function passed as an argument to another function, which calls it later. Callbacks are the fundamental mechanism for asynchronous programming in JavaScript. Every event handler, timer, and array method like `forEach` and `map` uses callbacks to execute code at the right time.
   </Accordion>
 
   <Accordion title="What is callback hell?">
@@ -1394,7 +1394,7 @@ Callbacks aren't obsolete. They're the foundation that everything else builds up
   </Accordion>
 
   <Accordion title="Why were Promises invented to replace callbacks?">
-    Promises solve three major callback problems: nested "pyramid of doom" code, inconsistent error handling, and inversion of control (trusting third-party code to call your callback correctly). According to the 2023 State of JS survey, async/await (built on Promises) is now the dominant async pattern, used by over 90% of JavaScript developers.
+    Promises solve three major callback problems: nested "pyramid of doom" code, inconsistent error handling, and inversion of control (trusting third-party code to call your callback correctly). Async/await (built on Promises) is now the dominant async pattern for modern JavaScript code.
   </Accordion>
 </AccordionGroup>
 

@@ -23,7 +23,7 @@ const greet = user.greet;
 greet();                // "Hi, I'm undefined" - broken!
 ```
 
-The **[`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)** keyword is one of JavaScript's most confusing features, but it follows specific rules. According to the Stack Overflow Developer Survey, `this` binding is consistently cited as one of the trickiest parts of JavaScript for developers to master. Once you understand them, you'll never be confused again.
+The **[`this`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this)** keyword is one of JavaScript's most confusing features, but it follows specific rules. Once you understand them, you'll never be confused again.
 
 <Info>
 **What you'll learn in this guide:**
@@ -171,7 +171,7 @@ BINDING RULES (Highest to Lowest Priority)
 ```
 
 <Note>
-Arrow functions are listed last not because they're lowest priority, but because they work differently. As defined in the ECMAScript 2015 specification, arrow functions do not have their own `this` binding at all — they inherit it from the enclosing lexical scope. We'll cover them in detail.
+Arrow functions are listed last not because they're lowest priority, but because they work differently. Arrow functions do not have their own `this` binding at all — they inherit it from the enclosing lexical scope. We'll cover them in detail.
 </Note>
 
 ---
@@ -1417,7 +1417,7 @@ Try to figure out what `this` refers to in each example before revealing the ans
 
 <AccordionGroup>
   <Accordion title="What is 'this' in JavaScript?">
-    The `this` keyword refers to the object that is currently executing the function. Unlike most languages where `this` is determined at definition time, JavaScript determines `this` at call time based on how the function is invoked. As documented on MDN, `this` follows specific binding rules: default, implicit, explicit (call/apply/bind), and new binding.
+    The `this` keyword refers to the object that is currently executing the function. Unlike most languages where `this` is determined at definition time, JavaScript determines `this` at call time based on how the function is invoked. `this` follows specific binding rules: default, implicit, explicit (call/apply/bind), and new binding.
   </Accordion>
 
   <Accordion title="What is the difference between call, apply, and bind?">
@@ -1425,7 +1425,7 @@ Try to figure out what `this` refers to in each example before revealing the ans
   </Accordion>
 
   <Accordion title="Why do arrow functions not have their own 'this'?">
-    Arrow functions were designed to solve the common problem of losing `this` context in callbacks. According to the ECMAScript 2015 specification, arrow functions do not have their own `this` binding — they inherit `this` from their enclosing lexical scope. This makes them ideal for callbacks and event handlers where you want to preserve the outer `this`.
+    Arrow functions were designed to solve the common problem of losing `this` context in callbacks. Arrow functions do not have their own `this` binding — they inherit `this` from their enclosing lexical scope. This makes them ideal for callbacks and event handlers where you want to preserve the outer `this`.
   </Accordion>
 
   <Accordion title="How do you fix 'this' losing context in a callback?">

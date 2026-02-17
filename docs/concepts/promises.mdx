@@ -140,7 +140,7 @@ Here's how this maps to JavaScript:
 | Picking up food | `.then()` handler | `promise.then(food => eat(food))` |
 | Handling problems | `.catch()` handler | `promise.catch(err => complain(err))` |
 
-Here's the important part: **once your order is fulfilled or rejected, it doesn't change**. You can't un-eat the pasta or un-reject the apology. Similarly, once a Promise settles, its state is permanent. According to the ECMAScript specification, this immutability guarantee (called "settled" state) is what makes Promises reliable building blocks for complex async workflows.
+Here's the important part: **once your order is fulfilled or rejected, it doesn't change**. You can't un-eat the pasta or un-reject the apology. Similarly, once a Promise settles, its state is permanent. This immutability guarantee (called "settled" state) is what makes Promises reliable building blocks for complex async workflows.
 
 ---
 
@@ -1665,7 +1665,7 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
 
 <AccordionGroup>
   <Accordion title="What is a Promise in JavaScript?">
-    A Promise is an object that represents the eventual completion or failure of an asynchronous operation. As defined in the ECMAScript specification, a Promise is in one of three states: pending, fulfilled, or rejected. Once settled (fulfilled or rejected), a Promise's state and value are immutable — it cannot change again.
+    A Promise is an object that represents the eventual completion or failure of an asynchronous operation. A Promise is in one of three states: pending, fulfilled, or rejected. Once settled (fulfilled or rejected), a Promise's state and value are immutable — it cannot change again.
   </Accordion>
 
   <Accordion title="What are the three states of a Promise?">
@@ -1681,7 +1681,7 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
   </Accordion>
 
   <Accordion title="What is Promise chaining and why is it useful?">
-    Promise chaining means calling `.then()` on the Promise returned by a previous `.then()`. Each `.then()` receives the return value of the previous one, creating a flat, readable sequence of async steps. According to MDN, this was the key innovation that solved callback hell by replacing nested callbacks with a linear chain of operations.
+    Promise chaining means calling `.then()` on the Promise returned by a previous `.then()`. Each `.then()` receives the return value of the previous one, creating a flat, readable sequence of async steps. This solves callback hell by replacing nested callbacks with a linear chain of operations.
   </Accordion>
 </AccordionGroup>
 

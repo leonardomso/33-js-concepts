@@ -505,7 +505,7 @@ console.log(document.cookie)  // sessionId won't appear
 
 ### SameSite: CSRF Protection
 
-The [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) attribute controls when cookies are sent with cross-site requests. According to web.dev's SameSite cookies guide, Chrome changed the default from `None` to `Lax` in 2020, significantly improving CSRF protection across the web:
+The [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) attribute controls when cookies are sent with cross-site requests. Chrome changed the default from `None` to `Lax` in 2020, significantly improving CSRF protection across the web:
 
 <Tabs>
   <Tab title="Strict">
@@ -631,7 +631,7 @@ Cookies set by a different domain than the one you're visiting:
 
 ## Third-Party Cookie Deprecation
 
-Major browsers are phasing out third-party cookies for privacy. According to MDN's third-party cookies documentation, this represents one of the most significant changes to web tracking since cookies were invented:
+Major browsers are phasing out third-party cookies for privacy. This is one of the most significant changes to web tracking since cookies were invented:
 
 | Browser | Status |
 |---------|--------|
@@ -973,7 +973,7 @@ With `Partitioned`, the cookie is isolated per top-level site:
   </Accordion>
 
   <Accordion title="What does the HttpOnly cookie attribute do?">
-    `HttpOnly` prevents JavaScript from accessing the cookie via `document.cookie`. This protects against XSS attacks — even if an attacker injects malicious JavaScript, they cannot steal HttpOnly cookies. According to MDN, HttpOnly can only be set by the server via the `Set-Cookie` header, not by client-side JavaScript.
+    `HttpOnly` prevents JavaScript from accessing the cookie via `document.cookie`. This protects against XSS attacks — even if an attacker injects malicious JavaScript, they cannot steal HttpOnly cookies. HttpOnly can only be set by the server via the `Set-Cookie` header, not by client-side JavaScript.
   </Accordion>
 
   <Accordion title="What is the SameSite cookie attribute?">
@@ -985,7 +985,7 @@ With `Partitioned`, the cookie is isolated per top-level site:
   </Accordion>
 
   <Accordion title="Are third-party cookies being deprecated?">
-    Yes. Safari has blocked third-party cookies by default since 2020, Firefox blocks them in Enhanced Tracking Protection, and Chrome is rolling out restrictions through 2024–2025. According to MDN, partitioned cookies (CHIPS) provide an alternative for legitimate cross-site use cases like embedded widgets.
+    Yes. Safari has blocked third-party cookies by default since 2020, Firefox blocks them in Enhanced Tracking Protection, and Chrome is rolling out restrictions through 2024–2025. Partitioned cookies (CHIPS) provide an alternative for legitimate cross-site use cases like embedded widgets.
   </Accordion>
 </AccordionGroup>
 

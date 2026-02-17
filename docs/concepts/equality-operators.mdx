@@ -20,7 +20,7 @@ console.log(typeof null);  // "object" — a bug from 1995!
 console.log(NaN === NaN);  // false — NaN never equals anything
 ```
 
-Understanding JavaScript's **[equality operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)** is crucial because comparison bugs are among the most common in JavaScript code. According to the ECMAScript specification (ECMA-262), JavaScript defines three distinct equality algorithms: Abstract Equality, Strict Equality, and SameValue. This guide will teach you exactly how `==`, **[`===`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)**, and **[`Object.is()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)** work, and when to use each one.
+Understanding JavaScript's **[equality operators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Equality)** is crucial because comparison bugs are among the most common in JavaScript code. JavaScript defines three distinct equality algorithms: Abstract Equality, Strict Equality, and SameValue. This guide will teach you exactly how `==`, **[`===`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Strict_equality)**, and **[`Object.is()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is)** work, and when to use each one.
 
 <Info>
 **What you'll learn in this guide:**
@@ -681,7 +681,7 @@ To compare objects by their content (deep equality), you need to:
 
 ## `Object.is()`: Same-Value Equality
 
-ES6 introduced `Object.is()` to fix the two edge cases where `===` gives unexpected results. As documented by MDN, `Object.is()` implements the "SameValue" algorithm from the ECMAScript specification. It works exactly like `===`, but handles `NaN` and `-0` correctly.
+ES6 introduced `Object.is()` to fix the two edge cases where `===` gives unexpected results. `Object.is()` implements the "SameValue" algorithm from the ECMAScript specification. It works exactly like `===`, but handles `NaN` and `-0` correctly.
 
 ### Why It Exists
 
@@ -1528,7 +1528,7 @@ Try to answer each question before revealing the solution:
 
 <AccordionGroup>
   <Accordion title="What is the difference between == and === in JavaScript?">
-    The `==` (loose equality) operator converts values to the same type before comparing, while `===` (strict equality) compares both type and value without any conversion. For example, `5 == "5"` is true because the string is coerced to a number, but `5 === "5"` is false because a number and string are different types. According to the ECMAScript specification, `===` should be your default choice for reliable comparisons.
+    The `==` (loose equality) operator converts values to the same type before comparing, while `===` (strict equality) compares both type and value without any conversion. For example, `5 == "5"` is true because the string is coerced to a number, but `5 === "5"` is false because a number and string are different types. `===` should be your default choice for reliable comparisons.
   </Accordion>
 
   <Accordion title="Why does NaN not equal itself in JavaScript?">
@@ -1544,7 +1544,7 @@ Try to answer each question before revealing the solution:
   </Accordion>
 
   <Accordion title="Why does typeof null return 'object' in JavaScript?">
-    This is a well-known bug from JavaScript's first implementation in 1995. As documented by MDN, values in the original engine used type tags, and both objects and null shared the `000` tag. A TC39 proposal to fix this was rejected because changing it would break backward compatibility with millions of existing websites. Always check for null explicitly with `value === null`.
+    This is a well-known bug from JavaScript's first implementation in 1995. Values in the original engine used type tags, and both objects and null shared the `000` tag. A TC39 proposal to fix this was rejected because changing it would break backward compatibility with millions of existing websites. Always check for null explicitly with `value === null`.
   </Accordion>
 </AccordionGroup>
 

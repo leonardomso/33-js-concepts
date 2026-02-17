@@ -97,14 +97,14 @@ LIFO = Last In, First Out
 
 ### Why Does JavaScript Need a Call Stack?
 
-JavaScript is **[single-threaded](https://developer.mozilla.org/en-US/docs/Glossary/Thread)**, meaning it can only do **one thing at a time**. According to the ECMAScript specification, each function invocation creates a new execution context that gets pushed onto the stack. The call stack helps JavaScript:
+JavaScript is **[single-threaded](https://developer.mozilla.org/en-US/docs/Glossary/Thread)**, meaning it can only do **one thing at a time**. Each function invocation creates a new execution context that gets pushed onto the stack. The call stack helps JavaScript:
 
 1. **Remember where it is** — Which function is currently running?
 2. **Know where to go back** — When a function finishes, where should execution continue?
 3. **Keep track of local variables** — Each function has its own variables that shouldn't interfere with others
 
 <Info>
-**ECMAScript Specification**: According to the official JavaScript specification, the call stack is implemented through "[execution contexts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#stack_and_execution_contexts)." Each function call creates a new execution context that gets pushed onto the stack.
+**ECMAScript Specification**: The call stack is implemented through "[execution contexts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#stack_and_execution_contexts)." Each function call creates a new execution context that gets pushed onto the stack.
 </Info>
 
 ---
@@ -905,7 +905,7 @@ The `setTimeout` callback doesn't go directly on the call stack. It waits in a q
 
 <AccordionGroup>
   <Accordion title="What is the call stack in JavaScript?">
-    The call stack is a LIFO (Last In, First Out) data structure that JavaScript uses to track function execution. According to the ECMAScript specification, each function call creates an "execution context" that is pushed onto the stack. When a function returns, its context is popped off and execution resumes in the calling function.
+    The call stack is a LIFO (Last In, First Out) data structure that JavaScript uses to track function execution. Each function call creates an "execution context" that is pushed onto the stack. When a function returns, its context is popped off and execution resumes in the calling function.
   </Accordion>
 
   <Accordion title="What causes a stack overflow error in JavaScript?">
@@ -913,7 +913,7 @@ The `setTimeout` callback doesn't go directly on the call stack. It waits in a q
   </Accordion>
 
   <Accordion title="Why is JavaScript single-threaded?">
-    JavaScript was designed as a single-threaded language to simplify DOM manipulation — having multiple threads modifying the page simultaneously would create race conditions. As documented in MDN, JavaScript has one call stack and can only execute one piece of code at a time. Asynchronous behavior is achieved through the event loop, Web APIs, and task queues rather than multiple threads.
+    JavaScript was designed as a single-threaded language to simplify DOM manipulation — having multiple threads modifying the page simultaneously would create race conditions. JavaScript has one call stack and can only execute one piece of code at a time. Asynchronous behavior is achieved through the event loop, Web APIs, and task queues rather than multiple threads.
   </Accordion>
 
   <Accordion title="What is an execution context in JavaScript?">
