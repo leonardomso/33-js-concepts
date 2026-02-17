@@ -13,17 +13,21 @@
     "dark": "#C9B83C"
   },
   "favicon": "/favicon.ico",
+  "thumbnails": {
+    "appearance": "dark"
+  },
   "seo": {
     "indexing": "navigable",
     "metatags": {
       "og:type": "website",
       "og:site_name": "33 JavaScript Concepts",
       "og:locale": "en_US",
-      "og:image": "/og-image.png",
+      "og:image": "https://33jsconcepts.com/og-image.png",
       "twitter:card": "summary_large_image",
       "twitter:site": "@leonardomso",
       "twitter:creator": "@leonardomso",
       "twitter:image": "/og-image.png",
+      "article:author": "Leonardo Maldonado",
       "author": "Leonardo Maldonado",
       "keywords": "JavaScript, JS, learn JavaScript, JavaScript tutorial, JavaScript concepts, JavaScript fundamentals, web development, programming, coding, closures, promises, async await, event loop, DOM, prototypes",
       "language": "en",
