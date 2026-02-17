@@ -2,9 +2,13 @@
 title: "JavaScript Memory Management"
 sidebarTitle: "Memory Management"
 description: "Learn how JavaScript manages memory automatically. Understand the memory lifecycle, stack vs heap, common memory leaks, and how to profile memory with DevTools."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Memory & Performance"
+"article:tag": "memory management, javascript memory, stack heap, memory leaks, devtools profiling"
 ---
 
-Why does your web app slow down over time? Why does that single-page application become sluggish after hours of use? The answer often lies in **memory management**, the invisible system that allocates and frees memory as your code runs.
+Why does your web app slow down over time? Why does that single-page application become sluggish after hours of use? The answer is often **memory management**. It is the system that allocates and frees memory as your code runs.
 
 ```javascript
 // Memory is allocated automatically when you create values
@@ -16,7 +20,7 @@ let count = 42;                            // Primitive stored in stack
 // JavaScript handles cleanup automatically... most of the time
 ```
 
-Unlike languages like C where you manually allocate and free memory, JavaScript handles this automatically. But "automatic" doesn't mean "worry-free." Understanding how memory management works helps you write faster, more efficient code and avoid the dreaded memory leaks that crash applications.
+Unlike languages like C, where you manually allocate and free memory, JavaScript handles this automatically. But "automatic" does not mean "worry-free." Memory management and performance optimization still cause real problems in production code. Understanding this model helps you write faster code and avoid leaks that crash applications.
 
 <Info>
 **What you'll learn in this guide:**
@@ -62,7 +66,7 @@ The tricky part? JavaScript handles allocation and release automatically, which 
 
 ## What is Memory Management?
 
-**[Memory management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)** is the process of allocating memory when your program needs it, using that memory, and releasing it when it's no longer needed. In JavaScript, this happens automatically through a system called garbage collection, which monitors objects and frees memory that's no longer reachable by your code.
+**[Memory management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)** is the process of allocating memory when your program needs it, using that memory, and releasing it when it's no longer needed. In JavaScript, this happens automatically through garbage collection. The collector monitors objects and frees memory that is no longer reachable by your code.
 
 ### The Memory Lifecycle
 
@@ -109,7 +113,7 @@ Every piece of data in your program goes through three phases:
 </Steps>
 
 <Note>
-**The hard part:** Determining when memory is "no longer needed" is actually an undecidable problem in computer science. Garbage collectors use approximations (like checking if values are reachable) rather than truly knowing if you'll use something again.
+**The hard part:** Determining when memory is "no longer needed" is an undecidable problem in computer science. Garbage collectors use practical approximations (like reachability) instead of trying to predict future usage perfectly.
 </Note>
 
 ---
@@ -288,7 +292,7 @@ function example() {
 
 ### The Mark-and-Sweep Algorithm
 
-Modern JavaScript engines use the **mark-and-sweep** algorithm:
+Modern JavaScript engines use the **mark-and-sweep** algorithm. This approach replaced older reference-counting strategies because it handles circular references — a limitation that caused notorious memory leaks in early Internet Explorer versions:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -574,7 +578,7 @@ JavaScript provides special data structures designed for memory efficiency:
 
 ### WeakMap and WeakSet
 
-[`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet) hold "weak" references that don't prevent garbage collection:
+[`WeakMap`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap) and [`WeakSet`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakSet), introduced in the ECMAScript 2015 specification, hold "weak" references that don't prevent garbage collection:
 
 ```javascript
 // WeakMap: Associate data with objects without preventing GC
@@ -945,6 +949,32 @@ To find memory leaks:
     3. Reclaim that memory for future allocations
     
     This approach handles circular references correctly — if two objects reference each other but neither is reachable from a root, both are collected.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What causes memory leaks in JavaScript?">
+    The most common causes are forgotten event listeners, uncleared timers and intervals, detached DOM elements still referenced in JavaScript, closures that capture large objects, and unbounded caches. According to Chrome DevTools documentation, detached DOM nodes are one of the most frequently identified leak sources in heap snapshot analysis.
+  </Accordion>
+
+  <Accordion title="How do you detect memory leaks in JavaScript?">
+    Use the Chrome DevTools Memory panel to take heap snapshots and compare them over time. Look for objects with unexpectedly high retained size, detached DOM nodes, and growing object counts between snapshots. The Allocation Timeline tool helps identify where allocations originate in your code.
+  </Accordion>
+
+  <Accordion title="What is the difference between stack and heap memory in JavaScript?">
+    The stack stores primitive values and function call frames with fast, ordered LIFO access. The heap stores objects, arrays, and functions with dynamic sizing managed by the garbage collector. Variables on the stack hold references (pointers) to objects in the heap, which is why reassigning an object variable doesn't copy the object.
+  </Accordion>
+
+  <Accordion title="Does JavaScript have manual memory management?">
+    No. JavaScript uses automatic memory management through garbage collection. The ECMAScript specification does not expose any API for manual allocation or deallocation. However, you can help the garbage collector by nullifying references to large objects when done and cleaning up event listeners and timers.
+  </Accordion>
+
+  <Accordion title="How much memory can a JavaScript application use?">
+    There is no fixed limit defined by the language. Browser tabs typically have access to 1–4 GB of heap memory depending on the device and browser. Node.js defaults to approximately 1.5 GB on 64-bit systems but can be increased with the `--max-old-space-size` flag. MDN recommends profiling regularly to avoid exceeding practical limits.
   </Accordion>
 </AccordionGroup>
 

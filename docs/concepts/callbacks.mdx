@@ -2,6 +2,10 @@
 title: "Callbacks"
 sidebarTitle: "Callbacks: The Foundation of Async"
 description: "Learn JavaScript callbacks. Understand sync vs async callbacks, error-first patterns, callback hell, and why Promises were invented."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Async JavaScript"
+"article:tag": "javascript callbacks, async callbacks, callback hell, error-first pattern, callback functions"
 ---
 
 Why doesn't JavaScript wait? When you set a timer, make a network request, or listen for a click, how does your code keep running instead of freezing until that operation completes?
@@ -21,7 +25,7 @@ console.log('After timer')
 // Timer fired! (1 second later)
 ```
 
-The answer is **callbacks**: functions you pass to other functions, saying "call me back when you're done." Callbacks power everything async in JavaScript. Every event handler, every timer, every network request. They all rely on them.
+The answer is **callbacks**: functions you pass to other functions, saying "call me back when you're done." A callback function is passed into another function as an argument and is then invoked inside the outer function. Callbacks power everything async in JavaScript. Every event handler, every timer, every network request. They all rely on them.
 
 <Info>
 **What you'll learn in this guide:**
@@ -134,7 +138,7 @@ Callbacks work like the buzzer you get at a busy restaurant:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-The key insight: **you don't wait at the counter**. You give them a way to reach you (the callback), and you go do other things. That's how JavaScript stays fast. It never sits around waiting.
+The key insight: **you don't wait at the counter**. You give them a way to reach you (the callback), and you go do other things. That's how JavaScript stays fast — it never sits around waiting. While most developers now prefer Promises and async/await for new code, callbacks remain foundational and are still used extensively in event handling and Node.js APIs.
 
 ```javascript
 // You place your order (start async operation)
@@ -1365,6 +1369,32 @@ Callbacks aren't obsolete. They're the foundation that everything else builds up
     ```
     
     Other approaches: control flow libraries (async.js), early returns, keeping nesting shallow.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is a callback function in JavaScript?">
+    A callback is a function passed as an argument to another function, which calls it later. Callbacks are the fundamental mechanism for asynchronous programming in JavaScript. Every event handler, timer, and array method like `forEach` and `map` uses callbacks to execute code at the right time.
+  </Accordion>
+
+  <Accordion title="What is callback hell?">
+    Callback hell (also called the "pyramid of doom") is a pattern of deeply nested callbacks that makes code hard to read and maintain. It typically occurs when multiple asynchronous operations depend on each other. This problem was one of the primary motivations for adding Promises to the ECMAScript 2015 specification.
+  </Accordion>
+
+  <Accordion title="What is the error-first callback pattern?">
+    The error-first pattern is a Node.js convention where callbacks receive an error as the first argument and the result as the second. If the error is `null`, the operation succeeded. This pattern became the de facto standard for Node.js APIs and was widely adopted before Promises. It ensures errors are always checked before processing results.
+  </Accordion>
+
+  <Accordion title="What is the difference between synchronous and asynchronous callbacks?">
+    Synchronous callbacks execute immediately within the calling function — array methods like `map` and `filter` use synchronous callbacks. Asynchronous callbacks execute later, after some operation completes — `setTimeout`, `fetch`, and event listeners use asynchronous callbacks. The distinction matters because async callbacks require understanding the event loop and task scheduling.
+  </Accordion>
+
+  <Accordion title="Why were Promises invented to replace callbacks?">
+    Promises solve three major callback problems: nested "pyramid of doom" code, inconsistent error handling, and inversion of control (trusting third-party code to call your callback correctly). Async/await (built on Promises) is now the dominant async pattern for modern JavaScript code.
   </Accordion>
 </AccordionGroup>
 

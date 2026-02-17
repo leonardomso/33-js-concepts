@@ -2,6 +2,10 @@
 title: "Computed Property Names in JS"
 sidebarTitle: "Computed Property Names"
 description: "Learn JavaScript computed property names. Create dynamic object keys with variables, expressions, Symbols, and computed methods for cleaner ES6+ code."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Modern Syntax & Operators"
+"article:tag": "computed property names, dynamic object keys, es6 syntax, bracket notation, symbols"
 ---
 
 Have you ever needed to create an object where the property name comes from a variable? Before ES6, this required creating the object first, then adding the property in a separate step. Computed property names changed everything.
@@ -19,7 +23,7 @@ const obj2 = { [key2]: 'active' };
 console.log(obj2);  // { status: 'active' }
 ```
 
-With **computed property names**, you can use any expression inside square brackets `[]` within an object literal, and JavaScript evaluates that expression to determine the property name. This seemingly small syntax addition enables powerful patterns for dynamic object creation.
+With **computed property names**, introduced in the ECMAScript 2015 specification, you can use any expression inside square brackets `[]` within an object literal, and JavaScript evaluates that expression to determine the property name. This seemingly small syntax addition enables powerful patterns for dynamic object creation.
 
 <Info>
 **What you'll learn in this guide:**
@@ -279,7 +283,7 @@ console.log(defaults);
 
 ## Symbol Keys: The Primary Use Case
 
-Symbols are unique, immutable identifiers that can **only** be used as object keys via computed property syntax. This is one of the most important use cases for computed properties.
+Symbols are unique, immutable identifiers that can **only** be used as object keys via computed property syntax. This is one of the most important use cases for computed properties and the reason Symbols were designed alongside this syntax in ES2015.
 
 ### Why Symbols Need Computed Syntax
 
@@ -545,7 +549,7 @@ console.log(validated[Symbol.for('value')]);  // 42
 
 ### Form Field Handling
 
-React and Vue state updates commonly use computed properties:
+React and Vue state updates commonly use computed properties. This pattern is one of the most widely used real-world applications of computed property names:
 
 ```javascript
 // React-style form handler
@@ -866,6 +870,32 @@ console.log(obj3.__proto__);  // 'just a string' (own property)
     ```
 
     This applies whether the duplicate comes from computed properties, static properties, or a mix. The same rule applies to the rest of JavaScript—later assignments overwrite earlier ones.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are computed property names in JavaScript?">
+    Computed property names are an ES2015 feature that lets you use any expression inside square brackets `[]` in an object literal to dynamically determine a property's name at runtime. The expression is evaluated, converted to a string (or kept as a Symbol), and used as the key — all in a single expression.
+  </Accordion>
+
+  <Accordion title="How do you use a variable as an object key in JavaScript?">
+    Wrap the variable in square brackets inside the object literal: `{ [myVariable]: value }`. Without brackets, `{ myVariable: value }` creates a property literally named `"myVariable"`. The brackets tell JavaScript to evaluate the expression and use the result as the key name.
+  </Accordion>
+
+  <Accordion title="Why do Symbols require computed property syntax?">
+    Symbol values cannot be expressed as identifiers or string literals in object shorthand. Writing `{ mySymbol: value }` creates a string key `"mySymbol"`, not a Symbol key. Only the computed syntax `{ [mySymbol]: value }` evaluates the variable and uses the actual Symbol as the key, as specified in the ECMAScript standard.
+  </Accordion>
+
+  <Accordion title="What happens when two computed properties evaluate to the same key?">
+    The last one wins — JavaScript silently overwrites previous values with no error. This applies whether the duplicates come from computed properties, static properties, or a mix. MDN documents that this behavior is consistent with how all property assignments work in JavaScript.
+  </Accordion>
+
+  <Accordion title="Can I use computed property names with methods and getters/setters?">
+    Yes. Computed syntax works with method shorthand (`{ [name]() {} }`), generator methods (`{ *[name]() {} }`), async methods (`{ async [name]() {} }`), and accessor properties (`{ get [name]() {}, set [name](v) {} }`). This enables powerful patterns for dynamically-named APIs.
   </Accordion>
 </AccordionGroup>
 

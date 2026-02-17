@@ -2,6 +2,10 @@
 title: "Property Descriptors in JS"
 sidebarTitle: "Property Descriptors: Hidden Property Flags"
 description: "Learn JavaScript property descriptors. Understand writable, enumerable, configurable flags, Object.defineProperty(), and how to create immutable properties."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Objects & Properties"
+"article:tag": "property descriptors, object.defineproperty, writable enumerable configurable, immutable properties, property flags"
 ---
 
 Why can you delete most object properties but not `Math.PI`? Why do some properties show up in `for...in` loops while others don't? And how do you create a property that can never be changed?
@@ -49,7 +53,7 @@ console.log(descriptor)
 
 ## What are Property Descriptors?
 
-**Property descriptors** are metadata objects that describe the characteristics of an object property. Every property in JavaScript has a descriptor that controls whether the property can be changed, deleted, or enumerated. When you create a property the "normal" way (with assignment), JavaScript sets all flags to permissive defaults.
+**Property descriptors** are metadata objects that describe the characteristics of an object property. Every property in JavaScript has a descriptor that controls whether the property can be changed, deleted, or enumerated. When you create a property the "normal" way (with assignment), JavaScript sets all flags to permissive defaults. Every property has internal attributes that determine its behavior — this mechanism is what powers built-in immutable properties like `Math.PI`.
 
 ```javascript
 const user = { name: "Alice" }
@@ -344,7 +348,7 @@ console.log(Object.getOwnPropertyDescriptors(user))
 
 ### Cloning Objects with Descriptors
 
-The spread operator and `Object.assign()` don't preserve property descriptors. Use `Object.getOwnPropertyDescriptors()` for a true clone:
+The spread operator and `Object.assign()` don't preserve property descriptors. `Object.getOwnPropertyDescriptors()` was added in ES2017 specifically to enable proper cloning of objects including their accessor properties and flags:
 
 ```javascript
 const original = {}
@@ -479,7 +483,7 @@ console.log(Object.isExtensible(user))  // false
 
 ### `Object.seal()`: No Add/Delete, Can Still Modify
 
-[`Object.seal()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal) prevents adding or deleting properties by setting `configurable: false` on all existing properties:
+[`Object.seal()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal) prevents adding or deleting properties by setting `configurable: false` on all existing properties. MDN notes that sealed objects are one of the most common patterns for creating configuration objects that should not have their structure modified at runtime:
 
 ```javascript
 const config = { debug: true, version: 1 }
@@ -829,6 +833,32 @@ person.age = "old"  // TypeError: Age must be a positive number
     console.log(Object.getOwnPropertyDescriptor(goodClone, 'id'))
     // { value: 1, writable: false, enumerable: true, configurable: false }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are property descriptors in JavaScript?">
+    Property descriptors are metadata objects that control how a property behaves — whether it can be modified (`writable`), shown in loops (`enumerable`), or reconfigured (`configurable`). The ECMAScript specification defines these as internal attributes that every object property has, which is how built-in properties like `Math.PI` remain immutable.
+  </Accordion>
+
+  <Accordion title="What is the difference between Object.freeze() and Object.seal()?">
+`Object.seal()` prevents adding or deleting properties but allows modifying existing values. `Object.freeze()` prevents all changes — no adding, deleting, or modifying. Both are shallow, meaning nested objects remain unaffected. `Object.freeze()` sets both `writable: false` and `configurable: false` on every property.
+  </Accordion>
+
+  <Accordion title="Can you undo configurable: false on a property?">
+    No. Setting `configurable: false` is permanent and irreversible. Once a property is non-configurable, you cannot delete it, change its enumerability, or switch it between data and accessor types. The only change still allowed is setting `writable` from `true` to `false` — never the reverse.
+  </Accordion>
+
+  <Accordion title="Why does Object.defineProperty() default flags to false?">
+    When using `Object.defineProperty()`, unspecified flags default to `false`, making properties restrictive by default. This is the opposite of normal assignment (where all flags default to `true`). MDN recommends always explicitly setting all flags you care about to avoid unexpected behavior from these defaults.
+  </Accordion>
+
+  <Accordion title="Do property descriptors affect JSON.stringify()?">
+    Yes. Non-enumerable properties are excluded from `JSON.stringify()` output, just as they are hidden from `Object.keys()` and `for...in` loops. However, `writable` and `configurable` flags have no effect on serialization. This is how JavaScript hides internal properties like `Array.prototype.length` from serialization.
   </Accordion>
 </AccordionGroup>
 

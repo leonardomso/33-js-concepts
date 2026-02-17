@@ -2,6 +2,10 @@
 title: "Design Patterns"
 sidebarTitle: "Design Patterns: Reusable Solutions"
 description: "Learn JavaScript design patterns like Module, Singleton, Observer, Factory, Proxy, and Decorator. Understand when to use each pattern and avoid common pitfalls."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Advanced Topics"
+"article:tag": "design patterns, singleton, observer, factory, proxy, decorator, software design"
 ---
 
 Ever find yourself solving the same problem over and over? What if experienced developers already figured out the best solutions to these recurring challenges?
@@ -86,11 +90,11 @@ You don't use every tool for every job. Similarly, you don't use every pattern i
 
 ## What Are Design Patterns?
 
-Design patterns are typical solutions to commonly occurring problems in software design. The term was popularized by the "Gang of Four" (GoF) in their 1994 book *Design Patterns: Elements of Reusable Object-Oriented Software*. They catalogued 23 patterns that developers kept reinventing.
+Design patterns are typical solutions to commonly occurring problems in software design. The term was popularized by Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides — the "Gang of Four" (GoF) — in their 1994 book *[Design Patterns: Elements of Reusable Object-Oriented Software](https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612)*. They catalogued 23 patterns that developers kept reinventing, and the book has sold over 500,000 copies worldwide.
 
 ### Why JavaScript Is Different
 
-The original GoF patterns were written for languages like C++ and Smalltalk. JavaScript is different:
+The original GoF patterns were written for languages like C++ and Smalltalk. As Addy Osmani explains in *[Learning JavaScript Design Patterns](https://www.patterns.dev/posts)*, JavaScript is fundamentally different:
 
 | Feature | Impact on Patterns |
 |---------|-------------------|
@@ -225,7 +229,7 @@ console.log(Counter.logChange)   // undefined
 
 ## The Singleton Pattern
 
-The **Singleton pattern** ensures a class has only one instance and provides a global access point to that instance. According to [Refactoring Guru](https://refactoring.guru/design-patterns/singleton), it solves two problems: guaranteeing a single instance and providing global access to it.
+The **Singleton pattern** ensures a class has only one instance and provides a global access point to that instance. It solves two problems: guaranteeing a single instance and providing global access to it.
 
 ### JavaScript Implementation
 
@@ -403,7 +407,7 @@ console.log(viewer.greet())      // "Hi, I'm Charlie"
 
 ## The Observer Pattern
 
-The **Observer pattern** defines a subscription mechanism that notifies multiple objects about events. According to [Refactoring Guru](https://refactoring.guru/design-patterns/observer), it lets you "define a subscription mechanism to notify multiple objects about any events that happen to the object they're observing."
+The **Observer pattern** defines a subscription mechanism that notifies multiple objects about events. It lets you notify multiple objects about events that happen to the object they are observing.
 
 This pattern is everywhere: DOM events, React state updates, Redux subscriptions, Node.js EventEmitter, and RxJS observables all use variations of Observer.
 
@@ -672,7 +676,7 @@ console.log(lazyResource.process())
 
 ## The Decorator Pattern
 
-The **Decorator pattern** attaches new behaviors to objects by wrapping them in objects that contain these behaviors. According to [Refactoring Guru](https://refactoring.guru/design-patterns/decorator), it lets you "attach new behaviors to objects by placing these objects inside special wrapper objects."
+The **Decorator pattern** attaches new behaviors to objects by wrapping them in objects that contain these behaviors. It lets you add behavior by placing objects inside special wrapper objects.
 
 In JavaScript, decorators are often implemented as functions that take an object and return an enhanced version.
 
@@ -1049,6 +1053,32 @@ const user = new User('Alice')
     - Add patterns only when you hit a real problem they solve
     - Ask: "Would a plain function/object work here?"
     - Remember: Code clarity beats clever patterns
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are design patterns in JavaScript?">
+    Design patterns are reusable solutions to common problems in software design. They are not specific code implementations but templates you adapt to your needs. In JavaScript, many classical patterns simplify because the language has first-class functions, closures, and prototypal inheritance, which reduce the need for complex class hierarchies.
+  </Accordion>
+
+  <Accordion title="What is the Observer pattern and when should I use it?">
+    The Observer pattern lets an object (the subject) notify a list of dependents (observers) when its state changes. Use it when multiple parts of your application need to react to the same event. The DOM's `addEventListener` is a built-in Observer implementation, and frameworks like React and Vue use Observer-like patterns internally for reactivity.
+  </Accordion>
+
+  <Accordion title="Are all Gang of Four design patterns relevant in JavaScript?">
+    No. As Addy Osmani notes in *Learning JavaScript Design Patterns*, many GoF patterns were designed for statically typed languages like C++ and Java. JavaScript's first-class functions, closures, and dynamic typing make patterns like Strategy, Command, and Iterator trivial — often just a function or callback. Focus on patterns that solve real problems in your codebase.
+  </Accordion>
+
+  <Accordion title="Why is the Singleton pattern considered an anti-pattern in JavaScript?">
+    ES Modules are already singletons — a module's exports are cached after the first import, so every file gets the same object. Using a Singleton class adds complexity without benefit. Singletons also make testing harder because components share hidden global state. Prefer dependency injection or module exports instead.
+  </Accordion>
+
+  <Accordion title="What is the difference between the Proxy and Decorator patterns?">
+    The Proxy pattern controls access to an object without changing its interface — it intercepts operations like property reads or function calls. The Decorator pattern adds new behavior or capabilities to an object by wrapping it. JavaScript's built-in `Proxy` object implements the Proxy pattern natively since ES2015.
   </Accordion>
 </AccordionGroup>
 

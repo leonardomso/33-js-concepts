@@ -2,6 +2,10 @@
 title: "requestAnimationFrame Guide"
 sidebarTitle: "requestAnimationFrame: Smooth Animations"
 description: "Learn requestAnimationFrame in JavaScript for smooth 60fps animations. Understand how it syncs with browser repaint cycles, delta time, and animation loops."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Data Handling"
+"article:tag": "requestanimationframe, smooth animations, 60fps, animation loop, delta time, repaint"
 ---
 
 Why do some JavaScript animations feel buttery smooth while others are janky and choppy? Why does your animation freeze when you switch browser tabs? And how do game developers create animations that run at consistent speeds regardless of frame rate?
@@ -24,7 +28,7 @@ function animate() {
 requestAnimationFrame(animate);
 ```
 
-Unlike [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval), `requestAnimationFrame` synchronizes with your monitor's refresh rate, pauses when the tab is hidden, and lets the browser optimize rendering for maximum performance.
+Unlike [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/Window/setInterval), `requestAnimationFrame` synchronizes with your monitor's refresh rate, pauses when the tab is hidden, and lets the browser optimize rendering for maximum performance. [MDN](https://developer.mozilla.org/en-US/docs/Web/API/Window/requestAnimationFrame) notes that this automatic pausing also saves CPU and battery life on mobile devices.
 
 <Info>
 **What you'll learn in this guide:**
@@ -45,7 +49,7 @@ Unlike [`setInterval`](https://developer.mozilla.org/en-US/docs/Web/API/Window/s
 
 ## What is requestAnimationFrame?
 
-**`requestAnimationFrame`** (often abbreviated as "rAF") is a browser API that tells the browser you want to perform an animation. It requests a callback to be executed just before the browser performs its next repaint, typically at 60 frames per second (60fps) on most displays.
+**`requestAnimationFrame`** (often abbreviated as "rAF") is a browser API that tells the browser you want to perform an animation. According to the [WHATWG HTML specification](https://html.spec.whatwg.org/multipage/imagebitmap-and-animations.html#dom-animationframeprovider-requestanimationframe), it requests a callback to be executed just before the browser performs its next repaint, typically at 60 frames per second (60fps) on most displays.
 
 Here's the key insight: instead of guessing when to update your animation with arbitrary timing like `setInterval(fn, 16)`, `requestAnimationFrame` lets the *browser* tell *you* when it's the optimal time to draw the next frame.
 
@@ -962,6 +966,32 @@ function animate(time) {
     ```
     
     Without this, the first delta would be the time since page load, causing a huge jump.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is requestAnimationFrame in JavaScript?">
+    `requestAnimationFrame` is a browser API that schedules a callback to run just before the next screen repaint. It synchronizes your animation code with the display's refresh rate (typically 60fps), producing smoother animations than `setInterval` or `setTimeout`. The WHATWG HTML specification defines it as part of the browser's rendering pipeline.
+  </Accordion>
+
+  <Accordion title="Why is requestAnimationFrame better than setInterval for animations?">
+    `setInterval` fires at a fixed interval regardless of the browser's readiness to paint, causing dropped frames and jank. `requestAnimationFrame` is called at the optimal time by the browser, automatically pauses when the tab is hidden (saving CPU and battery), and batches DOM reads and writes for better performance. MDN recommends it for all JavaScript-based animations.
+  </Accordion>
+
+  <Accordion title="What is delta time and why do animations need it?">
+    Delta time is the elapsed time between the current and previous animation frames. Without it, animations run faster on high-refresh-rate monitors and slower on struggling devices. Multiply your movement values by delta time to ensure consistent animation speed regardless of frame rate — this is standard practice in game development.
+  </Accordion>
+
+  <Accordion title="How do I cancel a requestAnimationFrame animation?">
+    `requestAnimationFrame` returns a numeric ID. Pass it to `cancelAnimationFrame(id)` to cancel the pending callback. Always store the ID when starting animations so you can clean up on component unmount or user interaction.
+  </Accordion>
+
+  <Accordion title="When should I use CSS animations instead of requestAnimationFrame?">
+    Use CSS animations and transitions for simple visual effects like opacity, transforms, and color changes — they run on the compositor thread and don't block JavaScript. Use `requestAnimationFrame` when animations need JavaScript logic, respond to user input, involve canvas or WebGL, or require physics calculations. Web.dev recommends CSS for anything that doesn't need per-frame logic.
   </Accordion>
 </AccordionGroup>
 

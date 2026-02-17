@@ -2,6 +2,10 @@
 title: "Factories & Classes"
 sidebarTitle: "Factories and Classes: Creating Objects Efficiently"
 description: "Learn JavaScript factory functions and ES6 classes. Understand constructors, prototypes, private fields, inheritance, and when to use each pattern."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Object-Oriented JavaScript"
+"article:tag": "factory functions, ES6 classes, constructors, private fields, object creation patterns"
 ---
 
 How do you create hundreds of similar objects without copy-pasting? How do game developers spawn thousands of enemies? How does JavaScript let you build blueprints for objects?
@@ -38,7 +42,7 @@ console.log(player.attack())  // "Alice attacks!"
 console.log(enemy.attack())   // "Goblin attacks!"
 ```
 
-**Factories** and **[Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)** are two patterns for creating objects efficiently. A factory function is a regular function that returns a new object. A class is a blueprint that uses the [`class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class) keyword and the [`new`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) operator. Both achieve the same goal, but they work differently and have different strengths.
+**Factories** and **[Classes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes)** are two patterns for creating objects efficiently. A factory function is a regular function that returns a new object. A class is a blueprint that uses the [`class`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/class) keyword and the [`new`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) operator. Both achieve the same goal, but they work differently and have different strengths. According to the 2023 State of JS survey, class syntax is now widely adopted, with the majority of JavaScript developers using classes regularly in their projects.
 
 <Info>
 **What you'll learn in this guide:**
@@ -173,7 +177,7 @@ Both factories and classes solve the same problem. They just do it differently. 
 
 ## What is a Factory Function in JavaScript?
 
-A **factory function** is a regular JavaScript function that creates and returns a new object each time it's called. Unlike constructors or classes, factory functions don't require the `new` keyword. They can use `this` in returned methods (like simple objects do), or use [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to avoid `this` entirely, giving you flexibility that classes don't offer.
+A **factory function** is a regular JavaScript function that creates and returns a new object each time it's called. Unlike constructors or classes, factory functions don't require the `new` keyword. They can use `this` in returned methods (like simple objects do), or use [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to avoid `this` entirely, giving you flexibility that classes don't offer. As Douglas Crockford documented in *JavaScript: The Good Parts*, factory functions leverage JavaScript's prototypal nature more directly than class-based patterns.
 
 ### Basic Factory Function
 
@@ -1947,6 +1951,32 @@ const cache = createCache({ maxSize: 100, ttl: 3600 });
     ```
     
     The class syntax makes the code easier to read and write, but under the hood, JavaScript is still using prototypes.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between factory functions and classes in JavaScript?">
+    Factory functions are regular functions that return new objects. Classes are syntactic sugar over constructor functions and prototypes, using the `class` keyword and `new` operator. Factories offer simpler composition and true privacy through closures, while classes provide a familiar OOP syntax and share methods efficiently via the prototype chain.
+  </Accordion>
+
+  <Accordion title="Are JavaScript classes real classes like in Java or C++?">
+    No. As stated in the ECMAScript specification, JavaScript classes are primarily syntactic sugar over the existing prototype-based inheritance model. Under the hood, a `class` declaration creates a constructor function with methods on its prototype. Unlike classical OOP languages, JavaScript does not have true class-based inheritance — it uses prototypal delegation.
+  </Accordion>
+
+  <Accordion title="What are private fields in JavaScript classes?">
+    Private fields, prefixed with `#`, are truly private properties that cannot be accessed outside the class body. They were standardized in ECMAScript 2022 and are enforced by the JavaScript engine at the language level. Unlike the underscore convention (`_name`), private fields throw a `SyntaxError` if accessed externally.
+  </Accordion>
+
+  <Accordion title="When should I use a factory function instead of a class?">
+    Use factories when you need true data privacy through closures, want to compose objects from multiple sources, or need to return different object types conditionally. Use classes when you want prototype-based method sharing, need `instanceof` checks, or work with frameworks that expect class syntax. According to the 2023 State of JS survey, class syntax is widely adopted, but factory patterns remain popular in functional-style codebases.
+  </Accordion>
+
+  <Accordion title="What does the new keyword do under the hood?">
+    The `new` keyword performs four steps: it creates a new empty object, links that object's prototype to the constructor's `prototype` property, executes the constructor with `this` bound to the new object, and returns the object (unless the constructor explicitly returns a different object). This is the same for both constructor functions and classes.
   </Accordion>
 </AccordionGroup>
 

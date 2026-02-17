@@ -2,6 +2,10 @@
 title: "Generators & Iterators"
 sidebarTitle: "Generators & Iterators: Pausable Functions"
 description: "Learn JavaScript generators and iterators. Understand yield, lazy evaluation, infinite sequences, and async generators."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Async JavaScript"
+"article:tag": "javascript generators, iterators, yield keyword, lazy evaluation, async generators"
 ---
 
 What if a function could pause mid-execution, return a value, and then resume right where it left off? What if you could create a sequence of values that are computed only when you ask for them — not all at once?
@@ -21,7 +25,7 @@ console.log(counter.next().value)  // 2
 console.log(counter.next().value)  // 3
 ```
 
-This is the power of **[generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)**. These are functions that can pause with `yield` and pick up where they left off. Combined with **[iterators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)** (objects that define how to step through a sequence), they open up patterns like lazy evaluation, infinite sequences, and clean data pipelines.
+This is the power of **[generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)**. Introduced in the ECMAScript 2015 specification, these are functions that can pause with `yield` and pick up where they left off. Combined with **[iterators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)** (objects that define how to step through a sequence), they open up patterns like lazy evaluation, infinite sequences, and clean data pipelines.
 
 <Info>
 **What you'll learn in this guide:**
@@ -108,7 +112,7 @@ console.log(iterator.next())  // { value: undefined, done: true }
 ```
 
 <Note>
-**`for...of` uses iterators under the hood.** When you write `for (const item of array)`, JavaScript is actually calling the iterator's `.next()` method repeatedly until `done` is `true`.
+**`for...of` uses iterators under the hood.** When you write `for (const item of array)`, JavaScript is actually calling the iterator's `.next()` method repeatedly until `done` is `true`. Any object that implements the `Symbol.iterator` method is considered iterable and can be used with `for...of`, spread syntax, and destructuring.
 </Note>
 
 ---
@@ -1416,6 +1420,32 @@ async function processLogFile(url) {
     ```
     
     Always use a limiting function like `take()`, or manually call `.next()` a specific number of times.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is a generator function in JavaScript?">
+    A generator function, declared with `function*`, is a special function that can pause its execution with `yield` and resume later. Each call to the generator's `.next()` method runs the function until the next `yield` and returns the yielded value. Generators were introduced in ECMAScript 2015 and are defined by the iteration protocols in the specification.
+  </Accordion>
+
+  <Accordion title="What is the difference between yield and return in a generator?">
+    `yield` pauses the generator and produces a value, but the generator can be resumed to continue execution. `return` terminates the generator permanently and sets `done: true` in the result object. A yielded value has `done: false`, while a returned value has `done: true`. Values produced by `return` are not included in `for...of` loops.
+  </Accordion>
+
+  <Accordion title="What are iterators in JavaScript?">
+An iterator is an object that implements the iterator protocol — it has a `.next()` method that returns `{ value, done }` objects. Many built-in JavaScript types are iterable (Arrays, Strings, Maps, Sets), meaning they have a `Symbol.iterator` method that returns an iterator. Generators automatically create iterators.
+  </Accordion>
+
+  <Accordion title="What is lazy evaluation in JavaScript generators?">
+    Lazy evaluation means values are computed only when requested, not upfront. Generators are inherently lazy — they compute each value on demand when `.next()` is called. This is memory-efficient because you never hold the entire sequence in memory. It also enables infinite sequences, where computing all values upfront would be impossible.
+  </Accordion>
+
+  <Accordion title="What are async generators and when should you use them?">
+Async generators combine `async function*` syntax with `yield` to produce values asynchronously. They are consumed with `for await...of` loops and are ideal for streaming data from APIs, reading files line by line, or paginating through large datasets. Async generators were standardized in ECMAScript 2018 as part of the async iteration proposal.
   </Accordion>
 </AccordionGroup>
 

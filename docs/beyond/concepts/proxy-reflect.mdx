@@ -2,6 +2,10 @@
 title: "Proxy & Reflect in JavaScript"
 sidebarTitle: "Proxy & Reflect: Intercepting Object Operations"
 description: "Learn JavaScript Proxy and Reflect APIs. Intercept object operations, create reactive systems, and build powerful metaprogramming patterns."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Objects & Properties"
+"article:tag": "javascript proxy, reflect api, metaprogramming, handler traps, object interception, reactive systems"
 ---
 
 What if you could intercept every property access on an object? What if reading `user.name` could trigger a function, or setting `user.age = -5` could throw an error automatically?
@@ -27,7 +31,7 @@ proxy.name       // Logs: "Reading name", returns "Alice"
 proxy.age = -5   // Error: Age cannot be negative
 ```
 
-This is the power of **[Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)** and **[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)**. Proxies let you intercept and customize fundamental operations on objects, while Reflect provides the default behavior you can forward to. Together, they enable validation, logging, reactive data binding, and other metaprogramming patterns.
+This is the power of **[Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)** and **[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)**. Proxies let you intercept and customize fundamental operations on objects, while Reflect provides the default behavior you can forward to. Together, they enable validation, logging, reactive data binding, and other metaprogramming patterns. Proxy traps map directly to [internal methods](https://tc39.es/ecma262/#sec-proxy-object-internal-methods-and-internal-slots) that define how all JavaScript objects behave at the engine level.
 
 <Info>
 **What you'll learn in this guide:**
@@ -347,7 +351,7 @@ console.log(Object.keys(safeUser))  // ["name", "age"] - _password hidden
 
 ## Why Reflect Exists
 
-**[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)** is a built-in object with methods that mirror every Proxy trap. It provides the default behavior you'd otherwise have to implement manually.
+**[Reflect](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect)** is a built-in object with methods that mirror every Proxy trap. It provides the default behavior you'd otherwise have to implement manually. MDN documents that Reflect was introduced alongside Proxy in ES2015 specifically to provide a clean, function-based API for object operations that previously required operators or `Object.*` methods.
 
 | Operation | Without Reflect | With Reflect |
 |-----------|-----------------|--------------|
@@ -404,7 +408,7 @@ const proxy = new Proxy(user, {
 
 ### Observable Objects (Reactive Data)
 
-Create objects that notify you when they change. This is how frameworks like Vue.js implement reactivity:
+Create objects that notify you when they change. This is how frameworks like Vue.js implement reactivity. Vue 3 replaced `Object.defineProperty()` (used in Vue 2) with `Proxy` for its reactivity system, enabling detection of property additions and deletions that were previously impossible:
 
 ```javascript
 function observable(target, onChange) {
@@ -709,6 +713,32 @@ console.log(set.has(proxy))    // false - they're different objects
     ```
     
     Once revoked, the proxy cannot be re-enabled. All operations on it throw TypeError.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is a JavaScript Proxy?">
+    A Proxy is a wrapper around an object (the "target") that intercepts fundamental operations like property access, assignment, and deletion. You define custom behavior through "trap" methods in a handler object. Proxy traps correspond to 13 internal object methods, covering every way JavaScript interacts with objects.
+  </Accordion>
+
+  <Accordion title="Why use Reflect with Proxy instead of direct property access?">
+    `Reflect` methods properly forward the `receiver` parameter, which is essential when the target has getters that use `this`. Using `target[prop]` directly can cause `this` to reference the wrong object in inheritance chains. MDN recommends always using `Reflect.get()` and `Reflect.set()` inside Proxy traps for correct behavior.
+  </Accordion>
+
+  <Accordion title="Can JavaScript Proxy work with Map, Set, and Date?">
+    Not directly. Built-in objects like `Map`, `Set`, and `Date` use internal slots that Proxy cannot intercept. Calling `proxy.set('key', 'value')` on a proxied Map throws a `TypeError`. The workaround is to bind methods to the original target inside the `get` trap, ensuring they execute with the correct `this` context.
+  </Accordion>
+
+  <Accordion title="What is a revocable proxy?">
+    A revocable proxy is created with `Proxy.revocable()` instead of `new Proxy()`. It returns both a `proxy` and a `revoke` function. Calling `revoke()` permanently disables the proxy — any subsequent operation throws a `TypeError`. This pattern is useful for granting temporary access to objects or implementing sandbox environments.
+  </Accordion>
+
+  <Accordion title="How does Proxy differ from Object.defineProperty() for validation?">
+    `Object.defineProperty()` validates only predefined, individual properties. Proxy intercepts all operations dynamically, including properties that do not yet exist. Vue.js switched from `Object.defineProperty()` (Vue 2) to `Proxy` (Vue 3) precisely because Proxy can detect property additions and deletions that `defineProperty` cannot.
   </Accordion>
 </AccordionGroup>
 

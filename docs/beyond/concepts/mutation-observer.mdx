@@ -2,9 +2,13 @@
 title: "MutationObserver in JavaScript"
 sidebarTitle: "MutationObserver: Watching DOM Changes"
 description: "Learn the MutationObserver API in JavaScript. Watch DOM changes, detect attribute modifications, and build reactive UIs."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Observer APIs"
+"article:tag": "mutationobserver, dom changes, attribute modifications, reactive ui, dom monitoring"
 ---
 
-How do you know when something changes in the DOM? What if you need to react when a third-party script adds elements, when user input modifies content, or when attributes change dynamically?
+How do you know when something changes in the DOM? You might need to react when a third-party script adds elements, when user input modifies content, or when attributes change dynamically.
 
 ```javascript
 // Watch for any changes to a DOM element
@@ -20,7 +24,7 @@ observer.observe(document.body, {
 })
 ```
 
-The **[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)** API lets you watch the DOM for changes and react to them efficiently. It replaced the older, performance-killing Mutation Events and is now the standard way to detect DOM modifications.
+The **[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)** API lets you watch the DOM for changes and react to them efficiently. It replaced older Mutation Events and is now the standard way to detect DOM modifications.
 
 <Info>
 **What you'll learn in this guide:**
@@ -68,7 +72,7 @@ Before MutationObserver, developers used **Mutation Events** (`DOMNodeInserted`,
 | Performance killer | Made complex DOM updates painfully slow |
 | Bubbled up the DOM | Caused cascade of unnecessary handlers |
 
-MutationObserver solves all of these by batching changes and delivering them asynchronously via microtasks.
+MutationObserver solves these problems by batching changes and delivering them asynchronously via microtasks. The redesign was driven by real-world performance issues caused by Mutation Events in complex web applications.
 
 ---
 
@@ -437,7 +441,7 @@ class MyComponent {
 
 ## When Callbacks Run: Microtasks
 
-MutationObserver callbacks are scheduled as **microtasks**, meaning they run after the current script but before the browser renders. This is the same queue as Promise callbacks.
+MutationObserver callbacks are scheduled as **microtasks**, so they run after the current script and before the browser renders. This batching behavior is intentional: it lets multiple DOM changes be processed in a single callback invocation. This is the same queue used by Promise callbacks.
 
 ```javascript
 console.log('1. Script start')
@@ -847,6 +851,32 @@ observer.observe(specificContainer, {
     - Use `attributeFilter` to exclude the attribute you're modifying
     - Add a guard condition to skip already-processed elements
     - Set a flag before modifying and check it in the callback
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is MutationObserver in JavaScript?">
+    MutationObserver is a built-in API that watches a DOM element and fires a callback when specified changes occur — child nodes added or removed, attributes modified, or text content changed. It replaced the deprecated Mutation Events API, which was removed from the W3C specification due to severe performance problems.
+  </Accordion>
+
+  <Accordion title="What is the difference between MutationObserver and Mutation Events?">
+    Mutation Events (`DOMNodeInserted`, `DOMAttrModified`) fired synchronously on every single DOM change, blocking the main thread. MutationObserver batches changes and delivers them asynchronously as microtasks. MDN marks Mutation Events as deprecated and recommends MutationObserver as the only supported alternative.
+  </Accordion>
+
+  <Accordion title="What does the subtree option do in MutationObserver?">
+    Without `subtree: true`, MutationObserver only watches direct children of the target element. With `subtree: true`, it watches the entire descendant tree. Use subtree when changes can happen at any depth, but be specific about which element to observe to avoid performance overhead.
+  </Accordion>
+
+  <Accordion title="How do I avoid infinite loops with MutationObserver?">
+    If your callback modifies the DOM in a way the observer is watching, it triggers another callback — creating a loop. Use `attributeFilter` to exclude attributes you modify, add a guard condition to skip processed elements, or temporarily disconnect before making changes and reconnect afterward.
+  </Accordion>
+
+  <Accordion title="When do MutationObserver callbacks execute?">
+    Callbacks run as microtasks — after the current synchronous script finishes but before the browser paints. Multiple rapid DOM changes are batched into a single callback invocation, which is why MutationObserver is far more efficient than the synchronous Mutation Events it replaced.
   </Accordion>
 </AccordionGroup>
 

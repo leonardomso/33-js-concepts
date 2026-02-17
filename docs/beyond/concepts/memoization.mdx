@@ -2,6 +2,10 @@
 title: "Memoization in JavaScript"
 sidebarTitle: "Memoization: Caching Function Results"
 description: "Learn memoization in JavaScript. Cache function results, optimize expensive computations, build your own memoize function, and know when caching helps vs hurts."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Memory & Performance"
+"article:tag": "memoization, function caching, performance optimization, usememo, expensive computations"
 ---
 
 Why does a naive Fibonacci function take forever for large numbers while a memoized version finishes instantly? Why do some React components re-render unnecessarily while others stay perfectly optimized?
@@ -48,7 +52,7 @@ Memoization is built on [closures](/concepts/scope-and-closures), uses data stru
 
 ## What is Memoization?
 
-**Memoization** is an optimization technique that speeds up programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. The term comes from the Latin word "memorandum" (to be remembered), which is also the root of "memo."
+**Memoization** is an optimization technique that speeds up programs by storing the results of expensive function calls and returning the cached result when the same inputs occur again. The term was coined by Donald Michie in 1968, derived from the Latin word "memorandum" (to be remembered), which is also the root of "memo."
 
 Think of memoization as giving your function a notepad. Before doing any calculation, the function checks its notes: "Have I solved this exact problem before?" If yes, it reads the answer from the notepad. If no, it calculates the result, writes it down, and then returns it.
 
@@ -258,7 +262,7 @@ function fibonacci(n) {
 //         fib(2) is calculated THREE times
 ```
 
-For `fibonacci(40)`, the naive version makes over 300 million function calls because it recalculates the same values repeatedly.
+For `fibonacci(40)`, the naive version makes over 330 million function calls because it recalculates the same values repeatedly. According to computer science research, this transforms O(2^n) exponential time complexity into O(n) linear time — a reduction of over 99.99% in function calls.
 
 ### The Solution: Memoized Fibonacci
 
@@ -626,7 +630,7 @@ const factorial = memoize(function(n) {
 
 ## Advanced: LRU Cache for Bounded Memory
 
-Standard memoization caches grow unbounded. For production use, consider a Least Recently Used (LRU) cache that evicts old entries:
+Standard memoization caches grow unbounded. As MDN's documentation on Map notes, Map maintains insertion order, which makes it an ideal foundation for building LRU (Least Recently Used) caches that evict old entries:
 
 ```javascript
 function memoizeLRU(fn, maxSize = 100) {
@@ -794,6 +798,32 @@ This implementation leverages the fact that [`Map`](https://developer.mozilla.or
       return n * factorial(n - 1)  // References the memoized version
     })
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is memoization in JavaScript?">
+    Memoization is an optimization technique that caches the results of function calls and returns the cached result when the same inputs occur again. It trades memory for speed by storing previous computations. The technique was formalized by Donald Michie in 1968 and is widely used in dynamic programming and UI frameworks like React.
+  </Accordion>
+
+  <Accordion title="What is the difference between memoization and caching?">
+    Memoization is a specific form of caching that stores function return values based on their input arguments. General caching can apply to any data (API responses, database queries, files). Memoization is tied to function purity — it only works correctly when the same inputs always produce the same output with no side effects.
+  </Accordion>
+
+  <Accordion title="Why does memoization only work with pure functions?">
+    Pure functions always return the same output for the same input and have no side effects. If you memoize an impure function that depends on external state, the cached result becomes stale when that state changes. Side effects (like logging or API calls) are also skipped on cache hits, which can break expected behavior.
+  </Accordion>
+
+  <Accordion title="Can I memoize functions with object arguments?">
+    Yes, but use `WeakMap` instead of `Map` for the cache. `JSON.stringify` loses object identity and prevents garbage collection. MDN documents that WeakMap keys are held weakly, meaning objects can be garbage collected when no other references exist, preventing memory leaks in long-running applications.
+  </Accordion>
+
+  <Accordion title="When should I NOT use memoization?">
+    Avoid memoizing fast functions where cache lookup overhead exceeds computation time, functions with always-unique inputs that fill the cache without providing hits, functions with side effects, and impure functions that depend on external state. Measure before and after to confirm memoization actually helps.
   </Accordion>
 </AccordionGroup>
 

@@ -2,6 +2,10 @@
 title: "Currying & Composition"
 sidebarTitle: "Currying & Composition: Functional Patterns"
 description: "Learn currying and function composition in JavaScript. Build reusable functions from simple pieces using curry, compose, and pipe for cleaner, modular code."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Functional Programming"
+"article:tag": "currying, function composition, pipe compose, partial application, functional patterns"
 ---
 
 How does `add(1)(2)(3)` even work? Why do libraries like [Lodash](https://lodash.com/) and [Ramda](https://ramdajs.com/) let you call functions in multiple ways? And what if you could build complex data transformations by snapping together tiny, single-purpose functions like LEGO blocks?
@@ -20,7 +24,7 @@ const process = pipe(
 process({ name: "  alice  " })  // "Alice"
 ```
 
-These two techniques, **currying** and **function composition**, are core to functional programming. They let you write smaller, more reusable functions and combine them into powerful pipelines. Once you understand them, you'll see opportunities to simplify your code everywhere.
+These two techniques, **currying** and **function composition**, are core to functional programming. They let you write smaller, more reusable functions and combine them into powerful pipelines. Once you understand them, you'll see opportunities to simplify your code everywhere. Libraries like [Lodash](https://lodash.com/) and [Ramda](https://ramdajs.com/) — which have over 50 million and 2 million weekly npm downloads respectively — make heavy use of currying and composition as foundational patterns.
 
 <Info>
 **What you'll learn in this guide:**
@@ -42,7 +46,7 @@ These two techniques, **currying** and **function composition**, are core to fun
 
 ## What is Currying?
 
-**Currying** is a transformation that converts a function with multiple arguments into a sequence of functions, each taking a single argument. It's named after mathematician Haskell Curry.
+**Currying** is a transformation that converts a function with multiple arguments into a sequence of functions, each taking a single argument. It's named after mathematician Haskell Curry, who formalized the concept in combinatory logic during the 1930s, though the technique was first described by Moses Schönfinkel in 1924.
 
 Instead of calling `add(1, 2, 3)` with all arguments at once, a curried version lets you call `add(1)(2)(3)`, providing one argument at a time. Each call returns a new function waiting for the next argument.
 
@@ -198,7 +202,7 @@ console.log(result)  // 6
 
 ### The Closure Connection
 
-Currying depends entirely on [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to work. Each nested function "closes over" the arguments from its parent function, keeping them alive even after the parent returns.
+Currying depends entirely on [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to work. Each nested function "closes over" the arguments from its parent function, keeping them alive even after the parent returns. As [MDN explains](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures), a closure gives a function access to its outer scope's variables even when the outer function has finished executing — this is the mechanism that allows curried functions to "remember" earlier arguments.
 
 ```javascript
 const multiply = a => b => a * b
@@ -1272,6 +1276,32 @@ function getThemeEmoji(user) {
     ```
     
     Point-free code focuses on the transformations rather than the data being transformed. It's often more declarative and can be easier to reason about, but can also be harder to read if overused.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is currying in JavaScript?">
+    Currying transforms a function that takes multiple arguments into a sequence of functions, each taking a single argument. Instead of `f(a, b, c)`, you call `f(a)(b)(c)`. Each call returns a new function until all arguments are provided. This pattern relies on [closures](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Closures) to remember previously supplied arguments.
+  </Accordion>
+
+  <Accordion title="What is the difference between currying and partial application?">
+    Currying always produces a chain of unary (single-argument) functions. Partial application fixes some arguments of a function and returns a new function that takes the remaining ones — it can fix multiple arguments at once. For example, `bind()` in JavaScript performs partial application, not currying.
+  </Accordion>
+
+  <Accordion title="What is function composition in JavaScript?">
+    Function composition combines two or more functions so the output of one becomes the input of the next. A `compose(f, g)` call creates a new function where `f(g(x))` is evaluated right-to-left. The `pipe()` variant runs left-to-right, which many developers find more readable.
+  </Accordion>
+
+  <Accordion title="What is the difference between compose and pipe?">
+    Both combine functions into a pipeline. `compose()` evaluates right-to-left: `compose(f, g, h)(x)` equals `f(g(h(x)))`. `pipe()` evaluates left-to-right: `pipe(h, g, f)(x)` equals `f(g(h(x)))`. The result is identical — only the argument order differs. Most developers prefer `pipe()` because it matches the natural reading direction.
+  </Accordion>
+
+  <Accordion title="When should I use currying in real projects?">
+    Currying shines when you frequently reuse functions with some arguments fixed — for example, loggers with preset levels, API calls with preset base URLs, or validators with preset rules. Libraries like Lodash and Ramda use currying extensively. If you rarely reuse partially applied functions, currying adds unnecessary complexity.
   </Accordion>
 </AccordionGroup>
 

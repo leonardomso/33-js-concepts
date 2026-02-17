@@ -2,6 +2,10 @@
 title: "ES Modules"
 sidebarTitle: "ES Modules: Native Module System"
 description: "Learn ES Modules in JavaScript. Understand import/export, live bindings, dynamic imports, top-level await, and tree-shaking."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Advanced Topics"
+"article:tag": "ES modules, import export, dynamic imports, tree-shaking, module system"
 ---
 
 Why does Node.js have two different module systems? Why can bundlers remove unused code from ES Modules but not from CommonJS? And why do some imports need curly braces while others don't?
@@ -49,14 +53,14 @@ For most of JavaScript's history, there was no built-in way to split code into r
 
 These solutions worked, but they were all invented outside the language itself. Each had tradeoffs, and none could be fully optimized by JavaScript engines or build tools.
 
-ES Modules changed that. Introduced in ES2015 (ES6), ESM is part of the language specification. This means:
+ES Modules changed that. Introduced in ES2015 (ES6) and formally defined in the [ECMAScript Language Specification](https://tc39.es/ecma262/#sec-modules), ESM is part of the language itself. This means:
 
 - **Browsers can load modules natively** without bundlers (though bundlers still help with optimization)
 - **Tools can analyze your code statically** because imports and exports are declarative
 - **Unused code can be eliminated** (tree-shaking) because the module graph is known at build time
 - **The syntax is standardized** across all JavaScript environments
 
-Today, ESM is supported in all modern browsers and Node.js. It's the module system you should use for new projects.
+Today, ESM is supported in all modern browsers and Node.js — according to [Can I Use](https://caniuse.com/es6-module), ES Modules have over 95% global browser support. It's the module system you should use for new projects.
 
 ---
 
@@ -193,7 +197,7 @@ ESM loads modules asynchronously. The browser fetches module files over the netw
 
 ## Live Bindings: Why ESM Exports Are Different
 
-Here's a difference that trips people up. When you import from a CommonJS module, you get a **copy** of the exported value. When you import from an ES Module, you get a **live binding**: a reference to the original variable.
+Here's a difference that trips people up. As [MDN documents](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules), when you import from a CommonJS module, you get a **copy** of the exported value. When you import from an ES Module, you get a **live binding**: a reference to the original variable.
 
 ```javascript
 // ─────────────────────────────────────────────
@@ -1246,6 +1250,36 @@ const legacyModule = require('some-commonjs-package')
     // Works: function accesses 'a' when called, not when defined
     export function getA() { return a }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are ES Modules in JavaScript?">
+    ES Modules (ESM) are JavaScript's official module system, standardized in ES2015. They use `import` and `export` statements to share code between files. Unlike older module systems like CommonJS, ESM is statically analyzable, meaning tools can determine your dependency graph at build time rather than runtime.
+  </Accordion>
+
+  <Accordion title="What is the difference between ES Modules and CommonJS?">
+    The key differences are: ESM uses `import`/`export` while CommonJS uses `require()`/`module.exports`; ESM loads asynchronously while CommonJS is synchronous; ESM provides live bindings (references) while CommonJS creates value copies. According to the Node.js documentation, ESM is the standard for new projects, though CommonJS remains widely used in existing codebases.
+  </Accordion>
+
+  <Accordion title="How does tree-shaking work with ES Modules?">
+    Tree-shaking removes unused code from your final bundle. It works because ESM imports and exports are static declarations — bundlers like webpack and Rollup can analyze which exports are actually used and eliminate the rest. This optimization is impossible with CommonJS because `require()` calls can be dynamic and conditional.
+  </Accordion>
+
+  <Accordion title="What are live bindings in ES Modules?">
+    Live bindings mean that when you import a value from an ES Module, you get a read-only reference to the original variable, not a copy. If the exporting module changes that variable, the importing module sees the updated value. MDN documents this as one of the key distinctions between ESM and CommonJS.
+  </Accordion>
+
+  <Accordion title="How do dynamic imports work in JavaScript?">
+    Dynamic imports use the `import()` function, which returns a Promise that resolves to the module's namespace object. Unlike static `import` declarations, `import()` can be called anywhere in your code — inside conditionals, loops, or event handlers. This enables code splitting and lazy loading of modules on demand.
+  </Accordion>
+
+  <Accordion title="Do I need a bundler to use ES Modules?">
+    No. All modern browsers support ES Modules natively via `<script type="module">`. However, bundlers like webpack, Rollup, and Vite still provide benefits for production: tree-shaking, code splitting, minification, and better caching strategies. For small projects or prototypes, native browser ESM works well without a bundler.
   </Accordion>
 </AccordionGroup>
 

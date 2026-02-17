@@ -2,6 +2,10 @@
 title: "Event Bubbling & Capturing"
 sidebarTitle: "Event Bubbling & Capturing"
 description: "Learn event bubbling and capturing in JavaScript. Understand the three phases of event propagation, stopPropagation, and when to use capturing vs bubbling."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Events"
+"article:tag": "event bubbling, event capturing, event propagation, stoppropagation, dom events"
 ---
 
 You click a button inside a `<div>`, but both the button's handler AND the div's handler fire. Why? Or you add a click listener to a parent element, and it somehow catches clicks on all its children. How does that work?
@@ -78,7 +82,7 @@ Every DOM event goes through **three phases**:
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
-By default, event listeners fire during the **bubbling phase** (Phase 3). That's why when you click a button, the button's handler fires first, then its parent's handler, then its grandparent's, and so on up to `window`.
+By default, event listeners fire during the **bubbling phase** (Phase 3). [Can I Use data](https://caniuse.com/addeventlistener) confirms that `addEventListener` with capture support is available in all modern browsers since IE9. That's why when you click a button, the button's handler fires first, then its parent's handler, then its grandparent's, and so on up to `window`.
 
 <CardGroup cols={2}>
   <Card title="Event bubbling — MDN" icon="book" href="https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Event_bubbling">
@@ -410,7 +414,7 @@ link.addEventListener('click', (e) => {
 
 ## Events That Don't Bubble
 
-Most events bubble, but some don't. Here are the common ones:
+Most events bubble, but some don't. As [MDN's event reference](https://developer.mozilla.org/en-US/docs/Web/Events) documents, each event specifies whether it bubbles in its specification. Here are the common ones:
 
 | Event | Bubbles? | Bubbling Alternative |
 |-------|----------|---------------------|
@@ -670,6 +674,32 @@ form.addEventListener('click', (e) => {
     element.removeEventListener('click', handler)       // ❌ Doesn't remove
     element.removeEventListener('click', handler, true) // ✓ Removes correctly
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is event bubbling in JavaScript?">
+    Event bubbling is the process where an event triggered on a child element propagates upward through its ancestor elements in the DOM tree. Bubbling is Phase 3 of event propagation and is the default phase in which `addEventListener` handlers fire.
+  </Accordion>
+
+  <Accordion title="What is the difference between event bubbling and event capturing?">
+    Bubbling travels from the target element up to `window`, while capturing travels from `window` down to the target. By default, listeners fire during bubbling. To listen during capturing, pass `{ capture: true }` as the third argument to `addEventListener`. MDN documents that most real-world code uses bubbling exclusively.
+  </Accordion>
+
+  <Accordion title="How do I stop event propagation in JavaScript?">
+    Call `event.stopPropagation()` to prevent the event from reaching other elements while still allowing other handlers on the same element to run. Use `event.stopImmediatePropagation()` to stop all further handling entirely. Use these sparingly — the CSS-Tricks article "Dangers of Stopping Event Propagation" warns they can break analytics and third-party modal libraries.
+  </Accordion>
+
+  <Accordion title="Which JavaScript events do not bubble?">
+    The `focus`, `blur`, `mouseenter`, `mouseleave`, `load`, `unload`, and `scroll` events do not bubble. For delegation with focus events, use `focusin` and `focusout` instead, which are their bubbling equivalents as defined in the W3C UI Events spec.
+  </Accordion>
+
+  <Accordion title="What is the difference between event.target and event.currentTarget?">
+    `event.target` is the element that originally triggered the event, while `event.currentTarget` is the element that has the listener attached. They are the same when you click directly on the element with the listener, but differ when events bubble up from child elements.
   </Accordion>
 </AccordionGroup>
 

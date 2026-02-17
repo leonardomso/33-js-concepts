@@ -2,6 +2,10 @@
 title: "IIFE & Namespaces"
 sidebarTitle: "IIFE, Modules & Namespaces: Structuring Code"
 description: "Learn how to organize JavaScript code with IIFEs, namespaces, and ES6 modules. Understand private scope, exports, dynamic imports, and common module mistakes."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Functions & Execution"
+"article:tag": "IIFE immediately invoked function expression, javascript modules, namespace pattern, ES6 modules, code organization"
 ---
 
 How do you prevent your JavaScript variables from conflicting with code from other files or libraries? How do modern applications organize thousands of lines of code across multiple files?
@@ -51,7 +55,7 @@ An **[IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)** (Immediate
 // console.log(private);  // ReferenceError: private is not defined
 ```
 
-The parentheses around the function turn it from a declaration into an expression, and the `()` at the end immediately invokes it. This was the go-to pattern for creating private scope before JavaScript had built-in modules.
+The parentheses around the function turn it from a declaration into an expression, and the `()` at the end immediately invokes it. This was the go-to pattern for creating private scope before JavaScript had built-in modules. ES modules are now used by the vast majority of JavaScript developers, but IIFEs remain common in bundler output and legacy codebases.
 
 <Note>
 **Historical context:** IIFEs were everywhere in JavaScript codebases from 2010-2015. Today, most projects use ES6 modules (`import`/`export`), so you won't write many IIFEs in modern code. However, understanding them is valuable. You'll encounter IIFEs in older codebases, libraries, and they're still useful for specific cases like async initialization or quick scripts.
@@ -1405,6 +1409,32 @@ Try to answer each question before revealing the solution:
     3. **Scripts without modules:** When you're adding a `<script>` tag without `type="module"`, IIFEs prevent polluting globals.
     
     4. **Creating private scope in non-module code.**
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is an IIFE in JavaScript?">
+An IIFE (Immediately Invoked Function Expression) is a function that runs as soon as it is defined. It creates a private scope that prevents variables from leaking into the global namespace. The pattern wraps a function in parentheses to make it an expression, then immediately invokes it with `()`.
+  </Accordion>
+
+  <Accordion title="Why were IIFEs used before ES6 modules?">
+    Before ES6 introduced native modules in 2015, JavaScript had no built-in way to create private scope at the file level. IIFEs provided encapsulation by leveraging function scope and closures. Libraries like jQuery and Lodash used the IIFE pattern extensively to avoid polluting the global namespace.
+  </Accordion>
+
+  <Accordion title="What is the difference between IIFEs and ES6 modules?">
+ES6 modules provide file-level scope automatically — every file is its own module with private variables. IIFEs achieve the same result manually using function scope. ES modules are now used by over 80% of JavaScript developers, making IIFEs largely unnecessary for new code. However, IIFEs remain useful for one-time initialization and inline scripts.
+  </Accordion>
+
+  <Accordion title="What is a namespace in JavaScript?">
+    A namespace is an object that groups related variables and functions under a single global name to avoid naming conflicts. Before modules, developers used patterns like `var MyApp = MyApp || {}` to organize code. The namespace pattern reduced global pollution but did not provide true privacy, which is why the module pattern and later ES6 modules became preferred.
+  </Accordion>
+
+  <Accordion title="Are IIFEs still useful in modern JavaScript?">
+    Yes, in specific cases. IIFEs are still valuable for async initialization (`(async () => { ... })()`), one-time configuration, and scripts loaded without `type="module"`. They also appear frequently in build tool output and legacy codebases, so understanding them remains important for professional JavaScript development.
   </Accordion>
 </AccordionGroup>
 

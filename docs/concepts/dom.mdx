@@ -2,6 +2,10 @@
 title: "DOM Manipulation"
 sidebarTitle: "DOM: How Browsers Represent Web Pages"
 description: "Learn the DOM in JavaScript. Select and manipulate elements, traverse nodes, handle events, and optimize rendering performance."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Web Platform"
+"article:tag": "javascript DOM, document object model, DOM manipulation, querySelector, event handling, DOM traversal"
 ---
 
 How does JavaScript change what you see on a webpage? How do you click a button and see new content appear, or type in a form and watch suggestions pop up? How does a "dark mode" toggle instantly transform an entire page?
@@ -34,7 +38,7 @@ The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web
 
 ## What is the DOM in JavaScript?
 
-The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface that represents HTML documents as a tree of objects. When a browser loads a webpage, it parses the HTML and creates the DOM, a live, structured representation that JavaScript can read and modify. Every element, attribute, and piece of text becomes a node in this tree. **In short: the DOM is how JavaScript "sees" and changes a webpage.**
+The **[Document Object Model (DOM)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)** is a programming interface that represents HTML documents as a tree of objects. As specified by the WHATWG DOM Living Standard, when a browser loads a webpage, it parses the HTML and creates the DOM, a live, structured representation that JavaScript can read and modify. Every element, attribute, and piece of text becomes a node in this tree. **In short: the DOM is how JavaScript "sees" and changes a webpage.**
 
 ---
 
@@ -119,7 +123,7 @@ Here's the key thing: your HTML file and the DOM are **different things**:
   </Tab>
 </Tabs>
 
-The browser **fixes your mistakes**! It adds missing `<head>` and `<body>` tags, closes unclosed tags, and corrects nesting errors. The DOM is the corrected version.
+The browser **fixes your mistakes**! It adds missing `<head>` and `<body>` tags, closes unclosed tags, and corrects nesting errors. The DOM is the corrected version. Browsers follow strict error-recovery rules so malformed markup is handled consistently across implementations.
 
 ### The DOM is NOT What You See in DevTools (Exactly)
 
@@ -2045,6 +2049,32 @@ input.value                  // "hello"
     A DocumentFragment is a virtual container. When appended, only its children are inserted. The fragment disappears.
     
     Alternative: Build HTML string and use `innerHTML` once (but sanitize if user input!).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the DOM in JavaScript?">
+    The DOM (Document Object Model) is a programming interface that represents an HTML document as a tree of objects. It provides a structured representation that JavaScript can read and modify. Every element, attribute, and text node becomes an object in this tree, allowing dynamic page manipulation.
+  </Accordion>
+
+  <Accordion title="What is the difference between the DOM and HTML?">
+    HTML is the static markup you write in a file. The DOM is the live, in-memory representation the browser creates after parsing that HTML. The browser corrects errors (adding missing tags, fixing nesting), executes JavaScript that modifies it, and keeps it in sync with what you see on screen. The DOM can differ significantly from your original HTML source.
+  </Accordion>
+
+  <Accordion title="What is the difference between getElementById and querySelector?">
+    `getElementById` finds a single element by its `id` attribute and is the fastest DOM lookup method. `querySelector` accepts any CSS selector and is more flexible, but slightly slower. `getElementById` is only available on the `document` object, while `querySelector` can be called on any element to search within its subtree.
+  </Accordion>
+
+  <Accordion title="What causes layout thrashing in the DOM?">
+    Layout thrashing occurs when you repeatedly read layout properties (like `offsetHeight`) and then write to the DOM in the same synchronous block. Each read forces the browser to recalculate layout before returning a value, and each write invalidates that layout. It is one of the most common causes of janky scrolling and slow interactions.
+  </Accordion>
+
+  <Accordion title="How does event delegation work in JavaScript?">
+    Event delegation attaches a single event listener to a parent element instead of adding listeners to every child. It works because DOM events bubble up from the target through ancestor elements. You check `event.target` to identify which child was clicked. This pattern is more memory-efficient and works automatically for dynamically added elements.
   </Accordion>
 </AccordionGroup>
 

@@ -2,6 +2,10 @@
 title: "Cookies in JavaScript"
 sidebarTitle: "Cookies"
 description: "Learn JavaScript cookies. Understand how to read, write, and delete cookies, cookie attributes like HttpOnly and SameSite, and security best practices."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Browser Storage"
+"article:tag": "cookies, http cookies, cookie attributes, httponly samesite, cookie security"
 ---
 
 Why do websites "remember" you're logged in, even after closing your browser? How does that shopping cart persist across tabs? Why can some data survive for weeks while other data vanishes when you close a tab?
@@ -17,7 +21,7 @@ console.log(document.cookie)  // "username=Alice; theme=dark; lang=en"
 // Cookie: username=Alice; theme=dark; lang=en
 ```
 
-The answer is **cookies**. They're the original browser storage mechanism, and unlike localStorage, cookies are automatically sent to the server with every HTTP request. This makes them essential for authentication, sessions, and any data the server needs to know about.
+The answer is **cookies**. Invented by Lou Montulli at Netscape in 1994, they're the original browser storage mechanism, and unlike localStorage, cookies are automatically sent to the server with every HTTP request. This makes them essential for authentication, sessions, and any data the server needs to know about.
 
 <Info>
 **What you'll learn in this guide:**
@@ -501,7 +505,7 @@ console.log(document.cookie)  // sessionId won't appear
 
 ### SameSite: CSRF Protection
 
-The [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) attribute controls when cookies are sent with cross-site requests:
+The [`SameSite`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie#samesitesamesite-value) attribute controls when cookies are sent with cross-site requests. Chrome changed the default from `None` to `Lax` in 2020, significantly improving CSRF protection across the web:
 
 <Tabs>
   <Tab title="Strict">
@@ -627,7 +631,7 @@ Cookies set by a different domain than the one you're visiting:
 
 ## Third-Party Cookie Deprecation
 
-Major browsers are phasing out third-party cookies for privacy:
+Major browsers are phasing out third-party cookies for privacy. This is one of the most significant changes to web tracking since cookies were invented:
 
 | Browser | Status |
 |---------|--------|
@@ -956,6 +960,32 @@ With `Partitioned`, the cookie is isolated per top-level site:
     ```
     
     They provide defense-in-depth—even if there's a bug in your code, the browser enforces these security requirements. `__Host-` is the most restrictive, ensuring the cookie can only be set by and sent to the exact host.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between cookies and localStorage?">
+    Cookies are automatically sent to the server with every HTTP request and have a ~4KB size limit, while localStorage stays in the browser and offers ~5–10MB. Use cookies when the server needs the data (authentication, sessions). Use localStorage for client-only data like UI preferences that doesn't need to travel with requests.
+  </Accordion>
+
+  <Accordion title="What does the HttpOnly cookie attribute do?">
+    `HttpOnly` prevents JavaScript from accessing the cookie via `document.cookie`. This protects against XSS attacks — even if an attacker injects malicious JavaScript, they cannot steal HttpOnly cookies. HttpOnly can only be set by the server via the `Set-Cookie` header, not by client-side JavaScript.
+  </Accordion>
+
+  <Accordion title="What is the SameSite cookie attribute?">
+    `SameSite` controls whether cookies are sent with cross-site requests. `Strict` blocks all cross-site sending, `Lax` (the default since Chrome 80) allows cookies on top-level navigation but blocks them on cross-site POST requests, and `None` sends cookies on all requests but requires the `Secure` attribute.
+  </Accordion>
+
+  <Accordion title="How do you delete a cookie in JavaScript?">
+    Set the cookie with `max-age=0` or an `expires` date in the past using the same `path` and `domain` attributes as when it was originally set. There is no direct delete method — this is a common source of bugs when the path or domain doesn't match the original cookie.
+  </Accordion>
+
+  <Accordion title="Are third-party cookies being deprecated?">
+    Yes. Safari has blocked third-party cookies by default since 2020, Firefox blocks them in Enhanced Tracking Protection, and Chrome is rolling out restrictions through 2024–2025. Partitioned cookies (CHIPS) provide an alternative for legitimate cross-site use cases like embedded widgets.
   </Accordion>
 </AccordionGroup>
 

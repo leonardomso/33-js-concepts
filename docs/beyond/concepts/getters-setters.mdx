@@ -2,6 +2,10 @@
 title: "Getters & Setters in JavaScript"
 sidebarTitle: "Getters & Setters: Computed Properties"
 description: "Learn JavaScript getters and setters. Create computed properties, validate data on assignment, and build encapsulated objects with get and set accessors."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Objects & Properties"
+"article:tag": "javascript getters setters, computed properties, property accessors, data validation, encapsulation"
 ---
 
 How do you create a property that calculates its value on the fly? What if you want to validate data every time someone assigns a value? And how do you make a property that looks normal but does something behind the scenes?
@@ -47,7 +51,7 @@ console.log(user.fullName)  // "Bob Smith"
 
 ## What Are Getters and Setters?
 
-**Getters** and **setters** are functions disguised as properties. When you access a getter, JavaScript calls the function and returns its result. When you assign to a setter, JavaScript calls the function with the assigned value. The key difference from regular methods is the syntax: no parentheses.
+**Getters** and **setters** are functions disguised as properties. When you access a getter, JavaScript calls the function and returns its result. When you assign to a setter, JavaScript calls the function with the assigned value. The key difference from regular methods is the syntax: no parentheses. Getters and setters are defined as special method types within object literals and class bodies, creating accessor property descriptors rather than data descriptors.
 
 ```javascript
 const circle = {
@@ -862,7 +866,7 @@ console.log(child.value)  // "parent" — inherited getter now visible
 
 ### Getters Are Called Every Time
 
-Unlike regular properties, getters execute their function on every access:
+Unlike regular properties, getters execute their function on every access. MDN documents that getter functions are called each time the property is accessed, which means expensive computations inside getters can become a performance bottleneck if not cached:
 
 ```javascript
 let callCount = 0
@@ -969,7 +973,7 @@ const point = {
 
 ## JSON.stringify() and Getters
 
-When you call [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) on an object, getter values are included in the output (because the getter is called), but setter-only properties result in nothing being included:
+When you call [`JSON.stringify()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify) on an object, getter values are included in the output (because the getter is called), but setter-only properties result in nothing being included. As the ECMAScript specification defines, `JSON.stringify()` reads enumerable own properties, which triggers getter functions during serialization:
 
 ```javascript
 const user = {
@@ -1137,6 +1141,32 @@ console.log(JSON.stringify(user))
     ```
     
     The getter `b` was called, and its value `2` was included. Setter-only properties result in nothing being included (no value to serialize).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between a getter and a regular method in JavaScript?">
+    Getters are accessed without parentheses (`obj.area`) while methods require them (`obj.calculateArea()`). Semantically, use getters for values that feel like properties (area, fullName, isValid) and methods for actions (calculate, fetch, process). Getters define an accessor property, not a data property.
+  </Accordion>
+
+  <Accordion title="How do you avoid infinite recursion in a getter or setter?">
+    Use a backing property with a different name (conventionally prefixed with `_`). For example, a `name` getter should read from `this._name`, not `this.name`. In modern classes, you can use private fields (`#name`) instead. Writing `this.name = value` inside a `name` setter calls the setter recursively, causing a stack overflow.
+  </Accordion>
+
+  <Accordion title="Do JavaScript getters affect performance?">
+    Yes. Unlike data properties, getters execute their function on every access. For expensive computations, this can become a bottleneck. MDN recommends using memoization or the self-replacing getter pattern to cache results. For values accessed in tight loops, consider using a regular data property instead.
+  </Accordion>
+
+  <Accordion title="Are getter values included in JSON.stringify() output?">
+    Yes. `JSON.stringify()` triggers getter functions and includes their return values in the output. Setter-only properties produce no output since there is no value to serialize. This behavior is defined by the ECMAScript specification's property enumeration algorithm.
+  </Accordion>
+
+  <Accordion title="Can you define a getter without a setter in JavaScript?">
+    Yes. A getter-only property is effectively read-only. In strict mode, attempting to assign to it throws a `TypeError`. In non-strict mode, the assignment silently fails. This pattern is common for computed values like `area` on a shape object that should be derived, not directly set.
   </Accordion>
 </AccordionGroup>
 

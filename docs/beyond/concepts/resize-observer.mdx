@@ -2,6 +2,10 @@
 title: "ResizeObserver in JavaScript"
 sidebarTitle: "ResizeObserver"
 description: "Learn the ResizeObserver API in JavaScript. Detect element size changes, build responsive components, and replace inefficient window resize listeners."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Observer APIs"
+"article:tag": "resizeobserver, element size changes, responsive components, window resize, container queries"
 ---
 
 How do you know when an element's size changes? Maybe a sidebar collapses, a container stretches to fit new content, or a user resizes a text area. How can JavaScript respond to these changes without constantly polling the DOM?
@@ -40,7 +44,7 @@ The **[ResizeObserver API](https://developer.mozilla.org/en-US/docs/Web/API/Resi
 
 ## What is ResizeObserver?
 
-The **ResizeObserver** interface reports changes to the dimensions of an element's content box or border box. It provides an efficient way to monitor element size without resorting to continuous polling or listening to every possible event that might cause a resize.
+The **ResizeObserver** interface reports changes to the dimensions of an element's content box or border box. According to [web.dev](https://web.dev/articles/resize-observer), it provides an efficient way to monitor element size without resorting to continuous polling or listening to every possible event that might cause a resize.
 
 Before ResizeObserver, detecting element size changes was painful:
 
@@ -588,7 +592,7 @@ class ResizableComponent {
 
 ## Browser Support and Polyfills
 
-ResizeObserver has excellent browser support, available in all modern browsers since July 2020.
+ResizeObserver has excellent browser support, available in all modern browsers since July 2020. [Can I Use data](https://caniuse.com/resizeobserver) shows over 96% global browser coverage.
 
 | Browser | Support Since |
 |---------|---------------|
@@ -833,6 +837,32 @@ if ('ResizeObserver' in window) {
     const width = entry.contentBoxSize[0].inlineSize;
     const height = entry.contentBoxSize[0].blockSize;
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is ResizeObserver in JavaScript?">
+    ResizeObserver is a browser API that detects when an element's dimensions change, regardless of the cause — content changes, CSS transitions, window resizing, or sibling layout shifts. Unlike the `window.resize` event which only fires on viewport changes, ResizeObserver monitors individual elements. Web.dev describes it as "document.onresize for elements."
+  </Accordion>
+
+  <Accordion title="What is the difference between ResizeObserver and window resize events?">
+    The `window.resize` event only fires when the browser viewport changes size. ResizeObserver fires when any observed element changes size, regardless of the cause. This makes it essential for responsive components that need to adapt when their container changes — a scenario that CSS Container Queries also address.
+  </Accordion>
+
+  <Accordion title="How do I avoid the ResizeObserver loop error?">
+    The error "ResizeObserver loop completed with undelivered notifications" occurs when your callback changes the observed element's size, triggering another callback. Avoid this by tracking expected sizes and skipping redundant updates, using `requestAnimationFrame` to defer changes, or modifying other elements instead of the observed one.
+  </Accordion>
+
+  <Accordion title="What is the difference between contentRect and contentBoxSize?">
+    `contentRect` is a legacy `DOMRectReadOnly` with `width` and `height` properties. `contentBoxSize` is the modern alternative — an array of `ResizeObserverSize` objects using `inlineSize` and `blockSize`, which correctly handle vertical writing modes. MDN recommends `contentBoxSize` for new code.
+  </Accordion>
+
+  <Accordion title="Does ResizeObserver fire immediately when you call observe()?">
+    Yes — like IntersectionObserver, ResizeObserver fires its callback immediately when you start observing an element to report its current dimensions. If you want to skip this initial call, add a guard flag that skips the first invocation.
   </Accordion>
 </AccordionGroup>
 

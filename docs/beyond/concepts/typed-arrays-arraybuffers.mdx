@@ -2,6 +2,10 @@
 title: "Typed Arrays in JavaScript"
 sidebarTitle: "Typed Arrays & ArrayBuffers"
 description: "Learn JavaScript Typed Arrays and ArrayBuffers for binary data handling. Work with DataView, WebGL, and file processing."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Data Handling"
+"article:tag": "typed arrays, arraybuffer, binary data, dataview, webgl, uint8array"
 ---
 
 How do you process a PNG image pixel by pixel? How do you read binary data from a WebSocket? How does WebGL render millions of triangles efficiently?
@@ -22,7 +26,7 @@ console.log(int32View.length)  // 4 (4 integers × 4 bytes = 16 bytes)
 console.log(int32View.byteLength)  // 16
 ```
 
-Typed Arrays provide a way to work with raw binary data in memory buffers, giving you the performance of low-level languages while staying in JavaScript.
+Typed Arrays provide a way to work with raw binary data in memory buffers, giving you low-level performance while staying in JavaScript. They were originally introduced to support WebGL and have since become essential for binary data processing in the browser.
 
 <Info>
 **What you'll learn in this guide:**
@@ -42,7 +46,7 @@ Typed Arrays provide a way to work with raw binary data in memory buffers, givin
 
 ## The Filing Cabinet Analogy
 
-Think of an [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) like a filing cabinet with a fixed number of drawers (bytes). The cabinet itself doesn't know what's inside the drawers. It just reserves the space.
+Think of an [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) like a filing cabinet with a fixed number of drawers (bytes). An ArrayBuffer represents a fixed-length raw binary data buffer — the cabinet itself doesn't know what's inside the drawers. It just reserves the space.
 
 A [Typed Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) is like a set of instructions for reading the cabinet. "Read drawers 1-4 as a single 32-bit integer" or "Read each drawer as a separate 8-bit value."
 
@@ -697,6 +701,32 @@ const backToTyped = new Uint8Array(array2)
     const text = decoder.decode(bytes)
     console.log(text)  // "Hello!"
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between ArrayBuffer and Typed Arrays?">
+    An `ArrayBuffer` is a fixed-length block of raw binary memory — you cannot read or write it directly. Typed Arrays like `Uint8Array`, `Float32Array`, and `Int16Array` are views that interpret the buffer's bytes in a specific format. Multiple views can share the same underlying buffer.
+  </Accordion>
+
+  <Accordion title="When should I use Typed Arrays instead of regular arrays?">
+Use Typed Arrays when working with binary data: file I/O, WebGL rendering, audio processing, WebSocket binary messages, or image pixel manipulation. They are faster for numeric computation because they store fixed-type values in contiguous memory and avoid dynamic typing overhead.
+  </Accordion>
+
+  <Accordion title="What is DataView and when should I use it?">
+    `DataView` provides a flexible interface for reading and writing multiple data types from a single `ArrayBuffer`, with explicit control over byte order (endianness). Use it when parsing binary file formats or network protocols that contain mixed data types, rather than creating multiple Typed Array views.
+  </Accordion>
+
+  <Accordion title="Can Typed Arrays be transferred between Web Workers?">
+    Yes — `ArrayBuffer` objects can be transferred (not copied) to Web Workers using the `transfer` option in `postMessage()`. After transfer, the original buffer becomes zero-length and unusable. MDN documents this as a "transferable object" — it moves ownership rather than duplicating data, which is critical for performance with large buffers.
+  </Accordion>
+
+  <Accordion title="What happens if I write a value too large for a Typed Array?">
+    Values are silently clamped or wrapped to fit. For example, writing 256 to a `Uint8Array` (max 255) wraps to 0. The exception is `Uint8ClampedArray`, which clamps values to the valid range (0-255 for images) instead of wrapping — this is why it's used for canvas pixel data.
   </Accordion>
 </AccordionGroup>
 

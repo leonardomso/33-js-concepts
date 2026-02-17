@@ -2,9 +2,13 @@
 title: "HTTP & Fetch API"
 sidebarTitle: "Fetch API: Making HTTP Requests the Modern Way"
 description: "Learn the JavaScript Fetch API for HTTP requests. Covers GET, POST, response handling, JSON parsing, and AbortController."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Web Platform"
+"article:tag": "fetch API, HTTP requests, GET POST, JSON parsing, AbortController, network requests"
 ---
 
-How does JavaScript get data from a server? How do you load user profiles, submit forms, or fetch the latest posts from an API? The answer is the **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**, JavaScript's modern way to make network requests.
+How does JavaScript get data from a server? How do you load user profiles, submit forms, or fetch the latest posts from an API? The answer is the **[Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)**, JavaScript's modern way to make network requests. Modern web pages make many network requests, so efficient request handling is essential for performance.
 
 ```javascript
 // This is how you fetch data in JavaScript
@@ -32,7 +36,7 @@ But to understand Fetch, you need to understand what's happening underneath: **[
 
 ## What is HTTP?
 
-**[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)** (Hypertext Transfer Protocol) is the foundation of data communication on the web. It defines how messages are formatted and transmitted between clients (like web browsers) and servers. Every time you load a webpage, submit a form, or fetch data with JavaScript, HTTP is the protocol making that exchange possible.
+**[HTTP](https://developer.mozilla.org/en-US/docs/Web/HTTP)** (Hypertext Transfer Protocol) is the foundation of data communication on the web. Originally defined in RFC 2616 and updated through RFC 7230-7235, it defines how messages are formatted and transmitted between clients (like web browsers) and servers. Every time you load a webpage, submit a form, or fetch data with JavaScript, HTTP is the protocol making that exchange possible.
 
 <Note>
 **HTTP is not JavaScript.** HTTP is a language-agnostic protocol. Python, Ruby, Go, Java, and every other language uses it too. We cover HTTP basics in this guide because understanding the protocol helps with using the Fetch API effectively. If you want to dive deeper into HTTP itself, check out the MDN resources below.
@@ -1033,6 +1037,32 @@ This example uses browser DOM APIs (`addEventListener`, `searchInput`). In Node.
     ```
     
     Parallel requests complete in the time of the slowest request, not the sum of all requests.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+<Accordion title="When should you use Fetch directly vs a client library?">
+    The Fetch API is JavaScript's modern interface for making HTTP requests. It returns Promises, supports streaming responses, and works with the Request and Response objects defined in the WHATWG Fetch Living Standard. It replaced the older XMLHttpRequest API and is now supported in all modern browsers and Node.js 18+.
+  </Accordion>
+
+<Accordion title="When should legacy code keep XMLHttpRequest instead of migrating immediately?">
+Fetch uses Promises instead of callbacks, has a cleaner API, supports streaming, and integrates with Service Workers. XMLHttpRequest (XHR) is callback-based and older but supports progress events natively. Fetch usage has surpassed XHR in modern web applications, though XHR remains in legacy codebases.
+  </Accordion>
+
+  <Accordion title="Why does fetch not throw an error on HTTP 404 or 500 responses?">
+    Fetch only rejects its Promise on network failures (no internet, DNS errors, CORS blocked). An HTTP 404 or 500 is still a successful network response — the server replied. You must check `response.ok` or `response.status` manually to detect HTTP errors. This is the most common Fetch gotcha for beginners.
+  </Accordion>
+
+<Accordion title="How do you debug requests that should have been cancelled?">
+    Use the AbortController API. Create an `AbortController`, pass its `signal` to `fetch()`, and call `controller.abort()` when you need to cancel. This throws an `AbortError` that you can catch. AbortController was added to the DOM specification and is supported in all modern browsers.
+  </Accordion>
+
+<Accordion title="When should you choose GET vs POST in real APIs?">
+GET requests retrieve data and should have no side effects — they are safe and idempotent. POST requests send data to create or modify resources. GET parameters go in the URL query string, while POST data goes in the request body. GET responses can be cached by browsers, but POST responses are not cached by default.
   </Accordion>
 </AccordionGroup>
 

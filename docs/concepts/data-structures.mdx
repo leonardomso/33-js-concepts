@@ -2,6 +2,10 @@
 title: "Data Structures"
 sidebarTitle: "Data Structures: Organizing and Storing Data"
 description: "Learn JavaScript data structures: Arrays, Objects, Maps, Sets, Stacks, Queues, and Linked Lists. Know when to use each one."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Advanced Topics"
+"article:tag": "data structures, arrays, objects, maps, sets, stacks, queues, linked lists"
 ---
 
 Why does finding an item in an array take longer as it grows? Why can you look up an object property instantly regardless of how many properties it has? The answer lies in **data structures**.
@@ -16,7 +20,7 @@ const userMap = { alice: 1, bob: 2, charlie: 3, /* ...thousands more */ }
 userMap['zara']  // Direct access - O(1)
 ```
 
-A **data structure** is a way of organizing data so it can be used efficiently. The right structure makes your code faster and cleaner. The wrong one can make simple operations painfully slow.
+A **data structure** is a way of organizing data so it can be used efficiently. In practice, the choice of data structure often matters more than the choice of algorithm. The right structure makes your code faster and cleaner. The wrong one can make simple operations painfully slow.
 
 <Info>
 **What you'll learn in this guide:**
@@ -428,7 +432,7 @@ stack.size()   // 1
 
 ### Queue (FIFO)
 
-A **Queue** follows First-In-First-Out: the first item added is the first removed. Think of a line at a store.
+A **Queue** follows First-In-First-Out: the first item added is the first removed. Think of a line at a store. Queues and other fundamental data structures remain common topics in technical interviews.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -1179,6 +1183,32 @@ Interview questions often test your understanding of data structures. Here are p
     2. `[...set]` spreads the Set back into an array
     
     Time complexity: O(n) - each element is processed once.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are data structures in JavaScript?">
+    Data structures are ways of organizing and storing data so it can be accessed and modified efficiently. JavaScript provides several built-in structures — Array, Object, Map, Set, WeakMap, and WeakSet — and you can implement others like stacks, queues, and linked lists using classes. Choosing the right structure depends on your most frequent operations.
+  </Accordion>
+
+  <Accordion title="When should I use a Map instead of an Object in JavaScript?">
+    Use a Map when your keys are not strings (objects, functions, numbers), when you need guaranteed insertion order, when you frequently add and delete keys, or when you need the `.size` property. MDN recommends Map over Object for frequent additions and removals of key-value pairs due to better performance characteristics.
+  </Accordion>
+
+  <Accordion title="Are JavaScript arrays actually arrays?">
+    Not in the traditional computer science sense. As the V8 blog explains, JavaScript engines use multiple internal representations. Dense arrays with sequential numeric keys are stored as contiguous memory (like C arrays), but sparse arrays or arrays with mixed types may be stored as hash tables internally. This is why V8 optimizes differently based on how you use arrays.
+  </Accordion>
+
+  <Accordion title="How do I choose the right data structure for my problem?">
+    Consider your most frequent operations. If you need fast lookups by key, use a Map or Object. If you need to track unique values, use a Set. If order matters and you access by index, use an Array. If you need fast insertion and deletion at both ends, consider a linked list or deque implementation.
+  </Accordion>
+
+  <Accordion title="What is the time complexity of common JavaScript data structure operations?">
+    Array access by index is O(1), but `indexOf()` is O(n). Object, Map, and Set lookups are all O(1). Array `push()`/`pop()` are O(1), but `shift()`/`unshift()` are O(n) because all elements must be re-indexed. Understanding these complexities, as outlined in the ECMAScript specification, helps you avoid performance bottlenecks.
   </Accordion>
 </AccordionGroup>
 

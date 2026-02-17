@@ -2,6 +2,10 @@
 title: "Algorithms & Big O"
 sidebarTitle: "Algorithms & Big O: Measuring Code Performance"
 description: "Learn Big O notation and algorithms in JavaScript. Understand time complexity, searching, sorting, and common interview patterns."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Advanced Topics"
+"article:tag": "Big O notation, time complexity, algorithms, sorting, searching, performance analysis"
 ---
 
 Why does one solution pass all tests instantly while another times out? Why do interviewers care so much about "time complexity"? Consider these two functions that both find if an array contains duplicates:
@@ -43,7 +47,7 @@ Both work correctly. But with 100,000 elements, Approach A takes several seconds
 
 ## What is Big O Notation?
 
-**Big O notation** describes how an algorithm's runtime or space requirements grow as input size increases. It provides an upper bound on growth rate and ignores constants, giving us a way to compare algorithms regardless of hardware.
+**Big O notation** describes how an algorithm's runtime or space requirements grow as input size increases. First formalized by Paul Bachmann in 1894 and later popularized by Donald Knuth in *The Art of Computer Programming*, it provides an upper bound on growth rate and ignores constants, giving us a way to compare algorithms regardless of hardware.
 
 ### The Package Delivery Analogy
 
@@ -245,7 +249,7 @@ Knowing these helps you make better decisions:
 | `indexOf()`, `includes()` | O(n) | Linear search |
 | `find()`, `findIndex()` | O(n) | Linear search |
 | `map()`, `filter()`, `forEach()` | O(n) | Visits each element |
-| `sort()` | O(n log n) | Implementation varies by browser |
+| `sort()` | O(n log n) | V8 uses [TimSort](https://v8.dev/blog/array-sort) since 2019 |
 
 ### Object, Map, and Set
 
@@ -280,7 +284,7 @@ linearSearch([3, 7, 1, 9, 4], 9)  // Returns 3
 
 ### Binary Search - O(log n)
 
-Divide and conquer on a **sorted** array. Eliminates half the remaining elements each step.
+Divide and conquer on a **sorted** array. Eliminates half the remaining elements each step. As noted in *Introduction to Algorithms* (Cormen et al.), binary search is one of the most efficient search algorithms with guaranteed O(log n) worst-case performance.
 
 ```javascript
 function binarySearch(arr, target) {
@@ -590,6 +594,32 @@ isAnagram('hello', 'world')    // false
     ```
     
     Time: O(n), Space: O(min(n, alphabet size))
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is Big O notation in simple terms?">
+    Big O notation describes how an algorithm's performance scales as the input grows. O(1) means constant time regardless of input size, O(n) means time grows linearly, and O(n²) means time grows quadratically. It focuses on the worst-case growth rate and ignores constants, so O(2n) simplifies to O(n).
+  </Accordion>
+
+  <Accordion title="What is the fastest sorting algorithm in JavaScript?">
+    JavaScript's built-in `Array.prototype.sort()` uses TimSort in V8 (Chrome, Node.js), which runs in O(n log n) time. For most use cases, the built-in sort is optimal. Merge sort guarantees O(n log n) in all cases, while quicksort averages O(n log n) but can degrade to O(n²) with poor pivot selection.
+  </Accordion>
+
+  <Accordion title="How do I determine the time complexity of my code?">
+    Identify what variable represents your input size (usually array length). Count nested loops: one loop is O(n), two nested loops is O(n²). A loop that halves the input each iteration is O(log n). Then drop constants and lower-order terms — O(2n + 5) becomes O(n), and O(n² + n) becomes O(n²).
+  </Accordion>
+
+  <Accordion title="When should I use binary search instead of linear search?">
+    Use binary search when your data is already sorted and you need to find elements repeatedly. Binary search runs in O(log n) — for a million elements, that is roughly 20 comparisons versus up to 1,000,000 with linear search. If the data is unsorted, the O(n log n) cost of sorting first is only worthwhile if you plan multiple searches.
+  </Accordion>
+
+  <Accordion title="What is the difference between time complexity and space complexity?">
+    Time complexity measures how many operations an algorithm performs as input grows. Space complexity measures how much additional memory it needs. For example, merge sort has O(n log n) time but O(n) space because it creates temporary arrays, while bubble sort has O(n²) time but O(1) space because it sorts in place.
   </Accordion>
 </AccordionGroup>
 

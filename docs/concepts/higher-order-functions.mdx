@@ -2,6 +2,10 @@
 title: "Higher-Order Functions"
 sidebarTitle: "Higher-Order Functions: Functions That Use Functions"
 description: "Learn higher-order functions in JavaScript. Understand functions that accept or return other functions, create reusable abstractions, and write cleaner code."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Functional Programming"
+"article:tag": "higher-order functions, functions as arguments, function composition, functional programming"
 ---
 
 What if you could tell a function *how* to do something, not just *what* data to work with? What if you could pass behavior itself as an argument, just like you pass numbers or strings?
@@ -23,7 +27,7 @@ repeat(3, console.log)           // 0, 1, 2
 repeat(3, i => console.log(i * 2))  // 0, 2, 4
 ```
 
-This is the power of **higher-order functions**. They let you write functions that are flexible, reusable, and abstract. Instead of writing the same loop over and over with slightly different logic, you write one function and pass in the logic that changes.
+This is the power of **higher-order functions**. They let you write functions that are flexible, reusable, and abstract. Instead of writing the same loop over and over with slightly different logic, you write one function and pass in the logic that changes. As [MDN documents](https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function), JavaScript treats functions as first-class citizens — they can be assigned to variables, passed as arguments, and returned from other functions — which is the foundation that makes higher-order functions possible.
 
 <Info>
 **What you'll learn in this guide:**
@@ -49,7 +53,7 @@ A **higher-order function** is a function that does at least one of these two th
 1. **Accepts one or more functions as arguments**
 2. **Returns a function as its result**
 
-That's it. If a function takes a function or returns a function, it's higher-order.
+That's it. If a function takes a function or returns a function, it's higher-order. The [ECMAScript specification](https://tc39.es/ecma262/#sec-function-objects) defines functions as callable objects, and because JavaScript allows any object to be passed around, functions naturally flow through higher-order patterns. According to the [State of JS 2023 survey](https://2023.stateofjs.com/), functional programming techniques like higher-order functions rank among the most widely used JavaScript patterns.
 
 ```javascript
 // 1. Accepts a function as an argument
@@ -875,6 +879,32 @@ Use HOFs when they make the code more readable, not just to seem clever.
     ```
     
     Use `map` when you need the transformed array. Use `forEach` when you just want to do something with each element (like logging or updating external state).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is a higher-order function in JavaScript?">
+    A higher-order function is any function that takes another function as an argument or returns a function as its result. Built-in examples include `Array.prototype.map()`, `filter()`, and `reduce()`. According to [MDN](https://developer.mozilla.org/en-US/docs/Glossary/First-class_Function), this pattern is possible because JavaScript treats functions as first-class citizens.
+  </Accordion>
+
+  <Accordion title="What is the difference between a callback and a higher-order function?">
+    A higher-order function is the function that *receives* or *returns* another function. A callback is the function being *passed in*. For example, in `[1,2,3].map(double)`, `map` is the higher-order function and `double` is the callback. They are two sides of the same pattern.
+  </Accordion>
+
+  <Accordion title="What are the most common built-in higher-order functions?">
+    The most widely used are `Array.prototype.map()`, `filter()`, `reduce()`, `forEach()`, `sort()`, and `find()`. The `setTimeout` and `addEventListener` APIs are also higher-order functions because they accept callback arguments. These methods are documented extensively on [MDN's Array reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array).
+  </Accordion>
+
+  <Accordion title="Why should I use higher-order functions instead of loops?">
+    Higher-order functions make code more declarative — you describe *what* you want, not *how* to do it step by step. They reduce repetition, minimize off-by-one errors, and produce code that is easier to read and maintain. The Stack Overflow 2023 Developer Survey shows that functional patterns are among the most popular paradigms in the JavaScript ecosystem.
+  </Accordion>
+
+  <Accordion title="Can I create my own higher-order functions?">
+    Yes. Any function you write that accepts a function parameter or returns a function qualifies. Function factories, middleware patterns, and decorator functions are all examples of custom higher-order functions you can build to reduce duplication in your own codebase.
   </Accordion>
 </AccordionGroup>
 

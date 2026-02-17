@@ -2,6 +2,10 @@
 title: "Debouncing & Throttling in JS"
 sidebarTitle: "Debouncing & Throttling: Control Event Frequency"
 description: "Learn debouncing and throttling in JavaScript. Optimize event handlers, reduce API calls, and implement both patterns from scratch with real-world examples."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Memory & Performance"
+"article:tag": "debouncing throttling, event optimization, api calls, performance patterns, event handlers"
 ---
 
 What happens when a user types in a search box at 60 characters per minute? Or when they scroll through your page, triggering hundreds of events per second? Without proper handling, your application can grind to a halt, making unnecessary API calls or blocking the main thread with expensive computations.
@@ -18,7 +22,7 @@ searchInput.addEventListener('input', debounce((e) => {
 }, 300))
 ```
 
-**[Debouncing](https://developer.mozilla.org/en-US/docs/Glossary/Debounce)** and **[throttling](https://developer.mozilla.org/en-US/docs/Glossary/Throttle)** are two techniques that control how often a function can execute. They're essential for handling high-frequency events like scrolling, resizing, typing, and mouse movement without destroying your app's performance.
+**[Debouncing](https://developer.mozilla.org/en-US/docs/Glossary/Debounce)** and **[throttling](https://developer.mozilla.org/en-US/docs/Glossary/Throttle)** are two techniques that control how often a function can execute. Both patterns are essential for handling high-frequency events like scrolling, resizing, typing, and mouse movement without destroying your app's performance. The scroll event alone can fire hundreds of times per second on modern browsers.
 
 <Info>
 **What you'll learn in this guide:**
@@ -493,7 +497,7 @@ function throttle(fn, interval, options = {}) {
 
 ## Using Lodash in Production
 
-For production applications, use battle-tested libraries like [Lodash](https://lodash.com/). They handle edge cases, provide TypeScript types, and are thoroughly tested.
+For production applications, use battle-tested libraries like [Lodash](https://lodash.com/). With over 30 million weekly npm downloads, Lodash's debounce and throttle implementations handle edge cases, provide TypeScript types, and are thoroughly tested across thousands of production applications.
 
 ### Installation
 
@@ -687,7 +691,7 @@ document.addEventListener('mousemove', (e) => {
 
 ## requestAnimationFrame Alternative
 
-For visual updates tied to rendering (animations, scroll effects), [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) is often better than throttle. It syncs with the browser's repaint cycle (typically 60fps ≈ 16ms) and is scheduled by the [event loop](/concepts/event-loop) as a special render-related callback.
+For visual updates tied to rendering (animations, scroll effects), [`requestAnimationFrame`](https://developer.mozilla.org/en-US/docs/Web/API/window/requestAnimationFrame) is often better than throttle. As web.dev's rendering performance guide explains, rAF syncs with the browser's repaint cycle (typically 60fps ≈ 16ms) and is scheduled by the [event loop](/concepts/event-loop) as a special render-related callback.
 
 ```javascript
 function throttleWithRAF(fn) {
@@ -978,6 +982,32 @@ throttle(scroll, 100)   // 100-150ms for scroll (smooth but efficient)
     - Store pending `args` and `this` context
     
     Without closures, each call would have no memory of previous calls.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between debounce and throttle in JavaScript?">
+    Debounce delays execution until events stop coming for a specified duration — it fires once after a burst. Throttle limits execution to at most once per interval during continuous events — it fires at regular intervals. Use debounce when you care about the final value (search), and throttle when you need periodic updates (scroll tracking).
+  </Accordion>
+
+  <Accordion title="What is a good debounce delay for search input?">
+    A delay of 250–400 milliseconds is standard for search autocomplete. This gives users enough time to finish typing a word without feeling unresponsive. Lodash's `maxWait` option can force execution after a maximum delay (e.g., 2 seconds) during long typing sessions, combining debounce and throttle behavior.
+  </Accordion>
+
+  <Accordion title="How do I clean up debounced functions in React?">
+Always cancel pending executions in a cleanup function. Return a cleanup from `useEffect` that calls `handler.cancel()` and removes event listeners. Forgetting cleanup is one of the most common sources of memory leaks in React applications using debounce or throttle.
+  </Accordion>
+
+  <Accordion title="Can I use requestAnimationFrame instead of throttle?">
+    Yes, for visual updates like animations and scroll-linked effects. `requestAnimationFrame` syncs with the browser's 60fps repaint cycle (~16ms intervals), producing smoother results than a fixed throttle interval. Use throttle for non-visual tasks like API calls, analytics tracking, and infinite scroll loading.
+  </Accordion>
+
+  <Accordion title="Why doesn't my debounce work when created inside an event handler?">
+    Creating a debounced function inside an event handler creates a new function (with its own timer) on every event. Each instance has a separate timer, so debouncing never kicks in. Always create the debounced function once outside the handler and reuse it — the closure maintains state between calls.
   </Accordion>
 </AccordionGroup>
 

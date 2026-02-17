@@ -1,7 +1,11 @@
 ---
 title: "Scope & Closures"
 sidebarTitle: "Scope and Closures: How Variables Really Work"
-description: "Learn JavaScript scope and closures. Understand var vs let vs const, lexical scoping, the scope chain, and closure patterns."
+description: "Learn JavaScript scope and closures. Understand the three types of scope, var vs let vs const, lexical scoping, the scope chain, and closure patterns for data privacy."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "JavaScript Fundamentals"
+"article:tag": "javascript closures, javascript scope, var let const, lexical scope, scope chain, closure patterns"
 ---
 
 Why can some variables be accessed from anywhere in your code, while others seem to disappear? How do functions "remember" variables from their parent functions, even after those functions have finished running?
@@ -420,7 +424,7 @@ This approach catches bugs at compile time and makes your intent clear.
 
 ## Lexical Scope
 
-**Lexical scope** (also called **static scope**) means that the scope of a variable is determined by its position in the source code, not by how functions are called at runtime.
+**Lexical scope** (also called **static scope**) means that the scope of a variable is determined by its position in the source code, not by how functions are called at runtime. As Kyle Simpson explains in *You Don't Know JS: Scope & Closures*, lexical scope is determined at "lex-time" — the time when the code is being parsed — which is why it is also called "static" scope.
 
 ```javascript
 const outer = "I'm outside!";
@@ -527,7 +531,7 @@ Shadowing can be confusing. While sometimes intentional, accidental shadowing is
 
 ## What is a Closure in JavaScript?
 
-A **[closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)** is the combination of a function bundled together with references to its surrounding state (the lexical environment). In other words, a closure gives a function access to variables from an outer (enclosing) scope, even after that outer function has finished executing and returned. Every function in JavaScript creates a closure at creation time.
+A **[closure](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Closures)** is the combination of a function bundled together with references to its surrounding state (the lexical environment). A closure gives a function access to variables from an outer (enclosing) scope, even after that outer function has finished executing and returned. Every function in JavaScript creates a closure at creation time.
 
 Remember our office building analogy? A closure is like someone who worked in the private office, left the building, but still remembers exactly where everything was, and can still use that knowledge!
 
@@ -1077,6 +1081,44 @@ cleanup();  // Removes listener, allows memory to be freed
       return (arg) => cache[arg] ?? (cache[arg] = fn(arg));
     }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the difference between scope and closures in JavaScript?">
+    Scope defines where a variable can be accessed in your code. A closure is what happens when a function keeps access to variables from its outer lexical scope even after that outer function returns. In short: scope is the rulebook, closure is a practical behavior created by those rules.
+  </Accordion>
+
+  <Accordion title="Why should I use let and const instead of var?">
+    `let` and `const` are block-scoped, so they reduce accidental leaks and make intent clearer. `const` communicates that the binding should not be reassigned, while `let` is for values that change. `var` is function-scoped and hoisted in ways that often produce bugs, especially inside loops and conditionals.
+  </Accordion>
+
+  <Accordion title="How do closures work in JavaScript?">
+    A function closes over the variables available where it was defined, not where it is called. When that function runs later, JavaScript still resolves those captured variables through the saved lexical environment.
+
+    ```javascript
+    function makeGreeter(name) {
+      return function greet() {
+        return `Hi, ${name}`;
+      };
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="What are common use cases for closures?">
+    Common uses include data privacy, function factories, memoization, and stateful callbacks. As Kyle Simpson explains in *You Don't Know JS: Scope & Closures*, closures are not a niche feature; they are a core part of how JavaScript functions work. You will use closures any time a callback needs to remember context.
+  </Accordion>
+
+  <Accordion title="What is lexical scope vs dynamic scope?">
+    JavaScript uses lexical scope, which means variable access is decided by where code is written in the file. Dynamic scope would decide variable access based on the call stack at runtime, but JavaScript does not use that model. This is why moving a function changes what it can access, even if calls stay the same.
+  </Accordion>
+
+  <Accordion title="Can closures cause memory leaks?">
+    Closures can keep objects in memory longer than expected if they retain references you no longer need. This is most common with long-lived event listeners and timers that capture large data structures. In the 2023 State of JS survey, many developers still reported debugging memory/performance issues, so cleaning up listeners and limiting captured data is an important habit.
   </Accordion>
 </AccordionGroup>
 

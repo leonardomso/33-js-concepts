@@ -2,6 +2,10 @@
 title: "Temporal Dead Zone in JS"
 sidebarTitle: "Temporal Dead Zone"
 description: "Learn the Temporal Dead Zone (TDZ) in JavaScript. Understand why let, const, and class throw ReferenceError before initialization, and how TDZ differs from var."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Language Mechanics"
+"article:tag": "temporal dead zone, let const hoisting, reference error, tdz, block scope, declaration timing"
 ---
 
 Why does this code throw an error?
@@ -39,7 +43,7 @@ The difference is the **Temporal Dead Zone (TDZ)**. It's a behavior that makes [
 
 ## What is the Temporal Dead Zone?
 
-The **Temporal Dead Zone (TDZ)** in JavaScript is the period between entering a scope and the line where a `let`, `const`, or `class` variable is initialized. During this zone, the variable exists but cannot be accessed—any attempt throws a [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError). The TDZ prevents bugs by catching accidental use of uninitialized variables.
+The **Temporal Dead Zone (TDZ)** in JavaScript is the period between entering a scope and the line where a `let`, `const`, or `class` variable is initialized. During this zone, the variable exists but cannot be accessed—any attempt throws a [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError). The TDZ prevents bugs by catching accidental use of uninitialized variables. `let` and `const` bindings are created when their containing environment record is instantiated but remain uninitialized until their declaration is evaluated.
 
 ```javascript
 {
@@ -156,7 +160,7 @@ function letExample() {
 
 ## Why "Temporal"?
 
-The word "temporal" means **related to time**. The TDZ is "temporal" because it depends on **when code executes**, not where it appears in the source.
+The word "temporal" means **related to time**. The TDZ is "temporal" because it depends on **when code executes**, not where it appears in the source. MDN documents this distinction explicitly: the zone is defined by the execution flow, not the lexical position of the code.
 
 This is a subtle but important distinction. Look at this example:
 
@@ -577,7 +581,7 @@ function fixed() {
 
 ## Why Does TDZ Exist?
 
-TDZ might seem like an annoyance, but it exists for good reasons:
+TDZ might seem like an annoyance, but it exists for good reasons. It was introduced to make `let` and `const` safer alternatives to `var` by catching common programming mistakes at the point of error rather than letting them propagate silently:
 
 ### 1. Catches Bugs Early
 
@@ -790,6 +794,32 @@ let data = fetchData()
     let price = 10
     let quantity = 5
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the Temporal Dead Zone in JavaScript?">
+    The Temporal Dead Zone (TDZ) is the period between entering a scope and reaching the declaration of a `let`, `const`, or `class` variable. During this window, the variable exists but any access throws a `ReferenceError`. MDN describes it as the zone where bindings are "created but not yet initialized."
+  </Accordion>
+
+  <Accordion title="Does typeof work safely in the Temporal Dead Zone?">
+    No. Unlike undeclared variables where `typeof` safely returns `"undefined"`, using `typeof` on a TDZ variable throws a `ReferenceError`. This is because the JavaScript engine knows the variable exists (it was hoisted) but enforces the TDZ restriction. The ECMAScript specification explicitly requires this behavior for `let` and `const` bindings.
+  </Accordion>
+
+  <Accordion title="Is the Temporal Dead Zone based on code position or execution time?">
+    It is based on execution time, which is why it is called "temporal." A function defined during the TDZ can reference a TDZ variable safely, as long as the function is called after the variable is initialized. MDN documents this distinction: the zone depends on the order of execution, not the order of code.
+  </Accordion>
+
+  <Accordion title="How does TDZ affect circular ES module imports?">
+    When two modules import each other, one will execute before the other has finished its exports. If module B tries to access an exported `const` from module A before A has reached that declaration, it triggers a TDZ `ReferenceError`. The fix is to access the import lazily inside a function rather than at the top level.
+  </Accordion>
+
+  <Accordion title="Can you avoid the Temporal Dead Zone?">
+    The simplest way to avoid TDZ issues is to always declare variables at the top of their scope before using them. The TDZ is a feature, not a bug — it trades early errors for safer code and fewer hidden bugs.
   </Accordion>
 </AccordionGroup>
 

@@ -2,6 +2,10 @@
 title: "Primitive Types"
 sidebarTitle: "Primitive Types: Building Blocks of Data"
 description: "Learn JavaScript's 7 primitive types: string, number, bigint, boolean, undefined, null, and symbol. Understand immutability, typeof quirks, and autoboxing."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "JavaScript Fundamentals"
+"article:tag": "javascript primitive types, js data types, typeof javascript, string number boolean, javascript undefined null, symbol bigint"
 ---
 
 What's the difference between `"hello"` and `{ text: "hello" }`? Why can you call `"hello".toUpperCase()` if strings aren't objects? And why does `typeof null` return `"object"`?
@@ -209,7 +213,7 @@ console.log(0.1 + 0.2);           // 0.30000000000000004
 console.log(0.1 + 0.2 === 0.3);   // false! Welcome to JavaScript!
 ```
 
-This isn't a JavaScript bug. It's how floating-point math works in all programming languages. The decimal `0.1` cannot be perfectly represented in binary.
+This isn't a JavaScript bug — it follows the IEEE 754 double-precision floating-point standard used by virtually all modern programming languages. The decimal `0.1` cannot be perfectly represented in binary.
 
 <Warning>
 **Working with money?** Never use floating-point for calculations! Store amounts in cents as integers, then use JavaScript's built-in [`Intl.NumberFormat`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl/NumberFormat) for display.
@@ -406,7 +410,7 @@ console.log(value === null);  // true (use strict equality)
 
 ### Symbol
 
-**[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)** (ES6) creates unique identifiers. Even symbols with the same description are different.
+**[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)** (ES6) creates unique identifiers. Symbol was the first new primitive type added to JavaScript since its creation in 1995. Even symbols with the same description are different.
 
 ```javascript
 let id1 = Symbol("id");
@@ -1004,6 +1008,32 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
     // ✓ CORRECT - Use Number.isNaN()
     if (Number.isNaN(value)) { }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are the 7 primitive types in JavaScript?">
+JavaScript has exactly seven primitive types: string, number, bigint, boolean, undefined, null, and symbol. These are the fundamental building blocks of all data in JavaScript — everything else is an object.
+  </Accordion>
+
+  <Accordion title="Why does typeof null return 'object' in JavaScript?">
+    This is a well-documented bug from JavaScript's first implementation in 1995. In the original C source code, values were stored with type tags, and both objects and null shared the `000` tag. A proposal to fix it (typeof null === "null") was rejected by TC39 because too much existing code depends on the current behavior.
+  </Accordion>
+
+  <Accordion title="What is autoboxing in JavaScript?">
+Autoboxing is the process where JavaScript temporarily wraps a primitive in its corresponding wrapper object (String, Number, Boolean) when you access a property or call a method. For example, `"hello".toUpperCase()` works because the engine briefly creates a String object, calls the method, and discards the wrapper. This is why primitives appear to have methods even though they are not objects.
+  </Accordion>
+
+  <Accordion title="What is the difference between null and undefined in JavaScript?">
+`undefined` means "no value has been assigned" and is set automatically by the JavaScript engine. `null` means "intentionally empty" and is always set explicitly by the developer. `null == undefined` is true under loose equality, but `null === undefined` is false because they are different types.
+  </Accordion>
+
+  <Accordion title="Why does 0.1 + 0.2 not equal 0.3 in JavaScript?">
+    This happens because JavaScript uses the IEEE 754 double-precision floating-point standard to represent numbers. Certain decimal fractions like 0.1 cannot be represented exactly in binary, leading to tiny rounding errors. This is not a JavaScript-specific issue — the same behavior occurs in Python, Java, C++, and virtually every language that uses IEEE 754.
   </Accordion>
 </AccordionGroup>
 

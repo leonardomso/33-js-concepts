@@ -2,6 +2,10 @@
 title: "this, call, apply & bind"
 sidebarTitle: "this, call, apply, and bind: How Context Works"
 description: "Learn JavaScript's 'this' keyword and context binding. Master the 5 binding rules, call/apply/bind methods, and arrow functions."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Object-Oriented JavaScript"
+"article:tag": "javascript this keyword, call apply bind, context binding, function context, arrow functions"
 ---
 
 Why does `this` sometimes point to the wrong object? Why does your method work perfectly when called directly, but break when passed as a callback? And how do **[`call`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/call)**, **[`apply`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/apply)**, and **[`bind`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind)** let you take control?
@@ -167,7 +171,7 @@ BINDING RULES (Highest to Lowest Priority)
 ```
 
 <Note>
-Arrow functions are listed last not because they're lowest priority, but because they work differently. They don't have their own `this` at all. We'll cover them in detail.
+Arrow functions are listed last not because they're lowest priority, but because they work differently. Arrow functions do not have their own `this` binding at all — they inherit it from the enclosing lexical scope. We'll cover them in detail.
 </Note>
 
 ---
@@ -1404,6 +1408,32 @@ Try to figure out what `this` refers to in each example before revealing the ans
     **Answer:** `10` and `1`
     
     `bind` creates a partially applied function. `double(5)` returns `2 * 5 = 10`. The `length` property of a bound function reflects remaining parameters: `multiply` has 2 params, we pre-filled 1, so `double.length` is 1.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is 'this' in JavaScript?">
+    The `this` keyword refers to the object that is currently executing the function. Unlike most languages where `this` is determined at definition time, JavaScript determines `this` at call time based on how the function is invoked. `this` follows specific binding rules: default, implicit, explicit (call/apply/bind), and new binding.
+  </Accordion>
+
+  <Accordion title="What is the difference between call, apply, and bind?">
+    `call` invokes the function immediately with a specified `this` and individual arguments. `apply` also invokes immediately but takes arguments as an array. `bind` does not invoke the function — it returns a new function with `this` permanently set. Use `call`/`apply` for one-time invocations and `bind` when you need a reusable function with a fixed context.
+  </Accordion>
+
+  <Accordion title="Why do arrow functions not have their own 'this'?">
+    Arrow functions were designed to solve the common problem of losing `this` context in callbacks. Arrow functions do not have their own `this` binding — they inherit `this` from their enclosing lexical scope. This makes them ideal for callbacks and event handlers where you want to preserve the outer `this`.
+  </Accordion>
+
+  <Accordion title="How do you fix 'this' losing context in a callback?">
+    There are three common solutions: use an arrow function (which inherits `this` lexically), use `.bind(this)` to create a bound function, or store `this` in a variable like `const self = this`. Arrow functions are the most modern and concise approach and are recommended for most callback scenarios.
+  </Accordion>
+
+  <Accordion title="What are the five binding rules for 'this' in order of priority?">
+    From highest to lowest priority: (1) `new` binding — `this` is the newly created object. (2) Explicit binding — `call`, `apply`, or `bind` set `this`. (3) Implicit binding — the object before the dot becomes `this`. (4) Default binding — `this` is `globalThis` (or `undefined` in strict mode). (5) Arrow functions — `this` is inherited from the enclosing scope and cannot be overridden.
   </Accordion>
 </AccordionGroup>
 

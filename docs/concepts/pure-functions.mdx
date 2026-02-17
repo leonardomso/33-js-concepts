@@ -2,6 +2,10 @@
 title: "Pure Functions"
 sidebarTitle: "Pure Functions: Writing Predictable Code"
 description: "Learn pure functions in JavaScript. Understand the two rules of purity, avoid side effects, and write testable, predictable code with immutable patterns."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Functional Programming"
+"article:tag": "pure functions, side effects, immutability, functional programming, predictable code"
 ---
 
 Why does the same function sometimes give you different results? Why is some code easy to test while other code requires elaborate setup and mocking? Why do bugs seem to appear "randomly" when your logic looks correct?
@@ -43,7 +47,7 @@ A **pure function** is a function that follows two simple rules:
 1. **Same input → Same output**: Given the same arguments, it always returns the same result
 2. **No side effects**: It doesn't change anything outside itself
 
-That's it. If a function follows both rules, it's pure. If it breaks either rule, it's impure.
+That's it. If a function follows both rules, it's pure. If it breaks either rule, it's impure. This concept comes directly from mathematics, where functions are defined as deterministic mappings from inputs to outputs. According to the [State of JS 2023 survey](https://2023.stateofjs.com/), functional programming concepts like pure functions and immutability continue to grow in adoption across the JavaScript ecosystem.
 
 ```javascript
 // ✓ PURE: Follows both rules
@@ -55,7 +59,7 @@ double(5)  // 10
 double(5)  // 10, always 10
 ```
 
-Using [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) breaks purity because it introduces randomness:
+Using [`Math.random()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random) breaks purity because it introduces randomness. As [MDN explains](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random), `Math.random()` returns a pseudo-random number, meaning it depends on internal engine state rather than your function's arguments:
 
 ```javascript
 // ❌ IMPURE: Breaks rule 1 (different output for same input)
@@ -138,7 +142,7 @@ A pure function is like a recipe: predictable, self-contained, and trustworthy. 
 
 ## Rule 1: Same Input → Same Output
 
-This rule is also called **referential transparency**. It means you could replace a function call with its result and the program would work exactly the same.
+This rule is also called **referential transparency**. It means you could replace a function call with its result and the program would work exactly the same. This property is fundamental to functional programming and is what enables tools like React's `useMemo` to safely cache function results — as the [React documentation](https://react.dev/reference/react/useMemo) notes, memoization relies on functions being pure.
 
 [`Math.max()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/max) is a great example of a pure function:
 
@@ -736,6 +740,32 @@ The pure functions (`formatUsername`, `isValidUsername`) are easy to test and re
     - Log errors and debugging info
     
     The strategy is to **isolate impurity at the edges** of your application. Keep your core business logic in pure functions, and use impure functions only for I/O operations. This gives you the best of both worlds: testable, predictable logic with the ability to interact with the outside world.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is a pure function in JavaScript?">
+    A pure function always returns the same output for the same input and produces no side effects — it doesn't modify external variables, the DOM, or any state outside itself. As [MDN's glossary](https://developer.mozilla.org/en-US/docs/Glossary/Function) explains, JavaScript functions are objects that can encapsulate logic, and pure functions use that encapsulation to guarantee predictability.
+  </Accordion>
+
+  <Accordion title="What are side effects in JavaScript?">
+    Side effects are any observable changes a function makes beyond returning a value. Common side effects include modifying global variables, writing to the DOM, making HTTP requests, logging to the console, and writing to local storage. Pure functions avoid all of these.
+  </Accordion>
+
+  <Accordion title="Why are pure functions easier to test?">
+    Pure functions need no mocking, no setup, and no teardown. You pass inputs and assert outputs — that's it. According to the Stack Overflow 2023 Developer Survey, testing difficulty is one of the top challenges developers face, and pure functions directly reduce that complexity.
+  </Accordion>
+
+  <Accordion title="Is console.log a side effect?">
+    Yes. `console.log()` writes to an external output stream (the browser console or terminal), which is an observable effect beyond returning a value. A function that calls `console.log()` is technically impure, even though it's harmless in practice. In production code, logging is an acceptable impurity kept at the edges of your application.
+  </Accordion>
+
+  <Accordion title="What is referential transparency?">
+    Referential transparency means you can replace a function call with its return value without changing the program's behavior. For example, if `add(2, 3)` always returns `5`, you can substitute `5` anywhere `add(2, 3)` appears. This property makes code easier to reason about and enables compiler optimizations.
   </Accordion>
 </AccordionGroup>
 

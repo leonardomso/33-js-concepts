@@ -2,6 +2,10 @@
 title: "Type Coercion"
 sidebarTitle: "Type Coercion: How Values Convert Automatically"
 description: "Learn JavaScript type coercion. Understand how values convert to strings, numbers, and booleans, plus the 8 falsy values."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "JavaScript Fundamentals"
+"article:tag": "javascript type coercion, implicit conversion, abstract equality, truthy falsy values, javascript type casting"
 ---
 
 Why does `"5" + 3` give you `"53"` but `"5" - 3` gives you `2`? Why does `[] == ![]` return `true`? How does JavaScript decide what type a value should be?
@@ -33,7 +37,7 @@ This surprising behavior is **[type coercion](https://developer.mozilla.org/en-U
 
 ## What Is Type Coercion?
 
-**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work, sometimes helpfully, sometimes surprisingly. Understanding these conversion rules helps you write predictable, bug-free code.
+**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. JavaScript performs these conversions through a set of "abstract operations" — internal algorithms like ToString, ToNumber, and ToBoolean. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work, sometimes helpfully, sometimes surprisingly. Understanding these conversion rules helps you write predictable, bug-free code.
 
 ### The Shapeshifter Analogy
 
@@ -799,7 +803,7 @@ Let's explore the famous "weird parts" that make JavaScript... special.
 
 ### When Implicit Coercion IS Useful
 
-Despite the gotchas, some implicit coercion patterns are actually helpful:
+Stack Overflow's 2023 Developer Survey reports that type-related bugs remain among the most common debugging challenges for JavaScript developers. Despite the gotchas, some implicit coercion patterns are actually helpful:
 
 ```javascript
 // 1. Checking for null OR undefined in one shot
@@ -950,6 +954,32 @@ function process(count) {
     Step by step:
     1. `true + false` = `1 + 0` = `1` (booleans → numbers)
     2. `1 + "hello"` = `"1hello"` (number → string for concatenation)
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+<Accordion title="When does type coercion cause production bugs most often?">
+    Type coercion is JavaScript's automatic conversion of values from one type to another. All coercion ultimately converts to one of three primitive types: String, Number, or Boolean. It can be implicit (triggered by operators) or explicit (using functions like `Number()`, `String()`, or `Boolean()`).
+  </Accordion>
+
+<Accordion title="How do falsy values create subtle conditional bugs?">
+    There are 8 common falsy values: `false`, `0`, `-0`, `0n` (BigInt zero), `""` (empty string), `null`, `undefined`, and `NaN`. Every other value in JavaScript is truthy — including empty arrays `[]`, empty objects `{}`, and the string `"0"`.
+  </Accordion>
+
+  <Accordion title='Why does "5" + 3 return "53" but "5" - 3 returns 2?'>
+    The `+` operator has a dual role: it performs both addition and string concatenation. When either operand is a string, `+` concatenates. The `-` operator only performs subtraction, so it always converts operands to numbers. This asymmetry is one of the most frequently asked JavaScript interview questions according to Stack Overflow surveys.
+  </Accordion>
+
+<Accordion title="When should you prefer explicit coercion over implicit coercion?">
+    Explicit coercion is when you intentionally convert types using functions like `Number("42")` or `String(42)`. Implicit coercion happens automatically when JavaScript encounters mismatched types in operations — for example, `"5" - 3` implicitly converts `"5"` to the number `5`. Most style guides recommend explicit coercion for clarity.
+  </Accordion>
+
+<Accordion title="How do you debug object-to-primitive conversion issues quickly?">
+    JavaScript uses the ToPrimitive abstract operation, which checks for a `Symbol.toPrimitive` method first, then falls back to `valueOf()` and `toString()`. For number hints, `valueOf()` is tried first; for string hints, `toString()` is tried first. Arrays convert via `toString()`, which is why `[1,2,3] + ""` produces `"1,2,3"`.
   </Accordion>
 </AccordionGroup>
 

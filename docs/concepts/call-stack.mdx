@@ -2,6 +2,10 @@
 title: "Call Stack"
 sidebarTitle: "Call Stack: How Function Execution Works"
 description: "Learn how the JavaScript call stack works. Understand stack frames, LIFO ordering, execution contexts, and stack overflow errors."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "JavaScript Fundamentals"
+"article:tag": "javascript call stack, execution context, stack overflow, LIFO, function execution, stack frame"
 ---
 
 How does JavaScript keep track of which function is running? When a function calls another function, how does JavaScript know where to return when that function finishes?
@@ -93,14 +97,14 @@ LIFO = Last In, First Out
 
 ### Why Does JavaScript Need a Call Stack?
 
-JavaScript is **[single-threaded](https://developer.mozilla.org/en-US/docs/Glossary/Thread)**, meaning it can only do **one thing at a time**. The call stack helps JavaScript:
+JavaScript is **[single-threaded](https://developer.mozilla.org/en-US/docs/Glossary/Thread)**, meaning it can only do **one thing at a time**. Each function invocation creates a new execution context that gets pushed onto the stack. The call stack helps JavaScript:
 
 1. **Remember where it is** — Which function is currently running?
 2. **Know where to go back** — When a function finishes, where should execution continue?
 3. **Keep track of local variables** — Each function has its own variables that shouldn't interfere with others
 
 <Info>
-**ECMAScript Specification**: According to the official JavaScript specification, the call stack is implemented through "[execution contexts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#stack_and_execution_contexts)." Each function call creates a new execution context that gets pushed onto the stack.
+**ECMAScript Specification**: The call stack is implemented through "[execution contexts](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Execution_model#stack_and_execution_contexts)." Each function call creates a new execution context that gets pushed onto the stack.
 </Info>
 
 ---
@@ -381,7 +385,7 @@ printSquare(4);
 
 ## The #1 Call Stack Mistake: Stack Overflow
 
-The call stack has a **limited size**. If you keep adding functions without removing them, eventually you'll run out of space. This is called a **stack overflow**, and JavaScript throws a **[RangeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError)** when it happens.
+The call stack has a **limited size**. The default limit varies by engine — Chrome's V8 typically allows around 10,000–15,000 frames, while Firefox's SpiderMonkey has a similar threshold. If you keep adding functions without removing them, eventually you'll run out of space. This is called a **stack overflow**, and JavaScript throws a **[RangeError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError)** when it happens.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
@@ -645,7 +649,7 @@ console.log('Third');
 // Second  ← Even with 0ms delay, this runs last!
 ```
 
-The `setTimeout` callback doesn't go directly on the call stack. It waits in a queue until the stack is empty. This is why "Third" prints before "Second" even though the timeout is 0 milliseconds.
+The `setTimeout` callback doesn't go directly on the call stack. It waits in a queue until the stack is empty. As Philip Roberts demonstrated in his acclaimed JSConf EU talk "What the heck is the event loop?" (viewed over 8 million times), this is why "Third" prints before "Second" even though the timeout is 0 milliseconds.
 
 <CardGroup cols={2}>
   <Card title="Event Loop" icon="rotate" href="/concepts/event-loop">
@@ -892,6 +896,32 @@ The `setTimeout` callback doesn't go directly on the call stack. It waits in a q
     3. **Bottom line** — Where the chain started (the initial call)
     
     The trace tells you: the program started at line 7, called `a()`, which called `b()`, which called `c()`, where the error was thrown. This helps you trace back through your code to find the root cause.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the call stack in JavaScript?">
+    The call stack is a LIFO (Last In, First Out) data structure that JavaScript uses to track function execution. Each function call creates an "execution context" that is pushed onto the stack. When a function returns, its context is popped off and execution resumes in the calling function.
+  </Accordion>
+
+  <Accordion title="What causes a stack overflow error in JavaScript?">
+    A stack overflow occurs when the call stack exceeds its maximum size, typically around 10,000–15,000 frames in V8 (Chrome, Node.js). The most common cause is infinite recursion — a function that calls itself without a proper base case. JavaScript throws a `RangeError: Maximum call stack size exceeded` when this happens.
+  </Accordion>
+
+  <Accordion title="Why is JavaScript single-threaded?">
+    JavaScript was designed as a single-threaded language to simplify DOM manipulation — having multiple threads modifying the page simultaneously would create race conditions. JavaScript has one call stack and can only execute one piece of code at a time. Asynchronous behavior is achieved through the event loop, Web APIs, and task queues rather than multiple threads.
+  </Accordion>
+
+  <Accordion title="What is an execution context in JavaScript?">
+    An execution context is the environment in which JavaScript code is evaluated and executed. It contains the function's arguments, local variables, the `this` binding, a reference to the outer scope (scope chain), and the return address. The ECMAScript specification defines two types: the Global Execution Context (created when your script starts) and Function Execution Contexts (created on each function call).
+  </Accordion>
+
+  <Accordion title="How does the call stack relate to the event loop?">
+    The call stack handles synchronous code execution, while the event loop manages asynchronous callbacks. When an async operation (like `setTimeout` or `fetch`) completes, its callback is placed in a task queue. The event loop checks if the call stack is empty, and only then moves the next callback onto the stack for execution. This architecture was popularized by Philip Roberts' JSConf EU talk, which has been viewed over 8 million times.
   </Accordion>
 </AccordionGroup>
 

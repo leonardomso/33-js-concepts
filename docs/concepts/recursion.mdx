@@ -2,6 +2,10 @@
 title: "Recursion"
 sidebarTitle: "Recursion: Functions That Call Themselves"
 description: "Learn recursion in JavaScript. Understand base cases, recursive calls, the call stack, and patterns like factorial, tree traversal, and memoization."
+"og:type": "article"
+"article:author": "Leonardo Maldonado"
+"article:section": "Functional Programming"
+"article:tag": "recursion, recursive functions, base case, call stack, tree traversal, memoization"
 ---
 
 How do you solve a problem by breaking it into smaller versions of the same problem? What if a function could call itself to chip away at a task until it's done?
@@ -44,7 +48,7 @@ This is **[recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursio
 
 ## What is Recursion?
 
-**[Recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursion)** is a programming technique where a function calls itself to solve a problem. Instead of using loops, the function breaks a problem into smaller versions of the same problem until it reaches a case simple enough to solve directly.
+**[Recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursion)** is a programming technique where a function calls itself to solve a problem. Instead of using loops, the function breaks a problem into smaller versions of the same problem until it reaches a case simple enough to solve directly. The [ECMAScript specification](https://tc39.es/ecma262/#sec-function-definitions) allows functions to reference themselves within their own body, which is the mechanism that makes recursion possible in JavaScript.
 
 <Note>
 **Recursion isn't unique to JavaScript.** It's a fundamental computer science concept found in virtually every programming language. The patterns you learn here apply whether you're writing Python, C++, Java, or any other language.
@@ -136,7 +140,7 @@ When you find the smallest doll, you start closing them back up. In recursion, o
 
 ## How Recursion Works Under the Hood
 
-To understand recursion, you need to understand how the [call stack](/concepts/call-stack) works. Every time a function is called, JavaScript creates an **[execution context](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** and pushes it onto the call stack. When the function returns, its context is popped off.
+To understand recursion, you need to understand how the [call stack](/concepts/call-stack) works. Every time a function is called, JavaScript creates an **[execution context](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack)** and pushes it onto the call stack. When the function returns, its context is popped off. According to [MDN's documentation on call stacks](https://developer.mozilla.org/en-US/docs/Glossary/Call_stack), most browsers have a stack size limit — typically around 10,000–25,000 frames — exceeding it throws a `RangeError: Maximum call stack size exceeded`.
 
 With recursion, multiple execution contexts for the *same function* stack up:
 
@@ -803,7 +807,7 @@ function factorialTail(n, accumulator = 1) {
 **Why does this matter?** In theory, tail recursive functions can be optimized by the JavaScript engine to reuse the same stack frame, avoiding stack overflow entirely. This is called **Tail Call Optimization (TCO)**.
 
 <Note>
-**Reality check:** Most JavaScript engines (V8 in Chrome/Node, SpiderMonkey in Firefox) **do not implement TCO**. Safari's JavaScriptCore is the notable exception. So in practice, tail recursion doesn't prevent stack overflow in most environments. Still, it's good to understand the concept, as it's important in functional programming languages like Haskell and Scheme.
+**Reality check:** Most JavaScript engines (V8 in Chrome/Node, SpiderMonkey in Firefox) **do not implement TCO**. Safari's JavaScriptCore is the notable exception — it has supported TCO since 2016. So in practice, tail recursion doesn't prevent stack overflow in most environments. The [ECMAScript 2015 specification](https://tc39.es/ecma262/#sec-tail-position-calls) does define tail call optimization in strict mode, but engine adoption remains limited. Still, it's good to understand the concept, as it's important in functional programming languages like Haskell and Scheme.
 </Note>
 
 ### Converting to Iteration
@@ -973,6 +977,32 @@ The iterative version uses heap memory (the array) instead of stack memory, so i
               ↓ returns 6
     Stack: []
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is recursion in JavaScript?">
+    Recursion is when a function calls itself to solve a problem by breaking it into smaller instances of the same problem. Every recursive function needs a base case (when to stop) and a recursive case (how to reduce the problem). As [MDN's glossary](https://developer.mozilla.org/en-US/docs/Glossary/Recursion) defines it, recursion is an act of a function calling itself until a termination condition is met.
+  </Accordion>
+
+  <Accordion title="What happens if I forget the base case?">
+    Without a base case, the function calls itself indefinitely until the JavaScript engine runs out of call stack space and throws a `RangeError: Maximum call stack size exceeded`. Most browsers limit the stack to around 10,000–25,000 frames. Always ensure your base case is reachable from every possible input.
+  </Accordion>
+
+  <Accordion title="When should I use recursion instead of loops?">
+    Recursion excels with naturally recursive data structures like trees, nested objects, and linked lists. For simple iteration over arrays or counting, a `for` loop is typically clearer and more performant. If the problem involves branching paths (like traversing a file system or DOM tree), recursion is usually the more natural solution.
+  </Accordion>
+
+  <Accordion title="Does JavaScript support tail call optimization?">
+    The [ECMAScript 2015 specification](https://tc39.es/ecma262/#sec-tail-position-calls) defines tail call optimization in strict mode, but most engines have not implemented it. Safari's JavaScriptCore is the only major engine with TCO support. In practice, use memoization or convert deep recursion to iteration when stack depth is a concern.
+  </Accordion>
+
+  <Accordion title="How deep can recursion go in JavaScript?">
+    The maximum recursion depth depends on the JavaScript engine and available memory. Chrome's V8 typically allows around 10,000–15,000 stack frames, while other engines vary. For problems requiring deep recursion, consider converting to an iterative approach using an explicit stack data structure.
   </Accordion>
 </AccordionGroup>
 
