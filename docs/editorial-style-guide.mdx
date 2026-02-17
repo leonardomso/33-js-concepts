@@ -1,0 +1,200 @@
+---
+title: "Editorial Style Guide"
+description: "Writing standards for 33 JavaScript Concepts: teacher voice, intro framework, research validation, and tested code examples."
+"og:type": "website"
+"article:author": "Leonardo Maldonado"
+"article:section": "Community"
+"article:tag": "editorial style guide, technical writing standards, javascript docs quality, tested code examples"
+---
+
+## Why This Guide Exists
+
+33 JavaScript Concepts should read like a clear, trusted teacher.
+
+This guide defines how we write concept pages so they stay:
+
+- accurate and evidence-based
+- easy to understand for beginners and intermediate developers
+- consistent across all topics
+- backed by tested examples in our tested files
+
+If a contribution does not meet these standards, it is not ready to publish.
+
+---
+
+## Voice Standard: Clear Teacher
+
+Write like an experienced engineer teaching one person at a time.
+
+### Required voice rules
+
+1. Explain directly. Do not hide key ideas behind buzzwords.
+2. Use active voice and short sentences.
+3. Define terms before using advanced nuance.
+4. Prefer practical language over academic phrasing.
+5. Lead with what the reader should understand, then add context.
+
+### Avoid these patterns
+
+- citation-led openings such as "According to..." when a direct statement is clearer
+- filler transitions such as "Now let's discuss..."
+- exaggerated claims without evidence
+
+<Tip>
+Strong rule: explain first, cite second.
+</Tip>
+
+---
+
+## Intro Framework (MAPP)
+
+Every concept page intro should follow **MAPP** in this order.
+
+| Step | What to write | Length target |
+|------|---------------|---------------|
+| **M - Moment** | A real JavaScript situation where this concept appears | 1-2 sentences |
+| **A - Abstract** | Plain-language definition of the concept | 1 sentence |
+| **P - Payoff** | Why this matters in production/debugging/interviews | 1 sentence |
+| **P - Preview** | What the page will teach and what the reader can do after | 1 sentence |
+
+### Example shape
+
+```mdx
+You click a button and the UI freezes while data loads.
+
+The event loop is JavaScript's scheduling model for async work on a single thread.
+
+Understanding it helps you debug timing bugs, avoid UI jank, and reason about Promise behavior.
+
+In this page, you will learn task queues, microtasks vs macrotasks, and how to choose the right async pattern.
+```
+
+---
+
+## Research and Validation Before Writing
+
+Before writing or updating technical claims, validate them.
+
+### Source priority (highest to lower)
+
+1. Official specifications (ECMAScript, WHATWG, W3C, RFCs)
+2. Official docs (MDN, Node.js docs, browser vendor docs)
+3. Reputable implementation sources (V8 blog, web.dev, Can I Use)
+4. Community resources (articles, talks) for explanation quality only
+
+### Evidence rules
+
+- Use at least **two independent sources** for non-trivial technical claims.
+- For browser support or usage stats, include source and recency.
+- If a claim is disputed or subtle, cite the spec or official docs.
+- Do not add decorative citations just to sound authoritative.
+
+### Fact-check checklist
+
+- Is the claim still true in modern JavaScript runtimes?
+- Does wording match current spec/documentation behavior?
+- Is browser/runtime scope explicit (browser, Node.js, both)?
+- Are caveats included where behavior differs?
+
+---
+
+## Code Example Standard: Tested Files Required
+
+Every example added to a concept page must be verified in our tested files.
+
+### Rule
+
+If code appears in `docs/concepts/*.mdx` or `docs/beyond/concepts/*.mdx`, there must be a corresponding test in `tests/` that validates behavior.
+
+### Mapping guidance
+
+- Core concept pages map to topic folders under `tests/` (for example `tests/fundamentals/*`, `tests/functions-execution/*`, `tests/advanced-topics/*`).
+- Beyond pages map to `tests/beyond/*` clusters.
+- DOM/browser behavior uses `.dom.test.js` where needed.
+
+### Required verification workflow
+
+<Steps>
+  <Step title="1) Locate or create the matching test file">
+    Add or update tests in the relevant topic folder under `tests/`.
+  </Step>
+  <Step title="2) Validate the new example behavior">
+    Run targeted tests first, then full suite if the change is broad.
+  </Step>
+  <Step title="3) Keep docs and tests in sync">
+    If example output or behavior changes, update both docs and tests in the same PR.
+  </Step>
+</Steps>
+
+### Test commands
+
+```bash
+npm test
+npm run test:coverage
+```
+
+<Warning>
+Untested examples should not be merged. "Looks correct" is not enough.
+</Warning>
+
+---
+
+## Page Structure Standard
+
+Use this default structure for concept pages:
+
+1. Intro using MAPP
+2. Core explanation (simple to advanced)
+3. Runnable examples
+4. Common mistakes/debug notes
+5. FAQ (4-5 useful questions)
+6. Key takeaways
+7. References/resources
+
+Keep one primary idea per section. If a section covers multiple ideas, split it.
+
+---
+
+## FAQ Quality Rules
+
+FAQ exists to answer real learner questions, not to pad content.
+
+### Good FAQ questions
+
+- "When should I use X vs Y?"
+- "Why does this fail in this case?"
+- "How do I debug this behavior quickly?"
+
+### Weak FAQ questions
+
+- definitions already explained in the first section
+- broad questions with vague answers
+- duplicate questions with minor wording changes
+
+Each answer should be direct, short, and actionable.
+
+---
+
+## Publish Readiness Checklist
+
+Before merging content updates, confirm all items:
+
+- [ ] Intro follows MAPP and explains importance clearly
+- [ ] Technical claims validated with authoritative sources
+- [ ] Citations are purposeful, not decorative
+- [ ] Every added/changed example is covered in tested files under `tests/`
+- [ ] Relevant tests pass locally
+- [ ] FAQ questions are practical and non-duplicate
+- [ ] Writing is concise, clear, and consistent with teacher voice
+
+---
+
+## Exception Policy
+
+Exceptions are allowed only when documented in the PR description:
+
+- experimental or runtime-specific behavior
+- legacy behavior kept for historical context
+- intentionally simplified examples for beginner onboarding
+
+Each exception must explain why the standard rule was not applied and how risk was reduced.

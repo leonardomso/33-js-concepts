@@ -254,6 +254,7 @@
             "group": "Get Involved",
             "icon": "users",
             "pages": [
+              "editorial-style-guide",
               "contributing",
               "translations"
             ]
