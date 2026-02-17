@@ -20,7 +20,7 @@ const userMap = { alice: 1, bob: 2, charlie: 3, /* ...thousands more */ }
 userMap['zara']  // Direct access - O(1)
 ```
 
-A **data structure** is a way of organizing data so it can be used efficiently. As Donald Knuth emphasizes in *The Art of Computer Programming*, the choice of data structure often matters more than the choice of algorithm. The right structure makes your code faster and cleaner. The wrong one can make simple operations painfully slow.
+A **data structure** is a way of organizing data so it can be used efficiently. In practice, the choice of data structure often matters more than the choice of algorithm. The right structure makes your code faster and cleaner. The wrong one can make simple operations painfully slow.
 
 <Info>
 **What you'll learn in this guide:**
@@ -142,7 +142,7 @@ user.hasOwnProperty('name')  // true
 - Keys are converted to strings (numbers become "1", "2", etc.)
 - Objects have a prototype chain (inherited properties)
 - No built-in `.size` property
-- As defined in the [ECMAScript specification](https://tc39.es/ecma262/#sec-ordinaryownpropertykeys), property order is preserved in ES2015+, but with specific rules: integer keys are sorted numerically first, then string keys appear in insertion order
+- Property order is preserved in ES2015+, but with specific rules: integer keys are sorted numerically first, then string keys appear in insertion order
 
 **When to use Objects:**
 - Storing entity data (user profiles, settings)
@@ -432,7 +432,7 @@ stack.size()   // 1
 
 ### Queue (FIFO)
 
-A **Queue** follows First-In-First-Out: the first item added is the first removed. Think of a line at a store. According to the [Stack Overflow Developer Survey 2023](https://survey.stackoverflow.co/2023/), queues and other fundamental data structures remain among the most commonly tested topics in technical interviews.
+A **Queue** follows First-In-First-Out: the first item added is the first removed. Think of a line at a store. Queues and other fundamental data structures remain common topics in technical interviews.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐

@@ -8,7 +8,7 @@ description: "Learn the MutationObserver API in JavaScript. Watch DOM changes, d
 "article:tag": "mutationobserver, dom changes, attribute modifications, reactive ui, dom monitoring"
 ---
 
-How do you know when something changes in the DOM? What if you need to react when a third-party script adds elements, when user input modifies content, or when attributes change dynamically?
+How do you know when something changes in the DOM? You might need to react when a third-party script adds elements, when user input modifies content, or when attributes change dynamically.
 
 ```javascript
 // Watch for any changes to a DOM element
@@ -24,7 +24,7 @@ observer.observe(document.body, {
 })
 ```
 
-The **[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)** API lets you watch the DOM for changes and react to them efficiently. It replaced the older, performance-killing Mutation Events and is now the standard way to detect DOM modifications.
+The **[MutationObserver](https://developer.mozilla.org/en-US/docs/Web/API/MutationObserver)** API lets you watch the DOM for changes and react to them efficiently. It replaced older Mutation Events and is now the standard way to detect DOM modifications.
 
 <Info>
 **What you'll learn in this guide:**
@@ -72,7 +72,7 @@ Before MutationObserver, developers used **Mutation Events** (`DOMNodeInserted`,
 | Performance killer | Made complex DOM updates painfully slow |
 | Bubbled up the DOM | Caused cascade of unnecessary handlers |
 
-MutationObserver solves all of these by batching changes and delivering them asynchronously via microtasks. As the [original Mozilla Hacks blog post](https://hacks.mozilla.org/2012/05/dom-mutationobserver-reacting-to-dom-changes-without-killing-browser-performance/) explains, this redesign was driven by real-world performance problems that Mutation Events caused in complex web applications.
+MutationObserver solves these problems by batching changes and delivering them asynchronously via microtasks. The redesign was driven by real-world performance issues caused by Mutation Events in complex web applications.
 
 ---
 
@@ -441,7 +441,7 @@ class MyComponent {
 
 ## When Callbacks Run: Microtasks
 
-MutationObserver callbacks are scheduled as **microtasks**, meaning they run after the current script but before the browser renders. According to the [WHATWG HTML specification](https://html.spec.whatwg.org/multipage/webappapis.html#mutation-observers), this batching behavior is intentional — it allows multiple DOM changes to be processed in a single callback invocation. This is the same queue as Promise callbacks.
+MutationObserver callbacks are scheduled as **microtasks**, so they run after the current script and before the browser renders. This batching behavior is intentional: it lets multiple DOM changes be processed in a single callback invocation. This is the same queue used by Promise callbacks.
 
 ```javascript
 console.log('1. Script start')
@@ -876,7 +876,7 @@ observer.observe(specificContainer, {
   </Accordion>
 
   <Accordion title="When do MutationObserver callbacks execute?">
-    Callbacks run as microtasks — after the current synchronous script finishes but before the browser paints. According to the WHATWG specification, multiple rapid DOM changes are batched into a single callback invocation, which is why MutationObserver is far more efficient than the synchronous Mutation Events it replaced.
+    Callbacks run as microtasks — after the current synchronous script finishes but before the browser paints. Multiple rapid DOM changes are batched into a single callback invocation, which is why MutationObserver is far more efficient than the synchronous Mutation Events it replaced.
   </Accordion>
 </AccordionGroup>
 

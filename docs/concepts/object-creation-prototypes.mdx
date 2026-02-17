@@ -22,7 +22,7 @@ console.log(player.hasOwnProperty("name"))  // true
 console.log(Object.getPrototypeOf(player))  // { constructor: Object, toString: f, ... }
 ```
 
-The answer is the **[prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)**. It's JavaScript's inheritance mechanism, defined in the ECMAScript specification as the `[[Prototype]]` internal slot. Every object has a hidden link to another object called its **prototype**. When you access a property, JavaScript looks for it on the object first, then follows this chain of prototypes until it finds the property or reaches the end (`null`).
+The answer is the **[prototype chain](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Inheritance_and_the_prototype_chain)**. It is JavaScript's inheritance mechanism. Every object has a hidden link to another object called its **prototype**. When you access a property, JavaScript checks the object first, then follows the chain of prototypes until it finds the property or reaches `null`.
 
 <Info>
 **What you'll learn in this guide:**
@@ -116,7 +116,7 @@ console.log(apprentice.castSpell())  // "Harry casts a spell!"
 ```
 
 <Tip>
-**The Chain Always Ends:** Every prototype chain eventually reaches `Object.prototype`, then `null`. As documented on MDN, this is why all objects have access to methods like `toString()` and `hasOwnProperty()`. They inherit them from `Object.prototype`.
+**The Chain Always Ends:** Every prototype chain eventually reaches `Object.prototype`, then `null`. That is why all objects have access to methods like `toString()` and `hasOwnProperty()`. They inherit them from `Object.prototype`.
 </Tip>
 
 ---
@@ -1062,11 +1062,11 @@ function Player(name) {
 
 <AccordionGroup>
   <Accordion title="What is the prototype chain in JavaScript?">
-    The prototype chain is JavaScript's inheritance mechanism. Every object has an internal `[[Prototype]]` link to another object. When you access a property, JavaScript looks on the object first, then follows the chain of prototypes until it finds the property or reaches `null`. As described in the ECMAScript specification, this delegation model is what powers all object inheritance in JavaScript.
+    The prototype chain is JavaScript's inheritance mechanism. Every object has an internal `[[Prototype]]` link to another object. When you access a property, JavaScript checks the object first, then follows the prototype chain until it finds the property or reaches `null`. This delegation model powers object inheritance in JavaScript.
   </Accordion>
 
   <Accordion title="What is the difference between __proto__ and prototype?">
-    `__proto__` is an accessor property on every object that points to its prototype (the object it inherits from). `.prototype` is a property on constructor functions that becomes the `__proto__` of objects created with `new`. According to MDN, `__proto__` is a legacy feature — use `Object.getPrototypeOf()` and `Object.setPrototypeOf()` instead.
+    `__proto__` is an accessor property on every object that points to its prototype (the object it inherits from). `.prototype` is a property on constructor functions that becomes the `__proto__` of objects created with `new`. `__proto__` is a legacy feature — use `Object.getPrototypeOf()` and `Object.setPrototypeOf()` instead.
   </Accordion>
 
   <Accordion title="How does Object.create() work?">

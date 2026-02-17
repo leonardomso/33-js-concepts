@@ -26,7 +26,7 @@ console.log(int32View.length)  // 4 (4 integers × 4 bytes = 16 bytes)
 console.log(int32View.byteLength)  // 16
 ```
 
-Typed Arrays provide a way to work with raw binary data in memory buffers, giving you the performance of low-level languages while staying in JavaScript. As [MDN's Typed Array guide](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Typed_arrays) explains, they were originally introduced to support WebGL and have since become essential for any binary data processing in the browser.
+Typed Arrays provide a way to work with raw binary data in memory buffers, giving you low-level performance while staying in JavaScript. They were originally introduced to support WebGL and have since become essential for binary data processing in the browser.
 
 <Info>
 **What you'll learn in this guide:**
@@ -46,7 +46,7 @@ Typed Arrays provide a way to work with raw binary data in memory buffers, givin
 
 ## The Filing Cabinet Analogy
 
-Think of an [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) like a filing cabinet with a fixed number of drawers (bytes). According to the [ECMAScript specification](https://tc39.es/ecma262/#sec-arraybuffer-objects), an ArrayBuffer represents a fixed-length raw binary data buffer — the cabinet itself doesn't know what's inside the drawers. It just reserves the space.
+Think of an [ArrayBuffer](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) like a filing cabinet with a fixed number of drawers (bytes). An ArrayBuffer represents a fixed-length raw binary data buffer — the cabinet itself doesn't know what's inside the drawers. It just reserves the space.
 
 A [Typed Array](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypedArray) is like a set of instructions for reading the cabinet. "Read drawers 1-4 as a single 32-bit integer" or "Read each drawer as a separate 8-bit value."
 
@@ -714,7 +714,7 @@ const backToTyped = new Uint8Array(array2)
   </Accordion>
 
   <Accordion title="When should I use Typed Arrays instead of regular arrays?">
-    Use Typed Arrays when working with binary data: file I/O, WebGL rendering, audio processing, WebSocket binary messages, or image pixel manipulation. MDN notes that Typed Arrays are significantly faster for numeric computation because they store fixed-type values in contiguous memory, avoiding the overhead of JavaScript's dynamic typing.
+Use Typed Arrays when working with binary data: file I/O, WebGL rendering, audio processing, WebSocket binary messages, or image pixel manipulation. They are faster for numeric computation because they store fixed-type values in contiguous memory and avoid dynamic typing overhead.
   </Accordion>
 
   <Accordion title="What is DataView and when should I use it?">

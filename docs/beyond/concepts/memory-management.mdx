@@ -8,7 +8,7 @@ description: "Learn how JavaScript manages memory automatically. Understand the 
 "article:tag": "memory management, javascript memory, stack heap, memory leaks, devtools profiling"
 ---
 
-Why does your web app slow down over time? Why does that single-page application become sluggish after hours of use? The answer often lies in **memory management**, the invisible system that allocates and frees memory as your code runs.
+Why does your web app slow down over time? Why does that single-page application become sluggish after hours of use? The answer is often **memory management**. It is the system that allocates and frees memory as your code runs.
 
 ```javascript
 // Memory is allocated automatically when you create values
@@ -20,7 +20,7 @@ let count = 42;                            // Primitive stored in stack
 // JavaScript handles cleanup automatically... most of the time
 ```
 
-Unlike languages like C where you manually allocate and free memory, JavaScript handles this automatically. But "automatic" doesn't mean "worry-free." According to the State of JS 2023 survey, memory management and performance optimization remain among the top pain points reported by JavaScript developers. Understanding how memory management works helps you write faster, more efficient code and avoid the dreaded memory leaks that crash applications.
+Unlike languages like C, where you manually allocate and free memory, JavaScript handles this automatically. But "automatic" does not mean "worry-free." Memory management and performance optimization still cause real problems in production code. Understanding this model helps you write faster code and avoid leaks that crash applications.
 
 <Info>
 **What you'll learn in this guide:**
@@ -66,7 +66,7 @@ The tricky part? JavaScript handles allocation and release automatically, which 
 
 ## What is Memory Management?
 
-**[Memory management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)** is the process of allocating memory when your program needs it, using that memory, and releasing it when it's no longer needed. In JavaScript, this happens automatically through a system called garbage collection, which monitors objects and frees memory that's no longer reachable by your code.
+**[Memory management](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Memory_management)** is the process of allocating memory when your program needs it, using that memory, and releasing it when it's no longer needed. In JavaScript, this happens automatically through garbage collection. The collector monitors objects and frees memory that is no longer reachable by your code.
 
 ### The Memory Lifecycle
 
@@ -113,7 +113,7 @@ Every piece of data in your program goes through three phases:
 </Steps>
 
 <Note>
-**The hard part:** Determining when memory is "no longer needed" is actually an undecidable problem in computer science. Garbage collectors use approximations (like checking if values are reachable) rather than truly knowing if you'll use something again.
+**The hard part:** Determining when memory is "no longer needed" is an undecidable problem in computer science. Garbage collectors use practical approximations (like reachability) instead of trying to predict future usage perfectly.
 </Note>
 
 ---
@@ -292,7 +292,7 @@ function example() {
 
 ### The Mark-and-Sweep Algorithm
 
-Modern JavaScript engines use the **mark-and-sweep** algorithm. As MDN documents, this approach replaced the older reference-counting strategy because it correctly handles circular references — a limitation that caused notorious memory leaks in early Internet Explorer versions:
+Modern JavaScript engines use the **mark-and-sweep** algorithm. This approach replaced older reference-counting strategies because it handles circular references — a limitation that caused notorious memory leaks in early Internet Explorer versions:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
