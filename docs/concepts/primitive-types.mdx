@@ -46,7 +46,7 @@ These seven **[primitive](https://developer.mozilla.org/en-US/docs/Glossary/Prim
 
 ## What Are Primitive Types?
 
-In JavaScript, a **primitive** is data that is not an object and has no methods of its own. As defined by the ECMAScript 2024 specification (ECMA-262), JavaScript has exactly **7 primitive types**:
+In JavaScript, a **primitive** is data that is not an object and has no methods of its own. JavaScript has exactly **7 primitive types**:
 
 | Type | Example | Description |
 |------|---------|-------------|
@@ -410,7 +410,7 @@ console.log(value === null);  // true (use strict equality)
 
 ### Symbol
 
-**[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)** (ES6) creates unique identifiers. According to MDN, Symbol was the first new primitive type added to JavaScript since its creation in 1995. Even symbols with the same description are different.
+**[Symbol](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)** (ES6) creates unique identifiers. Symbol was the first new primitive type added to JavaScript since its creation in 1995. Even symbols with the same description are different.
 
 ```javascript
 let id1 = Symbol("id");
@@ -1017,7 +1017,7 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
 
 <AccordionGroup>
   <Accordion title="What are the 7 primitive types in JavaScript?">
-    JavaScript has exactly seven primitive types: string, number, bigint, boolean, undefined, null, and symbol. As defined by the ECMAScript specification, these are the fundamental building blocks of all data in JavaScript — everything else is an object.
+JavaScript has exactly seven primitive types: string, number, bigint, boolean, undefined, null, and symbol. These are the fundamental building blocks of all data in JavaScript — everything else is an object.
   </Accordion>
 
   <Accordion title="Why does typeof null return 'object' in JavaScript?">
@@ -1025,11 +1025,11 @@ JavaScript has some famous "weird parts" that every developer should know. Most 
   </Accordion>
 
   <Accordion title="What is autoboxing in JavaScript?">
-    Autoboxing is the process where JavaScript temporarily wraps a primitive in its corresponding wrapper object (String, Number, Boolean) when you access a property or call a method. For example, `"hello".toUpperCase()` works because the engine briefly creates a String object, calls the method, and discards the wrapper. As documented in MDN, this is why primitives appear to have methods even though they are not objects.
+Autoboxing is the process where JavaScript temporarily wraps a primitive in its corresponding wrapper object (String, Number, Boolean) when you access a property or call a method. For example, `"hello".toUpperCase()` works because the engine briefly creates a String object, calls the method, and discards the wrapper. This is why primitives appear to have methods even though they are not objects.
   </Accordion>
 
   <Accordion title="What is the difference between null and undefined in JavaScript?">
-    `undefined` means "no value has been assigned" and is set automatically by the JavaScript engine. `null` means "intentionally empty" and is always set explicitly by the developer. According to the ECMAScript specification, `null == undefined` is true under loose equality, but `null === undefined` is false because they are different types.
+`undefined` means "no value has been assigned" and is set automatically by the JavaScript engine. `null` means "intentionally empty" and is always set explicitly by the developer. `null == undefined` is true under loose equality, but `null === undefined` is false because they are different types.
   </Accordion>
 
   <Accordion title="Why does 0.1 + 0.2 not equal 0.3 in JavaScript?">

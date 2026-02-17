@@ -112,7 +112,7 @@ console.log(iterator.next())  // { value: undefined, done: true }
 ```
 
 <Note>
-**`for...of` uses iterators under the hood.** When you write `for (const item of array)`, JavaScript is actually calling the iterator's `.next()` method repeatedly until `done` is `true`. According to the ECMAScript specification, any object that implements the `Symbol.iterator` method is considered iterable and can be used with `for...of`, spread syntax, and destructuring.
+**`for...of` uses iterators under the hood.** When you write `for (const item of array)`, JavaScript is actually calling the iterator's `.next()` method repeatedly until `done` is `true`. Any object that implements the `Symbol.iterator` method is considered iterable and can be used with `for...of`, spread syntax, and destructuring.
 </Note>
 
 ---
@@ -1437,7 +1437,7 @@ async function processLogFile(url) {
   </Accordion>
 
   <Accordion title="What are iterators in JavaScript?">
-    An iterator is an object that implements the iterator protocol — it has a `.next()` method that returns `{ value, done }` objects. As documented on MDN, many built-in JavaScript types are iterable (Arrays, Strings, Maps, Sets), meaning they have a `Symbol.iterator` method that returns an iterator. Generators automatically create iterators.
+An iterator is an object that implements the iterator protocol — it has a `.next()` method that returns `{ value, done }` objects. Many built-in JavaScript types are iterable (Arrays, Strings, Maps, Sets), meaning they have a `Symbol.iterator` method that returns an iterator. Generators automatically create iterators.
   </Accordion>
 
   <Accordion title="What is lazy evaluation in JavaScript generators?">
@@ -1445,7 +1445,7 @@ async function processLogFile(url) {
   </Accordion>
 
   <Accordion title="What are async generators and when should you use them?">
-    Async generators combine `async function*` syntax with `yield` to produce values asynchronously. They are consumed with `for await...of` loops and are ideal for streaming data from APIs, reading files line by line, or paginating through large datasets. According to MDN, async generators were standardized in ECMAScript 2018 as part of the async iteration proposal.
+Async generators combine `async function*` syntax with `yield` to produce values asynchronously. They are consumed with `for await...of` loops and are ideal for streaming data from APIs, reading files line by line, or paginating through large datasets. Async generators were standardized in ECMAScript 2018 as part of the async iteration proposal.
   </Accordion>
 </AccordionGroup>
 

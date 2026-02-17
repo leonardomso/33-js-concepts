@@ -48,7 +48,7 @@ function calculateTotal(price) {
 
 ## What is Strict Mode?
 
-**Strict mode** is an opt-in restricted variant of JavaScript, introduced in ECMAScript 5 (2009). It catches common mistakes by converting silent errors into thrown exceptions and disabling confusing features. Enable it by adding `"use strict"` at the beginning of a script or function. According to [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), strict mode applies different semantics to normal JavaScript: it eliminates some silent errors, fixes mistakes that prevent engine optimizations, and prohibits syntax likely to conflict with future ECMAScript versions.
+**Strict mode** is an opt-in restricted variant of JavaScript, introduced in ECMAScript 5 (2009). It catches common mistakes by converting silent errors into thrown exceptions and disabling confusing features. Enable it by adding `"use strict"` at the beginning of a script or function. Strict mode applies different semantics to normal JavaScript: it eliminates some silent errors, fixes mistakes that prevent engine optimizations, and prohibits syntax likely to conflict with future ECMAScript versions.
 
 ---
 
@@ -196,7 +196,7 @@ function processUser(user) {
 }
 ```
 
-This single change catches countless typos and copy-paste errors. According to a Stack Overflow analysis, accidental global variable creation is one of the top 10 most common JavaScript bugs, making this strict mode check especially valuable. See [Scope & Closures](/concepts/scope-and-closures) for more on how variable declarations work.
+This single change catches countless typos and copy-paste errors. Accidental global variable creation is a common JavaScript bug, which makes this strict mode check especially valuable. See [Scope & Closures](/concepts/scope-and-closures) for more on how variable declarations work.
 
 ### 2. Assignments to Read-Only Properties
 
@@ -631,7 +631,7 @@ This doesn't cause errors, but it's redundant. In modern JavaScript:
 
 <AccordionGroup>
   <Accordion title="What does 'use strict' do in JavaScript?">
-    The `"use strict"` directive enables strict mode, which converts silent errors into thrown exceptions, prevents accidental global variable creation, and disables confusing features like the `with` statement. As defined in the ECMAScript specification, strict mode applies a restricted variant of JavaScript semantics.
+The `"use strict"` directive enables strict mode, which converts silent errors into thrown exceptions, prevents accidental global variable creation, and disables confusing features like the `with` statement. Strict mode applies a restricted variant of JavaScript semantics.
   </Accordion>
 
   <Accordion title="Is strict mode still necessary with ES modules?">

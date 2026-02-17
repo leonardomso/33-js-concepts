@@ -53,7 +53,7 @@ console.log(descriptor)
 
 ## What are Property Descriptors?
 
-**Property descriptors** are metadata objects that describe the characteristics of an object property. Every property in JavaScript has a descriptor that controls whether the property can be changed, deleted, or enumerated. When you create a property the "normal" way (with assignment), JavaScript sets all flags to permissive defaults. As defined in the [ECMAScript specification](https://tc39.es/ecma262/#sec-property-attributes), every property has internal attributes that determine its behavior — this mechanism is what powers built-in immutable properties like `Math.PI`.
+**Property descriptors** are metadata objects that describe the characteristics of an object property. Every property in JavaScript has a descriptor that controls whether the property can be changed, deleted, or enumerated. When you create a property the "normal" way (with assignment), JavaScript sets all flags to permissive defaults. Every property has internal attributes that determine its behavior — this mechanism is what powers built-in immutable properties like `Math.PI`.
 
 ```javascript
 const user = { name: "Alice" }
@@ -348,7 +348,7 @@ console.log(Object.getOwnPropertyDescriptors(user))
 
 ### Cloning Objects with Descriptors
 
-The spread operator and `Object.assign()` don't preserve property descriptors. As documented by MDN, `Object.getOwnPropertyDescriptors()` was added in ES2017 specifically to enable proper cloning of objects including their accessor properties and flags:
+The spread operator and `Object.assign()` don't preserve property descriptors. `Object.getOwnPropertyDescriptors()` was added in ES2017 specifically to enable proper cloning of objects including their accessor properties and flags:
 
 ```javascript
 const original = {}
@@ -846,7 +846,7 @@ person.age = "old"  // TypeError: Age must be a positive number
   </Accordion>
 
   <Accordion title="What is the difference between Object.freeze() and Object.seal()?">
-    `Object.seal()` prevents adding or deleting properties but allows modifying existing values. `Object.freeze()` prevents all changes — no adding, deleting, or modifying. Both are shallow, meaning nested objects remain unaffected. According to MDN, `Object.freeze()` sets both `writable: false` and `configurable: false` on every property.
+`Object.seal()` prevents adding or deleting properties but allows modifying existing values. `Object.freeze()` prevents all changes — no adding, deleting, or modifying. Both are shallow, meaning nested objects remain unaffected. `Object.freeze()` sets both `writable: false` and `configurable: false` on every property.
   </Accordion>
 
   <Accordion title="Can you undo configurable: false on a property?">

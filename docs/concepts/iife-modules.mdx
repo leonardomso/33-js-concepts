@@ -42,7 +42,7 @@ This is **[ES6 modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/
 
 ## What is an IIFE?
 
-An **[IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)** (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it's defined. As documented on MDN, it creates a private scope to protect variables from polluting the global namespace. This pattern was essential before ES6 modules existed.
+An **[IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)** (Immediately Invoked Function Expression) is a JavaScript function that runs as soon as it's defined. It creates a private scope to protect variables from polluting the global namespace. This pattern was essential before ES6 modules existed.
 
 ```javascript
 // An IIFE — runs immediately, no calling needed
@@ -55,7 +55,7 @@ An **[IIFE](https://developer.mozilla.org/en-US/docs/Glossary/IIFE)** (Immediate
 // console.log(private);  // ReferenceError: private is not defined
 ```
 
-The parentheses around the function turn it from a declaration into an expression, and the `()` at the end immediately invokes it. This was the go-to pattern for creating private scope before JavaScript had built-in modules. According to the 2023 State of JS survey, ES modules are now used by the vast majority of JavaScript developers, but IIFEs remain common in bundler output and legacy codebases.
+The parentheses around the function turn it from a declaration into an expression, and the `()` at the end immediately invokes it. This was the go-to pattern for creating private scope before JavaScript had built-in modules. ES modules are now used by the vast majority of JavaScript developers, but IIFEs remain common in bundler output and legacy codebases.
 
 <Note>
 **Historical context:** IIFEs were everywhere in JavaScript codebases from 2010-2015. Today, most projects use ES6 modules (`import`/`export`), so you won't write many IIFEs in modern code. However, understanding them is valuable. You'll encounter IIFEs in older codebases, libraries, and they're still useful for specific cases like async initialization or quick scripts.
@@ -1418,7 +1418,7 @@ Try to answer each question before revealing the solution:
 
 <AccordionGroup>
   <Accordion title="What is an IIFE in JavaScript?">
-    An IIFE (Immediately Invoked Function Expression) is a function that runs as soon as it is defined. It creates a private scope that prevents variables from leaking into the global namespace. As documented on MDN, the pattern wraps a function in parentheses to make it an expression, then immediately invokes it with `()`.
+An IIFE (Immediately Invoked Function Expression) is a function that runs as soon as it is defined. It creates a private scope that prevents variables from leaking into the global namespace. The pattern wraps a function in parentheses to make it an expression, then immediately invokes it with `()`.
   </Accordion>
 
   <Accordion title="Why were IIFEs used before ES6 modules?">
@@ -1426,7 +1426,7 @@ Try to answer each question before revealing the solution:
   </Accordion>
 
   <Accordion title="What is the difference between IIFEs and ES6 modules?">
-    ES6 modules provide file-level scope automatically — every file is its own module with private variables. IIFEs achieve the same result manually using function scope. According to the 2023 State of JS survey, ES modules are now used by over 80% of JavaScript developers, making IIFEs largely unnecessary for new code. However, IIFEs remain useful for one-time initialization and inline scripts.
+ES6 modules provide file-level scope automatically — every file is its own module with private variables. IIFEs achieve the same result manually using function scope. ES modules are now used by over 80% of JavaScript developers, making IIFEs largely unnecessary for new code. However, IIFEs remain useful for one-time initialization and inline scripts.
   </Accordion>
 
   <Accordion title="What is a namespace in JavaScript?">
