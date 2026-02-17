@@ -22,7 +22,7 @@ const copy = [...arr];
 const merged = { ...obj1, ...obj2 };
 ```
 
-The answer is **ES6 (ECMAScript 2015)** and the yearly updates that followed. These additions didn't just add features. They transformed how we write JavaScript. Features like [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), and [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) are now everywhere: in tutorials, open-source projects, and job interviews.
+The answer is **ES6 (ECMAScript 2015)** and the yearly updates that followed. These additions didn't just add features. They transformed how we write JavaScript. Features like [destructuring](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment), [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), and [optional chaining](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Optional_chaining) are now everywhere: in tutorials, open-source projects, and job interviews. According to the [State of JS 2023 survey](https://2023.stateofjs.com/), features like destructuring and arrow functions have reached near-universal adoption, with over 95% of respondents using them regularly.
 
 <Info>
 **What you'll learn in this guide:**
@@ -48,7 +48,7 @@ The answer is **ES6 (ECMAScript 2015)** and the yearly updates that followed. Th
 
 ## A Quick Note on let, const, and var
 
-Before ES6, `var` was the only way to declare variables. Now we have `let` and `const`, which behave differently:
+Before ES6, `var` was the only way to declare variables. Now we have `let` and `const`, which were introduced in the [ECMAScript 2015 specification](https://tc39.es/ecma262/#sec-let-and-const-declarations) and behave differently:
 
 | Feature | `var` | `let` | `const` |
 |---------|-------|-------|---------|
@@ -79,7 +79,7 @@ For the full explanation of scope, hoisting, and the temporal dead zone, see [Sc
 
 ## Arrow Functions
 
-[Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) provide a shorter syntax for writing functions. But the real difference is how they handle `this`.
+[Arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) provide a shorter syntax for writing functions. But the real difference is how they handle `this`. As [MDN documents](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), arrow functions do not have their own `this`, `arguments`, `super`, or `new.target` bindings — they inherit these from the enclosing lexical scope.
 
 ### The Syntax
 
@@ -1098,6 +1098,32 @@ for (const index in arr) {
     // Without optional chaining, this would throw:
     // TypeError: Cannot read property 'address' of null
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is ES6 and why does it matter?">
+    ES6 (ECMAScript 2015) was the largest single update to JavaScript, introducing `let`/`const`, arrow functions, classes, template literals, destructuring, modules, Promises, and more. It transformed JavaScript from a scripting language into a modern programming language. Since ES6, the [TC39 committee](https://tc39.es/) releases yearly specification updates with incremental features.
+  </Accordion>
+
+  <Accordion title="What is the difference between arrow functions and regular functions?">
+    Arrow functions have shorter syntax and don't bind their own `this`, `arguments`, `super`, or `new.target`. They inherit `this` from the enclosing scope, making them ideal for callbacks and closures. Regular functions are needed for object methods, constructors, and any context requiring dynamic `this` binding. See [MDN's arrow function reference](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions) for the full list of differences.
+  </Accordion>
+
+  <Accordion title="What is destructuring in JavaScript?">
+    Destructuring is syntax for extracting values from arrays or properties from objects into distinct variables. Instead of `const name = user.name`, you write `const { name } = user`. It works with nested objects, arrays, default values, and renamed variables. The [ECMAScript specification](https://tc39.es/ecma262/#sec-destructuring-assignment) defines it as a destructuring assignment pattern.
+  </Accordion>
+
+  <Accordion title="What is the difference between spread and rest operators?">
+    Both use the `...` syntax but in different contexts. The **spread** operator expands an iterable into individual elements: `[...arr]` copies an array. The **rest** operator collects multiple elements into a single array: `function(...args)` gathers all arguments. Spread appears in expressions; rest appears in function parameters and destructuring patterns.
+  </Accordion>
+
+  <Accordion title="What is optional chaining and when should I use it?">
+    Optional chaining (`?.`) safely accesses deeply nested properties without checking each level for `null` or `undefined`. Instead of `user && user.address && user.address.city`, you write `user?.address?.city`. It returns `undefined` if any part of the chain is nullish. Introduced in ES2020, it pairs naturally with the nullish coalescing operator (`??`) for providing defaults.
   </Accordion>
 </AccordionGroup>
 

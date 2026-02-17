@@ -27,7 +27,7 @@ getUser(userId)
   .then(comments => console.log(comments))
 ```
 
-A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** is an object representing the eventual completion or failure of an asynchronous operation. It's a placeholder for a value that will show up later. Think of it like an order ticket at a restaurant that you'll trade for food when it's ready.
+A **[Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)** is an object representing the eventual completion or failure of an asynchronous operation. Standardized in the ECMAScript 2015 (ES6) specification, it's a placeholder for a value that will show up later. Think of it like an order ticket at a restaurant that you'll trade for food when it's ready.
 
 <Info>
 **What you'll learn in this guide:**
@@ -140,7 +140,7 @@ Here's how this maps to JavaScript:
 | Picking up food | `.then()` handler | `promise.then(food => eat(food))` |
 | Handling problems | `.catch()` handler | `promise.catch(err => complain(err))` |
 
-Here's the important part: **once your order is fulfilled or rejected, it doesn't change**. You can't un-eat the pasta or un-reject the apology. Similarly, once a Promise settles, its state is permanent.
+Here's the important part: **once your order is fulfilled or rejected, it doesn't change**. You can't un-eat the pasta or un-reject the apology. Similarly, once a Promise settles, its state is permanent. According to the ECMAScript specification, this immutability guarantee (called "settled" state) is what makes Promises reliable building blocks for complex async workflows.
 
 ---
 
@@ -1656,6 +1656,32 @@ Promise callbacks are scheduled as **microtasks**, which run after the current s
     8. `'D'` — Third microtask runs (microtask queue is drained before any macrotask)
     
     Promise callbacks always run as microtasks, after the current synchronous code but before macrotasks like `setTimeout`. See [Event Loop](/concepts/event-loop) for more.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is a Promise in JavaScript?">
+    A Promise is an object that represents the eventual completion or failure of an asynchronous operation. As defined in the ECMAScript specification, a Promise is in one of three states: pending, fulfilled, or rejected. Once settled (fulfilled or rejected), a Promise's state and value are immutable — it cannot change again.
+  </Accordion>
+
+  <Accordion title="What are the three states of a Promise?">
+    Pending means the async operation has not completed yet. Fulfilled means it completed successfully with a result value. Rejected means it failed with a reason (usually an Error). A Promise transitions from pending to either fulfilled or rejected, never both and never more than once. This guarantee makes Promises more predictable than callbacks.
+  </Accordion>
+
+  <Accordion title="What is the difference between Promise.all and Promise.allSettled?">
+    `Promise.all` resolves when all Promises fulfill and rejects immediately if any single Promise rejects. `Promise.allSettled` (added in ES2020) waits for all Promises to settle regardless of outcome and returns an array of result objects with `status` and `value` or `reason`. Use `allSettled` when you need results from every operation even if some fail.
+  </Accordion>
+
+  <Accordion title="How do you handle errors in Promise chains?">
+    Attach a `.catch()` at the end of the chain to handle any rejection from any preceding `.then()`. Errors propagate down the chain until caught. You can also use `.then(onFulfilled, onRejected)`, but a single `.catch()` at the end is the recommended pattern. Always handle rejections — unhandled rejections are logged as warnings in modern runtimes.
+  </Accordion>
+
+  <Accordion title="What is Promise chaining and why is it useful?">
+    Promise chaining means calling `.then()` on the Promise returned by a previous `.then()`. Each `.then()` receives the return value of the previous one, creating a flat, readable sequence of async steps. According to MDN, this was the key innovation that solved callback hell by replacing nested callbacks with a linear chain of operations.
   </Accordion>
 </AccordionGroup>
 

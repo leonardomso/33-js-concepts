@@ -309,7 +309,7 @@ isAdmin && deleteButton.show()  // Only call if isAdmin is truthy
 
 ### Nullish Coalescing (??) — Only null/undefined
 
-The [`??`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) operator is the modern solution. It only falls back when the left side is `null` or `undefined`:
+The [`??`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Nullish_coalescing) operator is the modern solution, introduced in ES2020. According to the [V8 blog](https://v8.dev/features/nullish-coalescing), the nullish coalescing operator was one of the most requested features by the JavaScript community. It only falls back when the left side is `null` or `undefined`:
 
 ```javascript
 // Only null and undefined trigger the fallback
@@ -454,7 +454,7 @@ This is JavaScript's most famous quirk:
 typeof null  // 'object' — NOT 'null'!
 ```
 
-This is a bug from the first version of JavaScript in 1995. In the original implementation, values were stored with a type tag. Objects had a type tag of `0`. `null` was represented as the NULL pointer (`0x00`), which also had a type tag of `0`. So `typeof null` returned `'object'`.
+This is a bug from the first version of JavaScript in 1995. In the original implementation, values were stored with a type tag. Objects had a type tag of `0`. `null` was represented as the NULL pointer (`0x00`), which also had a type tag of `0`. So `typeof null` returned `'object'`. As Dr. Axel Rauschmayer documented in his analysis of the [original JavaScript source code](https://2ality.com/2013/10/typeof-null.html), a proposal to fix this (typeof null === 'null') was rejected by TC39 because it would break an estimated 10% of existing websites.
 
 Fixing this bug would break too much existing code, so it remains. To properly check for `null`:
 
@@ -651,7 +651,7 @@ invalid instanceof ValidUser // false
 
 ## Symbols: Unique Identifiers
 
-[`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) is a primitive type that creates guaranteed unique identifiers. Every `Symbol()` call creates a new, unique value.
+[`Symbol`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol) is a primitive type introduced in ES2015 that creates guaranteed unique identifiers. Every `Symbol()` call creates a new, unique value. According to MDN, Symbols are the only primitive type that serves as a non-string property key, making them essential for metaprogramming and avoiding property name collisions in shared codebases.
 
 ### Creating Symbols
 
@@ -1136,6 +1136,36 @@ factorial(100n)  // Huge number, no precision loss!
     ```
     
     Be careful with `Number()` conversion. For very large BigInt values, you'll lose precision because Number can only safely represent integers up to 2^53 - 1.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Why does typeof null return 'object' in JavaScript?">
+    This is a well-known bug dating back to the original JavaScript implementation in 1995. Values were stored with type tags, and `null` used the same tag (`0`) as objects. A TC39 proposal to fix this was rejected because it would have broken too many existing websites. Use `value === null` to check for null instead of `typeof`.
+  </Accordion>
+
+  <Accordion title="What is the difference between == null and === null?">
+    Using `== null` (loose equality) checks for both `null` and `undefined` in one condition — this is because the ECMAScript specification defines `null == undefined` as `true`. Using `=== null` (strict equality) only matches `null`. Most style guides recommend `== null` as the one acceptable use of loose equality.
+  </Accordion>
+
+  <Accordion title="When should I use ?? instead of || for default values?">
+    Use `??` (nullish coalescing) when `0`, `""`, or `false` are valid values you want to preserve. The `||` operator replaces any falsy value, while `??` only replaces `null` and `undefined`. For example, `userCount ?? 10` keeps `0` as a valid count, whereas `userCount || 10` would replace it with `10`.
+  </Accordion>
+
+  <Accordion title="What are JavaScript Symbols used for?">
+    Symbols create guaranteed unique property keys that prevent name collisions between different parts of a codebase. They are also used as "well-known symbols" (like `Symbol.iterator` and `Symbol.hasInstance`) to customize built-in JavaScript behavior. MDN documents 13 well-known symbols in the current specification.
+  </Accordion>
+
+  <Accordion title="Can BigInt and Number be mixed in calculations?">
+    No. JavaScript throws a `TypeError` if you try to combine BigInt and Number in arithmetic operations like `10n + 5`. This is a deliberate design choice to prevent accidental precision loss. You must explicitly convert using `BigInt(5)` or `Number(10n)` before combining them.
+  </Accordion>
+
+  <Accordion title="How do I safely check for null or undefined?">
+    The recommended approach is to use `value == null`, which catches both `null` and `undefined` thanks to JavaScript's loose equality rules. Alternatively, use `value ?? 'default'` with nullish coalescing to provide a fallback value. For property access, use optional chaining (`obj?.prop`) to avoid `TypeError` on null or undefined objects.
   </Accordion>
 </AccordionGroup>
 

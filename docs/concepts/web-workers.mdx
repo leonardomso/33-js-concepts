@@ -33,7 +33,7 @@ document.getElementById('btn').addEventListener('click', () => {
 // - The page looks broken
 ```
 
-That's JavaScript's single thread at work. But there's a way out: **[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)**. They let you run JavaScript in background threads, keeping your UI smooth while crunching numbers, parsing data, or processing images.
+That's JavaScript's single thread at work. But there's a way out: **[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)**. Defined in the WHATWG HTML Living Standard, they let you run JavaScript in background threads, keeping your UI smooth while crunching numbers, parsing data, or processing images. According to Can I Use data, Web Workers have over 98% browser support across all modern browsers.
 
 <Info>
 **What you'll learn in this guide:**
@@ -56,7 +56,7 @@ That's JavaScript's single thread at work. But there's a way out: **[Web Workers
 
 You might think: "I already know async JavaScript. Doesn't that solve the freezing problem?"
 
-Not quite. Here's the thing everyone gets wrong about async: **async JavaScript is still single-threaded**. It's concurrent, not parallel.
+Not quite. Here's the thing everyone gets wrong about async: **async JavaScript is still single-threaded**. It's concurrent, not parallel. As explained in the ECMAScript specification, the language runtime uses a single execution thread — async operations yield control but never run JavaScript code simultaneously on the main thread.
 
 ```javascript
 // Async code is NOT running at the same time
@@ -1584,6 +1584,32 @@ worker.onmessage = (e) => console.log(e.data)  // [2, 4, 6]
       worker.postMessage(data)  // Reuse
     }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are Web Workers in JavaScript?">
+    Web Workers are a browser API that lets you run JavaScript in background threads, separate from the main UI thread. As defined in the WHATWG HTML Living Standard, workers execute in an isolated global context with no access to the DOM. They communicate with the main thread through `postMessage()` and are supported in all modern browsers.
+  </Accordion>
+
+  <Accordion title="What is the difference between Web Workers and async/await?">
+    Async/await provides concurrency on a single thread — it helps with waiting for I/O but cannot speed up CPU-intensive computation. Web Workers provide true parallelism by running code on separate OS threads. Use async/await for network requests and timers; use Web Workers for heavy calculations, image processing, or data parsing that would otherwise freeze the UI.
+  </Accordion>
+
+  <Accordion title="Can Web Workers access the DOM?">
+    No. Web Workers run in an isolated context and cannot access `document`, `window`, or any DOM APIs. This is by design — the DOM is not thread-safe, so allowing concurrent access would cause race conditions. Workers communicate results back to the main thread via `postMessage()`, and the main thread updates the DOM.
+  </Accordion>
+
+  <Accordion title="What is the difference between Dedicated Workers, Shared Workers, and Service Workers?">
+    Dedicated Workers serve a single page and are the most common type. Shared Workers can be accessed by multiple pages from the same origin. Service Workers act as network proxies that enable offline support and push notifications. According to Can I Use data, Dedicated Workers have over 98% browser support, while Shared Workers have more limited support.
+  </Accordion>
+
+  <Accordion title="What are transferable objects in Web Workers?">
+    Transferable objects (like ArrayBuffer, MessagePort, and OffscreenCanvas) can be moved between threads without copying. Normal `postMessage()` data is cloned using the structured clone algorithm, which is slow for large data. Transferring ownership is nearly instant regardless of size, but the sending context loses access to the transferred object.
   </Accordion>
 </AccordionGroup>
 

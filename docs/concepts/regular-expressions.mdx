@@ -41,7 +41,7 @@ The answer is **[regular expressions](https://developer.mozilla.org/en-US/docs/W
 
 ## What Are Regular Expressions?
 
-A **[regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)** is a pattern used to match character combinations in strings. In JavaScript, regex are objects that you can use with string methods to search, validate, extract, and replace text. They use a special syntax where characters like `\d`, `*`, and `^` have special meanings beyond their literal values.
+A **[regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)** is a pattern used to match character combinations in strings. In JavaScript, regex are objects that you can use with string methods to search, validate, extract, and replace text. They use a special syntax where characters like `\d`, `*`, and `^` have special meanings beyond their literal values. Regular expressions have been part of JavaScript since its first version in 1995, and the [ECMAScript specification](https://tc39.es/ecma262/#sec-regexp-regular-expression-objects) has steadily expanded their capabilities — adding features like named capture groups (ES2018), lookbehind assertions (ES2018), and the `d` flag for match indices (ES2022).
 
 ### Two Ways to Create Regex
 
@@ -57,7 +57,7 @@ console.log(pattern1.test('hello world'))  // true
 console.log(pattern2.test('hello world'))  // true
 ```
 
-Use the literal syntax when you know the pattern ahead of time. Use the constructor when you need to build patterns dynamically, like from user input:
+Use the literal syntax when you know the pattern ahead of time. Use the constructor when you need to build patterns dynamically, like from user input. As [MDN explains](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions), literal regex are compiled when the script loads, while `RegExp` constructor patterns are compiled at runtime — making literals slightly more efficient for static patterns:
 
 ```javascript
 function findWord(text, word) {
@@ -326,7 +326,7 @@ console.log(match[2])  // "123-4567" (second group)
 
 ### Named Groups
 
-Use `(?<name>pattern)` to give groups meaningful names:
+Use `(?<name>pattern)` to give groups meaningful names. Named groups were introduced in ES2018 and are documented on [MDN's groups and backreferences page](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions/Groups_and_backreferences):
 
 ```javascript
 const datePattern = /(?<month>\d{2})-(?<day>\d{2})-(?<year>\d{4})/
@@ -578,6 +578,32 @@ console.log(username.test('john_doe123'))  // true
     pattern.test('hello.world')  // true
     pattern.test('helloXworld')  // false
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are regular expressions in JavaScript?">
+    Regular expressions (regex) are patterns used to match character combinations in strings. In JavaScript, they are objects created with the `/pattern/flags` literal or the `RegExp` constructor. They power methods like `test()`, `match()`, `replace()`, and `split()` for searching, validating, and transforming text.
+  </Accordion>
+
+  <Accordion title="When should I use the RegExp constructor vs literal syntax?">
+    Use literal syntax (`/pattern/`) for static patterns known at write time — it's compiled when the script loads and is more readable. Use the `RegExp` constructor when patterns are built dynamically from variables or user input. As [MDN notes](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions), literal regex offer a slight performance advantage because they are compiled once at load time.
+  </Accordion>
+
+  <Accordion title="What does the g flag do in regex?">
+    The `g` (global) flag tells the regex engine to find all matches in the string instead of stopping after the first. Without `g`, methods like `match()` return only the first match with capture groups. With `g`, `match()` returns an array of all matches but without group details. Use `matchAll()` (ES2020) to get all matches with full group information.
+  </Accordion>
+
+  <Accordion title="What are named capture groups in JavaScript regex?">
+    Named capture groups, introduced in ES2018, let you assign names to capture groups using `(?<name>pattern)` syntax. Instead of accessing matches by index (`match[1]`), you access them by name (`match.groups.name`). This makes regex code more readable and resilient to pattern changes. The [ECMAScript specification](https://tc39.es/ecma262/#prod-GroupSpecifier) defines the full syntax.
+  </Accordion>
+
+  <Accordion title="How do I avoid common regex performance problems?">
+    Avoid catastrophic backtracking by limiting the use of nested quantifiers like `(a+)+`. Use atomic groups or possessive quantifiers where supported. Keep patterns as specific as possible — `/\d{3}/` is faster than `/\d+/` when you know the exact length. For complex validation, consider splitting the task into multiple simpler regex checks rather than one monolithic pattern.
   </Accordion>
 </AccordionGroup>
 

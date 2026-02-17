@@ -48,7 +48,7 @@ The answer is **hoisting**. It's one of JavaScript's most misunderstood behavior
 
 ## What is Hoisting in JavaScript?
 
-**[Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)** is JavaScript's behavior of moving declarations to the top of their scope during the compilation phase, before any code is executed. When JavaScript prepares to run your code, it first scans for all variable and function declarations and "hoists" them to the top of their containing scope. Only the declarations are hoisted, not the initializations.
+**[Hoisting](https://developer.mozilla.org/en-US/docs/Glossary/Hoisting)** is JavaScript's behavior of moving declarations to the top of their scope during the compilation phase, before any code is executed. When JavaScript prepares to run your code, it first scans for all variable and function declarations and "hoists" them to the top of their containing scope. Only the declarations are hoisted, not the initializations. According to the [ECMAScript specification](https://tc39.es/ecma262/#sec-variable-statement), variable declarations are instantiated when their containing environment record is created, which is why they appear to "move" to the top.
 
 Here's the key insight: hoisting isn't actually moving your code around. It's about when JavaScript becomes *aware* of your variables and functions during its two-phase execution process.
 
@@ -125,7 +125,7 @@ Let's explore each one in detail.
 
 ## Variable Hoisting with var
 
-Variables declared with [`var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var) are hoisted to the top of their function (or global scope) and automatically initialized to `undefined`.
+Variables declared with [`var`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var) are hoisted to the top of their function (or global scope) and automatically initialized to `undefined`. As MDN documents, `var` declarations are processed before any code is executed, which is why accessing a `var` variable before its declaration returns `undefined` rather than throwing an error.
 
 ```javascript
 console.log(greeting)  // undefined (not an error!)
@@ -571,7 +571,7 @@ This two-phase approach is why hoisting exists. It's a natural consequence of ho
     var counter = 0
     ```
     
-    `const` and `let` have more predictable scoping and the TDZ catches bugs early.
+    `const` and `let` have more predictable scoping and the TDZ catches bugs early. The State of JS 2023 survey shows that over 93% of developers now regularly use `const` and `let`, reflecting a strong industry shift away from `var`.
   </Accordion>
   
   <Accordion title="3. Use function declarations for named functions">
@@ -757,6 +757,32 @@ This two-phase approach is why hoisting exists. It's a natural consequence of ho
     Even though there's an outer `x`, the inner `const x` is hoisted within `test()` and creates a TDZ. The inner `x` shadows the outer `x` from the start of the function, so the `console.log(x)` tries to access the inner `x` which is still in the TDZ.
     
     This proves that `const` (and `let`) ARE hoisted; they just can't be accessed until initialized.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is hoisting in JavaScript?">
+    Hoisting is JavaScript's default behavior of moving variable and function declarations to the top of their scope during the compilation phase. Only the declarations are hoisted, not the initializations. According to MDN, this means variables can appear to be used before they are declared.
+  </Accordion>
+
+  <Accordion title="Are let and const hoisted in JavaScript?">
+    Yes, `let` and `const` are hoisted, but they are not initialized. They enter the Temporal Dead Zone (TDZ) from the start of their block until the declaration is reached. Accessing them before initialization throws a `ReferenceError`, unlike `var` which returns `undefined`.
+  </Accordion>
+
+  <Accordion title="What is the difference between function declarations and function expressions in hoisting?">
+    Function declarations are fully hoisted — both the name and the body are available before the declaration appears in code. Function expressions follow variable hoisting rules: a `var` function expression is hoisted as `undefined`, while a `let`/`const` expression enters the TDZ. The ECMAScript specification treats function declarations differently because they are instantiated during environment setup.
+  </Accordion>
+
+  <Accordion title="Does JavaScript physically move code during hoisting?">
+    No. Hoisting is a conceptual model describing observable behavior. The ECMAScript specification does not use the term "hoisting." Instead, JavaScript engines process declarations during a compilation phase before executing code, creating the effect of declarations being "moved" to the top.
+  </Accordion>
+
+  <Accordion title="Why does var return undefined instead of throwing an error before declaration?">
+    When a `var` variable is hoisted, it is immediately initialized to `undefined`. This was a design choice in early JavaScript (1995) to be forgiving to developers. Modern `let` and `const` fixed this by introducing the TDZ, which catches accidental use of uninitialized variables with a `ReferenceError`.
   </Accordion>
 </AccordionGroup>
 

@@ -157,7 +157,7 @@ const Car = {
 
 ## Functions Should Do One Thing
 
-This is the single most important rule in clean code. When functions do one thing, they're easier to name, easier to test, and easier to reuse.
+This is the single most important rule in clean code, known as the Single Responsibility Principle (SRP). As Robert C. Martin states in *Clean Code*, "a function should do one thing, do it well, and do it only." When functions do one thing, they're easier to name, easier to test, and easier to reuse.
 
 ### Keep Functions Small and Focused
 
@@ -275,7 +275,7 @@ if (status === STATUS.ACTIVE) {
 
 ## DRY: Don't Repeat Yourself
 
-Duplicate code means multiple places to update when logic changes. But be careful: a bad abstraction is worse than duplication. Only abstract when you see a clear pattern.
+Duplicate code means multiple places to update when logic changes. The DRY principle was coined by Andy Hunt and Dave Thomas in *[The Pragmatic Programmer](https://pragprog.com/titles/tpp20/the-pragmatic-programmer-20th-anniversary-edition/)*, where they define it as "every piece of knowledge must have a single, unambiguous, authoritative representation." But be careful: a bad abstraction is worse than duplication. Only abstract when you see a clear pattern.
 
 ```javascript
 // ❌ Duplicate logic
@@ -413,7 +413,7 @@ for (const user of users) {
 
 ## Comments: Less is More
 
-Good code mostly documents itself. Comments should explain *why*, not *what*. If you need a comment to explain what code does, consider rewriting the code to be clearer.
+Good code mostly documents itself. Comments should explain *why*, not *what*. According to a [Stack Overflow Developer Survey](https://survey.stackoverflow.co/2023/), over 80% of developers consider code readability more important than clever optimization. If you need a comment to explain what code does, consider rewriting the code to be clearer.
 
 ### Don't State the Obvious
 
@@ -842,6 +842,32 @@ Functions that do one thing with no side effects are easy to test. If a function
     ```
     
     Each guard clause handles one edge case, and the main logic sits at the top level without indentation.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is clean code in JavaScript?">
+    Clean code is code that is easy to read, easy to understand, and easy to change. Robert C. Martin defines it as code that "reads like well-written prose" in his book *Clean Code*. In JavaScript specifically, this means using meaningful variable names, small focused functions, consistent formatting, and avoiding side effects where possible.
+  </Accordion>
+
+  <Accordion title="How long should a JavaScript function be?">
+    A function should do one thing and do it well. While there is no strict line limit, Robert C. Martin recommends functions rarely exceed 20 lines. If a function needs a comment to explain a section, that section should likely be its own function. The key metric is not line count but whether the function operates at a single level of abstraction.
+  </Accordion>
+
+  <Accordion title="When should I write comments in my code?">
+    Write comments to explain *why*, never *what*. Good code is self-documenting through meaningful names and clear structure. Comments are valuable for explaining business rules, performance trade-offs, workarounds for known issues, and legal or regulatory requirements. As the saying in *The Pragmatic Programmer* goes, "don't document bad code — rewrite it."
+  </Accordion>
+
+  <Accordion title="What is the DRY principle and when should I apply it?">
+    DRY stands for "Don't Repeat Yourself," coined by Andy Hunt and Dave Thomas. It means every piece of knowledge should have a single authoritative representation. Apply it when you see the same logic repeated three or more times. However, premature abstraction is worse than duplication — wait until you see a clear, stable pattern before extracting shared code.
+  </Accordion>
+
+  <Accordion title="How do I write self-documenting JavaScript code?">
+    Use descriptive variable and function names that reveal intent (`calculateTotalPrice` not `calc`). Extract complex conditions into named boolean variables. Use `const` by default and `let` only when reassignment is needed. Prefer `for...of` over index-based loops, and use destructuring to name what you're extracting. These practices reduce the need for comments.
   </Accordion>
 </AccordionGroup>
 

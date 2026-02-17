@@ -45,7 +45,7 @@ The answer is **custom events**. They let you create your own event types, attac
 
 ## What is a Custom Event?
 
-A **[custom event](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent)** is a developer-defined event that you create, dispatch, and listen for in JavaScript. Unlike built-in events like `click` or `keydown` triggered by user actions, custom events are triggered programmatically using `dispatchEvent()`. The `CustomEvent` constructor extends the base `Event` interface, adding a `detail` property for passing data to listeners.
+A **[custom event](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent)** is a developer-defined event that you create, dispatch, and listen for in JavaScript. Unlike built-in events like `click` or `keydown` triggered by user actions, custom events are triggered programmatically using `dispatchEvent()`. The `CustomEvent` constructor extends the base `Event` interface, adding a `detail` property for passing data to listeners. [Can I Use data](https://caniuse.com/customevent) shows the `CustomEvent` constructor is supported in over 98% of browsers globally.
 
 <Note>
 Custom events work with any [`EventTarget`](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget), including DOM elements, the `document`, `window`, and even custom objects that extend `EventTarget`.
@@ -93,7 +93,7 @@ Think of custom events like a radio broadcast:
 └─────────────────────────────────────────────────────────────────────────────┘
 ```
 
-This decoupling is the superpower of custom events. Components can communicate without importing each other or knowing each other exists.
+This decoupling is the superpower of custom events. As MDN's guide on [creating and triggering events](https://developer.mozilla.org/en-US/docs/Web/Events/Creating_and_triggering_events) explains, this pub/sub pattern lets components communicate without importing each other or knowing each other exists.
 
 ---
 
@@ -265,7 +265,7 @@ someElement.dispatchEvent(event)
 
 ### Important: dispatchEvent is Synchronous
 
-Unlike native browser events (which are processed asynchronously through the event loop), `dispatchEvent()` is **synchronous**. All listeners execute immediately before `dispatchEvent()` returns:
+Unlike native browser events (which are processed asynchronously through the event loop), `dispatchEvent()` is **synchronous**. As the [W3C DOM specification](https://dom.spec.whatwg.org/#dom-eventtarget-dispatchevent) states, dispatching is a synchronous operation — all listeners execute immediately before `dispatchEvent()` returns:
 
 ```javascript
 console.log('1: Before dispatch')
@@ -836,6 +836,32 @@ button.dispatchEvent(new CustomEvent('customClick'))
       console.log('Deletion was canceled')
     }
     ```
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="How do I create a custom event in JavaScript?">
+    Use the `CustomEvent` constructor: `new CustomEvent('eventName', { detail: data })`. The `detail` property can hold any JavaScript value — objects, arrays, or primitives. Then dispatch it on any element with `element.dispatchEvent(event)`.
+  </Accordion>
+
+  <Accordion title="Do custom events bubble like native events?">
+    No — custom events do not bubble by default. You must explicitly set `bubbles: true` in the options object to enable bubbling. Without it, only listeners directly on the dispatching element will receive the event, as documented in the W3C DOM specification.
+  </Accordion>
+
+  <Accordion title="What is the difference between Event and CustomEvent?">
+    `CustomEvent` extends `Event` with one key addition: the `detail` property for passing arbitrary data. If you don't need to send data to listeners, `new Event('name')` works fine. MDN recommends `CustomEvent` when you need to communicate data alongside the event.
+  </Accordion>
+
+  <Accordion title="Is dispatchEvent synchronous or asynchronous?">
+    `dispatchEvent()` is synchronous — all listeners execute immediately before the method returns. This differs from native browser events, which are processed asynchronously through the event loop. You can use the return value of `dispatchEvent()` to check if any listener called `preventDefault()`.
+  </Accordion>
+
+  <Accordion title="Can I use onclick-style properties for custom events?">
+    No. Custom events do not have corresponding `on*` properties like native events. `element.onmyEvent = handler` does nothing — you must use `addEventListener()` to listen for custom events. This is a common mistake MDN specifically warns about.
   </Accordion>
 </AccordionGroup>
 

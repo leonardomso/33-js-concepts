@@ -43,7 +43,7 @@ These are everyday challenges when working with **[JSON](https://developer.mozil
 
 ## What is JSON?
 
-**JSON** (JavaScript Object Notation) is a lightweight text format for storing and exchanging data. It's language-independent but derived from JavaScript syntax. JSON has become the standard format for APIs, configuration files, and data storage across the web.
+**JSON** (JavaScript Object Notation) is a lightweight text format for storing and exchanging data. Originally specified by Douglas Crockford and formalized in [ECMA-404](https://ecma-international.org/publications-and-standards/standards/ecma-404/) and [RFC 8259](https://datatracker.ietf.org/doc/html/rfc8259), JSON is language-independent but derived from JavaScript syntax. JSON has become the standard format for APIs, configuration files, and data storage across the web.
 
 ```javascript
 // JSON is just text that represents data
@@ -59,7 +59,7 @@ console.log(backToJSON)  // '{"name":"Alice","age":30,"isAdmin":true}'
 ```
 
 <Tip>
-**JSON vs JavaScript Objects:** JSON syntax is a subset of JavaScript. All JSON is valid JavaScript, but not all JavaScript objects can be represented as JSON. Functions, `undefined`, Symbols, and circular references don't have JSON equivalents.
+**JSON vs JavaScript Objects:** JSON syntax is a strict subset of JavaScript. As [MDN documents](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON), all JSON is valid JavaScript, but not all JavaScript objects can be represented as JSON. Functions, `undefined`, Symbols, and circular references don't have JSON equivalents.
 </Tip>
 
 ---
@@ -964,6 +964,32 @@ safeLog({
     ```
     
     Numbers are clamped to 10, and strings are truncated to 10 characters.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What does JSON.stringify() do with undefined, functions, and Symbols?">
+    `JSON.stringify()` silently omits properties whose values are `undefined`, functions, or Symbols. In arrays, these values are replaced with `null`. MDN documents this behavior as part of the serialization algorithm defined in the ECMA-262 specification.
+  </Accordion>
+
+  <Accordion title="What is a replacer function in JSON.stringify()?">
+    A replacer is the optional second argument to `JSON.stringify()` — either a function or an array. A function receives each key-value pair and can transform or exclude values by returning `undefined`. An array acts as a whitelist, including only the listed property names in the output.
+  </Accordion>
+
+  <Accordion title="How do I handle circular references in JSON?">
+    `JSON.stringify()` throws a `TypeError` when it encounters circular references. Solutions include using a replacer function that tracks seen objects, libraries like `flatted` or `circular-json`, or restructuring your data to eliminate cycles before serialization.
+  </Accordion>
+
+  <Accordion title="What is the reviver parameter in JSON.parse()?">
+    The reviver is an optional second argument to `JSON.parse()` that transforms values during parsing. It's commonly used to convert ISO date strings back into `Date` objects. The reviver function receives each key-value pair and returns the transformed value.
+  </Accordion>
+
+  <Accordion title="How do I pretty-print JSON in JavaScript?">
+    Pass a third argument to `JSON.stringify()` for indentation: `JSON.stringify(data, null, 2)` adds 2-space indentation. You can use a number (1-10) for spaces or a string like `'\t'` for tabs. According to the ECMA-404 specification, whitespace in JSON is purely cosmetic.
   </Accordion>
 </AccordionGroup>
 

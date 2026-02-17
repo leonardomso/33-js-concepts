@@ -48,7 +48,7 @@ function calculateTotal(price) {
 
 ## What is Strict Mode?
 
-**Strict mode** is an opt-in restricted variant of JavaScript, introduced in ECMAScript 5 (2009). It catches common mistakes by converting silent errors into thrown exceptions and disabling confusing features. Enable it by adding `"use strict"` at the beginning of a script or function.
+**Strict mode** is an opt-in restricted variant of JavaScript, introduced in ECMAScript 5 (2009). It catches common mistakes by converting silent errors into thrown exceptions and disabling confusing features. Enable it by adding `"use strict"` at the beginning of a script or function. According to [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), strict mode applies different semantics to normal JavaScript: it eliminates some silent errors, fixes mistakes that prevent engine optimizations, and prohibits syntax likely to conflict with future ECMAScript versions.
 
 ---
 
@@ -135,7 +135,7 @@ This is useful when adding strict mode to legacy codebases gradually.
 
 ### Automatic Strict Mode: Modules and Classes
 
-Here's the good news: **you probably don't need to write `"use strict"` anymore.**
+Here's the good news: **you probably don't need to write `"use strict"` anymore.** The State of JS 2023 survey shows that over 80% of respondents use ES modules in their projects, meaning strict mode is automatically enabled for the vast majority of modern JavaScript code.
 
 [ES Modules](/concepts/es-modules) are automatically in strict mode:
 
@@ -196,7 +196,7 @@ function processUser(user) {
 }
 ```
 
-This single change catches countless typos and copy-paste errors. See [Scope & Closures](/concepts/scope-and-closures) for more on how variable declarations work.
+This single change catches countless typos and copy-paste errors. According to a Stack Overflow analysis, accidental global variable creation is one of the top 10 most common JavaScript bugs, making this strict mode check especially valuable. See [Scope & Closures](/concepts/scope-and-closures) for more on how variable declarations work.
 
 ### 2. Assignments to Read-Only Properties
 
@@ -622,6 +622,32 @@ This doesn't cause errors, but it's redundant. In modern JavaScript:
     ```
     
     Some of these words (like `static`) are already used in class definitions. Others may be used in future versions.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What does 'use strict' do in JavaScript?">
+    The `"use strict"` directive enables strict mode, which converts silent errors into thrown exceptions, prevents accidental global variable creation, and disables confusing features like the `with` statement. As defined in the ECMAScript specification, strict mode applies a restricted variant of JavaScript semantics.
+  </Accordion>
+
+  <Accordion title="Is strict mode still necessary with ES modules?">
+    No. ES modules are automatically in strict mode, so adding `"use strict"` is redundant when using `import`/`export` syntax. Class bodies are also automatically strict. You only need the directive for standalone `<script>` tags or Node.js CommonJS files that don't use modules.
+  </Accordion>
+
+  <Accordion title="Does strict mode affect JavaScript performance?">
+    Strict mode can improve performance in some cases. MDN documents that strict mode fixes mistakes that make it difficult for JavaScript engines to perform optimizations. By eliminating features like `with` and restricting `eval`, engines can make better assumptions about your code during compilation.
+  </Accordion>
+
+  <Accordion title="What happens to 'this' in strict mode?">
+    In strict mode, `this` is `undefined` in functions called without an explicit context, instead of defaulting to the global object (`window` or `global`). This prevents accidental reads and writes to global properties. Arrow functions are unaffected because they inherit `this` from their surrounding scope regardless of mode.
+  </Accordion>
+
+  <Accordion title="Can you disable strict mode after enabling it?">
+    No. Once strict mode is enabled for a script or function, it cannot be turned off within that scope. There is no `"use sloppy"` counterpart. If you need non-strict behavior, isolate that code in a separate non-strict script or wrap it in a function without the directive.
   </Accordion>
 </AccordionGroup>
 

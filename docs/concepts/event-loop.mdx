@@ -43,7 +43,7 @@ Even with a 0ms delay, `Timeout` prints last. The answer lies in the **[event lo
 
 ## What is the Event Loop?
 
-The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. It coordinates execution by checking callback queues when the call stack is empty, then pushing queued tasks to the stack for execution. This enables non-blocking behavior despite JavaScript being single-threaded.
+The **event loop** is JavaScript's mechanism for executing code, handling events, and managing asynchronous operations. As defined in the WHATWG HTML Living Standard, it coordinates execution by checking callback queues when the call stack is empty, then pushing queued tasks to the stack for execution. This enables non-blocking behavior despite JavaScript being single-threaded.
 
 ### The Restaurant Analogy
 
@@ -127,7 +127,7 @@ console.log(data);
 // - Complete UI freeze!
 ```
 
-A 30-second API call would freeze your entire webpage for 30 seconds. Users would think the browser crashed!
+A 30-second API call would freeze your entire webpage for 30 seconds. Users would think the browser crashed! According to Google's Core Web Vitals research, any interaction that takes longer than 200 milliseconds to respond is perceived as sluggish by users.
 
 ### The Solution: Asynchronous JavaScript
 
@@ -1604,6 +1604,32 @@ Watch how:
     ```
     
     Each has different timing and use cases. setTimeout is most common for yielding.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is the event loop in JavaScript?">
+    The event loop is JavaScript's mechanism for handling asynchronous operations while remaining single-threaded. As defined in the WHATWG HTML Living Standard, it continuously checks whether the call stack is empty and then dequeues tasks from the task queue or microtask queue for execution. This is what allows non-blocking I/O in both browsers and Node.js.
+  </Accordion>
+
+  <Accordion title="What is the difference between microtasks and macrotasks?">
+    Microtasks (Promise callbacks, queueMicrotask, MutationObserver) run after the current task completes but before the next macrotask. Macrotasks (setTimeout, setInterval, I/O) are queued in the task queue and processed one per event loop iteration. The key rule: the entire microtask queue is drained before the next macrotask runs.
+  </Accordion>
+
+  <Accordion title="Why does Promise.then() run before setTimeout(0)?">
+    Promise callbacks are scheduled as microtasks, while setTimeout callbacks are scheduled as macrotasks. According to the HTML specification's event loop processing model, all microtasks are processed before the event loop picks up the next macrotask. This is why `Promise.then()` always executes before `setTimeout(..., 0)` even though both are asynchronous.
+  </Accordion>
+
+  <Accordion title="How does JavaScript handle async operations if it is single-threaded?">
+    JavaScript delegates long-running operations (network requests, timers, file I/O) to the browser's Web APIs or Node.js's libuv thread pool, which run on separate threads. When those operations complete, their callbacks are placed into the appropriate queue. The event loop then picks them up when the call stack is empty. This gives the illusion of parallelism while keeping JavaScript execution single-threaded.
+  </Accordion>
+
+  <Accordion title="What is the difference between concurrency and parallelism in JavaScript?">
+    Concurrency means managing multiple tasks by interleaving them on a single thread, which is what the event loop provides. Parallelism means executing multiple tasks simultaneously on different threads, which requires Web Workers. According to MDN, async/await and Promises give you concurrency, while Web Workers give you true parallelism.
   </Accordion>
 </AccordionGroup>
 

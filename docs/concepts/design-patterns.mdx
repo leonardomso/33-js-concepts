@@ -90,11 +90,11 @@ You don't use every tool for every job. Similarly, you don't use every pattern i
 
 ## What Are Design Patterns?
 
-Design patterns are typical solutions to commonly occurring problems in software design. The term was popularized by the "Gang of Four" (GoF) in their 1994 book *Design Patterns: Elements of Reusable Object-Oriented Software*. They catalogued 23 patterns that developers kept reinventing.
+Design patterns are typical solutions to commonly occurring problems in software design. The term was popularized by Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides — the "Gang of Four" (GoF) — in their 1994 book *[Design Patterns: Elements of Reusable Object-Oriented Software](https://www.amazon.com/Design-Patterns-Elements-Reusable-Object-Oriented/dp/0201633612)*. They catalogued 23 patterns that developers kept reinventing, and the book has sold over 500,000 copies worldwide.
 
 ### Why JavaScript Is Different
 
-The original GoF patterns were written for languages like C++ and Smalltalk. JavaScript is different:
+The original GoF patterns were written for languages like C++ and Smalltalk. As Addy Osmani explains in *[Learning JavaScript Design Patterns](https://www.patterns.dev/posts)*, JavaScript is fundamentally different:
 
 | Feature | Impact on Patterns |
 |---------|-------------------|
@@ -336,7 +336,7 @@ Despite the caveats, Singletons can be appropriate for:
 
 ## The Factory Pattern
 
-The **Factory pattern** creates objects without exposing the creation logic. Instead of using `new` directly, you call a factory function that returns the appropriate object. This centralizes object creation and makes it easy to change how objects are created without updating every call site.
+The **Factory pattern** creates objects without exposing the creation logic. Instead of using `new` directly, you call a factory function that returns the appropriate object. According to the [State of JS 2023 survey](https://2023.stateofjs.com/), factory functions are among the most commonly used patterns in modern JavaScript codebases. This centralizes object creation and makes it easy to change how objects are created without updating every call site.
 
 ```javascript
 // Factory function — creates different user types
@@ -1053,6 +1053,32 @@ const user = new User('Alice')
     - Add patterns only when you hit a real problem they solve
     - Ask: "Would a plain function/object work here?"
     - Remember: Code clarity beats clever patterns
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What are design patterns in JavaScript?">
+    Design patterns are reusable solutions to common problems in software design. They are not specific code implementations but templates you adapt to your needs. In JavaScript, many classical patterns simplify because the language has first-class functions, closures, and prototypal inheritance, which reduce the need for complex class hierarchies.
+  </Accordion>
+
+  <Accordion title="What is the Observer pattern and when should I use it?">
+    The Observer pattern lets an object (the subject) notify a list of dependents (observers) when its state changes. Use it when multiple parts of your application need to react to the same event. The DOM's `addEventListener` is a built-in Observer implementation, and frameworks like React and Vue use Observer-like patterns internally for reactivity.
+  </Accordion>
+
+  <Accordion title="Are all Gang of Four design patterns relevant in JavaScript?">
+    No. As Addy Osmani notes in *Learning JavaScript Design Patterns*, many GoF patterns were designed for statically typed languages like C++ and Java. JavaScript's first-class functions, closures, and dynamic typing make patterns like Strategy, Command, and Iterator trivial — often just a function or callback. Focus on patterns that solve real problems in your codebase.
+  </Accordion>
+
+  <Accordion title="Why is the Singleton pattern considered an anti-pattern in JavaScript?">
+    ES Modules are already singletons — a module's exports are cached after the first import, so every file gets the same object. Using a Singleton class adds complexity without benefit. Singletons also make testing harder because components share hidden global state. Prefer dependency injection or module exports instead.
+  </Accordion>
+
+  <Accordion title="What is the difference between the Proxy and Decorator patterns?">
+    The Proxy pattern controls access to an object without changing its interface — it intercepts operations like property reads or function calls. The Decorator pattern adds new behavior or capabilities to an object by wrapping it. JavaScript's built-in `Proxy` object implements the Proxy pattern natively since ES2015.
   </Accordion>
 </AccordionGroup>
 

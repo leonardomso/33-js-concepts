@@ -25,7 +25,7 @@ async function getUserData(userId) {
 })()
 ```
 
-That's the magic of **[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)**. It's syntactic sugar introduced in ES2017 that makes asynchronous JavaScript look and behave like synchronous code, while still being non-blocking under the hood.
+That's the magic of **[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)**. It's syntactic sugar introduced in the ECMAScript 2017 specification that makes asynchronous JavaScript look and behave like synchronous code, while still being non-blocking under the hood. According to the 2023 State of JS survey, async/await has become the most widely used async pattern, adopted by over 90% of JavaScript developers.
 
 <Info>
 **What you'll learn in this guide:**
@@ -99,7 +99,7 @@ Here's the same operation written three ways:
   </Tab>
 </Tabs>
 
-The async/await version is much easier to read. Each line clearly shows what happens next, error handling uses familiar try/catch, and there's no nesting or callback pyramids.
+The async/await version is much easier to read. Each line clearly shows what happens next, error handling uses familiar try/catch, and there's no nesting or callback pyramids. As documented on MDN, every `async` function implicitly returns a Promise, making it fully compatible with existing Promise-based APIs.
 
 <Tip>
 **Don't forget:** async/await doesn't replace Promises. It's built on top of them. Every `async` function returns a Promise, and `await` works with any Promise. The better you understand Promises, the better you'll be at async/await.
@@ -1546,6 +1546,32 @@ async function getData() {
     8. Microtasks done → process task queue: `'2'`
     
     Key: Microtasks (Promises, await continuations) run before macrotasks (setTimeout).
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is async/await in JavaScript?">
+    Async/await is syntactic sugar introduced in ECMAScript 2017 that makes asynchronous code look and behave like synchronous code. The `async` keyword marks a function as returning a Promise, and `await` pauses execution until that Promise settles. Under the hood, it is still using Promises — await is equivalent to calling `.then()` on the awaited value.
+  </Accordion>
+
+  <Accordion title="Is async/await better than using Promises directly?">
+    Async/await is generally more readable, especially for sequential operations and error handling with try/catch. However, raw Promise methods like `Promise.all()` are still essential for parallel execution. According to the 2023 State of JS survey, async/await is the most widely used async pattern among JavaScript developers, but both approaches have their place.
+  </Accordion>
+
+  <Accordion title="How do you handle errors with async/await?">
+    Wrap your `await` calls in a `try/catch` block. The `catch` block receives the rejection reason, just like `.catch()` in Promise chains. You can also add a `finally` block for cleanup logic. This is one of the biggest advantages of async/await — error handling uses the same familiar syntax as synchronous code.
+  </Accordion>
+
+  <Accordion title="What is the difference between sequential and parallel async execution?">
+    Sequential execution uses `await` on each call one after another — each waits for the previous to complete. Parallel execution uses `Promise.all([...])` to start multiple operations simultaneously. Parallel is faster when operations are independent. A common mistake is accidentally writing sequential code when parallel would be appropriate.
+  </Accordion>
+
+  <Accordion title="Can you use await at the top level of a module?">
+    Yes. Top-level `await` was standardized in ECMAScript 2022 and works in ES modules (files with `type="module"` or `.mjs` extension). It lets you `await` Promises at the module's top scope without wrapping them in an async function. This is useful for dynamic imports, configuration loading, and module initialization.
   </Accordion>
 </AccordionGroup>
 

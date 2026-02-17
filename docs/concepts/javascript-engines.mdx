@@ -39,7 +39,7 @@ Behind every line of JavaScript is a **JavaScript engine**. It's the program tha
 
 ## What is a JavaScript Engine?
 
-A **JavaScript engine** is a program that executes JavaScript code. It takes the source code you write and converts it into machine code that your computer's processor can run.
+A **JavaScript engine** is a program that executes JavaScript code. It takes the source code you write and converts it into machine code that your computer's processor can run. According to the [V8 blog](https://v8.dev/blog), V8 processes billions of lines of JavaScript daily across Chrome, Node.js, and Electron applications worldwide.
 
 Every browser has its own JavaScript engine:
 
@@ -50,7 +50,7 @@ Every browser has its own JavaScript engine:
 | Safari | JavaScriptCore | Bun |
 | Edge | V8 (since 2020) | — |
 
-We'll focus on **V8** since it's the most widely used engine and powers both browser and server-side JavaScript.
+We'll focus on **V8** since it's the most widely used engine and powers both browser and server-side JavaScript. As of 2024, Chrome holds roughly 65% of the global browser market share according to [StatCounter](https://gs.statcounter.com/), making V8 by far the most widely deployed JavaScript engine.
 
 <Note>
 All JavaScript engines implement the [ECMAScript specification](https://tc39.es/ecma262/), which defines how the language should work. That's why JavaScript behaves the same way whether you run it in Chrome, Firefox, or Node.js.
@@ -160,7 +160,7 @@ First, V8 needs to understand your code. The **parser** reads the source text an
 
 ### Step 2: Ignition (The Interpreter)
 
-Once V8 has the AST, **Ignition** takes over. Ignition is V8's interpreter. It walks through the AST and generates **bytecode**, a compact representation of your code.
+Once V8 has the AST, **Ignition** takes over. Ignition is V8's interpreter, introduced in V8 version 5.9 (2017) to replace the older full-codegen baseline compiler. It walks through the AST and generates **bytecode**, a compact representation of your code. As the [V8 documentation](https://v8.dev/docs) explains, bytecode is 25–50% smaller than the equivalent machine code, significantly reducing memory usage.
 
 ```
 Bytecode for add(a, b):
@@ -866,6 +866,32 @@ distance(new Point(0, 0), new Point(3, 4))  // All Points, same shape
     3. `{ x, y }` - after adding y
     
     Pattern A is faster to create and produces the same final shape more directly. Modern engines optimize object literals with known properties, skipping intermediate shapes.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="What is a JavaScript engine?">
+    A JavaScript engine is the program that reads, compiles, and executes your JavaScript code. Each browser has its own: Chrome uses V8, Firefox uses SpiderMonkey, and Safari uses JavaScriptCore. All engines implement the [ECMAScript specification](https://tc39.es/ecma262/), which is why JavaScript behaves consistently across environments.
+  </Accordion>
+
+  <Accordion title="How does V8's JIT compilation work?">
+    V8 uses a two-tier approach. First, the Ignition interpreter generates bytecode and runs your code immediately. As code runs, V8 profiles which functions are called frequently ("hot" code). TurboFan, the optimizing compiler, then compiles those hot functions into highly optimized machine code. If type assumptions are violated, V8 "deoptimizes" back to bytecode.
+  </Accordion>
+
+  <Accordion title="What are hidden classes in V8?">
+    Hidden classes (also called "shapes" or "maps") are internal structures V8 creates to track the layout of your objects. When all objects of the same "shape" share a hidden class, V8 can use fast property access offsets instead of slow dictionary lookups. Changing object shapes after creation — like adding properties conditionally — forces V8 to create new hidden classes and slows performance.
+  </Accordion>
+
+  <Accordion title="How does garbage collection work in JavaScript?">
+    V8 uses a generational garbage collector. Short-lived objects go into the "young generation" (Scavenger), which is collected frequently and quickly. Objects that survive multiple collections are promoted to the "old generation" (Mark-Sweep/Mark-Compact), collected less often. The [V8 blog](https://v8.dev/blog/trash-talk) provides detailed information about V8's garbage collection strategies.
+  </Accordion>
+
+  <Accordion title="How can I write engine-friendly JavaScript?">
+    Keep object shapes consistent — initialize all properties in the constructor and avoid adding or deleting properties later. Use monomorphic functions that receive the same types. Avoid large, deeply nested closures that keep memory alive. Pre-allocate arrays to known sizes when possible, and prefer `const`/`let` over `var` for clearer scope analysis by the engine.
   </Accordion>
 </AccordionGroup>
 
