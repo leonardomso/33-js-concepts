@@ -25,7 +25,7 @@ async function getUserData(userId) {
 })()
 ```
 
-That's the magic of **[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)**. It's syntactic sugar introduced in the ECMAScript 2017 specification that makes asynchronous JavaScript look and behave like synchronous code, while still being non-blocking under the hood. According to the 2023 State of JS survey, async/await has become the most widely used async pattern, adopted by over 90% of JavaScript developers.
+That's the magic of **[async/await](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function)**. It's syntactic sugar introduced in the ECMAScript 2017 specification that makes asynchronous JavaScript look and behave like synchronous code, while still being non-blocking under the hood. Async/await has become the most widely used async pattern in modern JavaScript.
 
 <Info>
 **What you'll learn in this guide:**
@@ -99,7 +99,7 @@ Here's the same operation written three ways:
   </Tab>
 </Tabs>
 
-The async/await version is much easier to read. Each line clearly shows what happens next, error handling uses familiar try/catch, and there's no nesting or callback pyramids. As documented on MDN, every `async` function implicitly returns a Promise, making it fully compatible with existing Promise-based APIs.
+The async/await version is much easier to read. Each line clearly shows what happens next, error handling uses familiar try/catch, and there's no nesting or callback pyramids. Every `async` function implicitly returns a Promise, making it fully compatible with existing Promise-based APIs.
 
 <Tip>
 **Don't forget:** async/await doesn't replace Promises. It's built on top of them. Every `async` function returns a Promise, and `await` works with any Promise. The better you understand Promises, the better you'll be at async/await.
@@ -1559,7 +1559,7 @@ async function getData() {
   </Accordion>
 
   <Accordion title="Is async/await better than using Promises directly?">
-    Async/await is generally more readable, especially for sequential operations and error handling with try/catch. However, raw Promise methods like `Promise.all()` are still essential for parallel execution. According to the 2023 State of JS survey, async/await is the most widely used async pattern among JavaScript developers, but both approaches have their place.
+    Async/await is generally more readable, especially for sequential operations and error handling with try/catch. However, raw Promise methods like `Promise.all()` are still essential for parallel execution. Async/await is the most common default, but both approaches have their place.
   </Accordion>
 
   <Accordion title="How do you handle errors with async/await?">

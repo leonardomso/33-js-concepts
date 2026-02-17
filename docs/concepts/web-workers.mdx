@@ -33,7 +33,7 @@ document.getElementById('btn').addEventListener('click', () => {
 // - The page looks broken
 ```
 
-That's JavaScript's single thread at work. But there's a way out: **[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)**. Defined in the WHATWG HTML Living Standard, they let you run JavaScript in background threads, keeping your UI smooth while crunching numbers, parsing data, or processing images. According to Can I Use data, Web Workers have over 98% browser support across all modern browsers.
+That's JavaScript's single thread at work. But there's a way out: **[Web Workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API)**. They let you run JavaScript in background threads, keeping your UI smooth while crunching numbers, parsing data, or processing images. Web Workers have broad support across modern browsers.
 
 <Info>
 **What you'll learn in this guide:**
@@ -1593,7 +1593,7 @@ worker.onmessage = (e) => console.log(e.data)  // [2, 4, 6]
 
 <AccordionGroup>
   <Accordion title="What are Web Workers in JavaScript?">
-    Web Workers are a browser API that lets you run JavaScript in background threads, separate from the main UI thread. As defined in the WHATWG HTML Living Standard, workers execute in an isolated global context with no access to the DOM. They communicate with the main thread through `postMessage()` and are supported in all modern browsers.
+    Web Workers are a browser API that lets you run JavaScript in background threads, separate from the main UI thread. Workers execute in an isolated global context with no access to the DOM. They communicate with the main thread through `postMessage()` and are supported in all modern browsers.
   </Accordion>
 
   <Accordion title="What is the difference between Web Workers and async/await?">
@@ -1605,7 +1605,7 @@ worker.onmessage = (e) => console.log(e.data)  // [2, 4, 6]
   </Accordion>
 
   <Accordion title="What is the difference between Dedicated Workers, Shared Workers, and Service Workers?">
-    Dedicated Workers serve a single page and are the most common type. Shared Workers can be accessed by multiple pages from the same origin. Service Workers act as network proxies that enable offline support and push notifications. According to Can I Use data, Dedicated Workers have over 98% browser support, while Shared Workers have more limited support.
+    Dedicated Workers serve a single page and are the most common type. Shared Workers can be accessed by multiple pages from the same origin. Service Workers act as network proxies that enable offline support and push notifications. Dedicated Workers have broad browser support, while Shared Workers have more limited support.
   </Accordion>
 
   <Accordion title="What are transferable objects in Web Workers?">

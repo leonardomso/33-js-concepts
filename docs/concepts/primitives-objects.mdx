@@ -59,7 +59,7 @@ Before we dive in, let's clear up some widespread misconceptions that even exper
 
 ### What ECMAScript Actually Says
 
-The [ECMAScript specification](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values) (the official JavaScript standard) defines exactly two categories of values. According to the 2023 State of JS survey, confusion around value vs reference behavior remains one of the most common pain points for developers learning JavaScript:
+The [ECMAScript specification](https://tc39.es/ecma262/#sec-ecmascript-data-types-and-values) (the official JavaScript standard) defines exactly two categories of values. Confusion around value vs reference behavior remains one of the most common pain points for developers learning JavaScript:
 
 | ECMAScript Term | What It Includes |
 |-----------------|------------------|
@@ -539,7 +539,7 @@ console.log(original.scores);  // [95, 87, 92] ✅
 
 <Tip>
 **Which to use:**
-- **[`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)** — As documented by MDN, this API is available in all major browsers since 2022 and is the recommended approach for most cases
+- **[`structuredClone()`](https://developer.mozilla.org/en-US/docs/Web/API/structuredClone)** — This API is available in all major browsers since 2022 and is the recommended approach for most cases
 - **`JSON.parse(JSON.stringify())`** — Only for simple objects (loses functions, Dates, undefined)
 - **Lodash `_.cloneDeep()`** — When you need maximum compatibility
 </Tip>
@@ -558,7 +558,7 @@ The ECMAScript specification defines **behavior**, not **implementation**. It ne
 
 ### How V8 Actually Works
 
-V8 (Chrome, Node.js, Deno) uses a technique called **pointer tagging** to efficiently represent values. According to the V8 team's blog, this optimization is critical for JavaScript performance — it allows the engine to distinguish small integers from heap pointers without additional memory lookups.
+V8 (Chrome, Node.js, Deno) uses a technique called **pointer tagging** to efficiently represent values. This optimization is critical for JavaScript performance — it allows the engine to distinguish small integers from heap pointers without additional memory lookups.
 
 #### Smis (Small Integers): The Only "Direct" Values
 
@@ -917,7 +917,7 @@ Just know it's a **mental model for behavior**, not how JavaScript actually work
 
 <AccordionGroup>
   <Accordion title="What is the difference between primitives and objects in JavaScript?">
-    Primitives (string, number, bigint, boolean, undefined, null, symbol) are immutable — you cannot change a primitive value, only replace it. Objects (including arrays, functions, and dates) are mutable — you can change their contents. According to the ECMAScript specification, this mutability distinction is the fundamental behavioral difference between the two categories.
+    Primitives (string, number, bigint, boolean, undefined, null, symbol) are immutable — you cannot change a primitive value, only replace it. Objects (including arrays, functions, and dates) are mutable — you can change their contents. This mutability distinction is the fundamental behavioral difference between the two categories.
   </Accordion>
 
   <Accordion title="Is JavaScript pass by value or pass by reference?">
@@ -925,7 +925,7 @@ Just know it's a **mental model for behavior**, not how JavaScript actually work
   </Accordion>
 
   <Accordion title="Why does changing a copied object affect the original in JavaScript?">
-    When you write `let copy = original`, you copy the reference (the "key to the house"), not the object itself. Both variables point to the same object in memory. As documented in MDN, use `structuredClone()` for a deep copy or the spread operator (`{...obj}`) for a shallow copy to create independent duplicates.
+    When you write `let copy = original`, you copy the reference (the "key to the house"), not the object itself. Both variables point to the same object in memory. Use `structuredClone()` for a deep copy or the spread operator (`{...obj}`) for a shallow copy to create independent duplicates.
   </Accordion>
 
   <Accordion title="How do you create a deep copy of an object in JavaScript?">

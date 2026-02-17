@@ -37,7 +37,7 @@ This surprising behavior is **[type coercion](https://developer.mozilla.org/en-U
 
 ## What Is Type Coercion?
 
-**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. According to the ECMAScript specification, JavaScript performs these conversions through a set of "abstract operations" — internal algorithms like ToString, ToNumber, and ToBoolean. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work, sometimes helpfully, sometimes surprisingly. Understanding these conversion rules helps you write predictable, bug-free code.
+**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. JavaScript performs these conversions through a set of "abstract operations" — internal algorithms like ToString, ToNumber, and ToBoolean. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work, sometimes helpfully, sometimes surprisingly. Understanding these conversion rules helps you write predictable, bug-free code.
 
 ### The Shapeshifter Analogy
 
@@ -351,7 +351,7 @@ value || defaultValue  // logical OR
 
 ### The 8 Falsy Values (Memorize These!)
 
-As documented in MDN's reference on falsy values, there are **8 common values** that convert to `false`. Everything else is `true`.
+There are **8 common values** that convert to `false`. Everything else is `true`.
 
 ```javascript
 // THE FALSY EIGHT
@@ -963,11 +963,11 @@ function process(count) {
 
 <AccordionGroup>
   <Accordion title="What is type coercion in JavaScript?">
-    Type coercion is JavaScript's automatic conversion of values from one type to another. According to the ECMAScript specification, all coercion ultimately converts to one of three primitive types: String, Number, or Boolean. It can be implicit (triggered by operators) or explicit (using functions like `Number()`, `String()`, or `Boolean()`).
+    Type coercion is JavaScript's automatic conversion of values from one type to another. All coercion ultimately converts to one of three primitive types: String, Number, or Boolean. It can be implicit (triggered by operators) or explicit (using functions like `Number()`, `String()`, or `Boolean()`).
   </Accordion>
 
   <Accordion title="What are the falsy values in JavaScript?">
-    There are 8 common falsy values: `false`, `0`, `-0`, `0n` (BigInt zero), `""` (empty string), `null`, `undefined`, and `NaN`. As documented by MDN, every other value in JavaScript is truthy — including empty arrays `[]`, empty objects `{}`, and the string `"0"`.
+    There are 8 common falsy values: `false`, `0`, `-0`, `0n` (BigInt zero), `""` (empty string), `null`, `undefined`, and `NaN`. Every other value in JavaScript is truthy — including empty arrays `[]`, empty objects `{}`, and the string `"0"`.
   </Accordion>
 
   <Accordion title='Why does "5" + 3 return "53" but "5" - 3 returns 2?'>
