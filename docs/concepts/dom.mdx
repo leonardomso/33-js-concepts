@@ -1347,20 +1347,26 @@ The most dangerous DOM mistake is using **[`innerHTML`](https://developer.mozill
 
 ```javascript
 // ❌ DANGEROUS - Never do this with user input!
-const username = getUserInput()  // User enters: <img src=x onerror="stealCookies()">
+const username = getUserInput()  // User enters: <img src=x onerror="alert(1)">
 div.innerHTML = `Welcome, ${username}!`
 // The malicious script EXECUTES!
 
-// ✓ SAFE - textContent escapes HTML
+// ✓ SAFE - textContent escapes HTML automatically
 const username = getUserInput()
 div.textContent = `Welcome, ${username}!`
-// Displays: Welcome, <img src=x onerror="stealCookies()">!
+// Displays: Welcome, <img src=x onerror="alert(1)">!
 // The HTML is shown as text, not executed
 
 // ✓ SAFE - Create elements programmatically
 const username = getUserInput()
 const welcomeText = document.createTextNode(`Welcome, ${username}!`)
 div.appendChild(welcomeText)
+
+// ✓ SAFE - If you must insert HTML, sanitize it first with a library like DOMPurify
+import DOMPurify from 'dompurify'
+const rawHtml = getUserInput()
+div.innerHTML = DOMPurify.sanitize(rawHtml)
+// DOMPurify strips dangerous tags and attributes before inserting into the DOM
 ```
 
 <Warning>
