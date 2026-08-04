@@ -3,12 +3,12 @@
   "theme": "maple",
   "appearance": {
     "default": "dark",
-    "strict": true
+    "strict": false
   },
   "name": "33 JavaScript Concepts",
   "description": "Learn JavaScript with 33 essential concepts every developer should know. Free guide with clear explanations, practical code examples, and curated resources.",
   "colors": {
-    "primary": "#F0DB4F",
+    "primary": "#8A7500",
     "light": "#F0DB4F",
     "dark": "#C9B83C"
   },
