@@ -1,0 +1,277 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "maple",
+  "appearance": {
+    "default": "dark",
+    "strict": true
+  },
+  "name": "33 JavaScript Concepts",
+  "description": "Learn JavaScript with 33 essential concepts every developer should know. Free guide with clear explanations, practical code examples, and curated resources.",
+  "colors": {
+    "primary": "#F0DB4F",
+    "light": "#F0DB4F",
+    "dark": "#C9B83C"
+  },
+  "favicon": "/favicon.ico",
+  "thumbnails": {
+    "appearance": "dark"
+  },
+  "seo": {
+    "indexing": "navigable",
+    "metatags": {
+      "og:type": "website",
+      "og:site_name": "33 JavaScript Concepts",
+      "og:locale": "en_US",
+      "og:image": "https://33jsconcepts.com/og-image.png",
+      "twitter:card": "summary_large_image",
+      "twitter:site": "@leonardomso",
+      "twitter:creator": "@leonardomso",
+      "twitter:image": "/og-image.png",
+      "article:author": "Leonardo Maldonado",
+      "author": "Leonardo Maldonado",
+      "keywords": "JavaScript, JS, learn JavaScript, JavaScript tutorial, JavaScript concepts, JavaScript fundamentals, web development, programming, coding, closures, promises, async await, event loop, DOM, prototypes",
+      "language": "en",
+      "coverage": "Worldwide",
+      "distribution": "global",
+      "rating": "general",
+      "revisit-after": "7 days",
+      "category": "Technology, Education, Programming"
+    }
+  },
+  "search": {
+    "prompt": "Search concept..."
+  },
+  "metadata": {
+    "timestamp": true
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/leonardomso/33-js-concepts"
+      }
+    ]
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Learn",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "index",
+              "getting-started/about",
+              "getting-started/how-to-learn",
+              "getting-started/prerequisites",
+              "getting-started/learning-paths"
+            ]
+          },
+          {
+            "group": "Fundamentals",
+            "icon": "cube",
+            "pages": [
+              "concepts/primitive-types",
+              "concepts/primitives-objects",
+              "concepts/type-coercion",
+              "concepts/equality-operators",
+              "concepts/call-stack",
+              "concepts/scope-and-closures"
+            ]
+          },
+          {
+            "group": "Functions & Execution",
+            "icon": "code",
+            "pages": [
+              "concepts/event-loop",
+              "concepts/iife-modules"
+            ]
+          },
+{
+          "group": "Web Platform",
+          "icon": "browser",
+          "pages": [
+            "concepts/dom",
+            "concepts/http-fetch",
+            "concepts/web-workers"
+          ]
+        },
+        {
+          "group": "Object-Oriented JS",
+          "icon": "sitemap",
+          "pages": [
+            "concepts/factories-classes",
+            "concepts/this-call-apply-bind",
+            "concepts/object-creation-prototypes",
+            "concepts/inheritance-polymorphism"
+          ]
+        },
+        {
+          "group": "Async JavaScript",
+          "icon": "clock",
+          "pages": [
+            "concepts/callbacks",
+            "concepts/promises",
+            "concepts/async-await",
+            "concepts/generators-iterators"
+          ]
+        },
+        {
+          "group": "Functional Programming",
+          "icon": "filter",
+          "pages": [
+            "concepts/higher-order-functions",
+            "concepts/pure-functions",
+            "concepts/map-reduce-filter",
+            "concepts/recursion",
+            "concepts/currying-composition"
+          ]
+        },
+        {
+          "group": "Advanced Topics",
+          "icon": "graduation-cap",
+          "pages": [
+            "concepts/javascript-engines",
+            "concepts/error-handling",
+            "concepts/regular-expressions",
+            "concepts/modern-js-syntax",
+            "concepts/es-modules",
+            "concepts/data-structures",
+            "concepts/algorithms-big-o",
+            "concepts/design-patterns",
+            "concepts/clean-code"
+          ]
+        },
+        {
+          "group": "What's Next?",
+          "icon": "arrow-right",
+          "pages": [
+            "beyond/getting-started/overview"
+          ]
+        }
+      ]
+      },
+      {
+        "tab": "Beyond 33",
+        "groups": [
+          {
+            "group": "Getting Started",
+            "icon": "rocket",
+            "pages": [
+              "beyond/getting-started/overview"
+            ]
+          },
+          {
+            "group": "Language Mechanics",
+            "icon": "gear",
+            "pages": [
+              "beyond/concepts/hoisting",
+              "beyond/concepts/temporal-dead-zone",
+              "beyond/concepts/strict-mode"
+            ]
+          },
+          {
+            "group": "Type System",
+            "icon": "code",
+            "pages": [
+              "beyond/concepts/javascript-type-nuances"
+            ]
+          },
+          {
+            "group": "Objects & Properties",
+            "icon": "cube",
+            "pages": [
+              "beyond/concepts/property-descriptors",
+              "beyond/concepts/getters-setters",
+              "beyond/concepts/object-methods",
+              "beyond/concepts/proxy-reflect",
+              "beyond/concepts/weakmap-weakset"
+            ]
+          },
+          {
+            "group": "Memory & Performance",
+            "icon": "bolt",
+            "pages": [
+              "beyond/concepts/memory-management",
+              "beyond/concepts/garbage-collection",
+              "beyond/concepts/debouncing-throttling",
+              "beyond/concepts/memoization"
+            ]
+          },
+          {
+            "group": "Modern Syntax & Operators",
+            "icon": "wand-magic-sparkles",
+            "pages": [
+              "beyond/concepts/tagged-template-literals",
+              "beyond/concepts/computed-property-names"
+            ]
+          },
+          {
+            "group": "Browser Storage",
+            "icon": "database",
+            "pages": [
+              "beyond/concepts/localstorage-sessionstorage",
+              "beyond/concepts/indexeddb",
+              "beyond/concepts/cookies"
+            ]
+          },
+          {
+            "group": "Events",
+            "icon": "bell",
+            "pages": [
+              "beyond/concepts/event-bubbling-capturing",
+              "beyond/concepts/event-delegation",
+              "beyond/concepts/custom-events"
+            ]
+          },
+          {
+            "group": "Observer APIs",
+            "icon": "eye",
+            "pages": [
+              "beyond/concepts/intersection-observer",
+              "beyond/concepts/mutation-observer",
+              "beyond/concepts/resize-observer",
+              "beyond/concepts/performance-observer"
+            ]
+          },
+          {
+            "group": "Data Handling",
+            "icon": "file-code",
+            "pages": [
+              "beyond/concepts/json-deep-dive",
+              "beyond/concepts/typed-arrays-arraybuffers",
+              "beyond/concepts/blob-file-api",
+              "beyond/concepts/requestanimationframe"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Community",
+        "groups": [
+          {
+            "group": "Get Involved",
+            "icon": "users",
+            "pages": [
+              "contributing",
+              "translations"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "redirects": [
+    {
+      "source": "/concepts/value-reference-types",
+      "destination": "/concepts/primitives-objects"
+    }
+  ],
+  "footer": {
+    "socials": {
+      "github": "https://github.com/leonardomso/33-js-concepts",
+      "x": "https://x.com/leonardomso"
+    }
+  }
+}

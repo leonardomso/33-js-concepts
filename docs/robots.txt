@@ -1,0 +1,53 @@
+# Belt-and-suspenders robots.txt for 33jsconcepts.com
+# 
+# PRIMARY FIX: Cloudflare dashboard configuration is required to override
+# Cloudflare-managed AI bot blocking. This file serves as the origin-level
+# directive and fallback if Cloudflare managed robots is disabled.
+#
+# Cloudflare Dashboard Paths:
+# - Security -> Settings -> Bot traffic -> robots.txt setting
+# - AI Crawl Control -> Crawlers (allow/block per crawler)
+# - AI Crawl Control -> Robots.txt tab (check managed status)
+#
+# This file allows ALL major search engines and AI crawlers to index content.
+
+# Default rule: Allow all bots to crawl everything except Cloudflare internal paths
+User-agent: *
+Allow: /
+Disallow: /cdn-cgi/
+
+# Explicit allow directives for major search engine bots
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Yandexbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Explicit allow directives for AI search engine bots
+# These override any Cloudflare-managed blocks at the origin level
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+# Sitemap for search engine discovery
+Sitemap: https://33jsconcepts.com/sitemap.xml
