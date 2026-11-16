@@ -1,7 +1,7 @@
 ---
-title: "Callbacks"
+title: "Callbacks: Handling Asynchronous Operations in JavaScript"
 sidebarTitle: "Callbacks: The Foundation of Async"
-description: "Learn JavaScript callbacks. Understand sync vs async callbacks, error-first patterns, callback hell, and why Promises were invented."
+description: "Learn JavaScript callbacks. Understand sync and async callbacks, error-first patterns, callback hell, why Promises were invented, and common mistakes."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "Async JavaScript"
@@ -47,7 +47,7 @@ The answer is **callbacks**: functions you pass to other functions, saying "call
 
 ## What is a Callback?
 
-A **[callback](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function)** is a function passed as an argument to another function, that gets called later. The other function decides when (or if) to run it.
+A **[callback](https://developer.mozilla.org/en-US/docs/Glossary/Callback_function)** is a function passed as an argument to another function so it can run later. In JavaScript, callbacks enable asynchronous operations, event handling, and reusable behavior: the receiving function decides when and whether to invoke the callback with its own arguments.
 
 ```javascript
 // greet is a callback function

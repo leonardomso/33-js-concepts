@@ -1,7 +1,7 @@
 ---
-title: "Type Coercion"
+title: "Type Coercion: How Implicit Conversion Works in JavaScript"
 sidebarTitle: "Type Coercion: How Values Convert Automatically"
-description: "Learn JavaScript type coercion. Understand how values convert to strings, numbers, and booleans, plus the 8 falsy values."
+description: "Learn JavaScript type coercion. Understand how values convert to strings, numbers, and booleans, plus the eight falsy values and equality pitfalls in practice."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "JavaScript Fundamentals"
@@ -37,7 +37,9 @@ This surprising behavior is **[type coercion](https://developer.mozilla.org/en-U
 
 ## What Is Type Coercion?
 
-**Type coercion** is the automatic or implicit conversion of values from one data type to another in JavaScript. According to the ECMAScript specification, JavaScript performs these conversions through a set of "abstract operations" — internal algorithms like ToString, ToNumber, and ToBoolean. When you use operators or functions that expect a certain type, JavaScript will convert (coerce) values to make the operation work, sometimes helpfully, sometimes surprisingly. Understanding these conversion rules helps you write predictable, bug-free code.
+**Type coercion** is JavaScript's automatic conversion of a value from one data type to another. It happens when operators or functions expect a particular type, using internal conversions such as ToString, ToNumber, and ToBoolean. Understanding these rules helps prevent surprising results and comparison bugs.
+
+These conversions can be helpful, but they may also produce unexpected behavior when values of different types interact.
 
 ### The Shapeshifter Analogy
 

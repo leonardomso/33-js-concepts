@@ -1,7 +1,7 @@
 ---
-title: "ES Modules"
+title: "ES Modules: Build Maintainable Applications in JavaScript"
 sidebarTitle: "ES Modules: Native Module System"
-description: "Learn ES Modules in JavaScript. Understand import/export, live bindings, dynamic imports, top-level await, and tree-shaking."
+description: "Learn ES Modules in JavaScript. Understand import/export, live bindings, dynamic imports, top-level await, tree-shaking, and common module pitfalls in practice."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "Advanced Topics"
@@ -10,7 +10,7 @@ description: "Learn ES Modules in JavaScript. Understand import/export, live bin
 
 Why does Node.js have two different module systems? Why can bundlers remove unused code from ES Modules but not from CommonJS? And why do some imports need curly braces while others don't?
 
-ES Modules (ESM) is JavaScript's official module system, standardized in ES2015. It's the answer to years of competing module formats, and it's designed from the ground up to be statically analyzable, which unlocks optimizations that older systems simply can't match.
+**ES Modules (ESM)** is JavaScript's official module system, standardized in ES2015. It's the answer to years of competing module formats, and it's designed from the ground up to be statically analyzable, which unlocks optimizations that older systems simply can't match.
 
 ```javascript
 // math.js - Exporting functionality
@@ -44,6 +44,12 @@ This guide goes beyond the basics. You'll learn why ESM's design makes it better
 <Warning>
 **Prerequisite:** This guide assumes you're familiar with basic module concepts. If terms like "named exports" or "default exports" are new to you, start with our [IIFE, Modules & Namespaces](/concepts/iife-modules) guide first.
 </Warning>
+
+---
+
+## What Are ES Modules in JavaScript?
+
+**ES Modules (ESM)** are JavaScript's standard module system, introduced in ES2015. They use `import` and `export` declarations to share code between files, support static analysis and tree-shaking, enable dynamic imports and top-level await, and work natively in modern browsers and Node.js.
 
 ---
 

@@ -1,7 +1,7 @@
 ---
-title: "Primitives vs Objects: How JavaScript Values Actually Work"
+title: "Primitives vs Objects: How Values Behave in JavaScript"
 sidebarTitle: "Primitives vs Objects: How Values Work"
-description: "Learn how JavaScript primitives and objects differ in behavior. Understand immutability, call-by-sharing semantics, why mutation works but reassignment doesn't, and how V8 actually stores values."
+description: "Learn how JavaScript primitives and objects differ. Understand immutability, call-by-sharing, mutation, reassignment, object identity, and copying in practice."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "JavaScript Fundamentals"
@@ -38,6 +38,12 @@ The answer lies in how JavaScript **values behave** — not where they're stored
 <Warning>
 **Prerequisite:** This guide assumes you understand [Primitive Types](/concepts/primitive-types). If you're not familiar with the 7 primitive types in JavaScript, read that guide first!
 </Warning>
+
+---
+
+## What Is the Difference Between Primitives and Objects?
+
+**Primitives and objects** are JavaScript's two categories of values. Primitives are immutable and behave independently, while objects are mutable collections that variables can share. This difference affects assignment, comparison, function arguments, and copying, although JavaScript uses call-by-sharing rather than true pass-by-reference.
 
 ---
 

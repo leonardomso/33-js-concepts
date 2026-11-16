@@ -1,7 +1,7 @@
 ---
-title: "Equality: == vs ==="
+title: "Equality: How == and === Compare Values in JavaScript"
 sidebarTitle: "Equality Operators: == vs === Type Checking"
-description: "Learn JavaScript equality: == vs ===, typeof quirks, and Object.is(). Understand type coercion and why NaN !== NaN."
+description: "Learn JavaScript equality: == vs ===, typeof quirks, and Object.is(). Understand type coercion, NaN comparisons, and which operator to use with examples."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "JavaScript Fundamentals"
@@ -35,6 +35,12 @@ Understanding JavaScript's **[equality operators](https://developer.mozilla.org/
 <Warning>
 **Prerequisites:** This guide assumes you understand [Primitive Types](/concepts/primitive-types) and [Type Coercion](/concepts/type-coercion). Equality operators rely heavily on how JavaScript converts types. If those concepts are new to you, read those guides first!
 </Warning>
+
+---
+
+## What Are Equality Operators in JavaScript?
+
+**Equality operators** determine whether two JavaScript values are considered equal. Loose equality (`==`) may convert values to compatible types before comparing them, while strict equality (`===`) requires matching types. `Object.is()` offers SameValue comparison for special cases such as `NaN` and positive or negative zero.
 
 ---
 

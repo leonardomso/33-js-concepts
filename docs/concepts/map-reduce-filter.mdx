@@ -1,7 +1,7 @@
 ---
-title: "map, reduce, filter"
+title: "map, filter & reduce: Transform Arrays in JavaScript"
 sidebarTitle: "map, reduce, filter"
-description: "Learn map, reduce, and filter in JavaScript. Transform, filter, and combine arrays without mutation. Includes method chaining and common pitfalls."
+description: "Learn map, reduce, and filter in JavaScript. Transform, filter, and combine arrays without mutation. Practice method chaining and avoid common pitfalls."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "Functional Programming"
@@ -86,9 +86,11 @@ The beauty of this assembly line? You can connect the stations in any order. The
 
 ---
 
-## What Are These Methods?
+## What Are map(), filter(), and reduce()?
 
-These three methods are the workhorses of functional programming in JavaScript. They let you transform, filter, and aggregate data without writing explicit loops and without mutating your original data. According to the [State of JS 2023 survey](https://2023.stateofjs.com/), `map`, `filter`, and `reduce` are among the most commonly used array methods, with the vast majority of JavaScript developers using them regularly in production code.
+`map`, `filter`, and `reduce` are JavaScript array methods for transforming, selecting, and combining values without explicit loops. Each method accepts a callback and returns a new result without mutating the original array, enabling clear data-processing pipelines and reusable functional programming patterns.
+
+According to the [State of JS 2023 survey](https://2023.stateofjs.com/), `map`, `filter`, and `reduce` are among the most commonly used array methods, with the vast majority of JavaScript developers using them regularly in production code.
 
 | Method | What It Does | Returns | Original Array |
 |--------|-------------|---------|----------------|

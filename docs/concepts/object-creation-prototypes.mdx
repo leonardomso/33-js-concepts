@@ -1,7 +1,7 @@
 ---
-title: "Prototypes & Object Creation"
+title: "Object Prototypes: How Inheritance Works in JavaScript"
 sidebarTitle: "Object Creation & Prototypes: How Objects Inherit"
-description: "Learn JavaScript prototypes and object creation. Understand the prototype chain, new operator, Object.create(), and inheritance."
+description: "Learn JavaScript prototypes and object creation. Understand the prototype chain, the new operator, Object.create(), inheritance, and constructor patterns."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "Object-Oriented JavaScript"
@@ -44,7 +44,9 @@ The answer is the **[prototype chain](https://developer.mozilla.org/en-US/docs/W
 
 ## What is the Prototype Chain?
 
-The **prototype chain** is JavaScript's way of implementing inheritance. Every object has an internal link (called `[[Prototype]]`) to another object, its prototype. When you try to access a property on an object, JavaScript:
+The **prototype chain** is JavaScript's mechanism for property inheritance between objects. When a property is not found on an object, JavaScript follows its internal `[[Prototype]]` link and repeats the lookup on successive prototypes, continuing until it finds the property or reaches `null`.
+
+When you try to access a property on an object, JavaScript:
 
 1. First looks for the property on the object itself
 2. If not found, looks on the object's prototype

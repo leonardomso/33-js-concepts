@@ -1,7 +1,7 @@
 ---
-title: "Recursion"
+title: "Recursion: Solve Problems with Functions in JavaScript"
 sidebarTitle: "Recursion: Functions That Call Themselves"
-description: "Learn recursion in JavaScript. Understand base cases, recursive calls, the call stack, and patterns like factorial, tree traversal, and memoization."
+description: "Learn recursion in JavaScript. Understand base cases, recursive calls, the call stack, and patterns like factorial, tree traversal, and practical memoization."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "Functional Programming"
@@ -48,7 +48,9 @@ This is **[recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursio
 
 ## What is Recursion?
 
-**[Recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursion)** is a programming technique where a function calls itself to solve a problem. Instead of using loops, the function breaks a problem into smaller versions of the same problem until it reaches a case simple enough to solve directly. The [ECMAScript specification](https://tc39.es/ecma262/#sec-function-definitions) allows functions to reference themselves within their own body, which is the mechanism that makes recursion possible in JavaScript.
+**[Recursion](https://developer.mozilla.org/en-US/docs/Glossary/Recursion)** is a programming technique in which a function calls itself with a smaller version of the original problem. In JavaScript, each recursive call continues until a base case stops the chain, allowing functions to solve nested, repetitive, or hierarchical problems without explicit loops.
+
+The [ECMAScript specification](https://tc39.es/ecma262/#sec-function-definitions) allows functions to reference themselves within their own body, which is the mechanism that makes recursion possible in JavaScript.
 
 <Note>
 **Recursion isn't unique to JavaScript.** It's a fundamental computer science concept found in virtually every programming language. The patterns you learn here apply whether you're writing Python, C++, Java, or any other language.

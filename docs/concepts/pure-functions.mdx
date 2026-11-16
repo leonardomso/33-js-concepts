@@ -1,5 +1,5 @@
 ---
-title: "Pure Functions"
+title: "Pure Functions: Write Predictable Code in JavaScript"
 sidebarTitle: "Pure Functions: Writing Predictable Code"
 description: "Learn pure functions in JavaScript. Understand the two rules of purity, avoid side effects, and write testable, predictable code with immutable patterns."
 "og:type": "article"
@@ -42,7 +42,9 @@ A pure function is simple, predictable, and trustworthy. Once you understand why
 
 ## What is a Pure Function?
 
-A **pure function** is a function that follows two simple rules:
+A **pure function** is a JavaScript function that always returns the same result for the same arguments and produces no side effects. It does not modify external state or depend on mutable outside values, making its behavior predictable, easier to test, and safe to compose with other functions.
+
+A pure function follows two simple rules:
 
 1. **Same input → Same output**: Given the same arguments, it always returns the same result
 2. **No side effects**: It doesn't change anything outside itself

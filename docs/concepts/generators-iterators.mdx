@@ -1,7 +1,7 @@
 ---
-title: "Generators & Iterators"
+title: "Generators & Iterators: Control Lazy Sequences in JavaScript"
 sidebarTitle: "Generators & Iterators: Pausable Functions"
-description: "Learn JavaScript generators and iterators. Understand yield, lazy evaluation, infinite sequences, and async generators."
+description: "Learn JavaScript generators and iterators. Understand yield, lazy evaluation, infinite sequences, async generators, and custom iteration patterns with examples."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "Async JavaScript"
@@ -46,9 +46,9 @@ This is the power of **[generators](https://developer.mozilla.org/en-US/docs/Web
 
 ## What is an Iterator?
 
-Before getting into generators, we need to cover **iterators**, the foundation that makes generators work.
+An **[iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)** is an object that returns values one at a time through a `.next()` method, following the JavaScript iteration protocol. Each result contains a `value` and a `done` flag, allowing loops and other consumers to process sequences without loading every item into memory at once.
 
-An **[iterator](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols#the_iterator_protocol)** is an object that defines a sequence and provides a way to access values one at a time. It must have a `.next()` method that returns an object with two properties:
+Each result has two properties:
 
 - `value` — the next value in the sequence
 - `done` — `true` if the sequence is finished, `false` otherwise

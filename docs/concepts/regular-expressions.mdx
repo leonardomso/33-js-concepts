@@ -1,7 +1,7 @@
 ---
-title: "Regular Expressions"
+title: "Regular Expressions: Match Text Patterns in JavaScript"
 sidebarTitle: "Regular Expressions: Pattern Matching"
-description: "Learn regular expressions in JavaScript. Pattern syntax, character classes, quantifiers, flags, and methods like test and match."
+description: "Learn regular expressions in JavaScript. Understand pattern syntax, character classes, quantifiers, flags, and methods like test, exec, and match with examples."
 "og:type": "article"
 "article:author": "Leonardo Maldonado"
 "article:section": "Advanced Topics"
@@ -41,7 +41,9 @@ The answer is **[regular expressions](https://developer.mozilla.org/en-US/docs/W
 
 ## What Are Regular Expressions?
 
-A **[regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)** is a pattern used to match character combinations in strings. In JavaScript, regex are objects that you can use with string methods to search, validate, extract, and replace text. They use a special syntax where characters like `\d`, `*`, and `^` have special meanings beyond their literal values. Regular expressions have been part of JavaScript since its first version in 1995, and the [ECMAScript specification](https://tc39.es/ecma262/#sec-regexp-regular-expression-objects) has steadily expanded their capabilities — adding features like named capture groups (ES2018), lookbehind assertions (ES2018), and the `d` flag for match indices (ES2022).
+A **[regular expression](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)** is a pattern used to match character combinations in strings. In JavaScript, regular expressions are objects used to search, validate, extract, and replace text. Special tokens such as `\d`, `*`, and `^` describe complex matching rules beyond their literal characters.
+
+Regular expressions have been part of JavaScript since its first version in 1995, and the [ECMAScript specification](https://tc39.es/ecma262/#sec-regexp-regular-expression-objects) has steadily expanded their capabilities — adding features like named capture groups (ES2018), lookbehind assertions (ES2018), and the `d` flag for match indices (ES2022).
 
 ### Two Ways to Create Regex
 
